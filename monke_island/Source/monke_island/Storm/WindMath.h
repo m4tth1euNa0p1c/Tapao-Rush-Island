@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Math/RandomStream.h"
+#include "Expedition/Core/ExpeditionClock.h"
 #include "Storm/WindRules.h"
 
 /** One gust of the schedule */
@@ -83,6 +84,37 @@ namespace WindMath
 			Strength = FMath::Max(Strength, Rules.DeadlineStrength * Ramp);
 		}
 		return Strength;
+	}
+
+	/**
+	 *  Seconds since the ultra violent wind set in on the expedition clock, -1 before (T-098).
+	 *  It sets in LeadSeconds before the flood deadline (never before the start of the expedition).
+	 *  bSubmersionConfirmed: the expedition reached Submerging; until a client receives that phase, the part after the
+	 *  deadline is held (a zone bonus replicated late must not make the storm set in, then stop).
+	 */
+	inline double ExpeditionStormSeconds(const FExpeditionClockState& State, double ServerTime, double LeadSeconds, bool bSubmersionConfirmed)
+	{
+		if (!State.bStarted)
+		{
+			return -1.0;
+		}
+		const double StormStart = FMath::Max(State.StartTime, State.FloodStartTime - FMath::Max(0.0, LeadSeconds));
+		if (ServerTime < StormStart)
+		{
+			return -1.0;
+		}
+		if (ServerTime >= State.FloodStartTime && !bSubmersionConfirmed)
+		{
+			// Past the deadline but not confirmed yet: hold at the deadline (no storm when it has no lead)
+			return State.FloodStartTime > StormStart ? State.FloodStartTime - StormStart : -1.0;
+		}
+		return ServerTime - StormStart;
+	}
+
+	/** Elapsed time at which the ultra violent wind set in, for MeanStrengthAt; -1 when it has not (StormSeconds < 0) */
+	inline double DeadlineStartElapsed(double Elapsed, double StormSeconds)
+	{
+		return StormSeconds >= 0.0 ? FMath::Max(0.0, Elapsed - StormSeconds) : -1.0;
 	}
 
 	/** True when a mesh name contains one of the keywords (case insensitive) */

@@ -42,7 +42,7 @@ Le compteur n'a pas de minuterie propre : chaque rafraîchissement relit la sour
 1. **Horloge d'expédition** (contrat §6.1), prioritaire dès qu'elle tourne : `AExpeditionGameState` — `GetServerWorldTimeSeconds()`, `GetFloodStartTime()`, `GetSubmersionEndTime()`, phase répliquée. Un client ne passe en évacuation que quand la phase répliquée l'indique (un bonus peut être en route) ; avant, il reste bloqué à 0:00.
 2. **Acteur d'inondation autonome** (`AFloodSimulationActor`), si `bShowStandaloneFloodSource` : même horloge que l'acteur, l'horloge jour/nuit répliquée (`ADayNightCycleActor::GetElapsedSeconds`, dérivée du temps serveur), échéance `DA_FloodRules.StartSeconds`, fin `StartSeconds + RiseSeconds`. C'est la source qui fait réellement monter l'eau dans `Lvl_Raraka` aujourd'hui.
 
-Si les deux coexistent, le compteur affiche l'horloge d'expédition et journalise un avertissement (deux horloges = l'eau peut monter à un autre moment que l'affichage).
+Depuis T-098, l'acteur d'inondation suit l'horloge d'expédition dès que la map en a une (`DA_FloodRules.ClockMode = Auto`). Le compteur ne le montre alors qu'à travers l'expédition, et la source 2 ne sert plus qu'aux maps sans expédition. L'avertissement « deux horloges » ne subsiste que si `ClockMode = DayNightOnly` est forcé dans une map où une expédition tourne.
 
 ## Architecture
 

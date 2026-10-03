@@ -5,20 +5,27 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Flood/FloodGrid.h"
+#include "Flood/HazardClock.h"
 #include "FloodSimulationActor.generated.h"
 
+class AExpeditionGameState;
 class UFloodRules;
 class UMaterialInterface;
 class UProceduralMeshComponent;
 
 /**
- *  Rising water over the real topography (cahier §5, submersion): at StartSeconds the sea rises and the water
- *  flows inland through a shallow water simulation laid on the ground around this actor. Low ground floods first,
+ *  Rising water over the real topography (cahier §5, §6.1 submersion): the sea rises and the water flows inland
+ *  through a shallow water simulation laid on the ground around this actor. Low ground floods first,
  *  hollows fill, ridges hold until they overflow, and the island drowns chunk by chunk.
+ *  One clock (T-098): in a map with an expedition (AExpeditionGameState with DA_ExpeditionRules) the rise starts at
+ *  the flood deadline of the expedition clock (120 s + 120 s per pacified zone) and lasts its SubmersionDuration (60 s);
+ *  the end of the submersion (OnSubmersionEnded, then the extraction) is the only end signal. Without expedition the
+ *  actor falls back to the day / night clock of DA_FloodRules (StartSeconds, RiseSeconds). The choice is made once
+ *  (DA_FloodRules.ClockMode), logged, and the two clocks never drive the water together. The sea never goes down.
  *  The ground is read by traces at begin play: the terrain is never modified, any change of the level design is
  *  followed. The local surface feeds UIslandWaterSubsystem, so wading, swimming and drowning follow the flood.
- *  Every machine runs the same deterministic steps from the replicated day / night clock; the server's result
- *  is authoritative for gameplay. Debug (non shipping): monke.SetTime <s>, monke.FloodNow.
+ *  Every machine runs the same deterministic steps from the replicated clock; the server's result
+ *  is authoritative for gameplay. Debug (non shipping, day / night fallback only): monke.SetTime <s>, monke.FloodNow.
  */
 UCLASS()
 class MONKE_ISLAND_API AFloodSimulationActor : public AActor
@@ -50,10 +57,21 @@ public:
 	/** Water surface of the flood at a location (world Z, cm); false outside the grid or where it is dry */
 	bool GetFloodSurfaceAt(const FVector& Location, float& OutSurfaceZ) const;
 
-	/** Rise of the sea (cm) after Seconds of flooding, from the rules */
+	/** Clock that drives the rise (Undecided until the game state is known on this machine) */
+	EHazardClockSource GetClockSource() const { return ClockSource; }
+
+	/** Whether the final rise reached its end (expedition: end of the submersion; day / night: full rise) */
+	UFUNCTION(BlueprintPure, Category="Flood")
+	bool IsRiseComplete() const { return bRiseComplete; }
+
+	/** Rise of the sea (cm) after Seconds of flooding on the day / night fallback, from the rules */
 	static float RiseAt(const UFloodRules& InRules, float Seconds);
 
 private:
+
+	/** The expedition ended its submersion: the rise is over, the water stays up (extraction signal) */
+	UFUNCTION()
+	void HandleSubmersionEnded();
 
 	/** One procedural mesh per chunk of the grid */
 	UPROPERTY(Transient)
@@ -84,6 +102,18 @@ private:
 	/** Whether the sea has started rising */
 	bool bStarted = false;
 
+	/** Whether the final rise reached its end */
+	bool bRiseComplete = false;
+
+	/** Clock that drives the rise, decided once */
+	EHazardClockSource ClockSource = EHazardClockSource::Undecided;
+
+	/** Expedition followed in expedition mode */
+	TWeakObjectPtr<AExpeditionGameState> Expedition;
+
+	/** Highest rise of the sea reached so far (cm): the sea target never goes down */
+	double HeldRiseCm = 0.0;
+
 	/** Simulation steps done since the start of the flood */
 	int64 StepsDone = 0;
 
@@ -100,11 +130,20 @@ private:
 	/** Elapsed play time on the day / night clock (s) */
 	double GetElapsedSeconds() const;
 
+	/** Decides the clock once the game state is known; true when decided */
+	bool ResolveClock();
+
+	/** Seconds of rising water now on the chosen clock, -1 before the rise */
+	double GetFloodSeconds() const;
+
+	/** Rise of the sea (cm) after FloodSeconds on the chosen clock, before the hold */
+	double ComputeRiseCm(double FloodSeconds) const;
+
 	/** Traces a batch of ground cells */
 	void ReadGroundBatch();
 
-	/** Runs the simulation up to the current time */
-	void Simulate(double Elapsed);
+	/** Runs the simulation up to FloodSeconds of rising water (< 0: not yet) */
+	void Simulate(double FloodSeconds);
 
 	/** Rebuilds the surface of one chunk */
 	void BuildChunk(int32 ChunkIndex);

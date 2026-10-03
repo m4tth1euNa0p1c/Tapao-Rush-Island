@@ -14,6 +14,12 @@ namespace
 	{
 		return GameState && (GameState->GetClockState().bStarted || GameState->GetPhase() >= EExpeditionPhase::Exploring);
 	}
+
+	/** Whether the flood actor runs on its own day / night timing (no expedition in the map, or forced by DA_FloodRules) */
+	bool IsFloodOnDayNightClock(const AFloodSimulationActor* Flood)
+	{
+		return Flood && Flood->Rules && Flood->GetClockSource() == EHazardClockSource::DayNight;
+	}
 }
 
 void FFloodTimerSource::Resolve(UWorld* World, bool bInAllowFloodActor)
@@ -39,7 +45,8 @@ EFloodTimerSourceKind FFloodTimerSource::GetKind() const
 	{
 		return EFloodTimerSourceKind::Expedition;
 	}
-	if (bAllowFloodActor && FloodActor.IsValid() && FloodActor->Rules)
+	// A flood actor that follows the expedition clock (T-098) is shown through the expedition, never with its own timing
+	if (bAllowFloodActor && IsFloodOnDayNightClock(FloodActor.Get()))
 	{
 		return EFloodTimerSourceKind::FloodActor;
 	}
@@ -48,7 +55,9 @@ EFloodTimerSourceKind FFloodTimerSource::GetKind() const
 
 bool FFloodTimerSource::HasConflictingSources() const
 {
-	return IsExpeditionRunning(Expedition.Get()) && FloodActor.IsValid();
+	// Since T-098 the flood actor follows the expedition clock whenever there is one: a real conflict only remains
+	// when DA_FloodRules forces the day / night clock (ClockMode = DayNightOnly) in a map with a running expedition
+	return IsExpeditionRunning(Expedition.Get()) && IsFloodOnDayNightClock(FloodActor.Get());
 }
 
 FFloodTimerInput FFloodTimerSource::Read() const

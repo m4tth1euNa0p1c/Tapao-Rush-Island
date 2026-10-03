@@ -16,13 +16,15 @@ enum class EFloodTimerSourceKind : uint8
 	None,
 	/** The common expedition clock (cahier §6.1): AExpeditionGameState, server time */
 	Expedition,
-	/** A standalone AFloodSimulationActor on the day / night clock (Lvl_Raraka before the expedition is wired) */
+	/** A standalone AFloodSimulationActor on its day / night fallback clock (map without expedition game state) */
 	FloodActor
 };
 
 /**
  *  Reads the clock that really drives the water, without owning any timer:
- *  the expedition game state when its clock runs, else (if allowed) a flood simulation actor of the level.
+ *  the expedition game state when its clock runs, else (if allowed) a flood simulation actor of the level that runs on
+ *  its day / night fallback. Since T-098 a flood actor in a map with an expedition follows the expedition clock, so
+ *  both sources show the same deadline.
  *  Both read times derived from the replicated server time, so the host and the clients show the same values.
  */
 class MONKE_ISLAND_API FFloodTimerSource
@@ -38,7 +40,7 @@ public:
 	/** Expedition game state, when found (even before its clock starts) */
 	AExpeditionGameState* GetExpedition() const { return Expedition.Get(); }
 
-	/** Whether an expedition clock runs and a flood actor drives the water at the same time (two clocks) */
+	/** Whether an expedition clock runs while a flood actor is forced on the day / night clock (two clocks, misconfiguration) */
 	bool HasConflictingSources() const;
 
 	/** Times of the current source; inactive when there is none */

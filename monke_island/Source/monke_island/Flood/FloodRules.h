@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "Flood/HazardClock.h"
 #include "FloodRules.generated.h"
 
 class UMaterialInterface;
@@ -12,7 +13,10 @@ class UMaterialInterface;
  *  Tunable rules of the rising water (DA_FloodRules): when the sea rises, how high and how fast,
  *  and the simulation grid laid on the ground around the flood actor.
  *  The ground is read at runtime by traces, so the flood follows any change of the terrain without baked data
- *  and never deforms it. Times are elapsed play seconds on the day / night clock.
+ *  and never deforms it.
+ *  When the rise starts (T-098): in a map with an expedition (AExpeditionGameState + DA_ExpeditionRules) the rise starts
+ *  at the flood deadline of the expedition clock and lasts SubmersionDuration, with the height and curve of
+ *  DA_ExpeditionRules. The "Day / night fallback" values below only apply to a map without expedition.
  */
 UCLASS(BlueprintType)
 class MONKE_ISLAND_API UFloodRules : public UDataAsset
@@ -21,20 +25,27 @@ class MONKE_ISLAND_API UFloodRules : public UDataAsset
 
 public:
 
-	/** Elapsed play time when the sea starts rising (s): 4:50 */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rise", meta=(ClampMin="0", Units="s"))
+	/**
+	 *  Clock of the rise: Auto = the expedition clock when the map has one, else the day / night fallback below;
+	 *  ExpeditionOnly = no flood without expedition; DayNightOnly = always the fallback (test maps). Decided once, logged.
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock")
+	EHazardClockMode ClockMode = EHazardClockMode::Auto;
+
+	/** Day / night fallback only: elapsed play time when the sea starts rising (s), 4:50 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rise|Day / night fallback", meta=(ClampMin="0", Units="s"))
 	float StartSeconds = 290.0f;
 
-	/** Rise of the sea above its level (cm): above the highest motu plus a body height */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rise", meta=(ClampMin="0", Units="cm"))
+	/** Day / night fallback only: rise of the sea above its level (cm), above the highest motu plus a body height */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rise|Day / night fallback", meta=(ClampMin="0", Units="cm"))
 	float RiseCm = 650.0f;
 
-	/** Time for the sea to reach its full rise (s): the player loses footing within about a minute */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rise", meta=(ClampMin="1", Units="s"))
+	/** Day / night fallback only: time for the sea to reach its full rise (s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rise|Day / night fallback", meta=(ClampMin="1", Units="s"))
 	float RiseSeconds = 45.0f;
 
-	/** Shape of the rise: 1 linear, above 1 slow start then surge */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rise", meta=(ClampMin="0.2", ClampMax="5"))
+	/** Day / night fallback only: shape of the rise, 1 linear, above 1 slow start then surge */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rise|Day / night fallback", meta=(ClampMin="0.2", ClampMax="5"))
 	float RiseExponent = 1.6f;
 
 	/** Size of a simulation cell (cm) */
