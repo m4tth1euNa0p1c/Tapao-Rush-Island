@@ -201,6 +201,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="Movement|Ragdoll", meta=(ClampMin="0"))
 	float RagdollSettledSpeed = 30.0f;
 
+	/** Fastest a ragdoll body may be pushed out of an overlap (cm/s): falling over on a boat or against a
+	 *  creature must not catapult the body (engine default: unlimited) (T-063) */
+	UPROPERTY(EditDefaultsOnly, Category="Movement|Ragdoll", meta=(ClampMin="0"))
+	float RagdollMaxDepenetrationVelocity = 150.0f;
+
 	/** Bone whose position places the capsule when standing up */
 	UPROPERTY(EditDefaultsOnly, Category="Movement|Ragdoll")
 	FName RagdollPelvisBone = TEXT("pelvis");

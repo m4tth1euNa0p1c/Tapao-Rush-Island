@@ -157,6 +157,25 @@ void FIslanderMovementSpec::Define()
 		});
 	});
 
+	Describe("Physics interaction (T-063)", [this]()
+	{
+		It("pushes the 220 kg boat like a person, never by tens of m/s^2", [this]()
+		{
+			const UIslanderMovementComponent* Move = GetDefault<UIslanderMovementComponent>();
+			const float HullKg = 220.0f;
+			TestFalse(TEXT("force not scaled to the mass of what is hit"), Move->bPushForceScaledToMass);
+			const float MovingAccel = Move->PushForceFactor / HullKg;
+			const float RestingAccel = Move->InitialPushForceFactor * 30.0f / HullKg;
+			TestTrue(TEXT("moving hull: under 2 m/s^2"), MovingAccel > 0.0f && MovingAccel < 200.0f);
+			TestTrue(TEXT("resting hull: under 2 m/s^2"), RestingAccel > 0.0f && RestingAccel < 200.0f);
+		});
+
+		It("does not weigh twice on the boat (the boat adds the people aboard)", [this]()
+		{
+			TestEqual(TEXT("no standing downward force"), GetDefault<UIslanderMovementComponent>()->StandingDownwardForceScale, 0.0f);
+		});
+	});
+
 	Describe("Carry", [this]()
 	{
 		It("tires the carrier of a 10 kg statuette even at a walk", [this]()

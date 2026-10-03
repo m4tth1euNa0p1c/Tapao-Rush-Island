@@ -22,6 +22,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mass", meta=(ClampMin="1"))
 	float HullMassKg = 220.0f;
 
+	/** Fastest the hull may be pushed out of an overlap (cm/s): a player or a creature bumping into it, a
+	 *  ragdoll landing on it; the engine default is unlimited and throws the boat (T-063) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mass", meta=(ClampMin="0"))
+	float MaxDepenetrationVelocity = 100.0f;
+
 	/** Weight of one player aboard, standing or seated (kg) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Load", meta=(ClampMin="0"))
 	float PersonMassKg = 60.0f;

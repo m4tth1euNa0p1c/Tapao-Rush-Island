@@ -123,6 +123,10 @@ void ABoatActor::BeginPlay()
 	Hull->SetCenterOfMass(Rules->CenterOfMassOffset);
 	Hull->SetAngularDamping(Rules->AngularDamping);
 	Hull->SetLinearDamping(0.01f);
+	if (FBodyInstance* Body = Hull->GetBodyInstance())
+	{
+		Body->SetMaxDepenetrationVelocity(Rules->MaxDepenetrationVelocity);
+	}
 }
 
 void ABoatActor::EndPlay(const EEndPlayReason::Type EndPlayReason)

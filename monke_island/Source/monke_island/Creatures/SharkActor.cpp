@@ -29,6 +29,8 @@ ASharkActor::ASharkActor()
 	Collision->InitSphereRadius(45.0f);
 	Collision->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
 	Collision->SetCanEverAffectNavigation(false);
+	// moved kinematically: blocking the boat would shove its hull out of the water (T-063)
+	Collision->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Overlap);
 	RootComponent = Collision;
 
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));

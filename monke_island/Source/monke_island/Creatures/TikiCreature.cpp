@@ -5,6 +5,7 @@
 #include "Creatures/TikiMath.h"
 #include "Creatures/TikiRules.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Player/IslanderMovementComponent.h"
 #include "monke_island.h"
 #include "AIController.h"
 #include "Animation/AnimSequenceBase.h"
@@ -31,6 +32,10 @@ ATikiCreature::ATikiCreature()
 	Move->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
 	Move->MaxWalkSpeed = 120.0f;
 	Move->bRunPhysicsWithNoController = true;
+	// pushes the boat and props like a person, not with the engine default of 7500 N (T-063)
+	Move->bPushForceScaledToMass = false;
+	Move->PushForceFactor = UIslanderMovementComponent::HumanPushForce;
+	Move->InitialPushForceFactor = UIslanderMovementComponent::HumanPushForce / 30.0f;
 
 	// the Blender exports face +Y with the origin at the feet
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -55.0f), FRotator(0.0f, -90.0f, 0.0f));

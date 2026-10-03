@@ -133,9 +133,17 @@ UIslanderMovementComponent::UIslanderMovementComponent()
 	MaxFlySpeed = 1000.0f;
 	BrakingDecelerationFlying = 1500.0f;
 
-	// pushes physics objects with a force proportional to their mass
+	// pushes physics objects like a person does: about 250 N whatever their mass (T-063). Scaling the engine
+	// defaults (500 / 750000) by the mass turned a bump into 150 to 7500 m/s^2 on the 220 kg boat and threw it,
+	// with whoever stood on it, out of the water.
 	bEnablePhysicsInteraction = true;
-	bPushForceScaledToMass = true;
+	bPushForceScaledToMass = false;
+	bScalePushForceToVelocity = true;
+	PushForceFactor = HumanPushForce;
+	// a resting body: the engine multiplies this by 30 and applies it as a force for one frame
+	InitialPushForceFactor = HumanPushForce / 30.0f;
+	// the boat adds the weight of the people aboard itself (ABoatActor::ApplyLoadForces): no second weight here
+	StandingDownwardForceScale = 0.0f;
 }
 
 void UIslanderMovementComponent::BeginPlay()

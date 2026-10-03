@@ -137,6 +137,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Weight", meta=(ClampMin="0"))
 	float StaminaCostPerKg = 0.02f;
 
+	/** Force a walking character pushes physics objects with (kg cm/s^2; 25000 = 250 N, a person leaning on a boat) */
+	static constexpr float HumanPushForce = 25000.0f;
+
 	/** Stamina spent per second and per kilogram carried while moving: carrying tires even at a walk (10 kg -> 5/s) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Weight", meta=(ClampMin="0"))
 	float CarryStaminaPerKgMoving = 0.5f;

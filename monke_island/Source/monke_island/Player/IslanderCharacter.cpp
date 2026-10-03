@@ -527,6 +527,13 @@ void AIslanderCharacter::StartRagdoll(FVector InitialVelocity)
 	MeshComp->SetCollisionProfileName(FName(TEXT("Ragdoll")));
 	MeshComp->SetAllBodiesSimulatePhysics(true);
 	MeshComp->SetSimulatePhysics(true);
+	for (FBodyInstance* Body : MeshComp->Bodies)
+	{
+		if (Body)
+		{
+			Body->SetMaxDepenetrationVelocity(RagdollMaxDepenetrationVelocity);
+		}
+	}
 	MeshComp->WakeAllRigidBodies();
 	MeshComp->SetAllPhysicsLinearVelocity(InitialVelocity);
 
