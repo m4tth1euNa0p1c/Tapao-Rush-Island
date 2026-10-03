@@ -37,7 +37,7 @@ Le propriétaire a fourni `docs/CAHIER_DES_CHARGES.md` (Crownfall Expeditions v1
 | # | Sujet | Cahier | Existant | Défaut appliqué en attendant |
 |---|---|---|---|---|
 | E-01 | Caméra | 1re personne, bras locaux, corps visible des autres | `BP_Islander` 3e personne | Suivre le cahier (1re personne) pour le personnage d'expédition ; `BP_Islander` reste jouable dans `Lvl_Raraka` |
-| E-02 | Monde | Archipel **fictif**, îles faites à la main | Atoll **réel** de Raraka à l'échelle 1:1 (≈ 400 km²) | Prototype sur une île fictive `L_Island_Prototype` à taille d'expédition (2–8 min) ; Raraka sert de référence visuelle et technique (terrain, eau, végétation PCG) |
+| E-02 | Monde | Archipel **fictif**, îles faites à la main | Atoll **réel** de Raraka à l'échelle 1:1 (≈ 400 km²) | **Tranché le 2026-10-03 par ADR-004** : fragments réels de Raraka séparés par la mer, une map par expédition (`L_Frag_Raraka_NN`), contenu fictif |
 | E-03 | Fiction | Couronne, colons, drapeau britannique, factions insulaires | Village réel de Motutapu | Aucun lieu, village ou habitant réel de Raraka dans la fiction Crownfall ; factions insulaires fictives |
 | E-04 | Nom | Crownfall Expeditions (provisoire) | monke_island | Nom du jeu affiché = Crownfall Expeditions ; identifiants techniques monke_island inchangés |
 | E-05 | Réseau | Listen server 2–4 joueurs, serveur autoritaire dès L1 | Code solo | Réplication conçue dès L1 (pas de rattrapage après coup) |

@@ -13,6 +13,9 @@ Chaque épic passe par `/ue-feature` (spec → design → implémentation → te
 | **L3** | Ennemi mêlée, 3 zones pacifiables (drapeau + sermon 20 s), 120 s + 120 s/zone, submersion 60 s, extraction | Bonus unique partagé, eau qui ne baisse jamais, boucle solo puis hôte + client (n°7, n°13–18) |
 | **L4** | Hub, quotas, taxe 35 %, boutique, sauvegarde ; Nouvelle partie / Charger / Continuer | Exemple économique exact, relance conserve la progression, bilan non rejoué (n°1, n°9, n°20, UI01–UI05, UI10) |
 
+### Fragments des Tuamotu (ADR-004, spec `docs/features/fragments-tuamotu.md`, T-081 → T-092)
+Chaque expédition se joue sur un morceau réel de Raraka, séparé du reste par la mer (hoa, lagon), avec 3 villages, un marae et les silhouettes de l'atoll à l'horizon. L3 : pipeline + `L_Frag_Raraka_01` (remplace `L_Island_Prototype`) · L4 : choix au hub et voyage · L8 : fragments 2 à N.
+
 ## P1 — V1 coop (L5–L6)
 - **L5** : 4 joueurs, endurance, nuit, lanterne, requin ; HUD, paramètres, pause (n°10, n°11, n°21, UI06–UI09, UI11–UI12)
 - **L6** : build Windows V1 hors éditeur, intégration des personnages du propriétaire (§10), navigation et packaging vérifiés
