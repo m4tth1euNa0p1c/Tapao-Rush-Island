@@ -86,10 +86,14 @@ def cmd_build(args):
 
 def cmd_merge(args):
     tid = task_id(args.task)
-    if git("status", "--porcelain", "--untracked-files=no"):
-        sys.exit("L'arbre principal a des modifications suivies non commitées : commiter ou mettre de côté d'abord.")
     if git("status", "--porcelain", cwd=TREES / tid, check=False):
         sys.exit(f"Le worktree {tid} a des modifications non commitées.")
+    # other sessions keep editing the main tree: only a file changed on both sides would stop the merge halfway
+    changed = set(git("diff", "--name-only", f"main...dev/{tid}").splitlines())
+    local = {line[3:] for line in git("status", "--porcelain").splitlines()}
+    clash = sorted(changed & local)
+    if clash:
+        sys.exit("Fichiers modifiés à la fois par la branche et dans l'arbre principal :\n  " + "\n  ".join(clash))
     message = f"merge: {tid} dans main (fin de REC)"
     git("merge", "--no-ff", f"dev/{tid}", "-m", message)
     print(git("log", "--oneline", "-1"))
