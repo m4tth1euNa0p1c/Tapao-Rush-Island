@@ -19,6 +19,7 @@ public class monke_island : ModuleRules
 			"GameplayStateTreeModule",
 			"UMG",
 			"Slate",
+			"SlateCore",
 			"ProceduralMeshComponent"
 		});
 
