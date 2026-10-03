@@ -44,5 +44,7 @@ enum class EZoneBonusResult : uint8
 	/** The zone has no identifier */
 	InvalidZone,
 	/** Every pacifiable zone of the rules already gave its bonus */
-	ZoneLimitReached
+	ZoneLimitReached,
+	/** Called on a machine without authority: only the server grants bonuses */
+	NoAuthority
 };

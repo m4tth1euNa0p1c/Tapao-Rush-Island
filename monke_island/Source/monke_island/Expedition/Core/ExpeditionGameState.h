@@ -47,13 +47,18 @@ public:
 	bool StartExpedition();
 
 	/**
-	 *  Server: grants the bonus of a freshly pacified zone, once per (ExpeditionId, ZoneId), only when ServerTime
-	 *  strictly precedes the flood deadline. Called by the zone after its server validation.
+	 *  Server: grants the bonus of a freshly pacified zone, once per (ExpeditionId, ZoneId), only when the current
+	 *  server time strictly precedes the flood deadline (read here, never trusted from the caller).
+	 *  Called by the zone after its server validation. NoAuthority on a client.
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Expedition")
-	EZoneBonusResult AddZoneBonus(FName ZoneId, double ServerTime);
+	EZoneBonusResult AddZoneBonus(FName ZoneId);
 
-	/** Water height above the low water at ServerTime (cm): 0 before the flood, then rises over the submersion */
+	/**
+	 *  Water height above the low water at ServerTime (cm): 0 before the flood, then rises over the submersion.
+	 *  On a client it stays 0 until the replicated phase reaches Submerging, so a deadline update arriving late
+	 *  never makes the water rise then fall back.
+	 */
 	UFUNCTION(BlueprintPure, Category="Expedition")
 	double GetWaterRise(double ServerTime) const;
 
@@ -104,7 +109,10 @@ public:
 	/** Replicated clock state */
 	const FExpeditionClockState& GetClockState() const { return ClockState; }
 
-	/** Fires on every machine when the phase changes */
+	/**
+	 *  Fires on every machine when the phase changes. The server sees every phase in order; a client may skip one
+	 *  (e.g. Exploring -> Resolved after a hitch), so listeners test Phase >= Submerging rather than an exact phase.
+	 */
 	UPROPERTY(BlueprintAssignable, Category="Expedition")
 	FExpeditionPhaseChangedSignature OnPhaseChanged;
 

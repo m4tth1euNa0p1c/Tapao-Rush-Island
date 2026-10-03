@@ -86,12 +86,17 @@ bool AExpeditionGameState::StartExpedition()
 	return true;
 }
 
-EZoneBonusResult AExpeditionGameState::AddZoneBonus(FName ZoneId, double ServerTime)
+EZoneBonusResult AExpeditionGameState::AddZoneBonus(FName ZoneId)
 {
 	if (!HasAuthority())
 	{
-		return EZoneBonusResult::NotStarted;
+		UE_LOG(Logmonke_island, Warning, TEXT("Expedition %s: bonus of zone '%s' requested without authority (%s), ignored"),
+			*ExpeditionId.ToString(), *ZoneId.ToString(), *GetNameSafe(this));
+		return EZoneBonusResult::NoAuthority;
 	}
+
+	// The rule "strictly before the deadline" uses the server clock, never a time given by the caller
+	const double ServerTime = GetServerWorldTimeSeconds();
 
 	// The flood may be due before its timer fired this frame: settle the phase first, it is irreversible
 	RefreshPhase();
@@ -136,6 +141,11 @@ EZoneBonusResult AExpeditionGameState::AddZoneBonus(FName ZoneId, double ServerT
 
 double AExpeditionGameState::GetWaterRise(double ServerTime) const
 {
+	// Client: the replicated deadline may still move before the submersion; only the server clock decides it started
+	if (!HasAuthority() && Phase < EExpeditionPhase::Submerging)
+	{
+		return 0.0;
+	}
 	return ExpeditionClock::WaterRiseCm(ClockState, ServerTime, GetParams());
 }
 
@@ -172,7 +182,8 @@ void AExpeditionGameState::RefreshPhase()
 	const double Now = GetServerWorldTimeSeconds();
 	const EExpeditionPhase Target = ExpeditionClock::PhaseAt(ClockState, Now, Params);
 
-	// Phases only move forward, one step at a time so every listener sees each of them
+	// Phases only move forward, one step at a time so every server listener sees each of them
+	// (clients only receive the latest replicated phase and may skip steps)
 	while (Phase < Target)
 	{
 		SetPhase(static_cast<EExpeditionPhase>(static_cast<uint8>(Phase) + 1));
