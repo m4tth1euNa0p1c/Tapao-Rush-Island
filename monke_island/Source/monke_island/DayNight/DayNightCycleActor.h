@@ -24,6 +24,7 @@ enum class EDayPhase : uint8
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDayPhaseChangedSignature, EDayPhase, NewPhase);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDayChangedSignature, int32, NewDay);
 
 /** Replicated clock: elapsed play time = AnchorElapsed + (server time - AnchorServerTime) * Speed */
 USTRUCT()
@@ -101,6 +102,18 @@ public:
 	UFUNCTION(BlueprintPure, Category="DayNight")
 	EDayPhase GetPhase() const { return Phase; }
 
+	/** Day number: 1 on the first day, +1 each time a night has passed (same on every machine) */
+	UFUNCTION(BlueprintPure, Category="DayNight")
+	int32 GetDayNumber() const;
+
+	/** Elapsed play time at which a day begins (s), -1 when the clock does not loop */
+	UFUNCTION(BlueprintPure, Category="DayNight")
+	double GetDayStartElapsed(int32 Day) const;
+
+	/** Broadcast on every machine when a new day begins (the night has passed) */
+	UPROPERTY(BlueprintAssignable, Category="DayNight")
+	FDayChangedSignature OnDayChanged;
+
 	/** Daylight factor: 0 at night, 1 in full day */
 	UFUNCTION(BlueprintPure, Category="DayNight")
 	float GetDaylight() const { return Daylight; }
@@ -141,6 +154,9 @@ private:
 
 	/** Current part of the day */
 	EDayPhase Phase = EDayPhase::Day;
+
+	/** Day number seen at the last tick, for OnDayChanged */
+	int32 LastDay = 1;
 
 	/** Daylight factor (0-1) */
 	float Daylight = 1.0f;

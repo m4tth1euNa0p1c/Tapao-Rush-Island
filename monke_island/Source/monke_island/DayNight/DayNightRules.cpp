@@ -4,11 +4,13 @@
 
 UDayNightRules::UDayNightRules()
 {
-	// Cahier §5: day at the start, dusk at 120 s, night at 240 s; then dawn and back to the start hour
+	// User request (T-067, deviation from cahier §5): day 12 min, dusk 15 s, night 6 min, dawn 15 s (18 min 30 a day).
+	// The hours are those where the sun of Raraka (16.18 S, day 276) crosses +/- TwilightElevationDeg (6 deg), so
+	// the phases (Day / Dusk / Night / Dawn) last exactly these times; the cycle starts at the beginning of the day.
 	Keys = {
-		{0.0f, 9.0f},
-		{120.0f, 18.25f},
-		{240.0f, 19.5f},
-		{480.0f, 29.5f},
-		{600.0f, 33.0f}};
+		{0.0f, 6.3225f},      // sun at +6 deg, morning: day
+		{720.0f, 17.6775f},   // +6 deg, evening: dusk
+		{735.0f, 18.5140f},   // -6 deg: night
+		{1095.0f, 29.4860f},  // -6 deg, next morning: dawn
+		{1110.0f, 30.3225f}}; // +6 deg: the next day
 }

@@ -37,7 +37,7 @@ public:
 
 	UDayNightRules();
 
-	/** Clock keys, sorted by time and by hour: day 0 s, dusk 120 s, night 240 s, dawn, back to the start hour */
+	/** Clock keys, sorted by time and by hour: day 0 s, dusk 720 s, night 735 s, dawn 1095 s, next day 1110 s */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock")
 	TArray<FDayNightKey> Keys;
 

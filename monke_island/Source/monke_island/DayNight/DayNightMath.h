@@ -56,6 +56,30 @@ namespace DayNightMath
 		return Keys.Last().SolarHour + 24.0 * Days;
 	}
 
+	/** Length of one day of the looping clock (s), 0 when it does not loop */
+	inline double DayPeriod(const UDayNightRules& Rules)
+	{
+		return IsLooping(Rules) ? Rules.Keys.Last().ElapsedSeconds - Rules.Keys[0].ElapsedSeconds : 0.0;
+	}
+
+	/** Day number at an elapsed play time: 1 on the first day, +1 each time a night has passed (cycle loop) */
+	inline int32 DayNumberAt(const UDayNightRules& Rules, double Elapsed)
+	{
+		const double Period = DayPeriod(Rules);
+		if (Period <= 0.0 || Elapsed <= Rules.Keys[0].ElapsedSeconds)
+		{
+			return 1;
+		}
+		return 1 + FMath::FloorToInt32((Elapsed - Rules.Keys[0].ElapsedSeconds) / Period);
+	}
+
+	/** Elapsed play time at which day Day (1-based) begins; -1 when the clock does not loop (no days) */
+	inline double DayStartElapsed(const UDayNightRules& Rules, int32 Day)
+	{
+		const double Period = DayPeriod(Rules);
+		return Period > 0.0 ? Rules.Keys[0].ElapsedSeconds + Period * FMath::Max(Day - 1, 0) : -1.0;
+	}
+
 	/** First elapsed time at or after FromElapsed where the clock shows Hour (0-24); FromElapsed when never */
 	inline double ElapsedForHour(const UDayNightRules& Rules, double Hour, double FromElapsed)
 	{

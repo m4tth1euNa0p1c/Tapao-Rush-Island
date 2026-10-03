@@ -26,26 +26,59 @@ void FDayNightSpec::Define()
 		Rules = nullptr;
 	});
 
-	Describe("Cahier defaults", [this]()
+	Describe("Rhythm (T-067: day 12 min, dusk 15 s, night 6 min, dawn 15 s)", [this]()
 	{
-		It("starts in full day, with the sun high", [this]()
+		const auto Elevation = [this](double Elapsed)
 		{
-			const FVector Sun = DayNightMath::SunDirectionENU(DayNightMath::SolarHourAt(*Rules, 0.0), Rules->LatitudeDeg, Rules->DayOfYear);
-			TestTrue(TEXT("sun above 30 degrees"), DayNightMath::ElevationDeg(Sun) > 30.0);
+			return DayNightMath::ElevationDeg(DayNightMath::SunDirectionENU(DayNightMath::SolarHourAt(*Rules, Elapsed), Rules->LatitudeDeg, Rules->DayOfYear));
+		};
+
+		It("is day from 0 to 12 min: sun above the twilight", [this, Elevation]()
+		{
+			for (double T = 1.0; T < 719.0; T += 7.0)
+			{
+				if (!TestTrue(FString::Printf(TEXT("day at %.0f s"), T), Elevation(T) > Rules->TwilightElevationDeg))
+				{
+					break;
+				}
+			}
 		});
 
-		It("reaches dusk at 120 s: sun at the horizon", [this]()
+		It("has a dusk of 15 s and a night of 6 min", [this, Elevation]()
 		{
-			const FVector Sun = DayNightMath::SunDirectionENU(DayNightMath::SolarHourAt(*Rules, 120.0), Rules->LatitudeDeg, Rules->DayOfYear);
-			const double Elevation = DayNightMath::ElevationDeg(Sun);
-			TestTrue(TEXT("sun between -6 and +6 degrees"), Elevation > -6.0 && Elevation < 6.0);
+			const double Dusk = Elevation(727.5);
+			TestTrue(TEXT("dusk at 12:07"), Dusk > -Rules->TwilightElevationDeg && Dusk < Rules->TwilightElevationDeg);
+			for (double T = 737.0; T < 1093.0; T += 7.0)
+			{
+				if (!TestTrue(FString::Printf(TEXT("night at %.0f s"), T), Elevation(T) < -Rules->TwilightElevationDeg))
+				{
+					break;
+				}
+			}
+			const double Dawn = Elevation(1102.5);
+			TestTrue(TEXT("dawn at 18:22"), Dawn > -Rules->TwilightElevationDeg && Dawn < Rules->TwilightElevationDeg);
 		});
 
-		It("is night at 240 s: sun well under the horizon", [this]()
+		It("lasts 18 min 30 a day", [this]()
 		{
-			const FVector Sun = DayNightMath::SunDirectionENU(DayNightMath::SolarHourAt(*Rules, 240.0), Rules->LatitudeDeg, Rules->DayOfYear);
-			TestTrue(TEXT("sun under -6 degrees"), DayNightMath::ElevationDeg(Sun) < -6.0);
+			TestEqual(TEXT("period"), DayNightMath::DayPeriod(*Rules), 1110.0, 0.01);
 		});
+	});
+
+	Describe("Day counter", [this]()
+	{
+		It("adds a day each time a night has passed", [this]()
+		{
+			TestEqual(TEXT("first day"), DayNightMath::DayNumberAt(*Rules, 0.0), 1);
+			TestEqual(TEXT("still day 1 at night"), DayNightMath::DayNumberAt(*Rules, 1000.0), 1);
+			TestEqual(TEXT("day 2 after the first dawn"), DayNightMath::DayNumberAt(*Rules, 1111.0), 2);
+			TestEqual(TEXT("day 3"), DayNightMath::DayNumberAt(*Rules, 2221.0), 3);
+			TestEqual(TEXT("day 3 begins at 37 min"), DayNightMath::DayStartElapsed(*Rules, 3), 2220.0, 0.01);
+		});
+	});
+
+	Describe("Clock", [this]()
+	{
 
 		It("loops back to the start hour after one cycle", [this]()
 		{
