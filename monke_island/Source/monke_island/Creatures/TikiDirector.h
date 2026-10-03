@@ -10,6 +10,7 @@ class APawn;
 enum class ETikiWarriorRole : uint8;
 class ATikiVillager;
 class ATikiWarrior;
+class AVillageSpawner;
 class UBillboardComponent;
 class UInstancedStaticMeshComponent;
 class UTikiRules;
@@ -45,7 +46,8 @@ struct FTikiDoor
 
 /** A village of the level, read from its markers (scripts/map/place_villages.py): the zone marker tagged
  *  PacificationZone and "Village.<Id>" (a sphere gives the radius), and the NPC spawn points tagged NpcSpawn,
- *  "Village.<Id>" and "Role.<villager|elder|priest|guardian>" (server only) */
+ *  "Village.<Id>" and "Role.<villager|elder|priest|guardian>"; or a village of the fragment played, built by
+ *  AVillageSpawner (scripts/map/fragment_villages.py) (server only) */
 struct FTikiVillage
 {
 	/** Id of the village (V01...), "Director" for the fallback village around the director */
@@ -83,6 +85,15 @@ struct FTikiVillage
 
 	/** House of the next villager to appear */
 	int32 NextDoor = 0;
+
+	/** Its guardians came out (once per village) */
+	bool bGuardiansSpawned = false;
+
+	/** A pacifiable zone; a hamlet of a fragment is not, and has no guardian */
+	bool bZone = true;
+
+	/** Villagers living there, 0 for UTikiRules::VillagerCount */
+	int32 VillagerCount = 0;
 };
 
 /** A bush where a monster lies in wait (server): it leaps out when a player comes near; every bush zone with enough
@@ -165,6 +176,10 @@ public:
 	/** Debug (non shipping): whole corpses nearest to the first player to cut in two */
 	UPROPERTY(EditAnywhere, Transient, Category="Debug")
 	int32 DebugCutCorpses = 0;
+
+	/** Debug (non shipping): the warriors nearest to the first player to kill at the next thinks (they drop their weapon) */
+	UPROPERTY(EditAnywhere, Transient, Category="Debug")
+	int32 DebugKillWarriors = 0;
 
 	/** Server: reserves the free coconut nearest to Location within Radius for a villager; nullptr when none */
 	AActor* ClaimCoconutNear(ATikiVillager* Villager, const FVector& Location, float Radius);
@@ -261,6 +276,12 @@ private:
 
 	/** Reads the villages from their markers (or makes the fallback one around the director) */
 	void FindVillages();
+
+	/** The villages of the fragment played (AVillageSpawner) replace those of the markers, far from the game */
+	void UseFragmentVillages(const AVillageSpawner* Spawner);
+
+	/** The guardian delay is over: villages known later get their guardians at once */
+	bool bGuardianTimeReached = false;
 
 	/** Spawns one villager of the village on a free spawn point; false when none could appear */
 	bool SpawnVillager(int32 VillageIndex);

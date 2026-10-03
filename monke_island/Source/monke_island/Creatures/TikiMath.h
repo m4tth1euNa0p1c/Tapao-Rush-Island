@@ -277,4 +277,15 @@ namespace TikiMath
 	{
 		return DepthAhead <= MaxDepth || DepthAhead < DepthHere - 1.0f;
 	}
+
+	/** Where a dropped weapon pickup appears (its mesh in grip space, long axis +Z): at the grip of the bone in the world,
+	 *  +Z along the held weapon, from the grip toward MiddleInBone (the middle of the weapon at rest, in the bone frame) */
+	inline FTransform WeaponDropTransform(const FTransform& GripWorld, const FVector& MiddleInBone, const FVector& Scale)
+	{
+		const FQuat Bone = GripWorld.GetRotation();
+		const FVector Axis = MiddleInBone.IsNearlyZero() ? Bone.GetUpVector() : GripWorld.TransformVectorNoScale(MiddleInBone.GetSafeNormal());
+		// the roll around the weapon follows the bone axis the least aligned with it
+		const FVector Side = FMath::Abs(FVector::DotProduct(Axis, Bone.GetForwardVector())) < 0.9f ? Bone.GetForwardVector() : Bone.GetRightVector();
+		return FTransform(FRotationMatrix::MakeFromZX(Axis, Side).ToQuat(), GripWorld.GetLocation(), Scale);
+	}
 }

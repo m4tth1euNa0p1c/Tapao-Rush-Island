@@ -167,6 +167,24 @@ void FTikiSpec::Define()
 		});
 	});
 
+	Describe("Dropped weapons", [this]()
+	{
+		It("leave the hand at the grip, pointing where the weapon was held", [this]()
+		{
+			// the bone turned a quarter around Z: its +X looks along world +Y, its +Y along world -X
+			const FTransform Grip(FRotator(0.0f, 90.0f, 0.0f), FVector(100.0f, 200.0f, 50.0f));
+			const FTransform Drop = TikiMath::WeaponDropTransform(Grip, FVector(0.0f, 60.0f, 0.0f), FVector::OneVector);
+			TestTrue(TEXT("at the grip"), Drop.GetLocation().Equals(FVector(100.0f, 200.0f, 50.0f), 0.01));
+			TestTrue(TEXT("long axis along the held weapon"), Drop.GetRotation().GetUpVector().Equals(FVector(-1.0f, 0.0f, 0.0f), 0.001));
+			const FTransform Reversed = TikiMath::WeaponDropTransform(Grip, FVector(0.0f, -60.0f, 0.0f), FVector::OneVector);
+			TestTrue(TEXT("a weapon held the other way round"), Reversed.GetRotation().GetUpVector().Equals(FVector(1.0f, 0.0f, 0.0f), 0.001));
+			const FTransform Along = TikiMath::WeaponDropTransform(Grip, FVector(60.0f, 0.0f, 0.0f), FVector::OneVector);
+			TestTrue(TEXT("held along the forward axis of the bone"), Along.GetRotation().GetUpVector().Equals(FVector(0.0f, 1.0f, 0.0f), 0.001));
+			const FTransform Unknown = TikiMath::WeaponDropTransform(Grip, FVector::ZeroVector, FVector::OneVector);
+			TestTrue(TEXT("no geometry: the up axis of the bone"), Unknown.GetRotation().GetUpVector().Equals(FVector(0.0f, 0.0f, 1.0f), 0.001));
+		});
+	});
+
 	Describe("Corpse parts", [this]()
 	{
 		// root 0 > pelvis 1 > spine_01 2 > spine_02 3 > head 4 ; upperarm_r 5 (on spine_02) > hand_r 6 ; thigh_l 7 (on pelvis)

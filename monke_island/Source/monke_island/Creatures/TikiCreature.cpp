@@ -14,10 +14,12 @@
 #include "Weapons/CutlassWeapon.h"
 #include "monke_island.h"
 #include "AIController.h"
+#include "AnimationRuntime.h"
 #include "Animation/AnimSequenceBase.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/CollisionProfile.h"
+#include "Engine/SkeletalMesh.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -579,6 +581,7 @@ void ATikiCreature::HandleDeath(AActor* Killer)
 		CurrentClip = nullptr;
 		PlayClip(Anims.Death, false);
 	}
+	DropWeapon();
 
 	if (HasAuthority())
 	{
@@ -587,6 +590,49 @@ void ATikiCreature::HandleDeath(AActor* Killer)
 		GetWorldTimerManager().SetTimer(CorpseTimer, this, &ATikiCreature::BecomeCorpse, Rules ? Rules->CorpseDelay : 1.5f, false);
 		OnKilled(Killer);
 	}
+}
+
+void ATikiCreature::DropWeapon()
+{
+	USkeletalMesh* WeaponMesh = HeldItem ? HeldItem->GetSkeletalMeshAsset() : nullptr;
+	// nothing to drop, or the weapon left with an arm cut off before (its hand is hidden)
+	if (!DroppedWeaponClass || !WeaponMesh || !HeldItem->IsVisible())
+	{
+		return;
+	}
+	// the grip, and the long axis of the weapon from its geometry at rest (grip toward its middle): the static pickup
+	// leaves the hand as it was held, whatever the axes of the bone after the import
+	FTransform Grip = HeldItem->GetComponentTransform();
+	FVector Middle = FVector::ZeroVector;
+	const int32 Bone = WeaponMesh->GetRefSkeleton().FindBoneIndex(DroppedWeaponBone);
+	if (Bone != INDEX_NONE)
+	{
+		Grip = HeldItem->GetSocketTransform(DroppedWeaponBone, RTS_World);
+		const FTransform RestBone = FAnimationRuntime::GetComponentSpaceTransformRefPose(WeaponMesh->GetRefSkeleton(), Bone);
+		Middle = RestBone.InverseTransformPosition(WeaponMesh->GetImportedBounds().Origin);
+	}
+	// every machine: the hand lets go (a hidden item stays out of the corpse, ATikiCorpse::Snapshot)
+	HeldItem->SetVisibility(false);
+	if (!HasAuthority())
+	{
+		return;
+	}
+	const FTransform SpawnTransform = DroppedWeaponOffset * TikiMath::WeaponDropTransform(Grip, Middle, GetMesh()->GetComponentScale());
+	FActorSpawnParameters Params;
+	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	AActor* Weapon = GetWorld()->SpawnActor<AActor>(DroppedWeaponClass, SpawnTransform, Params);
+	if (!Weapon)
+	{
+		UE_LOG(Logmonke_island, Warning, TEXT("%s: its weapon %s could not be spawned"), *GetName(), *GetNameSafe(DroppedWeaponClass.Get()));
+		return;
+	}
+	// it flies out of the hand along the killing blow, a little upward
+	if (UPrimitiveComponent* Body = Cast<UPrimitiveComponent>(Weapon->GetRootComponent()); Body && Body->IsSimulatingPhysics())
+	{
+		const FVector Away = LastBlowDirection.IsNearlyZero() ? GetActorForwardVector() : LastBlowDirection;
+		Body->SetPhysicsLinearVelocity(Away * DroppedWeaponThrowSpeed + FVector(0.0f, 0.0f, DroppedWeaponThrowSpeed * 0.5f));
+	}
+	UE_LOG(Logmonke_island, Log, TEXT("%s drops %s"), *GetName(), *Weapon->GetName());
 }
 
 bool ATikiCreature::StartRagdoll()

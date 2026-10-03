@@ -183,6 +183,12 @@ Code : `Source/monke_island/Creatures/`. Règles : `DA_TikiRules` (`/Game/MonkeI
   - Ce cadavre est un corps mou de `CorpseMassKg` (40 kg) réparti sur ses os. On le saisit par n'importe quel membre (le profil Ragdoll est rendu visible aux traces de saisie). La barque compte sa masse.
   - Un coup de taille le coupe en deux moitiés rigides (`ATikiCorpse`). Les bras coupés avant la mort restent absents, avec leurs corps physiques.
   - Un cadavre posé dans une barque n'est pas emporté par l'eau : le fond de la coque est sous la mer extérieure.
+- **Armes lâchées** (demande de l'utilisateur, 2026-10-04) : à sa mort, un guerrier lâche son arme, qu'on peut ramasser, porter et ranger dans la barque.
+  - Réglages de chaque `BP_Tiki*` (`ATikiCreature`, catégorie Tiki|Death) : `DroppedWeaponClass` (objet physique avec une valeur, `BP_Drop_*` de monk-island-19 dans `/Game/MonkeIsland/Items/MobWeapons/`), `DroppedWeaponBone` (`weapon_r`), `DroppedWeaponOffset`, `DroppedWeaponThrowSpeed` (200 cm/s, dans le sens du coup fatal).
+  - Affectation : CocoWarrior → `BP_Drop_Spear` (2 kg, 30 $), AshWatcher → `BP_Drop_ObsidianClub` (3 kg, 45 $), CrabGuardian → `BP_Drop_ShellHammer` (4 kg, 50 $). Les villageois gardent leur panier.
+  - La prise apparaît sur l'os de prise, orientée comme l'arme tenue. Les `SM_*` sont en espace de prise, axe long +Z. L'axe est déduit de la géométrie de l'arme au repos, de la prise vers son milieu (`TikiMath::WeaponDropTransform`), et ne dépend donc pas des axes de l'os après l'import.
+  - Sur toutes les machines, l'arme tenue (`HeldItem`) est cachée à la mort, et le cadavre ne la reprend pas. Une arme partie avec un bras coupé avant la mort reste sur le bras.
+  - Test : `monke.TikiKillWarrior` (ou `DebugKillWarriors` sur `TikiDirector`) tue le guerrier le plus proche du joueur.
 - **Voix** (`FTikiVoice` dans chaque `BP_Tiki*`, T-077) : 47 sons CC0 de rubberduck (OpenGameArt, `scripts/props/creature_sounds.py`, crédités dans `art/SOURCES.md`), importés dans `/Game/MonkeIsland/Characters/Tiki/Audio`.
   - Ils passent par la classe de son `SC_Effects` (curseur Effets du menu), avec l'atténuation `ATT_Tiki_Voice` : net à 4 m, éteint à 40 m.
   - Guerriers :
@@ -228,3 +234,4 @@ Code : `Source/monke_island/Creatures/`. Règles : `DA_TikiRules` (`/Game/MonkeI
     - Les totems relisent déjà les zones calmes au moment de tomber.
 - Débogage : `monke.TikiDefender` (un défenseur contre le joueur local). Sur le villageois ou le cadavre le plus proche du joueur local : `monke.TikiKillVillager [cut]`, `monke.TikiCutArm` et `monke.TikiCutCorpse`. Même effet par MCP avec les propriétés `DebugKillVillagers`, `DebugCutKillVillagers`, `DebugCutArms` et `DebugCutCorpses` du directeur dans le monde PIE.
 - Hors de ce dossier : la barre de vie est cachée près des buissons (4f, `MobHealthBarComponent`, `BushHideRadius`) et les bruits de pas sont gérés par T-071 (aa, `Footsteps/`).
+- **Barre de vie masquée** (demande de l'utilisateur, 2026-10-04) : `MaxDistance = 0` sur le composant `HealthBar` de `BP_TikiCocoWarrior`, `BP_TikiCrabGuardian`, `BP_TikiAshWatcher`, `BP_TikiVillager` et `BP_Shark`. La barre ne s'affiche qu'à moins de `MaxDistance` de la vue locale, donc jamais. Pour la rendre, remettre 4000.

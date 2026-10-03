@@ -112,6 +112,23 @@ void AVillageAmbienceActor::FindLights()
 	}
 }
 
+void AVillageAmbienceActor::AddLight(ULightComponent* Light, bool bInterior)
+{
+	if (!Light)
+	{
+		return;
+	}
+	FVillageLight& Entry = Lights.AddDefaulted_GetRef();
+	Entry.Light = Light;
+	Entry.BaseIntensity = Light->Intensity;
+	Entry.bInterior = bInterior;
+	// right away: a lantern must not glow at noon until the next update
+	if (Rules && HasActorBegunPlay())
+	{
+		UpdateLights();
+	}
+}
+
 void AVillageAmbienceActor::UpdateLights()
 {
 	const float Daylight = GetDaylight();

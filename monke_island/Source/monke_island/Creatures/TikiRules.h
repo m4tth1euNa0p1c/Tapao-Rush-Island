@@ -337,6 +337,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Defender")
 	TArray<FString> BushMeshKeywords = { TEXT("MikiMiki"), TEXT("Naupaka"), TEXT("Pandanus"), TEXT("Tahinu") };
 
+	/** A bush lower than this is out of the game: the clearing of a village, a camp or a marae moved it away (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Defender")
+	float BushMinZ = -10000.0f;
+
 	/** Villagers follow their routine (activities at the points of interest of their village) while a player is this
 	 *  close to the village centre; farther, they rest where they are (cm) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Routine", meta=(ClampMin="0"))

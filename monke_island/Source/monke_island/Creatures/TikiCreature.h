@@ -235,6 +235,25 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Tiki")
 	FTikiAnimSet Anims;
 
+	/** Weapon one can pick up, thrown out of the hand at death (BP_Drop_*); none: the corpse keeps it in its hand. It
+	 *  stays in the hand of an arm cut off before */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Tiki|Death")
+	TSubclassOf<AActor> DroppedWeaponClass;
+
+	/** Bone the held weapon is skinned to: the dropped one appears at its grip */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Tiki|Death")
+	FName DroppedWeaponBone = TEXT("weapon_r");
+
+	/** Correction of the dropped weapon in its own frame. It is already placed as held: the static weapons are in grip
+	 *  space with their long axis on +Z (scripts/character/tiki/export.py), and that axis follows the held weapon from
+	 *  the grip toward its middle */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Tiki|Death")
+	FTransform DroppedWeaponOffset;
+
+	/** Speed the dropped weapon flies out of the hand with, along the killing blow (cm/s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Tiki|Death", meta=(ClampMin="0"))
+	float DroppedWeaponThrowSpeed = 200.0f;
+
 	/** Returns the health component */
 	UFUNCTION(BlueprintPure, Category="Tiki")
 	UIslanderHealthComponent* GetHealth() const { return Health; }
@@ -354,6 +373,9 @@ private:
 	/** Death on every machine */
 	UFUNCTION()
 	void HandleDeath(AActor* Killer);
+
+	/** At death: the hand lets go of its weapon on every machine, the server spawns the pickup (DroppedWeaponClass) */
+	void DropWeapon();
 
 	/** Plays the action clip on every machine */
 	UFUNCTION(NetMulticast, Unreliable)

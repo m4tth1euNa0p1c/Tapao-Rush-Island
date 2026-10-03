@@ -10,6 +10,8 @@
 #include "DayNight/DayNightCycleActor.h"
 #include "Items/ConsumablePickupActor.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Village/VillageMath.h"
+#include "Village/VillageSpawner.h"
 #include "Water/IslandWaterSubsystem.h"
 #include "monke_island.h"
 #include "Components/BillboardComponent.h"
@@ -104,6 +106,19 @@ void ATikiDirector::BeginPlay()
 	}
 
 	FindVillages();
+
+	// the villages of the fragment played, built now or in a moment (once the server knows where the players are)
+	if (AVillageSpawner* Spawner = AVillageSpawner::Find(this))
+	{
+		if (Spawner->IsBuilt())
+		{
+			UseFragmentVillages(Spawner);
+		}
+		else
+		{
+			Spawner->OnVillagesBuilt.AddUObject(this, &ATikiDirector::UseFragmentVillages);
+		}
+	}
 
 	// coconuts already placed in a village are gathered too
 	for (TActorIterator<AConsumablePickupActor> It(GetWorld()); It; ++It)
@@ -204,6 +219,85 @@ void ATikiDirector::FindVillages()
 	}
 }
 
+void ATikiDirector::UseFragmentVillages(const AVillageSpawner* Spawner)
+{
+	if (!Spawner || Spawner->GetVillages().IsEmpty())
+	{
+		return;
+	}
+	// the villages of the markers stand far from the fragment played: whoever already came out of them leaves
+	int32 Gone = 0;
+	for (FTikiVillage& Village : Villages)
+	{
+		for (const TWeakObjectPtr<ATikiVillager>& Villager : Village.Villagers)
+		{
+			if (Villager.IsValid())
+			{
+				Villager->Destroy();
+				++Gone;
+			}
+		}
+		for (const TWeakObjectPtr<ATikiWarrior>& Guardian : Village.Guardians)
+		{
+			if (Guardian.IsValid())
+			{
+				Guardian->Destroy();
+				++Gone;
+			}
+		}
+	}
+	Villages.Reset();
+
+	static const FName GuardianRole(TEXT("guardian"));
+	for (const FVillageLayout& Layout : Spawner->GetVillages())
+	{
+		FTikiVillage& Village = Villages.AddDefaulted_GetRef();
+		Village.Id = Layout.Id;
+		Village.Center = Layout.Center;
+		Village.Radius = Layout.Radius;
+		Village.bZone = Layout.bZone;
+		Village.VillagerCount = Layout.VillagerCount;
+		for (const FVillageSpawnPoint& Spawn : Layout.Spawns)
+		{
+			(Spawn.Role == GuardianRole ? Village.GuardianSpawns : Village.VillagerSpawns).Add(Spawn.Location);
+		}
+		for (const FVillagePoiPoint& Point : Layout.Pois)
+		{
+			const ETikiActivity Activity = TikiMath::ActivityFromName(Point.Activity);
+			if (Activity != ETikiActivity::None)
+			{
+				FTikiPoi& Poi = Village.Pois.AddDefaulted_GetRef();
+				Poi.Location = Point.Location;
+				Poi.Facing = FRotator(0.0f, Point.Yaw, 0.0f).Vector();
+				Poi.Activity = Activity;
+			}
+		}
+		for (const FVillageDoorPoint& Point : Layout.Doors)
+		{
+			FTikiDoor& Door = Village.Doors.AddDefaulted_GetRef();
+			Door.Door = Point.Location;
+			Door.Gate = VillageMath::GateOf(Point.Location, Point.Yaw, Point.GateDistance);
+		}
+		UE_LOG(Logmonke_island, Log, TEXT("%s: village %s (%s) of %s, radius %.0f m, %d villager spawn points, %d guardian points, %d points of interest, %d houses"),
+			*GetName(), *Village.Id.ToString(), *Layout.Name, *Spawner->GetActiveFragment().ToString(), Village.Radius / 100.0f,
+			Village.VillagerSpawns.Num(), Village.GuardianSpawns.Num(), Village.Pois.Num(), Village.Doors.Num());
+	}
+	UE_LOG(Logmonke_island, Log, TEXT("%s: the %d villages of %s replace those of the markers (%d tiki sent away)"),
+		*GetName(), Villages.Num(), *Spawner->GetActiveFragment().ToString(), Gone);
+
+	// the vegetation under the villages is gone: the bushes are read again, and the ambush zones with them
+	if (bBushesCached)
+	{
+		bBushesCached = false;
+		CacheBushes();
+	}
+	// past the guardian delay, the new villages get theirs at once
+	if (bGuardianTimeReached)
+	{
+		SpawnGuardians();
+	}
+}
+
 void ATikiDirector::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	GetWorld()->GetTimerManager().ClearTimer(ThinkTimer);
@@ -249,7 +343,8 @@ void ATikiDirector::TickVillage(double Now)
 		Village.Villagers.RemoveAll([](const TWeakObjectPtr<ATikiVillager>& V) { return !V.IsValid() || V->IsDead(); });
 		Village.Guardians.RemoveAll([](const TWeakObjectPtr<ATikiWarrior>& W) { return !W.IsValid() || W->IsDead(); });
 		// nobody new comes to a village that has just been attacked: its villagers hide in their houses
-		if (!bSpawned && VillagerClass && Village.Villagers.Num() < Rules->VillagerCount && Now - Village.LastAlarmTime >= Rules->HideDuration)
+		const int32 Wanted = Village.VillagerCount > 0 ? Village.VillagerCount : Rules->VillagerCount;
+		if (!bSpawned && VillagerClass && Village.Villagers.Num() < Wanted && Now - Village.LastAlarmTime >= Rules->HideDuration)
 		{
 			bSpawned = SpawnVillager(Index);
 		}
@@ -511,18 +606,20 @@ bool ATikiDirector::SpawnVillager(int32 VillageIndex)
 
 void ATikiDirector::SpawnGuardians()
 {
+	bGuardianTimeReached = true;
 	if (!Rules || Rules->GuardiansPerVillage <= 0)
 	{
 		return;
 	}
 	for (FTikiVillage& Village : Villages)
 	{
-		// the fallback village around the director has no guardian point
+		// the fallback village around the director has no guardian point, a hamlet is no zone to guard
 		const int32 Points = Village.GuardianSpawns.Num();
-		if (Points == 0)
+		if (Points == 0 || Village.bGuardiansSpawned || !Village.bZone)
 		{
 			continue;
 		}
+		Village.bGuardiansSpawned = true;
 		for (int32 Index = 0; Index < Rules->GuardiansPerVillage; ++Index)
 		{
 			const FVector& Point = Village.GuardianSpawns[(Index * Points / Rules->GuardiansPerVillage) % Points];
@@ -808,7 +905,7 @@ void ATikiDirector::CacheBushes()
 			for (int32 Index = 0; Index < Count; ++Index)
 			{
 				FTransform Transform;
-				if (!Component->GetInstanceTransform(Index, Transform, true))
+				if (!Component->GetInstanceTransform(Index, Transform, true) || Transform.GetLocation().Z < Rules->BushMinZ)
 				{
 					continue;
 				}
@@ -1054,7 +1151,7 @@ void ATikiDirector::TickAmbush(double Now)
 #if !UE_BUILD_SHIPPING
 void ATikiDirector::RunDebugActions()
 {
-	if (DebugKillVillagers + DebugCutKillVillagers + DebugCutArms + DebugCutCorpses <= 0)
+	if (DebugKillVillagers + DebugCutKillVillagers + DebugCutArms + DebugCutCorpses + DebugKillWarriors <= 0)
 	{
 		return;
 	}
@@ -1062,6 +1159,27 @@ void ATikiDirector::RunDebugActions()
 	APawn* Pawn = PC ? PC->GetPawn() : nullptr;
 	if (!Pawn)
 	{
+		return;
+	}
+	if (DebugKillWarriors > 0)
+	{
+		--DebugKillWarriors;
+		ATikiWarrior* Target = nullptr;
+		double TargetDistSq = TNumericLimits<double>::Max();
+		for (TActorIterator<ATikiWarrior> It(GetWorld()); It; ++It)
+		{
+			const double DistSq = FVector::DistSquared(It->GetActorLocation(), Pawn->GetActorLocation());
+			if (!It->IsDead() && DistSq < TargetDistSq)
+			{
+				TargetDistSq = DistSq;
+				Target = *It;
+			}
+		}
+		if (Target)
+		{
+			UE_LOG(Logmonke_island, Log, TEXT("Debug: %s kills %s"), *Pawn->GetName(), *Target->GetName());
+			UGameplayStatics::ApplyDamage(Target, 100000.0f, PC, Pawn, UDamageType::StaticClass());
+		}
 		return;
 	}
 	ATikiVillager* Nearest = nullptr;
@@ -1206,6 +1324,14 @@ static FAutoConsoleCommandWithWorld GTikiCutArmCommand(
 	FConsoleCommandWithWorldDelegate::CreateLambda([](UWorld* World)
 	{
 		TikiDebugRequest(World, &ATikiDirector::DebugCutArms, TEXT("monke.TikiCutArm"));
+	}));
+
+static FAutoConsoleCommandWithWorld GTikiKillWarriorCommand(
+	TEXT("monke.TikiKillWarrior"),
+	TEXT("Kills the warrior nearest to the local player, as if the player did (it drops its weapon)."),
+	FConsoleCommandWithWorldDelegate::CreateLambda([](UWorld* World)
+	{
+		TikiDebugRequest(World, &ATikiDirector::DebugKillWarriors, TEXT("monke.TikiKillWarrior"));
 	}));
 
 static FAutoConsoleCommandWithWorld GTikiCutCorpseCommand(

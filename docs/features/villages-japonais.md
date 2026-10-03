@@ -143,6 +143,40 @@ Piège : supprimer puis réimporter une DataTable encore référencée par un ac
 - [ ] Mesurer le coût des 12 villageois et 9 gardiens, qui tickent en continu, avant la gate PROD.
 - [ ] Chemin de terre visible : la route n'est aujourd'hui qu'un dégagement de la végétation ; il faudra un decal ou une couche du matériau de terrain.
 - [ ] Distances : V01 et V02 sont à plus de 900 m du départ. Ce sera à juger en jeu avec la barque (§6.3), en réglant `--max-dist`.
+- [ ] Villages des fragments (T-102) : PIE hôte + client (le client doit construire les mêmes villages par `OnRep_ActiveFragment`), partie lancée depuis `L_Boot`, coût serveur des 36 à 66 villageois d'un fragment.
+- [ ] Les villages V01-V03 de Motutapu (acteurs PCG et marqueurs de `Lvl_Raraka`) ne servent plus que hors fragment : à retirer ou à garder pour le hub, à décider.
+
+## Villages des fragments (T-102)
+Depuis T-094/T-095, une partie se joue dans **un fragment tiré au hasard** (`FRG_Raraka_NN`, départ en barque à son arrivée). Les trois villages de Motutapu (V01-V03) sont hors de tous les fragments : le joueur n'en voyait aucun. Chaque fragment a désormais un village sur chacun de ses trois sites (`sites.villages` Z1-Z3 de `docs/reference/map/raraka/fragments/fragments.json`), un par zone pacifiable (`ZoneCount = 3`).
+- **Génération** (hors ligne) : `python scripts/map/fragment_villages.py raraka [--fragment FRG_Raraka_19] [--regen]`.
+  - Il reprend le plan de `place_villages.py` (route, place, sanctuaire, parcelles, points d'intérêt, lumières, portes, formes de dégagement).
+  - Chaque site est essayé depuis son centre et depuis 4 points à 5 m, avec l'axe du site et celui du motu. Il garde le meilleur plan dont la place reste à **20 m au plus du centre du site**. Les camps de monk-island-19 restent à 120 m des centres de site.
+  - Les marae du fragment (`sites.marae`) sont tenus libres sur 22 m.
+  - Thèmes dans chaque fragment : richesses côté lagon au plus près du rivage, bois là où la cocoteraie est la plus dense, vivres pour le troisième. Les noms sont fictifs, tirés du thème et du numéro du fragment (Kogane-mura, Take-mura, Uo-mura…).
+  - Un village de zone remplit toutes les parcelles que son site permet, jusqu'à 16 (`ZONE_MAX_HOUSES`) : l'utilisateur trouvait qu'il n'y avait pas assez de villages.
+  - **Hameaux** (`kind: hameau`, ids `Fxx_H1..3`, noms en `-sato`) : jusqu'à 3 par fragment, 4 à 6 maisons, sur la terre large qui reste à 220 m au moins des autres villages et à 120 m des sites de marae. Ils ne sont pas des zones pacifiables (`bZone = false`) : pas de drapeau, pas de gardiens, 3 à 6 villageois (`villager_count`).
+  - Résultat au 2026-10-04 : 60 villages de zone (927 maisons, 15,5 en moyenne) et 44 hameaux (254 maisons). Places des villages de zone à 20 m au plus de leur site.
+  - Les camps de monk-island-19 (`scripts/map/place_camps.py`) excluent tout village de l'index, hameaux compris (rayon de zone + 40 m), et ses marae prennent des emplacements de camp.
+- **Mémoire** (suivie) : `docs/reference/map/raraka/villages/fragments/<FRG>.json`, même format que `villages.json`, plus `fragment`, `site` et `arrival_cm`. `index.json` résume les centres, les rayons, les thèmes et les noms. Aperçus : `preview_<FRG>.png` (le point cyan est l'arrivée de la barque).
+- **Rien n'est posé dans la carte**, à part un acteur `BP_VillageSpawner` (`AVillageSpawner`, dossier `Raraka/Villages`).
+  - Le serveur choisit le fragment une fois, dans cet ordre :
+    1. l'option `Island=` de l'URL quand elle y est (partie lancée depuis `L_Boot`) ;
+    2. sinon, le fragment de l'arrivée qu'a prise la barque de départ (`UBoatStartSubsystem::GetArrivalFragmentId`) : c'est le cas d'un PIE ouvert directement sur `Lvl_Raraka`, où le fragment annoncé par le GameState peut différer de celui de la barque ;
+    3. sinon, le fragment dont l'arrivée est la plus proche d'un joueur, à 1 km au plus (`ArrivalMatchRadius`).
+  - Le choix est répliqué (`ActiveFragment`), et chaque machine construit les mêmes villages :
+    - maisons et objets en instanced meshes avec leurs `UCX` (BlockAll, comme `PCG_Raraka_Village`) ;
+    - lumières et `AVillageAmbienceActor`, sauf sur serveur dédié ;
+    - végétation dégagée au lancement sous les villages, avec les formes et les marges par plante de `village_clearing.py` (tables dans `DA_VillageRules`), seulement sur les meshes de `/Game/MonkeIsland/Environment/Vegetation/` et `/Props/`. Les instances sont **déplacées de 1 km sous terre** (`HiddenDepth`), pas supprimées : leurs indices ne bougent pas, car `ACoconutFallDirector` compte les noix par indice d'instance (même technique que `FSiteClearing` des camps). `TikiDirector::CacheBushes` ignore les buissons sous `BushMinZ` (-100 m).
+  - Sans joueur près d'une arrivée au bout de 20 s, aucun village de fragment n'est construit : les villages de Motutapu restent.
+- **PNJ** : `ATikiDirector` remplace les villages des marqueurs par ceux du fragment (`OnVillagesBuilt`) : spawns, points d'intérêt, portes, gardiens. Il relit les buissons, puisque la végétation sous les villages a disparu.
+- **Unreal** :
+  - `DA_VillageRules` et `DA_Villages_FRG_Raraka_01..20` (`/Game/MonkeIsland/Environment/Village/Data/`), `BP_VillageSpawner` (`.../Village/Blueprints/`) ;
+  - remplis par `python scripts/map/fragment_villages_ue.py raraka [--place]` via le MCP. Les points ne passent pas par la conversation : 2 Mo pour les 60 villages.
+- **Tests** : `monke_island.Village.Fragments` (choix du fragment, formes de dégagement, plantes et marges, portails).
+- **Vérifié en PIE le 2026-10-04** (compilé + testé éditeur) :
+  - FRG_Raraka_01 (PIE de monk-island-19) : 6 villages, 623 instances, 166 lumières, 2 233 plantes dégagées en 29 ms, avec 2 marae et 8 camps de 19 ;
+  - FRG_Raraka_16 : 4 villages, 495 instances, 128 lumières, 3 208 plantes en 30 ms ; TikiDirector remplace les villages des marqueurs, gardiens sortis autour des 3 zones, pas autour du hameau. Capture : `docs/production/captures/T-102/pie_FRG_Raraka_16_Kashi-mura.png`.
+  - Non testé : multijoueur (réplication de `ActiveFragment` vers un client), partie depuis `L_Boot`.
 
 ## Portes des maisons (T-077)
 - `place_villages.py --extras` calcule pour chaque minka la porte du doma : locale (0,9 ; 0,6), devant la façade, à gauche de l'engawa. Il calcule aussi le portail de sa palissade : locale (0,35 ; 5,7), dehors.

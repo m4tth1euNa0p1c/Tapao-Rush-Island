@@ -37,6 +37,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village", meta=(ClampMin="100"))
 	float VillageRadius = 9000.0f;
 
+	/** Adds a light that is not an actor of the level (a village built at runtime by AVillageSpawner); its current
+	 *  intensity is its night intensity */
+	void AddLight(ULightComponent* Light, bool bInterior);
+
 protected:
 
 	virtual void BeginPlay() override;

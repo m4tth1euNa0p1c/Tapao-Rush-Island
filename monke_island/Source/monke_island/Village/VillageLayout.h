@@ -1,0 +1,251 @@
+// monke_island
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Engine/DataAsset.h"
+#include "VillageLayout.generated.h"
+
+class UStaticMesh;
+
+/** Shape of a clearing area */
+UENUM(BlueprintType)
+enum class EVillageClearShape : uint8
+{
+	/** Rectangle turned by Yaw: HalfSize in its own frame */
+	Rect,
+	/** Disc: HalfSize.X is its radius */
+	Circle,
+	/** Corridor along Points: HalfSize.X is its half width */
+	Path
+};
+
+/** What a clearing area is under: the margin around it depends on it and on the plant (UVillageRules) */
+UENUM(BlueprintType)
+enum class EVillageClearKind : uint8
+{
+	/** A house, a storehouse, the shrine, the well... (eaves included) */
+	Building,
+	/** A fence or a stone lantern */
+	Small,
+	/** The square */
+	Plaza,
+	/** The earth road */
+	Road,
+	/** The path to the shrine */
+	Path
+};
+
+/** Every instance of one mesh of a village */
+USTRUCT(BlueprintType)
+struct FVillageMeshGroup
+{
+	GENERATED_BODY()
+
+	/** Mesh of the village kit (SM_Minka, SM_Village_*) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TObjectPtr<UStaticMesh> Mesh;
+
+	/** Base of each instance (UE cm, world) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<FVector> Locations;
+
+	/** Yaw of each instance (degrees), in the order of Locations */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<float> Yaws;
+};
+
+/** Where an NPC of the village appears */
+USTRUCT(BlueprintType)
+struct FVillageSpawnPoint
+{
+	GENERATED_BODY()
+
+	/** On the ground (UE cm, world) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FVector Location = FVector::ZeroVector;
+
+	/** villager, elder, priest or guardian (a guardian comes out of the nearest bush) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FName Role;
+};
+
+/** A point of interest of the routine of the villagers */
+USTRUCT(BlueprintType)
+struct FVillagePoiPoint
+{
+	GENERATED_BODY()
+
+	/** Where the villager stands (UE cm, world) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FVector Location = FVector::ZeroVector;
+
+	/** Direction it faces (degrees) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	float Yaw = 0.0f;
+
+	/** work, read, pray, watch, rest or chat */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FName Activity;
+};
+
+/** A light of the village: a lamp by the irori of a house or the glow of a stone lantern */
+USTRUCT(BlueprintType)
+struct FVillageLightPoint
+{
+	GENERATED_BODY()
+
+	/** Position of the light (UE cm, world) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FVector Location = FVector::ZeroVector;
+
+	/** A stone lantern (off by day), otherwise a house lamp */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	bool bLantern = false;
+
+	/** Night intensity (cd) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village", meta=(ClampMin="0"))
+	float Candela = 6.0f;
+
+	/** Attenuation radius (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village", meta=(ClampMin="0"))
+	float Radius = 450.0f;
+
+	/** Casts shadows (the house lamps) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	bool bShadows = false;
+};
+
+/** The door of a house: its villagers run home through the gate of the plot and hide inside */
+USTRUCT(BlueprintType)
+struct FVillageDoorPoint
+{
+	GENERATED_BODY()
+
+	/** In front of the door (UE cm, world) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FVector Location = FVector::ZeroVector;
+
+	/** Direction of the gate from the door (degrees) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	float Yaw = 0.0f;
+
+	/** Door to gate, outside the fence (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village", meta=(ClampMin="0"))
+	float GateDistance = 0.0f;
+};
+
+/** An area cleared of vegetation, without margin (scripts/map/village_clearing.py) */
+USTRUCT(BlueprintType)
+struct FVillageClearArea
+{
+	GENERATED_BODY()
+
+	/** Rectangle, disc or corridor */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	EVillageClearShape Shape = EVillageClearShape::Rect;
+
+	/** What it is under */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	EVillageClearKind Kind = EVillageClearKind::Building;
+
+	/** Centre of a rectangle or of a disc (UE cm, world) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FVector2D Center = FVector2D::ZeroVector;
+
+	/** Half size of a rectangle in its frame; X = radius of a disc, half width of a corridor (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FVector2D HalfSize = FVector2D::ZeroVector;
+
+	/** Yaw of a rectangle (degrees) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	float Yaw = 0.0f;
+
+	/** Points of a corridor (UE cm, world) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<FVector2D> Points;
+};
+
+/** One Japanese village of a fragment, a pacifiable zone (generated by scripts/map/fragment_villages.py) */
+USTRUCT(BlueprintType)
+struct FVillageLayout
+{
+	GENERATED_BODY()
+
+	/** Id of the village (F19_Z1: fragment 19, zone Z1) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FName Id;
+
+	/** Working name, fictional (Izumi-mura); the name shown to the players will come from a String Table keyed by Id */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FString Name;
+
+	/** richesses, bois or vivres (cahier §6.2: each zone opens a concrete interest) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FName Theme;
+
+	/** Village site of the fragment it stands on (Z1 to Z3 of fragments.json) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FName Site;
+
+	/** Centre of the square, where the flag of the zone is planted (UE cm, world) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FVector Center = FVector::ZeroVector;
+
+	/** Radius of the zone (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village", meta=(ClampMin="0"))
+	float Radius = 9000.0f;
+
+	/** A pacifiable zone (cahier §6.2: flag, designated threats); a hamlet between the zones is not, it has no guardian */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	bool bZone = true;
+
+	/** Villagers living there, 0 for the count of DA_TikiRules (a hamlet has fewer) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village", meta=(ClampMin="0"))
+	int32 VillagerCount = 0;
+
+	/** Houses, storehouses, shrine, fences, lanterns... */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<FVillageMeshGroup> Meshes;
+
+	/** Where its NPCs appear */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<FVillageSpawnPoint> Spawns;
+
+	/** Points of interest of the routine */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<FVillagePoiPoint> Pois;
+
+	/** Its lights */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<FVillageLightPoint> Lights;
+
+	/** Its house doors */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<FVillageDoorPoint> Doors;
+
+	/** What it clears of the vegetation already there */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<FVillageClearArea> Clearing;
+};
+
+/**
+ *  The villages of one expedition fragment (DA_Villages_<FRG>), filled from docs/reference/map/<ile>/villages/
+ *  fragments/<FRG>.json by scripts/map/fragment_villages_ue.py. AVillageSpawner builds them when the fragment is
+ *  played.
+ */
+UCLASS(BlueprintType)
+class MONKE_ISLAND_API UVillageSetDefinition : public UDataAsset
+{
+	GENERATED_BODY()
+
+public:
+
+	/** Fragment of the villages (FRG_Raraka_19) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	FName FragmentId;
+
+	/** Its villages, one per pacifiable zone */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Village")
+	TArray<FVillageLayout> Villages;
+};

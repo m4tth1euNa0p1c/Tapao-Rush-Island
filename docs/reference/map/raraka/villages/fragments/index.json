@@ -1,0 +1,2184 @@
+{
+ "version": 1,
+ "island": "raraka",
+ "generator": "scripts/map/fragment_villages.py",
+ "frame": "UE cm: X east, Y south, Z up",
+ "fragments": [
+  {
+   "id": "FRG_Raraka_01",
+   "arrival_cm": [
+    1181313.7,
+    166315.7,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F01_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Uo-mura",
+     "theme": "vivres",
+     "center_cm": [
+      1228366.2,
+      218336.6,
+      348.2
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1229818.6,
+      218160.3
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F01_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Take-mura",
+     "theme": "bois",
+     "center_cm": [
+      1230748.9,
+      182596.8,
+      364.2
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1232571.4,
+      182373.8
+     ],
+     "offset_m": 18.4,
+     "houses": 16
+    },
+    {
+     "id": "F01_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Kogane-mura",
+     "theme": "richesses",
+     "center_cm": [
+      1220254.5,
+      137668.7,
+      289.4
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1221560.2,
+      138328.8
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F01_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Aoi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      1231420.8,
+      244643.9,
+      214.2
+     ],
+     "radius_cm": 6429.4,
+     "site_center_cm": [
+      1231420.8,
+      244643.9
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F01_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Akane-sato",
+     "theme": "hameau",
+     "center_cm": [
+      1247262.4,
+      201082.1,
+      257.7
+     ],
+     "radius_cm": 5593.2,
+     "site_center_cm": [
+      1247262.4,
+      201082.1
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F01_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Hasu-sato",
+     "theme": "hameau",
+     "center_cm": [
+      1216154.6,
+      115143.2,
+      211.8
+     ],
+     "radius_cm": 5938.1,
+     "site_center_cm": [
+      1216154.6,
+      115143.2
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_02",
+   "arrival_cm": [
+    1114413.5,
+    -134106.4,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F02_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Kani-mura",
+     "theme": "vivres",
+     "center_cm": [
+      1187157.6,
+      -34968.0,
+      336.9
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1188526.4,
+      -35098.3
+     ],
+     "offset_m": 13.7,
+     "houses": 16
+    },
+    {
+     "id": "F02_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Matsu-mura",
+     "theme": "bois",
+     "center_cm": [
+      1150909.2,
+      -148368.8,
+      285.6
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1152739.9,
+      -147963.6
+     ],
+     "offset_m": 18.8,
+     "houses": 16
+    },
+    {
+     "id": "F02_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Shinju-mura",
+     "theme": "richesses",
+     "center_cm": [
+      1173514.4,
+      -67368.5,
+      242.0
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1174762.4,
+      -68132.1
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F02_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Hibari-sato",
+     "theme": "hameau",
+     "center_cm": [
+      1137304.8,
+      -169545.4,
+      196.9
+     ],
+     "radius_cm": 6723.3,
+     "site_center_cm": [
+      1137304.8,
+      -169545.4
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_03",
+   "arrival_cm": [
+    706517.6,
+    1025096.0,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F03_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Ebi-mura",
+     "theme": "vivres",
+     "center_cm": [
+      670164.8,
+      1000132.4,
+      339.9
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      670997.8,
+      1001335.2
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F03_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Sugi-mura",
+     "theme": "bois",
+     "center_cm": [
+      718120.4,
+      898595.3,
+      320.7
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      719172.0,
+      899481.2
+     ],
+     "offset_m": 13.7,
+     "houses": 16
+    },
+    {
+     "id": "F03_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Tama-mura",
+     "theme": "richesses",
+     "center_cm": [
+      706473.6,
+      939958.8,
+      309.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      708160.8,
+      940773.4
+     ],
+     "offset_m": 18.7,
+     "houses": 16
+    },
+    {
+     "id": "F03_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Iwa-sato",
+     "theme": "hameau",
+     "center_cm": [
+      686508.4,
+      984726.6,
+      215.3
+     ],
+     "radius_cm": 5900.2,
+     "site_center_cm": [
+      686508.4,
+      984726.6
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F03_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Kaede-sato",
+     "theme": "hameau",
+     "center_cm": [
+      664753.7,
+      1022483.3,
+      209.0
+     ],
+     "radius_cm": 5734.0,
+     "site_center_cm": [
+      664753.7,
+      1022483.3
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F03_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Kaki-sato",
+     "theme": "hameau",
+     "center_cm": [
+      705714.3,
+      965514.6,
+      203.7
+     ],
+     "radius_cm": 5730.8,
+     "site_center_cm": [
+      705714.3,
+      965514.6
+     ],
+     "offset_m": 0.0,
+     "houses": 4
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_04",
+   "arrival_cm": [
+    1066543.7,
+    -326319.2,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F04_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Hinoki-mura",
+     "theme": "bois",
+     "center_cm": [
+      1132731.7,
+      -291114.6,
+      352.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1133470.2,
+      -292486.2
+     ],
+     "offset_m": 15.6,
+     "houses": 16
+    },
+    {
+     "id": "F04_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Ami-mura",
+     "theme": "vivres",
+     "center_cm": [
+      1116213.6,
+      -324673.3,
+      345.7
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1116953.3,
+      -324143.6
+     ],
+     "offset_m": 9.1,
+     "houses": 16
+    },
+    {
+     "id": "F04_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Gin-mura",
+     "theme": "richesses",
+     "center_cm": [
+      1135761.5,
+      -249475.9,
+      310.2
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1137599.4,
+      -249817.7
+     ],
+     "offset_m": 18.7,
+     "houses": 16
+    },
+    {
+     "id": "F04_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Karasu-sato",
+     "theme": "hameau",
+     "center_cm": [
+      1110631.2,
+      -347270.8,
+      253.2
+     ],
+     "radius_cm": 6739.2,
+     "site_center_cm": [
+      1110631.2,
+      -347270.8
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F04_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Kasa-sato",
+     "theme": "hameau",
+     "center_cm": [
+      1135710.4,
+      -313525.9,
+      246.1
+     ],
+     "radius_cm": 5854.2,
+     "site_center_cm": [
+      1135710.4,
+      -313525.9
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_05",
+   "arrival_cm": [
+    -864042.3,
+    404444.0,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F05_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Kusu-mura",
+     "theme": "bois",
+     "center_cm": [
+      -823477.0,
+      380416.2,
+      257.1
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -822402.5,
+      381952.6
+     ],
+     "offset_m": 18.7,
+     "houses": 16
+    },
+    {
+     "id": "F05_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Akari-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -833088.8,
+      348173.3,
+      215.6
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -834790.1,
+      347542.5
+     ],
+     "offset_m": 18.1,
+     "houses": 14
+    },
+    {
+     "id": "F05_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Nori-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -790827.5,
+      402602.6,
+      204.6
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -790745.1,
+      403975.1
+     ],
+     "offset_m": 13.7,
+     "houses": 12
+    },
+    {
+     "id": "F05_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Kogi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -854179.9,
+      328693.5,
+      215.3
+     ],
+     "radius_cm": 5578.3,
+     "site_center_cm": [
+      -854179.9,
+      328693.5
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F05_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Kujaku-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -846278.0,
+      307251.5,
+      198.8
+     ],
+     "radius_cm": 5673.6,
+     "site_center_cm": [
+      -846278.0,
+      307251.5
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F05_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Kurumi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -768807.6,
+      415310.0,
+      190.5
+     ],
+     "radius_cm": 5032.6,
+     "site_center_cm": [
+      -768807.6,
+      415310.0
+     ],
+     "offset_m": 0.0,
+     "houses": 4
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_06",
+   "arrival_cm": [
+    -195459.6,
+    -1052412.7,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F06_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Kai-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -205105.2,
+      -1096227.0,
+      342.1
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -205772.7,
+      -1094930.8
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F06_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Yanagi-mura",
+     "theme": "bois",
+     "center_cm": [
+      -172237.1,
+      -1085611.4,
+      267.1
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -171362.5,
+      -1086672.4
+     ],
+     "offset_m": 13.7,
+     "houses": 14
+    },
+    {
+     "id": "F06_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Hikari-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -119007.1,
+      -1083922.0,
+      249.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -119059.1,
+      -1085296.0
+     ],
+     "offset_m": 13.7,
+     "houses": 16
+    },
+    {
+     "id": "F06_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Kusa-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -240090.1,
+      -1100249.0,
+      258.1
+     ],
+     "radius_cm": 6218.4,
+     "site_center_cm": [
+      -240090.1,
+      -1100249.0
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_07",
+   "arrival_cm": [
+    -1279341.0,
+    -416694.9,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F07_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Kaba-mura",
+     "theme": "bois",
+     "center_cm": [
+      -1238040.0,
+      -393463.9,
+      334.8
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1238077.0,
+      -394340.3
+     ],
+     "offset_m": 8.8,
+     "houses": 16
+    },
+    {
+     "id": "F07_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Tako-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -1247346.4,
+      -361366.4,
+      251.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1247711.9,
+      -359930.1
+     ],
+     "offset_m": 14.8,
+     "houses": 16
+    },
+    {
+     "id": "F07_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Hoshi-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -1243799.3,
+      -322241.0,
+      226.0
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1243582.7,
+      -321390.8
+     ],
+     "offset_m": 8.8,
+     "houses": 16
+    },
+    {
+     "id": "F07_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Mikan-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1242005.9,
+      -415434.6,
+      241.7
+     ],
+     "radius_cm": 6004.7,
+     "site_center_cm": [
+      -1242005.9,
+      -415434.6
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F07_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Mitsu-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1229976.0,
+      -277241.1,
+      217.1
+     ],
+     "radius_cm": 6988.2,
+     "site_center_cm": [
+      -1229976.0,
+      -277241.1
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F07_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Momo-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1227972.8,
+      -340477.2,
+      209.1
+     ],
+     "radius_cm": 6283.0,
+     "site_center_cm": [
+      -1227972.8,
+      -340477.2
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_08",
+   "arrival_cm": [
+    199576.3,
+    -940038.7,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F08_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Kame-mura",
+     "theme": "vivres",
+     "center_cm": [
+      236913.2,
+      -956016.1,
+      246.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      237430.0,
+      -957290.3
+     ],
+     "offset_m": 13.8,
+     "houses": 15
+    },
+    {
+     "id": "F08_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Momiji-mura",
+     "theme": "bois",
+     "center_cm": [
+      196330.7,
+      -980166.6,
+      251.8
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      196137.8,
+      -979312.7
+     ],
+     "offset_m": 8.8,
+     "houses": 16
+    },
+    {
+     "id": "F08_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Tsuki-mura",
+     "theme": "richesses",
+     "center_cm": [
+      159336.9,
+      -994252.7,
+      239.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      160351.3,
+      -995829.6
+     ],
+     "offset_m": 18.8,
+     "houses": 16
+    },
+    {
+     "id": "F08_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Naka-sato",
+     "theme": "hameau",
+     "center_cm": [
+      259240.4,
+      -948638.8,
+      225.8
+     ],
+     "radius_cm": 6021.1,
+     "site_center_cm": [
+      259240.4,
+      -948638.8
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F08_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Nashi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      284593.4,
+      -939166.6,
+      201.7
+     ],
+     "radius_cm": 6170.3,
+     "site_center_cm": [
+      284593.4,
+      -939166.6
+     ],
+     "offset_m": 0.0,
+     "houses": 4
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_09",
+   "arrival_cm": [
+    585324.7,
+    -764488.0,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F09_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Same-mura",
+     "theme": "vivres",
+     "center_cm": [
+      639249.3,
+      -782323.3,
+      269.2
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      639340.5,
+      -783863.1
+     ],
+     "offset_m": 15.4,
+     "houses": 16
+    },
+    {
+     "id": "F09_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Sakura-mura",
+     "theme": "bois",
+     "center_cm": [
+      590237.4,
+      -807624.6,
+      242.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      591166.3,
+      -808638.4
+     ],
+     "offset_m": 13.7,
+     "houses": 16
+    },
+    {
+     "id": "F09_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Asahi-mura",
+     "theme": "richesses",
+     "center_cm": [
+      544070.1,
+      -833967.6,
+      241.0
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      544368.5,
+      -834790.1
+     ],
+     "offset_m": 8.7,
+     "houses": 16
+    },
+    {
+     "id": "F09_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Negi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      514799.3,
+      -847665.4,
+      192.4
+     ],
+     "radius_cm": 7743.6,
+     "site_center_cm": [
+      514799.3,
+      -847665.4
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F09_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Niji-sato",
+     "theme": "hameau",
+     "center_cm": [
+      573409.7,
+      -822281.1,
+      198.2
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      573409.7,
+      -822281.1
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_10",
+   "arrival_cm": [
+    -935969.2,
+    273021.5,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F10_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Ume-mura",
+     "theme": "bois",
+     "center_cm": [
+      -974446.0,
+      128094.3,
+      241.4
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -973807.1,
+      128693.9
+     ],
+     "offset_m": 8.8,
+     "houses": 16
+    },
+    {
+     "id": "F10_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Shio-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -886929.5,
+      246218.3,
+      213.9
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -885717.1,
+      247064.8
+     ],
+     "offset_m": 14.8,
+     "houses": 14
+    },
+    {
+     "id": "F10_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Yuhi-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -957398.2,
+      170953.7,
+      203.2
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -955913.8,
+      171362.5
+     ],
+     "offset_m": 15.4,
+     "houses": 14
+    },
+    {
+     "id": "F10_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Ogi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -932138.6,
+      196019.7,
+      197.4
+     ],
+     "radius_cm": 6232.9,
+     "site_center_cm": [
+      -932138.6,
+      196019.7
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F10_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Rin-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -894307.4,
+      222987.9,
+      200.4
+     ],
+     "radius_cm": 7607.9,
+     "site_center_cm": [
+      -894307.4,
+      222987.9
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F10_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Saba-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -951726.1,
+      118455.3,
+      203.5
+     ],
+     "radius_cm": 4619.1,
+     "site_center_cm": [
+      -951726.1,
+      118455.3
+     ],
+     "offset_m": 0.0,
+     "houses": 4
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_11",
+   "arrival_cm": [
+    -397268.1,
+    -1055292.1,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F11_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Yashi-mura",
+     "theme": "bois",
+     "center_cm": [
+      -378192.4,
+      -1100432.3,
+      318.8
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -377823.4,
+      -1099060.1
+     ],
+     "offset_m": 14.2,
+     "houses": 16
+    },
+    {
+     "id": "F11_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Hama-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -453805.8,
+      -1088018.6,
+      297.7
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -453525.7,
+      -1086672.4
+     ],
+     "offset_m": 13.8,
+     "houses": 16
+    },
+    {
+     "id": "F11_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Hinode-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -520402.3,
+      -1072750.9,
+      287.7
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -519593.2,
+      -1071531.9
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F11_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Sagi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -432176.7,
+      -1092702.6,
+      254.4
+     ],
+     "radius_cm": 6271.0,
+     "site_center_cm": [
+      -432176.7,
+      -1092702.6
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F11_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Sasa-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -402381.0,
+      -1094234.1,
+      302.5
+     ],
+     "radius_cm": 5871.7,
+     "site_center_cm": [
+      -402381.0,
+      -1094234.1
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F11_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Seri-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -480285.3,
+      -1081961.6,
+      257.1
+     ],
+     "radius_cm": 5827.5,
+     "site_center_cm": [
+      -480285.3,
+      -1081961.6
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_12",
+   "arrival_cm": [
+    -816725.9,
+    475866.6,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F12_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Ashi-mura",
+     "theme": "bois",
+     "center_cm": [
+      -737064.9,
+      486652.2,
+      222.9
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -735688.9,
+      486559.5
+     ],
+     "offset_m": 13.8,
+     "houses": 14
+    },
+    {
+     "id": "F12_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Iso-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -710853.0,
+      517280.0,
+      198.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -709537.2,
+      516840.4
+     ],
+     "offset_m": 13.9,
+     "houses": 14
+    },
+    {
+     "id": "F12_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Sango-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -765339.0,
+      462390.5,
+      183.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -765969.8,
+      461784.2
+     ],
+     "offset_m": 8.7,
+     "houses": 11
+    },
+    {
+     "id": "F12_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Shiba-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -690943.6,
+      537843.3,
+      209.0
+     ],
+     "radius_cm": 4945.7,
+     "site_center_cm": [
+      -690943.6,
+      537843.3
+     ],
+     "offset_m": 0.0,
+     "houses": 4
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_13",
+   "arrival_cm": [
+    679782.9,
+    -701501.6,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F13_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Yoshi-mura",
+     "theme": "bois",
+     "center_cm": [
+      756526.8,
+      -699957.7,
+      347.8
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      757711.4,
+      -698526.0
+     ],
+     "offset_m": 18.6,
+     "houses": 16
+    },
+    {
+     "id": "F13_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Umi-mura",
+     "theme": "vivres",
+     "center_cm": [
+      724349.2,
+      -720499.2,
+      340.4
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      724677.7,
+      -721924.9
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F13_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Kiku-mura",
+     "theme": "richesses",
+     "center_cm": [
+      784616.4,
+      -673136.4,
+      327.7
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      785239.5,
+      -673750.7
+     ],
+     "offset_m": 8.8,
+     "houses": 16
+    },
+    {
+     "id": "F13_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Suzu-sato",
+     "theme": "hameau",
+     "center_cm": [
+      702899.5,
+      -743525.3,
+      256.1
+     ],
+     "radius_cm": 6744.2,
+     "site_center_cm": [
+      702899.5,
+      -743525.3
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F13_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Tachi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      779554.1,
+      -696622.2,
+      216.6
+     ],
+     "radius_cm": 5483.3,
+     "site_center_cm": [
+      779554.1,
+      -696622.2
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_14",
+   "arrival_cm": [
+    794836.4,
+    -600494.7,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F14_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Kaya-mura",
+     "theme": "bois",
+     "center_cm": [
+      885288.5,
+      -587820.4,
+      347.5
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      885717.1,
+      -587037.1
+     ],
+     "offset_m": 8.9,
+     "houses": 16
+    },
+    {
+     "id": "F14_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Ura-mura",
+     "theme": "vivres",
+     "center_cm": [
+      915374.3,
+      -562603.1,
+      335.2
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      915998.1,
+      -563638.2
+     ],
+     "offset_m": 12.1,
+     "houses": 16
+    },
+    {
+     "id": "F14_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Fuji-mura",
+     "theme": "richesses",
+     "center_cm": [
+      832570.8,
+      -621737.3,
+      339.6
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      833413.7,
+      -622823.6
+     ],
+     "offset_m": 13.7,
+     "houses": 16
+    },
+    {
+     "id": "F14_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Tane-sato",
+     "theme": "hameau",
+     "center_cm": [
+      933571.1,
+      -547808.0,
+      329.3
+     ],
+     "radius_cm": 5604.5,
+     "site_center_cm": [
+      933571.1,
+      -547808.0
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F14_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Tanuki-sato",
+     "theme": "hameau",
+     "center_cm": [
+      866650.0,
+      -605229.2,
+      303.2
+     ],
+     "radius_cm": 6438.2,
+     "site_center_cm": [
+      866650.0,
+      -605229.2
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F14_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Tara-sato",
+     "theme": "hameau",
+     "center_cm": [
+      819878.1,
+      -640138.8,
+      238.3
+     ],
+     "radius_cm": 6393.3,
+     "site_center_cm": [
+      819878.1,
+      -640138.8
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_15",
+   "arrival_cm": [
+    1008331.7,
+    -406623.1,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F15_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Oki-mura",
+     "theme": "vivres",
+     "center_cm": [
+      1016505.9,
+      -465177.3,
+      348.5
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1017852.1,
+      -464537.0
+     ],
+     "offset_m": 14.9,
+     "houses": 16
+    },
+    {
+     "id": "F15_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Tochi-mura",
+     "theme": "bois",
+     "center_cm": [
+      1044341.6,
+      -432509.7,
+      355.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      1045380.2,
+      -432879.6
+     ],
+     "offset_m": 11.0,
+     "houses": 15
+    },
+    {
+     "id": "F15_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Tsubaki-mura",
+     "theme": "richesses",
+     "center_cm": [
+      993977.1,
+      -489942.0,
+      338.4
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      994453.2,
+      -490688.7
+     ],
+     "offset_m": 8.9,
+     "houses": 16
+    },
+    {
+     "id": "F15_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Tsuge-sato",
+     "theme": "hameau",
+     "center_cm": [
+      1076246.6,
+      -390745.4,
+      263.4
+     ],
+     "radius_cm": 5593.7,
+     "site_center_cm": [
+      1076246.6,
+      -390745.4
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F15_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Tsuta-sato",
+     "theme": "hameau",
+     "center_cm": [
+      1064981.9,
+      -424438.5,
+      208.7
+     ],
+     "radius_cm": 5591.9,
+     "site_center_cm": [
+      1064981.9,
+      -424438.5
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F15_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Uguisu-sato",
+     "theme": "hameau",
+     "center_cm": [
+      1039582.5,
+      -462591.4,
+      217.4
+     ],
+     "radius_cm": 5599.4,
+     "site_center_cm": [
+      1039582.5,
+      -462591.4
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_16",
+   "arrival_cm": [
+    -942310.0,
+    -911908.4,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F16_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Kashi-mura",
+     "theme": "bois",
+     "center_cm": [
+      -901856.2,
+      -888151.5,
+      340.8
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -900857.6,
+      -887093.6
+     ],
+     "offset_m": 14.5,
+     "houses": 16
+    },
+    {
+     "id": "F16_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Seto-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -998033.8,
+      -830382.4,
+      324.6
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -997206.0,
+      -829284.5
+     ],
+     "offset_m": 13.7,
+     "houses": 16
+    },
+    {
+     "id": "F16_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Hotaru-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -933557.3,
+      -872135.1,
+      289.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -932514.9,
+      -870576.7
+     ],
+     "offset_m": 18.7,
+     "houses": 15
+    },
+    {
+     "id": "F16_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Uri-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1017225.4,
+      -814333.2,
+      273.6
+     ],
+     "radius_cm": 5849.0,
+     "site_center_cm": [
+      -1017225.4,
+      -814333.2
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_17",
+   "arrival_cm": [
+    -1150332.2,
+    -784353.6,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F17_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Minato-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -1070879.6,
+      -782833.8,
+      322.9
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1070155.5,
+      -781110.3
+     ],
+     "offset_m": 18.7,
+     "houses": 15
+    },
+    {
+     "id": "F17_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Keyaki-mura",
+     "theme": "bois",
+     "center_cm": [
+      -1106585.7,
+      -766584.2,
+      329.3
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1105942.1,
+      -765969.8
+     ],
+     "offset_m": 8.9,
+     "houses": 16
+    },
+    {
+     "id": "F17_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Misaki-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -1037539.8,
+      -803158.5,
+      287.0
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1037121.8,
+      -801756.4
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F17_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Wara-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1132870.5,
+      -752838.7,
+      261.8
+     ],
+     "radius_cm": 6189.1,
+     "site_center_cm": [
+      -1132870.5,
+      -752838.7
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_18",
+   "arrival_cm": [
+    -1276588.1,
+    -449728.6,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F18_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Fune-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -1233002.5,
+      -445766.0,
+      358.8
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1231195.0,
+      -445267.3
+     ],
+     "offset_m": 18.7,
+     "houses": 16
+    },
+    {
+     "id": "F18_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Kiri-mura",
+     "theme": "bois",
+     "center_cm": [
+      -1232843.9,
+      -481873.6,
+      310.6
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1233947.8,
+      -481053.8
+     ],
+     "offset_m": 13.8,
+     "houses": 16
+    },
+    {
+     "id": "F18_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Tsuru-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -1217079.5,
+      -543357.9,
+      289.5
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1217431.0,
+      -541615.7
+     ],
+     "offset_m": 17.8,
+     "houses": 16
+    },
+    {
+     "id": "F18_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Yuki-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1223078.3,
+      -514205.8,
+      238.4
+     ],
+     "radius_cm": 5735.2,
+     "site_center_cm": [
+      -1223078.3,
+      -514205.8
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_19",
+   "arrival_cm": [
+    -1207473.3,
+    -124346.9,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F19_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Shii-mura",
+     "theme": "bois",
+     "center_cm": [
+      -1039423.9,
+      16578.7,
+      202.2
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1039874.6,
+      15828.7
+     ],
+     "offset_m": 8.8,
+     "houses": 15
+    },
+    {
+     "id": "F19_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Kasumi-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -1173069.5,
+      -159983.5,
+      181.8
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1172009.6,
+      -158974.9
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F19_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Izumi-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -1079986.6,
+      -52126.8,
+      179.8
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1081166.8,
+      -52991.6
+     ],
+     "offset_m": 14.6,
+     "houses": 9
+    },
+    {
+     "id": "F19_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Hagi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1057962.6,
+      -21653.2,
+      201.5
+     ],
+     "radius_cm": 5526.2,
+     "site_center_cm": [
+      -1057962.6,
+      -21653.2
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F19_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Kibi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1075217.4,
+      -5486.3,
+      200.7
+     ],
+     "radius_cm": 8031.3,
+     "site_center_cm": [
+      -1075217.4,
+      -5486.3
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F19_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Kuri-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1103331.4,
+      -76246.2,
+      177.0
+     ],
+     "radius_cm": 5909.8,
+     "site_center_cm": [
+      -1103331.4,
+      -76246.2
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  },
+  {
+   "id": "FRG_Raraka_20",
+   "arrival_cm": [
+    -1254941.5,
+    -646232.7,
+    0.0
+   ],
+   "villages": [
+    {
+     "id": "F20_Z1",
+     "kind": "zone",
+     "site": "Z1",
+     "name": "Mizu-mura",
+     "theme": "vivres",
+     "center_cm": [
+      -1191068.8,
+      -689619.8,
+      334.9
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1189902.8,
+      -688891.1
+     ],
+     "offset_m": 13.7,
+     "houses": 16
+    },
+    {
+     "id": "F20_Z2",
+     "kind": "zone",
+     "site": "Z2",
+     "name": "Enoki-mura",
+     "theme": "bois",
+     "center_cm": [
+      -1211994.3,
+      -634984.7,
+      358.2
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1210548.9,
+      -635211.3
+     ],
+     "offset_m": 14.6,
+     "houses": 16
+    },
+    {
+     "id": "F20_Z3",
+     "kind": "zone",
+     "site": "Z3",
+     "name": "Nagisa-mura",
+     "theme": "richesses",
+     "center_cm": [
+      -1217466.5,
+      -597549.7,
+      358.5
+     ],
+     "radius_cm": 9000.0,
+     "site_center_cm": [
+      -1216054.5,
+      -598048.3
+     ],
+     "offset_m": 15.0,
+     "houses": 16
+    },
+    {
+     "id": "F20_H1",
+     "kind": "hameau",
+     "site": "H1",
+     "name": "Mugi-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1171770.2,
+      -726558.3,
+      248.1
+     ],
+     "radius_cm": 5995.1,
+     "site_center_cm": [
+      -1171770.2,
+      -726558.3
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F20_H2",
+     "kind": "hameau",
+     "site": "H2",
+     "name": "Nazuna-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1152728.9,
+      -739277.7,
+      249.3
+     ],
+     "radius_cm": 6211.1,
+     "site_center_cm": [
+      -1152728.9,
+      -739277.7
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    },
+    {
+     "id": "F20_H3",
+     "kind": "hameau",
+     "site": "H3",
+     "name": "Suge-sato",
+     "theme": "hameau",
+     "center_cm": [
+      -1224869.3,
+      -568416.0,
+      257.9
+     ],
+     "radius_cm": 6731.5,
+     "site_center_cm": [
+      -1224869.3,
+      -568416.0
+     ],
+     "offset_m": 0.0,
+     "houses": 6
+    }
+   ]
+  }
+ ]
+}
