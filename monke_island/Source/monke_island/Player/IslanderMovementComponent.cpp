@@ -247,6 +247,8 @@ void UIslanderMovementComponent::UpdateStamina(float DeltaSeconds, bool bSprinti
 	const float SwimCost = bMoving ? SwimStaminaCost : SwimIdleStaminaCost;
 	float Cost = (bSprinting ? SprintStaminaCost : 0.0f) + (bSwimming ? SwimCost : 0.0f);
 	Cost *= 1.0f + CarriedWeight * StaminaCostPerKg;
+	// a load tires on its own, even at a walk: no regeneration while carrying (user request, T-061)
+	Cost += ComputeCarryStaminaCost(CarriedWeight, bMoving, CarryStaminaPerKgMoving, CarryStaminaPerKgIdle);
 
 	if (Cost > 0.0f)
 	{

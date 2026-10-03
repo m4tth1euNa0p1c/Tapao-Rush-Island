@@ -137,6 +137,20 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Weight", meta=(ClampMin="0"))
 	float StaminaCostPerKg = 0.02f;
 
+	/** Stamina spent per second and per kilogram carried while moving: carrying tires even at a walk (10 kg -> 5/s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Weight", meta=(ClampMin="0"))
+	float CarryStaminaPerKgMoving = 0.5f;
+
+	/** Stamina spent per second and per kilogram carried while standing still (holding at arm's length) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Weight", meta=(ClampMin="0"))
+	float CarryStaminaPerKgIdle = 0.15f;
+
+	/** Stamina per second the load alone costs (0 when nothing is carried) */
+	static float ComputeCarryStaminaCost(float CarriedKg, bool bMoving, float PerKgMoving, float PerKgIdle)
+	{
+		return FMath::Max(0.0f, CarriedKg) * (bMoving ? PerKgMoving : PerKgIdle);
+	}
+
 	/** Sets whether the character wants to sprint */
 	void SetWantsToSprint(bool bInWantsToSprint) { bWantsToSprint = bInWantsToSprint; }
 
