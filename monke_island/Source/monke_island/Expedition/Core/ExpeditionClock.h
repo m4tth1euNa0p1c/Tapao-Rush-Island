@@ -29,6 +29,12 @@ struct MONKE_ISLAND_API FExpeditionClockParams
 	/** Shape of the rise curve */
 	double WaterRiseExponent = 1.0;
 
+	/** Speed of the rise after the submersion (cm/s) */
+	double PostSubmersionRiseCmPerSecond = 0.0;
+
+	/** Highest extra rise after the submersion (cm) */
+	double PostSubmersionMaxRiseCm = 0.0;
+
 	/** Copies the clock values of the rules */
 	static FExpeditionClockParams FromRules(const UExpeditionRules& Rules);
 };
