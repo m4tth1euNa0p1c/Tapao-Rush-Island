@@ -8,7 +8,7 @@
 | Exports | `art/export/Characters/<Nom>/` : `SK_<Nom>.fbx`, `SK_<Nom>_<Arme>.fbx`, `SM_<Nom>_<Arme>.fbx`, `A_<Nom>_<Anim>.fbx` ; inscrits dans `art/export/ue_manifest.json` |
 | Rendus de contrôle | `art/_previews/tiki_lineup.png`, `tiki_poses.png`, `tiki_echelle.png`, `tiki_barque.png`, `tiki_<clé>_turnaround.png` |
 | Cible UE | `/Game/MonkeIsland/Characters/<Nom>/` (`Meshes`, `Anims`, `Materials`, `Physics`, `Blueprints`) |
-| Statut | modèles, armes, squelettes, animations et FBX **faits dans Blender** ; FBX vérifiés (skin et courbes présents) ; **rien n'est importé dans UE** |
+| Statut | Blender : modèles, armes, squelettes, animations, FBX. UE (2026-10-03, T-046) : Villageois, Guerrier Coco, Gardien Crabe et Veilleur des Cendres importés (SK, Skeleton, Physics Asset, arme en SK, `weapon_socket` sur `weapon_r`, 25 animations), `BP_Tiki*` jouables (T-051). Rôdeur des Ronces non importé (L8). Matériaux : couleurs unies, bake à faire |
 
 ```
 blender --background --factory-startup --python scripts/character/tiki_creatures.py -- [--only coco,crab] [--render] [--quick] [--export] [--no-refs] [--no-save]
@@ -79,6 +79,18 @@ Caméras : `CAM_Lineup`, `CAM_Echelle`, `CAM_Barque`. Le ciel est un HDRI CC0 (k
 
 ## Reste à faire
 - [ ] Bake par créature : dépliage UV et atlas 2K D/ORM/N (normale DirectX), plus un emplacement émissif. Les FBX actuels ont des couleurs unies par emplacement, et les fruits n'emportent pas leurs textures.
-- [ ] Import UE : SK, Skeleton, Physics Asset `PA_<Nom>`, sockets `weapon_socket` (sur `weapon_r`), animations sur `SKEL_<Nom>`, BP de test à côté d'un PlayerStart et d'un cocotier (recette §10).
+- [x] Import UE (4 créatures) : SK, Skeleton `SK_<Nom>_Skeleton`, Physics Asset `SK_<Nom>_PhysicsAsset`, arme en SK sur le même squelette, `weapon_socket` sur `weapon_r`, animations sur le squelette (commandlet `scripts/character/import_tiki_anims.py`, éditeur fermé ; le MCP n'importe pas les FBX d'animation seule).
+- [ ] Rôdeur des Ronces (L8).
 - [ ] Feuilles du Rôdeur : simple face, prévoir un matériau à deux faces dans UE.
 - [ ] Planches en pose A pour les variantes (ADR-002, P-04). Les planches actuelles ont les bras le long du corps.
+
+## Gameplay dans UE (T-051, lot L3)
+Code : `Source/monke_island/Creatures/`. Règles : `DA_TikiRules` (`/Game/MonkeIsland/Characters/Data/`). Acteur de niveau : `TikiDirector` (outliner `Raraka/Gameplay`, 40 m à l'intérieur des terres depuis le PlayerStart, rayon 50 m).
+- `ATikiCreature` : personnage sans NavMesh (déplacement direct, détection d'enlisement), santé `UIslanderHealthComponent`, clips joués en nœud unique depuis la vitesse et des actions multicast (pas d'AnimBP), arme ou panier en Leader Pose.
+- `ATikiVillager` (`BP_TikiVillager`) : flâne dans le village, ramasse les noix de coco (le directeur en fait tomber jusqu'à `CoconutCount`), fuit le joueur qui le frappe.
+- `ATikiWarrior` (`BP_TikiCocoWarrior`, `BP_TikiCrabGuardian`, `BP_TikiAshWatcher`) :
+  - la nuit (`ADayNightCycleActor`, phase Night) : jusqu'à `NightWarriorCount` sortent des buissons entre `NightSpawnMinDistance` et `NightSpawnMaxDistance` du joueur ; ils retournent sous terre à l'aube ;
+  - joueur qui frappe un villageois : un défenseur bondit du buisson le plus proche du villageois et poursuit ce joueur ;
+  - attaque de mêlée : préparation visible (`AttackWindup`), balayage serveur, dégâts, recul ; mort avec clip, puis disparition.
+- Buissons : instances des meshes dont le nom contient `BushMeshKeywords` (MikiMiki, Naupaka, Pandanus, Tahinu), soit 366 000 sur Raraka, rangées en grille de 20 m une fois au début de la partie.
+- Débogage : `monke.TikiDefender` (un défenseur contre le joueur local).
