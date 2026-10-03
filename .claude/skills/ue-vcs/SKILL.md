@@ -24,7 +24,7 @@ Le dépôt existe (Git + LFS local, `main`). Outil unique : `python scripts/work
 
 Règles communes à toutes les sessions :
 - Sur `main`, ne commiter qu'après un build OK, et seulement ses propres fichiers (`git add <fichiers>`, jamais `git add -A` ni `commit -a` sur le travail des autres sessions).
-- Assets : `git lfs lock <.uasset|.umap>` avant de les modifier dans l'arbre principal, `git lfs unlock` après le commit. Une map ou un Blueprint verrouillé par une autre session : ne pas y toucher.
+- Assets : `owner=<asset>` dans la note du chantier avant de les modifier dans l'arbre principal. `git lfs lock` échoue sans remote (« missing protocol ») : on ne s'en sert que le jour où un serveur LFS existe. Une map ou un Blueprint tenu par une autre session : ne pas y toucher.
 - Pas de `push`, pas de dépôt distant sans demande explicite de l'utilisateur.
 - Ne pas utiliser `isolation: "worktree"` de l'outil Agent : il ferait un checkout complet (environ 3 Go par agent).
 

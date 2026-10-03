@@ -25,7 +25,7 @@ Règles :
 - **Mode worktree (actif depuis le 2026-10-03, dépôt Git + LFS local, commit `47b1bdb`)** :
   - **Worktree léger** : `scripts/worktree.py new T-NNN` crée `.worktrees/T-NNN` sur `dev/T-NNN`, en sparse-checkout code + docs (`Source/`, `Config/`, `.uproject`, `docs/`, `scripts/`, `.claude/`), sans `Content/` ni téléchargement LFS : quelques secondes et quelques Mo. `--full` seulement si la tâche doit lire des assets.
   - **Compilation sans fermer l'éditeur** : `worktree.py build T-NNN` compile le module avec l'`Intermediate/` du worktree. Tant que l'éditeur est ouvert, UBT refuse la cible `monke_islandEditor`, même dans un worktree : le mutex Live Coding est global au moteur installé. On compile donc la **cible jeu** `monke_island` (environ 40 s à froid). Elle vérifie aussi ce qui casserait un build packagé (code `WITH_EDITORONLY_DATA`, collisions de noms en build unity). La preuve `compilé` de DEV ne réquisitionne plus l'éditeur partagé ; seule la reconstruction éditeur de l'arbre principal après fusion (INT) le demande.
-  - **Assets** : `.uasset` et `.umap` restent dans l'arbre principal, modifiés via l'éditeur partagé (ressource exclusive §5), avec `git lfs lock <fichier>` avant la modification et `unlock` après le commit.
+  - **Assets** : `.uasset` et `.umap` restent dans l'arbre principal, modifiés via l'éditeur partagé (ressource exclusive §5), avec le jeton `owner=<asset>` dans la note du chantier. `git lfs lock` exige un serveur LFS distant : le dépôt est local, donc pas de verrou Git tant qu'il n'y a pas de remote.
   - **Commits** : chaque instance commite **ses** fichiers sur sa branche, préfixe de domaine et ID de tâche (`gameplay: … (T-NNN)`). Sur `main`, on ne commite qu'après un build OK, et seulement ses propres fichiers : jamais de `git add -A` sur le travail des autres sessions.
   - **Fusion** (gate INT) : `worktree.py merge T-NNN` fait un `--no-ff` dans `main`, sur un arbre principal propre pour les fichiers touchés. Puis build complet et tests ; `worktree.py remove T-NNN` après `fait`.
   - **Repli mono-arbre** (petite correction urgente, ou tâche purement éditeur) : travail direct dans l'arbre principal, fichiers disjoints, commit ciblé des fichiers de la tâche. Les règles de gate ne changent pas.
@@ -69,7 +69,7 @@ Un dossier ou un asset hors du périmètre de la cellule demande l'accord du lea
 | Build UBT de l'arbre principal (éditeur fermé) | 1 | seulement en INT, après fusion ; fermer l'éditeur = coordination avec la tâche qui le tient |
 | Build UBT d'un worktree | N | `worktree.py build T-NNN` (cible jeu tant que l'éditeur est ouvert) ; les builds se sérialisent seuls (`-WaitMutex`) |
 | MCP `blender` | 1 | une instance Blender à la fois |
-| Une map `.umap` ou un Blueprint | 1 propriétaire | `owner=<asset>` dans la note + `git lfs lock <fichier>` dans l'arbre principal |
+| Une map `.umap` ou un Blueprint | 1 propriétaire | `owner=<asset>` dans la note du chantier (`git lfs lock` seulement le jour où un remote LFS existe) |
 | Code C++ | N | un worktree par instance ; les conflits se règlent à la fusion (INT), donc des fichiers qui se recouvrent restent possibles mais coûtent une résolution |
 | Docs, specs, scripts Python, données | N | parallèle si fichiers disjoints |
 
