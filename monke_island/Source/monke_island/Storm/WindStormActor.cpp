@@ -15,6 +15,7 @@
 #include "EngineUtils.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PlayerController.h"
 #include "GameFramework/RootMotionSource.h"
 #include "Materials/MaterialParameterCollection.h"
 #include "Materials/MaterialParameterCollectionInstance.h"
@@ -100,17 +101,7 @@ float AWindStormActor::GetShelterFactor(const AActor* Actor) const
 		return 1.0f;
 	}
 	const double Now = GetWorld()->GetTimeSeconds();
-	if (ShelterCache.Num() > 1024)
-	{
-		// destroyed actors leave stale entries: drop them now and then
-		for (auto It = ShelterCache.CreateIterator(); It; ++It)
-		{
-			if (!It.Key().IsValid())
-			{
-				It.RemoveCurrent();
-			}
-		}
-	}
+	// stale entries of destroyed actors are dropped by RefreshPushedBodies, once per refresh
 	FWindShelterSample& Sample = ShelterCache.FindOrAdd(Actor);
 	if (Now - Sample.Time >= Rules->ShelterRefreshInterval)
 	{
@@ -289,6 +280,12 @@ void AWindStormActor::Tick(float DeltaSeconds)
 	{
 		ApplyForces(DeltaSeconds);
 	}
+	else
+	{
+		// calm: no list to keep, the next gust searches the bodies again on its first frame
+		PushedBodies.Reset();
+		PushedBodiesTimer = 0.0f;
+	}
 }
 
 void AWindStormActor::ApplyForces(float DeltaSeconds)
@@ -341,12 +338,19 @@ void AWindStormActor::ApplyForces(float DeltaSeconds)
 	}
 	// free physics objects and boats: pressure (grows with the square of the wind) times the area facing the wind, replicated physics pushed by the server
 	// the drag works on the speed relative to the air: an object carried as fast as the wind is no longer pushed
+	PushedBodiesTimer -= DeltaSeconds;
+	if (PushedBodiesTimer <= 0.0f)
+	{
+		PushedBodiesTimer = Rules->PushedBodiesRefreshInterval;
+		RefreshPushedBodies();
+	}
 	const float ReferenceSpeed = FMath::Max(Rules->VisualWindSpeed, 1.0f);
 	const FVector AirVelocity = Wind * ReferenceSpeed;
-	for (TActorIterator<AActor> It(World); It; ++It)
+	for (const TWeakObjectPtr<UPrimitiveComponent>& Weak : PushedBodies)
 	{
-		UPrimitiveComponent* Body = Cast<UPrimitiveComponent>(It->GetRootComponent());
-		if (!Body || !Body->IsSimulatingPhysics() || It->IsA<ACharacter>() || It->ActorHasTag(WindShelteredTag))
+		UPrimitiveComponent* Body = Weak.Get();
+		AActor* BodyOwner = Body ? Body->GetOwner() : nullptr;
+		if (!BodyOwner || !Body->IsSimulatingPhysics() || BodyOwner->ActorHasTag(WindShelteredTag))
 		{
 			continue;
 		}
@@ -359,8 +363,44 @@ void AWindStormActor::ApplyForces(float DeltaSeconds)
 		const FVector Extent = Body->Bounds.BoxExtent;
 		const float AreaM2 = static_cast<float>(4.0 * FMath::Max(Extent.X, Extent.Y) * Extent.Z / 10000.0);
 		const float MassKg = FMath::Max(Body->GetMass(), 0.1f);
-		const float Pressure = Rules->WindPressurePa * FMath::Square(RelativeSpeed / ReferenceSpeed) * FMath::Square(GetShelterFactor(*It));
+		const float Pressure = Rules->WindPressurePa * FMath::Square(RelativeSpeed / ReferenceSpeed) * FMath::Square(GetShelterFactor(BodyOwner));
 		const float Acceleration = FMath::Min(Pressure * AreaM2 / MassKg, Rules->MaxObjectAcceleration);
 		Body->AddForce(Relative / RelativeSpeed * Acceleration * 100.0f, NAME_None, true);
+	}
+}
+
+void AWindStormActor::RefreshPushedBodies()
+{
+	UWorld* World = GetWorld();
+	for (auto It = ShelterCache.CreateIterator(); It; ++It)
+	{
+		if (!It.Key().IsValid())
+		{
+			It.RemoveCurrent();
+		}
+	}
+
+	TArray<FVector, TInlineAllocator<8>> Players;
+	for (FConstPlayerControllerIterator It = World->GetPlayerControllerIterator(); It; ++It)
+	{
+		if (const APawn* Pawn = It->IsValid() ? (*It)->GetPawn() : nullptr)
+		{
+			Players.Add(Pawn->GetActorLocation());
+		}
+	}
+	PushedBodies.Reset();
+	const double RadiusSquared = FMath::Square(static_cast<double>(Rules->ObjectPushRadius));
+	for (TActorIterator<AActor> It(World); It; ++It)
+	{
+		UPrimitiveComponent* Body = Cast<UPrimitiveComponent>(It->GetRootComponent());
+		if (!Body || !Body->IsSimulatingPhysics() || It->IsA<ACharacter>())
+		{
+			continue;
+		}
+		const FVector Location = Body->GetComponentLocation();
+		if (Players.ContainsByPredicate([&](const FVector& Player) { return FVector::DistSquared(Player, Location) <= RadiusSquared; }))
+		{
+			PushedBodies.Add(Body);
+		}
 	}
 }

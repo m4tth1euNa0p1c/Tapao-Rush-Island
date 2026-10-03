@@ -143,6 +143,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Force", meta=(ClampMin="0"))
 	float MaxObjectAcceleration = 25.0f;
 
+	/** Only the physics objects within this distance of a player are pushed (cm): far ones stay asleep, nobody sees them */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Force", meta=(ClampMin="0", Units="cm"))
+	float ObjectPushRadius = 5000.0f;
+
+	/** Seconds between two searches of the physics objects to push (the world is scanned once per refresh, not every frame) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Force", meta=(ClampMin="0.1", Units="s"))
+	float PushedBodiesRefreshInterval = 1.0f;
+
 	/** Turbulence inside a gust (fraction of its strength) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Gusts", meta=(ClampMin="0", ClampMax="3"))
 	float GustAmplitude = 0.7f;
