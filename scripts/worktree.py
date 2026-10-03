@@ -6,7 +6,7 @@ Le C++ se développe et se compile dans le worktree (UBT sur la copie du .uproje
 Usage :
     python scripts/worktree.py new T-053 [--full]   # crée dev/T-053 + .worktrees/T-053 (code seul, ou --full)
     python scripts/worktree.py list                  # worktrees, branches et état (propre / modifié / en avance)
-    python scripts/worktree.py build T-053           # compile l'éditeur du worktree (UBT)
+    python scripts/worktree.py build T-053 [--editor] # compile la cible jeu (éditeur ouvert OK) ; --editor éditeur fermé
     python scripts/worktree.py merge T-053           # fusionne dev/T-053 dans main (--no-ff), arbre principal propre exigé
     python scripts/worktree.py remove T-053          # supprime le worktree (la branche reste, sauf --delete-branch)
 
@@ -77,7 +77,11 @@ def cmd_build(args):
     if not project.exists():
         sys.exit(f"{project} introuvable : créer le worktree avec `new {tid}`")
     build = UE / "Engine" / "Build" / "BatchFiles" / "Build.bat"
-    result = subprocess.run([str(build), "monke_islandEditor", "Win64", "Development", f"-Project={project}", "-WaitMutex"],
+    # the editor target is refused while any editor runs (engine-wide Live Coding mutex): the game target is a real
+    # compile check that never conflicts; use --editor (editor closed) for the INT gate and headless tests
+    target = "monke_islandEditor" if args.editor else "monke_island"
+    print(f"UBT {target} ({project.parent.name})", flush=True)
+    result = subprocess.run([str(build), target, "Win64", "Development", f"-Project={project}", "-WaitMutex"],
                             capture_output=True, text=True, encoding="utf-8", errors="replace")
     errors = [l for l in result.stdout.splitlines() if re.search(r"error [A-Z]+\d+|Result:", l)]
     print("\n".join(errors[-30:]) or result.stdout[-2000:])
@@ -114,7 +118,7 @@ def main():
     sub = parser.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("new"); p.add_argument("task"); p.add_argument("--full", action="store_true"); p.set_defaults(func=cmd_new)
     p = sub.add_parser("list"); p.set_defaults(func=cmd_list)
-    p = sub.add_parser("build"); p.add_argument("task"); p.set_defaults(func=cmd_build)
+    p = sub.add_parser("build"); p.add_argument("task"); p.add_argument("--editor", action="store_true"); p.set_defaults(func=cmd_build)
     p = sub.add_parser("merge"); p.add_argument("task"); p.set_defaults(func=cmd_merge)
     p = sub.add_parser("remove"); p.add_argument("task"); p.add_argument("--delete-branch", action="store_true"); p.set_defaults(func=cmd_remove)
     args = parser.parse_args()
