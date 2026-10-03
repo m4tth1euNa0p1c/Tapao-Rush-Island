@@ -44,7 +44,10 @@ struct MONKE_ISLAND_API FCargoLedger
 	ECargoRefusal Stow(const FCargoEntry& Entry, EResourceState State, int32 SlotIndex, AActor* Actor, int32& OutSlot);
 
 	/** Empties a slot; OutSlot receives what it held */
-	ECargoRefusal Unstow(int32 SlotIndex, FCargoSlot& OutSlot);
+	ECargoRefusal Unstow(int32 SlotIndex, FCargoSlot& OutSlot) { return Release(SlotIndex, false, OutSlot); }
+
+	/** Empties a slot, optionally ignoring the lock (object lost or destroyed); OutSlot receives what it held */
+	ECargoRefusal Release(int32 SlotIndex, bool bIgnoreLock, FCargoSlot& OutSlot);
 
 	/** Empties every slot regardless of the lock (boat sunk); returns what they held */
 	TArray<FCargoSlot> RemoveAll();

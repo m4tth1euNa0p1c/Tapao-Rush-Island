@@ -20,6 +20,7 @@ void UResourceComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 
 	DOREPLIFETIME(UResourceComponent, ResourceId);
 	DOREPLIFETIME(UResourceComponent, State);
+	DOREPLIFETIME(UResourceComponent, bQueryOnlyWhenStowed);
 }
 
 void UResourceComponent::BeginPlay()
@@ -69,13 +70,46 @@ FCargoEntry UResourceComponent::MakeEntry()
 	return Entry;
 }
 
-void UResourceComponent::SetState(EResourceState NewState)
+bool UResourceComponent::SetState(EResourceState NewState)
 {
-	if (!GetOwner() || !GetOwner()->HasAuthority())
+	AActor* Owner = GetOwner();
+	if (!Owner || !Owner->HasAuthority())
 	{
-		UE_LOG(Logmonke_island, Warning, TEXT("Resource %s: SetState refused off the server"), *GetNameSafe(GetOwner()));
-		return;
+		UE_LOG(Logmonke_island, Warning, TEXT("Resource %s: SetState refused off the server"), *GetNameSafe(Owner));
+		return false;
 	}
+	if (State == NewState)
+	{
+		return true;
+	}
+	if (State == EResourceState::Lost)
+	{
+		return false;
+	}
+
+	if (State == EResourceState::Stowed)
+	{
+		// the cargo frees the slot and detaches; never leave a counted slot behind
+		if (UCargoComponent* Cargo = StowedIn.Get())
+		{
+			if (!Cargo->ReleaseResource(Owner, NewState))
+			{
+				UE_LOG(Logmonke_island, Warning, TEXT("Resource %s [%s]: leaving Stowed for %s refused by the cargo"), *GetNameSafe(Owner),
+					*ResourceId.ToString(), *UEnum::GetValueAsString(NewState));
+				return false;
+			}
+			return State == NewState;
+		}
+		// cargo gone: detach the orphan
+		Owner->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	}
+
+	SetStateInternal(NewState);
+	return true;
+}
+
+void UResourceComponent::SetStateInternal(EResourceState NewState)
+{
 	if (State == NewState || State == EResourceState::Lost)
 	{
 		return;

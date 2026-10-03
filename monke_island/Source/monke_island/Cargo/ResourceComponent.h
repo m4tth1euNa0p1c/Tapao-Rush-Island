@@ -68,9 +68,13 @@ public:
 	/** Builds the cargo entry of this resource (assigns the id first on the server if needed) */
 	FCargoEntry MakeEntry();
 
-	/** Changes the state (server only); Lost is final */
+	/**
+	 *  Changes the state (server only); Lost is final. Leaving Stowed goes through the cargo holding the object,
+	 *  which frees its slot and detaches it: refused while the cargo is locked, except for Lost.
+	 *  Returns true when the state is NewState afterwards.
+	 */
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Resource")
-	void SetState(EResourceState NewState);
+	bool SetState(EResourceState NewState);
 
 	/** Cargo holding this resource while stowed (server only) */
 	UCargoComponent* GetStowedIn() const;
@@ -92,6 +96,11 @@ protected:
 	void OnRep_State(EResourceState OldState);
 
 private:
+
+	friend class UCargoComponent;
+
+	/** Sets the state without going through the cargo (server, used by UCargoComponent) */
+	void SetStateInternal(EResourceState NewState);
 
 	/** Suspends or restores the root physics to match the state */
 	void ApplyStatePhysics(EResourceState OldState);
@@ -116,6 +125,7 @@ private:
 	/** Root collision before being stowed */
 	TEnumAsByte<ECollisionEnabled::Type> SavedCollision = ECollisionEnabled::QueryAndPhysics;
 
-	/** Stowed objects keep only query collision */
+	/** Stowed objects keep only query collision; set by the cargo, replicated so every machine applies the same physics */
+	UPROPERTY(Replicated)
 	bool bQueryOnlyWhenStowed = true;
 };

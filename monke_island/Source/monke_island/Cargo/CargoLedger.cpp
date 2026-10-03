@@ -90,10 +90,10 @@ ECargoRefusal FCargoLedger::Stow(const FCargoEntry& Entry, EResourceState State,
 	return ECargoRefusal::None;
 }
 
-ECargoRefusal FCargoLedger::Unstow(int32 SlotIndex, FCargoSlot& OutSlot)
+ECargoRefusal FCargoLedger::Release(int32 SlotIndex, bool bIgnoreLock, FCargoSlot& OutSlot)
 {
 	OutSlot = FCargoSlot();
-	if (bLocked)
+	if (bLocked && !bIgnoreLock)
 	{
 		return ECargoRefusal::Locked;
 	}

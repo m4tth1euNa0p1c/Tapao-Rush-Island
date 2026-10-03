@@ -4,6 +4,11 @@
 #include "Cargo/CargoComponent.h"
 #include "Cargo/CargoLedger.h"
 #include "Cargo/CargoRules.h"
+#include "Cargo/ResourceComponent.h"
+#include "Components/SceneComponent.h"
+#include "Engine/Engine.h"
+#include "Engine/World.h"
+#include "GameFramework/Actor.h"
 
 #if WITH_AUTOMATION_TESTS
 
@@ -210,6 +215,18 @@ void FCargoLedgerSpec::Define()
 			TestEqual(TEXT("count"), Totals.StowedCount, 2);
 		});
 
+		It("releases a lost object even while locked, but not a freed one", [this]()
+		{
+			int32 Slot = INDEX_NONE;
+			Ledger.Stow(MakeEntry(EResourceCategory::Wood, 10.0f, 0), EResourceState::Free, 0, nullptr, Slot);
+			Ledger.bLocked = true;
+			FCargoSlot Removed;
+			TestEqual(TEXT("free while locked"), Ledger.Release(0, false, Removed), ECargoRefusal::Locked);
+			TestTrue(TEXT("still stowed"), Ledger.IsSlotOccupied(0));
+			TestEqual(TEXT("lost while locked"), Ledger.Release(0, true, Removed), ECargoRefusal::None);
+			TestFalse(TEXT("slot freed"), Ledger.IsSlotOccupied(0));
+		});
+
 		It("refuses to unstow an empty slot", [this]()
 		{
 			FCargoSlot Removed;
@@ -285,6 +302,140 @@ void FCargoLedgerSpec::Define()
 			TestFalse(TEXT("unstow"), Cargo->TryUnstow(0, Refusal));
 			TestEqual(TEXT("nothing counted"), Cargo->GetTotals().StowedCount, 0);
 		});
+	});
+}
+
+// Component behaviour in a transient standalone game world (authority = server)
+BEGIN_DEFINE_SPEC(FCargoComponentSpec, "monke_island.Cargo.Component",
+	EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
+	UWorld* World = nullptr;
+	AActor* Boat = nullptr;
+	UCargoComponent* Cargo = nullptr;
+	UCargoRules* Rules = nullptr;
+
+	/** Spawns a replicated actor with a scene root and a resource component near the boat */
+	AActor* SpawnResource(EResourceCategory Category, float MassKg, int32 Value)
+	{
+		AActor* Actor = World->SpawnActor<AActor>(FVector(50.0, 0.0, 0.0), FRotator::ZeroRotator);
+		USceneComponent* Root = NewObject<USceneComponent>(Actor, TEXT("Root"));
+		Actor->SetRootComponent(Root);
+		Root->RegisterComponent();
+		Actor->SetReplicates(true);
+		Actor->SetReplicateMovement(true);
+		UResourceComponent* Resource = NewObject<UResourceComponent>(Actor, TEXT("Resource"));
+		Resource->Category = Category;
+		Resource->MassKg = MassKg;
+		Resource->Value = Value;
+		Resource->RegisterComponent();
+		return Actor;
+	}
+
+	/** Resource component of an actor */
+	static UResourceComponent* ResourceOf(AActor* Actor)
+	{
+		return Actor ? Actor->FindComponentByClass<UResourceComponent>() : nullptr;
+	}
+END_DEFINE_SPEC(FCargoComponentSpec)
+
+void FCargoComponentSpec::Define()
+{
+	BeforeEach([this]()
+	{
+		World = UWorld::CreateWorld(EWorldType::Game, false);
+		FWorldContext& Context = GEngine->CreateNewWorldContext(EWorldType::Game);
+		Context.SetCurrentWorld(World);
+		World->InitializeActorsForPlay(FURL());
+		World->BeginPlay();
+
+		Rules = NewObject<UCargoRules>();
+		Rules->AddToRoot();
+
+		Boat = World->SpawnActor<AActor>(FVector::ZeroVector, FRotator::ZeroRotator);
+		USceneComponent* Hull = NewObject<USceneComponent>(Boat, TEXT("Hull"));
+		Boat->SetRootComponent(Hull);
+		Hull->RegisterComponent();
+		Cargo = NewObject<UCargoComponent>(Boat, TEXT("Cargo"));
+		Cargo->Rules = Rules;
+		Cargo->RegisterComponent();
+	});
+
+	AfterEach([this]()
+	{
+		GEngine->DestroyWorldContext(World);
+		World->DestroyWorld(false);
+		World = nullptr;
+		Boat = nullptr;
+		Cargo = nullptr;
+		Rules->RemoveFromRoot();
+		Rules = nullptr;
+	});
+
+	It("stows on the server: attached, state Stowed, counted", [this]()
+	{
+		AActor* Log = SpawnResource(EResourceCategory::Wood, 10.0f, 0);
+		FText Refusal;
+		TestTrue(TEXT("stowed"), Cargo->TryStow(Log, INDEX_NONE, Refusal));
+		TestEqual(TEXT("state"), ResourceOf(Log)->GetState(), EResourceState::Stowed);
+		TestTrue(TEXT("attached to the boat"), Log->GetAttachParentActor() == Boat);
+		TestEqual(TEXT("wood"), Cargo->GetTotals().WoodQuantity, 1);
+		TestFalse(TEXT("second stow refused"), Cargo->TryStow(Log, 3, Refusal));
+		TestFalse(TEXT("readable"), Refusal.IsEmpty());
+	});
+
+	It("frees the slot when a stowed object is destroyed", [this]()
+	{
+		AActor* Chest = SpawnResource(EResourceCategory::Riches, 20.0f, 100);
+		FText Refusal;
+		Cargo->TryStow(Chest, 2, Refusal);
+		Chest->Destroy();
+		TestTrue(TEXT("slot free"), Cargo->IsSlotFree(2));
+		TestEqual(TEXT("nothing counted"), Cargo->GetTotals().StowedCount, 0);
+	});
+
+	It("frees the slot and detaches when SetState leaves Stowed", [this]()
+	{
+		AActor* Food = SpawnResource(EResourceCategory::Food, 5.0f, 0);
+		FText Refusal;
+		Cargo->TryStow(Food, 0, Refusal);
+		TestTrue(TEXT("set Free"), ResourceOf(Food)->SetState(EResourceState::Free));
+		TestEqual(TEXT("state"), ResourceOf(Food)->GetState(), EResourceState::Free);
+		TestTrue(TEXT("slot free"), Cargo->IsSlotFree(0));
+		TestTrue(TEXT("detached"), Food->GetAttachParentActor() == nullptr);
+	});
+
+	It("refuses SetState(Free) on a locked cargo but lets SetState(Lost) free the slot", [this]()
+	{
+		AActor* Log = SpawnResource(EResourceCategory::Wood, 10.0f, 0);
+		FText Refusal;
+		Cargo->TryStow(Log, 0, Refusal);
+		Cargo->SetLocked(true);
+		TestFalse(TEXT("Free refused"), ResourceOf(Log)->SetState(EResourceState::Free));
+		TestEqual(TEXT("still stowed"), ResourceOf(Log)->GetState(), EResourceState::Stowed);
+		TestFalse(TEXT("slot kept"), Cargo->IsSlotFree(0));
+		TestTrue(TEXT("Lost accepted"), ResourceOf(Log)->SetState(EResourceState::Lost));
+		TestEqual(TEXT("state lost"), ResourceOf(Log)->GetState(), EResourceState::Lost);
+		TestTrue(TEXT("slot freed"), Cargo->IsSlotFree(0));
+		TestEqual(TEXT("nothing counted"), Cargo->GetTotals().StowedCount, 0);
+	});
+
+	It("loses every stowed object when the boat ends play", [this]()
+	{
+		AActor* Log = SpawnResource(EResourceCategory::Wood, 10.0f, 0);
+		FText Refusal;
+		Cargo->TryStow(Log, 0, Refusal);
+		Boat->Destroy();
+		TestEqual(TEXT("lost"), ResourceOf(Log)->GetState(), EResourceState::Lost);
+		TestTrue(TEXT("detached"), Log->GetAttachParentActor() == nullptr);
+	});
+
+	It("re-places grid slots after a capacity change", [this]()
+	{
+		AActor* Log = SpawnResource(EResourceCategory::Wood, 10.0f, 0);
+		FText Refusal;
+		Cargo->TryStow(Log, 0, Refusal);
+		Cargo->SetCapacity(16, Rules->MaxMassKg);
+		const FVector Expected = CargoLayout::ComputeSlotOffset(0, 16, Rules->SlotColumns, Rules->SlotSpacingCm, Rules->SlotGridOrigin);
+		TestEqual(TEXT("relative location"), Log->GetRootComponent()->GetRelativeLocation(), Expected, 0.01f);
 	});
 }
 

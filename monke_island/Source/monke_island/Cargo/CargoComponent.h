@@ -69,6 +69,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Cargo")
 	void LoseAll();
 
+	/**
+	 *  Frees the slot of a stowed actor and gives it NewState (server only, called by UResourceComponent::SetState).
+	 *  Refused while locked unless NewState is Lost. Returns true when the slot was freed.
+	 */
+	bool ReleaseResource(AActor* Resource, EResourceState NewState);
+
 	/** Frozen copy of the stowed resources, without locking */
 	UFUNCTION(BlueprintPure, Category="Cargo")
 	FCargoSnapshot MakeSnapshot() const { return Ledger.MakeSnapshot(); }
@@ -143,6 +149,12 @@ private:
 
 	/** Parent component and socket of a slot (NAME_None when the grid is used) */
 	USceneComponent* GetSlotParent(int32 SlotIndex, FName& OutSocket) const;
+
+	/** Detaches a removed actor and gives it its new state (server) */
+	void DetachRemoved(AActor* Resource, EResourceState NewState);
+
+	/** Re-places the stowed actors that use the fallback grid (after a capacity change) */
+	void RefreshGridPlacement();
 
 	/** Common refusal path: text + log */
 	bool Refuse(ECargoRefusal Refusal, const AActor* Resource, int32 SlotIndex, FText& OutRefusal) const;

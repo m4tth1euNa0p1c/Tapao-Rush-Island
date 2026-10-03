@@ -39,6 +39,11 @@ void UCargoComponent::BeginPlay()
 
 void UCargoComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	// no Stowed orphan frozen on a vanished hull: everything aboard is lost
+	if (GetOwner() && GetOwner()->HasAuthority())
+	{
+		LoseAll();
+	}
 	for (const FCargoSlot& Slot : Ledger.Slots)
 	{
 		if (Slot.bOccupied && IsValid(Slot.Actor))
@@ -77,6 +82,12 @@ bool UCargoComponent::TryStow(AActor* Resource, int32 SlotIndex, FText& OutRefus
 		return Refuse(ECargoRefusal::InvalidResource, Resource, SlotIndex, OutRefusal);
 	}
 
+	if (!Resource->GetIsReplicated() || !Resource->IsReplicatingMovement())
+	{
+		UE_LOG(Logmonke_island, Warning, TEXT("Cargo %s: %s does not replicate (or not its movement), clients will not see it stowed"),
+			*GetNameSafe(Owner), *GetNameSafe(Resource));
+	}
+
 	// checks without changing anything, then the distance to the resolved slot
 	const FCargoEntry Entry = ResourceComp->MakeEntry();
 	int32 Slot = INDEX_NONE;
@@ -110,7 +121,7 @@ bool UCargoComponent::TryStow(AActor* Resource, int32 SlotIndex, FText& OutRefus
 
 	// physics off first (state Stowed), then attach to the slot
 	ResourceComp->SetQueryOnlyWhenStowed(R.bQueryOnlyWhenStowed);
-	ResourceComp->SetState(EResourceState::Stowed);
+	ResourceComp->SetStateInternal(EResourceState::Stowed);
 	ResourceComp->SetStowedIn(this);
 	const FAttachmentTransformRules AttachRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepWorld, false);
 	Resource->AttachToComponent(Parent, AttachRules, Socket);
@@ -143,16 +154,7 @@ bool UCargoComponent::TryUnstow(int32 SlotIndex, FText& OutRefusal)
 		return Refuse(Result, nullptr, SlotIndex, OutRefusal);
 	}
 
-	if (AActor* Resource = Removed.Actor; IsValid(Resource))
-	{
-		Resource->OnDestroyed.RemoveDynamic(this, &UCargoComponent::HandleStowedActorDestroyed);
-		Resource->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-		Resource->AddActorWorldOffset(FVector(0.0, 0.0, GetRules().UnstowLiftCm));
-		if (UResourceComponent* ResourceComp = Resource->FindComponentByClass<UResourceComponent>())
-		{
-			ResourceComp->SetState(EResourceState::Free);
-		}
-	}
+	DetachRemoved(Removed.Actor, EResourceState::Free);
 
 	UE_LOG(Logmonke_island, Log, TEXT("Cargo %s: unstowed %s [%s] from slot %d"), *GetNameSafe(Owner), *GetNameSafe(Removed.Actor),
 		*Removed.Entry.Id.ToString(), SlotIndex);
@@ -181,6 +183,7 @@ void UCargoComponent::SetCapacity(int32 SlotCount, float MaxMassKg)
 	{
 		UE_LOG(Logmonke_island, Warning, TEXT("Cargo %s: asked %d slots, kept %d (bounds or stowed objects)"), *GetNameSafe(GetOwner()), SlotCount, Kept);
 	}
+	RefreshGridPlacement();
 	OnCargoChanged.Broadcast(this);
 }
 
@@ -197,19 +200,81 @@ void UCargoComponent::LoseAll()
 		return;
 	}
 	const TArray<FCargoSlot> Removed = Ledger.RemoveAll();
+	if (Removed.IsEmpty())
+	{
+		return;
+	}
 	for (const FCargoSlot& Slot : Removed)
 	{
-		if (IsValid(Slot.Actor))
-		{
-			Slot.Actor->OnDestroyed.RemoveDynamic(this, &UCargoComponent::HandleStowedActorDestroyed);
-			if (UResourceComponent* ResourceComp = Slot.Actor->FindComponentByClass<UResourceComponent>())
-			{
-				ResourceComp->SetState(EResourceState::Lost);
-			}
-		}
+		DetachRemoved(Slot.Actor, EResourceState::Lost);
 	}
 	UE_LOG(Logmonke_island, Log, TEXT("Cargo %s: %d stowed objects lost"), *GetNameSafe(GetOwner()), Removed.Num());
 	OnCargoChanged.Broadcast(this);
+}
+
+bool UCargoComponent::ReleaseResource(AActor* Resource, EResourceState NewState)
+{
+	if (!GetOwner() || !GetOwner()->HasAuthority() || NewState == EResourceState::Stowed)
+	{
+		return false;
+	}
+	const int32 Slot = Ledger.FindSlotOfActor(Resource);
+	if (Slot == INDEX_NONE)
+	{
+		// not (or no longer) counted here: only fix the actor
+		DetachRemoved(Resource, NewState);
+		return true;
+	}
+
+	FCargoSlot Removed;
+	const ECargoRefusal Result = Ledger.Release(Slot, NewState == EResourceState::Lost, Removed);
+	if (Result != ECargoRefusal::None)
+	{
+		UE_LOG(Logmonke_island, Verbose, TEXT("Cargo %s: release of %s refused (%s)"), *GetNameSafe(GetOwner()), *GetNameSafe(Resource),
+			*UEnum::GetValueAsString(Result));
+		return false;
+	}
+
+	DetachRemoved(Resource, NewState);
+	UE_LOG(Logmonke_island, Log, TEXT("Cargo %s: released %s [%s] from slot %d as %s"), *GetNameSafe(GetOwner()), *GetNameSafe(Resource),
+		*Removed.Entry.Id.ToString(), Slot, *UEnum::GetValueAsString(NewState));
+	OnCargoChanged.Broadcast(this);
+	return true;
+}
+
+void UCargoComponent::DetachRemoved(AActor* Resource, EResourceState NewState)
+{
+	if (!IsValid(Resource))
+	{
+		return;
+	}
+	Resource->OnDestroyed.RemoveDynamic(this, &UCargoComponent::HandleStowedActorDestroyed);
+	if (Resource->GetAttachParentActor() == GetOwner())
+	{
+		Resource->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+		if (NewState != EResourceState::Lost)
+		{
+			Resource->AddActorWorldOffset(FVector(0.0, 0.0, GetRules().UnstowLiftCm));
+		}
+	}
+	if (UResourceComponent* ResourceComp = Resource->FindComponentByClass<UResourceComponent>())
+	{
+		ResourceComp->SetStateInternal(NewState);
+	}
+}
+
+void UCargoComponent::RefreshGridPlacement()
+{
+	const UCargoRules& R = GetRules();
+	for (int32 Index = 0; Index < Ledger.Slots.Num(); ++Index)
+	{
+		const FCargoSlot& Slot = Ledger.Slots[Index];
+		FName Socket = NAME_None;
+		if (Slot.bOccupied && IsValid(Slot.Actor) && GetSlotParent(Index, Socket) && Socket.IsNone())
+		{
+			Slot.Actor->SetActorRelativeLocation(CargoLayout::ComputeSlotOffset(Index, Ledger.Slots.Num(), R.SlotColumns, R.SlotSpacingCm, R.SlotGridOrigin));
+		}
+	}
 }
 
 void UCargoComponent::HandleStowedActorDestroyed(AActor* DestroyedActor)
