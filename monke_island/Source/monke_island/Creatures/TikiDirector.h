@@ -110,8 +110,8 @@ private:
 	/** Last defender call per player */
 	TMap<TWeakObjectPtr<APawn>, double> LastDefenderTime;
 
-	/** Bush meshes of the level, found once */
-	TArray<TWeakObjectPtr<UInstancedStaticMeshComponent>> BushComponents;
+	/** Bush positions of the level by grid cell (BushCellSize), filled once from the instanced meshes */
+	TMap<FIntPoint, TArray<FVector>> BushCells;
 
 	/** The bush search ran */
 	bool bBushesCached = false;
@@ -132,8 +132,11 @@ private:
 	/** Brings warriors out at night, sends them back at dawn */
 	void TickNight(double Now);
 
-	/** Finds the bush meshes among the instanced meshes of the level */
+	/** Finds the bush meshes among the instanced meshes of the level and files their instances in the grid */
 	void CacheBushes();
+
+	/** Grid cell of a world position */
+	static FIntPoint BushCellOf(const FVector& Location);
 
 	/** Warrior class drawn at random, or nullptr */
 	TSubclassOf<ATikiWarrior> PickWarriorClass() const;

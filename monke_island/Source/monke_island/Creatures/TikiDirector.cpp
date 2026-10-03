@@ -16,7 +16,14 @@
 #include "EngineUtils.h"
 #include "GameFramework/PlayerController.h"
 #include "HAL/IConsoleManager.h"
+#include "HAL/PlatformTime.h"
 #include "TimerManager.h"
+
+namespace
+{
+	/** Side of a cell of the bush grid (cm) */
+	constexpr double BushCellSize = 2000.0;
+}
 
 ATikiDirector::ATikiDirector()
 {
@@ -65,6 +72,10 @@ void ATikiDirector::BeginPlay()
 	}
 
 	GetWorld()->GetTimerManager().SetTimer(ThinkTimer, this, &ATikiDirector::Think, Rules->ThinkInterval, true, 0.5f);
+
+	// the bush grid is built once, early in the day, not on the first night spawn
+	FTimerHandle CacheTimer;
+	GetWorld()->GetTimerManager().SetTimer(CacheTimer, this, &ATikiDirector::CacheBushes, 2.0f, false);
 }
 
 void ATikiDirector::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -175,10 +186,11 @@ void ATikiDirector::TickNight(double Now)
 	}
 	APawn* Player = Players[FMath::RandRange(0, Players.Num() - 1)];
 	const FVector Near = TikiMath::PointOnRing(Player->GetActorLocation(), FMath::FRandRange(0.0f, 2.0f * PI), FMath::FRand(), Rules->NightSpawnMinDistance, Rules->NightSpawnMaxDistance);
+	// a failed try (sea, no ground) also waits for the next interval
+	LastNightSpawnTime = Now;
 	if (ATikiWarrior* Warrior = SpawnWarriorFromBush(Near, Rules->NightSpawnMaxDistance - Rules->NightSpawnMinDistance, nullptr, ETikiWarriorRole::Night))
 	{
 		NightWarriors.Add(Warrior);
-		LastNightSpawnTime = Now;
 		UE_LOG(Logmonke_island, Log, TEXT("%s: night, %s comes out at %s (%d/%d)"), *GetName(), *Warrior->GetName(), *Warrior->GetActorLocation().ToCompactString(), NightWarriors.Num(), Rules->NightWarriorCount);
 	}
 }
@@ -364,14 +376,25 @@ bool ATikiDirector::FindGroundPointNear(const FVector& Center, float MinRadius, 
 	return false;
 }
 
+FIntPoint ATikiDirector::BushCellOf(const FVector& Location)
+{
+	return FIntPoint(FMath::FloorToInt32(Location.X / BushCellSize), FMath::FloorToInt32(Location.Y / BushCellSize));
+}
+
 void ATikiDirector::CacheBushes()
 {
+	if (bBushesCached)
+	{
+		return;
+	}
 	bBushesCached = true;
-	BushComponents.Reset();
+	BushCells.Reset();
 	if (!Rules)
 	{
 		return;
 	}
+	const double StartTime = FPlatformTime::Seconds();
+	int32 Meshes = 0;
 	int32 Instances = 0;
 	for (TActorIterator<AActor> It(GetWorld()); It; ++It)
 	{
@@ -379,38 +402,40 @@ void ATikiDirector::CacheBushes()
 		for (UInstancedStaticMeshComponent* Component : Components)
 		{
 			const UStaticMesh* Mesh = Component->GetStaticMesh();
-			if (Mesh && Component->GetInstanceCount() > 0 && TikiMath::IsBushMeshName(Mesh->GetName(), Rules->BushMeshKeywords))
+			const int32 Count = Component->GetInstanceCount();
+			if (!Mesh || Count <= 0 || !TikiMath::IsBushMeshName(Mesh->GetName(), Rules->BushMeshKeywords))
 			{
-				BushComponents.Add(Component);
-				Instances += Component->GetInstanceCount();
+				continue;
+			}
+			++Meshes;
+			for (int32 Index = 0; Index < Count; ++Index)
+			{
+				FTransform Transform;
+				if (Component->GetInstanceTransform(Index, Transform, true))
+				{
+					BushCells.FindOrAdd(BushCellOf(Transform.GetLocation())).Add(Transform.GetLocation());
+					++Instances;
+				}
 			}
 		}
 	}
-	UE_LOG(Logmonke_island, Log, TEXT("%s: %d bush meshes, %d bushes"), *GetName(), BushComponents.Num(), Instances);
+	UE_LOG(Logmonke_island, Log, TEXT("%s: %d bush meshes, %d bushes in %d cells (%.0f ms)"),
+		*GetName(), Meshes, Instances, BushCells.Num(), (FPlatformTime::Seconds() - StartTime) * 1000.0);
 }
 
 bool ATikiDirector::FindNearestBush(const FVector& Location, float Radius, FVector& OutBush)
 {
-	if (!bBushesCached || BushComponents.IsEmpty())
-	{
-		CacheBushes();
-	}
-	const FSphere Query(Location, Radius);
+	CacheBushes();
+	const FIntPoint Center = BushCellOf(Location);
+	const int32 Reach = FMath::CeilToInt32(Radius / BushCellSize);
 	TArray<FVector> Candidates;
-	for (const TWeakObjectPtr<UInstancedStaticMeshComponent>& Weak : BushComponents)
+	for (int32 X = Center.X - Reach; X <= Center.X + Reach; ++X)
 	{
-		UInstancedStaticMeshComponent* Component = Weak.Get();
-		if (!Component || !Component->Bounds.GetSphere().Intersects(Query))
+		for (int32 Y = Center.Y - Reach; Y <= Center.Y + Reach; ++Y)
 		{
-			continue;
-		}
-		const TArray<int32> Indices = Component->GetInstancesOverlappingSphere(Location, Radius, true);
-		for (const int32 Index : Indices)
-		{
-			FTransform Transform;
-			if (Component->GetInstanceTransform(Index, Transform, true))
+			if (const TArray<FVector>* Cell = BushCells.Find(FIntPoint(X, Y)))
 			{
-				Candidates.Add(Transform.GetLocation());
+				Candidates.Append(*Cell);
 			}
 		}
 	}
