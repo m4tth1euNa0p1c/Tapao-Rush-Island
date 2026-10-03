@@ -120,7 +120,7 @@ void FFloodExpeditionClockSpec::Define()
 				}
 				Previous = Rise;
 			}
-			TestEqual(TEXT("held at the full rise after the end"), Previous, Params.MaxWaterRiseCm, 1.e-6);
+			TestTrue(TEXT("at least the full rise after the end (then the post-submersion rise)"), Previous >= Params.MaxWaterRiseCm - 1.e-6);
 		});
 
 		It("holds the sea even when the clock says lower (late replication)", [this]()

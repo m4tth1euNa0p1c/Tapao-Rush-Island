@@ -9,7 +9,8 @@
 /**
  *  Tunable rules of an expedition (DA_ExpeditionRules), cahier §6.1.
  *  Common clock: the flood starts at ExpeditionStartTime + InitialFloodDelay + ZoneBonus x pacified zones,
- *  then the water rises for SubmersionDuration along WaterRise = MaxWaterRiseCm x alpha^WaterRiseExponent.
+ *  then the water rises for SubmersionDuration along WaterRise = MaxWaterRiseCm x alpha^WaterRiseExponent,
+ *  then keeps rising at PostSubmersionRiseCmPerSecond up to PostSubmersionMaxRiseCm more (the swimmers drown, the boat floats).
  *  Other expedition values (cargo, quotas, tax) will join this asset with their lots.
  */
 UCLASS(BlueprintType)
@@ -42,4 +43,12 @@ public:
 	/** Shape of the rise: 1 = linear, above 1 = slow start then fast end */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Flood", meta=(ClampMin="0.01"))
 	float WaterRiseExponent = 1.6f;
+
+	/** Once the island is submerged the sea keeps rising at this speed (cm/s): no roof, no marae stays dry, only the boat floats */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Flood", meta=(ClampMin="0", Units="cm/s"))
+	float PostSubmersionRiseCmPerSecond = 10.0f;
+
+	/** Highest extra rise after the submersion (cm), on top of MaxWaterRiseCm; 0 = the sea stops at the end of the submersion */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Flood", meta=(ClampMin="0", Units="cm"))
+	float PostSubmersionMaxRiseCm = 1500.0f;
 };

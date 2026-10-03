@@ -12,6 +12,8 @@ FExpeditionClockParams FExpeditionClockParams::FromRules(const UExpeditionRules&
 	Params.ZonesCount = FMath::Max(0, Rules.ZonesCount);
 	Params.MaxWaterRiseCm = FMath::Max(0.0, static_cast<double>(Rules.MaxWaterRiseCm));
 	Params.WaterRiseExponent = FMath::Max(0.01, static_cast<double>(Rules.WaterRiseExponent));
+	Params.PostSubmersionRiseCmPerSecond = FMath::Max(0.0, static_cast<double>(Rules.PostSubmersionRiseCmPerSecond));
+	Params.PostSubmersionMaxRiseCm = FMath::Max(0.0, static_cast<double>(Rules.PostSubmersionMaxRiseCm));
 	return Params;
 }
 
@@ -103,7 +105,14 @@ namespace ExpeditionClock
 		{
 			return 0.0;
 		}
-		return Params.MaxWaterRiseCm * FMath::Pow(Alpha, FMath::Max(0.01, Params.WaterRiseExponent));
+		const double Rise = Params.MaxWaterRiseCm * FMath::Pow(Alpha, FMath::Max(0.01, Params.WaterRiseExponent));
+		// after the submersion the sea keeps rising, linearly and capped, until nobody can stand anywhere
+		const double After = ServerTime - SubmersionEndTime(State, Params);
+		if (After <= 0.0)
+		{
+			return Rise;
+		}
+		return Rise + FMath::Min(After * Params.PostSubmersionRiseCmPerSecond, Params.PostSubmersionMaxRiseCm);
 	}
 
 	double TimeBeforeSubmersion(const FExpeditionClockState& State, double ServerTime)

@@ -81,7 +81,19 @@ void FExpeditionClockSpec::Define()
 			TestEqual(TEXT("150 s"), ExpeditionClock::WaterRiseCm(State, At(150.0), Params),
 				Params.MaxWaterRiseCm * FMath::Pow(0.5, Params.WaterRiseExponent), 0.001);
 			TestEqual(TEXT("180 s"), ExpeditionClock::WaterRiseCm(State, At(180.0), Params), Params.MaxWaterRiseCm, 0.001);
-			TestEqual(TEXT("300 s"), ExpeditionClock::WaterRiseCm(State, At(300.0), Params), Params.MaxWaterRiseCm, 0.001);
+			TestEqual(TEXT("300 s: still rising after the submersion"), ExpeditionClock::WaterRiseCm(State, At(300.0), Params),
+				Params.MaxWaterRiseCm + FMath::Min(120.0 * Params.PostSubmersionRiseCmPerSecond, Params.PostSubmersionMaxRiseCm), 0.001);
+		});
+
+		It("keeps rising after the submersion until nobody can stand, then stops at the cap", [this]()
+		{
+			Params.PostSubmersionRiseCmPerSecond = 10.0;
+			Params.PostSubmersionMaxRiseCm = 1500.0;
+			TestEqual(TEXT("end of the submersion"), ExpeditionClock::WaterRiseCm(State, At(180.0), Params), Params.MaxWaterRiseCm, 0.001);
+			TestEqual(TEXT("+30 s"), ExpeditionClock::WaterRiseCm(State, At(210.0), Params), Params.MaxWaterRiseCm + 300.0, 0.001);
+			TestEqual(TEXT("capped"), ExpeditionClock::WaterRiseCm(State, At(1000.0), Params), Params.MaxWaterRiseCm + 1500.0, 0.001);
+			Params.PostSubmersionRiseCmPerSecond = 0.0;
+			TestEqual(TEXT("off"), ExpeditionClock::WaterRiseCm(State, At(1000.0), Params), Params.MaxWaterRiseCm, 0.001);
 		});
 	});
 
@@ -179,7 +191,7 @@ void FExpeditionClockSpec::Define()
 				}
 				Previous = Rise;
 			}
-			TestEqual(TEXT("fully risen at the end"), Previous, Params.MaxWaterRiseCm, 0.001);
+			TestTrue(TEXT("fully risen at the end"), Previous >= Params.MaxWaterRiseCm - 0.001);
 		});
 
 		It("keeps the phase irreversible once the submersion started", [this]()

@@ -240,7 +240,7 @@ void AFloodSimulationActor::HandleSubmersionEnded()
 		return;
 	}
 	bRiseComplete = true;
-	UE_LOG(Logmonke_island, Log, TEXT("%s: end of the submersion (expedition clock), the sea holds at +%.0f cm"), *GetName(), HeldRiseCm);
+	UE_LOG(Logmonke_island, Log, TEXT("%s: end of the submersion (expedition clock) at +%.0f cm: the sea keeps rising (PostSubmersionRiseCmPerSecond)"), *GetName(), HeldRiseCm);
 }
 
 float AFloodSimulationActor::RiseAt(const UFloodRules& InRules, float Seconds)
