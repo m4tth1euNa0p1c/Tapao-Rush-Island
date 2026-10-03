@@ -146,6 +146,7 @@ namespace MonkeSave
 	 *  3. the current main file becomes the backup if it is valid, otherwise it is moved aside to .corrupt (the backup is kept);
 	 *  4. the temp file becomes the main file. Any failure keeps the last valid copy and reports an error.
 	 *  A crash between 3 and 4 leaves a valid temp file that ReadCandidates picks up.
+	 *  @param bMainKnownDamaged  the main file decodes but was rejected at load (values out of bounds): moved aside, never made the backup
 	 */
-	[[nodiscard]] MONKE_ISLAND_API FWriteReport WriteAtomic(const FCampaignPaths& Paths, const TArray<uint8>& FileBytes, const FGuid& ExpectedId, int32 CurrentSchemaVersion, int64 MaxFileBytes);
+	[[nodiscard]] MONKE_ISLAND_API FWriteReport WriteAtomic(const FCampaignPaths& Paths, const TArray<uint8>& FileBytes, const FGuid& ExpectedId, int32 CurrentSchemaVersion, int64 MaxFileBytes, bool bMainKnownDamaged = false);
 }

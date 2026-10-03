@@ -48,7 +48,9 @@ enum class ESaveError : uint8
 	/** This ExpeditionId was already applied: the existing ledger entry is returned, nothing credited (idempotence) */
 	AlreadyApplied,
 	/** Equipment committed but not owned */
-	InsufficientEquipment
+	InsufficientEquipment,
+	/** Write requested on a client: only the host writes the campaign */
+	NotHost
 };
 
 /** Operation that produced a result */
@@ -230,6 +232,10 @@ struct MONKE_ISLAND_API FSaveOperationResult
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Save")
 	bool bQueued = false;
 
+	/** Final result of an operation already reported as Timeout (same RequestId): the state may have changed since */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Save")
+	bool bLateResult = false;
+
 	/** Load only: the main file was damaged or missing, a last valid copy was used (the damaged file is kept aside, never erased silently) */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Save")
 	bool bLoadedFromBackup = false;
@@ -265,6 +271,9 @@ struct MONKE_ISLAND_API FSaveMessages
 
 	/** Message for an error (empty text for None) */
 	static FText ForError(ESaveError Error);
+
+	/** Message when a write reported as Timeout finally succeeded */
+	static FText LateSaveDone();
 
 	/** Message when a load used the last valid copy */
 	static FText LoadedFromBackup();

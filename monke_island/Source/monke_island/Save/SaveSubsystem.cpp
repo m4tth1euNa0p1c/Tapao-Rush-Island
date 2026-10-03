@@ -11,6 +11,8 @@
 #include "Serialization/MemoryReader.h"
 #include "Serialization/MemoryWriter.h"
 #include "Serialization/ObjectAndNameAsStringProxyArchive.h"
+#include "Engine/GameInstance.h"
+#include "Engine/World.h"
 #include "UObject/Package.h"
 #include <atomic>
 
@@ -41,6 +43,17 @@ namespace
 		OutValue = static_cast<int32>(Value);
 		return true;
 	}
+
+	/** Memory reader whose strings and names can never be longer than the payload itself (SEC-05) */
+	class FBoundedMemoryReader : public FMemoryReader
+	{
+	public:
+		explicit FBoundedMemoryReader(const TArray<uint8>& InBytes)
+			: FMemoryReader(InBytes, true)
+		{
+			ArMaxSerializeSize = InBytes.Num();
+		}
+	};
 
 	/** Total items of a count map */
 	int32 CountItems(const TMap<FName, int32>& Map)
@@ -178,6 +191,10 @@ FSaveOperationResult USaveSubsystem::CreateCampaign(const FString& DisplayName)
 	{
 		return Refuse(ESaveOperation::Create, FGuid(), Name.GetError(), TEXT("invalid display name"));
 	}
+	if (!IsWriteAllowed())
+	{
+		return Refuse(ESaveOperation::Create, FGuid(), ESaveError::NotHost, TEXT("write requested on a client"));
+	}
 	if (RootDirectory.IsEmpty())
 	{
 		return Refuse(ESaveOperation::Create, FGuid(), ESaveError::PathRejected, TEXT("no campaign folder"));
@@ -224,6 +241,10 @@ FSaveOperationResult USaveSubsystem::SaveCurrentCampaign()
 	{
 		return Refuse(ESaveOperation::Save, FGuid(), ESaveError::NoCampaignLoaded, TEXT("no campaign loaded"));
 	}
+	if (!IsWriteAllowed())
+	{
+		return Refuse(ESaveOperation::Save, WorkingCampaign->CampaignId, ESaveError::NotHost, TEXT("write requested on a client"));
+	}
 	return EnqueueWrite(ESaveOperation::Save, WorkingCampaign, false, nullptr, FText::GetEmpty());
 }
 
@@ -232,6 +253,10 @@ FSaveOperationResult USaveSubsystem::RenameCurrentCampaign(const FString& NewDis
 	if (!WorkingCampaign)
 	{
 		return Refuse(ESaveOperation::Rename, FGuid(), ESaveError::NoCampaignLoaded, TEXT("no campaign loaded"));
+	}
+	if (!IsWriteAllowed())
+	{
+		return Refuse(ESaveOperation::Rename, WorkingCampaign->CampaignId, ESaveError::NotHost, TEXT("write requested on a client"));
 	}
 	TValueOrError<FString, ESaveError> Name = ValidateDisplayName(NewDisplayName);
 	if (Name.HasError())
@@ -249,6 +274,10 @@ FSaveOperationResult USaveSubsystem::BeginExpedition(const FGuid& ExpeditionId, 
 		return Refuse(ESaveOperation::BeginExpedition, FGuid(), ESaveError::NoCampaignLoaded, TEXT("no campaign loaded"));
 	}
 	const FGuid CampaignId = WorkingCampaign->CampaignId;
+	if (!IsWriteAllowed())
+	{
+		return Refuse(ESaveOperation::BeginExpedition, CampaignId, ESaveError::NotHost, TEXT("write requested on a client"));
+	}
 	if (!ExpeditionId.IsValid() || CommittedEquipment.Num() > MaxMapEntries)
 	{
 		return Refuse(ESaveOperation::BeginExpedition, CampaignId, ESaveError::InvalidRequest, TEXT("invalid expedition id or equipment list"));
@@ -258,6 +287,26 @@ FSaveOperationResult USaveSubsystem::BeginExpedition(const FGuid& ExpeditionId, 
 		FSaveOperationResult Result = Refuse(ESaveOperation::BeginExpedition, CampaignId, ESaveError::AlreadyApplied, TEXT("expedition id already resolved"));
 		Result.LedgerEntry = *Existing;
 		return Result;
+	}
+	if (WorkingCampaign->HasExpeditionInProgress() && WorkingCampaign->ExpeditionInProgress.ExpeditionId == ExpeditionId)
+	{
+		// Idempotent: same departure requested again (retry after a Timeout). Answer with the write still queued, or at once if written
+		FSaveOperationResult Same;
+		Same.Operation = ESaveOperation::BeginExpedition;
+		Same.CampaignId = CampaignId;
+		for (const TSharedRef<FQueuedOperation>& Pending : Queue)
+		{
+			if (Pending->Operation == ESaveOperation::BeginExpedition && Pending->CampaignId == CampaignId && Pending->StateToCommit.IsValid()
+				&& Pending->StateToCommit->ExpeditionInProgress.ExpeditionId == ExpeditionId)
+			{
+				Same.RequestId = Pending->RequestId;
+				Same.bQueued = true;
+				break;
+			}
+		}
+		UE_LOGFMT(LogMonkeSave, Log, "Campaign {CampaignId}: departure of expedition {ExpeditionId} requested again ({State})",
+			CampaignId.ToString(), ExpeditionId.ToString(), Same.bQueued ? TEXT("write pending") : TEXT("already written"));
+		return Same;
 	}
 	if (WorkingCampaign->HasExpeditionInProgress())
 	{
@@ -284,9 +333,13 @@ FSaveOperationResult USaveSubsystem::BeginExpedition(const FGuid& ExpeditionId, 
 	USG_Campaign* Next = DuplicateCampaign(WorkingCampaign);
 	for (const TPair<FName, int32>& Pair : CommittedEquipment)
 	{
-		int32& Owned = Next->HubEquipment.FindChecked(Pair.Key);
-		Owned -= Pair.Value;
-		if (Owned == 0)
+		int32* Owned = Next->HubEquipment.Find(Pair.Key);
+		if (!ensureMsgf(Owned && *Owned >= Pair.Value, TEXT("Committed equipment changed between validation and copy")))
+		{
+			return Refuse(ESaveOperation::BeginExpedition, CampaignId, ESaveError::InvalidRequest, TEXT("equipment changed during the request"));
+		}
+		*Owned -= Pair.Value;
+		if (*Owned == 0)
 		{
 			Next->HubEquipment.Remove(Pair.Key);
 		}
@@ -308,6 +361,10 @@ FSaveOperationResult USaveSubsystem::ApplyExpeditionResult(const FGuid& Expediti
 		return Refuse(ESaveOperation::ApplyExpeditionResult, FGuid(), ESaveError::NoCampaignLoaded, TEXT("no campaign loaded"));
 	}
 	const FGuid CampaignId = WorkingCampaign->CampaignId;
+	if (!IsWriteAllowed())
+	{
+		return Refuse(ESaveOperation::ApplyExpeditionResult, CampaignId, ESaveError::NotHost, TEXT("write requested on a client"));
+	}
 	if (!ExpeditionId.IsValid())
 	{
 		return Refuse(ESaveOperation::ApplyExpeditionResult, CampaignId, ESaveError::InvalidRequest, TEXT("invalid expedition id"));
@@ -366,8 +423,10 @@ FSaveOperationResult USaveSubsystem::ApplyExpeditionResult(const FGuid& Expediti
 	for (const TPair<FName, int32>& Pair : Result.ReserveDeltaByCategory)
 	{
 		int32& Value = Next->ReserveByCategory.FindOrAdd(Pair.Key);
-		const bool bAdded = AddCount(Value, Pair.Value, Value);
-		check(bAdded); // validated above on the same values
+		if (!ensureMsgf(AddCount(Value, Pair.Value, Value), TEXT("Reserve changed between validation and copy")))
+		{
+			return Refuse(ESaveOperation::ApplyExpeditionResult, CampaignId, ESaveError::InvalidRequest, TEXT("reserve out of bounds"));
+		}
 	}
 	for (const TPair<FName, int32>& Pair : Next->ExpeditionInProgress.CommittedEquipment)
 	{
@@ -376,8 +435,10 @@ FSaveOperationResult USaveSubsystem::ApplyExpeditionResult(const FGuid& Expediti
 		if (Back > 0)
 		{
 			int32& Owned = Next->HubEquipment.FindOrAdd(Pair.Key);
-			const bool bAdded = AddCount(Owned, Back, Owned);
-			check(bAdded); // Back <= committed, which left the hub inventory
+			if (!ensureMsgf(AddCount(Owned, Back, Owned), TEXT("Hub equipment overflow when crediting returned equipment")))
+			{
+				return Refuse(ESaveOperation::ApplyExpeditionResult, CampaignId, ESaveError::InvalidRequest, TEXT("equipment out of bounds"));
+			}
 		}
 		if (Pair.Value - Back > 0)
 		{
@@ -395,6 +456,17 @@ FSaveOperationResult USaveSubsystem::ApplyExpeditionResult(const FGuid& Expediti
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Queue
+
+bool USaveSubsystem::IsWriteAllowed() const
+{
+	if (bActAsClientForTests)
+	{
+		return false;
+	}
+	const UGameInstance* GameInstance = GetGameInstance();
+	const UWorld* World = GameInstance ? GameInstance->GetWorld() : nullptr;
+	return !World || World->GetNetMode() != NM_Client;
+}
 
 TValueOrError<FString, ESaveError> USaveSubsystem::ValidateDisplayName(const FString& DisplayName) const
 {
@@ -428,6 +500,10 @@ FSaveOperationResult USaveSubsystem::Refuse(ESaveOperation Operation, const FGui
 FSaveOperationResult USaveSubsystem::EnqueueWrite(ESaveOperation Operation, USG_Campaign* State, bool bTransactional, const FExpeditionLedgerEntry* LedgerEntry, const FText& SuccessMessage)
 {
 	check(State); // internal callers only
+	if (!IsWriteAllowed())
+	{
+		return Refuse(Operation, State->CampaignId, ESaveError::NotHost, TEXT("write requested on a client"));
+	}
 	TValueOrError<MonkeSave::FCampaignPaths, ESaveError> Paths = MonkeSave::MakeCampaignPaths(RootDirectory, State->CampaignId);
 	if (Paths.HasError())
 	{
@@ -452,6 +528,7 @@ FSaveOperationResult USaveSubsystem::EnqueueWrite(ESaveOperation Operation, USG_
 	Queued->FileBytes = EncodeCampaignFile(Snapshot);
 	Queued->StateToCommit.Reset(Snapshot);
 	Queued->Paths = Paths.StealValue();
+	Queued->bMainKnownDamaged = CampaignsWithRejectedMain.Contains(Queued->CampaignId);
 	Queued->SuccessMessage = SuccessMessage;
 	if (LedgerEntry)
 	{
@@ -498,10 +575,11 @@ void USaveSubsystem::StartOperation(FQueuedOperation& Operation)
 	const FGuid CampaignId = Operation.CampaignId;
 	const int64 MaxBytes = GetMaxFileBytes();
 	const float Delay = DebugWorkerDelaySeconds;
+	const bool bMainKnownDamaged = Operation.bMainKnownDamaged;
 	TArray<uint8> Bytes = MoveTemp(Operation.FileBytes);
 	TSharedPtr<FWorkerStats, ESPMode::ThreadSafe> Stats = WorkerStats;
 
-	Operation.Future = Async(EAsyncExecution::ThreadPool, [bIsRead, Paths, CampaignId, MaxBytes, Delay, Bytes = MoveTemp(Bytes), Stats]()
+	Operation.Future = Async(EAsyncExecution::ThreadPool, [bIsRead, bMainKnownDamaged, Paths, CampaignId, MaxBytes, Delay, Bytes = MoveTemp(Bytes), Stats]()
 	{
 		if (Stats.IsValid())
 		{
@@ -523,7 +601,7 @@ void USaveSubsystem::StartOperation(FQueuedOperation& Operation)
 		}
 		else
 		{
-			Output.Write = MonkeSave::WriteAtomic(Paths, Bytes, CampaignId, USG_Campaign::CurrentSchemaVersion, MaxBytes);
+			Output.Write = MonkeSave::WriteAtomic(Paths, Bytes, CampaignId, USG_Campaign::CurrentSchemaVersion, MaxBytes, bMainKnownDamaged);
 		}
 
 		if (Stats.IsValid())
@@ -620,10 +698,12 @@ void USaveSubsystem::FinishOperation(FQueuedOperation& Operation, FWorkerOutput&
 		UE_LOGFMT(LogMonkeSave, Warning, "Campaign {CampaignId}: damaged main file moved aside (.corrupt), backup kept", Operation.CampaignId.ToString());
 	}
 
+	TArray<FSaveOperationResult> CancelledResults;
 	if (Write.Error == ESaveError::None)
 	{
 		USG_Campaign* Written = Operation.StateToCommit.Get();
 		CommittedCampaign = DuplicateCampaign(Written);
+		CampaignsWithRejectedMain.Remove(Operation.CampaignId);
 		if (Operation.Operation == ESaveOperation::Create)
 		{
 			WorkingCampaign = DuplicateCampaign(Written);
@@ -633,7 +713,7 @@ void USaveSubsystem::FinishOperation(FQueuedOperation& Operation, FWorkerOutput&
 			WorkingCampaign->LastSavedUtc = Written->LastSavedUtc;
 		}
 		Result.LedgerEntry = Operation.LedgerEntry;
-		Result.PlayerMessage = Operation.SuccessMessage;
+		Result.PlayerMessage = Operation.bTimeoutReported ? FSaveMessages::LateSaveDone() : Operation.SuccessMessage;
 		UE_LOGFMT(LogMonkeSave, Display, "{Operation} #{RequestId}: campaign {CampaignId} written",
 			LexToString(Operation.Operation), Operation.RequestId, Operation.CampaignId.ToString());
 		if (!HasPendingWrite())
@@ -649,17 +729,23 @@ void USaveSubsystem::FinishOperation(FQueuedOperation& Operation, FWorkerOutput&
 		SetIndicator(ESaveIndicatorState::Failed);
 		if (Operation.bTransactional)
 		{
-			RollBackAfterFailure(Operation);
+			CancelledResults = RollBackAfterFailure(Operation);
 		}
 	}
 
 	if (Operation.bTimeoutReported)
 	{
+		// Already reported as Timeout: the final outcome is still broadcast (same RequestId) so the caller learns
+		// whether the marker or the result really landed, or was rolled back (ERR-04, ERR-05)
+		Result.bLateResult = true;
 		UE_LOGFMT(LogMonkeSave, Warning, "{Operation} #{RequestId} finished after its timeout with {Error}",
 			LexToString(Operation.Operation), Operation.RequestId, LexToString(Write.Error));
-		return;
 	}
 	Broadcast(Result);
+	for (const FSaveOperationResult& Cancelled : CancelledResults)
+	{
+		Broadcast(Cancelled);
+	}
 }
 
 void USaveSubsystem::FinishLoad(FQueuedOperation& Operation, const MonkeSave::FReadReport& Report, FSaveOperationResult& InOutResult)
@@ -677,6 +763,7 @@ void USaveSubsystem::FinishLoad(FQueuedOperation& Operation, const MonkeSave::FR
 	USG_Campaign* Loaded = nullptr;
 	MonkeSave::EFileSource Source = MonkeSave::EFileSource::Main;
 	bool bMigrated = false;
+	bool bMainRejected = false;
 	for (const MonkeSave::FFileCandidate& Candidate : Report.Candidates)
 	{
 		USG_Campaign* Campaign = DeserializeCampaign(Candidate.File.Payload, this);
@@ -703,8 +790,14 @@ void USaveSubsystem::FinishLoad(FQueuedOperation& Operation, const MonkeSave::FR
 				Reason = TEXT("campaign id mismatch");
 			}
 		}
+		bMainRejected |= Candidate.Source == MonkeSave::EFileSource::Main;
 		UE_LOGFMT(LogMonkeSave, Warning, "Load #{RequestId}: campaign {CampaignId} candidate {Source} rejected ({Reason})",
 			Operation.RequestId, CampaignIdText, static_cast<int32>(Candidate.Source), Reason);
+	}
+	if (bMainRejected)
+	{
+		// Decodes but holds impossible values: the next write moves it aside instead of making it the last valid copy
+		CampaignsWithRejectedMain.Add(Operation.CampaignId);
 	}
 
 	if (!Loaded)
@@ -716,7 +809,7 @@ void USaveSubsystem::FinishLoad(FQueuedOperation& Operation, const MonkeSave::FR
 	}
 
 	InOutResult.bMigrated = bMigrated;
-	InOutResult.bLoadedFromBackup = Report.bMainDamaged || Source == MonkeSave::EFileSource::Backup;
+	InOutResult.bLoadedFromBackup = Report.bMainDamaged || bMainRejected || Source == MonkeSave::EFileSource::Backup;
 	TArray<FText> Messages;
 	if (InOutResult.bLoadedFromBackup)
 	{
@@ -756,13 +849,16 @@ void USaveSubsystem::FinishLoad(FQueuedOperation& Operation, const MonkeSave::FR
 			Operation.RequestId, CampaignIdText, Marker.ExpeditionId.ToString(), CountItems(Entry.LostEquipment));
 		// Not transactional: the recovery is deterministic, so a failed write keeps it in memory (no stuck marker) and the next save retries;
 		// until then the file still holds the marker and a new crash recovers the same way, crediting nothing
-		EnqueueWrite(ESaveOperation::RecoverAbandonedExpedition, WorkingCampaign, false, &Entry, Summary);
+		// The recovery is also the rollback base: a later failed transaction never brings the marker back
+		CommittedCampaign = DuplicateCampaign(WorkingCampaign);
+		// The summary is shown once, with the load result: the recovery write itself carries no message
+		EnqueueWrite(ESaveOperation::RecoverAbandonedExpedition, WorkingCampaign, false, &Entry, FText::GetEmpty());
 	}
 
 	InOutResult.PlayerMessage = Messages.Num() > 0 ? FText::Join(FText::FromString(TEXT("\n")), Messages) : FText::GetEmpty();
 }
 
-void USaveSubsystem::RollBackAfterFailure(const FQueuedOperation& Failed)
+TArray<FSaveOperationResult> USaveSubsystem::RollBackAfterFailure(const FQueuedOperation& Failed)
 {
 	if (Failed.Operation != ESaveOperation::Create && WorkingCampaign && WorkingCampaign->CampaignId == Failed.CampaignId)
 	{
@@ -782,9 +878,10 @@ void USaveSubsystem::RollBackAfterFailure(const FQueuedOperation& Failed)
 			Queue.RemoveAt(Index);
 		}
 	}
+	TArray<FSaveOperationResult> Results;
 	for (const TSharedRef<FQueuedOperation>& Pending : Cancelled)
 	{
-		FSaveOperationResult Result;
+		FSaveOperationResult& Result = Results.AddDefaulted_GetRef();
 		Result.RequestId = Pending->RequestId;
 		Result.Operation = Pending->Operation;
 		Result.CampaignId = Pending->CampaignId;
@@ -792,8 +889,8 @@ void USaveSubsystem::RollBackAfterFailure(const FQueuedOperation& Failed)
 		Result.PlayerMessage = FSaveMessages::ForError(ESaveError::Cancelled);
 		UE_LOGFMT(LogMonkeSave, Warning, "{Operation} #{RequestId} for campaign {CampaignId} cancelled after a failed transaction",
 			LexToString(Pending->Operation), Pending->RequestId, Pending->CampaignId.ToString());
-		Broadcast(Result);
 	}
+	return Results;
 }
 
 void USaveSubsystem::Broadcast(const FSaveOperationResult& Result)
@@ -850,7 +947,8 @@ USG_Campaign* USaveSubsystem::DeserializeCampaign(const TArray<uint8>& Payload, 
 		return nullptr;
 	}
 	USG_Campaign* Campaign = NewObject<USG_Campaign>(Outer ? Outer : GetTransientPackage());
-	FMemoryReader Reader(Payload, true);
+	// Strings and names longer than the payload are refused before allocation; the proxy copies this limit at construction
+	FBoundedMemoryReader Reader(Payload);
 	Reader.ArIsSaveGame = true;
 	FObjectAndNameAsStringProxyArchive Archive(Reader, false);
 	Archive.ArIsSaveGame = true;

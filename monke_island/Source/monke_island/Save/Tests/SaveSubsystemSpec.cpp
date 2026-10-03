@@ -553,7 +553,7 @@ void FSaveErrorsSpec::Define()
 		TestEqual(TEXT("credited once"), Rig->Save->GetCurrentCampaign()->Gold, static_cast<int64>(10));
 	});
 
-	It("reports a timeout, unlocks the caller and still serialises the late write", [this]()
+	It("reports a timeout, unlocks the caller, serialises the late write and broadcasts its final result", [this]()
 	{
 		const FGuid Id = Rig->CreateCampaign();
 		Rig->Save->SetOperationTimeoutForTests(0.05f);
@@ -568,11 +568,181 @@ void FSaveErrorsSpec::Define()
 		TestTrue(TEXT("still pending"), Rig->Save->HasPendingOperations());
 
 		Rig->Save->WaitForIdle();
-		TestEqual(TEXT("no second result"), Rig->Results.Num(), Before + 1);
+		TestTrue(TEXT("late final result, same request"), Rig->Results.Num() == Before + 2 && Rig->Results.Last().RequestId == Save.RequestId
+			&& Rig->Results.Last().bLateResult && Rig->Results.Last().IsSuccess() && !Rig->Results.Last().PlayerMessage.IsEmpty());
+		TestEqual(TEXT("indicator saved after the late success"), Rig->Save->GetIndicatorState(), ESaveIndicatorState::Saved);
 		Rig->Save->SetWorkerDelayForTests(0.0f);
 		TArray<FSaveOperationResult> Results;
 		USG_Campaign* Loaded = Rig->Restart(Id, Results)->GetCurrentCampaign();
 		TestTrue(TEXT("late write completed on disk"), Loaded && Loaded->Gold == 77);
+	});
+
+	It("broadcasts the late result of a departure and answers a retried departure idempotently", [this]()
+	{
+		Rig->CreateCampaign();
+		Rig->GiveEquipment({ { Musket, 1 } });
+		Rig->Save->SetOperationTimeoutForTests(0.05f);
+		Rig->Save->SetWorkerDelayForTests(0.4f);
+		const FGuid Expedition = FGuid::NewGuid();
+		const FSaveOperationResult Begin = Rig->Save->BeginExpedition(Expedition, { { Musket, 1 } });
+		FPlatformProcess::Sleep(0.15f);
+		Rig->Save->PumpQueue();
+		const FSaveOperationResult* Timeout = Rig->FindResult(Begin.RequestId);
+		TestTrue(TEXT("Timeout reported"), Timeout && Timeout->Error == ESaveError::Timeout);
+
+		const FSaveOperationResult Retry = Rig->Save->BeginExpedition(Expedition, { { Musket, 1 } });
+		TestTrue(TEXT("retry joins the pending write"), Retry.IsSuccess() && Retry.bQueued && Retry.RequestId == Begin.RequestId);
+
+		Rig->Save->WaitForIdle();
+		const FSaveOperationResult Late = Rig->Results.Last();
+		TestTrue(TEXT("late success broadcast"), Late.RequestId == Begin.RequestId && Late.bLateResult && Late.IsSuccess());
+		TestEqual(TEXT("indicator saved"), Rig->Save->GetIndicatorState(), ESaveIndicatorState::Saved);
+		TestTrue(TEXT("marker on disk"), Rig->Save->GetCommittedCampaign()->HasExpeditionInProgress());
+
+		Rig->Save->SetWorkerDelayForTests(0.0f);
+		const FSaveOperationResult Again = Rig->Save->BeginExpedition(Expedition, { { Musket, 1 } });
+		TestTrue(TEXT("written departure answered at once"), Again.IsSuccess() && !Again.bQueued);
+		TestFalse(TEXT("nothing queued"), Rig->Save->HasPendingOperations());
+
+		FExpeditionResultToApply Result;
+		Result.GoldDelta = 5;
+		const FSaveOperationResult Apply = Rig->Save->ApplyExpeditionResult(Expedition, Result);
+		Rig->Save->WaitForIdle();
+		const FSaveOperationResult* ApplyDone = Rig->FindResult(Apply.RequestId);
+		TestTrue(TEXT("expedition resolves normally"), ApplyDone && ApplyDone->IsSuccess());
+	});
+
+	It("broadcasts the late failure of a result and rolls it back so it can be applied again", [this]()
+	{
+		const FGuid Id = Rig->CreateCampaign();
+		const FGuid Expedition = FGuid::NewGuid();
+		Rig->Save->BeginExpedition(Expedition, TMap<FName, int32>());
+		Rig->Save->WaitForIdle();
+
+		const MonkeSave::FCampaignPaths Paths = Rig->Paths(Id);
+		AddExpectedMessagePlain(TEXT("not written"), ELogVerbosity::Error, EAutomationExpectedMessageFlags::Contains, 1);
+		Rig->Save->SetOperationTimeoutForTests(0.05f);
+		Rig->Save->SetWorkerDelayForTests(0.4f);
+		FExpeditionResultToApply Result;
+		Result.GoldDelta = 30;
+		const FSaveOperationResult Apply = Rig->Save->ApplyExpeditionResult(Expedition, Result);
+		// The worker sleeps first, then finds the write impossible
+		IFileManager::Get().MakeDirectory(*Paths.Temp, true);
+		FPlatformProcess::Sleep(0.15f);
+		Rig->Save->PumpQueue();
+		const FSaveOperationResult* Timeout = Rig->FindResult(Apply.RequestId);
+		TestTrue(TEXT("Timeout reported"), Timeout && Timeout->Error == ESaveError::Timeout);
+
+		Rig->Save->WaitForIdle();
+		const FSaveOperationResult Late = Rig->Results.Last();
+		TestTrue(TEXT("late failure broadcast"), Late.RequestId == Apply.RequestId && Late.bLateResult && Late.Error == ESaveError::WriteFailed);
+		USG_Campaign* Campaign = Rig->Save->GetCurrentCampaign();
+		TestTrue(TEXT("rolled back: marker back, nothing credited"), Campaign && Campaign->HasExpeditionInProgress() && Campaign->Gold == 0 && !Campaign->IsExpeditionApplied(Expedition));
+
+		IFileManager::Get().DeleteDirectory(*Paths.Temp, false, true);
+		Rig->Save->SetWorkerDelayForTests(0.0f);
+		const FSaveOperationResult Retry = Rig->Save->ApplyExpeditionResult(Expedition, Result);
+		Rig->Save->WaitForIdle();
+		const FSaveOperationResult* RetryDone = Rig->FindResult(Retry.RequestId);
+		TestTrue(TEXT("retry queued and written"), Retry.bQueued && RetryDone && RetryDone->IsSuccess());
+		TestEqual(TEXT("credited once"), Rig->Save->GetCurrentCampaign()->Gold, static_cast<int64>(30));
+	});
+
+	It("never brings an abandoned expedition back when the recovery write and a later transaction both fail", [this]()
+	{
+		const FGuid Id = Rig->CreateCampaign();
+		Rig->GiveEquipment({ { Musket, 2 } });
+		const FGuid Expedition = FGuid::NewGuid();
+		Rig->Save->BeginExpedition(Expedition, { { Musket, 1 } });
+		Rig->Save->WaitForIdle();
+		// "Crash", then the disk refuses every write
+		const MonkeSave::FCampaignPaths Paths = Rig->Paths(Id);
+		IFileManager::Get().MakeDirectory(*Paths.Temp, true);
+		AddExpectedMessagePlain(TEXT("not written"), ELogVerbosity::Error, EAutomationExpectedMessageFlags::Contains, 2);
+
+		TArray<FSaveOperationResult> Results;
+		USaveSubsystem* Fresh = Rig->Restart(Id, Results);
+		const FSaveOperationResult* Recover = Results.FindByPredicate([](const FSaveOperationResult& R) { return R.Operation == ESaveOperation::RecoverAbandonedExpedition; });
+		TestTrue(TEXT("recovery write failed"), Recover && Recover->Error == ESaveError::WriteFailed);
+
+		const FSaveOperationResult Begin = Fresh->BeginExpedition(FGuid::NewGuid(), { { Musket, 1 } });
+		Fresh->WaitForIdle();
+		const FSaveOperationResult* BeginDone = Results.FindByPredicate([&Begin](const FSaveOperationResult& R) { return R.RequestId == Begin.RequestId; });
+		TestTrue(TEXT("departure write failed"), BeginDone && BeginDone->Error == ESaveError::WriteFailed);
+
+		USG_Campaign* Campaign = Fresh->GetCurrentCampaign();
+		if (!TestNotNull(TEXT("campaign still loaded"), Campaign))
+		{
+			return;
+		}
+		const FExpeditionLedgerEntry* Abandoned = Campaign->FindLedgerEntry(Expedition);
+		TestFalse(TEXT("abandoned marker not brought back"), Campaign->HasExpeditionInProgress());
+		TestTrue(TEXT("abandoned entry kept"), Abandoned && Abandoned->bAbandoned);
+		TestEqual(TEXT("lost musket stays lost, the other one is back"), Campaign->HubEquipment.FindRef(Musket), 1);
+		TestEqual(TEXT("late result for the abandoned expedition refused"), Fresh->ApplyExpeditionResult(Expedition, FExpeditionResultToApply()).Error, ESaveError::AlreadyApplied);
+		IFileManager::Get().DeleteDirectory(*Paths.Temp, false, true);
+	});
+
+	It("shows the abandon summary once: the recovery write carries no message", [this]()
+	{
+		const FGuid Id = Rig->CreateCampaign();
+		Rig->Save->BeginExpedition(FGuid::NewGuid(), TMap<FName, int32>());
+		Rig->Save->WaitForIdle();
+
+		TArray<FSaveOperationResult> Results;
+		Rig->Restart(Id, Results);
+		const FSaveOperationResult* Load = Results.FindByPredicate([](const FSaveOperationResult& R) { return R.Operation == ESaveOperation::Load; });
+		const FSaveOperationResult* Recover = Results.FindByPredicate([](const FSaveOperationResult& R) { return R.Operation == ESaveOperation::RecoverAbandonedExpedition; });
+		TestTrue(TEXT("summary on the load result"), Load && Load->bRecoveredAbandonedExpedition && !Load->PlayerMessage.IsEmpty());
+		TestTrue(TEXT("recovery result silent"), Recover && Recover->IsSuccess() && Recover->PlayerMessage.IsEmpty());
+	});
+
+	It("moves a main file rejected by validation aside instead of making it the backup", [this]()
+	{
+		const FGuid Id = Rig->CreateCampaign();
+		Rig->Save->GetCurrentCampaign()->Gold = 12;
+		Rig->Save->SaveCurrentCampaign();
+		Rig->Save->SaveCurrentCampaign();
+		Rig->Save->WaitForIdle();
+		const MonkeSave::FCampaignPaths Paths = Rig->Paths(Id);
+
+		// Well-formed file (envelope and checksum fine) holding an impossible value
+		USG_Campaign* Bad = NewObject<USG_Campaign>(GetTransientPackage());
+		Bad->CampaignId = Id;
+		Bad->DisplayName = TEXT("Invalide");
+		Bad->Gold = -5;
+		FFileHelper::SaveArrayToFile(USaveSubsystem::EncodeCampaignFile(Bad), *Paths.Main);
+
+		TArray<FSaveOperationResult> Results;
+		USaveSubsystem* Fresh = Rig->Restart(Id, Results);
+		TestTrue(TEXT("loaded from the last valid copy"), Results.Num() == 1 && Results[0].bLoadedFromBackup && Fresh->GetCurrentCampaign() && Fresh->GetCurrentCampaign()->Gold == 12);
+
+		Fresh->SaveCurrentCampaign();
+		Fresh->WaitForIdle();
+		TestTrue(TEXT("rejected main moved aside"), IFileManager::Get().FileExists(*Paths.Corrupt));
+		TArray<uint8> BackupBytes;
+		FFileHelper::LoadFileToArray(BackupBytes, *Paths.Backup);
+		TValueOrError<MonkeSave::FDecodedFile, ESaveError> Backup = MonkeSave::Decode(BackupBytes, USG_Campaign::CurrentSchemaVersion, 1 << 22);
+		USG_Campaign* BackupCampaign = Backup.HasValue() ? USaveSubsystem::DeserializeCampaign(Backup.GetValue().Payload, GetTransientPackage()) : nullptr;
+		TestTrue(TEXT("backup is still the valid copy"), BackupCampaign && BackupCampaign->Gold == 12);
+	});
+
+	It("refuses every write on a client: only the host writes the campaign", [this]()
+	{
+		Rig->CreateCampaign();
+		Rig->GiveEquipment({ { Musket, 1 } });
+		Rig->Save->SetActAsClientForTests(true);
+		const int32 Before = Rig->Results.Num();
+		TestEqual(TEXT("create"), Rig->Save->CreateCampaign(TEXT("Client")).Error, ESaveError::NotHost);
+		TestEqual(TEXT("save"), Rig->Save->SaveCurrentCampaign().Error, ESaveError::NotHost);
+		TestEqual(TEXT("rename"), Rig->Save->RenameCurrentCampaign(TEXT("Client")).Error, ESaveError::NotHost);
+		TestEqual(TEXT("begin"), Rig->Save->BeginExpedition(FGuid::NewGuid(), { { Musket, 1 } }).Error, ESaveError::NotHost);
+		TestEqual(TEXT("apply"), Rig->Save->ApplyExpeditionResult(FGuid::NewGuid(), FExpeditionResultToApply()).Error, ESaveError::NotHost);
+		TestFalse(TEXT("nothing queued"), Rig->Save->HasPendingOperations());
+		TestEqual(TEXT("no result broadcast"), Rig->Results.Num(), Before);
+		USG_Campaign* Campaign = Rig->Save->GetCurrentCampaign();
+		TestTrue(TEXT("state untouched"), Campaign && Campaign->HubEquipment.FindRef(Musket) == 1 && Campaign->DisplayName != TEXT("Client"));
+		TestFalse(TEXT("player message"), FSaveMessages::ForError(ESaveError::NotHost).IsEmpty());
 	});
 
 	It("rejects truncated and tampered envelopes in the decoder", [this]()

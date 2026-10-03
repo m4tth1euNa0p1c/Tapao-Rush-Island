@@ -101,7 +101,10 @@ public:
 	UFUNCTION(BlueprintPure, Category="Save")
 	USG_Campaign* GetCurrentCampaign() const { return WorkingCampaign; }
 
-	/** Last campaign state confirmed on disk, or nullptr */
+	/**
+	 *  Base of the rollbacks: last campaign state confirmed on disk, plus the deterministic recovery of an abandoned
+	 *  expedition done at load (so a failed transaction never brings the marker back). nullptr when none.
+	 */
 	USG_Campaign* GetCommittedCampaign() const { return CommittedCampaign; }
 
 	/** Save indicator state */
@@ -156,6 +159,8 @@ public:
 	void SetWorkerDelayForTests(float Seconds) { DebugWorkerDelaySeconds = Seconds; }
 	/** Tests: highest number of disk operations seen running at the same time (must stay 1) */
 	int32 GetMaxConcurrentWorkersForTests() const;
+	/** Tests: behaves as on a client (NM_Client), where every write is refused */
+	void SetActAsClientForTests(bool bActAsClient) { bActAsClientForTests = bActAsClient; }
 #endif
 
 protected:
@@ -217,6 +222,8 @@ private:
 		FText SuccessMessage;
 		/** Files of the campaign */
 		MonkeSave::FCampaignPaths Paths;
+		/** The main file was rejected at load: moved aside at this write, never made the backup */
+		bool bMainKnownDamaged = false;
 		/** Started on a worker */
 		bool bStarted = false;
 		/** Start time (platform seconds) */
@@ -226,6 +233,9 @@ private:
 		/** Disk operation */
 		TFuture<FWorkerOutput> Future;
 	};
+
+	/** False on a client (NM_Client): only the host writes the campaign */
+	bool IsWriteAllowed() const;
 
 	/** Validates and trims a display name */
 	[[nodiscard]] TValueOrError<FString, ESaveError> ValidateDisplayName(const FString& DisplayName) const;
@@ -248,8 +258,8 @@ private:
 	/** Game thread end of a load: deserialise, validate, migrate, recover an abandoned expedition */
 	void FinishLoad(FQueuedOperation& Operation, const MonkeSave::FReadReport& Report, FSaveOperationResult& InOutResult);
 
-	/** Rolls the working state back after a failed transaction and cancels the following operations of the campaign */
-	void RollBackAfterFailure(const FQueuedOperation& Failed);
+	/** Rolls the working state back after a failed transaction and cancels the following operations of the campaign; returns their results to broadcast */
+	TArray<FSaveOperationResult> RollBackAfterFailure(const FQueuedOperation& Failed);
 
 	/** Broadcasts a final result */
 	void Broadcast(const FSaveOperationResult& Result);
@@ -297,4 +307,10 @@ private:
 
 	/** Artificial delay in each disk operation (tests) */
 	float DebugWorkerDelaySeconds = 0.0f;
+
+	/** Act as a client (tests) */
+	bool bActAsClientForTests = false;
+
+	/** Campaigns whose main file decoded but was rejected at load: their next write moves it aside */
+	TSet<FGuid> CampaignsWithRejectedMain;
 };

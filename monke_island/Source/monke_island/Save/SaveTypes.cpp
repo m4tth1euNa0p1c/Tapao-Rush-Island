@@ -33,6 +33,8 @@ void FSaveMessages::EnsureRegistered()
 	LOCTABLE_SETSTRING("MonkeSave", "Error_ExpeditionMismatch", "Ce bilan ne correspond pas à l'expédition en cours.");
 	LOCTABLE_SETSTRING("MonkeSave", "Error_AlreadyApplied", "Ce bilan a déjà été appliqué.");
 	LOCTABLE_SETSTRING("MonkeSave", "Error_InsufficientEquipment", "Équipement insuffisant pour partir.");
+	LOCTABLE_SETSTRING("MonkeSave", "Error_NotHost", "Seul l'hôte peut sauvegarder la campagne.");
+	LOCTABLE_SETSTRING("MonkeSave", "Info_LateSaveDone", "La sauvegarde en retard est terminée.");
 	LOCTABLE_SETSTRING("MonkeSave", "Info_LoadedFromBackup", "Le fichier principal était endommagé : la dernière copie valide a été chargée.");
 	LOCTABLE_SETSTRING("MonkeSave", "Info_AbandonedExpedition", "Expédition interrompue : retour au galion. Équipement engagé perdu ({0}), aucun butin crédité.");
 	LOCTABLE_SETSTRING("MonkeSave", "Indicator_Saving", "Sauvegarde…");
@@ -63,8 +65,15 @@ FText FSaveMessages::ForError(ESaveError Error)
 	case ESaveError::ExpeditionMismatch:			return LOCTABLE("MonkeSave", "Error_ExpeditionMismatch");
 	case ESaveError::AlreadyApplied:				return LOCTABLE("MonkeSave", "Error_AlreadyApplied");
 	case ESaveError::InsufficientEquipment:			return LOCTABLE("MonkeSave", "Error_InsufficientEquipment");
+	case ESaveError::NotHost:						return LOCTABLE("MonkeSave", "Error_NotHost");
 	}
 	return LOCTABLE("MonkeSave", "Error_ReadFailed");
+}
+
+FText FSaveMessages::LateSaveDone()
+{
+	EnsureRegistered();
+	return LOCTABLE("MonkeSave", "Info_LateSaveDone");
 }
 
 FText FSaveMessages::LoadedFromBackup()

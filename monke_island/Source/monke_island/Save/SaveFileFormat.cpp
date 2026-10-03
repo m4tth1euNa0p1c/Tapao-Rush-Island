@@ -275,7 +275,7 @@ namespace MonkeSave
 		return Report;
 	}
 
-	FWriteReport WriteAtomic(const FCampaignPaths& Paths, const TArray<uint8>& FileBytes, const FGuid& ExpectedId, int32 CurrentSchemaVersion, int64 MaxFileBytes)
+	FWriteReport WriteAtomic(const FCampaignPaths& Paths, const TArray<uint8>& FileBytes, const FGuid& ExpectedId, int32 CurrentSchemaVersion, int64 MaxFileBytes, bool bMainKnownDamaged)
 	{
 		FWriteReport Report;
 		IFileManager& FileManager = IFileManager::Get();
@@ -330,7 +330,7 @@ namespace MonkeSave
 		if (FileManager.FileExists(*Paths.Main))
 		{
 			TValueOrError<TArray<uint8>, ESaveError> MainBytes = ReadBoundedFile(Paths.Main, MaxFileBytes);
-			const bool bMainValid = MainBytes.HasValue() && Decode(MainBytes.GetValue(), CurrentSchemaVersion, MaxFileBytes).HasValue();
+			const bool bMainValid = !bMainKnownDamaged && MainBytes.HasValue() && Decode(MainBytes.GetValue(), CurrentSchemaVersion, MaxFileBytes).HasValue();
 			if (bMainValid)
 			{
 				if (!FileManager.Move(*Paths.Backup, *Paths.Main, true, true, false, true))
