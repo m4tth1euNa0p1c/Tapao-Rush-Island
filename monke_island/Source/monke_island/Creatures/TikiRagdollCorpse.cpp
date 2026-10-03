@@ -24,7 +24,7 @@ namespace
 	const FName RagdollProfile(TEXT("Ragdoll"));
 
 	/** True when the corpse lies in a boat: its floor is below the sea outside, the water does not wash it away */
-	bool IsInBoat(const UWorld* World, const FVector& Location)
+	bool IsRagdollInBoat(const UWorld* World, const FVector& Location)
 	{
 		for (TActorIterator<ABoatActor> It(World); It; ++It)
 		{
@@ -202,7 +202,7 @@ void ATikiRagdollCorpse::CheckFlood()
 	}
 	const FBox Bounds = Body->Bounds.GetBox();
 	const float Surface = Water->GetWaterSurfaceAt(Bounds.GetCenter());
-	if (Surface - Bounds.Min.Z > Rules->CorpseFloodDepth && !IsInBoat(GetWorld(), Bounds.GetCenter()))
+	if (Surface - Bounds.Min.Z > Rules->CorpseFloodDepth && !IsRagdollInBoat(GetWorld(), Bounds.GetCenter()))
 	{
 		UE_LOG(Logmonke_island, Log, TEXT("%s washed away by the water (%.0f cm deep)"), *GetName(), Surface - Bounds.Min.Z);
 		Destroy();
