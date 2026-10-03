@@ -507,6 +507,12 @@ def main():
                     xf = f"{x:.1f},{y:.1f},{z:.1f}|{pitch:.2f},{yaw:.1f},{roll:.2f}|{s:.3f},{s:.3f},{s:.3f}"
                     w.writerow([f"{prefix}{k:02d}_{j:06d}", doc["meshes"][rows_n[i]], xf])
     doc["chunks"] = chunks
+    if not args.no_csv:   # villages generes (scripts/map/place_villages.py) : rien sous les maisons, la place, la route
+        vc = _load("village_clearing", ROOT / "scripts" / "map" / "village_clearing.py")
+        cleared = vc.refresh(raw, [f"{c['name']}.csv" for c in chunks], vc.Clearing.load(args.island))
+        if any(cleared.values()):
+            print(f"villages : {sum(cleared.values())} instances retirees sous les villages "
+                  f"({vc.memory_path(args.island).relative_to(ROOT)}), copies completes dans {raw.name}/_orig")
     (out / "vegetation_ue.json").write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
     for cls in PHYSICS:
         sel = [c for c in chunks if c["physics"] == cls]

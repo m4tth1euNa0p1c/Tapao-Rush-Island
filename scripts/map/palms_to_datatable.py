@@ -6,8 +6,11 @@ Le CSV utilise la structure de ligne moteur GameplayTagTableRow (seule structure
   Tag        = chemin du static mesh (FName) -> PCG « Analyser la chaîne » en SoftObjectPath -> sélection du mesh
   DevComment = transformation "x,y,z|pitch,yaw,roll|sx,sy,sz" (cm, degrés) -> PCG « Analyser la chaîne » en $Transform
 Sortie : docs/reference/map/raw/<ile>_vegetation/DT_<Ile>_Palms.csv (régénérable, ignoré par git)
+Villages générés (scripts/map/place_villages.py) : les cocotiers sous les maisons, la place et la route sont retirés
+(copie complète dans raw/<ile>_vegetation/_orig/).
 """
 import csv
+import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -39,6 +42,12 @@ def main():
                 w.writerow([f"P{n:06d}", MESH.format(v=v), xf])
                 n += 1
     print(f"{n} lignes -> {path} ({path.stat().st_size / 1e6:.1f} Mo)")
+    spec = importlib.util.spec_from_file_location("village_clearing", ROOT / "scripts" / "map" / "village_clearing.py")
+    vc = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(vc)
+    cleared = vc.refresh(out, [path.name], vc.Clearing.load(island))[path.name]
+    if cleared:
+        print(f"villages : {cleared} cocotiers retirés sous les villages")
 
 
 if __name__ == "__main__":

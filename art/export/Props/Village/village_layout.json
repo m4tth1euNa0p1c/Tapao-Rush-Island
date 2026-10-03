@@ -1,0 +1,1204 @@
+{
+ "village": "VillageA",
+ "units": "cm and degrees in Blender axes (+Y north); Unreal: (x, -y, z) and yaw -> -yaw",
+ "origin": "village square = pacification zone centre is at PLAZA",
+ "zone": {
+  "name": "PacificationZone_VillageA",
+  "center": [
+   0.0,
+   1000.0,
+   0
+  ],
+  "radius_cm": 7500.0,
+  "flag": [
+   0.0,
+   1000.0,
+   0
+  ]
+ },
+ "items": [
+  {
+   "name": "Minka_00",
+   "asset": "SM_Minka",
+   "loc": [
+    -6310.0,
+    544.1,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "Kura_00",
+   "asset": "SM_Village_Kura",
+   "loc": [
+    -5084.5,
+    1638.0,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "BambooFence_002",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -6512.3,
+    85.1,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "BambooFence_003",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -6312.3,
+    84.1,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "BambooFence_004",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -5892.3,
+    82.0,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "BambooFence_005",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -5692.3,
+    81.0,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "BambooFence_006",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -5492.3,
+    80.0,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "BambooFence_007",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -5292.3,
+    79.0,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "BambooFence_008",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -5092.3,
+    78.0,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "BambooFence_009",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -4892.3,
+    77.0,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "StoneLantern_010",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    -6372.6,
+    24.4,
+    0.0
+   ],
+   "yaw": -0.29
+  },
+  {
+   "name": "Minka_01",
+   "asset": "SM_Minka",
+   "loc": [
+    -3710.0,
+    531.1,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "BambooFence_012",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -3907.1,
+    69.8,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "BambooFence_013",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -3707.1,
+    71.1,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "BambooFence_014",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -3287.1,
+    73.7,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "BambooFence_015",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -3087.1,
+    75.0,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "BambooFence_016",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -2887.1,
+    76.2,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "BambooFence_017",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -2687.1,
+    77.5,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "BambooFence_018",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -2487.1,
+    78.7,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "BambooFence_019",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -2287.1,
+    80.0,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "StoneLantern_020",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    -3766.7,
+    10.7,
+    0.0
+   ],
+   "yaw": 0.36
+  },
+  {
+   "name": "Minka_02",
+   "asset": "SM_Minka",
+   "loc": [
+    2690.0,
+    1258.9,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "Kura_02",
+   "asset": "SM_Village_Kura",
+   "loc": [
+    3859.9,
+    2412.0,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "BambooFence_023",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    2510.6,
+    790.5,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "BambooFence_024",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    2710.4,
+    799.4,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "BambooFence_025",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    3130.0,
+    818.0,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "BambooFence_026",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    3329.8,
+    826.9,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "BambooFence_027",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    3529.6,
+    835.8,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "BambooFence_028",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    3729.4,
+    844.7,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "BambooFence_029",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    3929.2,
+    853.6,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "BambooFence_030",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    4129.0,
+    862.4,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "StoneLantern_031",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    2653.2,
+    736.8,
+    0.0
+   ],
+   "yaw": 2.55
+  },
+  {
+   "name": "Minka_03",
+   "asset": "SM_Minka",
+   "loc": [
+    5290.0,
+    1245.9,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "BambooFence_033",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    5088.3,
+    786.6,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "BambooFence_034",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    5288.3,
+    785.9,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "BambooFence_035",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    5708.3,
+    784.4,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "BambooFence_036",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    5908.3,
+    783.7,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "BambooFence_037",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    6108.3,
+    783.0,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "BambooFence_038",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    6308.3,
+    782.2,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "BambooFence_039",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    6508.3,
+    781.5,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "BambooFence_040",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    6708.3,
+    780.8,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "StoneLantern_041",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    5228.1,
+    726.1,
+    0.0
+   ],
+   "yaw": -0.21
+  },
+  {
+   "name": "Minka_04",
+   "asset": "SM_Minka",
+   "loc": [
+    -4090.0,
+    -1294.0,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "Kura_04",
+   "asset": "SM_Village_Kura",
+   "loc": [
+    -5309.1,
+    -2395.0,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "BambooFence_044",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -3890.4,
+    -833.8,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "BambooFence_045",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -4090.4,
+    -834.0,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "BambooFence_046",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -4510.4,
+    -834.3,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "BambooFence_047",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -4710.4,
+    -834.5,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "BambooFence_048",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -4910.4,
+    -834.6,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "BambooFence_049",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -5110.4,
+    -834.8,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "BambooFence_050",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -5310.4,
+    -835.0,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "BambooFence_051",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -5510.4,
+    -835.1,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "StoneLantern_052",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    -4030.4,
+    -773.9,
+    0.0
+   ],
+   "yaw": 180.05
+  },
+  {
+   "name": "Minka_05",
+   "asset": "SM_Minka",
+   "loc": [
+    -1290.0,
+    -1134.8,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "BambooFence_054",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -1094.2,
+    -673.0,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "BambooFence_055",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -1294.2,
+    -674.8,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "BambooFence_056",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -1714.2,
+    -678.7,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "BambooFence_057",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -1914.2,
+    -680.5,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "BambooFence_058",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -2114.2,
+    -682.3,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "BambooFence_059",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -2314.2,
+    -684.1,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "BambooFence_060",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -2514.2,
+    -686.0,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "BambooFence_061",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    -2714.1,
+    -687.8,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "StoneLantern_062",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    -1234.8,
+    -614.3,
+    0.0
+   ],
+   "yaw": 180.52
+  },
+  {
+   "name": "Minka_06",
+   "asset": "SM_Minka",
+   "loc": [
+    2310.0,
+    -655.2,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "Kura_06",
+   "asset": "SM_Village_Kura",
+   "loc": [
+    1054.3,
+    -1714.3,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "BambooFence_065",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    2525.1,
+    -202.1,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "BambooFence_066",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    2325.2,
+    -195.5,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "BambooFence_067",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    1905.4,
+    -181.6,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "BambooFence_068",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    1705.5,
+    -175.0,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "BambooFence_069",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    1505.6,
+    -168.4,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "BambooFence_070",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    1305.7,
+    -161.8,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "BambooFence_071",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    1105.9,
+    -155.2,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "BambooFence_072",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    906.0,
+    -148.6,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "StoneLantern_073",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    2387.1,
+    -137.5,
+    0.0
+   ],
+   "yaw": 178.11
+  },
+  {
+   "name": "Minka_07",
+   "asset": "SM_Minka",
+   "loc": [
+    5110.0,
+    -496.0,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "BambooFence_075",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    5309.4,
+    -35.8,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "BambooFence_076",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    5109.4,
+    -36.0,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "BambooFence_077",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    4689.4,
+    -36.6,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "BambooFence_078",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    4489.4,
+    -36.8,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "BambooFence_079",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    4289.4,
+    -37.1,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "BambooFence_080",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    4089.4,
+    -37.3,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "BambooFence_081",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    3889.4,
+    -37.6,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "BambooFence_082",
+   "asset": "SM_Village_BambooFence",
+   "loc": [
+    3689.4,
+    -37.8,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "StoneLantern_083",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    5169.4,
+    24.0,
+    0.0
+   ],
+   "yaw": 180.07
+  },
+  {
+   "name": "Well",
+   "asset": "SM_Village_Well",
+   "loc": [
+    -260.0,
+    1100.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "NoticeBoard",
+   "asset": "SM_Village_NoticeBoard",
+   "loc": [
+    380.0,
+    500.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "FireTower",
+   "asset": "SM_Village_FireTower",
+   "loc": [
+    850.0,
+    1500.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "StoneLantern_087",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    -650.0,
+    300.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "StoneLantern_088",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    650.0,
+    300.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "Torii",
+   "asset": "SM_Village_Torii",
+   "loc": [
+    0.0,
+    2600.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "StoneLantern_090",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    -230.0,
+    3100.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "StoneLantern_091",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    230.0,
+    3100.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "StoneLantern_092",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    -230.0,
+    3800.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "StoneLantern_093",
+   "asset": "SM_Village_StoneLantern",
+   "loc": [
+    230.0,
+    3800.0,
+    0.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "name": "Shrine",
+   "asset": "SM_Village_Shrine",
+   "loc": [
+    0.0,
+    4700.0,
+    0.0
+   ],
+   "yaw": 0.0
+  }
+ ],
+ "npc_spawns": [
+  {
+   "name": "NPC_Maison00_Doma",
+   "loc": [
+    -6185.8,
+    373.5,
+    0.0
+   ],
+   "area": "maison_00",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison00_Engawa",
+   "loc": [
+    -5751.2,
+    301.3,
+    0.0
+   ],
+   "area": "maison_00",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison01_Doma",
+   "loc": [
+    -3583.9,
+    361.9,
+    0.0
+   ],
+   "area": "maison_01",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison01_Engawa",
+   "loc": [
+    -3148.5,
+    294.6,
+    0.0
+   ],
+   "area": "maison_01",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison02_Doma",
+   "loc": [
+    2822.4,
+    1094.6,
+    0.0
+   ],
+   "area": "maison_02",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison02_Engawa",
+   "loc": [
+    3260.1,
+    1044.0,
+    0.0
+   ],
+   "area": "maison_02",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison03_Doma",
+   "loc": [
+    5414.4,
+    1075.5,
+    0.0
+   ],
+   "area": "maison_03",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison03_Engawa",
+   "loc": [
+    5849.1,
+    1003.9,
+    0.0
+   ],
+   "area": "maison_03",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison04_Doma",
+   "loc": [
+    -4215.1,
+    -1124.1,
+    0.0
+   ],
+   "area": "maison_04",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison04_Engawa",
+   "loc": [
+    -4650.2,
+    -1054.4,
+    0.0
+   ],
+   "area": "maison_04",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison05_Doma",
+   "loc": [
+    -1416.6,
+    -965.9,
+    0.0
+   ],
+   "area": "maison_05",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison05_Engawa",
+   "loc": [
+    -1852.2,
+    -899.9,
+    0.0
+   ],
+   "area": "maison_05",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison06_Doma",
+   "loc": [
+    2190.7,
+    -481.2,
+    0.0
+   ],
+   "area": "maison_06",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison06_Engawa",
+   "loc": [
+    1758.2,
+    -396.8,
+    0.0
+   ],
+   "area": "maison_06",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison07_Doma",
+   "loc": [
+    4984.8,
+    -326.2,
+    0.0
+   ],
+   "area": "maison_07",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Maison07_Engawa",
+   "loc": [
+    4549.7,
+    -256.7,
+    0.0
+   ],
+   "area": "maison_07",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Place_0",
+   "loc": [
+    388.9,
+    1388.9,
+    0.0
+   ],
+   "area": "place",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Place_1",
+   "loc": [
+    -388.9,
+    1388.9,
+    0.0
+   ],
+   "area": "place",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Place_2",
+   "loc": [
+    -388.9,
+    611.1,
+    0.0
+   ],
+   "area": "place",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Place_3",
+   "loc": [
+    388.9,
+    611.1,
+    0.0
+   ],
+   "area": "place",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Sanctuaire_0",
+   "loc": [
+    -200.0,
+    4200.0,
+    0.0
+   ],
+   "area": "sanctuaire",
+   "role": "villager"
+  },
+  {
+   "name": "NPC_Sanctuaire_1",
+   "loc": [
+    200.0,
+    4200.0,
+    0.0
+   ],
+   "area": "sanctuaire",
+   "role": "villager"
+  }
+ ],
+ "tris": {
+  "SM_Minka": 37746,
+  "SM_Village_Kura": 176,
+  "SM_Village_Well": 472,
+  "SM_Village_NoticeBoard": 96,
+  "SM_Village_FireTower": 1056,
+  "SM_Village_Torii": 372,
+  "SM_Village_Shrine": 168,
+  "SM_Village_StoneLantern": 176,
+  "SM_Village_BambooFence": 504
+ }
+}

@@ -37,20 +37,61 @@ def find(folder, *keys):
 
 
 def derived(src, name, mul=(1.0, 1.0, 1.0), add=(0.0, 0.0, 0.0), sat=1.0):
-    """Tinted copy of a colour texture (kept as a real image so glTF / FBX keep the look)."""
-    from PIL import Image, ImageEnhance
+    """Tinted copy of a colour texture (kept as a real image so glTF / FBX keep the look). Uses numpy inside
+    Blender (no PIL there); the result is cached in art/textures/props/minka/_derived."""
+    import numpy as np
     DERIVED.mkdir(parents=True, exist_ok=True)
     dst = DERIVED / f"{name}.jpg"
     if dst.exists() and dst.stat().st_mtime > Path(src).stat().st_mtime:
         return dst
-    im = Image.open(src).convert("RGB")
+    img = bpy.data.images.load(str(src), check_existing=False)
+    w, h = img.size
+    px = np.empty(w * h * 4, np.float32)
+    img.pixels.foreach_get(px)
+    px = px.reshape(h, w, 4)
+    rgb = px[..., :3]
     if sat != 1.0:
-        im = ImageEnhance.Color(im).enhance(sat)
-    r, g, b = im.split()
-    r = r.point(lambda v: max(0, min(255, int(v * mul[0] + add[0] * 255))))
-    g = g.point(lambda v: max(0, min(255, int(v * mul[1] + add[1] * 255))))
-    b = b.point(lambda v: max(0, min(255, int(v * mul[2] + add[2] * 255))))
-    Image.merge("RGB", (r, g, b)).save(dst, quality=92)
+        lum = (rgb * np.array([0.299, 0.587, 0.114], np.float32)).sum(-1, keepdims=True)
+        rgb = lum + (rgb - lum) * sat
+    rgb = np.clip(rgb * np.array(mul, np.float32) + np.array(add, np.float32), 0.0, 1.0)
+    out = bpy.data.images.new(f"_drv_{name}", w, h, alpha=False)
+    px[..., :3] = rgb
+    px[..., 3] = 1.0
+    out.pixels.foreach_set(px.ravel())
+    out.filepath_raw = str(dst)
+    out.file_format = "JPEG"
+    out.save()
+    bpy.data.images.remove(out)
+    bpy.data.images.remove(img)
+    return dst
+
+
+def crop_mirror(src, name, keep=0.9, mul=(1.0, 1.0, 1.0), colorspace="sRGB"):
+    """Drop the top band of a scan (e.g. the mossy ridge of reed_roof_04) and mirror it vertically so it tiles."""
+    import numpy as np
+    DERIVED.mkdir(parents=True, exist_ok=True)
+    dst = DERIVED / f"{name}.png"
+    if dst.exists() and dst.stat().st_mtime > Path(src).stat().st_mtime:
+        return dst
+    img = bpy.data.images.load(str(src), check_existing=False)
+    try:
+        img.colorspace_settings.name = colorspace
+    except TypeError:
+        pass
+    w, h = img.size
+    px = np.empty(w * h * 4, np.float32)
+    img.pixels.foreach_get(px)
+    px = px.reshape(h, w, 4)[: int(h * keep)]          # Blender rows go upward: the top band is at the end
+    px = np.concatenate([px, px[::-1]], 0)[::2]
+    px[..., :3] = np.clip(px[..., :3] * np.array(mul, np.float32), 0, 1)
+    px[..., 3] = 1.0
+    out = bpy.data.images.new(f"_crop_{name}", w, px.shape[0], alpha=False)
+    out.pixels.foreach_set(px.ravel())
+    out.filepath_raw = str(dst)
+    out.file_format = "PNG"
+    out.save()
+    bpy.data.images.remove(out)
+    bpy.data.images.remove(img)
     return dst
 
 
@@ -162,7 +203,9 @@ def materials():
 
     linen_n = find(ph("rough_linen", "1k"), "_nor_gl_")
     c, n, r = tex(ph("reed_roof_04", "2k"))
-    M["Thatch"] = img_material("M_Minka_Thatch", c, n, r, tint_hex="A88A52")
+    M["Thatch"] = img_material("M_Minka_Thatch", crop_mirror(c, "thatch_golden", 0.9, (1.10, 1.0, 0.80)),
+                               crop_mirror(n, "thatch_golden_n", 0.9, colorspace="Non-Color"),
+                               crop_mirror(r, "thatch_golden_r", 0.9, colorspace="Non-Color"), tint_hex="A88A52")
     c, n, r = tex(ph("thatch_roof_angled", "1k"))
     M["ThatchEdge"] = img_material("M_Minka_ThatchEdge", derived(c, "thatch_edge_warm", (1.12, 1.0, 0.82)), n, r,
                                    tint_hex="7A6440")
@@ -180,11 +223,14 @@ def materials():
     c, n, r = tex(ph("hinoki_planks", "2k"))
     M["FloorWood"] = img_material("M_Minka_FloorWood", derived(c, "hinoki_honey", (0.86, 0.74, 0.58)), n, r,
                                   tint_hex="B08850")
+    c2, n2, r2 = tex(ph("hinoki_planks", "2k"))
+    M["ShojiWood"] = img_material("M_Minka_ShojiWood", derived(c2, "hinoki_pale", (0.96, 0.88, 0.74), sat=0.8), n2,
+                                  r2, tint_hex="C8B08A")
     c, n, r = tex(ph("weathered_brown_planks", "1k"))
     M["Engawa"] = img_material("M_Minka_Engawa", c, n, r, tint_hex="6E5440")
     c, n, r = tex(ph("japanese_cedar_planks", "1k"))
-    M["Cedar"] = img_material("M_Minka_Cedar", derived(c, "cedar_aged", (0.72, 0.60, 0.50), sat=0.75), n, r,
-                              tint_hex="7A5434")
+    M["Cedar"] = img_material("M_Minka_Cedar", derived(c, "cedar_aged2", (0.58, 0.46, 0.37), sat=0.65), n, r,
+                              tint_hex="6A4A30")
     c, n, r = tex(ph("mossy_rock", "1k"))
     M["Stone"] = img_material("M_Minka_Stone", c, n, r, tint_hex="6A6A5E")
     c, n, r = tex(ph("tatami_mat", "2k"))
@@ -411,3 +457,81 @@ def obj(name, bm, mats, coll, smooth=False, bevel=0.0, origin=None, autosmooth=N
 
 def tri_count(ob):
     return sum(len(p.vertices) - 2 for p in ob.data.polygons)
+
+
+# ---------------------------------------------------------------- Unreal hand-off
+
+def _rel(path):
+    p = Path(bpy.path.abspath(path)).resolve()
+    try:
+        return p.relative_to(ROOT).as_posix()
+    except ValueError:
+        return p.as_posix()
+
+
+def _image_source(inp):
+    """Image file (and channel) feeding a BSDF input: direct image, or one channel of a Separate Color node
+    (glTF metallic-roughness maps: G = roughness, B = metallic)."""
+    if not inp.is_linked:
+        return None
+    link = inp.links[0]
+    node, channel = link.from_node, None
+    if node.type in ("SEPARATE_COLOR", "SEPRGB", "SEPARATE_RGB"):
+        channel = link.from_socket.name[:1].upper()
+        if not node.inputs[0].is_linked:
+            return None
+        node = node.inputs[0].links[0].from_node
+    if node.type == "TEX_IMAGE" and node.image and node.image.filepath:
+        return {"image": _rel(node.image.filepath), "channel": channel}
+    return None
+
+
+def material_manifest(mats):
+    """Describe materials for scripts/props/pack_ue_textures.py (one texture set per material in Unreal):
+    base colour, roughness, metallic, normal (OpenGL, strength), emission: image files or constants."""
+    out = {}
+    for m in mats:
+        if m is None or m.name in out:
+            continue
+        d = {}
+        bsdf = next((n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED"), None) if m.use_nodes else None
+        if bsdf is None:
+            d["base_color"] = [round(c, 4) for c in m.diffuse_color[:3]]
+            out[m.name] = d
+            continue
+        base = _image_source(_inp(bsdf, "Base Color"))
+        d["base_color"] = base or [round(c, 4) for c in _inp(bsdf, "Base Color").default_value[:3]]
+        rough = _image_source(_inp(bsdf, "Roughness"))
+        d["roughness"] = rough or round(_inp(bsdf, "Roughness").default_value, 3)
+        metal = _image_source(_inp(bsdf, "Metallic"))
+        d["metallic"] = metal or round(_inp(bsdf, "Metallic").default_value, 3)
+        if isinstance(rough, dict) and "_arm_" in rough["image"]:
+            d["ao"] = {"image": rough["image"], "channel": "R"}
+        nrm = _inp(bsdf, "Normal")
+        if nrm.is_linked and nrm.links[0].from_node.type == "NORMAL_MAP":
+            nm = nrm.links[0].from_node
+            src = _image_source(nm.inputs["Color"])
+            if src:
+                d["normal"] = dict(src, strength=round(nm.inputs["Strength"].default_value, 3))
+        em = _inp(bsdf, "Emission Strength").default_value
+        if em > 0:
+            d["emission"] = [round(c, 4) for c in _inp(bsdf, "Emission Color", "Emission").default_value[:3]]
+            d["emission_strength"] = round(em, 3)
+        out[m.name] = d
+    return out
+
+
+def ucx_boxes(name, boxes, coll=None):
+    """Unreal simple collision: one UCX_<name>_NN box object per (min, max) pair (meters, local frame)."""
+    objs = []
+    for i, (mn, mx) in enumerate(boxes):
+        bm = bmesh.new()
+        add_box(bm, mn, mx)
+        me = bpy.data.meshes.new(f"UCX_{name}_{i:02d}")
+        bm.to_mesh(me)
+        bm.free()
+        ob = bpy.data.objects.new(me.name, me)
+        (coll or bpy.context.scene.collection).objects.link(ob)
+        ob.display_type = "WIRE"
+        objs.append(ob)
+    return objs

@@ -1,4 +1,5 @@
-"""Download the CC0 textures and models of the rural minka (scripts/props/minka.py).
+"""Download the CC0 textures and models of the rural minka and of the Japanese village
+(scripts/props/minka_rurale.py, scripts/props/village_japonais.py).
 
 Usage: python scripts/props/fetch_minka_assets.py
 Output: art/textures/props/minka/<asset>/, art/models/props/<asset>/
@@ -25,6 +26,11 @@ TEXTURES = [
     ("japanese_cedar_planks", "1k", "porte coulissante d'entrée, coffre (sugi)"),
     ("mossy_rock", "1k", "pierres d'appui sous les poteaux"),
     ("rough_linen", "1k", "trame du papier washi, des fusuma, coussins et futon (normale seulement)"),
+    ("clay_roof_tiles", "1k", "village : toits de tuiles des entrepôts kura"),
+    ("pine_bark", "1k", "village : troncs des pins"),
+    ("forest_leaves_02", "1k", "village : haies et feuillage"),
+    ("brown_mud_02", "1k", "village : rizières, levées de terre"),
+    ("leafy_grass", "1k", "village : sol herbeux de la présentation"),
 ]
 MODELS = [
     ("ceramic_vase_02", "petit vase du tokonoma"),

@@ -100,6 +100,14 @@ Classes de l'atlas identifiées sur Raraka (couleur de rendu → classe) : (93,1
   - `raw/raraka_vegetation/DT_Raraka_{Hard,Soft}_NN.csv` : un bloc spatial par fichier, découpé en k-d à la médiane, 25 000 lignes au plus (`MAX_CHUNK`), au format GameplayTagTableRow comme les cocotiers. Aujourd'hui : 8 blocs Hard de 18 381 lignes et 32 blocs Soft de 19 559 lignes.
 - Densité réglable : `--density 0.5` divise par deux, `--density 1.5` augmente de 50 %.
 
+## Villages japonais (`villages/`, script `scripts/map/place_villages.py raraka`)
+- Ce sont les 3 zones de pacification de la première île (cahier §6.2) : V01 Kura-mura, V02 Mori-mura et V03 Takara-mura, de 12 minka chacun. Les PNJ y apparaissent. Fiche : `docs/features/villages-japonais.md`.
+- Ils sont générés par chunks de 256 m, là où la terre est large, plate, loin de l'eau et à plus de 250 m du bâti réel. Motutapu reste intact.
+- Chaque village s'adapte à la cocoteraie en place : les parcelles glissent pour éviter les troncs.
+- Mémoire : `villages/villages.json` (chunks évalués, villages, objets, spawns, zones, formes de dégagement). Un village connu est conservé ; `--regen Vxx` le reconstruit.
+- Végétation dégagée sous les villages : `--apply-clearing`, à partir des copies `raw/raraka_vegetation/_orig/`. Les DataTables touchées sont listées dans `villages/clearing_report.json`.
+- Vers Unreal : `raw/raraka_villages/DT_Raraka_Village_Vxx.csv`, au format GameplayTagTableRow comme la végétation. Chaque CSV donne une DataTable, et chaque DataTable un acteur PCG.
+
 ## Dans Unreal
 - Niveau `/Game/MonkeIsland/Maps/Lvl_Raraka` (dupliqué du template Basic : soleil, SkyAtmosphere, nuages volumétriques, brouillard).
 - 51 tuiles `SM_Raraka_Terrain_<x>_<y>` (Nanite, fallback 100 %, collision complexe) dans l'outliner `Raraka/Terrain`.

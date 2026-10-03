@@ -1,0 +1,380 @@
+{
+ "M_Minka_Ash": {
+  "mi": "MI_Minka_Ash",
+  "textures": {
+   "D": "T_Minka_Ash_D.png",
+   "N": "T_Minka_Ash_N.png",
+   "ORM": "T_Minka_Ash_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Bamboo": {
+  "mi": "MI_Minka_Bamboo",
+  "textures": {
+   "D": "T_Minka_Bamboo_D.png",
+   "N": "T_Minka_Bamboo_N.png",
+   "ORM": "T_Minka_Bamboo_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Cedar": {
+  "mi": "MI_Minka_Cedar",
+  "textures": {
+   "D": "T_Minka_Cedar_D.png",
+   "N": "T_Minka_Cedar_N.png",
+   "ORM": "T_Minka_Cedar_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Ceramic": {
+  "mi": "MI_Minka_Ceramic",
+  "textures": {
+   "D": "T_Minka_Ceramic_D.png",
+   "N": "T_Minka_Ceramic_N.png",
+   "ORM": "T_Minka_Ceramic_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Charcoal": {
+  "mi": "MI_Minka_Charcoal",
+  "textures": {
+   "D": "T_Minka_Charcoal_D.png",
+   "N": "T_Minka_Charcoal_N.png",
+   "ORM": "T_Minka_Charcoal_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Clay": {
+  "mi": "MI_Minka_Clay",
+  "textures": {
+   "D": "T_Minka_Clay_D.png",
+   "N": "T_Minka_Clay_N.png",
+   "ORM": "T_Minka_Clay_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_CushionOlive": {
+  "mi": "MI_Minka_CushionOlive",
+  "textures": {
+   "D": "T_Minka_CushionOlive_D.png",
+   "N": "T_Minka_CushionOlive_N.png",
+   "ORM": "T_Minka_CushionOlive_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Earth": {
+  "mi": "MI_Minka_Earth",
+  "textures": {
+   "D": "T_Minka_Earth_D.png",
+   "N": "T_Minka_Earth_N.png",
+   "ORM": "T_Minka_Earth_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Ember": {
+  "mi": "MI_Minka_Ember",
+  "textures": {
+   "D": "T_Minka_Ember_D.png",
+   "N": "T_Minka_Ember_N.png",
+   "ORM": "T_Minka_Ember_ORM.png"
+  },
+  "emissive": [
+   3.0,
+   0.307,
+   0.031
+  ]
+ },
+ "M_Minka_Engawa": {
+  "mi": "MI_Minka_Engawa",
+  "textures": {
+   "D": "T_Minka_Engawa_D.png",
+   "N": "T_Minka_Engawa_N.png",
+   "ORM": "T_Minka_Engawa_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_FloorWood": {
+  "mi": "MI_Minka_FloorWood",
+  "textures": {
+   "D": "T_Minka_FloorWood_D.png",
+   "N": "T_Minka_FloorWood_N.png",
+   "ORM": "T_Minka_FloorWood_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Flower": {
+  "mi": "MI_Minka_Flower",
+  "textures": {
+   "D": "T_Minka_Flower_D.png",
+   "N": "T_Minka_Flower_N.png",
+   "ORM": "T_Minka_Flower_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Fusuma": {
+  "mi": "MI_Minka_Fusuma",
+  "textures": {
+   "D": "T_Minka_Fusuma_D.png",
+   "N": "T_Minka_Fusuma_N.png",
+   "ORM": "T_Minka_Fusuma_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_FutonCream": {
+  "mi": "MI_Minka_FutonCream",
+  "textures": {
+   "D": "T_Minka_FutonCream_D.png",
+   "N": "T_Minka_FutonCream_N.png",
+   "ORM": "T_Minka_FutonCream_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_FutonIndigo": {
+  "mi": "MI_Minka_FutonIndigo",
+  "textures": {
+   "D": "T_Minka_FutonIndigo_D.png",
+   "N": "T_Minka_FutonIndigo_N.png",
+   "ORM": "T_Minka_FutonIndigo_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Iron": {
+  "mi": "MI_Minka_Iron",
+  "textures": {
+   "D": "T_Minka_Iron_D.png",
+   "N": "T_Minka_Iron_N.png",
+   "ORM": "T_Minka_Iron_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Kakejiku": {
+  "mi": "MI_Minka_Kakejiku",
+  "textures": {
+   "D": "T_Minka_Kakejiku_D.png",
+   "N": "T_Minka_Kakejiku_N.png",
+   "ORM": "T_Minka_Kakejiku_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Lacquer": {
+  "mi": "MI_Minka_Lacquer",
+  "textures": {
+   "D": "T_Minka_Lacquer_D.png",
+   "N": "T_Minka_Lacquer_N.png",
+   "ORM": "T_Minka_Lacquer_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_LanternGlow": {
+  "mi": "MI_Minka_LanternGlow",
+  "textures": {
+   "D": "T_Minka_LanternGlow_D.png",
+   "N": "T_Minka_LanternGlow_N.png",
+   "ORM": "T_Minka_LanternGlow_ORM.png"
+  },
+  "emissive": [
+   4.0,
+   2.158,
+   0.778
+  ]
+ },
+ "M_Minka_Leaf": {
+  "mi": "MI_Minka_Leaf",
+  "textures": {
+   "D": "T_Minka_Leaf_D.png",
+   "N": "T_Minka_Leaf_N.png",
+   "ORM": "T_Minka_Leaf_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Plaster": {
+  "mi": "MI_Minka_Plaster",
+  "textures": {
+   "D": "T_Minka_Plaster_D.png",
+   "N": "T_Minka_Plaster_N.png",
+   "ORM": "T_Minka_Plaster_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Rope": {
+  "mi": "MI_Minka_Rope",
+  "textures": {
+   "D": "T_Minka_Rope_D.png",
+   "N": "T_Minka_Rope_N.png",
+   "ORM": "T_Minka_Rope_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_ShojiWood": {
+  "mi": "MI_Minka_ShojiWood",
+  "textures": {
+   "D": "T_Minka_ShojiWood_D.png",
+   "N": "T_Minka_ShojiWood_N.png",
+   "ORM": "T_Minka_ShojiWood_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Stone": {
+  "mi": "MI_Minka_Stone",
+  "textures": {
+   "D": "T_Minka_Stone_D.png",
+   "N": "T_Minka_Stone_N.png",
+   "ORM": "T_Minka_Stone_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Tatami": {
+  "mi": "MI_Minka_Tatami",
+  "textures": {
+   "D": "T_Minka_Tatami_D.png",
+   "N": "T_Minka_Tatami_N.png",
+   "ORM": "T_Minka_Tatami_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Thatch": {
+  "mi": "MI_Minka_Thatch",
+  "textures": {
+   "D": "T_Minka_Thatch_D.png",
+   "N": "T_Minka_Thatch_N.png",
+   "ORM": "T_Minka_Thatch_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_ThatchEdge": {
+  "mi": "MI_Minka_ThatchEdge",
+  "textures": {
+   "D": "T_Minka_ThatchEdge_D.png",
+   "N": "T_Minka_ThatchEdge_N.png",
+   "ORM": "T_Minka_ThatchEdge_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Timber": {
+  "mi": "MI_Minka_Timber",
+  "textures": {
+   "D": "T_Minka_Timber_D.png",
+   "N": "T_Minka_Timber_N.png",
+   "ORM": "T_Minka_Timber_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_Washi": {
+  "mi": "MI_Minka_Washi",
+  "textures": {
+   "D": "T_Minka_Washi_D.png",
+   "N": "T_Minka_Washi_N.png",
+   "ORM": "T_Minka_Washi_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_ceramic_vase_02": {
+  "mi": "MI_Minka_ceramic_vase_02",
+  "textures": {
+   "D": "T_Minka_ceramic_vase_02_D.png",
+   "N": "T_Minka_ceramic_vase_02_N.png",
+   "ORM": "T_Minka_ceramic_vase_02_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_tea_set_01": {
+  "mi": "MI_Minka_tea_set_01",
+  "textures": {
+   "D": "T_Minka_tea_set_01_D.png",
+   "N": "T_Minka_tea_set_01_N.png",
+   "ORM": "T_Minka_tea_set_01_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_wooden_bowl_01": {
+  "mi": "MI_Minka_wooden_bowl_01",
+  "textures": {
+   "D": "T_Minka_wooden_bowl_01_D.png",
+   "N": "T_Minka_wooden_bowl_01_N.png",
+   "ORM": "T_Minka_wooden_bowl_01_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_wooden_bowl_01.001": {
+  "mi": "MI_Minka_wooden_bowl_01",
+  "textures": {
+   "D": "T_Minka_wooden_bowl_01_D.png",
+   "N": "T_Minka_wooden_bowl_01_N.png",
+   "ORM": "T_Minka_wooden_bowl_01_ORM.png"
+  },
+  "emissive": null,
+  "alias_of": "M_Minka_wooden_bowl_01"
+ },
+ "M_Minka_wooden_broom": {
+  "mi": "MI_Minka_wooden_broom",
+  "textures": {
+   "D": "T_Minka_wooden_broom_D.png",
+   "N": "T_Minka_wooden_broom_N.png",
+   "ORM": "T_Minka_wooden_broom_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_wooden_broom_1": {
+  "mi": "MI_Minka_wooden_broom_1",
+  "textures": {
+   "D": "T_Minka_wooden_broom_1_D.png",
+   "N": "T_Minka_wooden_broom_1_N.png",
+   "ORM": "T_Minka_wooden_broom_1_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Minka_wooden_bucket_01": {
+  "mi": "MI_Minka_wooden_bucket_01",
+  "textures": {
+   "D": "T_Minka_wooden_bucket_01_D.png",
+   "N": "T_Minka_wooden_bucket_01_N.png",
+   "ORM": "T_Minka_wooden_bucket_01_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Village_Bronze": {
+  "mi": "MI_Village_Bronze",
+  "textures": {
+   "D": "T_Village_Bronze_D.png",
+   "N": "T_Village_Bronze_N.png",
+   "ORM": "T_Village_Bronze_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Village_NoticePaper": {
+  "mi": "MI_Village_NoticePaper",
+  "textures": {
+   "D": "T_Village_NoticePaper_D.png",
+   "N": "T_Village_NoticePaper_N.png",
+   "ORM": "T_Village_NoticePaper_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Village_RoofTiles": {
+  "mi": "MI_Village_RoofTiles",
+  "textures": {
+   "D": "T_Village_RoofTiles_D.png",
+   "N": "T_Village_RoofTiles_N.png",
+   "ORM": "T_Village_RoofTiles_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Village_WellWater": {
+  "mi": "MI_Village_WellWater",
+  "textures": {
+   "D": "T_Village_WellWater_D.png",
+   "N": "T_Village_WellWater_N.png",
+   "ORM": "T_Village_WellWater_ORM.png"
+  },
+  "emissive": null
+ },
+ "M_Village_WhitePlaster": {
+  "mi": "MI_Village_WhitePlaster",
+  "textures": {
+   "D": "T_Village_WhitePlaster_D.png",
+   "N": "T_Village_WhitePlaster_N.png",
+   "ORM": "T_Village_WhitePlaster_ORM.png"
+  },
+  "emissive": null
+ }
+}

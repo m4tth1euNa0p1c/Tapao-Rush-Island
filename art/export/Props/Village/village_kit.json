@@ -1,0 +1,863 @@
+{
+ "units": "meters, Blender local frame (front -Y, pivot on the ground); in Unreal (x, -y, z) * 100 cm",
+ "assets": {
+  "SM_Minka": {
+   "tris": 37746,
+   "bbox": [
+    [
+     -0.75,
+     -1.95,
+     -0.8
+    ],
+    [
+     10.95,
+     7.95,
+     7.042
+    ]
+   ],
+   "ground": [
+    [
+     0.0,
+     0.0,
+     9.0,
+     7.2
+    ],
+    [
+     1.8,
+     -1.2,
+     10.2,
+     0.0
+    ],
+    [
+     9.0,
+     0.0,
+     10.2,
+     7.2
+    ]
+   ],
+   "ucx": 67
+  },
+  "SM_Village_Kura": {
+   "tris": 176,
+   "ucx": 1,
+   "bbox": [
+    [
+     -2.705,
+     -3.25,
+     -0.6
+    ],
+    [
+     2.705,
+     3.25,
+     6.244
+    ]
+   ],
+   "ground": [
+    [
+     -2.22,
+     -2.86,
+     2.22,
+     2.82
+    ]
+   ]
+  },
+  "SM_Village_Well": {
+   "tris": 472,
+   "ucx": 3,
+   "bbox": [
+    [
+     -1.2,
+     -0.844,
+     -0.5
+    ],
+    [
+     1.2,
+     0.844,
+     2.927
+    ]
+   ],
+   "ground": [
+    [
+     -0.72,
+     -0.72,
+     0.72,
+     0.72
+    ],
+    [
+     -0.91,
+     -0.06,
+     -0.79,
+     0.06
+    ],
+    [
+     0.79,
+     -0.06,
+     0.91,
+     0.06
+    ]
+   ]
+  },
+  "SM_Village_NoticeBoard": {
+   "tris": 96,
+   "ucx": 1,
+   "bbox": [
+    [
+     -1.15,
+     -0.427,
+     -0.5
+    ],
+    [
+     1.15,
+     0.427,
+     2.542
+    ]
+   ],
+   "ground": [
+    [
+     -0.96,
+     -0.07,
+     0.96,
+     0.07
+    ]
+   ]
+  },
+  "SM_Village_FireTower": {
+   "tris": 1056,
+   "ucx": 4,
+   "bbox": [
+    [
+     -1.3,
+     -1.309,
+     -0.504
+    ],
+    [
+     1.3,
+     1.309,
+     9.162
+    ]
+   ],
+   "ground": [
+    [
+     -1.07,
+     -1.07,
+     -0.83,
+     -0.83
+    ],
+    [
+     -1.07,
+     0.83,
+     -0.83,
+     1.07
+    ],
+    [
+     0.83,
+     -1.07,
+     1.07,
+     -0.83
+    ],
+    [
+     0.83,
+     0.83,
+     1.07,
+     1.07
+    ]
+   ]
+  },
+  "SM_Village_Torii": {
+   "tris": 372,
+   "ucx": 2,
+   "bbox": [
+    [
+     -2.4,
+     -0.209,
+     -0.504
+    ],
+    [
+     2.4,
+     0.16,
+     3.94
+    ]
+   ],
+   "ground": [
+    [
+     -1.67,
+     -0.17,
+     -1.33,
+     0.17
+    ],
+    [
+     1.33,
+     -0.17,
+     1.67,
+     0.17
+    ]
+   ]
+  },
+  "SM_Village_Shrine": {
+   "tris": 168,
+   "ucx": 3,
+   "bbox": [
+    [
+     -1.8,
+     -3.15,
+     -0.6
+    ],
+    [
+     1.8,
+     1.8,
+     3.5
+    ]
+   ],
+   "ground": [
+    [
+     -1.8,
+     -2.1,
+     1.8,
+     1.8
+    ],
+    [
+     -0.8,
+     -3.15,
+     0.8,
+     -2.1
+    ],
+    [
+     -1.25,
+     -1.15,
+     1.25,
+     1.15
+    ]
+   ]
+  },
+  "SM_Village_StoneLantern": {
+   "tris": 176,
+   "ucx": 1,
+   "bbox": [
+    [
+     -0.42,
+     -0.364,
+     -0.4
+    ],
+    [
+     0.42,
+     0.364,
+     1.84
+    ]
+   ],
+   "ground": [
+    [
+     -0.32,
+     -0.32,
+     0.32,
+     0.32
+    ]
+   ]
+  },
+  "SM_Village_BambooFence": {
+   "tris": 504,
+   "ucx": 1,
+   "bbox": [
+    [
+     -1.0,
+     -0.067,
+     -0.3
+    ],
+    [
+     1.0,
+     0.067,
+     1.4
+    ]
+   ],
+   "ground": [
+    [
+     -1.0,
+     -0.07,
+     1.0,
+     0.07
+    ]
+   ]
+  }
+ },
+ "materials": {
+  "M_Minka_Timber": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/timber_dark.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/characters/rough_wood/rough_wood_rough_1k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/characters/rough_wood/rough_wood_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Stone": {
+   "base_color": {
+    "image": "art/textures/props/minka/mossy_rock/mossy_rock_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/mossy_rock/mossy_rock_rough_1k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/mossy_rock/mossy_rock_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Cedar": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/cedar_aged2.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/japanese_cedar_planks/japanese_cedar_planks_rough_1k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/japanese_cedar_planks/japanese_cedar_planks_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Thatch": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/thatch_golden.png",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/_derived/thatch_golden_r.png",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/_derived/thatch_golden_n.png",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_ThatchEdge": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/thatch_edge_warm.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/thatch_roof_angled/thatch_roof_angled_rough_1k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/thatch_roof_angled/thatch_roof_angled_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Rope": {
+   "base_color": [
+    0.0685,
+    0.0423,
+    0.0194
+   ],
+   "roughness": 0.95,
+   "metallic": 0.0
+  },
+  "M_Minka_Plaster": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/plaster_ivory.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/patterned_clay_plaster/patterned_clay_plaster_rough_2k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/patterned_clay_plaster/patterned_clay_plaster_nor_gl_2k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Earth": {
+   "base_color": {
+    "image": "art/textures/props/minka/dirt_floor/dirt_floor_diff_2k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/dirt_floor/dirt_floor_rough_2k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/dirt_floor/dirt_floor_nor_gl_2k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_FloorWood": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/hinoki_honey.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/hinoki_planks/hinoki_planks_rough_2k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/hinoki_planks/hinoki_planks_nor_gl_2k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Lacquer": {
+   "base_color": [
+    0.0232,
+    0.0116,
+    0.007
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0
+  },
+  "M_Minka_Engawa": {
+   "base_color": {
+    "image": "art/textures/props/minka/weathered_brown_planks/weathered_brown_planks_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/weathered_brown_planks/weathered_brown_planks_rough_1k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/weathered_brown_planks/weathered_brown_planks_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_ShojiWood": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/hinoki_pale.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/hinoki_planks/hinoki_planks_rough_2k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/hinoki_planks/hinoki_planks_nor_gl_2k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Washi": {
+   "base_color": [
+    0.8879,
+    0.8388,
+    0.7157
+   ],
+   "roughness": 0.85,
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/rough_linen/rough_linen_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 0.25
+   }
+  },
+  "M_Minka_Fusuma": {
+   "base_color": [
+    0.7758,
+    0.6867,
+    0.5029
+   ],
+   "roughness": 0.8,
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/rough_linen/rough_linen_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 0.3
+   }
+  },
+  "M_Minka_Tatami": {
+   "base_color": {
+    "image": "art/textures/props/minka/tatami_mat/tatami_mat_diff_2k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/tatami_mat/tatami_mat_rough_2k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/tatami_mat/tatami_mat_nor_gl_2k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Ash": {
+   "base_color": [
+    0.2623,
+    0.2384,
+    0.2086
+   ],
+   "roughness": 1.0,
+   "metallic": 0.0
+  },
+  "M_Minka_Charcoal": {
+   "base_color": [
+    0.007,
+    0.006,
+    0.0052
+   ],
+   "roughness": 0.9,
+   "metallic": 0.0
+  },
+  "M_Minka_Ember": {
+   "base_color": [
+    0.0232,
+    0.0037,
+    0.0012
+   ],
+   "roughness": 0.9,
+   "metallic": 0.0,
+   "emission": [
+    1.0,
+    0.1022,
+    0.0103
+   ],
+   "emission_strength": 3.0
+  },
+  "M_Minka_Bamboo": {
+   "base_color": {
+    "image": "art/textures/characters/bamboo_veneer/bamboo_veneer_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/characters/bamboo_veneer/bamboo_veneer_rough_1k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/characters/bamboo_veneer/bamboo_veneer_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Iron": {
+   "base_color": [
+    0.0232,
+    0.0212,
+    0.0194
+   ],
+   "roughness": 0.55,
+   "metallic": 0.7
+  },
+  "M_Minka_CushionOlive": {
+   "base_color": [
+    0.147,
+    0.1683,
+    0.0513
+   ],
+   "roughness": 0.85,
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/rough_linen/rough_linen_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 0.6
+   }
+  },
+  "M_Minka_tea_set_01": {
+   "base_color": {
+    "image": "art/models/props/tea_set_01/textures/tea_set_01_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/models/props/tea_set_01/textures/tea_set_01_arm_1k.jpg",
+    "channel": "G"
+   },
+   "metallic": {
+    "image": "art/models/props/tea_set_01/textures/tea_set_01_arm_1k.jpg",
+    "channel": "B"
+   },
+   "ao": {
+    "image": "art/models/props/tea_set_01/textures/tea_set_01_arm_1k.jpg",
+    "channel": "R"
+   },
+   "normal": {
+    "image": "art/models/props/tea_set_01/textures/tea_set_01_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_FutonCream": {
+   "base_color": [
+    0.7913,
+    0.7157,
+    0.552
+   ],
+   "roughness": 0.9,
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/rough_linen/rough_linen_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 0.5
+   }
+  },
+  "M_Minka_FutonIndigo": {
+   "base_color": [
+    0.0252,
+    0.0369,
+    0.0802
+   ],
+   "roughness": 0.9,
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/rough_linen/rough_linen_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 0.5
+   }
+  },
+  "M_Minka_LanternGlow": {
+   "base_color": [
+    0.9047,
+    0.7913,
+    0.5776
+   ],
+   "roughness": 0.8,
+   "metallic": 0.0,
+   "emission": [
+    1.0,
+    0.5395,
+    0.1946
+   ],
+   "emission_strength": 4.0
+  },
+  "M_Minka_Kakejiku": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/kakejiku_mountains.png",
+    "channel": null
+   },
+   "roughness": 0.85,
+   "metallic": 0.0
+  },
+  "M_Minka_ceramic_vase_02": {
+   "base_color": {
+    "image": "art/models/props/ceramic_vase_02/textures/ceramic_vase_02_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/models/props/ceramic_vase_02/textures/ceramic_vase_02_rough_1k.jpg",
+    "channel": "G"
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/models/props/ceramic_vase_02/textures/ceramic_vase_02_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Leaf": {
+   "base_color": [
+    0.0762,
+    0.1441,
+    0.0273
+   ],
+   "roughness": 0.6,
+   "metallic": 0.0
+  },
+  "M_Minka_Flower": {
+   "base_color": [
+    0.807,
+    0.6867,
+    0.7454
+   ],
+   "roughness": 0.6,
+   "metallic": 0.0
+  },
+  "M_Minka_Clay": {
+   "base_color": {
+    "image": "art/textures/props/minka/clay_plaster/clay_plaster_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/clay_plaster/clay_plaster_rough_1k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/clay_plaster/clay_plaster_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_Ceramic": {
+   "base_color": [
+    0.1022,
+    0.0685,
+    0.0452
+   ],
+   "roughness": 0.35,
+   "metallic": 0.0
+  },
+  "M_Minka_wooden_bowl_01": {
+   "base_color": {
+    "image": "art/models/props/wooden_bowl_01/textures/wooden_bowl_01_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/models/props/wooden_bowl_01/textures/wooden_bowl_01_arm_1k.jpg",
+    "channel": "G"
+   },
+   "metallic": 0.0,
+   "ao": {
+    "image": "art/models/props/wooden_bowl_01/textures/wooden_bowl_01_arm_1k.jpg",
+    "channel": "R"
+   },
+   "normal": {
+    "image": "art/models/props/wooden_bowl_01/textures/wooden_bowl_01_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_wooden_bowl_01.001": {
+   "base_color": {
+    "image": "art/models/props/wooden_bowl_01/textures/wooden_bowl_01_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/models/props/wooden_bowl_01/textures/wooden_bowl_01_arm_1k.jpg",
+    "channel": "G"
+   },
+   "metallic": 0.0,
+   "ao": {
+    "image": "art/models/props/wooden_bowl_01/textures/wooden_bowl_01_arm_1k.jpg",
+    "channel": "R"
+   },
+   "normal": {
+    "image": "art/models/props/wooden_bowl_01/textures/wooden_bowl_01_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_wooden_bucket_01": {
+   "base_color": {
+    "image": "art/models/props/wooden_bucket_01/textures/wooden_bucket_01_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/models/props/wooden_bucket_01/textures/wooden_bucket_01_arm_1k.jpg",
+    "channel": "G"
+   },
+   "metallic": {
+    "image": "art/models/props/wooden_bucket_01/textures/wooden_bucket_01_arm_1k.jpg",
+    "channel": "B"
+   },
+   "ao": {
+    "image": "art/models/props/wooden_bucket_01/textures/wooden_bucket_01_arm_1k.jpg",
+    "channel": "R"
+   },
+   "normal": {
+    "image": "art/models/props/wooden_bucket_01/textures/wooden_bucket_01_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_wooden_broom": {
+   "base_color": {
+    "image": "art/models/props/wooden_broom/textures/wooden_broom_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/models/props/wooden_broom/textures/wooden_broom_arm_1k.jpg",
+    "channel": "G"
+   },
+   "metallic": {
+    "image": "art/models/props/wooden_broom/textures/wooden_broom_arm_1k.jpg",
+    "channel": "B"
+   },
+   "ao": {
+    "image": "art/models/props/wooden_broom/textures/wooden_broom_arm_1k.jpg",
+    "channel": "R"
+   },
+   "normal": {
+    "image": "art/models/props/wooden_broom/textures/wooden_broom_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Minka_wooden_broom_1": {
+   "base_color": {
+    "image": "art/models/props/wooden_broom/textures/wooden_broom_bristles_diff_1k.jpg",
+    "channel": null
+   },
+   "roughness": 0.5,
+   "metallic": 0.0
+  },
+  "M_Village_WhitePlaster": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/plaster_white.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/patterned_clay_plaster/patterned_clay_plaster_rough_2k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/patterned_clay_plaster/patterned_clay_plaster_nor_gl_2k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Village_RoofTiles": {
+   "base_color": {
+    "image": "art/textures/props/minka/_derived/tiles_charcoal.jpg",
+    "channel": null
+   },
+   "roughness": {
+    "image": "art/textures/props/minka/clay_roof_tiles/clay_roof_tiles_rough_1k.jpg",
+    "channel": null
+   },
+   "metallic": 0.0,
+   "normal": {
+    "image": "art/textures/props/minka/clay_roof_tiles/clay_roof_tiles_nor_gl_1k.jpg",
+    "channel": null,
+    "strength": 1.0
+   }
+  },
+  "M_Village_WellWater": {
+   "base_color": [
+    0.013,
+    0.0232,
+    0.0194
+   ],
+   "roughness": 0.05,
+   "metallic": 0.0
+  },
+  "M_Village_NoticePaper": {
+   "base_color": [
+    0.807,
+    0.7454,
+    0.6038
+   ],
+   "roughness": 0.9,
+   "metallic": 0.0
+  },
+  "M_Village_Bronze": {
+   "base_color": [
+    0.0685,
+    0.1022,
+    0.0648
+   ],
+   "roughness": 0.45,
+   "metallic": 0.8
+  }
+ }
+}
