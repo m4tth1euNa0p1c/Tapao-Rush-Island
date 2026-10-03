@@ -35,6 +35,8 @@ FText ExpeditionIslands::GetErrorText(EFragmentError Error)
 		return LOCTEXT("LoadTimedOut", "Le chargement de l'île a pris trop de temps. Réessayez.");
 	case EFragmentError::LoadCancelled:
 		return LOCTEXT("LoadCancelled", "Le chargement de l'île a été annulé.");
+	case EFragmentError::TravelFailed:
+		return LOCTEXT("TravelFailed", "Le voyage vers l'île a échoué. Réessayez.");
 	}
 	return LOCTEXT("Unknown", "Erreur inconnue sur l'île choisie.");
 }
@@ -59,6 +61,7 @@ const TCHAR* ExpeditionIslands::LexErrorName(EFragmentError Error)
 	case EFragmentError::NoAuthority:				return TEXT("NoAuthority");
 	case EFragmentError::LoadTimedOut:				return TEXT("LoadTimedOut");
 	case EFragmentError::LoadCancelled:				return TEXT("LoadCancelled");
+	case EFragmentError::TravelFailed:				return TEXT("TravelFailed");
 	}
 	return TEXT("Unknown");
 }

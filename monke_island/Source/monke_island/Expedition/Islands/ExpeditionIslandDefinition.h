@@ -30,6 +30,10 @@ public:
 
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override;
 
+	/** First anchorage with this role (Start: arrival point of the boat and the team, T-093); false when none */
+	UFUNCTION(BlueprintCallable, Category="Gameplay")
+	bool FindAnchorageByRole(EAnchorageRole Role, FExpeditionAnchorage& OutAnchorage) const;
+
 #if WITH_EDITOR
 	virtual EDataValidationResult IsDataValid(class FDataValidationContext& Context) const override;
 #endif

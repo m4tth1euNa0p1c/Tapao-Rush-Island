@@ -29,6 +29,17 @@ FPrimaryAssetId UExpeditionIslandDefinition::GetPrimaryAssetId() const
 	return FPrimaryAssetId(PrimaryAssetType, FragmentId.IsNone() ? GetFName() : FragmentId);
 }
 
+bool UExpeditionIslandDefinition::FindAnchorageByRole(EAnchorageRole Role, FExpeditionAnchorage& OutAnchorage) const
+{
+	const FExpeditionAnchorage* Found = Anchorages.FindByPredicate([Role](const FExpeditionAnchorage& Anchorage) { return Anchorage.Role == Role; });
+	if (!Found)
+	{
+		return false;
+	}
+	OutAnchorage = *Found;
+	return true;
+}
+
 #if WITH_EDITOR
 EDataValidationResult UExpeditionIslandDefinition::IsDataValid(FDataValidationContext& Context) const
 {

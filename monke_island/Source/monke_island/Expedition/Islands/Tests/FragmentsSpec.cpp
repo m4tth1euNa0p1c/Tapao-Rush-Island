@@ -232,6 +232,88 @@ void FFragmentsSpec::Define()
 			TestEqual(TEXT("too long"), ExpeditionIslands::ParseFragmentOption(*TooLong), FName());
 		});
 	});
+
+	Describe("PickRandom", [this]()
+	{
+		const TArray<FName> Ids = { TEXT("FRG_Raraka_01"), TEXT("FRG_Raraka_02"), TEXT("FRG_Raraka_03"), TEXT("FRG_Raraka_04") };
+
+		It("draws the same fragment with the same seed", [this, Ids]()
+		{
+			for (int32 Seed = 0; Seed < 50; ++Seed)
+			{
+				const TValueOrError<FName, EFragmentError> A = ExpeditionIslands::PickFragmentId(Ids, Seed, NAME_None);
+				const TValueOrError<FName, EFragmentError> B = ExpeditionIslands::PickFragmentId(Ids, Seed, NAME_None);
+				if (!TestTrue(TEXT("value"), A.HasValue() && B.HasValue()))
+				{
+					return;
+				}
+				TestEqual(*FString::Printf(TEXT("seed %d"), Seed), A.GetValue(), B.GetValue());
+			}
+		});
+
+		It("reaches every fragment over many seeds", [this, Ids]()
+		{
+			TSet<FName> Seen;
+			for (int32 Seed = 0; Seed < 200; ++Seed)
+			{
+				Seen.Add(ExpeditionIslands::PickFragmentId(Ids, Seed, NAME_None).GetValue());
+			}
+			TestEqual(TEXT("all drawn"), Seen.Num(), Ids.Num());
+		});
+
+		It("never draws the previous fragment twice in a row", [this, Ids]()
+		{
+			FName Previous = NAME_None;
+			for (int32 Seed = 0; Seed < 200; ++Seed)
+			{
+				const FName Drawn = ExpeditionIslands::PickFragmentId(Ids, Seed, Previous).GetValue();
+				if (!TestNotEqual(*FString::Printf(TEXT("seed %d"), Seed), Drawn, Previous))
+				{
+					return;
+				}
+				Previous = Drawn;
+			}
+		});
+
+		It("keeps the excluded index out of every draw", [this]()
+		{
+			for (int32 Seed = 0; Seed < 100; ++Seed)
+			{
+				const int32 Index = ExpeditionIslands::PickIndex(3, Seed, 1);
+				TestTrue(*FString::Printf(TEXT("seed %d in range"), Seed), Index == 0 || Index == 2);
+			}
+			TestTrue(TEXT("excluded out of range ignored"), FMath::IsWithin(ExpeditionIslands::PickIndex(3, 7, 9), 0, 3));
+		});
+
+		It("draws the only fragment of a one-entry catalog, even if it was the previous one", [this]()
+		{
+			const TArray<FName> One = { TEXT("FRG_Raraka_01") };
+			const TValueOrError<FName, EFragmentError> Drawn = ExpeditionIslands::PickFragmentId(One, 42, TEXT("FRG_Raraka_01"));
+			TestTrue(TEXT("value"), Drawn.HasValue());
+			if (Drawn.HasValue())
+			{
+				TestEqual(TEXT("only"), Drawn.GetValue(), FName(TEXT("FRG_Raraka_01")));
+			}
+			TestEqual(TEXT("index"), ExpeditionIslands::PickIndex(1, 42, 0), 0);
+		});
+
+		It("reports an empty catalog clearly", [this]()
+		{
+			const TValueOrError<FName, EFragmentError> Drawn = ExpeditionIslands::PickFragmentId(TArray<FName>(), 42, NAME_None);
+			TestTrue(TEXT("error"), Drawn.HasError());
+			if (Drawn.HasError())
+			{
+				TestEqual(TEXT("CatalogEmpty"), Drawn.GetError(), EFragmentError::CatalogEmpty);
+				TestFalse(TEXT("player message"), ExpeditionIslands::GetErrorText(Drawn.GetError()).IsEmpty());
+			}
+			TestEqual(TEXT("index"), ExpeditionIslands::PickIndex(0, 42, INDEX_NONE), static_cast<int32>(INDEX_NONE));
+		});
+
+		It("ignores a previous fragment that left the catalog", [this, Ids]()
+		{
+			TestTrue(TEXT("value"), ExpeditionIslands::PickFragmentId(Ids, 3, TEXT("FRG_Gone_09")).HasValue());
+		});
+	});
 }
 
 #endif // WITH_AUTOMATION_TESTS

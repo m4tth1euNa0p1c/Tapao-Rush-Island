@@ -37,6 +37,15 @@ namespace ExpeditionIslands
 	/** Travel URL of a definition for ServerTravel: <long package name of the map>?Island=<FragmentId> */
 	[[nodiscard]] MONKE_ISLAND_API TValueOrError<FString, EFragmentError> BuildTravelURL(const UExpeditionIslandDefinition* Definition);
 
+	/**
+	 *  Index drawn among Count fragments from Seed (same seed, same draw), never ExcludedIndex while another one
+	 *  exists. INDEX_NONE when Count <= 0; ExcludedIndex out of range excludes nothing.
+	 */
+	[[nodiscard]] MONKE_ISLAND_API int32 PickIndex(int32 Count, int32 Seed, int32 ExcludedIndex);
+
+	/** Fragment drawn among FragmentIds from Seed, never PreviousFragmentId twice in a row unless it is the only one */
+	[[nodiscard]] MONKE_ISLAND_API TValueOrError<FName, EFragmentError> PickFragmentId(TConstArrayView<FName> FragmentIds, int32 Seed, FName PreviousFragmentId);
+
 	/** Fragment id carried by the options of a travel URL (Island=...), None when absent or malformed */
 	[[nodiscard]] MONKE_ISLAND_API FName ParseFragmentOption(const TCHAR* OptionValue);
 }

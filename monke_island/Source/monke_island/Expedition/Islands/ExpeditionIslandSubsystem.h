@@ -98,6 +98,27 @@ public:
 	EFragmentError GetTravelURL(FString& OutURL) const;
 
 	/**
+	 *  Server: draws a fragment of the loaded catalog from Seed and chooses it (T-094: random island at launch until
+	 *  the hub of L4). Never the previously drawn fragment twice in a row, unless the catalog offers only one.
+	 */
+	UFUNCTION(BlueprintCallable, Category="Expedition|Islands")
+	EFragmentError PickRandomIsland(int32 Seed);
+
+	/** Fragment drawn last by PickRandomIsland in this game instance, None before the first draw */
+	UFUNCTION(BlueprintPure, Category="Expedition|Islands")
+	FName GetLastPickedFragmentId() const { return LastPickedFragmentId; }
+
+	/**
+	 *  Server: travels to the chosen fragment (<map>?Island=<id>, read by the boat of T-093): OpenLevel-like client
+	 *  travel when alone, ServerTravel when hosting (the listen option is kept). Refused on a client.
+	 */
+	UFUNCTION(BlueprintCallable, Category="Expedition|Islands")
+	EFragmentError TravelToSelectedIsland();
+
+	/** Server: travels to a map URL (fragment or fallback map), see TravelToSelectedIsland */
+	EFragmentError TravelToMapURL(const FString& URL);
+
+	/**
 	 *  Fragment played by a world, None when the world is not a fragment: the Island option of its URL, else the
 	 *  chosen or loaded definition of its map, else the asset registry (a map opened directly, without the hub).
 	 *  Reads the registry tags only: nothing is loaded. Called once by the expedition game state, not every frame.
@@ -207,4 +228,7 @@ private:
 
 	/** Next definition request id */
 	uint32 NextRequestId = 1;
+
+	/** Fragment drawn last: the next draw avoids it */
+	FName LastPickedFragmentId;
 };

@@ -42,7 +42,9 @@ enum class EFragmentError : uint8
 	/** The asynchronous load exceeded its maximum delay */
 	LoadTimedOut,
 	/** The asynchronous load was cancelled */
-	LoadCancelled
+	LoadCancelled,
+	/** The engine refused the travel to the fragment map */
+	TravelFailed
 };
 
 /** Role of an anchorage of the boat (cahier §6.4: initial beach, cove near the resources, fallback exit) */

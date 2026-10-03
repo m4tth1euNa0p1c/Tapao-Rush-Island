@@ -79,6 +79,29 @@ Les motu sont regroupés quand moins de 40 m d'eau les séparent. Voici ce qu'on
 - **Config** : `DefaultGame.ini`, `+PrimaryAssetTypesToScan` `ExpeditionIsland` et `IslandCatalog` dans `/Game/MonkeIsland/Data/Islands`, `CookRule=AlwaysCook` (la map suit par sa référence souple ; à vérifier au packaging, T-088).
 - **Reste** : T-088 (voyage seamless, GameMode qui appelle `GetTravelURL`, `ZoneCount` vers les règles d'horloge), T-089 (assets `DA_Island_Raraka_01`, `DA_IslandCatalog`, `DA_FragmentRules`, `LI_ExpeditionCore`).
 
+### Île aléatoire au lancement (T-094, lot L3, en attendant le hub L4)
+- **Code** (`Expedition/Islands/`) :
+  - `ExpeditionIslands::PickIndex` / `PickFragmentId` (purs) : tirage seedé, jamais deux fois de suite le même fragment sauf catalogue d'un seul, `CatalogEmpty` sur catalogue vide ;
+  - `UExpeditionIslandSubsystem::PickRandomIsland(Seed)` (serveur) : tire dans le catalogue chargé, sélectionne, mémorise le dernier tiré dans le GameInstance ;
+  - `TravelToSelectedIsland()` : solo = voyage client comme `OpenLevel`, hôte = `ServerTravel` absolu avec `?listen` conservé, client = refus `NoAuthority` ;
+  - `UExpeditionIslandDefinition::FindAnchorageByRole(Start)` : point d'arrivée de la barque ;
+  - `AExpeditionBootGameMode` : au `BeginPlay`, charge le catalogue, tire (graine horloge, ou `FixedSeed` si `bUseFixedSeed`), voyage au tick suivant. Pas de pion sur la carte de boot. Échec : log `Error`, message à l'écran (hors Shipping) et voyage vers `FallbackMap`, pour ne jamais rester bloqué sur une carte vide.
+- **Contrat avec T-093** (barque, `Boats/`) : URL `<Map>?Island=<FragmentId>`. Le serveur lit l'option `Island` (`World->URL`, ou `ExpeditionIslands::ParseFragmentOption`). Il prend la définition déjà chargée (`UExpeditionIslandSubsystem::FindLoadedDefinition`, ou `LoadDefinition` si besoin), puis le mouillage `Start` (`FindAnchorageByRole`), et y fait apparaître la barque avec les joueurs assis. `AExpeditionGameState::GetFragmentId()` donne le même id à tous les clients.
+- **À créer en éditeur par T-095** (aucun asset n'existe à ce stade) :
+  1. `/Game/MonkeIsland/Data/Islands/DA_FragmentRules` (`UFragmentRules`, valeurs par défaut : 60 s, 3 mouillages, mouillage de submersion exigé).
+  2. Des `DA_Island_Raraka_01`, `_02`, `_03` intérimaires (`UExpeditionIslandDefinition`) dans le même dossier :
+     - `FragmentId` `FRG_Raraka_01`, `02`, `03` ;
+     - `Map` = `Lvl_Raraka` pour les trois ;
+     - `ZoneCount` 3, un `DisplayName` fictif, `DataCredits` (Te Fenua / DAF, Licence Ouverte Etalab 2.0 ; atlas IRD) ;
+     - 3 mouillages : `Start`, `Resources`, `Fallback`, ce dernier avec `bAvailableDuringSubmersion`. Le `Start` de chacun est placé sur l'eau devant une plage **différente** de `Lvl_Raraka`, hors Motutapu, pour que les arrivées varient.
+
+     Sans ces 3 mouillages, la définition est écartée du catalogue (`InvalidAnchorages` dans le log).
+  3. `DA_IslandCatalog` (`UIslandCatalog`, nom exact attendu par le code) : `Fragments` = `ExpeditionIsland:FRG_Raraka_01`, `02`, `03` ; `Rules` = `DA_FragmentRules`.
+  4. La carte vide `/Game/MonkeIsland/Maps/L_Boot`, avec un `BP_BootGameMode` (enfant de `AExpeditionBootGameMode`, `FallbackMap` = `Lvl_Raraka`) en GameMode Override des World Settings.
+  5. Une fois `L_Boot` en place, et seulement alors : `DefaultEngine.ini`, `[/Script/EngineSettings.GameMapsSettings]`, `GameDefaultMap=/Game/MonkeIsland/Maps/L_Boot.L_Boot`. `EditorStartupMap` ne change pas.
+  6. Vérifier : l'éditeur relancé après la fusion (nouveaux types dans l'Asset Manager), *Data Validation* propre sur les 5 assets, `Audit Assets` montre `ExpeditionIsland:FRG_Raraka_0N`. Ensuite, deux PIE successifs depuis `L_Boot` arrivent sur deux fragments différents ; le log `LogMonkeIslands` donne la graine et le fragment tiré.
+- **Limite connue** : tant que les trois définitions partagent `Lvl_Raraka`, un PIE lancé directement sur `Lvl_Raraka` (sans `?Island=`) ne sait pas quel fragment il joue : le registre renvoie le premier trouvé. Passer par `L_Boot`.
+
 ## Critères d'acceptation
 1. Aucune frontière de fragment ne traverse la terre. Un test automatique sur `fragments.json` vérifie l'intersection entre frontière et terre, hors hoa synthétique.
 2. Huit captures prises depuis la côte et depuis la barque, en faisant le tour : aucun bord, mur, motu tranché ni trou de terrain visible.

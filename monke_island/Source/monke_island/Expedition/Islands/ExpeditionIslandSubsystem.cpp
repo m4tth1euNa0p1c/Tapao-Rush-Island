@@ -469,6 +469,83 @@ EFragmentError UExpeditionIslandSubsystem::GetTravelURL(FString& OutURL) const
 	return EFragmentError::None;
 }
 
+EFragmentError UExpeditionIslandSubsystem::PickRandomIsland(int32 Seed)
+{
+	if (!HasSelectionAuthority())
+	{
+		UE_LOG(LogMonkeIslands, Warning, TEXT("Islands: random pick refused on a client"));
+		return EFragmentError::NoAuthority;
+	}
+	if (CatalogState != ECatalogState::Loaded)
+	{
+		UE_LOG(LogMonkeIslands, Warning, TEXT("Islands: random pick before the catalog is loaded"));
+		return EFragmentError::CatalogNotLoaded;
+	}
+
+	TArray<FName, TInlineAllocator<16>> Ids;
+	for (const TObjectPtr<UExpeditionIslandDefinition>& Definition : OfferedDefinitions)
+	{
+		if (Definition)
+		{
+			Ids.Add(Definition->FragmentId);
+		}
+	}
+	const TValueOrError<FName, EFragmentError> Picked = ExpeditionIslands::PickFragmentId(Ids, Seed, LastPickedFragmentId);
+	if (Picked.HasError())
+	{
+		UE_LOG(LogMonkeIslands, Warning, TEXT("Islands: random pick failed (%s)"), ExpeditionIslands::LexErrorName(Picked.GetError()));
+		return Picked.GetError();
+	}
+
+	const EFragmentError Error = SelectFragment(Picked.GetValue());
+	if (Error == EFragmentError::None)
+	{
+		UE_LOG(LogMonkeIslands, Log, TEXT("Islands: drew %s with seed %d among %d fragment(s), previous %s"),
+			*Picked.GetValue().ToString(), Seed, Ids.Num(), *LastPickedFragmentId.ToString());
+		LastPickedFragmentId = Picked.GetValue();
+	}
+	return Error;
+}
+
+EFragmentError UExpeditionIslandSubsystem::TravelToSelectedIsland()
+{
+	FString URL;
+	const EFragmentError Error = GetTravelURL(URL);
+	return Error == EFragmentError::None ? TravelToMapURL(URL) : Error;
+}
+
+EFragmentError UExpeditionIslandSubsystem::TravelToMapURL(const FString& URL)
+{
+	const UGameInstance* GameInstance = GetGameInstance();
+	UWorld* World = GameInstance ? GameInstance->GetWorld() : nullptr;
+	if (!World || !GEngine || URL.IsEmpty())
+	{
+		UE_LOG(LogMonkeIslands, Warning, TEXT("Islands: travel to '%s' impossible (no world)"), *URL);
+		return EFragmentError::TravelFailed;
+	}
+
+	switch (World->GetNetMode())
+	{
+	case NM_Client:
+		UE_LOG(LogMonkeIslands, Warning, TEXT("Islands: travel to '%s' refused on a client"), *URL);
+		return EFragmentError::NoAuthority;
+
+	case NM_Standalone:
+		// Same path as UGameplayStatics::OpenLevel
+		UE_LOG(LogMonkeIslands, Log, TEXT("Islands: opening %s"), *URL);
+		GEngine->SetClientTravel(World, *URL, TRAVEL_Absolute);
+		return EFragmentError::None;
+
+	default:
+	{
+		// Absolute travel drops the previous options: keep the host listening, and never carry an older Island option
+		const FString HostURL = World->GetNetMode() == NM_ListenServer ? URL + TEXT("?listen") : URL;
+		UE_LOG(LogMonkeIslands, Log, TEXT("Islands: server travel to %s"), *HostURL);
+		return World->ServerTravel(HostURL, true) ? EFragmentError::None : EFragmentError::TravelFailed;
+	}
+	}
+}
+
 FName UExpeditionIslandSubsystem::ResolveFragmentIdForWorld(const UWorld* World) const
 {
 	if (!World)

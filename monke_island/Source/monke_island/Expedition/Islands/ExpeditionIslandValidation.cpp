@@ -4,6 +4,7 @@
 #include "Expedition/Islands/ExpeditionIslandDefinition.h"
 #include "Expedition/Islands/FragmentRules.h"
 #include "Expedition/Islands/IslandCatalog.h"
+#include "Math/RandomStream.h"
 
 #define LOCTEXT_NAMESPACE "MonkeFragments"
 
@@ -176,6 +177,41 @@ TValueOrError<FString, EFragmentError> ExpeditionIslands::BuildTravelURL(const U
 		return MakeError(EFragmentError::MapMissing);
 	}
 	return MakeValue(FString::Printf(TEXT("%s?%s=%s"), *PackageName, FragmentOptionKey, *Definition->FragmentId.ToString()));
+}
+
+int32 ExpeditionIslands::PickIndex(int32 Count, int32 Seed, int32 ExcludedIndex)
+{
+	if (Count <= 0)
+	{
+		return INDEX_NONE;
+	}
+	if (Count == 1)
+	{
+		return 0;
+	}
+	FRandomStream Stream(Seed);
+	if (ExcludedIndex < 0 || ExcludedIndex >= Count)
+	{
+		return Stream.RandRange(0, Count - 1);
+	}
+	// Draw among the others, then skip over the excluded slot: uniform over the Count - 1 remaining fragments
+	const int32 Drawn = Stream.RandRange(0, Count - 2);
+	return Drawn >= ExcludedIndex ? Drawn + 1 : Drawn;
+}
+
+TValueOrError<FName, EFragmentError> ExpeditionIslands::PickFragmentId(TConstArrayView<FName> FragmentIds, int32 Seed, FName PreviousFragmentId)
+{
+	if (FragmentIds.IsEmpty())
+	{
+		return MakeError(EFragmentError::CatalogEmpty);
+	}
+	const int32 Excluded = PreviousFragmentId.IsNone() ? INDEX_NONE : FragmentIds.IndexOfByKey(PreviousFragmentId);
+	const int32 Index = PickIndex(FragmentIds.Num(), Seed, Excluded);
+	if (!FragmentIds.IsValidIndex(Index))
+	{
+		return MakeError(EFragmentError::CatalogEmpty);
+	}
+	return MakeValue(FragmentIds[Index]);
 }
 
 FName ExpeditionIslands::ParseFragmentOption(const TCHAR* OptionValue)
