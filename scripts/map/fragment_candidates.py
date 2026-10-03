@@ -5,6 +5,7 @@ Usage: python scripts/map/fragment_candidates.py <sortie.png>   (depuis la racin
 Un groupe = motu relies par moins de 40 m d'eau. Classement : fragment naturel (8-100 ha, < 3 km),
 grand motu a scinder par un hoa, secteur bati exclu (< 400 m d'un batiment BD TOPO), ilot trop petit.
 Spec : docs/features/fragments-tuamotu.md
+Remplace par scripts/map/fragments/find_fragments.py (T-082) : garde pour memoire de l'esquisse.
 """
 import json, math, sys
 import numpy as np
