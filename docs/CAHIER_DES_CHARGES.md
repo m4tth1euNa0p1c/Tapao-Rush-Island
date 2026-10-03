@@ -1,6 +1,8 @@
 # Crownfall Expeditions — Cahier des charges et mandat pour agents Claude
 
-Version 1.2 — 3 octobre 2026. Nom provisoire. Document de référence à déposer dans `Docs/CAHIER_DES_CHARGES.md` du futur dépôt.
+Version 1.3 — 4 octobre 2026. Nom provisoire. Document de référence à déposer dans `Docs/CAHIER_DES_CHARGES.md` du futur dépôt.
+
+Historique : 1.3 (2026-10-04) — une partie devient une suite de manches autour du galion. On y trouve le lobby à bord, la barque qui fait la navette entre le galion et l'île, le départ à la barre, la vente en zone sûre et un quota éliminatoire. Demande du propriétaire ; voir §3 et §24, architecture dans `docs/adr/ADR-005-partie-en-manches.md`.
 
 ## 1. Objectif et décisions initiales
 
@@ -35,15 +37,18 @@ Un agent ne peut pas déclarer un build validé sans l’avoir exécuté. Si Unr
 
 ## 3. Boucle et états de partie
 
-`Hub → Préparation → Chargement île → Expédition → Extraction → Bilan → Hub`.
+Depuis la version 1.3, une **partie** est une suite de **manches** jouées autour du galion. Le détail fait foi en section 24.
 
-- Au hub, équiper l’équipage, consulter les quotas et lancer le départ quand tous sont prêts.
-- La barque apparaît près de la plage ; arrivée en galion et descente animée sont une mise en scène ultérieure.
-- Sur l’île, se répartir entre pacification des zones, récupération de ressources dans l’environnement et sur les ennemis, transport et protection des itinéraires ; ramener physiquement le butin.
-- Au départ, les ressources sécurisées sont figées ; le bilan applique quotas, vente et taxe.
-- Les survivants et les morts reviennent au hub à la prochaine expédition. Pas de respawn sur l’île en V1.
-- Si tous meurent, bilan de défaite : aucun butin de l’expédition, équipement emporté perdu, progression antérieure conservée.
-- Une partie ne change d’état qu’une fois. Récompenses et sauvegarde sont idempotentes par identifiant d’expédition.
+`Menu → Galion (équipage, contrat) → Chargement → Expédition (galion au mouillage, barque, île) → Départ à la barre → Traversée → Zone sûre (vente, quota) → manche suivante ou défaite → Menu`.
+
+- **Au galion**, l’équipage se rassemble à bord (lobby), lit le contrat de la manche (île tirée, quota) et lève l’ancre quand tous les présents sont prêts.
+- **Sur l’île**, l’équipe se répartit entre pacification des zones, récolte, combat, transport et protection de la barque. La barque fait la navette entre la plage et le galion ancré au large. Seul ce qui est à bord du galion au départ est rapporté.
+- **Le départ** se donne à la barre du galion. Qui n’est pas à bord est abandonné. À la fin de la submersion, le galion part de lui-même.
+- **En zone sûre** (pleine mer, galion seul), l’équipage vend sa cargaison au Percepteur de la Couronne.
+  - Quota atteint : boutique, puis manche suivante avec un quota plus élevé et une nouvelle île.
+  - Quota manqué : la Couronne punit l’équipage et la partie est perdue.
+- **Les morts** réapparaissent à bord en zone sûre, contre des frais de recrutement. Pas de respawn sur l’île.
+- Une partie ne change d’état qu’une fois. Ventes, quota, récompenses et sauvegarde sont idempotents par identifiant de manche.
 
 ## 4. Joueur et interactions
 
@@ -68,6 +73,7 @@ Chaque ressource possède un identifiant stable, une catégorie, une masse, une 
 - Un objet simplement jeté sur la barque reste libre et n’est pas comptabilisé. L’interface le signale.
 - Capacité initiale : 12 emplacements, 150 kg ; les joueurs ont leurs sièges séparés. Limites réglables.
 - Désarrimer est possible avant l’extraction ; aucun double comptage entrée/sortie.
+- v1.3 : l’arrimage dans la barque sert au transport entre l’île et le galion. Ce qui compte pour la manche est ce qui est à bord du galion au départ (§24.3).
 
 | Ressource initiale | Collecte | Masse indicative | Quantité/valeur |
 |---|---|---|---|
@@ -133,6 +139,8 @@ Pendant le déplacement : cargaison arrimée et passagers se déplacent avec la 
 
 ### 6.5 Quotas et départ
 
+> v1.3 : le départ se donne à la barre du galion et non plus depuis la barque (§24.2, étape 7). Le quota se contrôle à la vente, en zone sûre (§24.4). Les règles de vote, de préavis, d’abandon et d’échéance ci-dessous s’appliquent au galion ; « embarqué » se lit « à bord du galion ».
+
 Le quota est un objectif partagé, affiché à partir des objets réellement arrimés. Dès qu’il est rempli, afficher « Contrat rempli : extraction conseillée » ; ne pas téléporter l’équipe ni la forcer à partir. Elle peut chercher du surplus à ses risques.
 
 Un joueur embarque près de la barque immobile, sans objet tenu, dans un siège libre. Debout sur la coque ou dans l’eau ne compte pas comme embarqué. Désarrimer du loot peut faire repasser le quota sous sa cible avant départ.
@@ -142,6 +150,8 @@ Départ : tous les vivants embarqués ou vote majoritaire des vivants avec au mo
 À la fin des 60 s de submersion, le serveur extrait les passagers embarqués et le loot arrimé ; les autres meurent. L’échéance interdit toute interaction tardive. Une extraction confirmée abandonne les autres vivants et termine l’expédition pour tous. Aucun bonus de pacification ne remet en jeu une expédition résolue.
 
 ## 7. Quotas, taxe et progression
+
+> v1.3 : la vente a lieu en zone sûre, objet par objet, et le quota de manche se mesure en valeur vendue. Le quota manqué met fin à la partie. Les quotas de bois et de nourriture deviennent des commandes facultatives qui paient un bonus (§24.4, §24.6). La taxe, le bonus de contrat et la boutique ci-dessous restent valables.
 
 Le quota porte sur les quantités, la taxe sur l’or obtenu par vente. Séparer ces deux mécanismes dans le bilan.
 
@@ -461,3 +471,159 @@ La répartition L0–L8 demeure, avec ces ajouts obligatoires : L0 crée le menu
 | NET01 | Privé complet, mauvaise version, hôte parti | Motif exact, retour propre, pas de migration implicite |
 
 Definition of Done UI : chaque bouton a un effet ou une raison d’indisponibilité ; navigation aller/retour vérifiée en build ; toutes les opérations asynchrones ont succès, échec et annulation lorsque possible. Les crédits listent uniquement des contributions réelles et les licences vérifiées.
+
+## 24. Partie en manches autour du galion (v1.3)
+
+Demande du propriétaire du 2026-10-04 :
+- Le parcours : menu, puis lancer une partie, puis arriver sur le galion (en multijoueur, on attend les autres puis on lance).
+- Après un chargement, on se retrouve sur le galion ; on prend la barque jusqu'à l'île, on ramène les objets en barque, puis on retourne au galion.
+- À la barre, on termine l'expédition ; après un chargement, on arrive en zone sûre (océan seul, avec le galion), où l'on vend les objets.
+- Quota atteint : manche suivante. Quota manqué : on perd et on meurt.
+
+Cette section précise ce parcours et le complète. En cas de conflit, elle prime sur les sections 3, 5, 6.5, 7, 16, 17 et 21. Les valeurs sont des paramètres de départ à tester, dans `DA_RunRules`, jamais dans le code (§1). Architecture et restructuration : `docs/adr/ADR-005-partie-en-manches.md`.
+
+### 24.1 Vocabulaire
+
+- **Partie** : de la création jusqu’à la défaite ou l’abandon. Identifiant `RunId`, une sauvegarde de partie.
+- **Manche** : un contrat, soit une expédition puis une vente. Identifiant `RoundId`, qui joue le rôle de l’`ExpeditionId` des sections 3, 6 et 17.
+- **Galion** : le navire de l’équipage, même modèle dans toutes les phases. Il comprend un pont, une cale (écoutille), une barre, un palan, une échelle de coupée et une barque amarrée au flanc.
+- **Barque** : navette physique entre le galion et l’île (rames, ADR-003). Elle ne donne plus le départ.
+- **À bord** :
+  - pour un joueur, être dans le volume du galion (pont, cale, haut de l’échelle) ;
+  - pour un objet, être dans le volume de cargaison du galion (cale et pont), ou tenu par un joueur à bord.
+- **Zone sûre** : pleine mer, sans île ni ennemi, où le galion retrouve le cotre du Percepteur.
+- **Percepteur** : commis de la Couronne qui estime, achète, taxe et signe le contrat. C’est le visage de la satire bureaucratique (§1).
+
+### 24.2 Parcours de référence
+
+1. **Menu principal** (§16) : Nouvelle partie (Solo ou Héberger), Continuer (partie en cours), Rejoindre (LAN et développement ; internet en L7).
+2. **Galion en zone sûre, manche 0 : c’est le lobby.**
+   - Les joueurs apparaissent sur le pont.
+   - Panneau d’équipage : 4 places, nom, personnage, Prêt / Pas prêt, état de chargement.
+   - Tableau du contrat : manche 1, île tirée (fragment, ADR-004), quota, commandes facultatives.
+   - **Solo** : l’hôte lève l’ancre quand il veut.
+   - **Multijoueur** : l’hôte lève l’ancre quand tous les présents sont prêts ; sinon refus, avec la liste des joueurs pas prêts.
+   - Rejoindre n’est possible qu’en phase galion (lobby, zone sûre), jamais pendant une expédition (§16).
+3. **Lever l’ancre** : l’hôte maintient l’action 2 s à la barre, puis courte mise en scène (voiles, cloche), puis écran de chargement (destination, conseils ; §16).
+4. **Arrivée en expédition.**
+   - Les joueurs apparaissent sur le pont du galion ancré au mouillage du fragment, en eau profonde, à 250–400 m de la plage (point d’arrivée du catalogue d’îles).
+   - La barque est amarrée au flanc, au pied de l’échelle.
+   - L’horloge d’expédition (§6.1) démarre quand tous ont chargé, après 10 s de préparation affichées (« Barque à l’eau »). Un retardataire au-delà du délai de chargement de 60 s est retiré (§16).
+5. **Vers l’île** : descendre l’échelle, prendre place dans la barque, ramer jusqu’à la plage. L’expédition elle-même ne change pas (§5, §6, §8) : pacifier, récolter, combattre, porter, arrimer dans la barque pour le trajet.
+6. **Retour au galion.** La barque se range au flanc (zone d’amarrage). Deux façons de décharger :
+   - porter un objet à la main en montant l’échelle : lent, un objet à la fois ;
+   - **le palan** : depuis le pont, un joueur maintient le treuil 3 s. Le filet hisse tous les objets de la barque amarrée et les dépose dans la cale. C’est refusé si la barque n’est pas amarrée ou si elle bouge. Un objet hissé n’est compté qu’une fois.
+
+   La barque repart autant de fois que l’horloge le permet.
+7. **Départ, à la barre** : un joueur vivant à bord maintient « Lever l’ancre » 2 s.
+   - Tous les vivants à bord : départ après un préavis de 5 s.
+   - Sinon : vote majoritaire des vivants, avec au moins un joueur à bord. Préavis de 10 s annoncé à toute l’équipe (cloche, corne de brume, message et décompte). On peut l’annuler à la barre pendant le préavis.
+   - À la fin du préavis, joueurs et objets à bord sont figés et rapportés. Les joueurs restés à terre sont abandonnés (morts pour la manche). La barque et son contenu restent sur place.
+   - À la fin de la submersion (60 s, §6.1), le galion coupe l’ancre et part de lui-même avec ce qui est à bord.
+   - Équipage entier mort : après 8 s, le galion rentre seul avec sa cale. La manche n’est pas perdue pour autant : la vente décide (étapes 9 et 10).
+8. **Traversée vers la zone sûre** : courte mise en scène, chargement, puis pleine mer, ciel calme, cotre du Percepteur à couple.
+   - Les morts de la manche réapparaissent à bord.
+   - La cale contient ce qui a été rapporté, plus les invendus des manches précédentes.
+9. **Vente** : on porte un objet de la cale jusqu’à la **Balance du Percepteur**, sur le pont.
+   - Le serveur affiche sa valeur courante, réduite si l’objet a subi des chocs (`UValuableComponent`). « Vendre » (E) vend l’objet, le retire et le compte.
+   - On peut garder un objet en cale pour une manche suivante, dans la limite de capacité.
+   - Le **registre**, partagé, affiche : ventes brutes / quota, taxe, frais de recrutement, commandes remplies, net crédité.
+10. **Signer le registre**, à la table du Percepteur : l’hôte signe, ou vote majoritaire ; une confirmation est demandée si le quota n’est pas atteint.
+    - **Ventes brutes ≥ quota** : contrat rempli. Bonus de contrat et commandes payés, trésorerie créditée du net, sauvegarde de partie. Puis la boutique ouvre et le contrat de la manche suivante s’affiche : quota plus élevé, île jamais identique à la précédente. Retour à l’étape 3.
+    - **Ventes brutes < quota** : défaite.
+      - Une frégate de la Couronne arrive. Courte scène satirique, sans gore : « Contrat rompu : l’équipage est déclaré traître à la Couronne ».
+      - Bilan de partie : manches réussies, ventes totales, meilleur objet, morts.
+      - Partie close et archivée, retour au menu.
+11. **Pause et sortie** (§16) : en zone sûre, le jeu solo se met en pause. En expédition, les règles des sections 16 et 17 s’appliquent.
+
+### 24.3 Le galion pendant l’expédition
+
+- **Ancré et immobile.** Pas de navigation libre du galion en V1 ; son balancement est cosmétique. Le pont est praticable, la cale accessible par l’écoutille, l’échelle praticable depuis l’eau et depuis la barque.
+- **Ce qui compte au départ.** Un objet dans le volume de cargaison (cale, pont), ou tenu par un joueur à bord, compte à bord. Un objet resté dans la barque, même amarrée, ne compte pas.
+- **Pas un refuge absolu.** La submersion n’atteint pas le galion et les ennemis ne montent pas à bord en V1. Mais le requin (§8) attaque à l’eau, autour de l’échelle.
+- **Cale** : 40 emplacements / 600 kg, réglable et améliorable en boutique. Quand elle est pleine, le palan et le dépôt sont refusés avec un message ; rien n’est perdu.
+- **Barque de secours** : si la barque dérive ou coule (L8), une barque de secours est descendue, une par expédition.
+
+### 24.4 Zone sûre, vente et quota
+
+- **Pas de pression.** Ni horloge, ni ennemi, ni eau qui monte : on prend le temps de vendre. Les interactions passent par le serveur, comme sur l’île.
+- **Prix.** La valeur d’un objet est la valeur courante de son `UValuableComponent`, figée à l’estimation. Une vente est définitive.
+- **Quota de manche** : la valeur brute vendue minimale. Il se juge sur les ventes brutes, avant taxe et frais.
+- **Argent crédité** :
+  - taxe = `floor(ventes brutes × 35 %)` ; le bonus de contrat n’est pas taxé ;
+  - net = ventes − taxe + bonus de contrat + commandes − frais de recrutement ;
+  - la trésorerie ne descend jamais sous zéro.
+- **Commandes facultatives.** Le contrat peut demander des quantités, par exemple 4 bois et 3 nourritures (§7). Une commande remplie paie un bonus ; elle ne remplace pas le quota.
+- **Frais de recrutement** : 50 couronnes par joueur mort pendant la manche, abandonnés compris.
+- **Boutique**, après la signature : équipement de la section 7 (hache, lanterne, +4 emplacements de barque) et emplacements de cale. Achats confirmés par l’hôte, contrôle serveur, monnaie commune.
+- **Pas de remboursement.** Un quota manqué n’annule pas les ventes : la partie se termine sur le bilan.
+
+### 24.5 Multijoueur et sessions
+
+- **Un seul lieu d’accueil.** Listen server (§1). Le lobby et la zone sûre sont le même lieu (galion en pleine mer). On peut y arriver en retard, jamais pendant une expédition.
+- **Voyages.** Le passage entre le galion et l’île garde les joueurs connectés, quand le moteur le permet. Un joueur qui ne charge pas en 60 s est retiré, avec le motif (§16).
+- **États prêts.** Ils repassent à « pas prêt » pour tous si l’hôte change le contrat ou les réglages (§17).
+- **Départ de l’hôte** : fin de session pour tous (§16). La partie de l’hôte reprend à la dernière sauvegarde de zone sûre.
+- **Votes** (départ, signature) : comme en section 6.5, majorité des vivants présents ; un joueur déconnecté ne vote pas.
+
+### 24.6 Progression des manches
+
+| Paramètre (`DA_RunRules`) | Valeur de départ |
+|---|---|
+| Quota de la manche n | 250 + 120 × (n−1) + 30 × (n−1)² couronnes : 250, 400, 610, 880, 1 210… |
+| Échelle selon les joueurs | × (1 + 0,25 × (joueurs − 1)), recalculée au lancement de la manche |
+| Taxe | 35 % des ventes (§7) |
+| Bonus de contrat | 100 couronnes, non taxé |
+| Frais de recrutement | 50 couronnes par mort |
+| Préavis de départ | 5 s si tous sont à bord, 10 s sur vote |
+| Préparation avant l’horloge | 10 s |
+| Palan | maintenir 3 s, barque amarrée |
+| Cale | 40 emplacements, 600 kg |
+| Difficulté | ennemis, gardiens et embuscades +10 % par manche, plafond +50 % ; temps initial et bonus de zone inchangés |
+
+### 24.7 Sauvegarde de partie
+
+- **Quand.** À la signature réussie et après chaque achat (§17) ; jamais pendant une expédition.
+- **Continuer** reprend en zone sûre, avant le lancement de la manche suivante : cale, trésorerie, manche, quota et contrat tiré.
+- **Pas de seconde chance en quittant.** Le marqueur `ExpeditionInProgress` (§17) est posé au lever d’ancre. Après un crash ou un abandon en expédition, la reprise se fait en zone sûre avec l’expédition comptée comme rentrée vide : rien de rapporté, morts facturés. Puis la vente décide. On ne peut pas rejouer une manche en quittant.
+- **Défaite** : la partie est close et rangée dans l’historique, en lecture seule. On ne peut pas la continuer.
+
+### 24.8 Assets et services prévus
+
+Plan de création, pas la preuve que ces assets existent (§21). Détail dans l’ADR-005.
+
+| Asset/service | Responsabilité |
+|---|---|
+| `L_Galleon` | Galion en pleine mer : lobby (manche 0) et zone sûre, avec le cotre du Percepteur |
+| `BP_Galleon` (`AGalleonActor`) | Pont, volumes « à bord » et « cargaison », cale, échelle, amarrage de la barque ; présent dans `L_Galleon` et posé au mouillage de chaque île |
+| `BP_GalleonHelm`, `BP_Hoist`, `BP_RoyalAppraiser` | Barre (lever l’ancre, votes), palan (barque → cale), Balance et registre du Percepteur (vente, signature) |
+| `ARunGameMode` et `ARunGameState` | Phases Lobby / Voyage / Expédition / Vente / Défaite, état de partie répliqué (manche, quota, trésorerie, registre) |
+| `URunSubsystem` | État de partie côté hôte qui survit aux voyages : `RunId`, manche, contrat, trésorerie, manifeste de cale, morts |
+| `DA_RunRules`, `SG_Run` | Règles de la section 24.6 ; sauvegarde de partie versionnée (§17) |
+
+### 24.9 Recette
+
+| ID | Vérification | Résultat attendu |
+|---|---|---|
+| RUN01 | Solo : menu → Nouvelle partie → galion → lever l’ancre | Chargement, pont du galion au mouillage du fragment tiré, barque au flanc, horloge après 10 s |
+| RUN02 | Hôte + client au lobby, un joueur pas prêt | Lever l’ancre refusé avec son nom ; accepté quand tous sont prêts |
+| RUN03 | Client qui rejoint pendant une expédition | Refus « partie en expédition » ; accepté en zone sûre |
+| RUN04 | Barque chargée puis palan | Tous ses objets dans la cale, comptés une fois ; barque non amarrée = refus |
+| RUN05 | Départ voté avec un joueur à terre | Préavis de 10 s vu par tous ; joueur à terre mort, barque et contenu laissés ; objets à bord rapportés |
+| RUN06 | Fin de submersion sans départ | Le galion part seul avec ce qui est à bord |
+| RUN07 | Équipage entier mort | Zone sûre après 8 s, cale conservée, frais pour chaque mort |
+| RUN08 | Objet abîmé puis vendu, double clic | Valeur courante affichée et créditée, une seule fois |
+| RUN09 | Signature, quota atteint | Bonus, net exact, sauvegarde, boutique, contrat suivant au bon quota sur une autre île |
+| RUN10 | Signature, quota manqué | Confirmation, défaite, scène, bilan de partie, retour au menu ; partie non continuable |
+| RUN11 | Objet gardé en cale | Présent à la manche suivante avec la même valeur ; compté seulement à sa vente |
+| RUN12 | Quitter en expédition puis Continuer | Zone sûre, expédition rentrée vide, morts facturés, aucune duplication |
+| RUN13 | Quatre joueurs, deux manches puis défaite | Votes, cale et registre identiques sur tous les clients à chaque étape |
+| RUN14 | Exemple chiffré : manche 2 à 2 joueurs, 620 vendus, 1 mort | Quota 500 ; taxe 217, bonus 100, frais 50, net 453 |
+
+### 24.10 Lots
+
+- **L3 (complément)** : galion au mouillage, barque navette, palan, départ à la barre, retour en zone sûre. Cela remplace l’extraction depuis la barque.
+- **L4** : zone sûre, vente, registre, quota éliminatoire, manches, boutique, sauvegarde de partie, lobby à bord.
+- **L5** : quatre joueurs (RUN13). **L7** : rejoindre par internet.
+- **Mise en scène** (voiles, traversée, frégate) : provisoire acceptée jusqu’en L6.
+- **Recette §12.** Les n°1, 4, 7, 8 et 9 se lisent avec « galion » à la place de « barque » pour le départ, et « zone sûre » à la place de « hub ».

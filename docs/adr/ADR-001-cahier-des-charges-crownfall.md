@@ -49,3 +49,6 @@ Le propriétaire a fourni `docs/CAHIER_DES_CHARGES.md` (Crownfall Expeditions v1
 - Les lots s'enchaînent dans l'ordre des dépendances : L0 → L1 → L2 → L3 → L4, puis L5–L6 ; pas de L7/L8/E1 avant validation du noyau.
 - Les tâches carto/décor Raraka en cours (T-012 à T-019) ne sont plus prioritaires ; elles restent au backlog en P2.
 - Décisions réversibles courantes : prises par les agents et consignées en ADR (`docs/adr/ADR-NNN-*.md`). Arbitrage du propriétaire seulement pour changement de vision, coût externe ou blocage sans repli (§14).
+
+## Évolutions du cahier
+- v1.3 (2026-10-04) : partie en manches autour du galion — lobby à bord, barque navette, départ à la barre, vente en zone sûre, quota éliminatoire (cahier §3, §24). Architecture et restructuration : ADR-005, acceptée le 2026-10-04.
