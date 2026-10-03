@@ -95,6 +95,9 @@ public:
 	/** Number of seats (Seat_* sockets) */
 	int32 GetSeatCount() const { return SeatSockets.Num(); }
 
+	/** True when a player occupies this seat (replicated) */
+	bool IsSeatOccupied(int32 SeatIndex) const { return SeatOccupants.IsValidIndex(SeatIndex) && SeatOccupants[SeatIndex] != nullptr; }
+
 	/** Spawns a boat on the water in front of a location (server); returns nullptr when no water is found */
 	static ABoatActor* SpawnOnWaterNear(UWorld* World, const FVector& From, const FVector& Forward, TSubclassOf<ABoatActor> BoatClass);
 
