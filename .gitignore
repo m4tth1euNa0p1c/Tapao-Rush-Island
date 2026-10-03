@@ -32,3 +32,4 @@ monke_island/Plugins/*/Intermediate/
 
 # Factory worktrees (one per task, see .claude/factory/FACTORY.md)
 .worktrees/
+art/audio_src/

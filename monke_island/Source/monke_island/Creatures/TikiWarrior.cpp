@@ -10,6 +10,7 @@
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Net/UnrealNetwork.h"
 
 ATikiWarrior::ATikiWarrior()
 {
@@ -26,12 +27,27 @@ void ATikiWarrior::BeginPlay()
 	LastTargetTime = GetWorld()->GetTimeSeconds();
 }
 
+void ATikiWarrior::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ATikiWarrior, bInCombat);
+}
+
 void ATikiWarrior::InitWarrior(ETikiWarriorRole InRole, APawn* InTarget, const FVector& InLeapDirection)
 {
 	WarriorRole = InRole;
 	Target = InTarget;
 	LeapDirection = InLeapDirection.GetSafeNormal2D();
 	LastTargetTime = GetWorld()->GetTimeSeconds();
+}
+
+void ATikiWarrior::Engage(APawn* InTarget)
+{
+	if (IsLivingPlayer(InTarget) && !IsDead())
+	{
+		Target = InTarget;
+		LastTargetTime = GetWorld()->GetTimeSeconds();
+	}
 }
 
 void ATikiWarrior::Burrow()
@@ -84,31 +100,62 @@ void ATikiWarrior::ServerThink(float DeltaSeconds)
 		return;
 	}
 
-	// keep or find a target
+	// keep or find a target; a guardian also gives up a player who led it too far from its village
+	const bool bHasPost = (WarriorRole == ETikiWarriorRole::Guardian || WarriorRole == ETikiWarriorRole::Ambusher) && PostRadius > 0.0f;
 	APawn* Victim = Target.Get();
-	if (Victim && (!IsLivingPlayer(Victim) || FVector::Dist(Victim->GetActorLocation(), GetActorLocation()) > Rules->LoseRadius))
+	// its prey down: a victory; out of reach in the water: a taunt from the shore
+	if (Victim && !IsLivingPlayer(Victim))
+	{
+		PlayAction(ETikiAction::Victory);
+	}
+	else if (Victim && IsOutOfReachInWater(Victim) && Now - LastTauntTime >= Rules->TauntInterval)
+	{
+		LastTauntTime = Now;
+		FaceToward(Victim->GetActorLocation());
+		PlayAction(ETikiAction::Taunt);
+	}
+	if (Victim && (!IsLivingPlayer(Victim) || IsOutOfReachInWater(Victim) || FVector::Dist(Victim->GetActorLocation(), GetActorLocation()) > Rules->LoseRadius
+		|| (bHasPost && FVector::Dist2D(Victim->GetActorLocation(), Post) > Rules->LoseRadius)))
 	{
 		Victim = nullptr;
 		Target.Reset();
 	}
-	if (!Victim && WarriorRole == ETikiWarriorRole::Night)
+	if (!Victim && WarriorRole != ETikiWarriorRole::Defender)
 	{
 		Victim = FindNearestPlayer(Rules->AggroRadius);
+		if (IsOutOfReachInWater(Victim))
+		{
+			Victim = nullptr;
+		}
 		Target = Victim;
+		// a growl when it spots a player, not every time it finds it again
+		if (Victim && Now - LastRoarTime >= Rules->AggroVoiceCooldown)
+		{
+			LastRoarTime = Now;
+			PlayAction(ETikiAction::Alert);
+		}
 	}
 
+	bInCombat = Victim != nullptr;
 	if (!Victim)
 	{
-		// a defender with nobody left to punish goes back into the ground
-		if (WarriorRole == ETikiWarriorRole::Defender && Now - LastTargetTime > 8.0)
+		// a defender with nobody left to punish goes back into the ground, an ambusher into its bush
+		if ((WarriorRole == ETikiWarriorRole::Defender && Now - LastTargetTime > 8.0)
+			|| (WarriorRole == ETikiWarriorRole::Ambusher && Now - LastTargetTime > Rules->AmbushIdleTime))
 		{
 			Burrow();
 			return;
 		}
+		// a guardian stays by its bush: it wanders around its post and walks back when it strayed
+		if (bHasPost && TikiMath::IsOffPost(GetActorLocation(), Post, PostRadius))
+		{
+			IdleGoal = Post;
+		}
 		if (IdleGoal.IsZero() || MoveToward(IdleGoal, Rules->WarriorWalkSpeed) < 80.0f || UpdateStuck(true))
 		{
 			const float Angle = FMath::FRandRange(0.0f, 2.0f * PI);
-			IdleGoal = TikiMath::PointOnRing(GetActorLocation(), Angle, FMath::FRand(), 300.0f, 1200.0f);
+			IdleGoal = bHasPost ? TikiMath::PointOnRing(Post, Angle, FMath::Sqrt(FMath::FRand()), 0.0f, PostRadius)
+				: TikiMath::PointOnRing(GetActorLocation(), Angle, FMath::FRand(), 300.0f, 1200.0f);
 		}
 		return;
 	}
@@ -121,7 +168,7 @@ void ATikiWarrior::ServerThink(float DeltaSeconds)
 		FaceToward(Victim->GetActorLocation());
 		LastAttackTime = Now;
 		PendingStrikeTime = Now + Rules->AttackWindup;
-		PlayAction(ETikiAction::Attack);
+		PlayAction(ETikiAction::Attack, static_cast<uint8>(FMath::RandRange(0, Anims.AttackVariants.Num())));
 		return;
 	}
 	if (Distance > Rules->AttackRange * 0.7f)
@@ -153,12 +200,14 @@ void ATikiWarrior::StrikeNow()
 			continue;
 		}
 		Done.Add(Victim);
-		UGameplayStatics::ApplyDamage(Victim, Rules->AttackDamage, GetController(), this, nullptr);
+		// without the arm holding its weapon, it strikes with the other fist
+		const float Damage = Rules->AttackDamage * (IsMaimed() ? Rules->MaimedDamageScale : 1.0f);
+		UGameplayStatics::ApplyDamage(Victim, Damage, GetController(), this, nullptr);
 		if (ACharacter* VictimCharacter = Cast<ACharacter>(Victim))
 		{
 			VictimCharacter->LaunchCharacter(Forward * Rules->AttackKnockback + FVector(0.0f, 0.0f, 150.0f), true, false);
 		}
-		UE_LOG(Logmonke_island, Log, TEXT("%s strikes %s: %.0f damage"), *GetName(), *Victim->GetName(), Rules->AttackDamage);
+		UE_LOG(Logmonke_island, Log, TEXT("%s strikes %s: %.0f damage"), *GetName(), *Victim->GetName(), Damage);
 	}
 }
 

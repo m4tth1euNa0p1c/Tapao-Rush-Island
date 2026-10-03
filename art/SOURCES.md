@@ -67,6 +67,11 @@
 - `textures/props/minka/japanese_cedar_planks` — porte coulissante d'entrée, coffre (sugi) — https://polyhaven.com/a/japanese_cedar_planks
 - `textures/props/minka/mossy_rock` — pierres d'appui sous les poteaux — https://polyhaven.com/a/mossy_rock
 - `textures/props/minka/rough_linen` — trame du papier washi, des fusuma, coussins et futon (normale seulement) — https://polyhaven.com/a/rough_linen
+- `textures/props/minka/clay_roof_tiles` — village : toits de tuiles des entrepôts kura — https://polyhaven.com/a/clay_roof_tiles
+- `textures/props/minka/pine_bark` — village : troncs des pins — https://polyhaven.com/a/pine_bark
+- `textures/props/minka/forest_leaves_02` — village : haies et feuillage — https://polyhaven.com/a/forest_leaves_02
+- `textures/props/minka/brown_mud_02` — village : rizières, levées de terre — https://polyhaven.com/a/brown_mud_02
+- `textures/props/minka/leafy_grass` — village : sol herbeux de la présentation — https://polyhaven.com/a/leafy_grass
 - `models/props/ceramic_vase_02` — petit vase du tokonoma — https://polyhaven.com/a/ceramic_vase_02
 - `models/props/tea_set_01` — service à thé sur la table basse — https://polyhaven.com/a/tea_set_01
 - `models/props/wooden_bucket_01` — seau du doma — https://polyhaven.com/a/wooden_bucket_01
@@ -87,3 +92,21 @@ Kenney, « Impact Sounds » 1.0 — **CC0** (domaine public) — https://kenney.
 - `audio/hazards/SW_Coconut_Sand_0N` ← `impactSoft_heavy_00x`, mixé avec la gerbe de sable synthétisée de `coconut_sounds.py`
 
 Synthétisés (aucune licence) : `SW_Step_SandWet_0N`, `SW_Step_Water_0N`, `SW_Step_Coral_0N` (`footstep_sounds.py`).
+
+## Totem tiki (T-072) — art/export/Props/Totem/
+
+Maquette `totem-tiki` faite sur le 2e PC (OneDrive\maquette-blender\maquettes\totem-tiki, 3 variantes A/B/C, visages stylisés et fictifs).
+- `T_Totem_Tiki_*_D/_N/_ORM.png` (2K) : textures cuites depuis Poly Haven `palm_tree_bark` (écorce de cocotier teintée bois flotté) — https://polyhaven.com/a/palm_tree_bark — **CC0**. Nacre et creux procéduraux (Blender).
+- Conversion pour Unreal sur ce PC : normale OpenGL → DirectX (canal vert inversé) ; ORM = occlusion 1, rugosité de `_R`, métal 0.
+
+## Voix des créatures tiki (T-077) — scripts/props/creature_sounds.py
+
+rubberduck, « 80 CC0 creature SFX » et « 80 CC0 creature SFX #2 » — **CC0** (domaine public) — https://opengameart.org/content/80-cc0-creature-sfx et https://opengameart.org/content/80-cc0-creture-sfx-2
+- `audio/creatures/SW_Tiki_Emerge_0N` ← roar_02/04/05/06, monster_04/07 (sortie du buisson)
+- `audio/creatures/SW_Tiki_Aggro_0N` ← monster_03/06/09/12/20, troll_01 (repère un joueur)
+- `audio/creatures/SW_Tiki_Attack_0N` ← grunt_02/06/07/08/09, weird_05 (effort du coup)
+- `audio/creatures/SW_Tiki_Hurt_0N` ← hurt_03/04/05, troll_02/03, monster_15
+- `audio/creatures/SW_Tiki_Death_0N` ← die_01/02/03, howl
+- `audio/creatures/SW_Tiki_Idle_0N` ← grunt_01/03, weird_07/08/09, breath_02
+- `audio/creatures/SW_Villager_Hurt_0N` ← human_01/04/08, hurt_01/02 ; `SW_Villager_Flee_0N` ← scream_01/02, human_02/03/05 ; `SW_Villager_Death_0N` ← human_06/07, die_04
+Traitement : mono, silences coupés, crête normalisée à -1 dB, fondus de 10 ms. Archives d'origine en cache local dans `art/audio_src/creatures/` (non versionné, retéléchargé par le script).
