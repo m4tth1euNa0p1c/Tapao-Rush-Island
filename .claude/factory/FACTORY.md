@@ -13,16 +13,22 @@ L'échelle se gagne en découpant finement (tâches petites, fichiers disjoints,
 ## 2. Environnements : DEV → REC → INT → PROD
 | Env | Où | Qui | Entrée | Sortie (gate) | Statut chantier |
 |-----|----|-----|--------|----------------|-----------------|
-| **DEV** | worktree / branche `dev/T-NNN` (repli sans git : fichiers disjoints dans l'arbre principal) | instance du rôle assigné | tâche `a-faire` avec fiche §13 complète (lot, dépendances, fichiers autorisés, contrat, recette, preuve) | compile (UBT ou Live Coding), tests du domaine verts, auto-contrôle conventions | `en-cours` → `review` + note `env=rec` |
+| **DEV** | code, docs, scripts : worktree `.worktrees/T-NNN`, branche `dev/T-NNN` (`python scripts/worktree.py new T-NNN`) ; assets : arbre principal + éditeur partagé | instance du rôle assigné | tâche `a-faire` avec fiche §13 complète (lot, dépendances, fichiers autorisés, contrat, recette, preuve) | `python scripts/worktree.py build T-NNN` à 0 erreur (UBT du worktree, éditeur ouvert ou non), tests du domaine verts, auto-contrôle conventions, commits sur `dev/T-NNN` | `en-cours` → `review` + note `env=rec ; branche=dev/T-NNN` |
 | **REC** (recette) | même branche, éditeur partagé ou headless | `ue-qa-tester` (tests + recette du cahier), `ue-code-reviewer` (lecture seule), `ue-network-engineer` si code serveur, `ue-security-engineer` si RPC / fichiers / sauvegarde / dépendance, `ue-reliability-engineer` si opération faillible (fichier, async, réseau, flux §22) | `review` + preuves DEV | critères d'acceptation + IDs de recette du cahier passés, review sans CRITIQUE/MAJEUR, revues réseau / sécurité / fiabilité signées quand requises | `review` + note `env=int` (ou retour `en-cours` avec la liste des écarts) |
-| **INT** (intégration) | branche `integration` | `ue-integration-lead` (+ `ue-editor-integrator` pour les assets, `ue-build-engineer` si le build casse) | tâches passées en REC | fusion sans conflit, build complet 0 erreur, **toute** la suite `monke_island.*` verte, PIE solo puis hôte + client sans erreur ni ensure | `fait` + note `env=int niveau=testé éditeur` |
-| **PROD** | branche `main` + tag `L?-vN` | `ue-integration-lead`, `ue-build-engineer` (`/ue-package`), `ue-qa-tester`, `ue-performance-engineer`, `ue-memory-engineer`, `ue-architect` (revue d'architecture), `ue-security-engineer` (avant tout build distribué) | lot complet en INT | recette du **lot** (§11/§12/§23) passée sur build Windows packagé hors éditeur, release checklist, perf et mémoire mesurées contre les budgets, revue d'architecture sans CRITIQUE/MAJEUR ouvert, problèmes connus listés | lot validé dans `docs/production/journal.md`, tag |
+| **INT** (intégration) | `main` dans l'arbre principal (`python scripts/worktree.py merge T-NNN`) | `ue-integration-lead` (+ `ue-editor-integrator` pour les assets, `ue-build-engineer` si le build casse) | tâches passées en REC | fusion sans conflit, build complet 0 erreur, **toute** la suite `monke_island.*` verte, PIE solo puis hôte + client sans erreur ni ensure | `fait` + note `env=int niveau=testé éditeur` |
+| **PROD** | `main` + tag `L?-vN` | `ue-integration-lead`, `ue-build-engineer` (`/ue-package`), `ue-qa-tester`, `ue-performance-engineer`, `ue-memory-engineer`, `ue-architect` (revue d'architecture), `ue-security-engineer` (avant tout build distribué) | lot complet en INT | recette du **lot** (§11/§12/§23) passée sur build Windows packagé hors éditeur, release checklist, perf et mémoire mesurées contre les budgets, revue d'architecture sans CRITIQUE/MAJEUR ouvert, problèmes connus listés | lot validé dans `docs/production/journal.md`, tag |
 
 Règles :
 - Pas de saut d'environnement. Un retour arrière renvoie à DEV avec les écarts nommés.
 - Le niveau de preuve est toujours écrit : `compilé` / `testé éditeur` / `testé build` / `testé multi-machines`.
 - `fait` = sorti de INT. Un lot est « Validé » seulement après PROD.
-- **Pré-requis git** : DEV en worktrees et INT/PROD en branches exigent Git + LFS (`/ue-vcs setup`, accord de l'utilisateur requis). Tant qu'il n'y a pas de dépôt, l'usine tourne en **mode mono-arbre** : vagues limitées aux fichiers disjoints, INT = build + tests complets sur l'arbre principal, PROD = build packagé + journal (pas de tag).
+- **Mode worktree (actif depuis le 2026-10-03, dépôt Git + LFS local, commit `47b1bdb`)** :
+  - **Worktree léger** : `scripts/worktree.py new T-NNN` crée `.worktrees/T-NNN` sur `dev/T-NNN`, en sparse-checkout code + docs (`Source/`, `Config/`, `.uproject`, `docs/`, `scripts/`, `.claude/`), sans `Content/` ni téléchargement LFS : quelques secondes et quelques Mo. `--full` seulement si la tâche doit lire des assets.
+  - **Compilation sans fermer l'éditeur** : `worktree.py build T-NNN` compile le module avec l'`Intermediate/` du worktree. La preuve `compilé` de DEV ne réquisitionne plus l'éditeur partagé ; seule la reconstruction de l'arbre principal après fusion (INT) le demande.
+  - **Assets** : `.uasset` et `.umap` restent dans l'arbre principal, modifiés via l'éditeur partagé (ressource exclusive §5), avec `git lfs lock <fichier>` avant la modification et `unlock` après le commit.
+  - **Commits** : chaque instance commite **ses** fichiers sur sa branche, préfixe de domaine et ID de tâche (`gameplay: … (T-NNN)`). Sur `main`, on ne commite qu'après un build OK, et seulement ses propres fichiers : jamais de `git add -A` sur le travail des autres sessions.
+  - **Fusion** (gate INT) : `worktree.py merge T-NNN` fait un `--no-ff` dans `main`, sur un arbre principal propre pour les fichiers touchés. Puis build complet et tests ; `worktree.py remove T-NNN` après `fait`.
+  - **Repli mono-arbre** (petite correction urgente, ou tâche purement éditeur) : travail direct dans l'arbre principal, fichiers disjoints, commit ciblé des fichiers de la tâche. Les règles de gate ne changent pas.
 
 ## 3. Cellules (alignées sur le cahier §9, §13, §21)
 | Cellule | Lead | Rôles | Possède (code `Source/monke_island/…`, contenu `/Game/MonkeIsland/…`) | Cahier | Lots |
@@ -60,17 +66,18 @@ Un dossier ou un asset hors du périmètre de la cellule demande l'accord du lea
 | Ressource | Capacité | Règle |
 |-----------|----------|-------|
 | Éditeur Unreal + MCP `unreal` | 1 | une seule instance éditeur à la fois (jeton `owner=editor` dans la note du chantier) ; PIE bloque les sauvegardes |
-| Build UBT éditeur fermé | 1 par arbre | fermer l'éditeur = coordination avec la tâche qui le tient |
+| Build UBT de l'arbre principal (éditeur fermé) | 1 | seulement en INT, après fusion ; fermer l'éditeur = coordination avec la tâche qui le tient |
+| Build UBT d'un worktree | N | `worktree.py build T-NNN`, éditeur ouvert ou non ; les builds se sérialisent seuls (`-WaitMutex`) |
 | MCP `blender` | 1 | une instance Blender à la fois |
-| Une map `.umap` ou un Blueprint | 1 propriétaire | `owner=<asset>` dans la note ; verrou `git lfs lock` quand git existe |
-| Code C++ | N | parallèle si fichiers disjoints ; worktree par instance quand git existe |
+| Une map `.umap` ou un Blueprint | 1 propriétaire | `owner=<asset>` dans la note + `git lfs lock <fichier>` dans l'arbre principal |
+| Code C++ | N | un worktree par instance ; les conflits se règlent à la fusion (INT), donc des fichiers qui se recouvrent restent possibles mais coûtent une résolution |
 | Docs, specs, scripts Python, données | N | parallèle si fichiers disjoints |
 
-Taille de vague recommandée : en mode mono-arbre, 3 à 6 instances (code + docs) + 1 éditeur + 1 Blender. Avec worktrees, 10 à 20 instances code, toujours 1 éditeur et 1 Blender. Au-delà, enchaîner les vagues. Pas plus de 3 tâches `en-cours` par rôle et par cellule sans accord du lead.
+Taille de vague recommandée : 10 à 15 instances code et docs en worktrees, plus 1 tâche éditeur et 1 tâche Blender dans l'arbre principal. Les builds de worktree se sérialisent : au-delà de 15 compilations simultanées, la vague attend surtout UBT. En repli mono-arbre : 3 à 6 instances. Au-delà, enchaîner les vagues. Pas plus de 3 tâches `en-cours` par rôle et par cellule sans accord du lead.
 
 ## 6. Cycle d'une instance
-1. La session principale lance l'agent avec : ID de tâche, env (`dev`), fiche §13, propriétaire des ressources exclusives.
-2. L'instance passe `en-cours`, travaille **uniquement** sur ses fichiers autorisés, produit ses preuves.
+1. La session principale crée le worktree (`python scripts/worktree.py new T-NNN`), puis lance l'agent avec : ID de tâche, env (`dev`), chemin `.worktrees/T-NNN`, fiche §13, propriétaire des ressources exclusives. Pas d'`isolation: "worktree"` de l'outil Agent : il ferait un checkout complet de `Content/` et du LFS (environ 3 Go par agent).
+2. L'instance passe `en-cours`, travaille **uniquement** sur ses fichiers autorisés **dans son worktree**, compile avec `worktree.py build T-NNN`, commite sur `dev/T-NNN` et produit ses preuves.
 3. Elle termine en `review` (`env=rec`) ou `bloque` (avec ce qu'il faut pour débloquer). Jamais `fait` directement depuis DEV.
 4. `/factory-gate rec|int|prod <T-NNN|lot>` fait passer les gates.
 
