@@ -48,11 +48,48 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rise|Day / night fallback", meta=(ClampMin="0.2", ClampMax="5"))
 	float RiseExponent = 1.6f;
 
-	/** Size of a simulation cell (cm) */
+	/**
+	 *  Expedition (T-103): the water rises on the fragment played only, through the local grid below, recentred at the
+	 *  start of the expedition on the arrival of the boat. Off: the grid stays around the flood actor (legacy, test maps).
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea")
+	bool bLocalGridInExpedition = true;
+
+	/** Expedition: cells on each side of the grid laid on the fragment (fragments are up to 2 km long) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea", meta=(ClampMin="16", ClampMax="2048"))
+	int32 ExpeditionGridCells = 320;
+
+	/** Expedition: size of a cell of the grid laid on the fragment (cm); 320 x 8 m = 2.56 km */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea", meta=(ClampMin="100", Units="cm"))
+	float ExpeditionCellSizeCm = 800.0f;
+
+	/**
+	 *  Expedition: distance from the arrival boat to the centre of the grid, along its bow (the bow points to the beach,
+	 *  200 to 350 m away): the grid covers the island ahead and the water around the boat
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea", meta=(ClampMin="0", Units="cm"))
+	float ArrivalToGridCenterCm = 60000.0f;
+
+	/**
+	 *  Expedition: also raise the sea level of the whole map (UIslandWaterSubsystem::SetSeaLevel, UFloodSeaRiseSubsystem).
+	 *  Off by default (owner, 2026-10-04): the water rises only where the players are, not at the spawn.
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea")
+	bool bRaiseGlobalSea = false;
+
+	/** Expedition, with bRaiseGlobalSea: smallest move of the global sea level (cm), the surfaces move by steps */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea", meta=(ClampMin="0.1", ClampMax="50", Units="cm"))
+	float SeaLevelStepCm = 2.0f;
+
+	/** Expedition: seconds before the submersion over which the frame times are measured as the reference (log) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea", meta=(ClampMin="0", Units="s"))
+	float FrameStatsLeadSeconds = 10.0f;
+
+	/** Size of a simulation cell (cm), without expedition */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Grid", meta=(ClampMin="100", Units="cm"))
 	float CellSizeCm = 600.0f;
 
-	/** Number of cells on each side of the grid, centred on the flood actor */
+	/** Number of cells on each side of the grid, centred on the flood actor (without expedition) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Grid", meta=(ClampMin="16", ClampMax="2048"))
 	int32 GridCells = 512;
 
@@ -103,6 +140,17 @@ public:
 	/** Most chunks rebuilt per frame */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Render", meta=(ClampMin="1"))
 	int32 ChunksPerFrame = 24;
+
+	/** Game thread time given to the chunk rebuilds per frame (ms); the rest waits for the next frame */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Render", meta=(ClampMin="0.1", Units="ms"))
+	float MeshBudgetMs = 1.0f;
+
+	/**
+	 *  A chunk whose cells are all under water within this distance of the sea is drawn as one flat quad moved with
+	 *  the sea, instead of a rebuilt mesh (cm): the open sea and the drowned land cost a transform update
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Render", meta=(ClampMin="0", Units="cm"))
+	float FlatChunkToleranceCm = 3.0f;
 
 	/** Material of the flood surface (the lagoon water) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Render")

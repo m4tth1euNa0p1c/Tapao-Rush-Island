@@ -59,12 +59,38 @@ Chronologie de repli (map sans expédition), demandée par l'utilisateur le 2026
 - Au plus 40 noix restent à terre, chacune pendant 90 s. Le vent les pousse comme tout objet libre.
 - Débogage : `monke.DropCoconut`, une noix visée sur le premier joueur.
 
-## Inondation (`AFloodSimulationActor`, `Source/monke_island/Flood/`)
+## L'eau monte sur le fragment joué (T-103, lot L3)
+Recette visée : cahier §6.1 (la submersion couvre progressivement les terres accessibles), §12 n°16 (l'eau ne baisse jamais), demande T-101 (après la submersion, +10 cm/s jusqu'à +15 m). Demande du propriétaire (2026-10-04) : « l'eau monte uniquement dans la zone où je suis, pas à la zone de spawn ».
+
+- **Cause du « la mer ne monte pas »** : la grille d'`AFloodSimulationActor` faisait 3 km et restait centrée sur la position fixe de l'acteur dans `Lvl_Raraka`. Or le jeu démarre dans la barque devant un fragment tiré au hasard, à plus de 10 km de là (T-093/T-095). L'eau montait donc ailleurs.
+- **Ce qui change** : au début de l'expédition, le serveur pose la grille sur le fragment joué, puis réplique son centre (`GridCenter`). Toutes les machines lisent ainsi le même sol.
+  - Centre : la barque d'arrivée (`UBoatStartSubsystem::GetArrivalBoat`), avancée vers l'île le long de sa proue de `ArrivalToGridCenterCm` (600 m). La proue vise la plage, à 200–350 m. Sans barque d'arrivée, on prend le premier pion.
+  - Taille : `ExpeditionGridCells` × `ExpeditionCellSizeCm` = 320 × 8 m = 2,56 km. Les fragments font au plus 2 km de terre (`fragments.json`) ; la barque reste à environ 680 m du bord arrière.
+  - Montée : 650 cm en 60 s, puis +10 cm/s jusqu'à +1 500 cm, soit +21,5 m (`DA_ExpeditionRules`, T-101). Elle ne descend jamais (`FloodSchedule::HoldRise`). Un client attend la phase `Submerging` répliquée.
+  - La surface de la grille alimente `UIslandWaterSubsystem::SetSurfaceProvider` : flottaison de la barque, pataugeage, nage, noyade, requins, tiki et bruits de pas la suivent.
+  - La zone de départ et le reste de la map restent au niveau de la mer : `DA_FloodRules.bRaiseGlobalSea = false`. `UFloodSeaRiseSubsystem` sait monter la mer globale (`SetSeaLevel`, par pas de `SeaLevelStepCm`), mais seulement si cette case est cochée.
+- Réglages (`DA_FloodRules`) :
+  - catégorie *Expedition sea* : `bLocalGridInExpedition` (oui), `ExpeditionGridCells` (320), `ExpeditionCellSizeCm` (800), `ArrivalToGridCenterCm` (60 000), `bRaiseGlobalSea` (non), `SeaLevelStepCm` (2), `FrameStatsLeadSeconds` (10) ;
+  - catégorie *Render* : `MeshBudgetMs` (1 ms), `FlatChunkToleranceCm` (3 cm).
+- Journal : `flood grid laid on the fragment played, from the arrival boat of FRG_…`, `flood grid of 320 x 320 cells of 8.0 m…`, `SeaRise: the water starts rising`, `SeaRise: the water reached its top`.
+
+### Lag à l'immersion : cause, correction, mesures
+- **Cause probable.** La grille 512 × 512 était hors du fragment, presque toute en mer ouverte. Une fois l'eau montée, ses 256 parcelles de 32 × 32 cellules étaient toutes mouillées et dessinées, double face (environ 8 000 triangles par parcelle). Elles étaient reconstruites à tour de rôle, 24 par image, en boucle toutes les 0,2 s. Chaque `CreateMeshSection` refait les données de rendu et crée un `UBodySetup` neuf (cuisson asynchrone même sans collision), donc des déchets pour le ramasse-miettes. S'ajoutaient 1 à 4 pas de simulation par image.
+- **Correction.**
+  1. Grille plus petite : 102 400 cellules au lieu de 262 144 (×0,39), et 100 parcelles au lieu de 256.
+  2. Parcelles plates : une parcelle entièrement sous l'eau, à `FlatChunkToleranceCm` près du niveau de la mer (mer ouverte, terre noyée), devient un seul quadrilatère. Il est créé une fois, puis simplement déplacé avec la mer, sans reconstruction. Seules les parcelles de rivage, où l'eau avance, sont reconstruites.
+  3. Budget : la reconstruction s'arrête après `MeshBudgetMs` (1 ms) par image et reprend à l'image suivante (24 parcelles au plus).
+- **Mesure hors moteur** du 2026-10-04 : même algorithme de pas, en C++ autonome, en série, 200 pas, sur la machine de dev pendant un build. Ancienne grille 512² : 1,36 ms par pas en moyenne (min 0,81, max 3,6). Nouvelle grille 320² : 0,51 ms (min 0,31, max 1,6). Le moteur répartit le calcul sur plusieurs cœurs (`ParallelFor`). Cette mesure ne couvre pas la reconstruction des parcelles, qui demande l'éditeur.
+- **Mesure en jeu (à faire, éditeur requis).** `UFloodSeaRiseSubsystem` journalise les temps d'image réels (`FApp::GetDeltaTime`) en min / moyen / max sur trois fenêtres : les 10 s avant la submersion, la submersion, puis la montée qui suit (lignes `SeaRise frame times, …`). En complément : `stat unit`, ou Insights avec les marqueurs `AFloodSimulationActor::Simulate`, `AFloodSimulationActor::BuildChunks` et `UFloodSeaRiseSubsystem::Tick`. Le test `monke_island.Flood.SeaLevel` donne le coût d'un pas dans le moteur pour les deux tailles (lignes « Legacy » et « Fragment »).
+- Il n'existe pas de commande pour avancer l'horloge d'expédition (`Expedition/Core` n'en a pas). Pour atteindre la submersion, il faut attendre 120 s.
+
+## Inondation locale (`AFloodSimulationActor`, `Source/monke_island/Flood/`)
+- Expédition : posée sur le fragment joué (voir ci-dessus), de 320 × 8 m. Les points suivants décrivent la grille du repli jour/nuit, centrée sur l'acteur.
 - Eau peu profonde sur une grille posée sur le terrain, modèle des tuyaux virtuels (Mei, Decaudin, Hu 2007). L'eau descend les pentes, remplit les creux, et une crête la retient tant qu'elle n'est pas submergée.
 - Grille : 512 × 512 cellules de 6 m, soit 3 km centrés sur l'acteur (village de Motutapu). Pas de 0,05 s. Calcul en `ParallelFor`.
 - Le terrain est relevé en jeu par des tracés verticaux, sans compter la végétation ni les plans d'eau. Aucune donnée précalculée : la simulation suit toute modification du level design, et le terrain n'est jamais déformé.
 - Les cellules de mer ouverte (plus de 1,5 m sous le niveau de la mer) et le bord de la grille suivent le niveau de la mer.
-- Rendu : un maillage procédural par parcelle de 32 × 32 cellules, avec le matériau `M_Water_Lagoon`. Les parcelles sont reconstruites à tour de rôle toutes les 0,2 s.
+- Rendu : un maillage procédural par parcelle de 32 × 32 cellules, avec le matériau `M_Water_Lagoon`. Les parcelles sont reconstruites à tour de rôle toutes les 0,2 s, dans la limite de `MeshBudgetMs` par image. Une parcelle entièrement noyée au niveau de la mer est un seul quadrilatère, déplacé avec la mer (T-103).
 - La surface locale alimente `UIslandWaterSubsystem::GetWaterSurfaceAt` et `GetWaterDepthAt` : le joueur patauge, nage et se noie avec l'inondation, et la barque flotte dessus (monk-island-aa).
 - Réseau : chaque machine fait tourner les mêmes pas déterministes depuis l'horloge répliquée : `ClockState` et `Phase` de l'expédition, sinon l'horloge jour/nuit. Le serveur fait foi pour le gameplay.
 
@@ -72,10 +98,14 @@ Chronologie de repli (map sans expédition), demandée par l'utilisateur le 2026
 `monke.SetTime 285`, `monke.FloodNow`, `monke.SetHour 19`, `monke.TimeSpeed 5`. Ces commandes ne valent que pour le repli jour/nuit. Sur l'horloge d'expédition, `monke.FloodNow` journalise un avertissement et ne déplace pas l'eau : Expedition/Core n'a pas encore de commande de saut.
 
 ## Limites connues
-- Le plan de mer global ne monte pas : hors de la grille (au-delà de 1,5 km), l'océan reste au niveau 0, d'où une marche d'eau au bord de la grille. Le brouillard de tempête la masque en partie.
+- Le plan de mer global ne monte pas (choix du propriétaire, `bRaiseGlobalSea` décoché). Hors de la grille (au-delà d'environ 1,3 km du centre), l'océan reste au niveau 0, d'où une marche d'eau au bord de la grille. Le brouillard de tempête la masque en partie. Une barque qui sort de la grille retombe au niveau 0.
+- Le centre est fixé une fois, au départ. Une expédition qui change de fragment en cours de partie ne déplace pas la grille.
+- Avec `bRaiseGlobalSea` coché : `SM_Raraka_Water` a le profil `BlockAllDynamic` (QueryAndPhysics). S'il a une géométrie de collision, chaque pas de 2 cm la déplace dans la scène physique.
 - Pas encore de pluie ni de sons de tempête. Seuls les cocotiers bougent avec le vent, pas les buissons.
 
 ## Critères d'acceptation
+- [ ] T-103 : `monke_island.Flood.SeaLevel` passe (niveau = base + montée, jamais en baisse, poursuite jusqu'au plafond, réglages par défaut, mesure d'un pas). Compilé en cible jeu le 2026-10-04 ; tests et PIE pas encore lancés.
+- [ ] T-103 : en PIE sur `Lvl_Raraka`, l'eau monte sur le fragment de départ, la barque flotte plus haut et le pion nage puis se noie ; la zone de spawn reste sèche. Relever les lignes `SeaRise frame times` avant et pendant la submersion.
 - [x] Les tests `monke_island.Flood.Grid` passent (volume conservé, écoulement vers le bas, crête qui retient l'eau, bas avant haut, chronologie du vent et de la mer).
 - [x] PIE du 2026-10-03, 7 min en temps réel : tempête visible dès 1:50 (soleil de 6 à 1,5), nuit noire à 3:55, la mer commence à monter à 4:50 (journal : « the sea starts rising »).
 - [x] Le joueur nage (HUD « Nage ») 45 s après le début de la montée, puis se noie à 75 s (journal : « BP_IslanderBean_C_0 died »). Le joueur réapparu se noie aussi : l'île est entièrement sous l'eau.

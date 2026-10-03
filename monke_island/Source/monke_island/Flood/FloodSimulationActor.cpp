@@ -3,6 +3,9 @@
 #include "Flood/FloodSimulationActor.h"
 #include "Flood/FloodRules.h"
 #include "Flood/FloodSchedule.h"
+#include "Flood/FloodSeaRiseSubsystem.h"
+#include "Boats/BoatActor.h"
+#include "Boats/BoatStartSubsystem.h"
 #include "DayNight/DayNightCycleActor.h"
 #include "Expedition/Core/ExpeditionClock.h"
 #include "Expedition/Core/ExpeditionGameState.h"
@@ -11,10 +14,15 @@
 #include "monke_island.h"
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Engine/World.h"
+#include "GameFramework/Pawn.h"
+#include "GameFramework/PlayerController.h"
+#include "HAL/PlatformTime.h"
+#include "Net/UnrealNetwork.h"
 #include "EngineUtils.h"
 #include "HAL/IConsoleManager.h"
 #include "Materials/MaterialInterface.h"
 #include "ProceduralMeshComponent.h"
+#include "ProfilingDebugging/CpuProfilerTrace.h"
 
 AFloodSimulationActor::AFloodSimulationActor()
 {
@@ -37,15 +45,72 @@ void AFloodSimulationActor::BeginPlay()
 		UE_LOG(Logmonke_island, Warning, TEXT("%s has no DA_FloodRules: using the default rules"), *GetName());
 		Rules = NewObject<UFloodRules>(this);
 	}
+	bGridSetup = false;
+	bGroundReady = false;
+	// The grid is set up once the clock is known: in expedition mode it stays off (T-103), the global sea rises instead
+}
+
+void AFloodSimulationActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AFloodSimulationActor, GridCenter);
+	DOREPLIFETIME(AFloodSimulationActor, bHasGridCenter);
+}
+
+bool AFloodSimulationActor::ChooseGridCenter(FVector& OutCenter, FString& OutSource) const
+{
+	const UBoatStartSubsystem* BoatStart = UBoatStartSubsystem::Get(this);
+	if (BoatStart && !BoatStart->HasResolved())
+	{
+		// the boat start picks the fragment once the world has begun play
+		return false;
+	}
+	if (const ABoatActor* Boat = BoatStart ? BoatStart->GetArrivalBoat() : nullptr)
+	{
+		// the bow of the arrival boat points to the beach of the fragment
+		const FVector Bow = FVector(Boat->GetActorForwardVector().X, Boat->GetActorForwardVector().Y, 0.0).GetSafeNormal();
+		OutCenter = Boat->GetActorLocation() + Bow * Rules->ArrivalToGridCenterCm;
+		OutSource = FString::Printf(TEXT("arrival boat of %s"), *BoatStart->GetArrivalFragmentId().ToString());
+		return true;
+	}
+	const UWorld* World = GetWorld();
+	if (!World)
+	{
+		return false;
+	}
+	for (FConstPlayerControllerIterator It = World->GetPlayerControllerIterator(); It; ++It)
+	{
+		const APlayerController* Controller = It->Get();
+		if (const APawn* Pawn = Controller ? Controller->GetPawn() : nullptr)
+		{
+			OutCenter = Pawn->GetActorLocation();
+			OutSource = FString::Printf(TEXT("pawn %s (no arrival boat)"), *Pawn->GetName());
+			return true;
+		}
+	}
+	return false;
+}
+
+void AFloodSimulationActor::SetupGrid(const FVector& Center, int32 Cells, float CellSizeCm)
+{
+	TRACE_CPUPROFILER_EVENT_SCOPE(AFloodSimulationActor::SetupGrid);
+
+	bGridSetup = true;
+	CellCm = CellSizeCm;
 	WaterMaterial = Rules->WaterMaterial.LoadSynchronous();
 
 	const UIslandWaterSubsystem* Water = UIslandWaterSubsystem::Get(this);
-	BaseSeaLevel = (Water ? Water->GetSeaLevel() : 0.0f) / 100.0f;
+	double SeaLevelCm = Water ? Water->GetSeaLevel() : 0.0;
+	// A late joiner may set the grid up after the global sea started rising: the grid wants the level before the rise
+	if (const UFloodSeaRiseSubsystem* SeaRise = UFloodSeaRiseSubsystem::Get(this); SeaRise && SeaRise->IsDrivingSea())
+	{
+		SeaLevelCm -= SeaRise->GetHeldRiseCm();
+	}
+	BaseSeaLevel = static_cast<float>(SeaLevelCm / 100.0);
 
-	const float CellCm = Rules->CellSizeCm;
-	Grid.Init(Rules->GridCells, Rules->GridCells, CellCm / 100.0f);
-	const FVector Center = GetActorLocation();
-	Origin = FVector2D(Center.X, Center.Y) - FVector2D(0.5 * Rules->GridCells * CellCm);
+	Grid.Init(Cells, Cells, CellCm / 100.0f);
+	Origin = FVector2D(Center.X, Center.Y) - FVector2D(0.5 * Cells * CellCm);
 	TraceCursor = 0;
 	bGroundReady = false;
 
@@ -62,6 +127,8 @@ void AFloodSimulationActor::BeginPlay()
 	ChunksX = FMath::DivideAndRoundUp(Grid.GetSizeX() - 1, Rules->ChunkCells);
 	ChunksY = FMath::DivideAndRoundUp(Grid.GetSizeY() - 1, Rules->ChunkCells);
 	Chunks.Reset();
+	ChunkFlat.Init(0, ChunksX * ChunksY);
+	ChunkCursor = 0;
 	for (int32 Index = 0; Index < ChunksX * ChunksY; ++Index)
 	{
 		UProceduralMeshComponent* Chunk = NewObject<UProceduralMeshComponent>(this, *FString::Printf(TEXT("FloodChunk_%d"), Index));
@@ -84,6 +151,8 @@ void AFloodSimulationActor::BeginPlay()
 			return Flood && Flood->GetFloodSurfaceAt(Location, OutSurfaceZ);
 		});
 	}
+	UE_LOG(Logmonke_island, Log, TEXT("%s: flood grid of %d x %d cells of %.1f m (%.2f km) centred on X=%.0f Y=%.0f, %d chunks"),
+		*GetName(), Cells, Cells, CellCm / 100.0f, Cells * CellCm / 100000.0f, Center.X, Center.Y, Chunks.Num());
 }
 
 void AFloodSimulationActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -108,20 +177,47 @@ void AFloodSimulationActor::Tick(float DeltaSeconds)
 	{
 		return;
 	}
+	if (!bGridSetup)
+	{
+		if (!ResolveClock())
+		{
+			// A client waits for the replicated game state before choosing its clock
+			return;
+		}
+		if (ClockSource == EHazardClockSource::Disabled)
+		{
+			SetActorTickEnabled(false);
+			return;
+		}
+		if (ClockSource == EHazardClockSource::Expedition && Rules->bLocalGridInExpedition)
+		{
+			// T-103: the water rises on the fragment played, wherever the boat landed, never at the spawn
+			if (!bHasGridCenter)
+			{
+				if (!HasAuthority())
+				{
+					// a client waits for the centre chosen by the server
+					return;
+				}
+				FString Source;
+				if (!ChooseGridCenter(GridCenter, Source))
+				{
+					return;
+				}
+				bHasGridCenter = true;
+				ForceNetUpdate();
+				UE_LOG(Logmonke_island, Log, TEXT("%s: flood grid laid on the fragment played, from the %s"), *GetName(), *Source);
+			}
+			SetupGrid(GridCenter, Rules->ExpeditionGridCells, Rules->ExpeditionCellSizeCm);
+		}
+		else
+		{
+			SetupGrid(GetActorLocation(), Rules->GridCells, Rules->CellSizeCm);
+		}
+	}
 	if (!bGroundReady)
 	{
 		ReadGroundBatch();
-		return;
-	}
-
-	if (!ResolveClock())
-	{
-		// A client waits for the replicated game state before choosing its clock
-		return;
-	}
-	if (ClockSource == EHazardClockSource::Disabled)
-	{
-		SetActorTickEnabled(false);
 		return;
 	}
 
@@ -134,12 +230,15 @@ void AFloodSimulationActor::Tick(float DeltaSeconds)
 	MeshTimer -= DeltaSeconds;
 	if (MeshTimer <= 0.0f || ChunkCursor != 0)
 	{
+		TRACE_CPUPROFILER_EVENT_SCOPE(AFloodSimulationActor::BuildChunks);
 		const int32 Total = Chunks.Num();
+		// a round of rebuilds is spread over the frames: at most ChunksPerFrame chunks and MeshBudgetMs per frame
+		const double Deadline = FPlatformTime::Seconds() + Rules->MeshBudgetMs / 1000.0;
 		for (int32 Count = 0; Count < Rules->ChunksPerFrame && Total > 0; ++Count)
 		{
 			BuildChunk(ChunkCursor);
 			ChunkCursor = (ChunkCursor + 1) % Total;
-			if (ChunkCursor == 0)
+			if (ChunkCursor == 0 || FPlatformTime::Seconds() >= Deadline)
 			{
 				break;
 			}
@@ -255,6 +354,7 @@ float AFloodSimulationActor::GetCurrentRiseCm() const
 
 void AFloodSimulationActor::ReadGroundBatch()
 {
+	TRACE_CPUPROFILER_EVENT_SCOPE(AFloodSimulationActor::ReadGroundBatch);
 	UWorld* World = GetWorld();
 	const int32 Count = Grid.GetSizeX() * Grid.GetSizeY();
 	if (!World || Count == 0)
@@ -273,7 +373,6 @@ void AFloodSimulationActor::ReadGroundBatch()
 	}
 
 	const FCollisionObjectQueryParams Objects(ECC_WorldStatic);
-	const float CellCm = Rules->CellSizeCm;
 	const int32 End = FMath::Min(Count, TraceCursor + Rules->TracesPerFrame);
 	for (; TraceCursor < End; ++TraceCursor)
 	{
@@ -334,6 +433,7 @@ void AFloodSimulationActor::Simulate(double FloodSeconds)
 		}
 	}
 
+	TRACE_CPUPROFILER_EVENT_SCOPE(AFloodSimulationActor::Simulate);
 	const double Dt = Rules->StepSeconds;
 	const int64 Target = static_cast<int64>(FloodSeconds / Dt);
 	for (int32 Step = 0; Step < Rules->MaxStepsPerFrame && StepsDone < Target; ++Step)
@@ -358,7 +458,6 @@ bool AFloodSimulationActor::GetFloodSurfaceAt(const FVector& Location, float& Ou
 	{
 		return false;
 	}
-	const float CellCm = Rules->CellSizeCm;
 	const int32 X = FMath::FloorToInt32((Location.X - Origin.X) / CellCm);
 	const int32 Y = FMath::FloorToInt32((Location.Y - Origin.Y) / CellCm);
 	if (X < 0 || Y < 0 || X >= Grid.GetSizeX() || Y >= Grid.GetSizeY())
@@ -389,16 +488,70 @@ void AFloodSimulationActor::BuildChunk(int32 ChunkIndex)
 	const int32 Y1 = FMath::Min(Y0 + N, Grid.GetSizeY() - 1);
 	const int32 W = X1 - X0 + 1;
 	const int32 H = Y1 - Y0 + 1;
-	const float CellCm = Rules->CellSizeCm;
 	const float MinDepth = Rules->MinDrawDepthCm / 100.0f;
-	// open sea at its normal level is drawn by the sea surface itself
-	const float MinSurface = BaseSeaLevel + MinDepth;
+	// open sea is drawn by the sea surface itself, at its current level (it rises with the expedition, T-103)
+	const UIslandWaterSubsystem* Water = UIslandWaterSubsystem::Get(this);
+	const float MinSurface = FMath::Max(BaseSeaLevel, Water ? Water->GetSeaLevel() / 100.0f : BaseSeaLevel) + MinDepth;
 	const FVector ActorLocation = GetActorLocation();
 
 	auto IsWet = [&](int32 I)
 	{
 		return Grid.Depth[I] > MinDepth && Grid.Surface(I) > MinSurface;
 	};
+
+	// Open sea and drowned land: every cell under water at the sea level, one flat quad moved with the sea
+	// (a transform update) instead of a rebuilt mesh (new render data and body setup each time)
+	const float Sea = BaseSeaLevel + static_cast<float>(HeldRiseCm / 100.0);
+	const float FlatTolerance = Rules->FlatChunkToleranceCm / 100.0f;
+	bool bFlat = true;
+	for (int32 GY = Y0; GY <= Y1 && bFlat; ++GY)
+	{
+		for (int32 GX = X0; GX <= X1; ++GX)
+		{
+			const int32 I = Grid.Index(GX, GY);
+			if (!IsWet(I) || FMath::Abs(Grid.Surface(I) - Sea) > FlatTolerance)
+			{
+				bFlat = false;
+				break;
+			}
+		}
+	}
+	if (bFlat)
+	{
+		if (!ChunkFlat[ChunkIndex])
+		{
+			ChunkFlat[ChunkIndex] = 1;
+			const double LX0 = Origin.X + (X0 + 0.5) * CellCm;
+			const double LY0 = Origin.Y + (Y0 + 0.5) * CellCm;
+			const double LX1 = Origin.X + (X1 + 0.5) * CellCm;
+			const double LY1 = Origin.Y + (Y1 + 0.5) * CellCm;
+			const TArray<FVector> Corners = {
+				FVector(LX0 - ActorLocation.X, LY0 - ActorLocation.Y, 0.0), FVector(LX1 - ActorLocation.X, LY0 - ActorLocation.Y, 0.0),
+				FVector(LX0 - ActorLocation.X, LY1 - ActorLocation.Y, 0.0), FVector(LX1 - ActorLocation.X, LY1 - ActorLocation.Y, 0.0) };
+			const TArray<FVector> FlatNormals = { FVector::UpVector, FVector::UpVector, FVector::UpVector, FVector::UpVector };
+			const TArray<FVector2D> FlatUVs = {
+				FVector2D(LX0 / 1000.0, LY0 / 1000.0), FVector2D(LX1 / 1000.0, LY0 / 1000.0),
+				FVector2D(LX0 / 1000.0, LY1 / 1000.0), FVector2D(LX1 / 1000.0, LY1 / 1000.0) };
+			// both windings: the surface is seen from above and from under water
+			const TArray<int32> FlatTriangles = { 0, 2, 1, 1, 2, 3, 0, 1, 2, 1, 3, 2 };
+			Chunk->CreateMeshSection_LinearColor(0, Corners, FlatTriangles, FlatNormals, FlatUVs, TArray<FLinearColor>(), TArray<FProcMeshTangent>(), false);
+			if (WaterMaterial)
+			{
+				Chunk->SetMaterial(0, WaterMaterial);
+			}
+		}
+		const FVector Height(0.0, 0.0, Sea * 100.0 - ActorLocation.Z);
+		if (!Chunk->GetRelativeLocation().Equals(Height, 0.1))
+		{
+			Chunk->SetRelativeLocation(Height);
+		}
+		return;
+	}
+	if (ChunkFlat[ChunkIndex])
+	{
+		ChunkFlat[ChunkIndex] = 0;
+		Chunk->SetRelativeLocation(FVector::ZeroVector);
+	}
 
 	TArray<FVector> Vertices;
 	TArray<int32> Triangles;

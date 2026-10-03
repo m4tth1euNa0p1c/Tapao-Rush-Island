@@ -22,8 +22,13 @@ class UProceduralMeshComponent;
  *  the end of the submersion (OnSubmersionEnded, then the extraction) is the only end signal. Without expedition the
  *  actor falls back to the day / night clock of DA_FloodRules (StartSeconds, RiseSeconds). The choice is made once
  *  (DA_FloodRules.ClockMode), logged, and the two clocks never drive the water together. The sea never goes down.
- *  The ground is read by traces at begin play: the terrain is never modified, any change of the level design is
- *  followed. The local surface feeds UIslandWaterSubsystem, so wading, swimming and drowning follow the flood.
+ *  The ground is read by traces once the clock is known: the terrain is never modified, any change of the level design
+ *  is followed.
+ *  Expedition (T-103): the water rises on the fragment played only. At the start the server lays the grid on the
+ *  arrival of the boat (UBoatStartSubsystem), pushed towards the island along the bow (DA_FloodRules
+ *  ArrivalToGridCenterCm), else on the first pawn, and replicates that centre: every machine reads the same ground.
+ *  Chunks that are all under water at the sea level are one flat quad moved with the sea; the other chunks are
+ *  rebuilt within a time budget per frame (MeshBudgetMs). The local surface feeds UIslandWaterSubsystem, so wading, swimming and drowning follow the flood.
  *  Every machine runs the same deterministic steps from the replicated clock; the server's result
  *  is authoritative for gameplay. Debug (non shipping, day / night fallback only): monke.SetTime <s>, monke.FloodNow.
  */
@@ -43,6 +48,8 @@ public:
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -96,6 +103,23 @@ private:
 	/** Next cell to trace while reading the ground */
 	int32 TraceCursor = 0;
 
+	/** Centre of the grid on the fragment played (expedition), chosen by the server */
+	UPROPERTY(Replicated)
+	FVector GridCenter = FVector::ZeroVector;
+
+	/** Whether the server chose GridCenter */
+	UPROPERTY(Replicated)
+	bool bHasGridCenter = false;
+
+	/** Whether the grid, its chunks and its surface provider are set up (after the clock is known) */
+	bool bGridSetup = false;
+
+	/** Size of a cell of the grid in use (cm) */
+	float CellCm = 600.0f;
+
+	/** Per chunk: 1 while it is drawn as one flat quad moved with the sea */
+	TArray<uint8> ChunkFlat;
+
 	/** Whether the ground has been read */
 	bool bGroundReady = false;
 
@@ -138,6 +162,12 @@ private:
 
 	/** Rise of the sea (cm) after FloodSeconds on the chosen clock, before the hold */
 	double ComputeRiseCm(double FloodSeconds) const;
+
+	/** Lays a Cells x Cells grid of CellSizeCm cells centred on Center, creates the chunks and feeds UIslandWaterSubsystem */
+	void SetupGrid(const FVector& Center, int32 Cells, float CellSizeCm);
+
+	/** Server, expedition: centre of the grid on the fragment played; false while the start is not decided */
+	bool ChooseGridCenter(FVector& OutCenter, FString& OutSource) const;
 
 	/** Traces a batch of ground cells */
 	void ReadGroundBatch();

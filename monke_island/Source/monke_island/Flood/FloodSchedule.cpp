@@ -45,4 +45,19 @@ namespace FloodSchedule
 	{
 		return FMath::Max(PreviousRiseCm, TargetRiseCm);
 	}
+
+	double ExpeditionFinalRiseCm(const FExpeditionClockParams& Params)
+	{
+		const double After = Params.PostSubmersionRiseCmPerSecond > 0.0 ? Params.PostSubmersionMaxRiseCm : 0.0;
+		return Params.MaxWaterRiseCm + After;
+	}
+
+	bool ShouldApplySeaLevel(double AppliedLevelCm, double NewLevelCm, double StepCm, bool bTop)
+	{
+		if (NewLevelCm <= AppliedLevelCm)
+		{
+			return false;
+		}
+		return bTop || NewLevelCm - AppliedLevelCm >= StepCm;
+	}
 }
