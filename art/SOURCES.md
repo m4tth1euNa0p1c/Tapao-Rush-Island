@@ -76,3 +76,14 @@
 - `textures/characters/bamboo_veneer` (réutilisé) — perche jizai-kagi au-dessus de l'irori — https://polyhaven.com/a/bamboo_veneer
 
 <!-- minka:fin -->
+
+## Sons de pas et chute des noix (T-071) — scripts/props/fetch_footstep_sounds.py
+
+Kenney, « Impact Sounds » 1.0 — **CC0** (domaine public) — https://kenney.nl/assets/impact-sounds
+- `audio/footsteps/SW_Step_Wood_0N` ← `footstep_wood_00x` (barque, bâtiments du village)
+- `audio/footsteps/SW_Step_Stone_0N` ← `footstep_concrete_00x` (pierre, sanctuaire, lanternes)
+- `audio/footsteps/SW_Step_Litter_0N` ← `footstep_grass_00x` (palmes, feuilles mortes)
+- `audio/footsteps/SW_Step_SandDry_0N` ← `footstep_snow_00x` (sable sec : même crissement de grains tassés)
+- `audio/hazards/SW_Coconut_Sand_0N` ← `impactSoft_heavy_00x`, mixé avec la gerbe de sable synthétisée de `coconut_sounds.py`
+
+Synthétisés (aucune licence) : `SW_Step_SandWet_0N`, `SW_Step_Water_0N`, `SW_Step_Coral_0N` (`footstep_sounds.py`).

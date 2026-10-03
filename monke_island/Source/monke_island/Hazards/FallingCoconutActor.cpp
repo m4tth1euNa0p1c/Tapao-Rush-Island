@@ -7,7 +7,9 @@
 #include "monke_island.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
+#include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
+#include "Sound/SoundBase.h"
 
 namespace
 {
@@ -73,6 +75,10 @@ void AFallingCoconutActor::HandleHit(UPrimitiveComponent* HitComponent, AActor* 
 	Tags.Remove(CoconutWindShelteredTag);
 
 	AIslanderCharacter* Islander = Cast<AIslanderCharacter>(OtherActor);
+	if (!Cast<APawn>(OtherActor))
+	{
+		TryLandSound(NormalImpulse, Hit.ImpactPoint);
+	}
 	if (bHasHit || !Islander || !Rules || Islander->IsRagdoll())
 	{
 		return;
@@ -92,6 +98,42 @@ void AFallingCoconutActor::HandleHit(UPrimitiveComponent* HitComponent, AActor* 
 		Health->ApplyHealthDamage(Rules->KnockoutDamage, this);
 	}
 	Islander->Knockout(Velocity * Rules->KnockoutVelocityShare);
+}
+
+void AFallingCoconutActor::TryLandSound(const FVector& NormalImpulse, const FVector& Location)
+{
+	if (!Rules || Rules->LandSounds.IsEmpty() || LandSoundCount >= Rules->MaxLandSounds)
+	{
+		return;
+	}
+	const double Now = GetWorld()->GetTimeSeconds();
+	if (LastLandSoundTime >= 0.0 && Now - LastLandSoundTime < Rules->LandSoundCooldown)
+	{
+		return;
+	}
+	// speed lost in the impact (cm/s): the impulse over the mass of the nut
+	const float ImpactSpeed = static_cast<float>(NormalImpulse.Size()) / FMath::Max(Mesh->GetMass(), 0.1f);
+	const float Volume = Rules->LandVolumeFor(ImpactSpeed);
+	if (Volume <= 0.0f)
+	{
+		return;
+	}
+	USoundBase* Sound = Rules->LandSounds[FMath::RandRange(0, Rules->LandSounds.Num() - 1)];
+	if (!Sound)
+	{
+		return;
+	}
+	++LandSoundCount;
+	LastLandSoundTime = Now;
+	MulticastLandSound(Sound, Rules->LandAttenuation, Location, Volume);
+}
+
+void AFallingCoconutActor::MulticastLandSound_Implementation(USoundBase* Sound, USoundAttenuation* Attenuation, FVector_NetQuantize Location, float Volume)
+{
+	if (Sound && GetNetMode() != NM_DedicatedServer)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, Sound, Location, Volume, FMath::FRandRange(0.92f, 1.08f), 0.0f, Attenuation);
+	}
 }
 
 void AFallingCoconutActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

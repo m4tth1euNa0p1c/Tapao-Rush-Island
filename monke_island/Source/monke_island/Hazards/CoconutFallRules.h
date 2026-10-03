@@ -7,10 +7,13 @@
 #include "CoconutFallRules.generated.h"
 
 class UStaticMesh;
+class USoundBase;
+class USoundAttenuation;
 
 /**
  *  Tunable rules of the coconuts falling from the palms (DA_CoconutFallRules): how often they fall around each
- *  player (more under the storm wind), and when a nut knocks a player out (ragdoll on the ground).
+ *  player (more under the storm wind), when a nut knocks a player out (ragdoll on the ground), and the thud it
+ *  makes landing on the sand.
  *  A green coconut weighs 1.5 to 2.5 kg and falls from 10 to 25 m: it lands at 14 to 22 m/s.
  */
 UCLASS(BlueprintType)
@@ -112,6 +115,30 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Knockout", meta=(ClampMin="0", ClampMax="1"))
 	float KnockoutVelocityShare = 0.15f;
 
+	/** Thuds of a nut landing on the sand, one drawn per impact */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound")
+	TArray<TObjectPtr<USoundBase>> LandSounds;
+
+	/** Attenuation of the landing thuds */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound")
+	TObjectPtr<USoundAttenuation> LandAttenuation;
+
+	/** Impact speeds (cm/s) of the quietest and of the loudest thud: slower bounces and rolls are silent */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound")
+	FVector2D LandSoundSpeedRange = FVector2D(150.0f, 1500.0f);
+
+	/** Volume of the quietest and of the loudest thud */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound")
+	FVector2D LandSoundVolumeRange = FVector2D(0.25f, 1.2f);
+
+	/** Thuds heard per nut at most (the landing and its first bounces) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound", meta=(ClampMin="0"))
+	int32 MaxLandSounds = 3;
+
+	/** Shortest time between two thuds of the same nut (s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound", meta=(ClampMin="0", Units="s"))
+	float LandSoundCooldown = 0.15f;
+
 	/** Mean time between falls for a wind strength (0 calm, 1 full storm; gusts above 1 drop even more) */
 	float IntervalFor(float WindStrength) const
 	{
@@ -121,4 +148,14 @@ public:
 
 	/** Whether a nut hitting at this speed knocks a player out */
 	bool KnocksOut(float ImpactSpeed) const { return ImpactSpeed >= KnockoutSpeed; }
+
+	/** Volume of a landing thud at this impact speed, 0 when too soft to be heard */
+	float LandVolumeFor(float ImpactSpeed) const
+	{
+		if (ImpactSpeed < LandSoundSpeedRange.X)
+		{
+			return 0.0f;
+		}
+		return FMath::GetMappedRangeValueClamped(FVector2D(LandSoundSpeedRange.X, FMath::Max(LandSoundSpeedRange.Y, LandSoundSpeedRange.X + 1.0f)), LandSoundVolumeRange, ImpactSpeed);
+	}
 };

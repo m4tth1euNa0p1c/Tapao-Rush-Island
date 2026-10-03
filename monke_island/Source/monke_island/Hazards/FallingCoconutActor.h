@@ -8,12 +8,15 @@
 
 class UCoconutFallRules;
 class UStaticMesh;
+class USoundAttenuation;
+class USoundBase;
 class UStaticMeshComponent;
 
 /**
  *  A coconut dropped by a palm: a replicated physics body that falls, bounces and rolls (the storm wind pushes it
  *  like any free object). The first time it hits a player fast enough, the server knocks the player out (ragdoll
- *  on the ground, health loss) — once per nut.
+ *  on the ground, health loss) — once per nut. Its landing and first bounces thud on every machine (server
+ *  multicast, louder when faster).
  */
 UCLASS()
 class MONKE_ISLAND_API AFallingCoconutActor : public AActor
@@ -54,6 +57,19 @@ private:
 
 	/** True once the nut knocked someone out */
 	bool bHasHit = false;
+
+	/** Thuds already played (server) */
+	int32 LandSoundCount = 0;
+
+	/** World time of the last thud (server) */
+	double LastLandSoundTime = -1.0;
+
+	/** Plays a landing thud everywhere (sent by the server) */
+	UFUNCTION(NetMulticast, Unreliable)
+	void MulticastLandSound(USoundBase* Sound, USoundAttenuation* Attenuation, FVector_NetQuantize Location, float Volume);
+
+	/** Sends a thud for an impact on anything but a player (server) */
+	void TryLandSound(const FVector& NormalImpulse, const FVector& Location);
 
 	UFUNCTION()
 	void OnRep_NutMesh();
