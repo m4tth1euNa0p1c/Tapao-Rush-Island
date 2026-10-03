@@ -161,7 +161,7 @@ void ADayNightCycleActor::BindLevelLights()
 	{
 		for (TActorIterator<ADirectionalLight> It(World); It; ++It)
 		{
-			const UDirectionalLightComponent* Light = It->GetComponent();
+			const UDirectionalLightComponent* Light = Cast<UDirectionalLightComponent>(It->GetLightComponent());
 			if (Light && Light->bAtmosphereSunLight && Light->AtmosphereSunLightIndex == 0)
 			{
 				Sun = *It;
@@ -180,7 +180,7 @@ void ADayNightCycleActor::BindLevelLights()
 		HeightFog = It ? *It : nullptr;
 	}
 
-	if (UDirectionalLightComponent* SunLight = Sun ? Sun->GetComponent() : nullptr)
+	if (UDirectionalLightComponent* SunLight = Sun ? Cast<UDirectionalLightComponent>(Sun->GetLightComponent()) : nullptr)
 	{
 		SunLight->SetMobility(EComponentMobility::Movable);
 		SunLight->SetUseTemperature(true);
@@ -218,7 +218,7 @@ void ADayNightCycleActor::UpdateLighting(bool bForce)
 
 	// Sun: on the real solar path, fading under the horizon, warm when low
 	const float SunFactor = FMath::SmoothStep(Rules->SunOffElevationDeg, Rules->SunFullElevationDeg, static_cast<float>(SunElevation));
-	if (UDirectionalLightComponent* SunLight = Sun ? Sun->GetComponent() : nullptr)
+	if (UDirectionalLightComponent* SunLight = Sun ? Cast<UDirectionalLightComponent>(Sun->GetLightComponent()) : nullptr)
 	{
 		Sun->SetActorRotation((-SunDir).Rotation());
 		SunLight->SetIntensity(SunNoonIntensity * SunFactor * FMath::Lerp(1.0f, Rules->StormSunFraction, StormFactor));

@@ -12,7 +12,7 @@
 namespace
 {
 	/** Same tag as AWindStormActor: a dense nut in free fall barely drifts, the wind takes it once it has bounced */
-	const FName WindShelteredTag(TEXT("WindSheltered"));
+	const FName CoconutWindShelteredTag(TEXT("WindSheltered"));
 }
 
 AFallingCoconutActor::AFallingCoconutActor()
@@ -35,7 +35,7 @@ void AFallingCoconutActor::Setup(UStaticMesh* InMesh, const UCoconutFallRules* I
 {
 	Rules = InRules;
 	NutMesh = InMesh;
-	Tags.AddUnique(WindShelteredTag);
+	Tags.AddUnique(CoconutWindShelteredTag);
 	OnRep_NutMesh();
 	if (Rules)
 	{
@@ -70,7 +70,7 @@ void AFallingCoconutActor::OnRep_NutMesh()
 void AFallingCoconutActor::HandleHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	// first contact with anything: the fall is over, the wind can now roll the nut
-	Tags.Remove(WindShelteredTag);
+	Tags.Remove(CoconutWindShelteredTag);
 
 	AIslanderCharacter* Islander = Cast<AIslanderCharacter>(OtherActor);
 	if (bHasHit || !Islander || !Rules || Islander->IsRagdoll())
