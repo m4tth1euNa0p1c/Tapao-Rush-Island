@@ -64,6 +64,44 @@ Les motu sont regroupés quand moins de 40 m d'eau les séparent. Voici ce qu'on
 - `LI_ExpeditionCore` contient le plan d'eau tagué `IslandWaterSurface`, le ciel et le jour/nuit, la tempête et le vent, l'horloge d'expédition et le directeur d'événements. Le niveau d'eau reste un paramètre global (`UIslandWaterSubsystem`).
 - Pas de World Partition par défaut (environ 3 × 3 km marge comprise). On ne l'active qu'après mesure (T-091).
 
+### Design technique T-087 (lot L3)
+- **Dossier** `Source/monke_island/Expedition/Islands/` : les îles sont des données du domaine Expédition (cahier §9 « Data Assets : îles »), à côté de `Expedition/Core/`. `World/` reste pour les systèmes du monde (eau, ciel). Dépendance à sens unique : `Core/` (GameState) inclut `Islands/` dans son `.cpp` ; `Islands/` n'inclut ni `Core/`, ni UI, ni autre domaine (ARC-01).
+- **Classes** :
+  - `UExpeditionIslandDefinition` (`UPrimaryDataAsset`, type primaire `ExpeditionIsland`) : `FragmentId` (`FRG_Raraka_01`, aussi nom du `FPrimaryAssetId`, donc stable même si l'asset est renommé), `DisplayName` (FText, String Table), `Map` (`TSoftObjectPtr<UWorld>`), `ZoneCount`, `Anchorages` (`FExpeditionAnchorage` : id, nom, rôle §6.4 départ / ressources / repli, disponible pendant la submersion, transform dans le repère de la map), `SizeHectares`, `IndicativeDifficulty`, `VariantSeeds`, `DataCredits`, `PreviewImage` (soft, bundle `Preview`). `FragmentId` et `Map` sont `AssetRegistrySearchable` : on retrouve le fragment d'une map sans rien charger.
+  - Mouillages en **données** (id + transform), pas en référence d'acteur : la définition est lisible au hub sans charger la map ; les futurs `BP_MooringPoint` porteront le même `AnchorageId`.
+  - `UIslandCatalog` (`UPrimaryDataAsset`, type `IslandCatalog`, asset `DA_IslandCatalog`) : liste de `FPrimaryAssetId` de définitions + `UFragmentRules` (`DA_FragmentRules`, petit, référence dure).
+  - `UFragmentRules` (`UDataAsset`) : seuils runtime seulement — délai maximal de chargement (60 s, §16), mouillages minimum (3), mouillage de submersion exigé. Les valeurs du pipeline Python restent dans sa config.
+  - `ExpeditionIslands::` (fonctions pures, testées) : `ValidateDefinition`, `ValidateCatalog`, `BuildTravelURL`, `ParseFragmentOption`.
+  - `UExpeditionIslandSubsystem` (`UGameInstanceSubsystem`, toutes machines) : charge catalogue puis définitions **en asynchrone** via l'Asset Manager (`LoadPrimaryAssets`, branches succès / échec / annulation, délai maximal), cache des définitions, **sélection serveur** (`SelectFragment`, refusée sur un client ou hors catalogue), URL de voyage pour T-088 (`<map>?Island=FRG_…`, option partagée avec T-093), et `ResolveFragmentIdForWorld` (option d'URL, puis sélection, puis registre d'assets par la map ouverte : couvre le PIE lancé directement sur `L_Frag_Raraka_01`).
+- **Erreurs** : `EFragmentError` + `GetFragmentErrorText` (textes LOCTEXT, à basculer en String Table `ST_Fragments`) ; jamais de `check` sur une donnée d'asset ; une définition invalide est écartée du catalogue avec un `Warning`, un catalogue vide rend `CatalogEmpty`. Journal `LogMonkeIslands`.
+- **Réseau** : le choix appartient au serveur (hub, L4). Seul `FragmentId` est répliqué, dans `AExpeditionGameState` (fixé par le serveur au `BeginPlay`, avant le départ de l'horloge) ; chaque client charge la définition localement par son id (nom affiché, crédits). Aucun RPC ajouté ici : la requête « choisir ce fragment » passera par le PlayerController (L4) et appellera `SelectFragment` côté serveur.
+- **Mémoire** : définitions légères (map et aperçu en souple), gardées par le cache du subsystem et l'Asset Manager ; pas de `LoadSynchronous`. Callbacks liés faiblement, timers et handles annulés au `Deinitialize`.
+- **Config** : `DefaultGame.ini`, `+PrimaryAssetTypesToScan` `ExpeditionIsland` et `IslandCatalog` dans `/Game/MonkeIsland/Data/Islands`, `CookRule=AlwaysCook` (la map suit par sa référence souple ; à vérifier au packaging, T-088).
+- **Reste** : T-088 (voyage seamless, GameMode qui appelle `GetTravelURL`, `ZoneCount` vers les règles d'horloge), T-089 (assets `DA_Island_Raraka_01`, `DA_IslandCatalog`, `DA_FragmentRules`, `LI_ExpeditionCore`).
+
+### Île aléatoire au lancement (T-094, lot L3, en attendant le hub L4)
+- **Code** (`Expedition/Islands/`) :
+  - `ExpeditionIslands::PickIndex` / `PickFragmentId` (purs) : tirage seedé, jamais deux fois de suite le même fragment sauf catalogue d'un seul, `CatalogEmpty` sur catalogue vide ;
+  - `UExpeditionIslandSubsystem::PickRandomIsland(Seed)` (serveur) : tire dans le catalogue chargé, sélectionne, mémorise le dernier tiré dans le GameInstance ;
+  - `TravelToSelectedIsland()` : solo = voyage client comme `OpenLevel`, hôte = `ServerTravel` absolu avec `?listen` conservé, client = refus `NoAuthority` ;
+  - `UExpeditionIslandDefinition::FindAnchorageByRole(Start)` : point d'arrivée de la barque ;
+  - `AExpeditionBootGameMode` : au `BeginPlay`, charge le catalogue, tire (graine horloge, ou `FixedSeed` si `bUseFixedSeed`), voyage au tick suivant. Pas de pion sur la carte de boot. Échec : log `Error`, message à l'écran (hors Shipping) et voyage vers `FallbackMap`, pour ne jamais rester bloqué sur une carte vide.
+- **Contrat avec T-093** (barque, `Boats/`) : URL `<Map>?Island=<FragmentId>`. Le serveur lit l'option `Island` (`World->URL`, ou `ExpeditionIslands::ParseFragmentOption`). Il prend la définition déjà chargée (`UExpeditionIslandSubsystem::FindLoadedDefinition`, ou `LoadDefinition` si besoin), puis le mouillage `Start` (`FindAnchorageByRole`), et y fait apparaître la barque avec les joueurs assis. `AExpeditionGameState::GetFragmentId()` donne le même id à tous les clients.
+- **À créer en éditeur par T-095** (aucun asset n'existe à ce stade) :
+  1. `/Game/MonkeIsland/Data/Islands/DA_FragmentRules` (`UFragmentRules`, valeurs par défaut : 60 s, 3 mouillages, mouillage de submersion exigé).
+  2. Des `DA_Island_Raraka_01`, `_02`, `_03` intérimaires (`UExpeditionIslandDefinition`) dans le même dossier :
+     - `FragmentId` `FRG_Raraka_01`, `02`, `03` ;
+     - `Map` = `Lvl_Raraka` pour les trois ;
+     - `ZoneCount` 3, un `DisplayName` fictif, `DataCredits` (Te Fenua / DAF, Licence Ouverte Etalab 2.0 ; atlas IRD) ;
+     - 3 mouillages : `Start`, `Resources`, `Fallback`, ce dernier avec `bAvailableDuringSubmersion`. Le `Start` de chacun est placé sur l'eau devant une plage **différente** de `Lvl_Raraka`, hors Motutapu, pour que les arrivées varient.
+
+     Sans ces 3 mouillages, la définition est écartée du catalogue (`InvalidAnchorages` dans le log).
+  3. `DA_IslandCatalog` (`UIslandCatalog`, nom exact attendu par le code) : `Fragments` = `ExpeditionIsland:FRG_Raraka_01`, `02`, `03` ; `Rules` = `DA_FragmentRules`.
+  4. La carte vide `/Game/MonkeIsland/Maps/L_Boot`, avec un `BP_BootGameMode` (enfant de `AExpeditionBootGameMode`, `FallbackMap` = `Lvl_Raraka`) en GameMode Override des World Settings.
+  5. Une fois `L_Boot` en place, et seulement alors : `DefaultEngine.ini`, `[/Script/EngineSettings.GameMapsSettings]`, `GameDefaultMap=/Game/MonkeIsland/Maps/L_Boot.L_Boot`. `EditorStartupMap` ne change pas.
+  6. Vérifier : l'éditeur relancé après la fusion (nouveaux types dans l'Asset Manager), *Data Validation* propre sur les 5 assets, `Audit Assets` montre `ExpeditionIsland:FRG_Raraka_0N`. Ensuite, deux PIE successifs depuis `L_Boot` arrivent sur deux fragments différents ; le log `LogMonkeIslands` donne la graine et le fragment tiré.
+- **Limite connue** : tant que les trois définitions partagent `Lvl_Raraka`, un PIE lancé directement sur `Lvl_Raraka` (sans `?Island=`) ne sait pas quel fragment il joue : le registre renvoie le premier trouvé. Passer par `L_Boot`.
+
 ## Critères d'acceptation
 1. Aucune frontière de fragment ne traverse la terre. Un test automatique sur `fragments.json` vérifie l'intersection entre frontière et terre, hors hoa synthétique.
 2. Huit captures prises depuis la côte et depuis la barque, en faisant le tour : aucun bord, mur, motu tranché ni trou de terrain visible.

@@ -2,6 +2,7 @@
 
 #include "Expedition/Core/ExpeditionGameState.h"
 #include "Expedition/Core/ExpeditionRules.h"
+#include "Expedition/Islands/ExpeditionIslandSubsystem.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "Net/UnrealNetwork.h"
@@ -24,6 +25,7 @@ void AExpeditionGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AExpeditionGameState, ExpeditionId);
+	DOREPLIFETIME(AExpeditionGameState, FragmentId);
 	DOREPLIFETIME(AExpeditionGameState, ClockState);
 	DOREPLIFETIME(AExpeditionGameState, Phase);
 	DOREPLIFETIME(AExpeditionGameState, Resolution);
@@ -32,6 +34,19 @@ void AExpeditionGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 void AExpeditionGameState::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (HasAuthority())
+	{
+		// The server says which fragment this map plays; the clients receive the id with the game state
+		if (const UExpeditionIslandSubsystem* Islands = UExpeditionIslandSubsystem::Get(this))
+		{
+			FragmentId = Islands->ResolveFragmentIdForWorld(GetWorld());
+		}
+		if (!FragmentId.IsNone())
+		{
+			UE_LOG(Logmonke_island, Log, TEXT("Expedition: playing fragment %s"), *FragmentId.ToString());
+		}
+	}
 
 	if (HasAuthority() && bStartOnBeginPlay)
 	{
