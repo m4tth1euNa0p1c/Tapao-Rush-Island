@@ -4,15 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "Flood/HazardClock.h"
 #include "WindRules.generated.h"
 
 class UMaterialParameterCollection;
 
 /**
  *  Tunable rules of the wind (DA_WindRules): random gusts of one minute at least MinGapSeconds apart, stronger every
- *  GustsPerLevel gusts, then an ultra violent wind from DeadlineDay on; how hard it pushes; what shelters from it.
+ *  GustsPerLevel gusts, then an ultra violent wind that never stops; how hard it pushes; what shelters from it.
  *  Forces from the drag of a standing adult: F = 0.5 * rho * Cd * A * v^2 (about 260 N at 25 m/s).
- *  Times are elapsed play seconds on the day / night clock.
+ *  Clock (T-098): in a map with an expedition, gust times count from the start of the expedition and the ultra violent
+ *  wind sets in at the start of the submersion (minus ExpeditionStormLeadSeconds); without expedition, gust times are
+ *  elapsed play seconds on the day / night clock and the ultra violent wind comes with DeadlineDay.
  */
 UCLASS(BlueprintType)
 class MONKE_ISLAND_API UWindRules : public UDataAsset
@@ -21,7 +24,22 @@ class MONKE_ISLAND_API UWindRules : public UDataAsset
 
 public:
 
-	/** Earliest elapsed play time of the first gust (s) */
+	/**
+	 *  Clock of the wind: Auto = the expedition clock when the map has one, else the day / night clock;
+	 *  ExpeditionOnly = no wind without expedition; DayNightOnly = always the day / night clock. Decided once, logged.
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock")
+	EHazardClockMode ClockMode = EHazardClockMode::Auto;
+
+	/**
+	 *  Expedition clock: the ultra violent wind sets in this many seconds before the start of the submersion
+	 *  (0 = with the first rise of the water, cahier §6.1). Never before the start of the expedition.
+	 *  A zone bonus granted inside this lead moves the submersion back, and the wind with it.
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock", meta=(ClampMin="0", Units="s"))
+	float ExpeditionStormLeadSeconds = 0.0f;
+
+	/** Earliest time of the first gust (s): from the start of the expedition, or elapsed play time without expedition */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Gust schedule", meta=(ClampMin="0", Units="s"))
 	float FirstGustSeconds = 300.0f;
 
@@ -57,7 +75,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Escalation", meta=(ClampMin="0"))
 	float StrengthPerLevel = 0.25f;
 
-	/** Day on which the ultra violent wind sets in and never stops (user request: day 3) */
+	/** Day / night clock only (map without expedition): day on which the ultra violent wind sets in and never stops */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Escalation", meta=(ClampMin="1"))
 	int32 DeadlineDay = 3;
 
@@ -65,7 +83,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Escalation", meta=(ClampMin="0"))
 	float DeadlineStrength = 2.0f;
 
-	/** Time the ultra violent wind takes to build up at the start of the deadline day (s) */
+	/** Time the ultra violent wind takes to build up once it sets in (s) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Escalation", meta=(ClampMin="0.1", Units="s"))
 	float DeadlineRampSeconds = 45.0f;
 

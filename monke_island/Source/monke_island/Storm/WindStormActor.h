@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Flood/HazardClock.h"
 #include "WindStormActor.generated.h"
 
+class AExpeditionGameState;
 class UMaterialParameterCollection;
 class UWindDirectionalSourceComponent;
 class UWindRules;
@@ -22,7 +24,9 @@ struct FWindShelterSample
 
 /**
  *  Wind of an island level (T-067): random gusts of one minute, at least MinGapSeconds apart, one level stronger
- *  every GustsPerLevel gusts, then an ultra violent wind from DeadlineDay on (day counter of the day / night clock).
+ *  every GustsPerLevel gusts, then an ultra violent wind that never stops. One clock (T-098): in a map with an
+ *  expedition, gusts count from its start and the ultra violent wind sets in at the start of the submersion
+ *  (or ExpeditionStormLeadSeconds before); without expedition, the day / night clock and DeadlineDay (fallback).
  *  A building or a bush upwind shelters what stands behind it. During a gust the wind
  *  makes the characters drift (additive root motion, predicted), pushes the free physics objects and the boats
  *  in proportion to the area they offer to the wind, drives the engine wind (foliage, cloth)
@@ -65,13 +69,16 @@ public:
 	UFUNCTION(BlueprintPure, Category="Wind")
 	int32 GetGustLevel() const;
 
-	/** True while a gust blows or the ultra violent wind of the deadline day */
+	/** True while a gust blows or the ultra violent wind */
 	UFUNCTION(BlueprintPure, Category="Wind")
 	bool IsBlowing() const;
 
-	/** True from the deadline day on */
+	/** True once the ultra violent wind set in (submersion of the expedition, or deadline day without expedition) */
 	UFUNCTION(BlueprintPure, Category="Wind")
 	bool IsDeadlineWind() const { return bDeadline; }
+
+	/** Clock that drives the wind (Undecided until the game state is known on this machine) */
+	EHazardClockSource GetClockSource() const { return ClockSource; }
 
 	/** Wind left at an actor by the buildings and bushes upwind (1 in the open), cached per actor */
 	float GetShelterFactor(const AActor* Actor) const;
@@ -95,8 +102,17 @@ private:
 	/** Last gust started */
 	int32 GustIndex = INDEX_NONE;
 
-	/** The deadline day has come */
+	/** The ultra violent wind has set in */
 	bool bDeadline = false;
+
+	/** Clock that drives the wind, decided once */
+	EHazardClockSource ClockSource = EHazardClockSource::Undecided;
+
+	/** Expedition followed in expedition mode */
+	TWeakObjectPtr<AExpeditionGameState> Expedition;
+
+	/** Decides the clock once the game state is known; true when decided */
+	bool ResolveClock();
 
 	/** Shelter per actor */
 	mutable TMap<TWeakObjectPtr<const AActor>, FWindShelterSample> ShelterCache;

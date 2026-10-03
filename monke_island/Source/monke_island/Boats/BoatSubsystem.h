@@ -7,6 +7,8 @@
 #include "BoatSubsystem.generated.h"
 
 class ABoatActor;
+class ACharacter;
+class UBoatRiderComponent;
 
 /**
  *  Boats of a game world: gives every player pawn its UBoatRiderComponent (server, replicated) so the
@@ -33,6 +35,12 @@ public:
 
 	/** Spawns a boat on the water in front of the first local player (server); returns it or nullptr */
 	ABoatActor* SpawnBoatNearPlayer();
+
+	/** Gives a player character its replicated UBoatRiderComponent if it has none (server); returns it */
+	static UBoatRiderComponent* EnsureRider(ACharacter* Character);
+
+	/** Loads the boat class: BoatClass when set and found, else DefaultBoatClassPath, else the bare C++ boat */
+	static UClass* LoadBoatClass(const TSoftClassPtr<ABoatActor>& BoatClass);
 
 private:
 

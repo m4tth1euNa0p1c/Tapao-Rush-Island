@@ -2,7 +2,11 @@
 
 #include "Flood/FloodSimulationActor.h"
 #include "Flood/FloodRules.h"
+#include "Flood/FloodSchedule.h"
 #include "DayNight/DayNightCycleActor.h"
+#include "Expedition/Core/ExpeditionClock.h"
+#include "Expedition/Core/ExpeditionGameState.h"
+#include "Expedition/Core/ExpeditionRules.h"
 #include "Water/IslandWaterSubsystem.h"
 #include "monke_island.h"
 #include "Components/InstancedStaticMeshComponent.h"
@@ -84,6 +88,11 @@ void AFloodSimulationActor::BeginPlay()
 
 void AFloodSimulationActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	if (AExpeditionGameState* GameState = Expedition.Get())
+	{
+		GameState->OnSubmersionEnded.RemoveDynamic(this, &AFloodSimulationActor::HandleSubmersionEnded);
+	}
+	Expedition.Reset();
 	if (UIslandWaterSubsystem* WaterSubsystem = UIslandWaterSubsystem::Get(this))
 	{
 		WaterSubsystem->SetSurfaceProvider(this, nullptr);
@@ -105,7 +114,18 @@ void AFloodSimulationActor::Tick(float DeltaSeconds)
 		return;
 	}
 
-	Simulate(GetElapsedSeconds());
+	if (!ResolveClock())
+	{
+		// A client waits for the replicated game state before choosing its clock
+		return;
+	}
+	if (ClockSource == EHazardClockSource::Disabled)
+	{
+		SetActorTickEnabled(false);
+		return;
+	}
+
+	Simulate(GetFloodSeconds());
 
 	if (!bStarted)
 	{
@@ -141,15 +161,96 @@ double AFloodSimulationActor::GetElapsedSeconds() const
 	return World ? World->GetTimeSeconds() : 0.0;
 }
 
+bool AFloodSimulationActor::ResolveClock()
+{
+	if (ClockSource != EHazardClockSource::Undecided)
+	{
+		return true;
+	}
+	ClockSource = HazardClock::ResolveForWorld(Rules->ClockMode, GetWorld());
+	if (ClockSource == EHazardClockSource::Undecided)
+	{
+		return false;
+	}
+
+	HazardClock::LogDecision(this, TEXT("the rising water"), Rules->ClockMode, ClockSource);
+	if (ClockSource == EHazardClockSource::Expedition)
+	{
+		AExpeditionGameState* GameState = AExpeditionGameState::Get(this);
+		check(GameState && GameState->Rules);
+		Expedition = GameState;
+		GameState->OnSubmersionEnded.AddUniqueDynamic(this, &AFloodSimulationActor::HandleSubmersionEnded);
+		// A late joiner may arrive after the end of the submersion: the water is already up
+		bRiseComplete = GameState->GetPhase() == EExpeditionPhase::Resolved;
+		UE_LOG(Logmonke_island, Log, TEXT("%s: the sea rises at the expedition deadline, %.0f cm in %.0f s (DA_ExpeditionRules); DA_FloodRules timing ignored"),
+			*GetName(), GameState->Rules->MaxWaterRiseCm, GameState->Rules->SubmersionDuration);
+	}
+	return true;
+}
+
+double AFloodSimulationActor::GetFloodSeconds() const
+{
+	switch (ClockSource)
+	{
+	case EHazardClockSource::Expedition:
+	{
+		const AExpeditionGameState* GameState = Expedition.Get();
+		if (!GameState)
+		{
+			return -1.0;
+		}
+		const FExpeditionClockState& State = GameState->GetClockState();
+		const double Now = GameState->GetServerWorldTimeSeconds();
+		// The server owns the clock (no bonus once its time passed the deadline); a client waits for the replicated phase
+		const bool bConfirmed = GameState->GetPhase() >= EExpeditionPhase::Submerging
+			|| (GameState->HasAuthority() && State.bStarted && Now >= State.FloodStartTime);
+		return FloodSchedule::ExpeditionFloodSeconds(State, Now, bConfirmed);
+	}
+	case EHazardClockSource::DayNight:
+		return FloodSchedule::DayNightFloodSeconds(*Rules, GetElapsedSeconds());
+	default:
+		return -1.0;
+	}
+}
+
+double AFloodSimulationActor::ComputeRiseCm(double FloodSeconds) const
+{
+	switch (ClockSource)
+	{
+	case EHazardClockSource::Expedition:
+	{
+		const AExpeditionGameState* GameState = Expedition.Get();
+		if (!GameState || !GameState->Rules)
+		{
+			return 0.0;
+		}
+		return FloodSchedule::ExpeditionRiseCm(GameState->GetClockState(), FloodSeconds, FExpeditionClockParams::FromRules(*GameState->Rules));
+	}
+	case EHazardClockSource::DayNight:
+		return FloodSchedule::DayNightRiseCm(*Rules, FloodSeconds);
+	default:
+		return 0.0;
+	}
+}
+
+void AFloodSimulationActor::HandleSubmersionEnded()
+{
+	if (bRiseComplete)
+	{
+		return;
+	}
+	bRiseComplete = true;
+	UE_LOG(Logmonke_island, Log, TEXT("%s: end of the submersion (expedition clock), the sea holds at +%.0f cm"), *GetName(), HeldRiseCm);
+}
+
 float AFloodSimulationActor::RiseAt(const UFloodRules& InRules, float Seconds)
 {
-	const float Alpha = FMath::Clamp(Seconds / InRules.RiseSeconds, 0.0f, 1.0f);
-	return InRules.RiseCm * FMath::Pow(Alpha, InRules.RiseExponent);
+	return static_cast<float>(FloodSchedule::DayNightRiseCm(InRules, Seconds));
 }
 
 float AFloodSimulationActor::GetCurrentRiseCm() const
 {
-	return Rules && bStarted ? RiseAt(*Rules, static_cast<float>(StepsDone * Rules->StepSeconds)) : 0.0f;
+	return bStarted ? static_cast<float>(HeldRiseCm) : 0.0f;
 }
 
 void AFloodSimulationActor::ReadGroundBatch()
@@ -208,10 +309,9 @@ void AFloodSimulationActor::ReadGroundBatch()
 	}
 }
 
-void AFloodSimulationActor::Simulate(double Elapsed)
+void AFloodSimulationActor::Simulate(double FloodSeconds)
 {
-	const double FloodTime = Elapsed - Rules->StartSeconds;
-	if (FloodTime < 0.0)
+	if (FloodSeconds < 0.0)
 	{
 		return;
 	}
@@ -220,17 +320,35 @@ void AFloodSimulationActor::Simulate(double Elapsed)
 		Grid.SetupSea(BaseSeaLevel, Rules->OpenSeaDepthCm / 100.0f);
 		bStarted = true;
 		StepsDone = 0;
+		HeldRiseCm = 0.0;
 		MeshTimer = 0.0f;
-		UE_LOG(Logmonke_island, Log, TEXT("%s: the sea starts rising (%.0f cm in %.0f s)"), *GetName(), Rules->RiseCm, Rules->RiseSeconds);
+		if (ClockSource == EHazardClockSource::Expedition)
+		{
+			const AExpeditionGameState* GameState = Expedition.Get();
+			UE_LOG(Logmonke_island, Log, TEXT("%s: the sea starts rising at the expedition deadline (%.2f s server time)"), *GetName(),
+				GameState ? GameState->GetFloodStartTime() : -1.0);
+		}
+		else
+		{
+			UE_LOG(Logmonke_island, Log, TEXT("%s: the sea starts rising on the day / night clock (%.0f cm in %.0f s)"), *GetName(), Rules->RiseCm, Rules->RiseSeconds);
+		}
 	}
 
 	const double Dt = Rules->StepSeconds;
-	const int64 Target = static_cast<int64>(FloodTime / Dt);
+	const int64 Target = static_cast<int64>(FloodSeconds / Dt);
 	for (int32 Step = 0; Step < Rules->MaxStepsPerFrame && StepsDone < Target; ++Step)
 	{
 		++StepsDone;
-		const float Sea = BaseSeaLevel + RiseAt(*Rules, static_cast<float>(StepsDone * Dt)) / 100.0f;
+		// The sea target only ever rises, whatever the clock says (late replication, rounding)
+		HeldRiseCm = FloodSchedule::HoldRise(HeldRiseCm, ComputeRiseCm(StepsDone * Dt));
+		const float Sea = BaseSeaLevel + static_cast<float>(HeldRiseCm / 100.0);
 		Grid.Step(static_cast<float>(Dt), Sea, Rules->Gravity, Rules->FluxDamping);
+	}
+
+	if (!bRiseComplete && ClockSource == EHazardClockSource::DayNight && StepsDone * Dt >= Rules->RiseSeconds)
+	{
+		bRiseComplete = true;
+		UE_LOG(Logmonke_island, Log, TEXT("%s: full rise reached on the day / night clock (+%.0f cm)"), *GetName(), HeldRiseCm);
 	}
 }
 
@@ -366,13 +484,17 @@ void AFloodSimulationActor::BuildChunk(int32 ChunkIndex)
 
 static FAutoConsoleCommandWithWorld GFloodNowCommand(
 	TEXT("monke.FloodNow"),
-	TEXT("Jumps the clock to 5 s before the rising water (server)"),
+	TEXT("Jumps the day / night clock to 5 s before the rising water (server, day / night fallback only)"),
 	FConsoleCommandWithWorldDelegate::CreateLambda([](UWorld* World)
 	{
 		ADayNightCycleActor* Clock = ADayNightCycleActor::Get(World);
 		for (TActorIterator<AFloodSimulationActor> It(World); It && Clock; ++It)
 		{
-			if (It->Rules)
+			if (It->GetClockSource() == EHazardClockSource::Expedition)
+			{
+				UE_LOG(Logmonke_island, Warning, TEXT("monke.FloodNow: %s follows the expedition clock, the day / night jump does not move the water"), *It->GetName());
+			}
+			else if (It->Rules)
 			{
 				Clock->SetElapsedSeconds(FMath::Max(0.0f, It->Rules->StartSeconds - 5.0f));
 			}

@@ -82,6 +82,10 @@ public:
 	UFUNCTION(BlueprintPure, Category="Expedition")
 	FGuid GetExpeditionId() const { return ExpeditionId; }
 
+	/** Fragment played (FRG_<Ile>_<NN>, ADR-004), None outside a fragment map; clients load its definition by this id */
+	UFUNCTION(BlueprintPure, Category="Expedition")
+	FName GetFragmentId() const { return FragmentId; }
+
 	/** Server time of the start of the expedition (s) */
 	UFUNCTION(BlueprintPure, Category="Expedition")
 	double GetExpeditionStartTime() const { return ClockState.StartTime; }
@@ -152,6 +156,10 @@ private:
 	/** Identifier of the expedition, keys the zone bonuses and the future result */
 	UPROPERTY(Replicated)
 	FGuid ExpeditionId;
+
+	/** Fragment played, chosen by the server (UExpeditionIslandSubsystem) and set at BeginPlay */
+	UPROPERTY(Replicated)
+	FName FragmentId;
 
 	/** Start, flood deadline and bonused zones */
 	UPROPERTY(ReplicatedUsing=OnRep_ClockState)

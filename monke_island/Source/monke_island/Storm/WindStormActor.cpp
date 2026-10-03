@@ -4,6 +4,7 @@
 #include "Storm/WindMath.h"
 #include "Storm/WindRules.h"
 #include "DayNight/DayNightCycleActor.h"
+#include "Expedition/Core/ExpeditionGameState.h"
 #include "monke_island.h"
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Components/PrimitiveComponent.h"
@@ -174,6 +175,27 @@ FVector AWindStormActor::GetWindAccelerationOn(const AActor* Actor) const
 	return Wind.GetSafeNormal() * Acceleration * 100.0f;
 }
 
+bool AWindStormActor::ResolveClock()
+{
+	if (ClockSource != EHazardClockSource::Undecided)
+	{
+		return true;
+	}
+	ClockSource = HazardClock::ResolveForWorld(Rules->ClockMode, GetWorld());
+	if (ClockSource == EHazardClockSource::Undecided)
+	{
+		return false;
+	}
+	HazardClock::LogDecision(this, TEXT("the wind"), Rules->ClockMode, ClockSource);
+	if (ClockSource == EHazardClockSource::Expedition)
+	{
+		Expedition = AExpeditionGameState::Get(this);
+		UE_LOG(Logmonke_island, Log, TEXT("%s: the ultra violent wind sets in %.0f s before the submersion (DeadlineDay ignored)"),
+			*GetName(), Rules->ExpeditionStormLeadSeconds);
+	}
+	return true;
+}
+
 void AWindStormActor::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -182,21 +204,66 @@ void AWindStormActor::Tick(float DeltaSeconds)
 	{
 		return;
 	}
+	if (!ResolveClock())
+	{
+		// A client waits for the replicated game state before choosing its clock
+		return;
+	}
+	if (ClockSource == EHazardClockSource::Disabled)
+	{
+		Wind = FVector::ZeroVector;
+		EngineWind->SetStrength(0.0f);
+		EngineWind->SetSpeed(0.0f);
+		SetActorTickEnabled(false);
+		return;
+	}
+
 	ADayNightCycleActor* Clock = ADayNightCycleActor::Get(this);
-	const double Elapsed = Clock ? Clock->GetElapsedSeconds() : GetWorld()->GetTimeSeconds();
 	const int32 Day = Clock ? Clock->GetDayNumber() : 1;
-	const double DeadlineStart = Clock ? Clock->GetDayStartElapsed(Rules->DeadlineDay) : -1.0;
+	double Elapsed = 0.0;
+	double DeadlineStart = -1.0;
+	bool bDeadlineNow = false;
+	if (ClockSource == EHazardClockSource::Expedition)
+	{
+		// One clock: gusts count from the start of the expedition, the ultra violent wind follows the submersion
+		if (const AExpeditionGameState* GameState = Expedition.Get())
+		{
+			const FExpeditionClockState& State = GameState->GetClockState();
+			const double Now = GameState->GetServerWorldTimeSeconds();
+			const bool bConfirmed = GameState->GetPhase() >= EExpeditionPhase::Submerging
+				|| (GameState->HasAuthority() && State.bStarted && Now >= State.FloodStartTime);
+			Elapsed = State.bStarted ? FMath::Max(0.0, Now - State.StartTime) : 0.0;
+			const double StormSeconds = WindMath::ExpeditionStormSeconds(State, Now, Rules->ExpeditionStormLeadSeconds, bConfirmed);
+			DeadlineStart = WindMath::DeadlineStartElapsed(Elapsed, StormSeconds);
+			bDeadlineNow = StormSeconds >= 0.0;
+		}
+	}
+	else
+	{
+		Elapsed = Clock ? Clock->GetElapsedSeconds() : GetWorld()->GetTimeSeconds();
+		DeadlineStart = Clock ? Clock->GetDayStartElapsed(Rules->DeadlineDay) : -1.0;
+		bDeadlineNow = Clock && Day >= Rules->DeadlineDay;
+	}
+
 	const int32 PreviousGust = GustIndex;
 	WindMath::MeanStrengthAt(*Rules, Elapsed, DeadlineStart, &GustIndex);
 	if (GustIndex != PreviousGust && GustIndex != INDEX_NONE)
 	{
 		UE_LOG(Logmonke_island, Log, TEXT("Gust %d (level %d, day %d)"), GustIndex + 1, GetGustLevel(), Day);
 	}
-	if (!bDeadline && Clock && Day >= Rules->DeadlineDay)
+	if (bDeadlineNow != bDeadline)
 	{
-		UE_LOG(Logmonke_island, Log, TEXT("Day %d: the ultra violent wind sets in"), Day);
+		if (ClockSource == EHazardClockSource::Expedition)
+		{
+			UE_LOG(Logmonke_island, Log, TEXT("%s: the ultra violent wind %s (expedition clock, %.0f s before the submersion)"), *GetName(),
+				bDeadlineNow ? TEXT("sets in") : TEXT("waits: the submersion was moved back"), Rules->ExpeditionStormLeadSeconds);
+		}
+		else if (bDeadlineNow)
+		{
+			UE_LOG(Logmonke_island, Log, TEXT("Day %d: the ultra violent wind sets in"), Day);
+		}
 	}
-	bDeadline = Clock && Day >= Rules->DeadlineDay;
+	bDeadline = bDeadlineNow;
 	Wind = WindAt(*Rules, Elapsed, DeadlineStart);
 	const float Strength = static_cast<float>(Wind.Size());
 
