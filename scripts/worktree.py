@@ -14,7 +14,10 @@ Code seul = sparse-checkout de Source/, Config/, le .uproject, docs/, scripts/, 
 sans téléchargement LFS : quelques Mo au lieu d'environ 3 Go.
 """
 import argparse
+import json
 import os
+import shutil
+import time
 import re
 import subprocess
 import sys
@@ -71,11 +74,44 @@ def cmd_list(_):
         print(f"{branch or '(détaché)':<14} {state:<8} +{ahead:<3} {path}")
 
 
+def seed_build_rules(tid):
+    """Reuse the main tree's compiled build rules in a worktree.
+
+    Windows Smart App Control blocks a freshly compiled, unsigned monke_islandModuleRules.dll (0x800711C7), so UBT
+    cannot load rules it builds inside a worktree. When the worktree's Build.cs / Target.cs are identical to the main
+    tree's, the trusted DLL of the main tree is copied and its manifest pointed at the worktree sources.
+    """
+    src = ROOT / "monke_island" / "Intermediate" / "Build" / "BuildRules"
+    dst = TREES / tid / "monke_island" / "Intermediate" / "Build" / "BuildRules"
+    manifest = src / "monke_islandModuleRulesManifest.json"
+    if not manifest.exists():
+        print("règles de build absentes de l'arbre principal : compiler une fois l'arbre principal (scripts/ue.ps1 build)")
+        return
+    data = json.loads(manifest.read_text(encoding="utf-8-sig"))
+    main_prefix = str(ROOT / "monke_island") + "\\"
+    tree_prefix = str(TREES / tid / "monke_island") + "\\"
+    for source in data["SourceFiles"]:
+        mirror = Path(source.replace(main_prefix, tree_prefix))
+        if not mirror.exists() or mirror.read_bytes() != Path(source).read_bytes():
+            print(f"{mirror.name} diffère de l'arbre principal : UBT recompilera les règles (bloquées par Windows si non signées)")
+            return
+    dst.mkdir(parents=True, exist_ok=True)
+    for name in ("monke_islandModuleRules.dll", "monke_islandModuleRules.pdb"):
+        if (src / name).exists():
+            shutil.copy2(src / name, dst / name)
+    data["SourceFiles"] = [s.replace(main_prefix, tree_prefix) for s in data["SourceFiles"]]
+    (dst / manifest.name).write_text(json.dumps(data, indent="\t"), encoding="utf-8")
+    now = time.time()
+    for path in dst.iterdir():
+        os.utime(path, (now, now))
+
+
 def cmd_build(args):
     tid = task_id(args.task)
     project = TREES / tid / "monke_island" / "monke_island.uproject"
     if not project.exists():
         sys.exit(f"{project} introuvable : créer le worktree avec `new {tid}`")
+    seed_build_rules(tid)
     build = UE / "Engine" / "Build" / "BatchFiles" / "Build.bat"
     # the editor target is refused while any editor runs (engine-wide Live Coding mutex): the game target is a real
     # compile check that never conflicts; use --editor (editor closed) for the INT gate and headless tests
