@@ -1,6 +1,8 @@
 // monke_island
 
 #include "Player/IslanderHUD.h"
+#include "DayNight/DayNightCycleActor.h"
+#include "Storm/WindStormActor.h"
 #include "CanvasItem.h"
 #include "Engine/Canvas.h"
 #include "Engine/Engine.h"
@@ -61,8 +63,27 @@ void AIslanderHUD::DrawHUD()
 			Health->IsDead() ? TEXT("Santé - mort") : FString::Printf(TEXT("Santé %.0f"), Health->GetHealth()));
 	}
 
-	// stance line above the bars
+	// stance line above the bars; the day and the wind first (T-067)
 	TArray<FString> States;
+	if (const ADayNightCycleActor* Clock = ADayNightCycleActor::Get(this))
+	{
+		States.Add(FString::Printf(TEXT("Jour %d"), Clock->GetDayNumber()));
+	}
+	if (const AWindStormActor* Storm = AWindStormActor::Get(this))
+	{
+		if (Storm->IsDeadlineWind())
+		{
+			States.Add(TEXT("Tempête"));
+		}
+		else if (Storm->IsBlowing())
+		{
+			States.Add(FString::Printf(TEXT("Coup de vent (niveau %d)"), Storm->GetGustLevel() + 1));
+		}
+		if (Storm->IsBlowing() && Storm->GetShelterFactor(Character) < 1.0f)
+		{
+			States.Add(TEXT("À l'abri"));
+		}
+	}
 	if (Character->bIsCrouched)
 	{
 		States.Add(TEXT("Accroupi"));

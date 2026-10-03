@@ -88,6 +88,25 @@ void ADayNightCycleActor::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	UpdateLighting(false);
+
+	// the night has passed: a new day on every machine (pure function of the replicated clock)
+	const int32 Day = GetDayNumber();
+	if (Day != LastDay)
+	{
+		LastDay = Day;
+		UE_LOG(Logmonke_island, Log, TEXT("Day %d begins"), Day);
+		OnDayChanged.Broadcast(Day);
+	}
+}
+
+int32 ADayNightCycleActor::GetDayNumber() const
+{
+	return Rules ? DayNightMath::DayNumberAt(*Rules, GetElapsedSeconds()) : 1;
+}
+
+double ADayNightCycleActor::GetDayStartElapsed(int32 Day) const
+{
+	return Rules ? DayNightMath::DayStartElapsed(*Rules, Day) : -1.0;
 }
 
 void ADayNightCycleActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

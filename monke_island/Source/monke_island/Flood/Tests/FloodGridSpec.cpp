@@ -114,13 +114,14 @@ void FFloodGridSpec::Define()
 			TestEqual(TEXT("starts at 4:50"), Rules->StartSeconds, 290.0f);
 		});
 
-		It("keeps the wind calm before 1:20 and blowing after", [this]()
+		It("keeps the wind calm before the first gust and blowing during it", [this]()
 		{
 			UWindRules* Rules = NewObject<UWindRules>();
-			TestTrue(TEXT("calm at 79 s"), AWindStormActor::WindAt(*Rules, 79.0).IsNearlyZero());
-			for (double T = Rules->StartSeconds + Rules->RampSeconds; T < 400.0; T += 3.7)
+			TestTrue(TEXT("breeze before the first gust"), AWindStormActor::WindAt(*Rules, Rules->FirstGustSeconds - 1.0).Size() < Rules->ForceThreshold);
+			const double Plateau = Rules->FirstGustSeconds + Rules->GustRampSeconds + 1.0;
+			for (double T = Plateau; T < Rules->FirstGustSeconds + Rules->GustDurationSeconds - Rules->GustRampSeconds; T += 3.7)
 			{
-				if (!TestTrue(TEXT("blowing"), AWindStormActor::WindAt(*Rules, T).Size() > 0.3))
+				if (!TestTrue(TEXT("blowing"), AWindStormActor::WindAt(*Rules, T).Size() > Rules->ForceThreshold))
 				{
 					break;
 				}

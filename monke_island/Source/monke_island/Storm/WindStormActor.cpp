@@ -1,10 +1,14 @@
 // monke_island
 
 #include "Storm/WindStormActor.h"
+#include "Storm/WindMath.h"
 #include "Storm/WindRules.h"
 #include "DayNight/DayNightCycleActor.h"
 #include "monke_island.h"
+#include "Components/InstancedStaticMeshComponent.h"
 #include "Components/PrimitiveComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Engine/StaticMesh.h"
 #include "Components/WindDirectionalSourceComponent.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -53,20 +57,106 @@ void AWindStormActor::BeginPlay()
 	MaterialParameters = Rules->MaterialParameters.LoadSynchronous();
 }
 
-FVector AWindStormActor::WindAt(const UWindRules& InRules, double Elapsed)
+AWindStormActor* AWindStormActor::Get(const UObject* WorldContextObject)
 {
-	const double T = Elapsed - InRules.StartSeconds;
-	if (T <= 0.0)
+	UWorld* World = WorldContextObject ? WorldContextObject->GetWorld() : nullptr;
+	if (!World)
 	{
-		return FVector::ZeroVector;
+		return nullptr;
 	}
-	const float Ramp = FMath::SmoothStep(0.0f, 1.0f, static_cast<float>(T / InRules.RampSeconds));
-	const float Phase = static_cast<float>(T * InRules.GustFrequency);
-	// two octaves of noise: long surges and short gusts, never below a third of the mean
-	const float Gust = 0.65f * FMath::PerlinNoise1D(Phase) + 0.35f * FMath::PerlinNoise1D(Phase * 3.1f + 17.0f);
-	const float Strength = Ramp * FMath::Max(0.33f, 1.0f + InRules.GustAmplitude * Gust * 1.6f);
+	for (TActorIterator<AWindStormActor> It(World); It; ++It)
+	{
+		return *It;
+	}
+	return nullptr;
+}
+
+FVector AWindStormActor::WindAt(const UWindRules& InRules, double Elapsed, double DeadlineStartElapsed)
+{
+	const float Mean = WindMath::MeanStrengthAt(InRules, Elapsed, DeadlineStartElapsed);
+	const float Phase = static_cast<float>(Elapsed * InRules.GustFrequency);
+	// two octaves of noise inside the gust: long surges and short bursts, never below a third of the mean
+	const float Turbulence = 0.65f * FMath::PerlinNoise1D(Phase) + 0.35f * FMath::PerlinNoise1D(Phase * 3.1f + 17.0f);
+	const float Strength = Mean * FMath::Max(0.33f, 1.0f + InRules.GustAmplitude * Turbulence * 1.6f);
 	const float Yaw = InRules.BlowTowardYawDeg + InRules.DirectionSwingDeg * FMath::PerlinNoise1D(Phase * 0.4f + 41.0f) * 1.6f;
 	return FRotator(0.0, Yaw, 0.0).Vector() * Strength;
+}
+
+int32 AWindStormActor::GetGustLevel() const
+{
+	return Rules ? WindMath::LevelOf(*Rules, GustIndex) : 0;
+}
+
+bool AWindStormActor::IsBlowing() const
+{
+	return Rules && Wind.Size() >= Rules->ForceThreshold;
+}
+
+float AWindStormActor::GetShelterFactor(const AActor* Actor) const
+{
+	if (!Rules || !Actor)
+	{
+		return 1.0f;
+	}
+	const double Now = GetWorld()->GetTimeSeconds();
+	if (ShelterCache.Num() > 1024)
+	{
+		// destroyed actors leave stale entries: drop them now and then
+		for (auto It = ShelterCache.CreateIterator(); It; ++It)
+		{
+			if (!It.Key().IsValid())
+			{
+				It.RemoveCurrent();
+			}
+		}
+	}
+	FWindShelterSample& Sample = ShelterCache.FindOrAdd(Actor);
+	if (Now - Sample.Time >= Rules->ShelterRefreshInterval)
+	{
+		FVector Origin;
+		FVector Extent;
+		Actor->GetActorBounds(true, Origin, Extent);
+		Sample.Factor = ComputeShelter(Actor, FVector(Origin.X, Origin.Y, Origin.Z - Extent.Z));
+		Sample.Time = Now;
+	}
+	return Sample.Factor;
+}
+
+float AWindStormActor::ComputeShelter(const AActor* Actor, const FVector& Feet) const
+{
+	const FVector Direction = Wind.GetSafeNormal2D();
+	if (Direction.IsNearlyZero() || Rules->ShelterDistance <= 0.0f)
+	{
+		return 1.0f;
+	}
+	// look upwind, at chest height: a building or a bush there breaks the wind
+	const FVector Start = Feet + FVector(0.0, 0.0, Rules->ShelterHeight);
+	const FVector End = Start - Direction * Rules->ShelterDistance;
+	TArray<FHitResult> Hits;
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(WindShelter), false, Actor);
+	GetWorld()->SweepMultiByObjectType(Hits, Start, End, FQuat::Identity, FCollisionObjectQueryParams(ECC_WorldStatic),
+		FCollisionShape::MakeSphere(Rules->ShelterTraceRadius), Params);
+
+	float Factor = 1.0f;
+	for (const FHitResult& Hit : Hits)
+	{
+		const UStaticMeshComponent* MeshComponent = Cast<UStaticMeshComponent>(Hit.GetComponent());
+		const UStaticMesh* Mesh = MeshComponent ? MeshComponent->GetStaticMesh() : nullptr;
+		if (!Mesh)
+		{
+			continue;
+		}
+		const FString Name = Mesh->GetName();
+		if (WindMath::HasKeyword(Name, Rules->BuildingMeshKeywords))
+		{
+			Factor = FMath::Min(Factor, Rules->BuildingShelterFactor);
+		}
+		else if (WindMath::HasKeyword(Name, Rules->BushMeshKeywords))
+		{
+			Factor = FMath::Min(Factor, Rules->BushShelterFactor);
+		}
+	}
+	return Factor;
 }
 
 FVector AWindStormActor::GetWindAccelerationOn(const AActor* Actor) const
@@ -79,7 +169,7 @@ FVector AWindStormActor::GetWindAccelerationOn(const AActor* Actor) const
 	const FVector Extent = Body->Bounds.BoxExtent;
 	const float AreaM2 = static_cast<float>(4.0 * FMath::Max(Extent.X, Extent.Y) * Extent.Z / 10000.0);
 	const float MassKg = FMath::Max(Body->GetMass(), 0.1f);
-	const float Strength = static_cast<float>(Wind.Size());
+	const float Strength = static_cast<float>(Wind.Size()) * GetShelterFactor(Actor);
 	const float Acceleration = FMath::Min(Rules->WindPressurePa * Strength * Strength * AreaM2 / MassKg, Rules->MaxObjectAcceleration);
 	return Wind.GetSafeNormal() * Acceleration * 100.0f;
 }
@@ -94,7 +184,20 @@ void AWindStormActor::Tick(float DeltaSeconds)
 	}
 	ADayNightCycleActor* Clock = ADayNightCycleActor::Get(this);
 	const double Elapsed = Clock ? Clock->GetElapsedSeconds() : GetWorld()->GetTimeSeconds();
-	Wind = WindAt(*Rules, Elapsed);
+	const int32 Day = Clock ? Clock->GetDayNumber() : 1;
+	const double DeadlineStart = Clock ? Clock->GetDayStartElapsed(Rules->DeadlineDay) : -1.0;
+	const int32 PreviousGust = GustIndex;
+	WindMath::MeanStrengthAt(*Rules, Elapsed, DeadlineStart, &GustIndex);
+	if (GustIndex != PreviousGust && GustIndex != INDEX_NONE)
+	{
+		UE_LOG(Logmonke_island, Log, TEXT("Gust %d (level %d, day %d)"), GustIndex + 1, GetGustLevel(), Day);
+	}
+	if (!bDeadline && Clock && Day >= Rules->DeadlineDay)
+	{
+		UE_LOG(Logmonke_island, Log, TEXT("Day %d: the ultra violent wind sets in"), Day);
+	}
+	bDeadline = Clock && Day >= Rules->DeadlineDay;
+	Wind = WindAt(*Rules, Elapsed, DeadlineStart);
 	const float Strength = static_cast<float>(Wind.Size());
 
 	EngineWind->SetWorldRotation(Wind.IsNearlyZero() ? FRotator::ZeroRotator : Wind.Rotation());
@@ -111,11 +214,11 @@ void AWindStormActor::Tick(float DeltaSeconds)
 
 	if (Clock)
 	{
-		const float Ramp = FMath::SmoothStep(0.0f, 1.0f, static_cast<float>((Elapsed - Rules->StartSeconds) / Rules->RampSeconds));
-		Clock->SetStormFactor(Rules->StormSkyFactor * Ramp);
+		// the sky darkens with the gusts, fully from a full storm (strength 1) on
+		Clock->SetStormFactor(Rules->StormSkyFactor * FMath::Clamp((Strength - Rules->ForceThreshold) / (1.0f - Rules->ForceThreshold), 0.0f, 1.0f));
 	}
 
-	if (Strength > 0.0f)
+	if (Strength >= Rules->ForceThreshold)
 	{
 		ApplyForces(DeltaSeconds);
 	}
@@ -132,7 +235,7 @@ void AWindStormActor::ApplyForces(float DeltaSeconds)
 	if (DriftTimer <= 0.0f)
 	{
 		DriftTimer = Rules->DriftRefreshInterval;
-		const FVector Drift = FVector(Wind.X, Wind.Y, 0.0) * Rules->CharacterDriftSpeed;
+		const FVector OpenDrift = FVector(Wind.X, Wind.Y, 0.0) * Rules->CharacterDriftSpeed;
 		for (TActorIterator<ACharacter> It(World); It; ++It)
 		{
 			ACharacter* Character = *It;
@@ -148,6 +251,12 @@ void AWindStormActor::ApplyForces(float DeltaSeconds)
 				continue;
 			}
 			Movement->RemoveRootMotionSource(StormDriftName);
+			// behind a building or a bush the wind barely pushes
+			const FVector Drift = OpenDrift * GetShelterFactor(Character);
+			if (Drift.IsNearlyZero())
+			{
+				continue;
+			}
 			TSharedPtr<FRootMotionSource_ConstantForce> Source = MakeShared<FRootMotionSource_ConstantForce>();
 			Source->InstanceName = StormDriftName;
 			Source->AccumulateMode = ERootMotionAccumulateMode::Additive;
@@ -183,7 +292,7 @@ void AWindStormActor::ApplyForces(float DeltaSeconds)
 		const FVector Extent = Body->Bounds.BoxExtent;
 		const float AreaM2 = static_cast<float>(4.0 * FMath::Max(Extent.X, Extent.Y) * Extent.Z / 10000.0);
 		const float MassKg = FMath::Max(Body->GetMass(), 0.1f);
-		const float Pressure = Rules->WindPressurePa * FMath::Square(RelativeSpeed / ReferenceSpeed);
+		const float Pressure = Rules->WindPressurePa * FMath::Square(RelativeSpeed / ReferenceSpeed) * FMath::Square(GetShelterFactor(*It));
 		const float Acceleration = FMath::Min(Pressure * AreaM2 / MassKg, Rules->MaxObjectAcceleration);
 		Body->AddForce(Relative / RelativeSpeed * Acceleration * 100.0f, NAME_None, true);
 	}
