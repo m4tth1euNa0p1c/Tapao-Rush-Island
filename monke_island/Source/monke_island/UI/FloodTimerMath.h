@@ -16,7 +16,9 @@ enum class EFloodTimerMode : uint8
 	/** During the final rise: distinct evacuation countdown */
 	Evacuation,
 	/** The rise is over */
-	Over
+	Over,
+	/** Every player is dead: countdown to the next expedition */
+	GameOver
 };
 
 /** Times read from a flood source, all on the same clock (server time, or the elapsed time of the day / night clock) */
@@ -42,6 +44,12 @@ struct MONKE_ISLAND_API FFloodTimerInput
 
 	/** Whether the source confirms that the expedition resolved */
 	bool bResolved = false;
+
+	/** Whether every player is dead */
+	bool bGameOver = false;
+
+	/** Time the next expedition starts after a game over (s) */
+	double RestartTime = 0.0;
 };
 
 /** What the timer displays at one moment */

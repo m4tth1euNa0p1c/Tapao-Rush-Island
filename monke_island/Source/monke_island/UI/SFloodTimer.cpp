@@ -152,7 +152,7 @@ EVisibility SFloodTimer::GetPanelVisibility() const
 
 EVisibility SFloodTimer::GetIconVisibility() const
 {
-	return Mode == EFloodTimerMode::Evacuation || Mode == EFloodTimerMode::Over ? EVisibility::HitTestInvisible : EVisibility::Collapsed;
+	return Mode >= EFloodTimerMode::Evacuation ? EVisibility::HitTestInvisible : EVisibility::Collapsed;
 }
 
 EVisibility SFloodTimer::GetNotificationVisibility() const
@@ -162,7 +162,7 @@ EVisibility SFloodTimer::GetNotificationVisibility() const
 
 FSlateColor SFloodTimer::GetClockColor() const
 {
-	const FLinearColor Base = Mode == EFloodTimerMode::Evacuation || Mode == EFloodTimerMode::Over ? Style.EvacuationColor
+	const FLinearColor Base = Mode >= EFloodTimerMode::Evacuation ? Style.EvacuationColor
 		: (bUrgent ? Style.UrgentColor : Style.CountdownColor);
 	if (!PulseSequence.IsPlaying())
 	{
@@ -174,7 +174,7 @@ FSlateColor SFloodTimer::GetClockColor() const
 
 FSlateColor SFloodTimer::GetPanelColor() const
 {
-	return Mode == EFloodTimerMode::Evacuation || Mode == EFloodTimerMode::Over ? Style.EvacuationPanelColor : Style.PanelColor;
+	return Mode >= EFloodTimerMode::Evacuation ? Style.EvacuationPanelColor : Style.PanelColor;
 }
 
 TOptional<FSlateRenderTransform> SFloodTimer::GetPulseTransform() const

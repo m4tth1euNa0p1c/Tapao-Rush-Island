@@ -139,6 +139,25 @@ void FFloodTimerSpec::Define()
 			TestEqual(TEXT("over at 180 s"), End.Mode, EFloodTimerMode::Over);
 		});
 
+		It("shows the game over and the time to the next expedition once every player is dead", [this]()
+		{
+			const FExpeditionClockParams Params = CahierParams();
+			const FExpeditionClockState State = ExpeditionClock::Start(0.0, Params);
+			FFloodTimerInput Input = ExpeditionInput(State, 50.0, Params);
+			Input.bGameOver = true;
+			Input.RestartTime = 56.0;
+			const FFloodTimerSnapshot Dead = FloodTimerMath::Evaluate(Input);
+			TestEqual(TEXT("game over before the flood"), Dead.Mode, EFloodTimerMode::GameOver);
+			TestEqual(TEXT("6 s to the restart"), Dead.SecondsLeft, 6.0);
+
+			Input = ExpeditionInput(State, 200.0, Params);
+			Input.bGameOver = true;
+			Input.RestartTime = 190.0;
+			const FFloodTimerSnapshot Late = FloodTimerMath::Evaluate(Input);
+			TestEqual(TEXT("game over wins over the submerged island"), Late.Mode, EFloodTimerMode::GameOver);
+			TestEqual(TEXT("never negative"), Late.SecondsLeft, 0.0);
+		});
+
 		It("a client never shows the evacuation before the server phase says so", [this]()
 		{
 			FFloodTimerInput Input;

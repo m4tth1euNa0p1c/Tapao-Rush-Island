@@ -175,6 +175,8 @@ FText UFloodTimerWidget::MakeClockText(const FFloodTimerSnapshot& InSnapshot)
 		return FText::Format(LOCTEXT("Evacuation", "Évacuation ! Extraction dans {0}"), Time);
 	case EFloodTimerMode::Over:
 		return LOCTEXT("Over", "Île submergée : l'eau monte encore, montez dans la barque !");
+	case EFloodTimerMode::GameOver:
+		return FText::Format(LOCTEXT("GameOver", "Fin de partie : nouvelle expédition dans {0}"), Time);
 	default:
 		return FText::GetEmpty();
 	}

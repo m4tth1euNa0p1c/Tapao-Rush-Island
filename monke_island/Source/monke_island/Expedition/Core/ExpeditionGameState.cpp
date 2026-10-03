@@ -5,7 +5,12 @@
 #include "Expedition/Islands/ExpeditionIslandSubsystem.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
+#include "GameFramework/PlayerState.h"
+#include "Misc/ConfigCacheIni.h"
 #include "Net/UnrealNetwork.h"
+#include "Player/IslanderCharacter.h"
+#include "Player/IslanderHealthComponent.h"
 #include "TimerManager.h"
 #include "monke_island.h"
 
@@ -29,6 +34,7 @@ void AExpeditionGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AExpeditionGameState, ClockState);
 	DOREPLIFETIME(AExpeditionGameState, Phase);
 	DOREPLIFETIME(AExpeditionGameState, Resolution);
+	DOREPLIFETIME(AExpeditionGameState, TeamWipedTime);
 }
 
 void AExpeditionGameState::BeginPlay()
@@ -48,6 +54,16 @@ void AExpeditionGameState::BeginPlay()
 		}
 	}
 
+	if (HasAuthority())
+	{
+		// Players may spawn before or after this actor begins play: watch both
+		ActorSpawnedHandle = GetWorld()->AddOnActorSpawnedHandler(FOnActorSpawned::FDelegate::CreateUObject(this, &AExpeditionGameState::WatchPlayerCharacter));
+		for (TActorIterator<AIslanderCharacter> It(GetWorld()); It; ++It)
+		{
+			WatchPlayerCharacter(*It);
+		}
+	}
+
 	if (HasAuthority() && bStartOnBeginPlay)
 	{
 		StartExpedition();
@@ -59,6 +75,8 @@ void AExpeditionGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	if (UWorld* World = GetWorld())
 	{
 		World->GetTimerManager().ClearTimer(PhaseTimer);
+		World->GetTimerManager().ClearTimer(RestartTimer);
+		World->RemoveOnActorSpawnedHandler(ActorSpawnedHandle);
 	}
 
 	Super::EndPlay(EndPlayReason);
@@ -263,5 +281,96 @@ void AExpeditionGameState::OnRep_Phase(EExpeditionPhase PreviousPhase)
 	if (Phase == EExpeditionPhase::Resolved && Resolution == EExpeditionResolution::Submerged)
 	{
 		OnSubmersionEnded.Broadcast();
+	}
+}
+
+double AExpeditionGameState::GetRestartTime() const
+{
+	return IsTeamWiped() ? TeamWipedTime + (Rules ? Rules->GameOverRestartDelay : 0.0f) : -1.0;
+}
+
+void AExpeditionGameState::WatchPlayerCharacter(AActor* Actor)
+{
+	AIslanderCharacter* Character = Cast<AIslanderCharacter>(Actor);
+	if (!Character || !Rules || !Rules->bPermadeath)
+	{
+		return;
+	}
+	// AIslanderCharacter::RespawnDelay: 0 disables respawning. Set through reflection (the member is protected):
+	// to be replaced by a call on the character once its file is free.
+	if (const FFloatProperty* Delay = FindFProperty<FFloatProperty>(AIslanderCharacter::StaticClass(), TEXT("RespawnDelay")))
+	{
+		Delay->SetPropertyValue_InContainer(Character, 0.0f);
+	}
+	else
+	{
+		UE_LOG(Logmonke_island, Warning, TEXT("Expedition: AIslanderCharacter has no RespawnDelay, %s still respawns"), *GetNameSafe(Character));
+	}
+	if (UIslanderHealthComponent* Health = Character->GetHealthComponent())
+	{
+		Health->OnDeath.AddUniqueDynamic(this, &AExpeditionGameState::HandlePlayerDeath);
+	}
+}
+
+void AExpeditionGameState::HandlePlayerDeath(AActor* Killer)
+{
+	CheckTeamWiped();
+}
+
+void AExpeditionGameState::CheckTeamWiped()
+{
+	if (!HasAuthority() || IsTeamWiped() || !Rules || !Rules->bPermadeath)
+	{
+		return;
+	}
+	int32 WithPawn = 0;
+	int32 Alive = 0;
+	for (const APlayerState* PlayerState : PlayerArray)
+	{
+		const AIslanderCharacter* Character = PlayerState ? Cast<AIslanderCharacter>(PlayerState->GetPawn()) : nullptr;
+		if (!Character)
+		{
+			continue;
+		}
+		++WithPawn;
+		const UIslanderHealthComponent* Health = Character->GetHealthComponent();
+		Alive += Health && !Health->IsDead() ? 1 : 0;
+	}
+	if (!IsWipe(WithPawn, Alive))
+	{
+		UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: a player died, %d of %d still alive"), *ExpeditionId.ToString(), Alive, WithPawn);
+		return;
+	}
+
+	TeamWipedTime = GetServerWorldTimeSeconds();
+	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: every player is dead at %.2f s, game over, restart in %.1f s"),
+		*ExpeditionId.ToString(), TeamWipedTime, Rules->GameOverRestartDelay);
+	OnTeamWiped.Broadcast();
+	GetWorldTimerManager().SetTimer(RestartTimer, this, &AExpeditionGameState::RestartFromBoot,
+		FMath::Max(Rules->GameOverRestartDelay, UE_KINDA_SMALL_NUMBER), false);
+}
+
+void AExpeditionGameState::OnRep_TeamWipedTime()
+{
+	if (IsTeamWiped())
+	{
+		OnTeamWiped.Broadcast();
+	}
+}
+
+void AExpeditionGameState::RestartFromBoot()
+{
+	FString Map = Rules ? Rules->RestartMap.GetLongPackageName() : FString();
+	if (Map.IsEmpty() && GConfig)
+	{
+		FString DefaultMap;
+		GConfig->GetString(TEXT("/Script/EngineSettings.GameMapsSettings"), TEXT("GameDefaultMap"), DefaultMap, GEngineIni);
+		Map = FSoftObjectPath(DefaultMap).GetLongPackageName();
+	}
+	UExpeditionIslandSubsystem* Islands = UExpeditionIslandSubsystem::Get(this);
+	const EFragmentError Error = Islands ? Islands->TravelToMapURL(Map) : EFragmentError::TravelFailed;
+	if (Error != EFragmentError::None)
+	{
+		UE_LOG(Logmonke_island, Error, TEXT("Expedition %s: game over but no restart (map '%s'): the players stay dead on this map"), *ExpeditionId.ToString(), *Map);
 	}
 }

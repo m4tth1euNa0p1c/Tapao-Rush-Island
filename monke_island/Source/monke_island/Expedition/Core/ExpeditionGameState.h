@@ -13,12 +13,15 @@ class UExpeditionRules;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FExpeditionPhaseChangedSignature, EExpeditionPhase, NewPhase, EExpeditionPhase, PreviousPhase);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FExpeditionFloodDeadlineChangedSignature, double, NewFloodStartTime, double, PreviousFloodStartTime);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FExpeditionSubmersionEndedSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FExpeditionTeamWipedSignature);
 
 /**
  *  Shared state of an expedition (cahier §6.1, §21: BP_ExpeditionGameState).
  *  Server authoritative: the server starts the clock, grants zone bonuses and moves the phases with timers
  *  (no tick); every machine reads the replicated clock and computes the water rise from the server time.
  *  Rules live in UExpeditionRules (DA_ExpeditionRules); the pure computation lives in ExpeditionClock.
+ *  Game over (T-104): with bPermadeath nobody respawns; once every player is dead the server waits
+ *  GameOverRestartDelay then travels back to the restart map (L_Boot: new draw, start in the boat).
  */
 UCLASS()
 class MONKE_ISLAND_API AExpeditionGameState : public AGameStateBase
@@ -113,6 +116,17 @@ public:
 	/** Replicated clock state */
 	const FExpeditionClockState& GetClockState() const { return ClockState; }
 
+	/** Whether every player died: the game is over and the expedition restarts */
+	UFUNCTION(BlueprintPure, Category="Expedition")
+	bool IsTeamWiped() const { return TeamWipedTime >= 0.0; }
+
+	/** Server time of the return to the restart map (s), negative while somebody lives */
+	UFUNCTION(BlueprintPure, Category="Expedition")
+	double GetRestartTime() const;
+
+	/** Whether a team is wiped: somebody plays and nobody is alive */
+	static bool IsWipe(int32 PlayersWithPawn, int32 PlayersAlive) { return PlayersWithPawn > 0 && PlayersAlive <= 0; }
+
 	/**
 	 *  Fires on every machine when the phase changes. The server sees every phase in order; a client may skip one
 	 *  (e.g. Exploring -> Resolved after a hitch), so listeners test Phase >= Submerging rather than an exact phase.
@@ -128,6 +142,10 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="Expedition")
 	FExpeditionSubmersionEndedSignature OnSubmersionEnded;
 
+	/** Fires on every machine when the last player dies (game over) */
+	UPROPERTY(BlueprintAssignable, Category="Expedition")
+	FExpeditionTeamWipedSignature OnTeamWiped;
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -141,6 +159,14 @@ protected:
 	/** Client: broadcasts the phase change, and the end of the submersion */
 	UFUNCTION()
 	void OnRep_Phase(EExpeditionPhase PreviousPhase);
+
+	/** Client: broadcasts the game over */
+	UFUNCTION()
+	void OnRep_TeamWipedTime();
+
+	/** Server: a watched player died */
+	UFUNCTION()
+	void HandlePlayerDeath(AActor* Killer);
 
 private:
 
@@ -175,4 +201,23 @@ private:
 
 	/** Next phase transition on the server */
 	FTimerHandle PhaseTimer;
+
+	/** Server: turns the respawn of a player character off (bPermadeath) and listens to its death */
+	void WatchPlayerCharacter(AActor* Actor);
+
+	/** Server: declares the game over when nobody is alive */
+	void CheckTeamWiped();
+
+	/** Server: travels to the restart map */
+	void RestartFromBoot();
+
+	/** Server time the last player died (s), negative while somebody lives */
+	UPROPERTY(ReplicatedUsing=OnRep_TeamWipedTime)
+	double TeamWipedTime = -1.0;
+
+	/** Return to the restart map after the game over */
+	FTimerHandle RestartTimer;
+
+	/** Characters spawned during the expedition */
+	FDelegateHandle ActorSpawnedHandle;
 };
