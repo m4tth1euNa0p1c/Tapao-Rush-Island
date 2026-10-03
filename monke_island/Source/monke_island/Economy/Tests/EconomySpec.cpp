@@ -119,8 +119,7 @@ void FEconomySpec::Define()
 			Rules.bTaxContractBonus = true;
 			TArray<FExtractedResource> Stacks = QuotaStacks();
 			Stacks.Add(FExtractedResource(EEconomyResourceCategory::Valuables, 1, 500));
-			FCommonReserve Reserve;
-			const FExpeditionLedger Ledger = FEconomyCalculator::ComputeLedger(Rules, MakeInput(Stacks), Reserve);
+			const FExpeditionLedger Ledger = FEconomyCalculator::ComputeLedger(Rules, MakeInput(Stacks));
 			TestEqual(TEXT("tax on 600"), Ledger.Tax, 210);
 			TestEqual(TEXT("net"), Ledger.Net, 390);
 		});
@@ -130,8 +129,7 @@ void FEconomySpec::Define()
 			TArray<FExtractedResource> Stacks = QuotaStacks();
 			Stacks.Add(FExtractedResource(EEconomyResourceCategory::Valuables, 1, 1));
 			Stacks.Add(FExtractedResource(EEconomyResourceCategory::Valuables, 1, 2));
-			FCommonReserve Reserve;
-			const FExpeditionLedger Ledger = FEconomyCalculator::ComputeLedger(Rules, MakeInput(Stacks), Reserve);
+			const FExpeditionLedger Ledger = FEconomyCalculator::ComputeLedger(Rules, MakeInput(Stacks));
 			TestEqual(TEXT("gross 3"), Ledger.GrossSale, 3);
 			TestEqual(TEXT("tax floor(1.05)"), Ledger.Tax, 1);
 			TestEqual(TEXT("net"), Ledger.Net, 102);
@@ -179,6 +177,20 @@ void FEconomySpec::Define()
 			TestEqual(TEXT("bonus only, nothing sold"), State.Gold, 100);
 		});
 
+		It("previews a ledger without touching the campaign", [this]()
+		{
+			State.Reserve.Wood = 2;
+			const TArray<FExtractedResource> Stacks = {
+				FExtractedResource(EEconomyResourceCategory::Wood, 7, 0),
+				FExtractedResource(EEconomyResourceCategory::Food, 3, 0)
+			};
+			const FExpeditionLedger Preview = FEconomyCalculator::ComputeLedger(Rules, MakeInput(Stacks));
+			TestEqual(TEXT("surplus in the ledger"), Preview.WoodQuota.Surplus, 3);
+			TestEqual(TEXT("reserve untouched"), State.Reserve.Wood, 2);
+			TestEqual(TEXT("gold untouched"), State.Gold, 0);
+			TestEqual(TEXT("register untouched"), State.ResolvedExpeditions.Num(), 0);
+		});
+
 		It("does not fill a quota from the reserve", [this]()
 		{
 			State.Reserve.Wood = 10;
@@ -214,12 +226,15 @@ void FEconomySpec::Define()
 			TArray<FExtractedResource> Stacks = QuotaStacks();
 			Stacks.Add(FExtractedResource(EEconomyResourceCategory::Wood, -10, 0));
 			Stacks.Add(FExtractedResource(EEconomyResourceCategory::Valuables, 1, -500));
-			FCommonReserve Reserve;
-			const FExpeditionLedger Ledger = FEconomyCalculator::ComputeLedger(Rules, MakeInput(Stacks), Reserve);
-			TestEqual(TEXT("invalid stacks"), Ledger.InvalidStacks, 2);
-			TestTrue(TEXT("quota still met"), Ledger.bContractFulfilled);
-			TestEqual(TEXT("gross"), Ledger.GrossSale, 0);
-			TestEqual(TEXT("net"), Ledger.Net, 100);
+			AddExpectedMessagePlain(TEXT("invalid stack"), ELogVerbosity::Warning, EAutomationExpectedMessageFlags::Contains, 1);
+			const FExpeditionResolution Result = FEconomyCalculator::ResolveExpedition(Rules, MakeInput(Stacks), State);
+			TestEqual(TEXT("invalid stacks"), Result.Ledger.InvalidStacks, 2);
+			TestTrue(TEXT("quota still met"), Result.Ledger.bContractFulfilled);
+			TestEqual(TEXT("gross"), Result.Ledger.GrossSale, 0);
+			TestEqual(TEXT("net"), Result.Ledger.Net, 100);
+			TestEqual(TEXT("reserve wood intact"), State.Reserve.Wood, 0);
+			TestEqual(TEXT("reserve food intact"), State.Reserve.Food, 0);
+			TestEqual(TEXT("gold"), State.Gold, 100);
 		});
 	});
 

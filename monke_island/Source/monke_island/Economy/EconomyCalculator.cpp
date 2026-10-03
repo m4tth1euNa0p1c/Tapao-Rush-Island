@@ -55,7 +55,7 @@ int32 FEconomyCalculator::ComputeTax(int32 Amount, int32 TaxRateBasisPoints)
 	return static_cast<int32>((static_cast<int64>(Amount) * Rate) / 10000);
 }
 
-FExpeditionLedger FEconomyCalculator::ComputeLedger(const FEconomyRulesSnapshot& Rules, const FExpeditionInput& Input, FCommonReserve& InOutReserve)
+FExpeditionLedger FEconomyCalculator::ComputeLedger(const FEconomyRulesSnapshot& Rules, const FExpeditionInput& Input)
 {
 	using namespace EconomyCalculatorPrivate;
 
@@ -96,6 +96,12 @@ FExpeditionLedger FEconomyCalculator::ComputeLedger(const FEconomyRulesSnapshot&
 		}
 	}
 
+	if (Ledger.InvalidStacks > 0)
+	{
+		UE_LOG(LogMonkeEconomy, Warning, TEXT("Expedition %s: %d invalid stack(s) left out of the balance (negative quantity or value, or unknown category)"),
+			*Input.ExpeditionId.ToString(), Ledger.InvalidStacks);
+	}
+
 	// 2) Quotas: delivered units are consumed by the contract
 	int32 WoodRequired = 0;
 	int32 FoodRequired = 0;
@@ -105,9 +111,7 @@ FExpeditionLedger FEconomyCalculator::ComputeLedger(const FEconomyRulesSnapshot&
 	Ledger.bContractFulfilled = Ledger.WoodQuota.bMet && Ledger.FoodQuota.bMet;
 	Ledger.Warning = Ledger.bContractFulfilled ? EExpeditionWarning::None : EExpeditionWarning::QuotaMissed;
 
-	// 3) Surplus to the common reserve
-	InOutReserve.Wood = ClampGold(static_cast<int64>(InOutReserve.Wood) + Ledger.WoodQuota.Surplus);
-	InOutReserve.Food = ClampGold(static_cast<int64>(InOutReserve.Food) + Ledger.FoodQuota.Surplus);
+	// 3) The surplus lines are in the ledger; ResolveExpedition moves them to the common reserve
 
 	// 4) Sale of the valuables and royal tax
 	Ledger.GrossSale = ClampGold(GrossSale);
@@ -139,8 +143,12 @@ FExpeditionResolution FEconomyCalculator::ResolveExpedition(const FEconomyRulesS
 		return Resolution;
 	}
 
-	Resolution.Ledger = ComputeLedger(Rules, Input, InOutState.Reserve);
-	InOutState.Gold = EconomyCalculatorPrivate::ClampGold(static_cast<int64>(InOutState.Gold) + Resolution.Ledger.Net);
+	using namespace EconomyCalculatorPrivate;
+	Resolution.Ledger = ComputeLedger(Rules, Input);
+	// 3) Surplus to the common reserve, applied only here
+	InOutState.Reserve.Wood = ClampGold(static_cast<int64>(InOutState.Reserve.Wood) + Resolution.Ledger.WoodQuota.Surplus);
+	InOutState.Reserve.Food = ClampGold(static_cast<int64>(InOutState.Reserve.Food) + Resolution.Ledger.FoodQuota.Surplus);
+	InOutState.Gold = ClampGold(static_cast<int64>(InOutState.Gold) + Resolution.Ledger.Net);
 	InOutState.ResolvedExpeditions.Add(Input.ExpeditionId, Resolution.Ledger);
 	UE_LOG(LogMonkeEconomy, Log, TEXT("Expedition %s resolved: sale %d, tax %d, bonus %d, net %d, contract %s"),
 		*Input.ExpeditionId.ToString(), Resolution.Ledger.GrossSale, Resolution.Ledger.Tax, Resolution.Ledger.ContractBonus,

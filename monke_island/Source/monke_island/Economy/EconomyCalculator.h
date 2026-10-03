@@ -23,8 +23,8 @@ struct MONKE_ISLAND_API FEconomyCalculator
 	/** floor(Amount x BasisPoints / 10000) in integers; negative amounts give 0 */
 	static int32 ComputeTax(int32 Amount, int32 TaxRateBasisPoints);
 
-	/** Steps 1 to 5: computes the ledger and adds the surplus to InOutReserve. Credits no gold */
-	static FExpeditionLedger ComputeLedger(const FEconomyRulesSnapshot& Rules, const FExpeditionInput& Input, FCommonReserve& InOutReserve);
+	/** Steps 1 to 5 as a preview: computes the ledger (surplus included) with no side effect. Changes no reserve, credits no gold */
+	static FExpeditionLedger ComputeLedger(const FEconomyRulesSnapshot& Rules, const FExpeditionInput& Input);
 
 	/**
 	 *  Applies an expedition to the campaign once: reserve, gold and the register of resolved ids.

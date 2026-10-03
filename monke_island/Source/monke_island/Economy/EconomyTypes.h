@@ -294,23 +294,23 @@ struct MONKE_ISLAND_API FEconomyQuotaOverride
 	int32 Food = 3;
 };
 
-/** Plain copy of the economy rules: the pure calculator needs no UObject */
+/** Plain copy of the economy rules: the pure calculator needs no UObject. Neutral defaults: the cahier values live in UEconomyRules only */
 struct MONKE_ISLAND_API FEconomyRulesSnapshot
 {
 	/** Wood units required when no override applies */
-	int32 BaseWoodQuota = 4;
+	int32 BaseWoodQuota = 0;
 
 	/** Food units required when no override applies */
-	int32 BaseFoodQuota = 3;
+	int32 BaseFoodQuota = 0;
 
 	/** Quotas by player count */
 	TArray<FEconomyQuotaOverride> QuotaOverrides;
 
 	/** Tax rate in basis points (3500 = 35 %) */
-	int32 TaxRateBasisPoints = 3500;
+	int32 TaxRateBasisPoints = 0;
 
 	/** Contract bonus when every quota is met */
-	int32 ContractBonus = 100;
+	int32 ContractBonus = 0;
 
 	/** The contract bonus is taxed with the sale (false by default, cahier §7) */
 	bool bTaxContractBonus = false;
