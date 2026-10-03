@@ -64,6 +64,12 @@ Les motu sont regroupés quand moins de 40 m d'eau les séparent. Voici ce qu'on
 - `LI_ExpeditionCore` contient le plan d'eau tagué `IslandWaterSurface`, le ciel et le jour/nuit, la tempête et le vent, l'horloge d'expédition et le directeur d'événements. Le niveau d'eau reste un paramètre global (`UIslandWaterSubsystem`).
 - Pas de World Partition par défaut (environ 3 × 3 km marge comprise). On ne l'active qu'après mesure (T-091).
 
+## Départ en barque : ce qui est attendu (T-093 → T-094, T-095)
+Le départ en barque est implémenté dans `Source/monke_island/Boats/` (spec : `boat-rowing.md`, section « Départ en barque »). Il reste à le brancher :
+- **T-082** : `fragments.json` donne, pour chaque fragment, au moins un point d'arrivée sur l'eau. Ce point est à quelques centaines de mètres d'une plage, sur au moins 1,2 m d'eau, avec un cap vers l'île : x, y et lacet.
+- **T-095** : place dans `Lvl_Raraka` un acteur `AExpeditionArrivalPoint` par point de `fragments.json`, avec `FragmentId = FRG_*` et la flèche (+X) vers l'île. Crée `DA_BoatStartRules` et le renseigne dans `DefaultGame.ini`. Vérifie en PIE, en solo puis en hôte + client, avec `?Island=` et sans.
+- **T-094** : ouvre la map avec `?Island=<FragmentId>`. Une fois la définition d'île fusionnée, il peut aussi injecter le mouillage `Start` par `UBoatStartSubsystem::SetArrivalOverride(Transform, FragmentId)`, côté serveur, avant la première frame du monde (`OnWorldBeginPlay` d'un subsystem d'Expedition/). L'override passe avant les acteurs.
+
 ## Critères d'acceptation
 1. Aucune frontière de fragment ne traverse la terre. Un test automatique sur `fragments.json` vérifie l'intersection entre frontière et terre, hors hoa synthétique.
 2. Huit captures prises depuis la côte et depuis la barque, en faisant le tour : aucun bord, mur, motu tranché ni trou de terrain visible.

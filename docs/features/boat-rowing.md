@@ -67,6 +67,36 @@ Une barque qu'on vit physiquement, de façon drôle et lisible :
 
 Noyade (composant de mouvement du joueur) : `SwimIdleStaminaCost` 2/s, `DrowningBuoyancy` 0,85, `DrownGraceTime` 3 s, `DrownDamagePerSecond` 12. Saut hors de l'eau : `WaterJumpZVelocity` 520 cm/s.
 
+## Départ en barque (T-093, lot L3, ADR-004)
+Au début d'une expédition, les joueurs commencent assis dans la barque, sur l'eau, la proue vers l'île.
+
+**Règles (serveur uniquement, `UBoatStartSubsystem`)**
+1. Une frame après le `BeginPlay` du monde (le niveau d'eau et les acteurs sont prêts), le serveur choisit l'arrivée dans cet ordre :
+   1. le **transform injecté** par `SetArrivalOverride(Transform, FragmentId)` : mouillage `Start` de la définition d'île (T-087/T-094) ; Boats/ ne dépend pas d'Expedition/ ;
+   2. un acteur **`AExpeditionArrivalPoint`** dont le `FragmentId` vaut l'option d'URL `?Island=<FragmentId>` (contrat avec T-094) ; tirage seedé s'il y en a plusieurs ;
+   3. sinon, un `AExpeditionArrivalPoint` au hasard (`bRandomArrivalWhenIslandUnknown`) ; graine : `?Seed=N`, puis `ArrivalSeed`, puis l'horloge (elle est écrite dans le log) ;
+   4. sinon, rien. Le départ se fait sur un PlayerStart, comme avant, avec un log clair et aucun crash.
+2. Sécurité : s'il y a moins de `MinWaterDepthCm` d'eau sous le point, on recule le point vers le large, par pas de `SafetySearchStepCm`, jusqu'à `SafetySearchMaxCm`. Au-delà, pas de barque.
+3. La barque (`BoatClass`, référence souple, sinon `BP_Barque`) apparaît au repos. Son pivot, à la flottaison, est posé `SpawnHeightAboveWaterCm` au-dessus de la surface donnée par `UIslandWaterSubsystem`. Elle n'a que le lacet du point : la proue suit la flèche (+X).
+4. Chaque contrôleur de joueur embarque **une seule fois**, dès que son pawn existe (solo, hôte, clients, et ceux qui rejoignent en cours si `bBoardLateJoiners`) :
+   - il prend le premier siège libre de `SeatOrder` ; le premier assis prend les rames, et ZQSD fonctionne tout de suite (`ABoatActor::SitCharacter`, même chemin que F) ;
+   - quand tous les sièges sont pris, il est posé debout sur un `StandingSpots`, et la barque porte son poids (`PersonMassKg`) ;
+   - sa vue est tournée vers la proue (`bFaceBow`).
+5. Le respawn après la mort n'est **pas** modifié : un contrôleur déjà embarqué repasse par le GameMode et un PlayerStart. Le GameMode Blueprint reste tel quel.
+6. Réplication : la place assise passe par `UBoatRiderComponent` (`SeatedBoat` / `SeatIndex` répliqués, `OnRep_Seat` attache le pawn chez le client). La barque se réplique comme toute barque.
+
+**Valeurs (`DA_BoatStartRules`, classe `UBoatStartRules`)** : bEnabled (vrai), BoatClass (vide = BP_Barque), bRandomArrivalWhenIslandUnknown (vrai), ArrivalSeed (0 = nouvelle graine), MaxFragmentIdLength (64), SpawnHeightAboveWaterCm (5), MinWaterDepthCm (120 : tirant d'eau 30 cm chargée, plus une marge), SafetySearchStepCm / SafetySearchMaxCm (100 / 5000), SeatOrder (0, 1, 2, 3), StandingSpots (4 points sur l'axe, Z 100), bBoardLateJoiners (vrai), bFaceBow (vrai).
+Tant que l'asset n'existe pas, ce sont les valeurs par défaut de la classe qui s'appliquent. Pour brancher l'asset, renseigner `StartRulesAsset` dans `Config/DefaultGame.ini`, section `[/Script/monke_island.BoatStartSubsystem]` (la ligne y est en commentaire).
+
+**Critères**
+- [ ] Map avec un point `FRG_X`, lancée avec `?Island=FRG_X` : barque au point, joueur 1 aux rames, ZQSD actif.
+- [ ] Sans option : un point au hasard, le même pour la même `?Seed=`.
+- [ ] Map sans point ni override : départ sur un PlayerStart, aucune barque de départ supplémentaire en dehors de la barque d'essai existante.
+- [ ] 5 joueurs pour 4 sièges : 4 assis et 1 debout dans la barque. Elle flotte.
+- [ ] Mort puis respawn : sur un PlayerStart, pas dans la barque.
+- [ ] Hôte + client : le client se voit assis au bon siège (PIE à 2, T-095).
+- [ ] Specs `monke_island.Boats.Start.*` vertes.
+
 ## Critères d'acceptation
 - [ ] Barque vide : elle flotte avec environ 16 cm d'immersion, de façon stable, avec un léger tangage.
 - [ ] 1 joueur debout sur un bord : la barque gîte de ce côté.
