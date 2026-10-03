@@ -157,6 +157,24 @@ void FIslanderMovementSpec::Define()
 		});
 	});
 
+	Describe("Carry", [this]()
+	{
+		It("tires the carrier of a 10 kg statuette even at a walk", [this]()
+		{
+			const UIslanderMovementComponent* Move = GetDefault<UIslanderMovementComponent>();
+			const float Walking = UIslanderMovementComponent::ComputeCarryStaminaCost(10.0f, true, Move->CarryStaminaPerKgMoving, Move->CarryStaminaPerKgIdle);
+			const float Standing = UIslanderMovementComponent::ComputeCarryStaminaCost(10.0f, false, Move->CarryStaminaPerKgMoving, Move->CarryStaminaPerKgIdle);
+			TestTrue(TEXT("walking with it costs stamina"), Walking > 0.0f);
+			TestTrue(TEXT("standing still costs less"), Standing < Walking);
+			TestTrue(TEXT("a full bar lasts between 15 s and 60 s at a walk"), Move->MaxStamina / Walking >= 15.0f && Move->MaxStamina / Walking <= 60.0f);
+		});
+
+		It("costs nothing with empty hands", [this]()
+		{
+			TestEqual(TEXT("empty hands"), UIslanderMovementComponent::ComputeCarryStaminaCost(0.0f, true, 0.5f, 0.15f), 0.0f);
+		});
+	});
+
 	Describe("Guard", [this]()
 	{
 		It("reduces a frontal hit", [this]()
