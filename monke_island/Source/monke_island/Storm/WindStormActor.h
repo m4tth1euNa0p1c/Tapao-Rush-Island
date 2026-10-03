@@ -123,6 +123,15 @@ private:
 	/** Seconds until the next refresh of the character drift */
 	float DriftTimer = 0.0f;
 
+	/** Physics bodies near a player, pushed by the wind (server) */
+	TArray<TWeakObjectPtr<UPrimitiveComponent>> PushedBodies;
+
+	/** Seconds until the next search of PushedBodies */
+	float PushedBodiesTimer = 0.0f;
+
+	/** Finds the physics bodies near the players and drops the shelter samples of destroyed actors */
+	void RefreshPushedBodies();
+
 	/** Pushes characters, physics objects and boats */
 	void ApplyForces(float DeltaSeconds);
 };
