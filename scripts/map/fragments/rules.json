@@ -1,0 +1,115 @@
+{
+  "_doc": "Parametres du pipeline des fragments (ADR-004, docs/features/fragments-tuamotu.md). Toutes les valeurs de find_fragments.py et check_fragments.py viennent d'ici. Distances en metres, surfaces en hectares.",
+  "ring": {
+    "_doc": "Axe de l'anneau : rayon median des pixels terre + platier par secteur angulaire autour du centre du lagon, lisse.",
+    "angle_bins": 1440,
+    "smooth_bins": 6,
+    "sample_m": 5.0
+  },
+  "cuts": {
+    "natural_min_water_m": 60.0,
+    "_natural": "deux terres separees par moins de natural_min_water_m d'eau forment un meme groupe : on ne coupe entre deux groupes que par de l'eau large",
+    "synthetic_hoa_m": 60.0,
+    "synthetic_hoa_range_m": [40.0, 80.0],
+    "_synthetic": "hoa synthetique creuse au cou le plus etroit d'un grand groupe (40-80 m de large, -1,5 a -3 m au centre, plage de chaque cote, pente <= 7 deg : construit par build_fragment.py, T-083)",
+    "neck_min_group_ha": 25.0,
+    "neck_min_group_km": 0.9,
+    "neck_max_land_width_m": 260.0,
+    "neck_window_m": 200.0,
+    "neck_min_piece_m": 250.0,
+    "profile_bin_m": 5.0
+  },
+  "segment": {
+    "land_ha": [15.0, 80.0],
+    "ring_km": [1.0, 2.5],
+    "max_internal_gap_m": 600.0,
+    "archipel_min_groups": 3,
+    "box_margin_m": 1500.0
+  },
+  "exclusion": {
+    "motutapu_point_cm": [-653334.7, -1025282.0],
+    "motutapu_buffer_m": 500.0,
+    "sector_link_m": 400.0,
+    "isolated_buffer_m": 50.0,
+    "_doc": "Motutapu (village reel) : aucune terre gardee a moins de motutapu_buffer_m du bati de son secteur. Autres secteurs batis (cabanes isolees) : exclusion locale de isolated_buffer_m autour du bati (aucun site de village ni de marae)."
+  },
+  "village": {
+    "_doc": "Memes criteres que scripts/map/place_villages.py (SITE_MIN_SHORE, ROAD_MIN_SHORE, LOT_S, FACADE, MIN_HOUSES, SM_Minka 10 m de l'eau et 0,7 m de denivele), evalues ici en approximation raster rapide ; place_villages.py reste l'autorite au placement (T-085).",
+    "site_min_shore_m": 24.0,
+    "road_min_shore_m": 12.0,
+    "lot_s_m": [15.0, 37.0, 59.0, 81.0],
+    "facade_m": 7.85,
+    "house_depth_m": 7.2,
+    "house_half_diag_m": 5.8,
+    "house_min_shore_m": 10.0,
+    "house_max_drop_m": 0.7,
+    "min_houses": 4,
+    "max_houses": 12,
+    "count": 3,
+    "spacing_m": 350.0,
+    "candidate_step_px": 3,
+    "axis_sigma_m": 70.0,
+    "cut_clearance_m": 110.0
+  },
+  "marae": {
+    "_doc": "Criteres du site du marae des Perles (docs/features/marae-des-perles.md, scripts/props/marae_layout.py) : sable (masque G), denivele < 0,6 m sur 23 m, a plus de 150 m des villages, cote lagon de preference.",
+    "diameter_m": 23.0,
+    "max_drop_m": 0.6,
+    "min_sand": 0.85,
+    "min_shore_m": 14.0,
+    "min_village_dist_m": 150.0,
+    "cut_clearance_m": 60.0
+  },
+  "coves": {
+    "radius_m": 60.0,
+    "min_land_fraction": 0.36,
+    "min_shore_dist_m": 10.0,
+    "max_shore_dist_m": 80.0,
+    "min_area_ha": 0.1
+  },
+  "moorings": {
+    "_doc": "Mouillage = eau d'au moins 0,6 m (barque a flot) cote lagon, le plus pres possible du rivage ; le platier cote lagon (-0,4 m estime) fait souvent plus de 100 m de large, d'ou une bande large.",
+    "shore_band_m": [15.0, 160.0],
+    "max_floor_m": -0.6,
+    "spacing_m": 220.0,
+    "count": 3
+  },
+  "arrival": {
+    "_doc": "Point d'arrivee de la barque (le jeu commence sur l'eau devant le fragment) : cote lagon de preference, a 200-350 m du rivage, au moins 1,5 m d'eau sur toute la ligne droite jusqu'a une plage ou une crique du fragment (sauf l'approche finale de la plage), sans pinacle ni platier, loin des autres motu ; proue vers la plage. Profondeurs = bathymetrie estimee de build_terrain.py.",
+    "shore_dist_m": [200.0, 350.0],
+    "min_depth_m": 1.5,
+    "final_approach_m": [35.0, 60.0, 90.0, 120.0],
+    "_final_approach": "approche finale de la plage (eau peu profonde ou platier toleres) : on essaie la plus courte d'abord ; la valeur retenue est ecrite dans arrival.final_approach_m. Avec la bathymetrie estimee, le platier cote lagon fait ~150 m de large en mediane : seuls les rivages ou la pente interne arrive pres de la plage passent.",
+    "other_land_min_m": 300.0,
+    "sample_m": 2.0,
+    "shore_step_px": 2,
+    "directions": 36
+  },
+  "prototype": {
+    "_doc": "Choix de FRG_<Ile>_01 a la creation du catalogue (premier prototype L3, 3 zones) : la meilleure note parmi les fragments ou l'on passe d'une zone a l'autre a pied (un seul groupe de motu), sans hoa synthetique a creuser, avec une arrivee cote lagon. Les autres sont numerotes par note.",
+    "max_groups": 1,
+    "max_synthetic_cuts": 0,
+    "arrival_side": "lagon"
+  },
+  "score": {
+    "_doc": "Note d'un segment (plus haut = mieux). Les sites manquants rendent le segment non jouable (pas de note).",
+    "village_capacity": 0.6,
+    "marae_sites": 2.0,
+    "coves": 4.0,
+    "moorings": 3.0,
+    "coconut_target": 0.3,
+    "coconut": 6.0,
+    "thicket_target": 0.2,
+    "thicket": 6.0,
+    "synthetic_cut": 6.0,
+    "removed_ha": 2.0,
+    "target_ha": 40.0,
+    "size_ha": 0.1,
+    "target_km": 1.6,
+    "size_km": 4.0,
+    "extra_group": 0.5,
+    "_extra_group": "par groupe de motu au-dela du premier : passage a gue ou en barque entre les zones",
+    "arrival_lagoon": 3.0,
+    "arrival_approach_per_m": 0.025
+  }
+}

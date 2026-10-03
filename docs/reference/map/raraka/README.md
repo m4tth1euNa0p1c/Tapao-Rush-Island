@@ -100,6 +100,22 @@ Classes de l'atlas identifiées sur Raraka (couleur de rendu → classe) : (93,1
   - `raw/raraka_vegetation/DT_Raraka_{Hard,Soft}_NN.csv` : un bloc spatial par fichier, découpé en k-d à la médiane, 25 000 lignes au plus (`MAX_CHUNK`), au format GameplayTagTableRow comme les cocotiers. Aujourd'hui : 8 blocs Hard de 18 381 lignes et 32 blocs Soft de 19 559 lignes.
 - Densité réglable : `--density 0.5` divise par deux, `--density 1.5` augmente de 50 %.
 
+## Fragments d'expédition (`fragments/`, script `scripts/map/fragments/find_fragments.py raraka`)
+- ADR-004 : chaque expédition se joue sur un morceau de l'anneau séparé du reste par la mer. Spec : `docs/features/fragments-tuamotu.md` ; paramètres : `scripts/map/fragments/rules.json`.
+- `fragments.json` (mémoire, identifiants stables `FRG_Raraka_NN`, un fragment écrit est gelé). Pour chaque fragment :
+  - polygones de terre gardée (cm UE, règle pair-impair) et coupes (naturelles : largeur d'eau ; synthétiques : hoa à creuser, terre retirée) ;
+  - boîte avec 1,5 km de marge ;
+  - sites : 3 villages, marae, criques, extraction, mouillages ;
+  - parts de cocoteraie et de fourré, détail de la note ;
+  - point d'arrivée de la barque `arrival` (z = 0, proue vers la plage).
+- Résultat du 2026-10-03 : **20 fragments** de 17 à 71 ha et de 1,3 à 2,3 km. On compte 5 naturels, 4 archipels et 11 motu scindés par des hoa synthétiques. Le contrôle `check_fragments.py raraka` passe.
+- **Prototype proposé : `FRG_Raraka_01`**, à l'est de l'atoll : 52 ha, un seul groupe de motu, deux coupes naturelles (230 et 115 m d'eau), arrivée côté lagon.
+- Exclusions :
+  - Motutapu : aucune terre gardée à moins de 500 m de son bâti ;
+  - 4 groupes de cabanes isolées (2 à 9 cabanes légères chacun, BD TOPO) : 50 m autour du bâti sans site de village ni de marae.
+- Aperçus : `fragments/preview_fragments.png` (atoll), `fragments/preview_FRG_Raraka_NN.png` (vignettes).
+- Limite principale : la bathymétrie est estimée. Le platier côté lagon fait environ 150 m de large, donc la barque finit son approche sur 35 à 120 m de platier.
+
 ## Dans Unreal
 - Niveau `/Game/MonkeIsland/Maps/Lvl_Raraka` (dupliqué du template Basic : soleil, SkyAtmosphere, nuages volumétriques, brouillard).
 - 51 tuiles `SM_Raraka_Terrain_<x>_<y>` (Nanite, fallback 100 %, collision complexe) dans l'outliner `Raraka/Terrain`.
