@@ -14,11 +14,11 @@ class UDamageType;
 class UPacificationRules;
 class USceneComponent;
 
-/** Zone pacified: the expedition clock grants its bonus (once per expedition and zone) */
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnZonePacifiedSignature, FName, ZoneId, double, ServerTime);
+/** Zone pacified: the expedition clock grants its bonus (once per ExpeditionId and ZoneId) */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnZonePacifiedSignature, FGuid, ExpeditionId, FName, ZoneId, double, ServerTime);
 
 /** Native twin of OnZonePacified, for C++ systems (expedition clock) */
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnZonePacifiedNative, FName /*ZoneId*/, double /*ServerTime*/);
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnZonePacifiedNative, const FGuid& /*ExpeditionId*/, FName /*ZoneId*/, double /*ServerTime*/);
 
 /** Sermon progress moved (0 when it was reset, 1 when it completed) */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnZoneProgressChangedSignature, FName, ZoneId, float, Progress01);
@@ -65,7 +65,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Pacification")
 	void StopSermon(APawn* Officiant);
 
-	/** The zone went under water: stops any sermon, no pacification any more (server) */
+	/**
+	 *  The zone went under water: stops any sermon, no pacification any more (server). The expedition clock must call
+	 *  it on every zone in the frame the submersion starts, so no sermon can complete after that instant.
+	 */
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Pacification")
 	void SetSubmerged();
 
@@ -96,6 +99,9 @@ public:
 	UFUNCTION(BlueprintPure, Category="Pacification")
 	int32 GetRemainingThreats() const { return RemainingThreats; }
 
+	/** Whether the pawn may start a sermon now: walking on the ground and almost still (server) */
+	bool IsStandingStill(const APawn* Pawn) const;
+
 	/** Whether the pacification bonus was already announced for this zone */
 	UFUNCTION(BlueprintPure, Category="Pacification")
 	bool WasPacificationAwarded() const { return bPacificationAwarded; }
@@ -106,10 +112,21 @@ public:
 	/** Sets the rules (server, before the objective starts; used by spawners and tests) */
 	void SetRules(const UPacificationRules* InRules);
 
+	/** Sets the expedition this zone belongs to, sent with OnZonePacified (server, before the objective starts) */
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Pacification")
+	void SetExpeditionId(const FGuid& InExpeditionId) { ExpeditionId = InExpeditionId; }
+
+	/** Expedition this zone belongs to */
+	UFUNCTION(BlueprintPure, Category="Pacification")
+	FGuid GetExpeditionId() const { return ExpeditionId; }
+
+	/** Whether this pawn is reciting a sermon in any zone of its world (server) */
+	static bool IsOfficiatingAnywhere(const APawn* Pawn);
+
 	/** Sets the zone identifier (before the objective starts; used by spawners and tests) */
 	void SetZoneId(FName InZoneId) { ZoneId = InZoneId; }
 
-	/** Whether a designated threat still counts as alive: valid, not being destroyed, and IPacificationParticipant says so */
+	/** Whether a designated threat still counts as alive: valid, not being destroyed, then IPacificationParticipant, else its UIslanderHealthComponent */
 	virtual bool IsThreatAlive(AActor* Threat) const;
 
 	/** Whether the officiant still counts as alive (same test as the threats by default) */
@@ -201,6 +218,10 @@ private:
 	UPROPERTY(Replicated)
 	int32 RemainingThreats = 0;
 
+	/** Expedition this zone belongs to */
+	UPROPERTY(Replicated)
+	FGuid ExpeditionId;
+
 	/** Designated threats fixed at the start of the objective (server only, not owned) */
 	TArray<TWeakObjectPtr<AActor>> DesignatedThreats;
 
@@ -231,12 +252,37 @@ private:
 	/** Unbinds them (server) */
 	void UnbindOfficiant();
 
+	/** Binds the destruction and death events of the designated threats to recount them (server) */
+	void BindThreats();
+
+	/** Unbinds them (server) */
+	void UnbindThreats();
+
+	/** Recounts the living designated threats (server) */
+	void RecountThreats();
+
 	/** Horizontal distance from the flag socket (cm) */
 	double HorizontalDistanceToSocket(const FVector& Location) const;
 
 	/** Damage taken by the officiant */
 	UFUNCTION()
 	void HandleOfficiantDamaged(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);
+
+	/** Health of the officiant changed (direct damage: coconuts, drowning) */
+	UFUNCTION()
+	void HandleOfficiantHealthChanged(float NewHealth, float Delta);
+
+	/** Officiant died */
+	UFUNCTION()
+	void HandleOfficiantDeath(AActor* Killer);
+
+	/** A designated threat was destroyed */
+	UFUNCTION()
+	void HandleThreatDestroyed(AActor* DestroyedActor);
+
+	/** A designated threat died */
+	UFUNCTION()
+	void HandleThreatDeath(AActor* Killer);
 
 	/** Officiant pawn destroyed */
 	UFUNCTION()

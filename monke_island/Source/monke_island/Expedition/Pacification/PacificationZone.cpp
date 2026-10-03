@@ -6,15 +6,22 @@
 #include "Expedition/Pacification/RoyalFlag.h"
 #include "Components/SceneComponent.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/GameStateBase.h"
 #include "GameFramework/Pawn.h"
 #include "Net/UnrealNetwork.h"
+#include "Player/IslanderHealthComponent.h"
 #include "monke_island.h"
 
 namespace
 {
-	/** Alive test shared by threats and officiants: valid, not being destroyed, and the optional interface agrees */
+	/**
+	 *  Alive test shared by threats and officiants: valid, not being destroyed, then the optional interface (first
+	 *  choice), else the health component (dead but not destroyed counts as dead)
+	 */
 	bool IsActorAliveForPacification(const AActor* Actor)
 	{
 		if (!IsValid(Actor) || Actor->IsActorBeingDestroyed())
@@ -24,6 +31,10 @@ namespace
 		if (Actor->GetClass()->ImplementsInterface(UPacificationParticipant::StaticClass()))
 		{
 			return IPacificationParticipant::Execute_IsPacificationAlive(Actor);
+		}
+		if (const UIslanderHealthComponent* Health = Actor->FindComponentByClass<UIslanderHealthComponent>())
+		{
+			return !Health->IsDead();
 		}
 		return true;
 	}
@@ -85,7 +96,13 @@ void APacificationZone::BeginPlay()
 void APacificationZone::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	UnbindOfficiant();
+	UnbindThreats();
 	Sermon.Reset();
+	if (HasAuthority() && IsValid(Flag))
+	{
+		Flag->Destroy();
+	}
+	Flag = nullptr;
 	Super::EndPlay(EndPlayReason);
 }
 
@@ -118,6 +135,7 @@ EPacificationRequestResult APacificationZone::BeginObjective(const TArray<AActor
 			DesignatedThreats.AddUnique(Threat);
 		}
 	}
+	BindThreats();
 	RemainingThreats = CountLivingThreats();
 
 	UE_LOG(Logmonke_island, Log, TEXT("PacificationZone %s: objective started with %d designated threats"), *ZoneId.ToString(), DesignatedThreats.Num());
@@ -197,6 +215,14 @@ EPacificationRequestResult APacificationZone::TryStartSermon(APawn* Officiant)
 	if (HorizontalDistanceToSocket(Officiant->GetActorLocation()) > Rules->FlagReachRadiusCm)
 	{
 		return EPacificationRequestResult::OutOfReach;
+	}
+	if (!IsStandingStill(Officiant))
+	{
+		return EPacificationRequestResult::NotStandingStill;
+	}
+	if (IsOfficiatingAnywhere(Officiant))
+	{
+		return EPacificationRequestResult::OfficiantBusy;
 	}
 	if (IsThreatInPerimeter())
 	{
@@ -318,9 +344,13 @@ void APacificationZone::CompleteSermon(double ServerTime)
 	}
 	bPacificationAwarded = true;
 
-	UE_LOG(Logmonke_island, Log, TEXT("PacificationZone %s pacified by %s at %.2f s"), *ZoneId.ToString(), *OfficiantName, ServerTime);
-	OnZonePacified.Broadcast(ZoneId, ServerTime);
-	OnZonePacifiedNative.Broadcast(ZoneId, ServerTime);
+	if (!ExpeditionId.IsValid())
+	{
+		UE_LOG(Logmonke_island, Warning, TEXT("PacificationZone %s pacified without an ExpeditionId: the clock cannot tell expeditions apart"), *ZoneId.ToString());
+	}
+	UE_LOG(Logmonke_island, Log, TEXT("PacificationZone %s pacified by %s at %.2f s (expedition %s)"), *ZoneId.ToString(), *OfficiantName, ServerTime, *ExpeditionId.ToString());
+	OnZonePacified.Broadcast(ExpeditionId, ZoneId, ServerTime);
+	OnZonePacifiedNative.Broadcast(ExpeditionId, ZoneId, ServerTime);
 }
 
 void APacificationZone::SetZoneState(EZoneState NewState)
@@ -407,6 +437,87 @@ bool APacificationZone::IsThreatInPerimeter() const
 	return false;
 }
 
+bool APacificationZone::IsStandingStill(const APawn* Pawn) const
+{
+	if (!Pawn || !Rules)
+	{
+		return false;
+	}
+	if (const ACharacter* Character = Cast<ACharacter>(Pawn))
+	{
+		const UCharacterMovementComponent* Movement = Character->GetCharacterMovement();
+		if (Movement && Movement->MovementMode != MOVE_Walking && Movement->MovementMode != MOVE_NavWalking)
+		{
+			// no sermon while falling, jumping, swimming or flying
+			return false;
+		}
+	}
+	return Pawn->GetVelocity().SizeSquared2D() <= FMath::Square(static_cast<double>(Rules->MaxStartSpeedCmS));
+}
+
+bool APacificationZone::IsOfficiatingAnywhere(const APawn* Pawn)
+{
+	UWorld* World = Pawn ? Pawn->GetWorld() : nullptr;
+	if (!World)
+	{
+		return false;
+	}
+	// called on a sermon request only, never per frame: a handful of zones per expedition
+	for (TActorIterator<APacificationZone> It(World); It; ++It)
+	{
+		if (It->Sermon.bActive && It->Sermon.Officiant == Pawn)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void APacificationZone::BindThreats()
+{
+	for (const TWeakObjectPtr<AActor>& WeakThreat : DesignatedThreats)
+	{
+		if (AActor* Threat = WeakThreat.Get())
+		{
+			Threat->OnDestroyed.AddUniqueDynamic(this, &APacificationZone::HandleThreatDestroyed);
+			if (UIslanderHealthComponent* Health = Threat->FindComponentByClass<UIslanderHealthComponent>())
+			{
+				Health->OnDeath.AddUniqueDynamic(this, &APacificationZone::HandleThreatDeath);
+			}
+		}
+	}
+}
+
+void APacificationZone::UnbindThreats()
+{
+	for (const TWeakObjectPtr<AActor>& WeakThreat : DesignatedThreats)
+	{
+		if (AActor* Threat = WeakThreat.Get())
+		{
+			Threat->OnDestroyed.RemoveDynamic(this, &APacificationZone::HandleThreatDestroyed);
+			if (UIslanderHealthComponent* Health = Threat->FindComponentByClass<UIslanderHealthComponent>())
+			{
+				Health->OnDeath.RemoveDynamic(this, &APacificationZone::HandleThreatDeath);
+			}
+		}
+	}
+}
+
+void APacificationZone::RecountThreats()
+{
+	RemainingThreats = CountLivingThreats();
+}
+
+void APacificationZone::HandleThreatDestroyed(AActor* DestroyedActor)
+{
+	RecountThreats();
+}
+
+void APacificationZone::HandleThreatDeath(AActor* Killer)
+{
+	RecountThreats();
+}
+
 double APacificationZone::HorizontalDistanceToSocket(const FVector& Location) const
 {
 	return FVector::Dist2D(Location, FlagSocket->GetComponentLocation());
@@ -421,6 +532,11 @@ void APacificationZone::BindOfficiant(APawn* Officiant)
 	}
 	Officiant->OnTakeAnyDamage.AddDynamic(this, &APacificationZone::HandleOfficiantDamaged);
 	Officiant->OnDestroyed.AddDynamic(this, &APacificationZone::HandleOfficiantDestroyed);
+	if (UIslanderHealthComponent* Health = Officiant->FindComponentByClass<UIslanderHealthComponent>())
+	{
+		Health->OnHealthChanged.AddDynamic(this, &APacificationZone::HandleOfficiantHealthChanged);
+		Health->OnDeath.AddDynamic(this, &APacificationZone::HandleOfficiantDeath);
+	}
 	BoundOfficiant = Officiant;
 }
 
@@ -430,6 +546,11 @@ void APacificationZone::UnbindOfficiant()
 	{
 		Officiant->OnTakeAnyDamage.RemoveDynamic(this, &APacificationZone::HandleOfficiantDamaged);
 		Officiant->OnDestroyed.RemoveDynamic(this, &APacificationZone::HandleOfficiantDestroyed);
+		if (UIslanderHealthComponent* Health = Officiant->FindComponentByClass<UIslanderHealthComponent>())
+		{
+			Health->OnHealthChanged.RemoveDynamic(this, &APacificationZone::HandleOfficiantHealthChanged);
+			Health->OnDeath.RemoveDynamic(this, &APacificationZone::HandleOfficiantDeath);
+		}
 	}
 	BoundOfficiant.Reset();
 }
@@ -443,6 +564,31 @@ void APacificationZone::HandleOfficiantDamaged(AActor* DamagedActor, float Damag
 	if (Damage > 0.0f && Damage >= Rules->MinInterruptDamage)
 	{
 		InterruptSermon(ESermonInterruptReason::Damaged);
+	}
+}
+
+void APacificationZone::HandleOfficiantHealthChanged(float NewHealth, float Delta)
+{
+	if (!Sermon.bActive || !Rules || Delta >= 0.0f)
+	{
+		return;
+	}
+	if (NewHealth <= 0.0f)
+	{
+		// lethal blow: OnDeath follows, report the death rather than the damage
+		InterruptSermon(ESermonInterruptReason::OfficiantDied);
+	}
+	else if (-Delta >= Rules->MinInterruptDamage)
+	{
+		InterruptSermon(ESermonInterruptReason::Damaged);
+	}
+}
+
+void APacificationZone::HandleOfficiantDeath(AActor* Killer)
+{
+	if (Sermon.bActive)
+	{
+		InterruptSermon(ESermonInterruptReason::OfficiantDied);
 	}
 }
 
@@ -480,4 +626,5 @@ void APacificationZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME(APacificationZone, SermonProgress);
 	DOREPLIFETIME(APacificationZone, Flag);
 	DOREPLIFETIME(APacificationZone, RemainingThreats);
+	DOREPLIFETIME_CONDITION(APacificationZone, ExpeditionId, COND_InitialOnly);
 }

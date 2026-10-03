@@ -67,6 +67,8 @@ enum class EPacificationRequestResult : uint8
 	InvalidPawn,
 	/** The pawn is too far from the flag socket */
 	OutOfReach,
+	/** The pawn is not walking on the ground, or is still moving */
+	NotStandingStill,
 	/** Designated threats are still alive (plant) or one is inside the perimeter (sermon) */
 	ThreatsRemaining,
 	/** The flag could not be spawned */

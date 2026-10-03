@@ -29,6 +29,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sermon", meta=(ClampMin="0", Units="cm"))
 	float VerticalToleranceCm = 25.0f;
 
+	/** Highest horizontal speed at which a player may start the sermon: it must stand still, walking on the ground (cm/s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sermon", meta=(ClampMin="0", Units="cm/s"))
+	float MaxStartSpeedCmS = 20.0f;
+
 	/** Farthest horizontal distance from the flag socket where a player can plant the flag or start the sermon (cm) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Flag", meta=(ClampMin="0", Units="cm"))
 	float FlagReachRadiusCm = 250.0f;

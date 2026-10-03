@@ -7,7 +7,10 @@
 #include "Expedition/Pacification/RoyalFlag.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "AIController.h"
 #include "GameFramework/DefaultPawn.h"
+#include "GameFramework/PawnMovementComponent.h"
+#include "Player/IslanderHealthComponent.h"
 #include "UObject/Package.h"
 
 #if WITH_AUTOMATION_TESTS
@@ -28,6 +31,14 @@ BEGIN_DEFINE_SPEC(FSermonSpec, "monke_island.Expedition.Sermon",
 		FActorSpawnParameters Params;
 		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		return World->SpawnActor<ADefaultPawn>(ADefaultPawn::StaticClass(), FTransform(Location), Params);
+	}
+
+	/** Gives an actor a registered health component (player or creature health) */
+	UIslanderHealthComponent* AddHealth(AActor* Actor)
+	{
+		UIslanderHealthComponent* Health = NewObject<UIslanderHealthComponent>(Actor);
+		Health->RegisterComponent();
+		return Health;
 	}
 
 	/** Sets the world clock read by the zone (no tick runs in the test world) */
@@ -163,7 +174,7 @@ void FSermonSpec::Define()
 
 			PacifiedCount = 0;
 			LastInterrupt = ESermonInterruptReason::None;
-			Zone->OnZonePacifiedNative.AddLambda([this](FName, double) { ++PacifiedCount; });
+			Zone->OnZonePacifiedNative.AddLambda([this](const FGuid&, FName, double) { ++PacifiedCount; });
 			Zone->OnSermonInterruptedNative.AddLambda([this](FName, ESermonInterruptReason Reason) { LastInterrupt = Reason; });
 		});
 
@@ -336,6 +347,108 @@ void FSermonSpec::Define()
 			TestEqual(TEXT("submerged"), LastInterrupt, ESermonInterruptReason::ZoneSubmerged);
 			TestEqual(TEXT("state"), Zone->GetZoneState(), EZoneState::Submerged);
 			TestEqual(TEXT("no sermon"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::WrongState);
+		});
+
+		It("breaks when a living designated threat stands inside the perimeter", [this]()
+		{
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			APawn* Threat = SpawnPawn(FVector(500.0, 0.0, 0.0));
+			UIslanderHealthComponent* ThreatHealth = AddHealth(Threat);
+			Zone->BeginObjective({ Threat });
+			TestEqual(TEXT("one threat"), Zone->GetRemainingThreats(), 1);
+
+			ThreatHealth->ApplyHealthDamage(ThreatHealth->MaxHealth, nullptr);
+			TestEqual(TEXT("recounted on death"), Zone->GetRemainingThreats(), 0);
+			TestEqual(TEXT("dead threat: plant"), Zone->TryPlantFlag(Officiant), EPacificationRequestResult::Accepted);
+			TestEqual(TEXT("start"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::Accepted);
+
+			ThreatHealth->ResetHealth();
+			Zone->ServerUpdateSermon(5.0);
+			TestEqual(TEXT("threat in perimeter"), LastInterrupt, ESermonInterruptReason::ThreatInPerimeter);
+			TestEqual(TEXT("refused while inside"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::ThreatsRemaining);
+
+			Threat->SetActorLocation(FVector(Rules->PerimeterRadiusCm + 500.0f, 0.0, 0.0));
+			TestEqual(TEXT("outside: accepted"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::Accepted);
+		});
+
+		It("recounts the designated threats when one is destroyed", [this]()
+		{
+			APawn* First = SpawnPawn(FVector(5000.0, 0.0, 0.0));
+			APawn* Second = SpawnPawn(FVector(6000.0, 0.0, 0.0));
+			Zone->BeginObjective({ First, Second });
+			TestEqual(TEXT("two"), Zone->GetRemainingThreats(), 2);
+			First->Destroy();
+			TestEqual(TEXT("one"), Zone->GetRemainingThreats(), 1);
+		});
+
+		It("resets on direct health damage and on death through the health component", [this]()
+		{
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			UIslanderHealthComponent* Health = AddHealth(Officiant);
+			PlantFlagWithoutThreats(Officiant);
+
+			Zone->TryStartSermon(Officiant);
+			Health->ApplyHealthDamage(5.0f, nullptr);
+			TestEqual(TEXT("coconut damage"), LastInterrupt, ESermonInterruptReason::Damaged);
+
+			TestEqual(TEXT("restart"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::Accepted);
+			Health->ApplyHealthDamage(Health->MaxHealth, nullptr);
+			TestEqual(TEXT("death"), LastInterrupt, ESermonInterruptReason::OfficiantDied);
+			TestNull(TEXT("no officiant"), Zone->GetOfficiant());
+			TestEqual(TEXT("dead but not destroyed counts as dead"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::InvalidPawn);
+			Zone->ServerUpdateSermon(30.0);
+			TestEqual(TEXT("no bonus"), PacifiedCount, 0);
+		});
+
+		It("resets when the officiant loses its controller (disconnection)", [this]()
+		{
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			AAIController* Controller = World->SpawnActor<AAIController>(AAIController::StaticClass(), FTransform::Identity);
+			if (!TestNotNull(TEXT("controller"), Controller))
+			{
+				return;
+			}
+			Controller->Possess(Officiant);
+			TestEqual(TEXT("possessed"), Officiant->GetController(), static_cast<AController*>(Controller));
+			PlantFlagWithoutThreats(Officiant);
+			Zone->TryStartSermon(Officiant);
+
+			Controller->UnPossess();
+			Zone->ServerUpdateSermon(5.0);
+			TestEqual(TEXT("lost"), LastInterrupt, ESermonInterruptReason::OfficiantLost);
+		});
+
+		It("refuses a moving pawn and a pawn already officiating at another flag", [this]()
+		{
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+
+			Officiant->GetMovementComponent()->Velocity = FVector(Rules->MaxStartSpeedCmS + 50.0f, 0.0, 0.0);
+			TestEqual(TEXT("moving"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::NotStandingStill);
+			Officiant->GetMovementComponent()->Velocity = FVector::ZeroVector;
+			TestEqual(TEXT("still"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::Accepted);
+
+			APacificationZone* Other = World->SpawnActor<APacificationZone>(APacificationZone::StaticClass(), FTransform(FVector(100.0, 0.0, 0.0)));
+			Other->SetRules(Rules);
+			Other->SetZoneId(TEXT("Zone_Other"));
+			Other->BeginObjective({});
+			TestEqual(TEXT("other flag"), Other->TryPlantFlag(Officiant), EPacificationRequestResult::Accepted);
+			TestEqual(TEXT("busy elsewhere"), Other->TryStartSermon(Officiant), EPacificationRequestResult::OfficiantBusy);
+		});
+
+		It("sends the expedition id with the single pacification", [this]()
+		{
+			const FGuid Expedition = FGuid::NewGuid();
+			FGuid Received;
+			Zone->SetExpeditionId(Expedition);
+			Zone->OnZonePacifiedNative.AddLambda([&Received](const FGuid& Id, FName, double) { Received = Id; });
+
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+			Zone->TryStartSermon(Officiant);
+			Zone->ServerUpdateSermon(20.0);
+			TestEqual(TEXT("expedition"), Received, Expedition);
+			TestEqual(TEXT("once"), PacifiedCount, 1);
 		});
 	});
 }
