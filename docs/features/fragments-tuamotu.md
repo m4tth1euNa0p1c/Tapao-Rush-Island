@@ -212,6 +212,42 @@ Le départ en barque est implémenté dans `Source/monke_island/Boats/` (spec : 
 - **T-095** : place dans `Lvl_Raraka` un acteur `AExpeditionArrivalPoint` par point de `fragments.json`, avec `FragmentId = FRG_*` et la flèche (+X) vers l'île. Crée `DA_BoatStartRules` et le renseigne dans `DefaultGame.ini`. Vérifie en PIE, en solo puis en hôte + client, avec `?Island=` et sans.
 - **T-094** : ouvre la map avec `?Island=<FragmentId>`. Une fois la définition d'île fusionnée, il peut aussi injecter le mouillage `Start` par `UBoatStartSubsystem::SetArrivalOverride(Transform, FragmentId)`, côté serveur, avant la première frame du monde (`OnWorldBeginPlay` d'un subsystem d'Expedition/). L'override passe avant les acteurs.
 
+## Intégration T-095 (lot L3, 2026-10-03, preuve `testé éditeur`)
+**Créé** (script reproductible `scripts/editor/setup_fragments.py --part assets|arrivals`, exécuté par le `ProgrammaticToolset` du MCP, idempotent) :
+- `Lvl_Raraka` : 20 `AExpeditionArrivalPoint` `ARR_FRG_Raraka_NN`, dossier `Expedition/Arrivals`, position et lacet de `arrival` (z = 0). Aucun autre acteur n'a été modifié.
+- `/Game/MonkeIsland/Data/Islands/` :
+  - `DA_FragmentRules` (valeurs par défaut) ;
+  - `DA_Island_Raraka_01` à `_20` :
+    - `Map` = `Lvl_Raraka`, `ZoneCount` 3, `SizeHectares` et `VariantSeeds` issus du json, `DataCredits` Te Fenua / DAF Etalab 2.0 + IRD ;
+    - `DisplayName` = référence `ST_Islands` / `Island.FRG_Raraka_NN.Name` de 01 à 08, « Fragment NN » provisoire ensuite ;
+    - mouillages `ANC_Start` (l'arrivée), `ANC_Resources` (1er mouillage, sinon une crique), `ANC_Fallback` (crique d'extraction, `bAvailableDuringSubmersion`) ;
+  - `DA_IslandCatalog` (les 20 + `DA_FragmentRules`).
+- `/Game/MonkeIsland/UI/Text/ST_Islands` : import de `docs/narrative/ST_Islands.csv`, 70 clés. Le chemin diffère de `islands.md` (`/Localization/`).
+- Départ, horloge et compteur :
+  - `Boat/Data/DA_BoatStartRules` (valeurs par défaut), `Expedition/Data/DA_ExpeditionRules` (120 / 120 / 3 / 60) ;
+  - `Expedition/Blueprints/BP_ExpeditionGameState` (`Rules`, `bStartOnBeginPlay`), branché comme `GameStateClass` de `BP_IslandGameMode` ;
+  - `UI/DA_HudTimerRules` : `SoundClass` = `SC_Effects`, sons vides faute de bip adapté.
+- Démarrage : `Maps/L_Boot` (gabarit vidé) + `Expedition/Blueprints/BP_BootGameMode` (`FallbackMap` = `Lvl_Raraka`) en GameMode Override.
+- Config : `DefaultGame.ini` (`StartRulesAsset`, section `FloodTimerSubsystem`) ; `DefaultEngine.ini` `GameDefaultMap` = `L_Boot`.
+
+**Vérifié en PIE (éditeur)** :
+- Depuis `L_Boot`, en solo :
+  - catalogue chargé (20 fragments), tirage FRG_Raraka_19, ouverture de `Lvl_Raraka?Island=FRG_Raraka_19` ;
+  - le GameState joue FRG_Raraka_19 ; barque au point, bean **aux rames** (siège 0), proue vers la plage ;
+  - compteur « Montée des eaux dans m:ss » sur l'horloge d'expédition (échéance 120 s, capturé à 1:41 et 1:23) ; eau et vent « follow the expedition clock ».
+  - Relance : FRG_Raraka_20.
+  - Captures : `docs/production/captures/T-095/`.
+- PIE à 2 directement sur `Lvl_Raraka` : l'hôte aux rames ; le client embarque **debout** dans la barque, car `DA_BoatRules.bOnlyRowerSits` = vrai : seul le rameur s'assoit. Même compteur des deux côtés.
+
+**Non vérifié ou défauts** :
+- ZQSD n'a pas été piloté (pas d'entrée clavier par le MCP) : seul « at the oars » est prouvé.
+- **PIE à 2 depuis `L_Boot` : le client est perdu.** `AExpeditionBootGameMode` voyage 0,3 s après le chargement du catalogue, avant la connexion du client. Le `ServerTravel` non seamless de l'hôte ferme alors la connexion (« HostClosedConnection »), et le client retombe seul sur `Lvl_Raraka?closed` avec un autre fragment. À corriger en C++ : attendre les joueurs attendus, ou ne pas tirer en listen server avant le hub L4.
+- Le joueur debout se tient sur `StandingSpots[0]` (−40, 0, 100), juste devant la caméra du rameur, et lui bouche la vue (capture 03).
+- PIE lancé directement sur `Lvl_Raraka` sans `?Island=` : le GameState annonce FRG_Raraka_01 (premier trouvé), alors que la barque tire un point au hasard (limite connue).
+- « Jamais deux fois de suite » ne tient que dans une même session de jeu : à chaque PIE ou relance, `previous None`.
+- Les définitions créées vides s'enregistrent d'abord sous leur nom d'asset : une nouvelle analyse de l'Asset Manager a été nécessaire. Le script ne règle pas ce point : après une création, relancer l'éditeur ou modifier un réglage de l'Asset Manager.
+- `Lvl_Raraka` reste une map intérimaire : pas encore de fragments découpés (T-083 à T-089).
+
 ## Critères d'acceptation
 1. Aucune frontière de fragment ne traverse la terre. Un test automatique sur `fragments.json` vérifie l'intersection entre frontière et terre, hors hoa synthétique.
 2. Huit captures prises depuis la côte et depuis la barque, en faisant le tour : aucun bord, mur, motu tranché ni trou de terrain visible.

@@ -37,6 +37,16 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Boot")
 	TSoftObjectPtr<UWorld> FallbackMap;
 
+	/** Listen server only: seconds without a new player before the travel, so the clients still joining the boot map
+	 *  travel with the host (a travel before their login drops them). Restarted at each login, capped by
+	 *  MaxJoinWaitSeconds. Solo and dedicated travel on the next tick */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Boot", meta=(ClampMin="0", Units="s"))
+	float ListenJoinGraceSeconds = 3.0f;
+
+	/** Listen server only: longest wait for joining clients after the draw, whatever the logins */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Boot", meta=(ClampMin="0", Units="s"))
+	float MaxJoinWaitSeconds = 15.0f;
+
 	/** Error of the boot (None while it runs or once the travel started) */
 	UFUNCTION(BlueprintPure, Category="Boot")
 	EFragmentError GetBootError() const { return BootError; }
@@ -47,6 +57,9 @@ protected:
 
 	/** No pawn on the boot map: the players only wait for the travel */
 	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
+
+	/** A client joined during the grace: wait for the others before the travel */
+	virtual void PostLogin(APlayerController* NewPlayer) override;
 
 private:
 
@@ -61,6 +74,15 @@ private:
 
 	/** Error of the boot */
 	EFragmentError BootError = EFragmentError::None;
+
+	/** Arms the travel: next tick, or after the join grace on a listen server */
+	void ScheduleTravel();
+
+	/** Timer of the delayed travel (listen server) */
+	FTimerHandle TravelTimer;
+
+	/** World time of the draw, to cap the join wait */
+	double DrawTime = 0.0;
 
 	/** The travel was requested: the boot runs once */
 	bool bTravelRequested = false;

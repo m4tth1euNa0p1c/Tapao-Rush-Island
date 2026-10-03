@@ -64,7 +64,38 @@ void AExpeditionBootGameMode::HandleCatalogLoaded(EFragmentError Error, const TA
 
 	// Out of the load callback: the travel tears this world down
 	bTravelRequested = true;
-	GetWorldTimerManager().SetTimerForNextTick(FTimerDelegate::CreateUObject(this, &AExpeditionBootGameMode::TravelToIsland));
+	DrawTime = GetWorld()->GetTimeSeconds();
+	ScheduleTravel();
+}
+
+void AExpeditionBootGameMode::ScheduleTravel()
+{
+	FTimerManager& Timers = GetWorldTimerManager();
+	Timers.ClearTimer(TravelTimer);
+	if (GetNetMode() != NM_ListenServer || ListenJoinGraceSeconds <= 0.0f)
+	{
+		Timers.SetTimerForNextTick(FTimerDelegate::CreateUObject(this, &AExpeditionBootGameMode::TravelToIsland));
+		return;
+	}
+	const float Remaining = FMath::Max(0.0f, MaxJoinWaitSeconds - static_cast<float>(GetWorld()->GetTimeSeconds() - DrawTime));
+	const float Delay = FMath::Min(ListenJoinGraceSeconds, Remaining);
+	UE_LOG(LogMonkeIslands, Log, TEXT("Boot: listen server, travel in %.1f s (%d player(s) logged in)"), Delay, GetNumPlayers());
+	if (Delay <= 0.0f)
+	{
+		Timers.SetTimerForNextTick(FTimerDelegate::CreateUObject(this, &AExpeditionBootGameMode::TravelToIsland));
+		return;
+	}
+	Timers.SetTimer(TravelTimer, FTimerDelegate::CreateUObject(this, &AExpeditionBootGameMode::TravelToIsland), Delay, false);
+}
+
+void AExpeditionBootGameMode::PostLogin(APlayerController* NewPlayer)
+{
+	Super::PostLogin(NewPlayer);
+	// A client joined while the host waits: restart the grace so it travels too
+	if (bTravelRequested && TravelTimer.IsValid())
+	{
+		ScheduleTravel();
+	}
 }
 
 void AExpeditionBootGameMode::TravelToIsland()
