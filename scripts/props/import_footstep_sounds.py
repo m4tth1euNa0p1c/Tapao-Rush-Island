@@ -13,6 +13,7 @@ STEP_DEST = "/Game/MonkeIsland/Player/Footsteps"
 STEP_RULES = "DA_FootstepRules"
 COCONUT_DEST = "/Game/MonkeIsland/Environment/Storm/Audio"
 COCONUT_RULES = "/Game/MonkeIsland/Environment/Storm/DA_CoconutFallRules"
+EFFECTS_CLASS = "/Game/MonkeIsland/Settings/SoundClasses/SC_Effects"
 
 # surface -> (enum, relative volume)
 SURFACES = {
@@ -35,7 +36,13 @@ def import_sound(tools, folder, dest, name):
     task.automated = True
     task.save = True
     tools.import_asset_tasks([task])
-    return unreal.load_asset(f"{dest}/{name}")
+    sound = unreal.load_asset(f"{dest}/{name}")
+    # volume channel of the settings menu (T-073), kept through reimports
+    effects = unreal.load_asset(EFFECTS_CLASS) if unreal.EditorAssetLibrary.does_asset_exist(EFFECTS_CLASS) else None
+    if sound and effects:
+        sound.set_editor_property("sound_class_object", effects)
+        unreal.EditorAssetLibrary.save_loaded_asset(sound)
+    return sound
 
 
 def make_attenuation(tools, dest, name, inner, falloff):
