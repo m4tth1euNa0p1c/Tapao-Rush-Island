@@ -141,6 +141,12 @@ void AWindStormActor::ApplyForces(float DeltaSeconds)
 			{
 				continue;
 			}
+			// only on the ground: in the water the swim physics owns the body, in the air the jump does
+			if (!Movement->IsMovingOnGround())
+			{
+				Movement->RemoveRootMotionSource(StormDriftName);
+				continue;
+			}
 			Movement->RemoveRootMotionSource(StormDriftName);
 			TSharedPtr<FRootMotionSource_ConstantForce> Source = MakeShared<FRootMotionSource_ConstantForce>();
 			Source->InstanceName = StormDriftName;

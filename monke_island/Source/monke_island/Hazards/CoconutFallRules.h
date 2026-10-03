@@ -52,6 +52,30 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Falls")
 	FString PalmMeshNameFilter = TEXT("CoconutPalm");
 
+	/** Only palms whose mesh name contains one of these drop nuts: mature trees with a full green crown */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Falls")
+	TArray<FString> CrownedPalmTokens = {TEXT("Straight"), TEXT("Leaning"), TEXT("Sabre"), TEXT("SCurve")};
+
+	/** Fewest nuts a crowned palm holds; once dropped they never grow back during the expedition */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Falls", meta=(ClampMin="0"))
+	int32 MinNutsPerPalm = 2;
+
+	/** Most nuts a crowned palm holds */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Falls", meta=(ClampMin="0"))
+	int32 MaxNutsPerPalm = 5;
+
+	/** Whether fallen nuts stay on the ground for the whole expedition (no despawn); MaxLiveCoconuts still caps them */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Coconut")
+	bool bFallenNutsStay = true;
+
+	/** Nuts a palm instance holds at the start, stable for a given instance (same tree, same count) */
+	int32 NutsForPalm(uint32 PalmKey) const
+	{
+		const int32 Low = FMath::Min(MinNutsPerPalm, MaxNutsPerPalm);
+		const int32 High = FMath::Max(MinNutsPerPalm, MaxNutsPerPalm);
+		return Low + static_cast<int32>(PalmKey % static_cast<uint32>(High - Low + 1));
+	}
+
 	/** Nuts start this far under the top of the palm (cm), inside the crown */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Falls", meta=(ClampMin="0", Units="cm"))
 	float CrownDepthCm = 120.0f;

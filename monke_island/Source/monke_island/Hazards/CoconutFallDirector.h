@@ -50,6 +50,12 @@ private:
 	/** Palm instance components found in the level */
 	TArray<TWeakObjectPtr<UInstancedStaticMeshComponent>> PalmComponents;
 
+	/** Nuts already dropped by each palm instance (component, instance index): a palm never regrows its nuts */
+	TMap<TPair<TWeakObjectPtr<UInstancedStaticMeshComponent>, int32>, int32> NutsDropped;
+
+	/** Nuts still hanging on a palm instance */
+	int32 NutsLeft(UInstancedStaticMeshComponent* Component, int32 Instance) const;
+
 	/** Nuts alive, oldest first */
 	TArray<TWeakObjectPtr<AFallingCoconutActor>> LiveCoconuts;
 

@@ -54,6 +54,12 @@ void ACoconutFallDirector::FindPalms()
 			{
 				continue;
 			}
+			// broken, dead, fallen and young palms have no fruiting crown
+			const FString MeshName = StaticMesh->GetName();
+			if (!Rules->CrownedPalmTokens.ContainsByPredicate([&MeshName](const FString& Token) { return MeshName.Contains(Token); }))
+			{
+				continue;
+			}
 			const FBox Box = StaticMesh->GetBoundingBox();
 			if (Box.Max.Z - Box.Min.Z < Rules->MinPalmHeightCm)
 			{
@@ -135,6 +141,10 @@ AFallingCoconutActor* ACoconutFallDirector::DropNear(const APawn* Target, EPick 
 		}
 		for (const int32 Instance : Component->GetInstancesOverlappingSphere(Location, Radius, true))
 		{
+			if (NutsLeft(Component, Instance) <= 0)
+			{
+				continue;
+			}
 			FTransform Transform;
 			Component->GetInstanceTransform(Instance, Transform, true);
 			Candidates.Add({Component, Instance, FVector::DistSquared2D(Transform.GetLocation(), Location)});
@@ -155,7 +165,8 @@ AFallingCoconutActor* ACoconutFallDirector::DropNear(const APawn* Target, EPick 
 		return Transform.TransformPosition(LocalTop);
 	};
 
-	FVector Start = CrownOf(Candidates[FMath::RandRange(0, Candidates.Num() - 1)]);
+	const FCandidate* Dropper = &Candidates[FMath::RandRange(0, Candidates.Num() - 1)];
+	FVector Start = CrownOf(*Dropper);
 	if (Pick != EPick::Random)
 	{
 		// the closest crown, not trunk base: leaning palms hang their crown away from the base
@@ -168,6 +179,7 @@ AFallingCoconutActor* ACoconutFallDirector::DropNear(const APawn* Target, EPick 
 			{
 				Best = DistanceSq;
 				Start = Crown;
+				Dropper = &Candidate;
 			}
 		}
 		if (Best == TNumericLimits<double>::Max() || (bAim && Best > FMath::Square(Rules->MaxAimDistanceCm)))
@@ -205,6 +217,8 @@ AFallingCoconutActor* ACoconutFallDirector::DropNear(const APawn* Target, EPick 
 	Nut->Setup(NutMesh, Rules);
 	Nut->FinishSpawning(FTransform(FMath::VRand().Rotation(), Start));
 	LiveCoconuts.Add(Nut);
+	// the nut is gone from this crown for good
+	NutsDropped.FindOrAdd(TPair<TWeakObjectPtr<UInstancedStaticMeshComponent>, int32>(Dropper->Component, Dropper->Instance))++;
 
 	if (bAim)
 	{
@@ -220,6 +234,18 @@ AFallingCoconutActor* ACoconutFallDirector::DropNear(const APawn* Target, EPick 
 		bAim ? TEXT("aimed") : (Pick == EPick::Closest ? TEXT("closest") : TEXT("random")),
 		(Start.Z - Location.Z) / 100.0, FVector::Dist2D(Start, Location) / 100.0, *Target->GetName());
 	return Nut;
+}
+
+int32 ACoconutFallDirector::NutsLeft(UInstancedStaticMeshComponent* Component, int32 Instance) const
+{
+	if (!Rules || !Component)
+	{
+		return 0;
+	}
+	// stable per tree: the same instance always starts with the same number of nuts
+	const uint32 Key = HashCombine(GetTypeHash(Component->GetFName()), GetTypeHash(Instance));
+	const int32* Dropped = NutsDropped.Find(TPair<TWeakObjectPtr<UInstancedStaticMeshComponent>, int32>(Component, Instance));
+	return Rules->NutsForPalm(Key) - (Dropped ? *Dropped : 0);
 }
 
 #if !UE_BUILD_SHIPPING

@@ -40,7 +40,7 @@ void AFallingCoconutActor::Setup(UStaticMesh* InMesh, const UCoconutFallRules* I
 	if (Rules)
 	{
 		Mesh->SetMassOverrideInKg(NAME_None, Rules->CoconutMassKg, true);
-		SetLifeSpan(Rules->CoconutLifeSpan);
+		SetLifeSpan(Rules->bFallenNutsStay ? 0.0f : Rules->CoconutLifeSpan);
 	}
 }
 
