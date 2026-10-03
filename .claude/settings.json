@@ -1,0 +1,15 @@
+{
+  "enabledMcpjsonServers": ["unreal", "blender"],
+  "permissions": {
+    "allow": [
+      "Bash(powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ue.ps1:*)",
+      "PowerShell(powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ue.ps1:*)",
+      "PowerShell(./scripts/ue.ps1:*)",
+      "Bash(python scripts/chantier.py:*)",
+      "Bash(python scripts/perf_summary.py:*)",
+      "Bash(python scripts/mcp_image.py:*)",
+      "mcp__unreal__list_toolsets",
+      "mcp__unreal__describe_toolset"
+    ]
+  }
+}

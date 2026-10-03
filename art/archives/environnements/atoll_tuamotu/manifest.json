@@ -1,0 +1,728 @@
+{
+ "scene": "scene/atoll_tuamotu.blend",
+ "source_blend": "C:\\Users\\matth\\monk-island\\art\\blender\\atoll_lookdev.blend",
+ "textures": [
+  {
+   "file": "textures/Ground/T_Feo_CH.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/terrain_layers/feo_ch.png",
+   "used_by": [
+    "M_AtollTerrain",
+    "M_CoralBlock"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_Feo_N_GL.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/terrain_layers/feo_n.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_Litter_CH.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/terrain_layers/litter_ch.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_Litter_N_GL.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/terrain_layers/litter_n.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_Rubble_CH.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/terrain_layers/rubble_ch.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_Rubble_N_GL.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/terrain_layers/rubble_n.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_SandDry_CH.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/terrain_layers/sand_dry_ch.png",
+   "used_by": [
+    "M_AtollTerrain",
+    "M_LineupGround"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_SandDry_N_GL.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/terrain_layers/sand_dry_n.png",
+   "used_by": [
+    "M_AtollTerrain",
+    "M_LineupGround"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_SandWet_CH.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/terrain_layers/sand_wet_ch.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_SandWet_N_GL.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/terrain_layers/sand_wet_n.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_Soil_CH.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/terrain_layers/soil_ch.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_Soil_N_GL.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/terrain_layers/soil_n.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_Wrack_CH.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/terrain_layers/wrack_ch.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Ground/T_Wrack_N_GL.png",
+   "category": "Ground",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/terrain_layers/wrack_n.png",
+   "used_by": [
+    "M_AtollTerrain"
+   ]
+  },
+  {
+   "file": "textures/Props/T_LambisShell_ARM.jpg",
+   "category": "Props",
+   "size": [
+    1024,
+    1024
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/models/props/lambis_shell/textures/lambis_shell_arm_1k.jpg",
+   "used_by": [
+    "lambis_shell"
+   ]
+  },
+  {
+   "file": "textures/Props/T_LambisShell_D.jpg",
+   "category": "Props",
+   "size": [
+    1024,
+    1024
+   ],
+   "colorspace": "sRGB",
+   "source": "art/models/props/lambis_shell/textures/lambis_shell_diff_1k.jpg",
+   "used_by": [
+    "lambis_shell"
+   ]
+  },
+  {
+   "file": "textures/Props/T_LambisShell_N_GL.jpg",
+   "category": "Props",
+   "size": [
+    1024,
+    1024
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/models/props/lambis_shell/textures/lambis_shell_nor_gl_1k.jpg",
+   "used_by": [
+    "lambis_shell"
+   ]
+  },
+  {
+   "file": "textures/Sky/kloofendal_48d_partly_cloudy_puresky_4k.hdr",
+   "category": "Sky",
+   "size": [
+    4096,
+    2048
+   ],
+   "colorspace": "Linear Rec.709",
+   "source": "art/hdri/kloofendal_48d_partly_cloudy_puresky_4k.hdr",
+   "used_by": [
+    "W_Atoll"
+   ]
+  },
+  {
+   "file": "textures/Sky/secluded_beach_4k.hdr",
+   "category": "Sky",
+   "size": null,
+   "colorspace": null,
+   "source": "art/hdri/secluded_beach_4k.hdr",
+   "used_by": []
+  },
+  {
+   "file": "textures/Sky/spiaggia_di_mondello_4k.hdr",
+   "category": "Sky",
+   "size": null,
+   "colorspace": null,
+   "source": "art/hdri/spiaggia_di_mondello_4k.hdr",
+   "used_by": []
+  },
+  {
+   "file": "textures/Vegetation/T_CoconutEophyll_D.png",
+   "category": "Vegetation",
+   "size": [
+    256,
+    1024
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/plants/coconut_eophyll_basecolor.png",
+   "used_by": [
+    "M_Leaf_coconut_eophyll"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_CoconutEophyll_N_GL.png",
+   "category": "Vegetation",
+   "size": [
+    256,
+    1024
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/coconut_eophyll_normal_gl.png",
+   "used_by": [
+    "M_Leaf_coconut_eophyll"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_CoconutEophyll_R.png",
+   "category": "Vegetation",
+   "size": [
+    256,
+    1024
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/coconut_eophyll_roughness.png",
+   "used_by": [
+    "M_Leaf_coconut_eophyll"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_CoconutLeaflet_D.png",
+   "category": "Vegetation",
+   "size": [
+    128,
+    1024
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/plants/coconut_leaflet_basecolor.png",
+   "used_by": [
+    "M_Leaf_coconut_leaflet"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_CoconutLeaflet_N_GL.png",
+   "category": "Vegetation",
+   "size": [
+    128,
+    1024
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/coconut_leaflet_normal_gl.png",
+   "used_by": [
+    "M_Leaf_coconut_leaflet"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_CoconutLeaflet_R.png",
+   "category": "Vegetation",
+   "size": [
+    128,
+    1024
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/coconut_leaflet_roughness.png",
+   "used_by": [
+    "M_Leaf_coconut_leaflet"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_FernLobe_D.png",
+   "category": "Vegetation",
+   "size": [
+    256,
+    512
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/plants/fern_lobe_basecolor.png",
+   "used_by": [
+    "M_Leaf_fern_lobe"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_FernLobe_N_GL.png",
+   "category": "Vegetation",
+   "size": [
+    256,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/fern_lobe_normal_gl.png",
+   "used_by": [
+    "M_Leaf_fern_lobe"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_FernLobe_R.png",
+   "category": "Vegetation",
+   "size": [
+    256,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/fern_lobe_roughness.png",
+   "used_by": [
+    "M_Leaf_fern_lobe"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_GrassBlade_D.png",
+   "category": "Vegetation",
+   "size": [
+    64,
+    512
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/plants/grass_basecolor.png",
+   "used_by": [
+    "M_Leaf_grass"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_GrassBlade_N_GL.png",
+   "category": "Vegetation",
+   "size": [
+    64,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/grass_normal_gl.png",
+   "used_by": [
+    "M_Leaf_grass"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_GrassBlade_R.png",
+   "category": "Vegetation",
+   "size": [
+    64,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/grass_roughness.png",
+   "used_by": [
+    "M_Leaf_grass"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_IpomoeaLeaf_D.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/plants/ipomoea_basecolor.png",
+   "used_by": [
+    "M_Leaf_ipomoea"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_IpomoeaLeaf_N_GL.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/ipomoea_normal_gl.png",
+   "used_by": [
+    "M_Leaf_ipomoea"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_IpomoeaLeaf_R.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/ipomoea_roughness.png",
+   "used_by": [
+    "M_Leaf_ipomoea"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_MikiMikiTwig_D.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/plants/mikimiki_twig_basecolor.png",
+   "used_by": [
+    "M_LeafCard_mikimiki_twig"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_MikiMikiTwig_N_GL.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/mikimiki_twig_normal_gl.png",
+   "used_by": [
+    "M_LeafCard_mikimiki_twig"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_NaupakaLeaf_D.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/plants/naupaka_basecolor.png",
+   "used_by": [
+    "M_Leaf_naupaka"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_NaupakaLeaf_N_GL.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/naupaka_normal_gl.png",
+   "used_by": [
+    "M_Leaf_naupaka"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_NaupakaLeaf_R.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/naupaka_roughness.png",
+   "used_by": [
+    "M_Leaf_naupaka"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_PalmFiber_D.jpg",
+   "category": "Vegetation",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/palm/palm_bark/palm_bark_diff_2k.jpg",
+   "used_by": [
+    "M_CoconutLeafBase",
+    "M_PandanusBark"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_PalmFiber_N_GL.jpg",
+   "category": "Vegetation",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/palm/palm_bark/palm_bark_nor_gl_2k.jpg",
+   "used_by": [
+    "M_CoconutLeafBase",
+    "M_PandanusBark"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_PalmFiber_R.jpg",
+   "category": "Vegetation",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/palm/palm_bark/palm_bark_rough_2k.jpg",
+   "used_by": [
+    "M_CoconutLeafBase",
+    "M_PandanusBark"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_PalmTrunk_D.jpg",
+   "category": "Vegetation",
+   "size": [
+    2048,
+    4096
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/palm/palm_tree_bark/palm_tree_bark_diff_2k.jpg",
+   "used_by": [
+    "M_CoconutTrunk",
+    "M_Driftwood"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_PalmTrunk_N_GL.jpg",
+   "category": "Vegetation",
+   "size": [
+    2048,
+    4096
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/palm/palm_tree_bark/palm_tree_bark_nor_gl_2k.jpg",
+   "used_by": [
+    "M_CoconutTrunk",
+    "M_Driftwood"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_PalmTrunk_R.jpg",
+   "category": "Vegetation",
+   "size": [
+    2048,
+    4096
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/palm/palm_tree_bark/palm_tree_bark_rough_2k.jpg",
+   "used_by": [
+    "M_CoconutTrunk",
+    "M_Driftwood"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_PandanusLeaf_D.png",
+   "category": "Vegetation",
+   "size": [
+    128,
+    1024
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/plants/pandanus_basecolor.png",
+   "used_by": [
+    "M_Leaf_pandanus"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_PandanusLeaf_N_GL.png",
+   "category": "Vegetation",
+   "size": [
+    128,
+    1024
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/pandanus_normal_gl.png",
+   "used_by": [
+    "M_Leaf_pandanus"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_PandanusLeaf_R.png",
+   "category": "Vegetation",
+   "size": [
+    128,
+    1024
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/pandanus_roughness.png",
+   "used_by": [
+    "M_Leaf_pandanus"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_ShrubBark_D.jpg",
+   "category": "Vegetation",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/shrub/bark_brown_02/bark_brown_02_diff_2k.jpg",
+   "used_by": [
+    "M_ShrubBark"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_ShrubBark_N_GL.jpg",
+   "category": "Vegetation",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/shrub/bark_brown_02/bark_brown_02_nor_gl_2k.jpg",
+   "used_by": [
+    "M_ShrubBark"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_ShrubBark_R.jpg",
+   "category": "Vegetation",
+   "size": [
+    2048,
+    2048
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/shrub/bark_brown_02/bark_brown_02_rough_2k.jpg",
+   "used_by": [
+    "M_ShrubBark"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_TahinuLeaf_D.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "sRGB",
+   "source": "art/textures/plants/tahinu_basecolor.png",
+   "used_by": [
+    "M_Leaf_tahinu"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_TahinuLeaf_N_GL.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/tahinu_normal_gl.png",
+   "used_by": [
+    "M_Leaf_tahinu"
+   ]
+  },
+  {
+   "file": "textures/Vegetation/T_TahinuLeaf_R.png",
+   "category": "Vegetation",
+   "size": [
+    512,
+    512
+   ],
+   "colorspace": "Non-Color",
+   "source": "art/textures/plants/tahinu_roughness.png",
+   "used_by": [
+    "M_Leaf_tahinu"
+   ]
+  },
+  {
+   "file": "textures/Water/T_Water_N.png",
+   "category": "Water",
+   "size": null,
+   "colorspace": null,
+   "source": "art/textures/water/T_Water_N.png",
+   "used_by": []
+  }
+ ]
+}

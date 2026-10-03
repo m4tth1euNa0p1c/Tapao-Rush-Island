@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "unreal": {
+      "type": "http",
+      "url": "http://127.0.0.1:8000/mcp"
+    },
+    "blender": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["blender-mcp"],
+      "env": {
+        "DISABLE_TELEMETRY": "true"
+      }
+    }
+  }
+}

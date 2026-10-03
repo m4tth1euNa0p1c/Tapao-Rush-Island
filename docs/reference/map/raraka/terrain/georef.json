@@ -1,0 +1,441 @@
+{
+  "island": "raraka",
+  "source_grid": {
+    "width": 6400,
+    "height": 5632,
+    "merc_bounds": [
+      -16144723.366281789,
+      -1839380.6486544795,
+      -16114148.554967716,
+      -1812474.8146981
+    ],
+    "merc_px": 4.777314267823822
+  },
+  "ground_m_per_px": 4.588019421994801,
+  "latitude_center": -16.18302409947757,
+  "ue_frame": "origine = centre de l'emprise ; X = est, Y = sud, Z = haut (cm) ; Z = 0 niveau moyen de la mer",
+  "extent_m": [
+    29363.324300766726,
+    25839.72538467472
+  ],
+  "mesh": {
+    "step_px": 2,
+    "spacing_m": 9.176038843989602,
+    "tiles": [
+      {
+        "name": "SM_Raraka_Terrain_1_0",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_1_0.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.64
+      },
+      {
+        "name": "SM_Raraka_Terrain_2_0",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_2_0.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.45
+      },
+      {
+        "name": "SM_Raraka_Terrain_3_0",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_3_0.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.57
+      },
+      {
+        "name": "SM_Raraka_Terrain_4_0",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_4_0.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.12
+      },
+      {
+        "name": "SM_Raraka_Terrain_0_1",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_0_1.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.58
+      },
+      {
+        "name": "SM_Raraka_Terrain_1_1",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_1_1.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.63
+      },
+      {
+        "name": "SM_Raraka_Terrain_2_1",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_2_1.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.34
+      },
+      {
+        "name": "SM_Raraka_Terrain_3_1",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_3_1.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.18
+      },
+      {
+        "name": "SM_Raraka_Terrain_4_1",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_4_1.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.83
+      },
+      {
+        "name": "SM_Raraka_Terrain_5_1",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_5_1.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.46
+      },
+      {
+        "name": "SM_Raraka_Terrain_6_1",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_6_1.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.51
+      },
+      {
+        "name": "SM_Raraka_Terrain_0_2",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_0_2.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.71
+      },
+      {
+        "name": "SM_Raraka_Terrain_1_2",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_1_2.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -6.89
+      },
+      {
+        "name": "SM_Raraka_Terrain_2_2",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_2_2.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -26.37
+      },
+      {
+        "name": "SM_Raraka_Terrain_3_2",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_3_2.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -1.2
+      },
+      {
+        "name": "SM_Raraka_Terrain_4_2",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_4_2.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.35
+      },
+      {
+        "name": "SM_Raraka_Terrain_5_2",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_5_2.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.31
+      },
+      {
+        "name": "SM_Raraka_Terrain_6_2",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_6_2.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.67
+      },
+      {
+        "name": "SM_Raraka_Terrain_7_2",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_7_2.obj",
+        "vertices": 141200,
+        "triangles": 280896,
+        "max_height_m": 3.57
+      },
+      {
+        "name": "SM_Raraka_Terrain_0_3",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_0_3.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.49
+      },
+      {
+        "name": "SM_Raraka_Terrain_1_3",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_1_3.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.09
+      },
+      {
+        "name": "SM_Raraka_Terrain_2_3",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_2_3.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.73
+      },
+      {
+        "name": "SM_Raraka_Terrain_3_3",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_3_3.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.18
+      },
+      {
+        "name": "SM_Raraka_Terrain_4_3",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_4_3.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -27.22
+      },
+      {
+        "name": "SM_Raraka_Terrain_5_3",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_5_3.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -1.2
+      },
+      {
+        "name": "SM_Raraka_Terrain_6_3",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_6_3.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 1.01
+      },
+      {
+        "name": "SM_Raraka_Terrain_7_3",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_7_3.obj",
+        "vertices": 141200,
+        "triangles": 280896,
+        "max_height_m": 3.58
+      },
+      {
+        "name": "SM_Raraka_Terrain_0_4",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_0_4.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.46
+      },
+      {
+        "name": "SM_Raraka_Terrain_1_4",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_1_4.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.59
+      },
+      {
+        "name": "SM_Raraka_Terrain_2_4",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_2_4.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -4.5
+      },
+      {
+        "name": "SM_Raraka_Terrain_3_4",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_3_4.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.18
+      },
+      {
+        "name": "SM_Raraka_Terrain_4_4",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_4_4.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.18
+      },
+      {
+        "name": "SM_Raraka_Terrain_5_4",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_5_4.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -1.2
+      },
+      {
+        "name": "SM_Raraka_Terrain_6_4",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_6_4.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -1.12
+      },
+      {
+        "name": "SM_Raraka_Terrain_7_4",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_7_4.obj",
+        "vertices": 141200,
+        "triangles": 280896,
+        "max_height_m": 3.65
+      },
+      {
+        "name": "SM_Raraka_Terrain_1_5",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_1_5.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.8
+      },
+      {
+        "name": "SM_Raraka_Terrain_2_5",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_2_5.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.18
+      },
+      {
+        "name": "SM_Raraka_Terrain_3_5",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_3_5.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.18
+      },
+      {
+        "name": "SM_Raraka_Terrain_4_5",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_4_5.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.99
+      },
+      {
+        "name": "SM_Raraka_Terrain_5_5",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_5_5.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.73
+      },
+      {
+        "name": "SM_Raraka_Terrain_6_5",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_6_5.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.08
+      },
+      {
+        "name": "SM_Raraka_Terrain_7_5",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_7_5.obj",
+        "vertices": 141200,
+        "triangles": 280896,
+        "max_height_m": 2.04
+      },
+      {
+        "name": "SM_Raraka_Terrain_2_6",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_2_6.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.05
+      },
+      {
+        "name": "SM_Raraka_Terrain_3_6",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_3_6.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.08
+      },
+      {
+        "name": "SM_Raraka_Terrain_4_6",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_4_6.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -0.36
+      },
+      {
+        "name": "SM_Raraka_Terrain_5_6",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_5_6.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 3.34
+      },
+      {
+        "name": "SM_Raraka_Terrain_6_6",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_6_6.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": 2.05
+      },
+      {
+        "name": "SM_Raraka_Terrain_3_7",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_3_7.obj",
+        "vertices": 141152,
+        "triangles": 280800,
+        "max_height_m": 2.01
+      },
+      {
+        "name": "SM_Raraka_Terrain_4_7",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_4_7.obj",
+        "vertices": 141152,
+        "triangles": 280800,
+        "max_height_m": 2.03
+      },
+      {
+        "name": "SM_Raraka_Terrain_5_7",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_5_7.obj",
+        "vertices": 141152,
+        "triangles": 280800,
+        "max_height_m": 3.45
+      },
+      {
+        "name": "SM_Raraka_Terrain_6_7",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_6_7.obj",
+        "vertices": 141152,
+        "triangles": 280800,
+        "max_height_m": -24.73
+      }
+    ],
+    "water": "SM_Raraka_Water"
+  },
+  "masks_texture": {
+    "file": "T_Raraka_Masks.png",
+    "uv0": "UV0 = (colonne/W, ligne/H) sur toute l'emprise",
+    "channels": {
+      "R": "vegetation / litiere",
+      "G": "sable",
+      "B": "recif / debris coralliens",
+      "A": "humidite (1 = immerge)"
+    }
+  },
+  "heights_m": {
+    "land": [
+      0.5,
+      3.5
+    ],
+    "reef_flat": -0.4,
+    "inner_slope_max": -7.5,
+    "lagoon": [
+      -8.0,
+      -30.0
+    ],
+    "pass": -14.0,
+    "pinnacle": -1.2,
+    "ocean_min": -300.0,
+    "note": "estimations (pas de bathymetrie mesuree) : a remplacer si un releve SHOM/IRD est obtenu"
+  },
+  "heightmap_16": {
+    "file": "heightmap_16.png",
+    "min_m": -300.0,
+    "max_m": 3.713994026184082
+  },
+  "class_areas_km2": {
+    "ocean": 346.591,
+    "pente_externe": 9.716,
+    "platier": 36.101,
+    "terre": 10.0,
+    "pente_interne": 18.252,
+    "lagon": 336.69,
+    "pinacle": 0.97,
+    "passe": 0.42
+  },
+  "points_ue": {
+    "village_motutapu": {
+      "x_cm": -653334.7,
+      "y_cm": -1025282.0
+    },
+    "passe_manureva": {
+      "x_cm": -698236.4,
+      "y_cm": -1011929.9
+    }
+  },
+  "sources": [
+    "Trait de cote : Te Fenua / DAF (Etalab 2.0)",
+    "Atlas des recifs coralliens de Polynesie francaise, Andrefouet et al., IRD 2005, via Te Fenua",
+    "Hauts-fonds : contraste local de l'imagerie (c) Maxar via Te Fenua (derive, image non embarquee)"
+  ]
+}

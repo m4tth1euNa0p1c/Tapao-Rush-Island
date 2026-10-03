@@ -1,0 +1,1148 @@
+{
+ "SM_CoconutPalm_Sprout_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Palms/SM_CoconutPalm_Sprout_A.fbx",
+  "slots": [
+   "MI_CoconutPalm_LeafBase",
+   "MI_CoconutPalm_Nut",
+   "MI_CoconutPalm_Seedling"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "sprouts",
+  "size_m": [
+   0.42,
+   0.32,
+   0.82
+  ],
+  "verts": 202
+ },
+ "SM_CoconutPalm_Sprout_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Palms/SM_CoconutPalm_Sprout_B.fbx",
+  "slots": [
+   "MI_CoconutPalm_LeafBase",
+   "MI_CoconutPalm_Nut",
+   "MI_CoconutPalm_Seedling"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "sprouts",
+  "size_m": [
+   0.68,
+   0.78,
+   0.8
+  ],
+  "verts": 256
+ },
+ "SM_Pandanus_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_Pandanus_A.fbx",
+  "slots": [
+   "MI_Pandanus_Bark",
+   "MI_Pandanus_Leaf",
+   "MI_Pandanus_Fruit"
+  ],
+  "foliage": true,
+  "ucx": 3,
+  "group": "shrubs",
+  "size_m": [
+   6.86,
+   6.73,
+   8.32
+  ],
+  "verts": 12695
+ },
+ "SM_Pandanus_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_Pandanus_B.fbx",
+  "slots": [
+   "MI_Pandanus_Bark",
+   "MI_Pandanus_Leaf",
+   "MI_Pandanus_Fruit"
+  ],
+  "foliage": true,
+  "ucx": 2,
+  "group": "shrubs",
+  "size_m": [
+   4.69,
+   7.05,
+   7.16
+  ],
+  "verts": 16164
+ },
+ "SM_Pandanus_Young": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_Pandanus_Young.fbx",
+  "slots": [
+   "MI_Pandanus_Bark",
+   "MI_Pandanus_Leaf"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "shrubs",
+  "size_m": [
+   2.42,
+   2.38,
+   3.29
+  ],
+  "verts": 2022
+ },
+ "SM_Naupaka_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_Naupaka_A.fbx",
+  "slots": [
+   "MI_Shrub_Bark",
+   "MI_Naupaka_Leaf",
+   "MI_Flower"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "shrubs",
+  "size_m": [
+   3.06,
+   2.71,
+   1.93
+  ],
+  "verts": 75303
+ },
+ "SM_Naupaka_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_Naupaka_B.fbx",
+  "slots": [
+   "MI_Shrub_Bark",
+   "MI_Naupaka_Leaf",
+   "MI_Flower"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "shrubs",
+  "size_m": [
+   3.05,
+   2.55,
+   2.32
+  ],
+  "verts": 78781
+ },
+ "SM_Naupaka_C": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_Naupaka_C.fbx",
+  "slots": [
+   "MI_Shrub_Bark",
+   "MI_Naupaka_Leaf",
+   "MI_Flower"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "shrubs",
+  "size_m": [
+   3.62,
+   3.0,
+   2.03
+  ],
+  "verts": 73170
+ },
+ "SM_Tahinu_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_Tahinu_A.fbx",
+  "slots": [
+   "MI_Shrub_Bark",
+   "MI_Tahinu_Leaf",
+   "MI_Flower"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "shrubs",
+  "size_m": [
+   4.74,
+   4.75,
+   3.58
+  ],
+  "verts": 139808
+ },
+ "SM_Tahinu_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_Tahinu_B.fbx",
+  "slots": [
+   "MI_Shrub_Bark",
+   "MI_Tahinu_Leaf",
+   "MI_Flower"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "shrubs",
+  "size_m": [
+   5.49,
+   5.43,
+   3.4
+  ],
+  "verts": 140437
+ },
+ "SM_MikiMiki_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_MikiMiki_A.fbx",
+  "slots": [
+   "MI_Shrub_Bark",
+   "MI_MikiMiki_Twig"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "shrubs",
+  "size_m": [
+   4.48,
+   3.51,
+   2.46
+  ],
+  "verts": 22130
+ },
+ "SM_MikiMiki_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_MikiMiki_B.fbx",
+  "slots": [
+   "MI_Shrub_Bark",
+   "MI_MikiMiki_Twig"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "shrubs",
+  "size_m": [
+   4.19,
+   3.69,
+   2.44
+  ],
+  "verts": 21481
+ },
+ "SM_MikiMiki_C": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/Shrubs/SM_MikiMiki_C.fbx",
+  "slots": [
+   "MI_Shrub_Bark",
+   "MI_MikiMiki_Twig"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "shrubs",
+  "size_m": [
+   3.92,
+   3.18,
+   2.05
+  ],
+  "verts": 22783
+ },
+ "SM_Fern_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/GroundCover/SM_Fern_A.fbx",
+  "slots": [
+   "MI_Fern_Leaf"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "groundcover",
+  "size_m": [
+   1.3,
+   1.1,
+   0.54
+  ],
+  "verts": 3020
+ },
+ "SM_Fern_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/GroundCover/SM_Fern_B.fbx",
+  "slots": [
+   "MI_Fern_Leaf"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "groundcover",
+  "size_m": [
+   1.05,
+   1.41,
+   0.54
+  ],
+  "verts": 3870
+ },
+ "SM_Grass_Short": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/GroundCover/SM_Grass_Short.fbx",
+  "slots": [
+   "MI_Grass_Blade"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "groundcover",
+  "size_m": [
+   0.27,
+   0.19,
+   0.18
+  ],
+  "verts": 315
+ },
+ "SM_Grass_Tuft": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/GroundCover/SM_Grass_Tuft.fbx",
+  "slots": [
+   "MI_Grass_Blade"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "groundcover",
+  "size_m": [
+   0.59,
+   0.5,
+   0.28
+  ],
+  "verts": 615
+ },
+ "SM_Grass_Dry": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/GroundCover/SM_Grass_Dry.fbx",
+  "slots": [
+   "MI_Grass_Blade"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "groundcover",
+  "size_m": [
+   0.42,
+   0.29,
+   0.27
+  ],
+  "verts": 375
+ },
+ "SM_Ipomoea_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/GroundCover/SM_Ipomoea_A.fbx",
+  "slots": [
+   "MI_Ipomoea_Leaf",
+   "MI_Flower"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "groundcover",
+  "size_m": [
+   4.56,
+   4.83,
+   0.13
+  ],
+  "verts": 4151
+ },
+ "SM_Ipomoea_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/GroundCover/SM_Ipomoea_B.fbx",
+  "slots": [
+   "MI_Ipomoea_Leaf",
+   "MI_Flower"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "groundcover",
+  "size_m": [
+   3.11,
+   4.95,
+   0.13
+  ],
+  "verts": 4260
+ },
+ "SM_Coconut_Brown": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coconut/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coconut/SM_Coconut_Brown.fbx",
+  "slots": [
+   "MI_CoconutPalm_Nut"
+  ],
+  "foliage": false,
+  "ucx": 1,
+  "group": "props",
+  "size_m": [
+   0.27,
+   0.21,
+   0.21
+  ],
+  "verts": 130
+ },
+ "SM_Coconut_Green": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coconut/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coconut/SM_Coconut_Green.fbx",
+  "slots": [
+   "MI_CoconutPalm_Nut"
+  ],
+  "foliage": false,
+  "ucx": 1,
+  "group": "props",
+  "size_m": [
+   0.31,
+   0.24,
+   0.24
+  ],
+  "verts": 130
+ },
+ "SM_Coconut_Yellow": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coconut/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coconut/SM_Coconut_Yellow.fbx",
+  "slots": [
+   "MI_CoconutPalm_Nut"
+  ],
+  "foliage": false,
+  "ucx": 1,
+  "group": "props",
+  "size_m": [
+   0.29,
+   0.23,
+   0.23
+  ],
+  "verts": 130
+ },
+ "SM_CoconutFrond_Dry_A": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coconut/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coconut/SM_CoconutFrond_Dry_A.fbx",
+  "slots": [
+   "MI_CoconutPalm_Leaf"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   4.97,
+   1.62,
+   0.28
+  ],
+  "verts": 1330
+ },
+ "SM_CoconutFrond_Dry_B": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coconut/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coconut/SM_CoconutFrond_Dry_B.fbx",
+  "slots": [
+   "MI_CoconutPalm_Leaf"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   3.72,
+   1.24,
+   0.32
+  ],
+  "verts": 1285
+ },
+ "SM_CoralBlock_A": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralBlock_A.fbx",
+  "slots": [
+   "MI_Coral_Rock"
+  ],
+  "foliage": false,
+  "ucx": 1,
+  "group": "props",
+  "size_m": [
+   0.45,
+   0.58,
+   0.32
+  ],
+  "verts": 642
+ },
+ "SM_CoralBlock_B": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralBlock_B.fbx",
+  "slots": [
+   "MI_Coral_Rock"
+  ],
+  "foliage": false,
+  "ucx": 1,
+  "group": "props",
+  "size_m": [
+   0.66,
+   0.78,
+   0.35
+  ],
+  "verts": 642
+ },
+ "SM_CoralBlock_C": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralBlock_C.fbx",
+  "slots": [
+   "MI_Coral_Rock"
+  ],
+  "foliage": false,
+  "ucx": 1,
+  "group": "props",
+  "size_m": [
+   1.11,
+   1.02,
+   0.66
+  ],
+  "verts": 642
+ },
+ "SM_CoralBlock_D": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralBlock_D.fbx",
+  "slots": [
+   "MI_Coral_Rock"
+  ],
+  "foliage": false,
+  "ucx": 1,
+  "group": "props",
+  "size_m": [
+   1.46,
+   1.26,
+   0.92
+  ],
+  "verts": 642
+ },
+ "SM_CoralBlock_E": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralBlock_E.fbx",
+  "slots": [
+   "MI_Coral_Rock"
+  ],
+  "foliage": false,
+  "ucx": 1,
+  "group": "props",
+  "size_m": [
+   2.22,
+   1.43,
+   0.84
+  ],
+  "verts": 642
+ },
+ "SM_CoralBlock_F": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralBlock_F.fbx",
+  "slots": [
+   "MI_Coral_Rock"
+  ],
+  "foliage": false,
+  "ucx": 1,
+  "group": "props",
+  "size_m": [
+   0.39,
+   0.32,
+   0.2
+  ],
+  "verts": 642
+ },
+ "SM_CoralRubble_A": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralRubble_A.fbx",
+  "slots": [
+   "MI_Coral_Rubble"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   0.11,
+   0.04,
+   0.04
+  ],
+  "verts": 57
+ },
+ "SM_CoralRubble_B": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralRubble_B.fbx",
+  "slots": [
+   "MI_Coral_Rubble"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   0.17,
+   0.09,
+   0.03
+  ],
+  "verts": 42
+ },
+ "SM_CoralRubble_C": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralRubble_C.fbx",
+  "slots": [
+   "MI_Coral_Rubble"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   0.08,
+   0.06,
+   0.03
+  ],
+  "verts": 57
+ },
+ "SM_CoralRubble_D": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralRubble_D.fbx",
+  "slots": [
+   "MI_Coral_Rubble"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   0.19,
+   0.08,
+   0.04
+  ],
+  "verts": 42
+ },
+ "SM_CoralRubble_E": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralRubble_E.fbx",
+  "slots": [
+   "MI_Coral_Rubble"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   0.13,
+   0.07,
+   0.04
+  ],
+  "verts": 57
+ },
+ "SM_CoralRubble_F": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralRubble_F.fbx",
+  "slots": [
+   "MI_Coral_Rubble"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   0.14,
+   0.1,
+   0.06
+  ],
+  "verts": 42
+ },
+ "SM_CoralRubble_G": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralRubble_G.fbx",
+  "slots": [
+   "MI_Coral_Rubble"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   0.13,
+   0.06,
+   0.05
+  ],
+  "verts": 57
+ },
+ "SM_CoralRubble_H": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Coral/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Coral/SM_CoralRubble_H.fbx",
+  "slots": [
+   "MI_Coral_Rubble"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   0.09,
+   0.1,
+   0.07
+  ],
+  "verts": 42
+ },
+ "SM_Driftwood_A": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Beach/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Beach/SM_Driftwood_A.fbx",
+  "slots": [
+   "MI_Driftwood"
+  ],
+  "foliage": false,
+  "ucx": 3,
+  "group": "props",
+  "size_m": [
+   2.86,
+   0.56,
+   0.35
+  ],
+  "verts": 280
+ },
+ "SM_Driftwood_B": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Beach/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Beach/SM_Driftwood_B.fbx",
+  "slots": [
+   "MI_Driftwood"
+  ],
+  "foliage": false,
+  "ucx": 3,
+  "group": "props",
+  "size_m": [
+   2.48,
+   0.65,
+   0.36
+  ],
+  "verts": 280
+ },
+ "SM_LambisShell": {
+  "folder": "/Game/MonkeIsland/Environment/Props/Beach/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Props/Beach/SM_LambisShell.fbx",
+  "slots": [
+   "MI_LambisShell"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "props",
+  "size_m": [
+   0.14,
+   0.07,
+   0.05
+  ],
+  "verts": 7361
+ },
+ "SM_Barque": {
+  "folder": "/Game/MonkeIsland/Boat/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Boat/SM_Barque.fbx",
+  "slots": [
+   "MI_Barque"
+  ],
+  "foliage": false,
+  "ucx": 23,
+  "group": "boat",
+  "size_m": [
+   6.41,
+   2.25,
+   2.07
+  ],
+  "verts": 9228,
+  "sockets": [
+   "SOCKET_Seat_0",
+   "SOCKET_Seat_1",
+   "SOCKET_Seat_2",
+   "SOCKET_Seat_3",
+   "SOCKET_Slot_00",
+   "SOCKET_Slot_01",
+   "SOCKET_Slot_02",
+   "SOCKET_Slot_03",
+   "SOCKET_Slot_04",
+   "SOCKET_Slot_05",
+   "SOCKET_Slot_06",
+   "SOCKET_Slot_07",
+   "SOCKET_Slot_08",
+   "SOCKET_Slot_09",
+   "SOCKET_Slot_10",
+   "SOCKET_Slot_11",
+   "SOCKET_Lantern",
+   "SOCKET_Flag",
+   "SOCKET_Tiller",
+   "SOCKET_Mooring",
+   "SOCKET_Oarlock_L",
+   "SOCKET_Oarlock_R",
+   "SOCKET_Board_L",
+   "SOCKET_Board_R",
+   "SOCKET_Marker"
+  ],
+  "textures": [
+   "T_Barque_D",
+   "T_Barque_ORM",
+   "T_Barque_N"
+  ],
+  "pivot": "centerline, designed waterline (z = 0)"
+ },
+ "SM_Barque_Oar": {
+  "folder": "/Game/MonkeIsland/Boat/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Boat/SM_Barque_Oar.fbx",
+  "slots": [
+   "MI_Barque"
+  ],
+  "foliage": false,
+  "ucx": 0,
+  "group": "boat",
+  "size_m": [
+   2.4,
+   0.17,
+   0.07
+  ],
+  "verts": 100,
+  "pivot": "oarlock contact"
+ },
+ "SK_Villager": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/SK_Villager.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_Villager",
+  "character": "CHR_Npc_Villager"
+ },
+ "SK_Villager_FruitBasket": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/SK_Villager_FruitBasket.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_Villager",
+  "character": "CHR_Npc_Villager"
+ },
+ "SM_Villager_FruitBasket": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/SM_Villager_FruitBasket.fbx",
+  "group": "characters",
+  "kind": "SM",
+  "skeleton": null,
+  "character": "CHR_Npc_Villager"
+ },
+ "A_Villager_Idle": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/A_Villager_Idle.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_Villager",
+  "character": "CHR_Npc_Villager"
+ },
+ "A_Villager_Walk": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/A_Villager_Walk.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_Villager",
+  "character": "CHR_Npc_Villager"
+ },
+ "A_Villager_Run": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/A_Villager_Run.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_Villager",
+  "character": "CHR_Npc_Villager"
+ },
+ "A_Villager_Cower": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/A_Villager_Cower.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_Villager",
+  "character": "CHR_Npc_Villager"
+ },
+ "A_Villager_Talk": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/A_Villager_Talk.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_Villager",
+  "character": "CHR_Npc_Villager"
+ },
+ "A_Villager_Hit": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/A_Villager_Hit.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_Villager",
+  "character": "CHR_Npc_Villager"
+ },
+ "A_Villager_Death": {
+  "folder": "/Game/MonkeIsland/Characters/Villager/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/Villager/A_Villager_Death.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_Villager",
+  "character": "CHR_Npc_Villager"
+ },
+ "SK_CocoWarrior": {
+  "folder": "/Game/MonkeIsland/Characters/CocoWarrior/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CocoWarrior/SK_CocoWarrior.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_CocoWarrior",
+  "character": "CHR_Mob_CocoWarrior"
+ },
+ "SK_CocoWarrior_Spear": {
+  "folder": "/Game/MonkeIsland/Characters/CocoWarrior/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CocoWarrior/SK_CocoWarrior_Spear.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_CocoWarrior",
+  "character": "CHR_Mob_CocoWarrior"
+ },
+ "SM_CocoWarrior_Spear": {
+  "folder": "/Game/MonkeIsland/Characters/CocoWarrior/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CocoWarrior/SM_CocoWarrior_Spear.fbx",
+  "group": "characters",
+  "kind": "SM",
+  "skeleton": null,
+  "character": "CHR_Mob_CocoWarrior"
+ },
+ "A_CocoWarrior_Idle": {
+  "folder": "/Game/MonkeIsland/Characters/CocoWarrior/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CocoWarrior/A_CocoWarrior_Idle.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CocoWarrior",
+  "character": "CHR_Mob_CocoWarrior"
+ },
+ "A_CocoWarrior_Walk": {
+  "folder": "/Game/MonkeIsland/Characters/CocoWarrior/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CocoWarrior/A_CocoWarrior_Walk.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CocoWarrior",
+  "character": "CHR_Mob_CocoWarrior"
+ },
+ "A_CocoWarrior_Run": {
+  "folder": "/Game/MonkeIsland/Characters/CocoWarrior/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CocoWarrior/A_CocoWarrior_Run.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CocoWarrior",
+  "character": "CHR_Mob_CocoWarrior"
+ },
+ "A_CocoWarrior_Attack": {
+  "folder": "/Game/MonkeIsland/Characters/CocoWarrior/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CocoWarrior/A_CocoWarrior_Attack.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CocoWarrior",
+  "character": "CHR_Mob_CocoWarrior"
+ },
+ "A_CocoWarrior_Hit": {
+  "folder": "/Game/MonkeIsland/Characters/CocoWarrior/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CocoWarrior/A_CocoWarrior_Hit.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CocoWarrior",
+  "character": "CHR_Mob_CocoWarrior"
+ },
+ "A_CocoWarrior_Death": {
+  "folder": "/Game/MonkeIsland/Characters/CocoWarrior/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CocoWarrior/A_CocoWarrior_Death.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CocoWarrior",
+  "character": "CHR_Mob_CocoWarrior"
+ },
+ "SK_CrabGuardian": {
+  "folder": "/Game/MonkeIsland/Characters/CrabGuardian/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CrabGuardian/SK_CrabGuardian.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_CrabGuardian",
+  "character": "CHR_Mob_CrabGuardian"
+ },
+ "SK_CrabGuardian_ShellHammer": {
+  "folder": "/Game/MonkeIsland/Characters/CrabGuardian/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CrabGuardian/SK_CrabGuardian_ShellHammer.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_CrabGuardian",
+  "character": "CHR_Mob_CrabGuardian"
+ },
+ "SM_CrabGuardian_ShellHammer": {
+  "folder": "/Game/MonkeIsland/Characters/CrabGuardian/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CrabGuardian/SM_CrabGuardian_ShellHammer.fbx",
+  "group": "characters",
+  "kind": "SM",
+  "skeleton": null,
+  "character": "CHR_Mob_CrabGuardian"
+ },
+ "A_CrabGuardian_Idle": {
+  "folder": "/Game/MonkeIsland/Characters/CrabGuardian/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CrabGuardian/A_CrabGuardian_Idle.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CrabGuardian",
+  "character": "CHR_Mob_CrabGuardian"
+ },
+ "A_CrabGuardian_Walk": {
+  "folder": "/Game/MonkeIsland/Characters/CrabGuardian/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CrabGuardian/A_CrabGuardian_Walk.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CrabGuardian",
+  "character": "CHR_Mob_CrabGuardian"
+ },
+ "A_CrabGuardian_Run": {
+  "folder": "/Game/MonkeIsland/Characters/CrabGuardian/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CrabGuardian/A_CrabGuardian_Run.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CrabGuardian",
+  "character": "CHR_Mob_CrabGuardian"
+ },
+ "A_CrabGuardian_Attack": {
+  "folder": "/Game/MonkeIsland/Characters/CrabGuardian/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CrabGuardian/A_CrabGuardian_Attack.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CrabGuardian",
+  "character": "CHR_Mob_CrabGuardian"
+ },
+ "A_CrabGuardian_Hit": {
+  "folder": "/Game/MonkeIsland/Characters/CrabGuardian/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CrabGuardian/A_CrabGuardian_Hit.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CrabGuardian",
+  "character": "CHR_Mob_CrabGuardian"
+ },
+ "A_CrabGuardian_Death": {
+  "folder": "/Game/MonkeIsland/Characters/CrabGuardian/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/CrabGuardian/A_CrabGuardian_Death.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_CrabGuardian",
+  "character": "CHR_Mob_CrabGuardian"
+ },
+ "SK_AshWatcher": {
+  "folder": "/Game/MonkeIsland/Characters/AshWatcher/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/AshWatcher/SK_AshWatcher.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_AshWatcher",
+  "character": "CHR_Mob_AshWatcher"
+ },
+ "SK_AshWatcher_ObsidianClub": {
+  "folder": "/Game/MonkeIsland/Characters/AshWatcher/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/AshWatcher/SK_AshWatcher_ObsidianClub.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_AshWatcher",
+  "character": "CHR_Mob_AshWatcher"
+ },
+ "SM_AshWatcher_ObsidianClub": {
+  "folder": "/Game/MonkeIsland/Characters/AshWatcher/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/AshWatcher/SM_AshWatcher_ObsidianClub.fbx",
+  "group": "characters",
+  "kind": "SM",
+  "skeleton": null,
+  "character": "CHR_Mob_AshWatcher"
+ },
+ "A_AshWatcher_Idle": {
+  "folder": "/Game/MonkeIsland/Characters/AshWatcher/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/AshWatcher/A_AshWatcher_Idle.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_AshWatcher",
+  "character": "CHR_Mob_AshWatcher"
+ },
+ "A_AshWatcher_Walk": {
+  "folder": "/Game/MonkeIsland/Characters/AshWatcher/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/AshWatcher/A_AshWatcher_Walk.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_AshWatcher",
+  "character": "CHR_Mob_AshWatcher"
+ },
+ "A_AshWatcher_Run": {
+  "folder": "/Game/MonkeIsland/Characters/AshWatcher/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/AshWatcher/A_AshWatcher_Run.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_AshWatcher",
+  "character": "CHR_Mob_AshWatcher"
+ },
+ "A_AshWatcher_Attack": {
+  "folder": "/Game/MonkeIsland/Characters/AshWatcher/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/AshWatcher/A_AshWatcher_Attack.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_AshWatcher",
+  "character": "CHR_Mob_AshWatcher"
+ },
+ "A_AshWatcher_Hit": {
+  "folder": "/Game/MonkeIsland/Characters/AshWatcher/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/AshWatcher/A_AshWatcher_Hit.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_AshWatcher",
+  "character": "CHR_Mob_AshWatcher"
+ },
+ "A_AshWatcher_Death": {
+  "folder": "/Game/MonkeIsland/Characters/AshWatcher/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/AshWatcher/A_AshWatcher_Death.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_AshWatcher",
+  "character": "CHR_Mob_AshWatcher"
+ },
+ "SK_BrambleStalker": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/SK_BrambleStalker.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "SK_BrambleStalker_Blowgun": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/SK_BrambleStalker_Blowgun.fbx",
+  "group": "characters",
+  "kind": "SK",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "SM_BrambleStalker_Blowgun": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/SM_BrambleStalker_Blowgun.fbx",
+  "group": "characters",
+  "kind": "SM",
+  "skeleton": null,
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "A_BrambleStalker_Idle": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/A_BrambleStalker_Idle.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "A_BrambleStalker_Walk": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/A_BrambleStalker_Walk.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "A_BrambleStalker_Run": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/A_BrambleStalker_Run.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "A_BrambleStalker_Aim": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/A_BrambleStalker_Aim.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "A_BrambleStalker_Shoot": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/A_BrambleStalker_Shoot.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "A_BrambleStalker_Reload": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/A_BrambleStalker_Reload.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "A_BrambleStalker_Hit": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/A_BrambleStalker_Hit.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ },
+ "A_BrambleStalker_Death": {
+  "folder": "/Game/MonkeIsland/Characters/BrambleStalker/Anims",
+  "fbx": "C:/Users/matth/monk-island/art/export/Characters/BrambleStalker/A_BrambleStalker_Death.fbx",
+  "group": "characters",
+  "kind": "A",
+  "skeleton": "SKEL_BrambleStalker",
+  "character": "CHR_Mob_BrambleStalker"
+ }
+}

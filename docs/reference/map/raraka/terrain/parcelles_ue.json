@@ -1,0 +1,6202 @@
+[
+ {
+  "id": "162SL10",
+  "section": "SL",
+  "numero": 10,
+  "surface_m2": 697,
+  "center_ue_cm": {
+   "x": -960742.9,
+   "y": 105231.6
+  }
+ },
+ {
+  "id": "162RW12",
+  "section": "RW",
+  "numero": 12,
+  "surface_m2": 796,
+  "center_ue_cm": {
+   "x": 944340.4,
+   "y": 613175.7
+  }
+ },
+ {
+  "id": "162SD5",
+  "section": "SD",
+  "numero": 5,
+  "surface_m2": 4466,
+  "center_ue_cm": {
+   "x": -308416.1,
+   "y": 793758.0
+  }
+ },
+ {
+  "id": "162SV33",
+  "section": "SV",
+  "numero": 33,
+  "surface_m2": 1618,
+  "center_ue_cm": {
+   "x": -810808.6,
+   "y": -917713.3
+  }
+ },
+ {
+  "id": "162RK2",
+  "section": "RK",
+  "numero": 2,
+  "surface_m2": 6096,
+  "center_ue_cm": {
+   "x": 483098.0,
+   "y": -860060.6
+  }
+ },
+ {
+  "id": "162RA17",
+  "section": "RA",
+  "numero": 17,
+  "surface_m2": 4273,
+  "center_ue_cm": {
+   "x": -634783.1,
+   "y": -1027627.1
+  }
+ },
+ {
+  "id": "162SV19",
+  "section": "SV",
+  "numero": 19,
+  "surface_m2": 401,
+  "center_ue_cm": {
+   "x": -719536.8,
+   "y": -973044.0
+  }
+ },
+ {
+  "id": "162RK10",
+  "section": "RK",
+  "numero": 10,
+  "surface_m2": 58843,
+  "center_ue_cm": {
+   "x": 548754.3,
+   "y": -826197.9
+  }
+ },
+ {
+  "id": "162RD2",
+  "section": "RD",
+  "numero": 2,
+  "surface_m2": 26620,
+  "center_ue_cm": {
+   "x": -222072.8,
+   "y": -1096357.4
+  }
+ },
+ {
+  "id": "162RX13",
+  "section": "RX",
+  "numero": 13,
+  "surface_m2": 1536,
+  "center_ue_cm": {
+   "x": 808264.8,
+   "y": 766843.4
+  }
+ },
+ {
+  "id": "162RP5",
+  "section": "RP",
+  "numero": 5,
+  "surface_m2": 6883,
+  "center_ue_cm": {
+   "x": 1120271.0,
+   "y": -274502.8
+  }
+ },
+ {
+  "id": "162SS12",
+  "section": "SS",
+  "numero": 12,
+  "surface_m2": 22609,
+  "center_ue_cm": {
+   "x": -1113478.2,
+   "y": -757200.7
+  }
+ },
+ {
+  "id": "162SS5",
+  "section": "SS",
+  "numero": 5,
+  "surface_m2": 21904,
+  "center_ue_cm": {
+   "x": -1144520.1,
+   "y": -752092.1
+  }
+ },
+ {
+  "id": "162RO6",
+  "section": "RO",
+  "numero": 6,
+  "surface_m2": 6245,
+  "center_ue_cm": {
+   "x": 1045504.6,
+   "y": -406354.7
+  }
+ },
+ {
+  "id": "162RS22",
+  "section": "RS",
+  "numero": 22,
+  "surface_m2": 784,
+  "center_ue_cm": {
+   "x": 1186704.4,
+   "y": 287831.3
+  }
+ },
+ {
+  "id": "162RW8",
+  "section": "RW",
+  "numero": 8,
+  "surface_m2": 308,
+  "center_ue_cm": {
+   "x": 933722.3,
+   "y": 649888.6
+  }
+ },
+ {
+  "id": "162SR18",
+  "section": "SR",
+  "numero": 18,
+  "surface_m2": 103666,
+  "center_ue_cm": {
+   "x": -1193666.1,
+   "y": -684536.6
+  }
+ },
+ {
+  "id": "162RX2",
+  "section": "RX",
+  "numero": 2,
+  "surface_m2": 17869,
+  "center_ue_cm": {
+   "x": 743902.6,
+   "y": 850024.8
+  }
+ },
+ {
+  "id": "162RK5",
+  "section": "RK",
+  "numero": 5,
+  "surface_m2": 20074,
+  "center_ue_cm": {
+   "x": 521501.2,
+   "y": -842812.9
+  }
+ },
+ {
+  "id": "162RV2",
+  "section": "RV",
+  "numero": 2,
+  "surface_m2": 5881,
+  "center_ue_cm": {
+   "x": 1014549.6,
+   "y": 531909.7
+  }
+ },
+ {
+  "id": "162RH1",
+  "section": "RH",
+  "numero": 1,
+  "surface_m2": 2912,
+  "center_ue_cm": {
+   "x": 121582.3,
+   "y": -1005761.9
+  }
+ },
+ {
+  "id": "162RV9",
+  "section": "RV",
+  "numero": 9,
+  "surface_m2": 3259,
+  "center_ue_cm": {
+   "x": 1054001.8,
+   "y": 528663.4
+  }
+ },
+ {
+  "id": "162SV13",
+  "section": "SV",
+  "numero": 13,
+  "surface_m2": 15722,
+  "center_ue_cm": {
+   "x": -723096.0,
+   "y": -991744.1
+  }
+ },
+ {
+  "id": "162RS1",
+  "section": "RS",
+  "numero": 1,
+  "surface_m2": 15922,
+  "center_ue_cm": {
+   "x": 1210340.2,
+   "y": 112939.7
+  }
+ },
+ {
+  "id": "162RH9",
+  "section": "RH",
+  "numero": 9,
+  "surface_m2": 10555,
+  "center_ue_cm": {
+   "x": 283640.2,
+   "y": -936893.7
+  }
+ },
+ {
+  "id": "162RN3",
+  "section": "RN",
+  "numero": 3,
+  "surface_m2": 245102,
+  "center_ue_cm": {
+   "x": 990211.9,
+   "y": -491320.6
+  }
+ },
+ {
+  "id": "162RW17",
+  "section": "RW",
+  "numero": 17,
+  "surface_m2": 1809,
+  "center_ue_cm": {
+   "x": 989715.4,
+   "y": 588675.9
+  }
+ },
+ {
+  "id": "162RV26",
+  "section": "RV",
+  "numero": 26,
+  "surface_m2": 1505,
+  "center_ue_cm": {
+   "x": 1078622.3,
+   "y": 477321.3
+  }
+ },
+ {
+  "id": "162ST11",
+  "section": "ST",
+  "numero": 11,
+  "surface_m2": 25837,
+  "center_ue_cm": {
+   "x": -874960.2,
+   "y": -907198.9
+  }
+ },
+ {
+  "id": "162RR6",
+  "section": "RR",
+  "numero": 6,
+  "surface_m2": 40853,
+  "center_ue_cm": {
+   "x": 1206691.8,
+   "y": 73132.4
+  }
+ },
+ {
+  "id": "162RD6",
+  "section": "RD",
+  "numero": 6,
+  "surface_m2": 88272,
+  "center_ue_cm": {
+   "x": -126243.3,
+   "y": -1080293.3
+  }
+ },
+ {
+  "id": "162RS7",
+  "section": "RS",
+  "numero": 7,
+  "surface_m2": 101583,
+  "center_ue_cm": {
+   "x": 1231016.1,
+   "y": 180066.4
+  }
+ },
+ {
+  "id": "162SD7",
+  "section": "SD",
+  "numero": 7,
+  "surface_m2": 2133,
+  "center_ue_cm": {
+   "x": -284213.8,
+   "y": 805196.3
+  }
+ },
+ {
+  "id": "162SH8",
+  "section": "SH",
+  "numero": 8,
+  "surface_m2": 934,
+  "center_ue_cm": {
+   "x": -583175.7,
+   "y": 629829.2
+  }
+ },
+ {
+  "id": "162SP4",
+  "section": "SP",
+  "numero": 4,
+  "surface_m2": 62587,
+  "center_ue_cm": {
+   "x": -1218536.9,
+   "y": -537430.9
+  }
+ },
+ {
+  "id": "162RT19",
+  "section": "RT",
+  "numero": 19,
+  "surface_m2": 2154,
+  "center_ue_cm": {
+   "x": 1178632.3,
+   "y": 296324.8
+  }
+ },
+ {
+  "id": "162RT17",
+  "section": "RT",
+  "numero": 17,
+  "surface_m2": 1539,
+  "center_ue_cm": {
+   "x": 1158562.0,
+   "y": 289848.0
+  }
+ },
+ {
+  "id": "162SO10",
+  "section": "SO",
+  "numero": 10,
+  "surface_m2": 1984,
+  "center_ue_cm": {
+   "x": -1210766.9,
+   "y": -329851.1
+  }
+ },
+ {
+  "id": "162SK9",
+  "section": "SK",
+  "numero": 9,
+  "surface_m2": 8738,
+  "center_ue_cm": {
+   "x": -844598.8,
+   "y": 305331.2
+  }
+ },
+ {
+  "id": "162SV30",
+  "section": "SV",
+  "numero": 30,
+  "surface_m2": 7149,
+  "center_ue_cm": {
+   "x": -805256.1,
+   "y": -921454.6
+  }
+ },
+ {
+  "id": "162RI11",
+  "section": "RI",
+  "numero": 11,
+  "surface_m2": 57898,
+  "center_ue_cm": {
+   "x": 389403.4,
+   "y": -895467.9
+  }
+ },
+ {
+  "id": "162RX7",
+  "section": "RX",
+  "numero": 7,
+  "surface_m2": 344,
+  "center_ue_cm": {
+   "x": 779656.8,
+   "y": 820968.7
+  }
+ },
+ {
+  "id": "162RM7",
+  "section": "RM",
+  "numero": 7,
+  "surface_m2": 38911,
+  "center_ue_cm": {
+   "x": 840708.6,
+   "y": -610153.9
+  }
+ },
+ {
+  "id": "162RL6",
+  "section": "RL",
+  "numero": 6,
+  "surface_m2": 85742,
+  "center_ue_cm": {
+   "x": 676012.2,
+   "y": -749696.9
+  }
+ },
+ {
+  "id": "162SI16",
+  "section": "SI",
+  "numero": 16,
+  "surface_m2": 17020,
+  "center_ue_cm": {
+   "x": -753618.6,
+   "y": 469015.4
+  }
+ },
+ {
+  "id": "162SM17",
+  "section": "SM",
+  "numero": 17,
+  "surface_m2": 10306,
+  "center_ue_cm": {
+   "x": -1056200.7,
+   "y": -21478.9
+  }
+ },
+ {
+  "id": "162RA13",
+  "section": "RA",
+  "numero": 13,
+  "surface_m2": 4497,
+  "center_ue_cm": {
+   "x": -599625.4,
+   "y": -1045260.9
+  }
+ },
+ {
+  "id": "162SR7",
+  "section": "SR",
+  "numero": 7,
+  "surface_m2": 3930,
+  "center_ue_cm": {
+   "x": -1208829.5,
+   "y": -629895.2
+  }
+ },
+ {
+  "id": "162SN20",
+  "section": "SN",
+  "numero": 20,
+  "surface_m2": 179,
+  "center_ue_cm": {
+   "x": -1176389.6,
+   "y": -206159.5
+  }
+ },
+ {
+  "id": "162SK1",
+  "section": "SK",
+  "numero": 1,
+  "surface_m2": 8061,
+  "center_ue_cm": {
+   "x": -893021.8,
+   "y": 222752.1
+  }
+ },
+ {
+  "id": "162RA5",
+  "section": "RA",
+  "numero": 5,
+  "surface_m2": 3321,
+  "center_ue_cm": {
+   "x": -653687.6,
+   "y": -1034509.6
+  }
+ },
+ {
+  "id": "162SL24",
+  "section": "SL",
+  "numero": 24,
+  "surface_m2": 1229,
+  "center_ue_cm": {
+   "x": -907668.6,
+   "y": 198593.0
+  }
+ },
+ {
+  "id": "162SD8",
+  "section": "SD",
+  "numero": 8,
+  "surface_m2": 6527,
+  "center_ue_cm": {
+   "x": -249899.2,
+   "y": 824685.1
+  }
+ },
+ {
+  "id": "162RT10",
+  "section": "RT",
+  "numero": 10,
+  "surface_m2": 1959,
+  "center_ue_cm": {
+   "x": 1126266.4,
+   "y": 398261.3
+  }
+ },
+ {
+  "id": "162SV11",
+  "section": "SV",
+  "numero": 11,
+  "surface_m2": 34140,
+  "center_ue_cm": {
+   "x": -736395.0,
+   "y": -989897.3
+  }
+ },
+ {
+  "id": "162RB2",
+  "section": "RB",
+  "numero": 2,
+  "surface_m2": 17229,
+  "center_ue_cm": {
+   "x": -580351.9,
+   "y": -1050087.5
+  }
+ },
+ {
+  "id": "162SI11",
+  "section": "SI",
+  "numero": 11,
+  "surface_m2": 5464,
+  "center_ue_cm": {
+   "x": -788452.7,
+   "y": 438151.1
+  }
+ },
+ {
+  "id": "162SO8",
+  "section": "SO",
+  "numero": 8,
+  "surface_m2": 52742,
+  "center_ue_cm": {
+   "x": -1230219.2,
+   "y": -418890.2
+  }
+ },
+ {
+  "id": "162RV21",
+  "section": "RV",
+  "numero": 21,
+  "surface_m2": 5574,
+  "center_ue_cm": {
+   "x": 997585.8,
+   "y": 581788.5
+  }
+ },
+ {
+  "id": "162SL19",
+  "section": "SL",
+  "numero": 19,
+  "surface_m2": 18255,
+  "center_ue_cm": {
+   "x": -952525.2,
+   "y": 169317.7
+  }
+ },
+ {
+  "id": "162RX11",
+  "section": "RX",
+  "numero": 11,
+  "surface_m2": 472,
+  "center_ue_cm": {
+   "x": 772257.9,
+   "y": 837266.3
+  }
+ },
+ {
+  "id": "162SM18",
+  "section": "SM",
+  "numero": 18,
+  "surface_m2": 1025,
+  "center_ue_cm": {
+   "x": -1067668.4,
+   "y": -17522.5
+  }
+ },
+ {
+  "id": "162SO3",
+  "section": "SO",
+  "numero": 3,
+  "surface_m2": 23263,
+  "center_ue_cm": {
+   "x": -1239415.2,
+   "y": -339154.2
+  }
+ },
+ {
+  "id": "162SV6",
+  "section": "SV",
+  "numero": 6,
+  "surface_m2": 23556,
+  "center_ue_cm": {
+   "x": -795334.9,
+   "y": -960734.0
+  }
+ },
+ {
+  "id": "162RI12",
+  "section": "RI",
+  "numero": 12,
+  "surface_m2": 11014,
+  "center_ue_cm": {
+   "x": 409434.6,
+   "y": -889212.6
+  }
+ },
+ {
+  "id": "162RO13",
+  "section": "RO",
+  "numero": 13,
+  "surface_m2": 21204,
+  "center_ue_cm": {
+   "x": 1136800.0,
+   "y": -303846.9
+  }
+ },
+ {
+  "id": "162RE1",
+  "section": "RE",
+  "numero": 1,
+  "surface_m2": 223,
+  "center_ue_cm": {
+   "x": -49612.3,
+   "y": -1072379.7
+  }
+ },
+ {
+  "id": "162SV37",
+  "section": "SV",
+  "numero": 37,
+  "surface_m2": 10728,
+  "center_ue_cm": {
+   "x": -841795.9,
+   "y": -900159.4
+  }
+ },
+ {
+  "id": "162RV17",
+  "section": "RV",
+  "numero": 17,
+  "surface_m2": 148,
+  "center_ue_cm": {
+   "x": 1021866.9,
+   "y": 567025.6
+  }
+ },
+ {
+  "id": "162SS13",
+  "section": "SS",
+  "numero": 13,
+  "surface_m2": 5336,
+  "center_ue_cm": {
+   "x": -1108324.8,
+   "y": -759164.0
+  }
+ },
+ {
+  "id": "162RC7",
+  "section": "RC",
+  "numero": 7,
+  "surface_m2": 20713,
+  "center_ue_cm": {
+   "x": -306176.5,
+   "y": -1097805.7
+  }
+ },
+ {
+  "id": "162RD8",
+  "section": "RD",
+  "numero": 8,
+  "surface_m2": 7262,
+  "center_ue_cm": {
+   "x": -76803.6,
+   "y": -1076264.4
+  }
+ },
+ {
+  "id": "162ST7",
+  "section": "ST",
+  "numero": 7,
+  "surface_m2": 27210,
+  "center_ue_cm": {
+   "x": -902602.3,
+   "y": -886417.4
+  }
+ },
+ {
+  "id": "162RY10",
+  "section": "RY",
+  "numero": 10,
+  "surface_m2": 625,
+  "center_ue_cm": {
+   "x": 709163.1,
+   "y": 891805.6
+  }
+ },
+ {
+  "id": "162RL28",
+  "section": "RL",
+  "numero": 28,
+  "surface_m2": 1565,
+  "center_ue_cm": {
+   "x": 725970.2,
+   "y": -703495.2
+  }
+ },
+ {
+  "id": "162RC1",
+  "section": "RC",
+  "numero": 1,
+  "surface_m2": 32993,
+  "center_ue_cm": {
+   "x": -406186.8,
+   "y": -1091092.4
+  }
+ },
+ {
+  "id": "162RI13",
+  "section": "RI",
+  "numero": 13,
+  "surface_m2": 88318,
+  "center_ue_cm": {
+   "x": 438616.1,
+   "y": -877808.1
+  }
+ },
+ {
+  "id": "162SR3",
+  "section": "SR",
+  "numero": 3,
+  "surface_m2": 3061,
+  "center_ue_cm": {
+   "x": -1200862.2,
+   "y": -608394.0
+  }
+ },
+ {
+  "id": "162SV25",
+  "section": "SV",
+  "numero": 25,
+  "surface_m2": 4722,
+  "center_ue_cm": {
+   "x": -743760.5,
+   "y": -966714.3
+  }
+ },
+ {
+  "id": "162SL16",
+  "section": "SL",
+  "numero": 16,
+  "surface_m2": 1169,
+  "center_ue_cm": {
+   "x": -941628.7,
+   "y": 147724.4
+  }
+ },
+ {
+  "id": "162RA46",
+  "section": "RA",
+  "numero": 46,
+  "surface_m2": 1460,
+  "center_ue_cm": {
+   "x": -654062.0,
+   "y": -1009446.9
+  }
+ },
+ {
+  "id": "162RV16",
+  "section": "RV",
+  "numero": 16,
+  "surface_m2": 3870,
+  "center_ue_cm": {
+   "x": 1027288.4,
+   "y": 561972.8
+  }
+ },
+ {
+  "id": "162RD3",
+  "section": "RD",
+  "numero": 3,
+  "surface_m2": 79927,
+  "center_ue_cm": {
+   "x": -199186.3,
+   "y": -1097108.4
+  }
+ },
+ {
+  "id": "162SN19",
+  "section": "SN",
+  "numero": 19,
+  "surface_m2": 230,
+  "center_ue_cm": {
+   "x": -1173640.0,
+   "y": -209524.2
+  }
+ },
+ {
+  "id": "162RV8",
+  "section": "RV",
+  "numero": 8,
+  "surface_m2": 302,
+  "center_ue_cm": {
+   "x": 1056505.6,
+   "y": 524535.8
+  }
+ },
+ {
+  "id": "162ST13",
+  "section": "ST",
+  "numero": 13,
+  "surface_m2": 1992,
+  "center_ue_cm": {
+   "x": -868527.2,
+   "y": -890258.6
+  }
+ },
+ {
+  "id": "162SD3",
+  "section": "SD",
+  "numero": 3,
+  "surface_m2": 10079,
+  "center_ue_cm": {
+   "x": -345173.7,
+   "y": 773339.7
+  }
+ },
+ {
+  "id": "162RK3",
+  "section": "RK",
+  "numero": 3,
+  "surface_m2": 923,
+  "center_ue_cm": {
+   "x": 490280.1,
+   "y": -854171.9
+  }
+ },
+ {
+  "id": "162RS3",
+  "section": "RS",
+  "numero": 3,
+  "surface_m2": 7291,
+  "center_ue_cm": {
+   "x": 1218897.7,
+   "y": 125348.5
+  }
+ },
+ {
+  "id": "162RC8",
+  "section": "RC",
+  "numero": 8,
+  "surface_m2": 49282,
+  "center_ue_cm": {
+   "x": -292328.8,
+   "y": -1098412.4
+  }
+ },
+ {
+  "id": "162SL13",
+  "section": "SL",
+  "numero": 13,
+  "surface_m2": 421,
+  "center_ue_cm": {
+   "x": -948258.7,
+   "y": 106225.1
+  }
+ },
+ {
+  "id": "162RT18",
+  "section": "RT",
+  "numero": 18,
+  "surface_m2": 863,
+  "center_ue_cm": {
+   "x": 1183316.1,
+   "y": 293912.5
+  }
+ },
+ {
+  "id": "162SM14",
+  "section": "SM",
+  "numero": 14,
+  "surface_m2": 9335,
+  "center_ue_cm": {
+   "x": -1082742.5,
+   "y": -51803.0
+  }
+ },
+ {
+  "id": "162RI4",
+  "section": "RI",
+  "numero": 4,
+  "surface_m2": 920,
+  "center_ue_cm": {
+   "x": 329407.8,
+   "y": -902035.0
+  }
+ },
+ {
+  "id": "162SL29",
+  "section": "SL",
+  "numero": 29,
+  "surface_m2": 845,
+  "center_ue_cm": {
+   "x": -893881.1,
+   "y": 211351.4
+  }
+ },
+ {
+  "id": "162RN1",
+  "section": "RN",
+  "numero": 1,
+  "surface_m2": 214455,
+  "center_ue_cm": {
+   "x": 920143.4,
+   "y": -554240.8
+  }
+ },
+ {
+  "id": "162RA4",
+  "section": "RA",
+  "numero": 4,
+  "surface_m2": 1200,
+  "center_ue_cm": {
+   "x": -655490.8,
+   "y": -1023232.9
+  }
+ },
+ {
+  "id": "162RV29",
+  "section": "RV",
+  "numero": 29,
+  "surface_m2": 557,
+  "center_ue_cm": {
+   "x": 1071375.8,
+   "y": 493013.5
+  }
+ },
+ {
+  "id": "162SN23",
+  "section": "SN",
+  "numero": 23,
+  "surface_m2": 9507,
+  "center_ue_cm": {
+   "x": -1175531.3,
+   "y": -178799.2
+  }
+ },
+ {
+  "id": "162SS18",
+  "section": "SS",
+  "numero": 18,
+  "surface_m2": 178023,
+  "center_ue_cm": {
+   "x": -1054745.6,
+   "y": -790338.8
+  }
+ },
+ {
+  "id": "162SP1",
+  "section": "SP",
+  "numero": 1,
+  "surface_m2": 113332,
+  "center_ue_cm": {
+   "x": -1233919.6,
+   "y": -466651.6
+  }
+ },
+ {
+  "id": "162SO7",
+  "section": "SO",
+  "numero": 7,
+  "surface_m2": 67525,
+  "center_ue_cm": {
+   "x": -1235259.4,
+   "y": -395066.4
+  }
+ },
+ {
+  "id": "162SV39",
+  "section": "SV",
+  "numero": 39,
+  "surface_m2": 641,
+  "center_ue_cm": {
+   "x": -702235.3,
+   "y": -973900.2
+  }
+ },
+ {
+  "id": "162SV10",
+  "section": "SV",
+  "numero": 10,
+  "surface_m2": 15952,
+  "center_ue_cm": {
+   "x": -747421.2,
+   "y": -985039.1
+  }
+ },
+ {
+  "id": "162RV12",
+  "section": "RV",
+  "numero": 12,
+  "surface_m2": 383,
+  "center_ue_cm": {
+   "x": 1041018.2,
+   "y": 540965.4
+  }
+ },
+ {
+  "id": "162RT8",
+  "section": "RT",
+  "numero": 8,
+  "surface_m2": 371,
+  "center_ue_cm": {
+   "x": 1130046.2,
+   "y": 387180.7
+  }
+ },
+ {
+  "id": "162SV18",
+  "section": "SV",
+  "numero": 18,
+  "surface_m2": 2142,
+  "center_ue_cm": {
+   "x": -717903.9,
+   "y": -976341.0
+  }
+ },
+ {
+  "id": "162ST4",
+  "section": "ST",
+  "numero": 4,
+  "surface_m2": 11597,
+  "center_ue_cm": {
+   "x": -933365.0,
+   "y": -867768.2
+  }
+ },
+ {
+  "id": "162RW11",
+  "section": "RW",
+  "numero": 11,
+  "surface_m2": 385,
+  "center_ue_cm": {
+   "x": 946023.6,
+   "y": 631599.9
+  }
+ },
+ {
+  "id": "162SK7",
+  "section": "SK",
+  "numero": 7,
+  "surface_m2": 12750,
+  "center_ue_cm": {
+   "x": -864554.9,
+   "y": 294788.9
+  }
+ },
+ {
+  "id": "162SL2",
+  "section": "SL",
+  "numero": 2,
+  "surface_m2": 455,
+  "center_ue_cm": {
+   "x": -1006306.4,
+   "y": 50071.6
+  }
+ },
+ {
+  "id": "162RI9",
+  "section": "RI",
+  "numero": 9,
+  "surface_m2": 3846,
+  "center_ue_cm": {
+   "x": 364689.7,
+   "y": -906640.4
+  }
+ },
+ {
+  "id": "162RB11",
+  "section": "RB",
+  "numero": 11,
+  "surface_m2": 46976,
+  "center_ue_cm": {
+   "x": -497502.1,
+   "y": -1075988.5
+  }
+ },
+ {
+  "id": "162SM23",
+  "section": "SM",
+  "numero": 23,
+  "surface_m2": 6429,
+  "center_ue_cm": {
+   "x": -1033097.4,
+   "y": 34563.1
+  }
+ },
+ {
+  "id": "162ST12",
+  "section": "ST",
+  "numero": 12,
+  "surface_m2": 10591,
+  "center_ue_cm": {
+   "x": -866258.7,
+   "y": -902655.5
+  }
+ },
+ {
+  "id": "162RW16",
+  "section": "RW",
+  "numero": 16,
+  "surface_m2": 3360,
+  "center_ue_cm": {
+   "x": 981278.9,
+   "y": 576195.4
+  }
+ },
+ {
+  "id": "162RA11",
+  "section": "RA",
+  "numero": 11,
+  "surface_m2": 11806,
+  "center_ue_cm": {
+   "x": -611410.7,
+   "y": -1045272.5
+  }
+ },
+ {
+  "id": "162RE3",
+  "section": "RE",
+  "numero": 3,
+  "surface_m2": 10176,
+  "center_ue_cm": {
+   "x": -31322.0,
+   "y": -1067747.0
+  }
+ },
+ {
+  "id": "162RA45",
+  "section": "RA",
+  "numero": 45,
+  "surface_m2": 1235,
+  "center_ue_cm": {
+   "x": -671841.8,
+   "y": -991047.9
+  }
+ },
+ {
+  "id": "162RC3",
+  "section": "RC",
+  "numero": 3,
+  "surface_m2": 30075,
+  "center_ue_cm": {
+   "x": -374560.7,
+   "y": -1098681.9
+  }
+ },
+ {
+  "id": "162RY4",
+  "section": "RY",
+  "numero": 4,
+  "surface_m2": 47388,
+  "center_ue_cm": {
+   "x": 693886.0,
+   "y": 967665.7
+  }
+ },
+ {
+  "id": "162RO11",
+  "section": "RO",
+  "numero": 11,
+  "surface_m2": 53425,
+  "center_ue_cm": {
+   "x": 1113318.2,
+   "y": -337134.4
+  }
+ },
+ {
+  "id": "162ST3",
+  "section": "ST",
+  "numero": 3,
+  "surface_m2": 27902,
+  "center_ue_cm": {
+   "x": -944823.2,
+   "y": -860562.5
+  }
+ },
+ {
+  "id": "162SR20",
+  "section": "SR",
+  "numero": 20,
+  "surface_m2": 24015,
+  "center_ue_cm": {
+   "x": -1167789.0,
+   "y": -704364.8
+  }
+ },
+ {
+  "id": "162SM6",
+  "section": "SM",
+  "numero": 6,
+  "surface_m2": 1295,
+  "center_ue_cm": {
+   "x": -1107716.8,
+   "y": -108376.9
+  }
+ },
+ {
+  "id": "162SC2",
+  "section": "SC",
+  "numero": 2,
+  "surface_m2": 5691,
+  "center_ue_cm": {
+   "x": -89483.8,
+   "y": 939672.4
+  }
+ },
+ {
+  "id": "162RT16",
+  "section": "RT",
+  "numero": 16,
+  "surface_m2": 1282,
+  "center_ue_cm": {
+   "x": 1149741.0,
+   "y": 303288.4
+  }
+ },
+ {
+  "id": "162SL18",
+  "section": "SL",
+  "numero": 18,
+  "surface_m2": 6560,
+  "center_ue_cm": {
+   "x": -937248.4,
+   "y": 162673.0
+  }
+ },
+ {
+  "id": "162RS2",
+  "section": "RS",
+  "numero": 2,
+  "surface_m2": 9173,
+  "center_ue_cm": {
+   "x": 1217162.3,
+   "y": 121460.0
+  }
+ },
+ {
+  "id": "162SL1",
+  "section": "SL",
+  "numero": 1,
+  "surface_m2": 761,
+  "center_ue_cm": {
+   "x": -1001813.4,
+   "y": 46446.1
+  }
+ },
+ {
+  "id": "162RC6",
+  "section": "RC",
+  "numero": 6,
+  "surface_m2": 29063,
+  "center_ue_cm": {
+   "x": -316589.5,
+   "y": -1098736.2
+  }
+ },
+ {
+  "id": "162SH4",
+  "section": "SH",
+  "numero": 4,
+  "surface_m2": 2815,
+  "center_ue_cm": {
+   "x": -668583.8,
+   "y": 581229.4
+  }
+ },
+ {
+  "id": "162RM5",
+  "section": "RM",
+  "numero": 5,
+  "surface_m2": 26727,
+  "center_ue_cm": {
+   "x": 811955.3,
+   "y": -632268.1
+  }
+ },
+ {
+  "id": "162SR13",
+  "section": "SR",
+  "numero": 13,
+  "surface_m2": 2846,
+  "center_ue_cm": {
+   "x": -1192433.0,
+   "y": -640503.0
+  }
+ },
+ {
+  "id": "162RK13",
+  "section": "RK",
+  "numero": 13,
+  "surface_m2": 2383,
+  "center_ue_cm": {
+   "x": 602131.8,
+   "y": -789638.2
+  }
+ },
+ {
+  "id": "162SL26",
+  "section": "SL",
+  "numero": 26,
+  "surface_m2": 103,
+  "center_ue_cm": {
+   "x": -897885.2,
+   "y": 206469.6
+  }
+ },
+ {
+  "id": "162SM11",
+  "section": "SM",
+  "numero": 11,
+  "surface_m2": 239,
+  "center_ue_cm": {
+   "x": -1100385.5,
+   "y": -82701.4
+  }
+ },
+ {
+  "id": "162RX1",
+  "section": "RX",
+  "numero": 1,
+  "surface_m2": 12431,
+  "center_ue_cm": {
+   "x": 737087.8,
+   "y": 861073.6
+  }
+ },
+ {
+  "id": "162RV1",
+  "section": "RV",
+  "numero": 1,
+  "surface_m2": 4316,
+  "center_ue_cm": {
+   "x": 991403.5,
+   "y": 563004.0
+  }
+ },
+ {
+  "id": "162RA8",
+  "section": "RA",
+  "numero": 8,
+  "surface_m2": 13564,
+  "center_ue_cm": {
+   "x": -641461.6,
+   "y": -1036730.3
+  }
+ },
+ {
+  "id": "162RZ13",
+  "section": "RZ",
+  "numero": 13,
+  "surface_m2": 578,
+  "center_ue_cm": {
+   "x": 631482.5,
+   "y": 1052307.1
+  }
+ },
+ {
+  "id": "162SK8",
+  "section": "SK",
+  "numero": 8,
+  "surface_m2": 785,
+  "center_ue_cm": {
+   "x": -856922.3,
+   "y": 292746.0
+  }
+ },
+ {
+  "id": "162RA18",
+  "section": "RA",
+  "numero": 18,
+  "surface_m2": 3279,
+  "center_ue_cm": {
+   "x": -635355.3,
+   "y": -1020390.6
+  }
+ },
+ {
+  "id": "162SN13",
+  "section": "SN",
+  "numero": 13,
+  "surface_m2": 2752,
+  "center_ue_cm": {
+   "x": -1185305.2,
+   "y": -231123.3
+  }
+ },
+ {
+  "id": "162RA23",
+  "section": "RA",
+  "numero": 23,
+  "surface_m2": 1963,
+  "center_ue_cm": {
+   "x": -648990.3,
+   "y": -1014339.3
+  }
+ },
+ {
+  "id": "162RY7",
+  "section": "RY",
+  "numero": 7,
+  "surface_m2": 12210,
+  "center_ue_cm": {
+   "x": 699837.0,
+   "y": 909657.4
+  }
+ },
+ {
+  "id": "162RH6",
+  "section": "RH",
+  "numero": 6,
+  "surface_m2": 2188,
+  "center_ue_cm": {
+   "x": 144739.1,
+   "y": -999570.7
+  }
+ },
+ {
+  "id": "162SB7",
+  "section": "SB",
+  "numero": 7,
+  "surface_m2": 2164,
+  "center_ue_cm": {
+   "x": 128238.6,
+   "y": 1041185.4
+  }
+ },
+ {
+  "id": "162ST14",
+  "section": "ST",
+  "numero": 14,
+  "surface_m2": 3135,
+  "center_ue_cm": {
+   "x": -871752.8,
+   "y": -889255.3
+  }
+ },
+ {
+  "id": "162SI14",
+  "section": "SI",
+  "numero": 14,
+  "surface_m2": 116,
+  "center_ue_cm": {
+   "x": -779936.6,
+   "y": 427725.8
+  }
+ },
+ {
+  "id": "162SV27",
+  "section": "SV",
+  "numero": 27,
+  "surface_m2": 2169,
+  "center_ue_cm": {
+   "x": -781662.7,
+   "y": -943339.6
+  }
+ },
+ {
+  "id": "162SI6",
+  "section": "SI",
+  "numero": 6,
+  "surface_m2": 6735,
+  "center_ue_cm": {
+   "x": -764775.3,
+   "y": 441227.5
+  }
+ },
+ {
+  "id": "162RM9",
+  "section": "RM",
+  "numero": 9,
+  "surface_m2": 107157,
+  "center_ue_cm": {
+   "x": 883543.5,
+   "y": -588184.1
+  }
+ },
+ {
+  "id": "162SB2",
+  "section": "SB",
+  "numero": 2,
+  "surface_m2": 476,
+  "center_ue_cm": {
+   "x": 57822.9,
+   "y": 997262.9
+  }
+ },
+ {
+  "id": "162RC5",
+  "section": "RC",
+  "numero": 5,
+  "surface_m2": 53099,
+  "center_ue_cm": {
+   "x": -341844.9,
+   "y": -1097301.7
+  }
+ },
+ {
+  "id": "162RI8",
+  "section": "RI",
+  "numero": 8,
+  "surface_m2": 3380,
+  "center_ue_cm": {
+   "x": 360441.4,
+   "y": -909791.0
+  }
+ },
+ {
+  "id": "162SI9",
+  "section": "SI",
+  "numero": 9,
+  "surface_m2": 559,
+  "center_ue_cm": {
+   "x": -786051.4,
+   "y": 447353.7
+  }
+ },
+ {
+  "id": "162SR9",
+  "section": "SR",
+  "numero": 9,
+  "surface_m2": 1453,
+  "center_ue_cm": {
+   "x": -1193230.7,
+   "y": -634188.9
+  }
+ },
+ {
+  "id": "162RA22",
+  "section": "RA",
+  "numero": 22,
+  "surface_m2": 1739,
+  "center_ue_cm": {
+   "x": -646077.3,
+   "y": -1015834.0
+  }
+ },
+ {
+  "id": "162RK7",
+  "section": "RK",
+  "numero": 7,
+  "surface_m2": 674,
+  "center_ue_cm": {
+   "x": 519520.1,
+   "y": -832562.4
+  }
+ },
+ {
+  "id": "162SM12",
+  "section": "SM",
+  "numero": 12,
+  "surface_m2": 7831,
+  "center_ue_cm": {
+   "x": -1101343.5,
+   "y": -76065.9
+  }
+ },
+ {
+  "id": "162RO2",
+  "section": "RO",
+  "numero": 2,
+  "surface_m2": 47067,
+  "center_ue_cm": {
+   "x": 1063582.3,
+   "y": -427683.2
+  }
+ },
+ {
+  "id": "162SN6",
+  "section": "SN",
+  "numero": 6,
+  "surface_m2": 26181,
+  "center_ue_cm": {
+   "x": -1212224.6,
+   "y": -254162.3
+  }
+ },
+ {
+  "id": "162RP12",
+  "section": "RP",
+  "numero": 12,
+  "surface_m2": 26247,
+  "center_ue_cm": {
+   "x": 1130873.4,
+   "y": -215214.9
+  }
+ },
+ {
+  "id": "162SI24",
+  "section": "SI",
+  "numero": 24,
+  "surface_m2": 10958,
+  "center_ue_cm": {
+   "x": -707510.9,
+   "y": 534424.4
+  }
+ },
+ {
+  "id": "162SL11",
+  "section": "SL",
+  "numero": 11,
+  "surface_m2": 138,
+  "center_ue_cm": {
+   "x": -965254.7,
+   "y": 106325.6
+  }
+ },
+ {
+  "id": "162SS6",
+  "section": "SS",
+  "numero": 6,
+  "surface_m2": 15969,
+  "center_ue_cm": {
+   "x": -1133764.4,
+   "y": -735952.9
+  }
+ },
+ {
+  "id": "162RI7",
+  "section": "RI",
+  "numero": 7,
+  "surface_m2": 716,
+  "center_ue_cm": {
+   "x": 356032.4,
+   "y": -905610.0
+  }
+ },
+ {
+  "id": "162RL16",
+  "section": "RL",
+  "numero": 16,
+  "surface_m2": 9232,
+  "center_ue_cm": {
+   "x": 758871.9,
+   "y": -676087.4
+  }
+ },
+ {
+  "id": "162RI10",
+  "section": "RI",
+  "numero": 10,
+  "surface_m2": 6263,
+  "center_ue_cm": {
+   "x": 372934.3,
+   "y": -903058.4
+  }
+ },
+ {
+  "id": "162SN25",
+  "section": "SN",
+  "numero": 25,
+  "surface_m2": 22609,
+  "center_ue_cm": {
+   "x": -1175557.1,
+   "y": -156971.2
+  }
+ },
+ {
+  "id": "162SH9",
+  "section": "SH",
+  "numero": 9,
+  "surface_m2": 796,
+  "center_ue_cm": {
+   "x": -563418.3,
+   "y": 628183.7
+  }
+ },
+ {
+  "id": "162RO7",
+  "section": "RO",
+  "numero": 7,
+  "surface_m2": 56056,
+  "center_ue_cm": {
+   "x": 1061731.7,
+   "y": -399440.8
+  }
+ },
+ {
+  "id": "162SL15",
+  "section": "SL",
+  "numero": 15,
+  "surface_m2": 31606,
+  "center_ue_cm": {
+   "x": -976543.3,
+   "y": 130239.4
+  }
+ },
+ {
+  "id": "162SR8",
+  "section": "SR",
+  "numero": 8,
+  "surface_m2": 6914,
+  "center_ue_cm": {
+   "x": -1197590.1,
+   "y": -628563.5
+  }
+ },
+ {
+  "id": "162SL12",
+  "section": "SL",
+  "numero": 12,
+  "surface_m2": 7175,
+  "center_ue_cm": {
+   "x": -979591.7,
+   "y": 111972.9
+  }
+ },
+ {
+  "id": "162SR15",
+  "section": "SR",
+  "numero": 15,
+  "surface_m2": 4547,
+  "center_ue_cm": {
+   "x": -1187550.0,
+   "y": -658199.3
+  }
+ },
+ {
+  "id": "162RV13",
+  "section": "RV",
+  "numero": 13,
+  "surface_m2": 6210,
+  "center_ue_cm": {
+   "x": 1040141.1,
+   "y": 548526.1
+  }
+ },
+ {
+  "id": "162RA14",
+  "section": "RA",
+  "numero": 14,
+  "surface_m2": 12094,
+  "center_ue_cm": {
+   "x": -603368.8,
+   "y": -1035993.5
+  }
+ },
+ {
+  "id": "162RA15",
+  "section": "RA",
+  "numero": 15,
+  "surface_m2": 1393,
+  "center_ue_cm": {
+   "x": -631569.3,
+   "y": -1024551.1
+  }
+ },
+ {
+  "id": "162RH7",
+  "section": "RH",
+  "numero": 7,
+  "surface_m2": 55284,
+  "center_ue_cm": {
+   "x": 170962.9,
+   "y": -987709.6
+  }
+ },
+ {
+  "id": "162RS17",
+  "section": "RS",
+  "numero": 17,
+  "surface_m2": 1312,
+  "center_ue_cm": {
+   "x": 1199118.3,
+   "y": 251171.9
+  }
+ },
+ {
+  "id": "162SL5",
+  "section": "SL",
+  "numero": 5,
+  "surface_m2": 154,
+  "center_ue_cm": {
+   "x": -1017665.8,
+   "y": 79727.0
+  }
+ },
+ {
+  "id": "162RH2",
+  "section": "RH",
+  "numero": 2,
+  "surface_m2": 3015,
+  "center_ue_cm": {
+   "x": 125333.3,
+   "y": -1007548.6
+  }
+ },
+ {
+  "id": "162RK8",
+  "section": "RK",
+  "numero": 8,
+  "surface_m2": 781,
+  "center_ue_cm": {
+   "x": 509050.4,
+   "y": -837563.3
+  }
+ },
+ {
+  "id": "162SC4",
+  "section": "SC",
+  "numero": 4,
+  "surface_m2": 7743,
+  "center_ue_cm": {
+   "x": -46737.1,
+   "y": 972440.8
+  }
+ },
+ {
+  "id": "162RL1",
+  "section": "RL",
+  "numero": 1,
+  "surface_m2": 46651,
+  "center_ue_cm": {
+   "x": 634660.3,
+   "y": -780074.0
+  }
+ },
+ {
+  "id": "162RA16",
+  "section": "RA",
+  "numero": 16,
+  "surface_m2": 3406,
+  "center_ue_cm": {
+   "x": -628878.4,
+   "y": -1029030.5
+  }
+ },
+ {
+  "id": "162SM5",
+  "section": "SM",
+  "numero": 5,
+  "surface_m2": 4727,
+  "center_ue_cm": {
+   "x": -1111867.3,
+   "y": -115618.5
+  }
+ },
+ {
+  "id": "162RC4",
+  "section": "RC",
+  "numero": 4,
+  "surface_m2": 34088,
+  "center_ue_cm": {
+   "x": -356181.4,
+   "y": -1095440.1
+  }
+ },
+ {
+  "id": "162RA35",
+  "section": "RA",
+  "numero": 35,
+  "surface_m2": 2400,
+  "center_ue_cm": {
+   "x": -660962.0,
+   "y": -1012319.4
+  }
+ },
+ {
+  "id": "162RO9",
+  "section": "RO",
+  "numero": 9,
+  "surface_m2": 34490,
+  "center_ue_cm": {
+   "x": 1093501.5,
+   "y": -364207.0
+  }
+ },
+ {
+  "id": "162RL24",
+  "section": "RL",
+  "numero": 24,
+  "surface_m2": 8440,
+  "center_ue_cm": {
+   "x": 746964.4,
+   "y": -702519.9
+  }
+ },
+ {
+  "id": "162RT1",
+  "section": "RT",
+  "numero": 1,
+  "surface_m2": 706,
+  "center_ue_cm": {
+   "x": 1105165.9,
+   "y": 436194.8
+  }
+ },
+ {
+  "id": "162RE8",
+  "section": "RE",
+  "numero": 8,
+  "surface_m2": 4042,
+  "center_ue_cm": {
+   "x": 2872.4,
+   "y": -1057177.1
+  }
+ },
+ {
+  "id": "162RS5",
+  "section": "RS",
+  "numero": 5,
+  "surface_m2": 32139,
+  "center_ue_cm": {
+   "x": 1216421.2,
+   "y": 149092.0
+  }
+ },
+ {
+  "id": "162RT20",
+  "section": "RT",
+  "numero": 20,
+  "surface_m2": 293,
+  "center_ue_cm": {
+   "x": 1175594.6,
+   "y": 302454.3
+  }
+ },
+ {
+  "id": "162RA27",
+  "section": "RA",
+  "numero": 27,
+  "surface_m2": 3036,
+  "center_ue_cm": {
+   "x": -650153.5,
+   "y": -1021179.2
+  }
+ },
+ {
+  "id": "162SI18",
+  "section": "SI",
+  "numero": 18,
+  "surface_m2": 850,
+  "center_ue_cm": {
+   "x": -754847.0,
+   "y": 484927.9
+  }
+ },
+ {
+  "id": "162SD4",
+  "section": "SD",
+  "numero": 4,
+  "surface_m2": 10410,
+  "center_ue_cm": {
+   "x": -331661.6,
+   "y": 782910.7
+  }
+ },
+ {
+  "id": "162SL17",
+  "section": "SL",
+  "numero": 17,
+  "surface_m2": 5756,
+  "center_ue_cm": {
+   "x": -948984.7,
+   "y": 156878.5
+  }
+ },
+ {
+  "id": "162RA34",
+  "section": "RA",
+  "numero": 34,
+  "surface_m2": 1029,
+  "center_ue_cm": {
+   "x": -657853.6,
+   "y": -1013140.4
+  }
+ },
+ {
+  "id": "162SI8",
+  "section": "SI",
+  "numero": 8,
+  "surface_m2": 1274,
+  "center_ue_cm": {
+   "x": -788736.3,
+   "y": 458732.4
+  }
+ },
+ {
+  "id": "162RR5",
+  "section": "RR",
+  "numero": 5,
+  "surface_m2": 35196,
+  "center_ue_cm": {
+   "x": 1205631.0,
+   "y": 39672.5
+  }
+ },
+ {
+  "id": "162SR19",
+  "section": "SR",
+  "numero": 19,
+  "surface_m2": 54198,
+  "center_ue_cm": {
+   "x": -1184550.1,
+   "y": -709751.3
+  }
+ },
+ {
+  "id": "162RX19",
+  "section": "RX",
+  "numero": 19,
+  "surface_m2": 365,
+  "center_ue_cm": {
+   "x": 807753.7,
+   "y": 795710.5
+  }
+ },
+ {
+  "id": "162RK15",
+  "section": "RK",
+  "numero": 15,
+  "surface_m2": 5406,
+  "center_ue_cm": {
+   "x": 613092.5,
+   "y": -797115.2
+  }
+ },
+ {
+  "id": "162RK1",
+  "section": "RK",
+  "numero": 1,
+  "surface_m2": 10817,
+  "center_ue_cm": {
+   "x": 470612.9,
+   "y": -865155.4
+  }
+ },
+ {
+  "id": "162RP16",
+  "section": "RP",
+  "numero": 16,
+  "surface_m2": 3944,
+  "center_ue_cm": {
+   "x": 1158516.5,
+   "y": -106903.9
+  }
+ },
+ {
+  "id": "162ST6",
+  "section": "ST",
+  "numero": 6,
+  "surface_m2": 55575,
+  "center_ue_cm": {
+   "x": -917292.0,
+   "y": -878311.6
+  }
+ },
+ {
+  "id": "162RT5",
+  "section": "RT",
+  "numero": 5,
+  "surface_m2": 4797,
+  "center_ue_cm": {
+   "x": 1111855.9,
+   "y": 376290.9
+  }
+ },
+ {
+  "id": "162SN7",
+  "section": "SN",
+  "numero": 7,
+  "surface_m2": 1074,
+  "center_ue_cm": {
+   "x": -1187714.3,
+   "y": -269357.7
+  }
+ },
+ {
+  "id": "162RT21",
+  "section": "RT",
+  "numero": 21,
+  "surface_m2": 1287,
+  "center_ue_cm": {
+   "x": 1169141.0,
+   "y": 302466.4
+  }
+ },
+ {
+  "id": "162RT3",
+  "section": "RT",
+  "numero": 3,
+  "surface_m2": 14898,
+  "center_ue_cm": {
+   "x": 1099308.0,
+   "y": 414147.8
+  }
+ },
+ {
+  "id": "162SV23",
+  "section": "SV",
+  "numero": 23,
+  "surface_m2": 1619,
+  "center_ue_cm": {
+   "x": -733467.5,
+   "y": -962048.2
+  }
+ },
+ {
+  "id": "162SL21",
+  "section": "SL",
+  "numero": 21,
+  "surface_m2": 613,
+  "center_ue_cm": {
+   "x": -921278.2,
+   "y": 184692.4
+  }
+ },
+ {
+  "id": "162RY1",
+  "section": "RY",
+  "numero": 1,
+  "surface_m2": 158,
+  "center_ue_cm": {
+   "x": 642676.1,
+   "y": 1031149.5
+  }
+ },
+ {
+  "id": "162RY14",
+  "section": "RY",
+  "numero": 14,
+  "surface_m2": 20770,
+  "center_ue_cm": {
+   "x": 725884.1,
+   "y": 908384.3
+  }
+ },
+ {
+  "id": "162RS9",
+  "section": "RS",
+  "numero": 9,
+  "surface_m2": 94994,
+  "center_ue_cm": {
+   "x": 1231912.8,
+   "y": 205030.4
+  }
+ },
+ {
+  "id": "162SO4",
+  "section": "SO",
+  "numero": 4,
+  "surface_m2": 8090,
+  "center_ue_cm": {
+   "x": -1212730.6,
+   "y": -340283.6
+  }
+ },
+ {
+  "id": "162RB1",
+  "section": "RB",
+  "numero": 1,
+  "surface_m2": 11068,
+  "center_ue_cm": {
+   "x": -588942.6,
+   "y": -1049912.3
+  }
+ },
+ {
+  "id": "162RL20",
+  "section": "RL",
+  "numero": 20,
+  "surface_m2": 114,
+  "center_ue_cm": {
+   "x": 741200.2,
+   "y": -683275.3
+  }
+ },
+ {
+  "id": "162SS11",
+  "section": "SS",
+  "numero": 11,
+  "surface_m2": 3409,
+  "center_ue_cm": {
+   "x": -1114636.0,
+   "y": -745651.4
+  }
+ },
+ {
+  "id": "162RL15",
+  "section": "RL",
+  "numero": 15,
+  "surface_m2": 10991,
+  "center_ue_cm": {
+   "x": 760774.2,
+   "y": -695718.7
+  }
+ },
+ {
+  "id": "162SM1",
+  "section": "SM",
+  "numero": 1,
+  "surface_m2": 367,
+  "center_ue_cm": {
+   "x": -1121977.0,
+   "y": -134806.7
+  }
+ },
+ {
+  "id": "162SK13",
+  "section": "SK",
+  "numero": 13,
+  "surface_m2": 3156,
+  "center_ue_cm": {
+   "x": -824469.9,
+   "y": 364707.5
+  }
+ },
+ {
+  "id": "162RZ1",
+  "section": "RZ",
+  "numero": 1,
+  "surface_m2": 6879,
+  "center_ue_cm": {
+   "x": 544042.0,
+   "y": 1067838.3
+  }
+ },
+ {
+  "id": "162SP2",
+  "section": "SP",
+  "numero": 2,
+  "surface_m2": 28829,
+  "center_ue_cm": {
+   "x": -1215470.6,
+   "y": -486637.5
+  }
+ },
+ {
+  "id": "162RY15",
+  "section": "RY",
+  "numero": 15,
+  "surface_m2": 26913,
+  "center_ue_cm": {
+   "x": 716109.5,
+   "y": 919396.1
+  }
+ },
+ {
+  "id": "162SP3",
+  "section": "SP",
+  "numero": 3,
+  "surface_m2": 51025,
+  "center_ue_cm": {
+   "x": -1217454.0,
+   "y": -516072.5
+  }
+ },
+ {
+  "id": "162RA48",
+  "section": "RA",
+  "numero": 48,
+  "surface_m2": 454,
+  "center_ue_cm": {
+   "x": -657519.9,
+   "y": -1008524.6
+  }
+ },
+ {
+  "id": "162RB8",
+  "section": "RB",
+  "numero": 8,
+  "surface_m2": 39323,
+  "center_ue_cm": {
+   "x": -528383.0,
+   "y": -1068369.4
+  }
+ },
+ {
+  "id": "162RK16",
+  "section": "RK",
+  "numero": 16,
+  "surface_m2": 1403,
+  "center_ue_cm": {
+   "x": 618060.2,
+   "y": -793813.8
+  }
+ },
+ {
+  "id": "162SN27",
+  "section": "SN",
+  "numero": 27,
+  "surface_m2": 9326,
+  "center_ue_cm": {
+   "x": -1165564.2,
+   "y": -146393.9
+  }
+ },
+ {
+  "id": "162RV7",
+  "section": "RV",
+  "numero": 7,
+  "surface_m2": 767,
+  "center_ue_cm": {
+   "x": 1054794.0,
+   "y": 516450.7
+  }
+ },
+ {
+  "id": "162SN26",
+  "section": "SN",
+  "numero": 26,
+  "surface_m2": 201,
+  "center_ue_cm": {
+   "x": -1154737.0,
+   "y": -168163.9
+  }
+ },
+ {
+  "id": "162RA43",
+  "section": "RA",
+  "numero": 43,
+  "surface_m2": 663,
+  "center_ue_cm": {
+   "x": -670275.9,
+   "y": -1005035.5
+  }
+ },
+ {
+  "id": "162SD10",
+  "section": "SD",
+  "numero": 10,
+  "surface_m2": 7683,
+  "center_ue_cm": {
+   "x": -217669.8,
+   "y": 847491.6
+  }
+ },
+ {
+  "id": "162RZ3",
+  "section": "RZ",
+  "numero": 3,
+  "surface_m2": 1160,
+  "center_ue_cm": {
+   "x": 566309.8,
+   "y": 1077679.6
+  }
+ },
+ {
+  "id": "162RV3",
+  "section": "RV",
+  "numero": 3,
+  "surface_m2": 3163,
+  "center_ue_cm": {
+   "x": 1035554.0,
+   "y": 503765.6
+  }
+ },
+ {
+  "id": "162RV22",
+  "section": "RV",
+  "numero": 22,
+  "surface_m2": 6257,
+  "center_ue_cm": {
+   "x": 1064775.6,
+   "y": 462618.4
+  }
+ },
+ {
+  "id": "162RL10",
+  "section": "RL",
+  "numero": 10,
+  "surface_m2": 34830,
+  "center_ue_cm": {
+   "x": 724316.8,
+   "y": -734977.3
+  }
+ },
+ {
+  "id": "162RS19",
+  "section": "RS",
+  "numero": 19,
+  "surface_m2": 2764,
+  "center_ue_cm": {
+   "x": 1194780.6,
+   "y": 228105.3
+  }
+ },
+ {
+  "id": "162RZ4",
+  "section": "RZ",
+  "numero": 4,
+  "surface_m2": 608,
+  "center_ue_cm": {
+   "x": 571760.2,
+   "y": 1086743.8
+  }
+ },
+ {
+  "id": "162SH6",
+  "section": "SH",
+  "numero": 6,
+  "surface_m2": 133,
+  "center_ue_cm": {
+   "x": -648802.8,
+   "y": 565370.1
+  }
+ },
+ {
+  "id": "162ST10",
+  "section": "ST",
+  "numero": 10,
+  "surface_m2": 19609,
+  "center_ue_cm": {
+   "x": -880373.4,
+   "y": -896766.5
+  }
+ },
+ {
+  "id": "162RX10",
+  "section": "RX",
+  "numero": 10,
+  "surface_m2": 683,
+  "center_ue_cm": {
+   "x": 773569.3,
+   "y": 833674.8
+  }
+ },
+ {
+  "id": "162SV31",
+  "section": "SV",
+  "numero": 31,
+  "surface_m2": 3812,
+  "center_ue_cm": {
+   "x": -810513.6,
+   "y": -926548.4
+  }
+ },
+ {
+  "id": "162SS16",
+  "section": "SS",
+  "numero": 16,
+  "surface_m2": 13684,
+  "center_ue_cm": {
+   "x": -1106123.1,
+   "y": -774727.6
+  }
+ },
+ {
+  "id": "162RP15",
+  "section": "RP",
+  "numero": 15,
+  "surface_m2": 2484,
+  "center_ue_cm": {
+   "x": 1141645.9,
+   "y": -148223.8
+  }
+ },
+ {
+  "id": "162RP8",
+  "section": "RP",
+  "numero": 8,
+  "surface_m2": 13145,
+  "center_ue_cm": {
+   "x": 1131798.5,
+   "y": -261628.0
+  }
+ },
+ {
+  "id": "162RA21",
+  "section": "RA",
+  "numero": 21,
+  "surface_m2": 930,
+  "center_ue_cm": {
+   "x": -641051.1,
+   "y": -1026669.9
+  }
+ },
+ {
+  "id": "162RB9",
+  "section": "RB",
+  "numero": 9,
+  "surface_m2": 18232,
+  "center_ue_cm": {
+   "x": -516680.3,
+   "y": -1079283.0
+  }
+ },
+ {
+  "id": "162SE2",
+  "section": "SE",
+  "numero": 2,
+  "surface_m2": 3731,
+  "center_ue_cm": {
+   "x": -370322.6,
+   "y": 739375.2
+  }
+ },
+ {
+  "id": "162RA30",
+  "section": "RA",
+  "numero": 30,
+  "surface_m2": 568,
+  "center_ue_cm": {
+   "x": -651978.1,
+   "y": -1012173.9
+  }
+ },
+ {
+  "id": "162RA44",
+  "section": "RA",
+  "numero": 44,
+  "surface_m2": 748,
+  "center_ue_cm": {
+   "x": -668947.5,
+   "y": -1002042.0
+  }
+ },
+ {
+  "id": "162SV24",
+  "section": "SV",
+  "numero": 24,
+  "surface_m2": 3930,
+  "center_ue_cm": {
+   "x": -739102.2,
+   "y": -961958.4
+  }
+ },
+ {
+  "id": "162RA36",
+  "section": "RA",
+  "numero": 36,
+  "surface_m2": 172,
+  "center_ue_cm": {
+   "x": -663119.0,
+   "y": -1009936.7
+  }
+ },
+ {
+  "id": "162SV17",
+  "section": "SV",
+  "numero": 17,
+  "surface_m2": 1716,
+  "center_ue_cm": {
+   "x": -717304.2,
+   "y": -980987.1
+  }
+ },
+ {
+  "id": "162SR12",
+  "section": "SR",
+  "numero": 12,
+  "surface_m2": 4210,
+  "center_ue_cm": {
+   "x": -1196774.6,
+   "y": -642569.4
+  }
+ },
+ {
+  "id": "162RZ6",
+  "section": "RZ",
+  "numero": 6,
+  "surface_m2": 1918,
+  "center_ue_cm": {
+   "x": 553533.4,
+   "y": 1099110.3
+  }
+ },
+ {
+  "id": "162RP4",
+  "section": "RP",
+  "numero": 4,
+  "surface_m2": 5434,
+  "center_ue_cm": {
+   "x": 1120238.6,
+   "y": -267428.5
+  }
+ },
+ {
+  "id": "162SR16",
+  "section": "SR",
+  "numero": 16,
+  "surface_m2": 15117,
+  "center_ue_cm": {
+   "x": -1187745.1,
+   "y": -658506.2
+  }
+ },
+ {
+  "id": "162RK18",
+  "section": "RK",
+  "numero": 18,
+  "surface_m2": 11947,
+  "center_ue_cm": {
+   "x": 622713.9,
+   "y": -789397.7
+  }
+ },
+ {
+  "id": "162RK12",
+  "section": "RK",
+  "numero": 12,
+  "surface_m2": 1822,
+  "center_ue_cm": {
+   "x": 592226.9,
+   "y": -795047.3
+  }
+ },
+ {
+  "id": "162SP5",
+  "section": "SP",
+  "numero": 5,
+  "surface_m2": 52520,
+  "center_ue_cm": {
+   "x": -1222857.5,
+   "y": -561377.2
+  }
+ },
+ {
+  "id": "162SR10",
+  "section": "SR",
+  "numero": 10,
+  "surface_m2": 36966,
+  "center_ue_cm": {
+   "x": -1214803.5,
+   "y": -636880.5
+  }
+ },
+ {
+  "id": "162RW10",
+  "section": "RW",
+  "numero": 10,
+  "surface_m2": 1387,
+  "center_ue_cm": {
+   "x": 941284.0,
+   "y": 638990.4
+  }
+ },
+ {
+  "id": "162SK15",
+  "section": "SK",
+  "numero": 15,
+  "surface_m2": 59383,
+  "center_ue_cm": {
+   "x": -818061.2,
+   "y": 381435.7
+  }
+ },
+ {
+  "id": "162RT14",
+  "section": "RT",
+  "numero": 14,
+  "surface_m2": 2801,
+  "center_ue_cm": {
+   "x": 1151867.0,
+   "y": 334654.3
+  }
+ },
+ {
+  "id": "162SK3",
+  "section": "SK",
+  "numero": 3,
+  "surface_m2": 40317,
+  "center_ue_cm": {
+   "x": -893460.6,
+   "y": 249715.8
+  }
+ },
+ {
+  "id": "162RD5",
+  "section": "RD",
+  "numero": 5,
+  "surface_m2": 4468,
+  "center_ue_cm": {
+   "x": -156218.9,
+   "y": -1085178.3
+  }
+ },
+ {
+  "id": "162RS20",
+  "section": "RS",
+  "numero": 20,
+  "surface_m2": 5260,
+  "center_ue_cm": {
+   "x": 1191590.7,
+   "y": 273328.0
+  }
+ },
+ {
+  "id": "162RL26",
+  "section": "RL",
+  "numero": 26,
+  "surface_m2": 2928,
+  "center_ue_cm": {
+   "x": 732539.1,
+   "y": -699367.0
+  }
+ },
+ {
+  "id": "162RL22",
+  "section": "RL",
+  "numero": 22,
+  "surface_m2": 4063,
+  "center_ue_cm": {
+   "x": 746389.1,
+   "y": -691812.3
+  }
+ },
+ {
+  "id": "162SL6",
+  "section": "SL",
+  "numero": 6,
+  "surface_m2": 2145,
+  "center_ue_cm": {
+   "x": -950466.2,
+   "y": 87324.5
+  }
+ },
+ {
+  "id": "162RO5",
+  "section": "RO",
+  "numero": 5,
+  "surface_m2": 7648,
+  "center_ue_cm": {
+   "x": 1050056.6,
+   "y": -411348.8
+  }
+ },
+ {
+  "id": "162SH1",
+  "section": "SH",
+  "numero": 1,
+  "surface_m2": 2772,
+  "center_ue_cm": {
+   "x": -673255.0,
+   "y": 549262.4
+  }
+ },
+ {
+  "id": "162RS13",
+  "section": "RS",
+  "numero": 13,
+  "surface_m2": 54048,
+  "center_ue_cm": {
+   "x": 1221661.8,
+   "y": 238422.1
+  }
+ },
+ {
+  "id": "162SS14",
+  "section": "SS",
+  "numero": 14,
+  "surface_m2": 12872,
+  "center_ue_cm": {
+   "x": -1106677.7,
+   "y": -763291.6
+  }
+ },
+ {
+  "id": "162SM20",
+  "section": "SM",
+  "numero": 20,
+  "surface_m2": 10073,
+  "center_ue_cm": {
+   "x": -1072868.1,
+   "y": -6360.1
+  }
+ },
+ {
+  "id": "162SM24",
+  "section": "SM",
+  "numero": 24,
+  "surface_m2": 10495,
+  "center_ue_cm": {
+   "x": -1018268.3,
+   "y": 30420.7
+  }
+ },
+ {
+  "id": "162RO8",
+  "section": "RO",
+  "numero": 8,
+  "surface_m2": 73291,
+  "center_ue_cm": {
+   "x": 1080611.4,
+   "y": -379432.8
+  }
+ },
+ {
+  "id": "162RY5",
+  "section": "RY",
+  "numero": 5,
+  "surface_m2": 4633,
+  "center_ue_cm": {
+   "x": 683559.8,
+   "y": 953203.7
+  }
+ },
+ {
+  "id": "162SL22",
+  "section": "SL",
+  "numero": 22,
+  "surface_m2": 14710,
+  "center_ue_cm": {
+   "x": -929829.5,
+   "y": 196829.7
+  }
+ },
+ {
+  "id": "162SP6",
+  "section": "SP",
+  "numero": 6,
+  "surface_m2": 1826,
+  "center_ue_cm": {
+   "x": -1210277.6,
+   "y": -565728.6
+  }
+ },
+ {
+  "id": "162SI15",
+  "section": "SI",
+  "numero": 15,
+  "surface_m2": 14702,
+  "center_ue_cm": {
+   "x": -767021.9,
+   "y": 461614.7
+  }
+ },
+ {
+  "id": "162SD6",
+  "section": "SD",
+  "numero": 6,
+  "surface_m2": 2843,
+  "center_ue_cm": {
+   "x": -298477.3,
+   "y": 798866.8
+  }
+ },
+ {
+  "id": "162SB1",
+  "section": "SB",
+  "numero": 1,
+  "surface_m2": 1221,
+  "center_ue_cm": {
+   "x": 54202.9,
+   "y": 998334.2
+  }
+ },
+ {
+  "id": "162RO10",
+  "section": "RO",
+  "numero": 10,
+  "surface_m2": 43957,
+  "center_ue_cm": {
+   "x": 1104523.2,
+   "y": -349487.9
+  }
+ },
+ {
+  "id": "162RS21",
+  "section": "RS",
+  "numero": 21,
+  "surface_m2": 5678,
+  "center_ue_cm": {
+   "x": 1186375.4,
+   "y": 276368.3
+  }
+ },
+ {
+  "id": "162RV20",
+  "section": "RV",
+  "numero": 20,
+  "surface_m2": 568,
+  "center_ue_cm": {
+   "x": 1002784.0,
+   "y": 576462.4
+  }
+ },
+ {
+  "id": "162RY13",
+  "section": "RY",
+  "numero": 13,
+  "surface_m2": 4524,
+  "center_ue_cm": {
+   "x": 716996.0,
+   "y": 877057.3
+  }
+ },
+ {
+  "id": "162SN9",
+  "section": "SN",
+  "numero": 9,
+  "surface_m2": 468,
+  "center_ue_cm": {
+   "x": -1216555.1,
+   "y": -237372.3
+  }
+ },
+ {
+  "id": "162SI13",
+  "section": "SI",
+  "numero": 13,
+  "surface_m2": 9674,
+  "center_ue_cm": {
+   "x": -793295.6,
+   "y": 433221.2
+  }
+ },
+ {
+  "id": "162SL9",
+  "section": "SL",
+  "numero": 9,
+  "surface_m2": 1080,
+  "center_ue_cm": {
+   "x": -953418.1,
+   "y": 99986.2
+  }
+ },
+ {
+  "id": "162SV5",
+  "section": "SV",
+  "numero": 5,
+  "surface_m2": 10454,
+  "center_ue_cm": {
+   "x": -800948.7,
+   "y": -952482.8
+  }
+ },
+ {
+  "id": "162RV10",
+  "section": "RV",
+  "numero": 10,
+  "surface_m2": 1329,
+  "center_ue_cm": {
+   "x": 1043999.6,
+   "y": 534124.5
+  }
+ },
+ {
+  "id": "162RA3",
+  "section": "RA",
+  "numero": 3,
+  "surface_m2": 1600,
+  "center_ue_cm": {
+   "x": -666857.7,
+   "y": -1020326.0
+  }
+ },
+ {
+  "id": "162SS10",
+  "section": "SS",
+  "numero": 10,
+  "surface_m2": 3930,
+  "center_ue_cm": {
+   "x": -1119182.6,
+   "y": -749969.3
+  }
+ },
+ {
+  "id": "162RD9",
+  "section": "RD",
+  "numero": 9,
+  "surface_m2": 7531,
+  "center_ue_cm": {
+   "x": -66437.4,
+   "y": -1074551.3
+  }
+ },
+ {
+  "id": "162SR23",
+  "section": "SR",
+  "numero": 23,
+  "surface_m2": 5066,
+  "center_ue_cm": {
+   "x": -1170599.5,
+   "y": -686434.3
+  }
+ },
+ {
+  "id": "162SK10",
+  "section": "SK",
+  "numero": 10,
+  "surface_m2": 42436,
+  "center_ue_cm": {
+   "x": -849292.0,
+   "y": 333266.3
+  }
+ },
+ {
+  "id": "162RM2",
+  "section": "RM",
+  "numero": 2,
+  "surface_m2": 65388,
+  "center_ue_cm": {
+   "x": 781169.1,
+   "y": -668740.9
+  }
+ },
+ {
+  "id": "162RX12",
+  "section": "RX",
+  "numero": 12,
+  "surface_m2": 2099,
+  "center_ue_cm": {
+   "x": 792443.5,
+   "y": 783222.0
+  }
+ },
+ {
+  "id": "162RA19",
+  "section": "RA",
+  "numero": 19,
+  "surface_m2": 309,
+  "center_ue_cm": {
+   "x": -643161.2,
+   "y": -1013848.5
+  }
+ },
+ {
+  "id": "162RA42",
+  "section": "RA",
+  "numero": 42,
+  "surface_m2": 1526,
+  "center_ue_cm": {
+   "x": -672657.9,
+   "y": -1012409.5
+  }
+ },
+ {
+  "id": "162SV15",
+  "section": "SV",
+  "numero": 15,
+  "surface_m2": 864,
+  "center_ue_cm": {
+   "x": -713243.6,
+   "y": -979022.5
+  }
+ },
+ {
+  "id": "162RA39",
+  "section": "RA",
+  "numero": 39,
+  "surface_m2": 585,
+  "center_ue_cm": {
+   "x": -667921.5,
+   "y": -1013117.1
+  }
+ },
+ {
+  "id": "162RZ14",
+  "section": "RZ",
+  "numero": 14,
+  "surface_m2": 430,
+  "center_ue_cm": {
+   "x": 633931.0,
+   "y": 1051387.2
+  }
+ },
+ {
+  "id": "162RA29",
+  "section": "RA",
+  "numero": 29,
+  "surface_m2": 1583,
+  "center_ue_cm": {
+   "x": -653966.1,
+   "y": -1016661.1
+  }
+ },
+ {
+  "id": "162SS8",
+  "section": "SS",
+  "numero": 8,
+  "surface_m2": 9732,
+  "center_ue_cm": {
+   "x": -1131878.1,
+   "y": -759865.9
+  }
+ },
+ {
+  "id": "162RZ9",
+  "section": "RZ",
+  "numero": 9,
+  "surface_m2": 2398,
+  "center_ue_cm": {
+   "x": 542338.6,
+   "y": 1090161.7
+  }
+ },
+ {
+  "id": "162SN18",
+  "section": "SN",
+  "numero": 18,
+  "surface_m2": 469,
+  "center_ue_cm": {
+   "x": -1168080.3,
+   "y": -210853.9
+  }
+ },
+ {
+  "id": "162RO12",
+  "section": "RO",
+  "numero": 12,
+  "surface_m2": 92468,
+  "center_ue_cm": {
+   "x": 1119831.7,
+   "y": -314782.9
+  }
+ },
+ {
+  "id": "162SM16",
+  "section": "SM",
+  "numero": 16,
+  "surface_m2": 767,
+  "center_ue_cm": {
+   "x": -1056532.2,
+   "y": -33665.5
+  }
+ },
+ {
+  "id": "162RR2",
+  "section": "RR",
+  "numero": 2,
+  "surface_m2": 76331,
+  "center_ue_cm": {
+   "x": 1184964.0,
+   "y": -32556.4
+  }
+ },
+ {
+  "id": "162SB5",
+  "section": "SB",
+  "numero": 5,
+  "surface_m2": 1128,
+  "center_ue_cm": {
+   "x": 56678.7,
+   "y": 1002214.3
+  }
+ },
+ {
+  "id": "162RZ5",
+  "section": "RZ",
+  "numero": 5,
+  "surface_m2": 4597,
+  "center_ue_cm": {
+   "x": 560316.6,
+   "y": 1095397.9
+  }
+ },
+ {
+  "id": "162SV2",
+  "section": "SV",
+  "numero": 2,
+  "surface_m2": 147466,
+  "center_ue_cm": {
+   "x": -823255.2,
+   "y": -936825.0
+  }
+ },
+ {
+  "id": "162RA33",
+  "section": "RA",
+  "numero": 33,
+  "surface_m2": 1200,
+  "center_ue_cm": {
+   "x": -657493.9,
+   "y": -1019178.9
+  }
+ },
+ {
+  "id": "162SS19",
+  "section": "SS",
+  "numero": 19,
+  "surface_m2": 38653,
+  "center_ue_cm": {
+   "x": -1095984.6,
+   "y": -777190.7
+  }
+ },
+ {
+  "id": "162SL8",
+  "section": "SL",
+  "numero": 8,
+  "surface_m2": 562,
+  "center_ue_cm": {
+   "x": -946743.8,
+   "y": 99814.1
+  }
+ },
+ {
+  "id": "162RA9",
+  "section": "RA",
+  "numero": 9,
+  "surface_m2": 8908,
+  "center_ue_cm": {
+   "x": -634133.0,
+   "y": -1041052.9
+  }
+ },
+ {
+  "id": "162SV7",
+  "section": "SV",
+  "numero": 7,
+  "surface_m2": 57535,
+  "center_ue_cm": {
+   "x": -774930.9,
+   "y": -958226.2
+  }
+ },
+ {
+  "id": "162SS17",
+  "section": "SS",
+  "numero": 17,
+  "surface_m2": 6271,
+  "center_ue_cm": {
+   "x": -1084042.3,
+   "y": -760356.4
+  }
+ },
+ {
+  "id": "162RZ10",
+  "section": "RZ",
+  "numero": 10,
+  "surface_m2": 14258,
+  "center_ue_cm": {
+   "x": 589533.1,
+   "y": 1052805.4
+  }
+ },
+ {
+  "id": "162RA38",
+  "section": "RA",
+  "numero": 38,
+  "surface_m2": 1149,
+  "center_ue_cm": {
+   "x": -665039.3,
+   "y": -1013419.3
+  }
+ },
+ {
+  "id": "162RI5",
+  "section": "RI",
+  "numero": 5,
+  "surface_m2": 325,
+  "center_ue_cm": {
+   "x": 324331.2,
+   "y": -904664.0
+  }
+ },
+ {
+  "id": "162SI23",
+  "section": "SI",
+  "numero": 23,
+  "surface_m2": 30541,
+  "center_ue_cm": {
+   "x": -719274.3,
+   "y": 513454.3
+  }
+ },
+ {
+  "id": "162RH4",
+  "section": "RH",
+  "numero": 4,
+  "surface_m2": 4022,
+  "center_ue_cm": {
+   "x": 134243.0,
+   "y": -1003080.3
+  }
+ },
+ {
+  "id": "162SN5",
+  "section": "SN",
+  "numero": 5,
+  "surface_m2": 2627,
+  "center_ue_cm": {
+   "x": -1219267.6,
+   "y": -259753.4
+  }
+ },
+ {
+  "id": "162RB3",
+  "section": "RB",
+  "numero": 3,
+  "surface_m2": 20472,
+  "center_ue_cm": {
+   "x": -574675.3,
+   "y": -1052373.7
+  }
+ },
+ {
+  "id": "162SM3",
+  "section": "SM",
+  "numero": 3,
+  "surface_m2": 1698,
+  "center_ue_cm": {
+   "x": -1119798.8,
+   "y": -128989.4
+  }
+ },
+ {
+  "id": "162SL25",
+  "section": "SL",
+  "numero": 25,
+  "surface_m2": 4083,
+  "center_ue_cm": {
+   "x": -912220.9,
+   "y": 202255.7
+  }
+ },
+ {
+  "id": "162RW1",
+  "section": "RW",
+  "numero": 1,
+  "surface_m2": 1456,
+  "center_ue_cm": {
+   "x": 878961.7,
+   "y": 688160.0
+  }
+ },
+ {
+  "id": "162SE1",
+  "section": "SE",
+  "numero": 1,
+  "surface_m2": 775,
+  "center_ue_cm": {
+   "x": -466670.9,
+   "y": 708499.5
+  }
+ },
+ {
+  "id": "162SM13",
+  "section": "SM",
+  "numero": 13,
+  "surface_m2": 5431,
+  "center_ue_cm": {
+   "x": -1089737.7,
+   "y": -62312.4
+  }
+ },
+ {
+  "id": "162RY3",
+  "section": "RY",
+  "numero": 3,
+  "surface_m2": 149864,
+  "center_ue_cm": {
+   "x": 663371.7,
+   "y": 1001614.1
+  }
+ },
+ {
+  "id": "162SV8",
+  "section": "SV",
+  "numero": 8,
+  "surface_m2": 56586,
+  "center_ue_cm": {
+   "x": -758053.9,
+   "y": -966433.7
+  }
+ },
+ {
+  "id": "162SC5",
+  "section": "SC",
+  "numero": 5,
+  "surface_m2": 243,
+  "center_ue_cm": {
+   "x": -32106.6,
+   "y": 978390.5
+  }
+ },
+ {
+  "id": "162RY6",
+  "section": "RY",
+  "numero": 6,
+  "surface_m2": 85875,
+  "center_ue_cm": {
+   "x": 698658.5,
+   "y": 934704.3
+  }
+ },
+ {
+  "id": "162SM22",
+  "section": "SM",
+  "numero": 22,
+  "surface_m2": 19479,
+  "center_ue_cm": {
+   "x": -1040188.4,
+   "y": 15368.9
+  }
+ },
+ {
+  "id": "162RB16",
+  "section": "RB",
+  "numero": 16,
+  "surface_m2": 3838,
+  "center_ue_cm": {
+   "x": -415307.6,
+   "y": -1083833.0
+  }
+ },
+ {
+  "id": "162SN12",
+  "section": "SN",
+  "numero": 12,
+  "surface_m2": 654,
+  "center_ue_cm": {
+   "x": -1172757.9,
+   "y": -236409.1
+  }
+ },
+ {
+  "id": "162RL5",
+  "section": "RL",
+  "numero": 5,
+  "surface_m2": 252,
+  "center_ue_cm": {
+   "x": 649312.5,
+   "y": -759245.0
+  }
+ },
+ {
+  "id": "162RA25",
+  "section": "RA",
+  "numero": 25,
+  "surface_m2": 318,
+  "center_ue_cm": {
+   "x": -651523.6,
+   "y": -1015353.5
+  }
+ },
+ {
+  "id": "162RN4",
+  "section": "RN",
+  "numero": 4,
+  "surface_m2": 57450,
+  "center_ue_cm": {
+   "x": 1027392.6,
+   "y": -453235.5
+  }
+ },
+ {
+  "id": "162RB13",
+  "section": "RB",
+  "numero": 13,
+  "surface_m2": 32334,
+  "center_ue_cm": {
+   "x": -461129.4,
+   "y": -1083047.9
+  }
+ },
+ {
+  "id": "162RX9",
+  "section": "RX",
+  "numero": 9,
+  "surface_m2": 449,
+  "center_ue_cm": {
+   "x": 775163.0,
+   "y": 826982.1
+  }
+ },
+ {
+  "id": "162RB4",
+  "section": "RB",
+  "numero": 4,
+  "surface_m2": 16757,
+  "center_ue_cm": {
+   "x": -566321.1,
+   "y": -1062975.1
+  }
+ },
+ {
+  "id": "162RY9",
+  "section": "RY",
+  "numero": 9,
+  "surface_m2": 7996,
+  "center_ue_cm": {
+   "x": 704375.1,
+   "y": 893263.6
+  }
+ },
+ {
+  "id": "162SR5",
+  "section": "SR",
+  "numero": 5,
+  "surface_m2": 4470,
+  "center_ue_cm": {
+   "x": -1225992.2,
+   "y": -627323.3
+  }
+ },
+ {
+  "id": "162RV18",
+  "section": "RV",
+  "numero": 18,
+  "surface_m2": 857,
+  "center_ue_cm": {
+   "x": 1020226.1,
+   "y": 571675.6
+  }
+ },
+ {
+  "id": "162SK2",
+  "section": "SK",
+  "numero": 2,
+  "surface_m2": 1284,
+  "center_ue_cm": {
+   "x": -891879.2,
+   "y": 231539.7
+  }
+ },
+ {
+  "id": "162RW2",
+  "section": "RW",
+  "numero": 2,
+  "surface_m2": 134,
+  "center_ue_cm": {
+   "x": 888448.6,
+   "y": 674255.6
+  }
+ },
+ {
+  "id": "162SN21",
+  "section": "SN",
+  "numero": 21,
+  "surface_m2": 905,
+  "center_ue_cm": {
+   "x": -1165732.6,
+   "y": -203864.0
+  }
+ },
+ {
+  "id": "162RM8",
+  "section": "RM",
+  "numero": 8,
+  "surface_m2": 59821,
+  "center_ue_cm": {
+   "x": 854424.7,
+   "y": -601876.5
+  }
+ },
+ {
+  "id": "162RI2",
+  "section": "RI",
+  "numero": 2,
+  "surface_m2": 1250,
+  "center_ue_cm": {
+   "x": 334596.8,
+   "y": -917135.7
+  }
+ },
+ {
+  "id": "162SM19",
+  "section": "SM",
+  "numero": 19,
+  "surface_m2": 317,
+  "center_ue_cm": {
+   "x": -1063952.9,
+   "y": -12766.8
+  }
+ },
+ {
+  "id": "162SR11",
+  "section": "SR",
+  "numero": 11,
+  "surface_m2": 56368,
+  "center_ue_cm": {
+   "x": -1216508.4,
+   "y": -655482.7
+  }
+ },
+ {
+  "id": "162RV15",
+  "section": "RV",
+  "numero": 15,
+  "surface_m2": 2206,
+  "center_ue_cm": {
+   "x": 1031555.7,
+   "y": 554891.1
+  }
+ },
+ {
+  "id": "162SI25",
+  "section": "SI",
+  "numero": 25,
+  "surface_m2": 17067,
+  "center_ue_cm": {
+   "x": -693878.4,
+   "y": 542604.5
+  }
+ },
+ {
+  "id": "162RT11",
+  "section": "RT",
+  "numero": 11,
+  "surface_m2": 10722,
+  "center_ue_cm": {
+   "x": 1137336.4,
+   "y": 331189.7
+  }
+ },
+ {
+  "id": "162RS4",
+  "section": "RS",
+  "numero": 4,
+  "surface_m2": 22163,
+  "center_ue_cm": {
+   "x": 1217006.2,
+   "y": 133328.8
+  }
+ },
+ {
+  "id": "162SV22",
+  "section": "SV",
+  "numero": 22,
+  "surface_m2": 6625,
+  "center_ue_cm": {
+   "x": -733184.0,
+   "y": -965750.9
+  }
+ },
+ {
+  "id": "162RL29",
+  "section": "RL",
+  "numero": 29,
+  "surface_m2": 9525,
+  "center_ue_cm": {
+   "x": 720204.3,
+   "y": -706094.3
+  }
+ },
+ {
+  "id": "162SM4",
+  "section": "SM",
+  "numero": 4,
+  "surface_m2": 8465,
+  "center_ue_cm": {
+   "x": -1139823.8,
+   "y": -109643.4
+  }
+ },
+ {
+  "id": "162SO5",
+  "section": "SO",
+  "numero": 5,
+  "surface_m2": 68042,
+  "center_ue_cm": {
+   "x": -1227044.4,
+   "y": -358988.2
+  }
+ },
+ {
+  "id": "162RA26",
+  "section": "RA",
+  "numero": 26,
+  "surface_m2": 522,
+  "center_ue_cm": {
+   "x": -651756.0,
+   "y": -1017580.6
+  }
+ },
+ {
+  "id": "162SB3",
+  "section": "SB",
+  "numero": 3,
+  "surface_m2": 7825,
+  "center_ue_cm": {
+   "x": 61239.2,
+   "y": 1003201.3
+  }
+ },
+ {
+  "id": "162RL14",
+  "section": "RL",
+  "numero": 14,
+  "surface_m2": 7209,
+  "center_ue_cm": {
+   "x": 767673.4,
+   "y": -700203.6
+  }
+ },
+ {
+  "id": "162RL19",
+  "section": "RL",
+  "numero": 19,
+  "surface_m2": 444,
+  "center_ue_cm": {
+   "x": 742780.5,
+   "y": -682331.9
+  }
+ },
+ {
+  "id": "162RL2",
+  "section": "RL",
+  "numero": 2,
+  "surface_m2": 41059,
+  "center_ue_cm": {
+   "x": 657570.9,
+   "y": -766950.2
+  }
+ },
+ {
+  "id": "162RT13",
+  "section": "RT",
+  "numero": 13,
+  "surface_m2": 1514,
+  "center_ue_cm": {
+   "x": 1155591.4,
+   "y": 329373.7
+  }
+ },
+ {
+  "id": "162RV5",
+  "section": "RV",
+  "numero": 5,
+  "surface_m2": 3293,
+  "center_ue_cm": {
+   "x": 1064803.9,
+   "y": 506082.2
+  }
+ },
+ {
+  "id": "162RE2",
+  "section": "RE",
+  "numero": 2,
+  "surface_m2": 5930,
+  "center_ue_cm": {
+   "x": -41310.6,
+   "y": -1069703.4
+  }
+ },
+ {
+  "id": "162RK11",
+  "section": "RK",
+  "numero": 11,
+  "surface_m2": 67953,
+  "center_ue_cm": {
+   "x": 585973.2,
+   "y": -807144.5
+  }
+ },
+ {
+  "id": "162RS14",
+  "section": "RS",
+  "numero": 14,
+  "surface_m2": 1513,
+  "center_ue_cm": {
+   "x": 1199269.0,
+   "y": 224244.6
+  }
+ },
+ {
+  "id": "162SC3",
+  "section": "SC",
+  "numero": 3,
+  "surface_m2": 2399,
+  "center_ue_cm": {
+   "x": -72341.1,
+   "y": 954425.0
+  }
+ },
+ {
+  "id": "162SN2",
+  "section": "SN",
+  "numero": 2,
+  "surface_m2": 964,
+  "center_ue_cm": {
+   "x": -1198756.0,
+   "y": -284368.2
+  }
+ },
+ {
+  "id": "162RW4",
+  "section": "RW",
+  "numero": 4,
+  "surface_m2": 190,
+  "center_ue_cm": {
+   "x": 907587.8,
+   "y": 653472.1
+  }
+ },
+ {
+  "id": "162RK14",
+  "section": "RK",
+  "numero": 14,
+  "surface_m2": 1856,
+  "center_ue_cm": {
+   "x": 609031.9,
+   "y": -801317.2
+  }
+ },
+ {
+  "id": "162SH11",
+  "section": "SH",
+  "numero": 11,
+  "surface_m2": 17560,
+  "center_ue_cm": {
+   "x": -552598.0,
+   "y": 673366.8
+  }
+ },
+ {
+  "id": "162RT6",
+  "section": "RT",
+  "numero": 6,
+  "surface_m2": 238,
+  "center_ue_cm": {
+   "x": 1135191.7,
+   "y": 366914.8
+  }
+ },
+ {
+  "id": "162RL3",
+  "section": "RL",
+  "numero": 3,
+  "surface_m2": 330,
+  "center_ue_cm": {
+   "x": 663795.7,
+   "y": -750240.5
+  }
+ },
+ {
+  "id": "162RW3",
+  "section": "RW",
+  "numero": 3,
+  "surface_m2": 1315,
+  "center_ue_cm": {
+   "x": 898345.7,
+   "y": 664099.4
+  }
+ },
+ {
+  "id": "162RK4",
+  "section": "RK",
+  "numero": 4,
+  "surface_m2": 397,
+  "center_ue_cm": {
+   "x": 492861.9,
+   "y": -857395.5
+  }
+ },
+ {
+  "id": "162RT4",
+  "section": "RT",
+  "numero": 4,
+  "surface_m2": 1813,
+  "center_ue_cm": {
+   "x": 1112215.8,
+   "y": 417621.2
+  }
+ },
+ {
+  "id": "162RX8",
+  "section": "RX",
+  "numero": 8,
+  "surface_m2": 311,
+  "center_ue_cm": {
+   "x": 775502.7,
+   "y": 817839.6
+  }
+ },
+ {
+  "id": "162SI22",
+  "section": "SI",
+  "numero": 22,
+  "surface_m2": 8857,
+  "center_ue_cm": {
+   "x": -732002.0,
+   "y": 509930.8
+  }
+ },
+ {
+  "id": "162RD1",
+  "section": "RD",
+  "numero": 1,
+  "surface_m2": 52309,
+  "center_ue_cm": {
+   "x": -236280.7,
+   "y": -1097967.6
+  }
+ },
+ {
+  "id": "162SH3",
+  "section": "SH",
+  "numero": 3,
+  "surface_m2": 6598,
+  "center_ue_cm": {
+   "x": -676789.7,
+   "y": 566016.3
+  }
+ },
+ {
+  "id": "162SO2",
+  "section": "SO",
+  "numero": 2,
+  "surface_m2": 32830,
+  "center_ue_cm": {
+   "x": -1241571.9,
+   "y": -322389.4
+  }
+ },
+ {
+  "id": "162SD2",
+  "section": "SD",
+  "numero": 2,
+  "surface_m2": 95,
+  "center_ue_cm": {
+   "x": -352390.0,
+   "y": 755309.2
+  }
+ },
+ {
+  "id": "162SH5",
+  "section": "SH",
+  "numero": 5,
+  "surface_m2": 5989,
+  "center_ue_cm": {
+   "x": -657761.1,
+   "y": 566746.6
+  }
+ },
+ {
+  "id": "162RM6",
+  "section": "RM",
+  "numero": 6,
+  "surface_m2": 59093,
+  "center_ue_cm": {
+   "x": 822710.9,
+   "y": -619214.6
+  }
+ },
+ {
+  "id": "162RP14",
+  "section": "RP",
+  "numero": 14,
+  "surface_m2": 51367,
+  "center_ue_cm": {
+   "x": 1146294.6,
+   "y": -138628.1
+  }
+ },
+ {
+  "id": "162SI26",
+  "section": "SI",
+  "numero": 26,
+  "surface_m2": 259,
+  "center_ue_cm": {
+   "x": -678427.3,
+   "y": 542377.0
+  }
+ },
+ {
+  "id": "162SV12",
+  "section": "SV",
+  "numero": 12,
+  "surface_m2": 948,
+  "center_ue_cm": {
+   "x": -728138.9,
+   "y": -995449.6
+  }
+ },
+ {
+  "id": "162RE7",
+  "section": "RE",
+  "numero": 7,
+  "surface_m2": 2497,
+  "center_ue_cm": {
+   "x": -5532.2,
+   "y": -1058065.3
+  }
+ },
+ {
+  "id": "162RX4",
+  "section": "RX",
+  "numero": 4,
+  "surface_m2": 1829,
+  "center_ue_cm": {
+   "x": 773223.2,
+   "y": 804207.5
+  }
+ },
+ {
+  "id": "162SI12",
+  "section": "SI",
+  "numero": 12,
+  "surface_m2": 1753,
+  "center_ue_cm": {
+   "x": -799208.4,
+   "y": 447256.5
+  }
+ },
+ {
+  "id": "162SV32",
+  "section": "SV",
+  "numero": 32,
+  "surface_m2": 2629,
+  "center_ue_cm": {
+   "x": -807932.2,
+   "y": -913903.9
+  }
+ },
+ {
+  "id": "162SS3",
+  "section": "SS",
+  "numero": 3,
+  "surface_m2": 12561,
+  "center_ue_cm": {
+   "x": -1150465.1,
+   "y": -736472.9
+  }
+ },
+ {
+  "id": "162SN28",
+  "section": "SN",
+  "numero": 28,
+  "surface_m2": 7028,
+  "center_ue_cm": {
+   "x": -1160610.6,
+   "y": -135632.6
+  }
+ },
+ {
+  "id": "162RP9",
+  "section": "RP",
+  "numero": 9,
+  "surface_m2": 30430,
+  "center_ue_cm": {
+   "x": 1127443.1,
+   "y": -253567.3
+  }
+ },
+ {
+  "id": "162RZ7",
+  "section": "RZ",
+  "numero": 7,
+  "surface_m2": 783,
+  "center_ue_cm": {
+   "x": 550004.1,
+   "y": 1101518.2
+  }
+ },
+ {
+  "id": "162RS18",
+  "section": "RS",
+  "numero": 18,
+  "surface_m2": 4280,
+  "center_ue_cm": {
+   "x": 1188619.2,
+   "y": 237460.0
+  }
+ },
+ {
+  "id": "162RZ8",
+  "section": "RZ",
+  "numero": 8,
+  "surface_m2": 438,
+  "center_ue_cm": {
+   "x": 547375.2,
+   "y": 1094565.1
+  }
+ },
+ {
+  "id": "162RD7",
+  "section": "RD",
+  "numero": 7,
+  "surface_m2": 10849,
+  "center_ue_cm": {
+   "x": -87625.9,
+   "y": -1078109.8
+  }
+ },
+ {
+  "id": "162RT12",
+  "section": "RT",
+  "numero": 12,
+  "surface_m2": 988,
+  "center_ue_cm": {
+   "x": 1154329.0,
+   "y": 323337.9
+  }
+ },
+ {
+  "id": "162RB17",
+  "section": "RB",
+  "numero": 17,
+  "surface_m2": 3786,
+  "center_ue_cm": {
+   "x": -420913.1,
+   "y": -1082523.0
+  }
+ },
+ {
+  "id": "162RN2",
+  "section": "RN",
+  "numero": 2,
+  "surface_m2": 20983,
+  "center_ue_cm": {
+   "x": 956035.3,
+   "y": -519426.2
+  }
+ },
+ {
+  "id": "162RA12",
+  "section": "RA",
+  "numero": 12,
+  "surface_m2": 8206,
+  "center_ue_cm": {
+   "x": -601577.2,
+   "y": -1054357.4
+  }
+ },
+ {
+  "id": "162RV4",
+  "section": "RV",
+  "numero": 4,
+  "surface_m2": 16740,
+  "center_ue_cm": {
+   "x": 1060019.4,
+   "y": 493537.6
+  }
+ },
+ {
+  "id": "162RL30",
+  "section": "RL",
+  "numero": 30,
+  "surface_m2": 16587,
+  "center_ue_cm": {
+   "x": 711962.0,
+   "y": -712172.3
+  }
+ },
+ {
+  "id": "162RT7",
+  "section": "RT",
+  "numero": 7,
+  "surface_m2": 3106,
+  "center_ue_cm": {
+   "x": 1135128.3,
+   "y": 381588.2
+  }
+ },
+ {
+  "id": "162RC9",
+  "section": "RC",
+  "numero": 9,
+  "surface_m2": 54029,
+  "center_ue_cm": {
+   "x": -264704.0,
+   "y": -1099150.8
+  }
+ },
+ {
+  "id": "162RA32",
+  "section": "RA",
+  "numero": 32,
+  "surface_m2": 1738,
+  "center_ue_cm": {
+   "x": -655941.5,
+   "y": -1013400.9
+  }
+ },
+ {
+  "id": "162SK14",
+  "section": "SK",
+  "numero": 14,
+  "surface_m2": 1068,
+  "center_ue_cm": {
+   "x": -823927.9,
+   "y": 368755.3
+  }
+ },
+ {
+  "id": "162RE6",
+  "section": "RE",
+  "numero": 6,
+  "surface_m2": 1265,
+  "center_ue_cm": {
+   "x": -10748.3,
+   "y": -1058281.5
+  }
+ },
+ {
+  "id": "162SL20",
+  "section": "SL",
+  "numero": 20,
+  "surface_m2": 13635,
+  "center_ue_cm": {
+   "x": -933816.7,
+   "y": 178916.1
+  }
+ },
+ {
+  "id": "162SI2",
+  "section": "SI",
+  "numero": 2,
+  "surface_m2": 6490,
+  "center_ue_cm": {
+   "x": -777860.0,
+   "y": 409974.7
+  }
+ },
+ {
+  "id": "162RL18",
+  "section": "RL",
+  "numero": 18,
+  "surface_m2": 461,
+  "center_ue_cm": {
+   "x": 745102.3,
+   "y": -680785.6
+  }
+ },
+ {
+  "id": "162RA41",
+  "section": "RA",
+  "numero": 41,
+  "surface_m2": 2063,
+  "center_ue_cm": {
+   "x": -671142.4,
+   "y": -1008736.9
+  }
+ },
+ {
+  "id": "162RE5",
+  "section": "RE",
+  "numero": 5,
+  "surface_m2": 1725,
+  "center_ue_cm": {
+   "x": -15833.2,
+   "y": -1059638.7
+  }
+ },
+ {
+  "id": "162RL25",
+  "section": "RL",
+  "numero": 25,
+  "surface_m2": 24335,
+  "center_ue_cm": {
+   "x": 737303.6,
+   "y": -710566.5
+  }
+ },
+ {
+  "id": "162RX14",
+  "section": "RX",
+  "numero": 14,
+  "surface_m2": 1638,
+  "center_ue_cm": {
+   "x": 820848.8,
+   "y": 751590.8
+  }
+ },
+ {
+  "id": "162SR14",
+  "section": "SR",
+  "numero": 14,
+  "surface_m2": 3799,
+  "center_ue_cm": {
+   "x": -1191167.6,
+   "y": -646373.0
+  }
+ },
+ {
+  "id": "162SN14",
+  "section": "SN",
+  "numero": 14,
+  "surface_m2": 519,
+  "center_ue_cm": {
+   "x": -1172642.7,
+   "y": -231337.0
+  }
+ },
+ {
+  "id": "162RX18",
+  "section": "RX",
+  "numero": 18,
+  "surface_m2": 999,
+  "center_ue_cm": {
+   "x": 812287.3,
+   "y": 787823.1
+  }
+ },
+ {
+  "id": "162RM1",
+  "section": "RM",
+  "numero": 1,
+  "surface_m2": 25756,
+  "center_ue_cm": {
+   "x": 772564.1,
+   "y": -679705.1
+  }
+ },
+ {
+  "id": "162RP11",
+  "section": "RP",
+  "numero": 11,
+  "surface_m2": 42519,
+  "center_ue_cm": {
+   "x": 1135452.3,
+   "y": -228792.2
+  }
+ },
+ {
+  "id": "162SN11",
+  "section": "SN",
+  "numero": 11,
+  "surface_m2": 244,
+  "center_ue_cm": {
+   "x": -1174418.4,
+   "y": -237696.4
+  }
+ },
+ {
+  "id": "162RY12",
+  "section": "RY",
+  "numero": 12,
+  "surface_m2": 42229,
+  "center_ue_cm": {
+   "x": 721762.0,
+   "y": 889025.0
+  }
+ },
+ {
+  "id": "162RO14",
+  "section": "RO",
+  "numero": 14,
+  "surface_m2": 3376,
+  "center_ue_cm": {
+   "x": 1115763.8,
+   "y": -296229.7
+  }
+ },
+ {
+  "id": "162RV14",
+  "section": "RV",
+  "numero": 14,
+  "surface_m2": 766,
+  "center_ue_cm": {
+   "x": 1032781.0,
+   "y": 545478.1
+  }
+ },
+ {
+  "id": "162SD1",
+  "section": "SD",
+  "numero": 1,
+  "surface_m2": 369,
+  "center_ue_cm": {
+   "x": -358987.0,
+   "y": 749861.8
+  }
+ },
+ {
+  "id": "162RV19",
+  "section": "RV",
+  "numero": 19,
+  "surface_m2": 1964,
+  "center_ue_cm": {
+   "x": 1007025.6,
+   "y": 581159.2
+  }
+ },
+ {
+  "id": "162RA7",
+  "section": "RA",
+  "numero": 7,
+  "surface_m2": 7316,
+  "center_ue_cm": {
+   "x": -647615.7,
+   "y": -1031135.4
+  }
+ },
+ {
+  "id": "162SS15",
+  "section": "SS",
+  "numero": 15,
+  "surface_m2": 2564,
+  "center_ue_cm": {
+   "x": -1096229.0,
+   "y": -757755.6
+  }
+ },
+ {
+  "id": "162SL14",
+  "section": "SL",
+  "numero": 14,
+  "surface_m2": 8616,
+  "center_ue_cm": {
+   "x": -951070.2,
+   "y": 117091.7
+  }
+ },
+ {
+  "id": "162RH8",
+  "section": "RH",
+  "numero": 8,
+  "surface_m2": 172213,
+  "center_ue_cm": {
+   "x": 236456.8,
+   "y": -953671.9
+  }
+ },
+ {
+  "id": "162RV27",
+  "section": "RV",
+  "numero": 27,
+  "surface_m2": 235,
+  "center_ue_cm": {
+   "x": 1081042.9,
+   "y": 481409.8
+  }
+ },
+ {
+  "id": "162SV29",
+  "section": "SV",
+  "numero": 29,
+  "surface_m2": 1728,
+  "center_ue_cm": {
+   "x": -802284.5,
+   "y": -927711.4
+  }
+ },
+ {
+  "id": "162RW14",
+  "section": "RW",
+  "numero": 14,
+  "surface_m2": 233,
+  "center_ue_cm": {
+   "x": 977055.3,
+   "y": 585146.2
+  }
+ },
+ {
+  "id": "162RS11",
+  "section": "RS",
+  "numero": 11,
+  "surface_m2": 23364,
+  "center_ue_cm": {
+   "x": 1219245.2,
+   "y": 226667.5
+  }
+ },
+ {
+  "id": "162RZ11",
+  "section": "RZ",
+  "numero": 11,
+  "surface_m2": 2472,
+  "center_ue_cm": {
+   "x": 598803.6,
+   "y": 1071277.4
+  }
+ },
+ {
+  "id": "162SV14",
+  "section": "SV",
+  "numero": 14,
+  "surface_m2": 10836,
+  "center_ue_cm": {
+   "x": -711252.1,
+   "y": -985587.1
+  }
+ },
+ {
+  "id": "162SV20",
+  "section": "SV",
+  "numero": 20,
+  "surface_m2": 8035,
+  "center_ue_cm": {
+   "x": -724618.5,
+   "y": -971362.2
+  }
+ },
+ {
+  "id": "162ST15",
+  "section": "ST",
+  "numero": 15,
+  "surface_m2": 2672,
+  "center_ue_cm": {
+   "x": -875820.3,
+   "y": -889024.7
+  }
+ },
+ {
+  "id": "162RI3",
+  "section": "RI",
+  "numero": 3,
+  "surface_m2": 5131,
+  "center_ue_cm": {
+   "x": 339778.6,
+   "y": -913570.0
+  }
+ },
+ {
+  "id": "162SI7",
+  "section": "SI",
+  "numero": 7,
+  "surface_m2": 189,
+  "center_ue_cm": {
+   "x": -779426.8,
+   "y": 450982.6
+  }
+ },
+ {
+  "id": "162RL33",
+  "section": "RL",
+  "numero": 33,
+  "surface_m2": 25625,
+  "center_ue_cm": {
+   "x": 777056.8,
+   "y": -706962.2
+  }
+ },
+ {
+  "id": "162SD9",
+  "section": "SD",
+  "numero": 9,
+  "surface_m2": 137,
+  "center_ue_cm": {
+   "x": -239369.4,
+   "y": 830229.7
+  }
+ },
+ {
+  "id": "162RB7",
+  "section": "RB",
+  "numero": 7,
+  "surface_m2": 39283,
+  "center_ue_cm": {
+   "x": -544915.2,
+   "y": -1064870.5
+  }
+ },
+ {
+  "id": "162RA24",
+  "section": "RA",
+  "numero": 24,
+  "surface_m2": 546,
+  "center_ue_cm": {
+   "x": -651430.2,
+   "y": -1013130.0
+  }
+ },
+ {
+  "id": "162RP6",
+  "section": "RP",
+  "numero": 6,
+  "surface_m2": 1053,
+  "center_ue_cm": {
+   "x": 1118455.8,
+   "y": -278684.9
+  }
+ },
+ {
+  "id": "162SV35",
+  "section": "SV",
+  "numero": 35,
+  "surface_m2": 1739,
+  "center_ue_cm": {
+   "x": -828545.5,
+   "y": -904700.7
+  }
+ },
+ {
+  "id": "162ST1",
+  "section": "ST",
+  "numero": 1,
+  "surface_m2": 86897,
+  "center_ue_cm": {
+   "x": -1009720.8,
+   "y": -816305.2
+  }
+ },
+ {
+  "id": "162RP2",
+  "section": "RP",
+  "numero": 2,
+  "surface_m2": 20472,
+  "center_ue_cm": {
+   "x": 1135955.5,
+   "y": -276629.7
+  }
+ },
+ {
+  "id": "162SL27",
+  "section": "SL",
+  "numero": 27,
+  "surface_m2": 615,
+  "center_ue_cm": {
+   "x": -907918.1,
+   "y": 213911.4
+  }
+ },
+ {
+  "id": "162SM9",
+  "section": "SM",
+  "numero": 9,
+  "surface_m2": 1008,
+  "center_ue_cm": {
+   "x": -1135291.6,
+   "y": -95722.4
+  }
+ },
+ {
+  "id": "162RV24",
+  "section": "RV",
+  "numero": 24,
+  "surface_m2": 527,
+  "center_ue_cm": {
+   "x": 1082945.6,
+   "y": 465076.9
+  }
+ },
+ {
+  "id": "162RL8",
+  "section": "RL",
+  "numero": 8,
+  "surface_m2": 19605,
+  "center_ue_cm": {
+   "x": 697715.8,
+   "y": -734154.6
+  }
+ },
+ {
+  "id": "162RY8",
+  "section": "RY",
+  "numero": 8,
+  "surface_m2": 3261,
+  "center_ue_cm": {
+   "x": 703937.0,
+   "y": 899470.2
+  }
+ },
+ {
+  "id": "162RM3",
+  "section": "RM",
+  "numero": 3,
+  "surface_m2": 17313,
+  "center_ue_cm": {
+   "x": 790984.9,
+   "y": -657571.0
+  }
+ },
+ {
+  "id": "162RM4",
+  "section": "RM",
+  "numero": 4,
+  "surface_m2": 62186,
+  "center_ue_cm": {
+   "x": 801508.7,
+   "y": -645413.7
+  }
+ },
+ {
+  "id": "162RV23",
+  "section": "RV",
+  "numero": 23,
+  "surface_m2": 1624,
+  "center_ue_cm": {
+   "x": 1074244.9,
+   "y": 467777.4
+  }
+ },
+ {
+  "id": "162SI21",
+  "section": "SI",
+  "numero": 21,
+  "surface_m2": 385,
+  "center_ue_cm": {
+   "x": -733009.3,
+   "y": 499990.4
+  }
+ },
+ {
+  "id": "162SN3",
+  "section": "SN",
+  "numero": 3,
+  "surface_m2": 36696,
+  "center_ue_cm": {
+   "x": -1228662.0,
+   "y": -278704.8
+  }
+ },
+ {
+  "id": "162SM21",
+  "section": "SM",
+  "numero": 21,
+  "surface_m2": 10708,
+  "center_ue_cm": {
+   "x": -1052160.7,
+   "y": -10194.7
+  }
+ },
+ {
+  "id": "162SI4",
+  "section": "SI",
+  "numero": 4,
+  "surface_m2": 777,
+  "center_ue_cm": {
+   "x": -764399.2,
+   "y": 420780.5
+  }
+ },
+ {
+  "id": "162SK12",
+  "section": "SK",
+  "numero": 12,
+  "surface_m2": 2065,
+  "center_ue_cm": {
+   "x": -827228.6,
+   "y": 355957.4
+  }
+ },
+ {
+  "id": "162RS6",
+  "section": "RS",
+  "numero": 6,
+  "surface_m2": 6459,
+  "center_ue_cm": {
+   "x": 1216451.6,
+   "y": 163356.6
+  }
+ },
+ {
+  "id": "162SB6",
+  "section": "SB",
+  "numero": 6,
+  "surface_m2": 721,
+  "center_ue_cm": {
+   "x": 54237.5,
+   "y": 1001879.7
+  }
+ },
+ {
+  "id": "162RA2",
+  "section": "RA",
+  "numero": 2,
+  "surface_m2": 274,
+  "center_ue_cm": {
+   "x": -668475.3,
+   "y": -1019339.8
+  }
+ },
+ {
+  "id": "162RP10",
+  "section": "RP",
+  "numero": 10,
+  "surface_m2": 31488,
+  "center_ue_cm": {
+   "x": 1135689.3,
+   "y": -242220.7
+  }
+ },
+ {
+  "id": "162SV1",
+  "section": "SV",
+  "numero": 1,
+  "surface_m2": 33134,
+  "center_ue_cm": {
+   "x": -857574.9,
+   "y": -925059.9
+  }
+ },
+ {
+  "id": "162SV34",
+  "section": "SV",
+  "numero": 34,
+  "surface_m2": 10526,
+  "center_ue_cm": {
+   "x": -818970.9,
+   "y": -907823.5
+  }
+ },
+ {
+  "id": "162SL4",
+  "section": "SL",
+  "numero": 4,
+  "surface_m2": 247,
+  "center_ue_cm": {
+   "x": -1013253.6,
+   "y": 78403.6
+  }
+ },
+ {
+  "id": "162SN10",
+  "section": "SN",
+  "numero": 10,
+  "surface_m2": 4136,
+  "center_ue_cm": {
+   "x": -1174154.0,
+   "y": -255067.7
+  }
+ },
+ {
+  "id": "162RL4",
+  "section": "RL",
+  "numero": 4,
+  "surface_m2": 553,
+  "center_ue_cm": {
+   "x": 658264.8,
+   "y": -754162.3
+  }
+ },
+ {
+  "id": "162RX15",
+  "section": "RX",
+  "numero": 15,
+  "surface_m2": 417,
+  "center_ue_cm": {
+   "x": 829010.0,
+   "y": 755590.0
+  }
+ },
+ {
+  "id": "162RZ12",
+  "section": "RZ",
+  "numero": 12,
+  "surface_m2": 741,
+  "center_ue_cm": {
+   "x": 618327.3,
+   "y": 1057440.8
+  }
+ },
+ {
+  "id": "162SO6",
+  "section": "SO",
+  "numero": 6,
+  "surface_m2": 43691,
+  "center_ue_cm": {
+   "x": -1230429.7,
+   "y": -377155.5
+  }
+ },
+ {
+  "id": "162SN17",
+  "section": "SN",
+  "numero": 17,
+  "surface_m2": 13324,
+  "center_ue_cm": {
+   "x": -1198115.3,
+   "y": -207733.6
+  }
+ },
+ {
+  "id": "162SK4",
+  "section": "SK",
+  "numero": 4,
+  "surface_m2": 2053,
+  "center_ue_cm": {
+   "x": -877721.5,
+   "y": 254458.7
+  }
+ },
+ {
+  "id": "162RL13",
+  "section": "RL",
+  "numero": 13,
+  "surface_m2": 1544,
+  "center_ue_cm": {
+   "x": 765066.1,
+   "y": -717656.4
+  }
+ },
+ {
+  "id": "162RS15",
+  "section": "RS",
+  "numero": 15,
+  "surface_m2": 48032,
+  "center_ue_cm": {
+   "x": 1213415.0,
+   "y": 256896.0
+  }
+ },
+ {
+  "id": "162RW15",
+  "section": "RW",
+  "numero": 15,
+  "surface_m2": 229,
+  "center_ue_cm": {
+   "x": 982495.9,
+   "y": 593103.9
+  }
+ },
+ {
+  "id": "162RP7",
+  "section": "RP",
+  "numero": 7,
+  "surface_m2": 4321,
+  "center_ue_cm": {
+   "x": 1122654.5,
+   "y": -281737.0
+  }
+ },
+ {
+  "id": "162SS2",
+  "section": "SS",
+  "numero": 2,
+  "surface_m2": 59747,
+  "center_ue_cm": {
+   "x": -1162523.9,
+   "y": -730546.9
+  }
+ },
+ {
+  "id": "162SK11",
+  "section": "SK",
+  "numero": 11,
+  "surface_m2": 32575,
+  "center_ue_cm": {
+   "x": -841093.4,
+   "y": 351047.3
+  }
+ },
+ {
+  "id": "162RB10",
+  "section": "RB",
+  "numero": 10,
+  "surface_m2": 5988,
+  "center_ue_cm": {
+   "x": -511603.0,
+   "y": -1064235.0
+  }
+ },
+ {
+  "id": "162RV28",
+  "section": "RV",
+  "numero": 28,
+  "surface_m2": 695,
+  "center_ue_cm": {
+   "x": 1077034.4,
+   "y": 483026.3
+  }
+ },
+ {
+  "id": "162RA47",
+  "section": "RA",
+  "numero": 47,
+  "surface_m2": 755,
+  "center_ue_cm": {
+   "x": -655564.6,
+   "y": -1009170.3
+  }
+ },
+ {
+  "id": "162SM15",
+  "section": "SM",
+  "numero": 15,
+  "surface_m2": 7733,
+  "center_ue_cm": {
+   "x": -1080770.8,
+   "y": -29891.2
+  }
+ },
+ {
+  "id": "162RP3",
+  "section": "RP",
+  "numero": 3,
+  "surface_m2": 3467,
+  "center_ue_cm": {
+   "x": 1124546.8,
+   "y": -263953.0
+  }
+ },
+ {
+  "id": "162RW9",
+  "section": "RW",
+  "numero": 9,
+  "surface_m2": 1395,
+  "center_ue_cm": {
+   "x": 930719.3,
+   "y": 628876.9
+  }
+ },
+ {
+  "id": "162ST2",
+  "section": "ST",
+  "numero": 2,
+  "surface_m2": 78608,
+  "center_ue_cm": {
+   "x": -969779.0,
+   "y": -844912.7
+  }
+ },
+ {
+  "id": "162SN29",
+  "section": "SN",
+  "numero": 29,
+  "surface_m2": 8715,
+  "center_ue_cm": {
+   "x": -1147174.5,
+   "y": -131595.4
+  }
+ },
+ {
+  "id": "162SL23",
+  "section": "SL",
+  "numero": 23,
+  "surface_m2": 863,
+  "center_ue_cm": {
+   "x": -915440.3,
+   "y": 194884.4
+  }
+ },
+ {
+  "id": "162RL11",
+  "section": "RL",
+  "numero": 11,
+  "surface_m2": 19932,
+  "center_ue_cm": {
+   "x": 741649.4,
+   "y": -721309.9
+  }
+ },
+ {
+  "id": "162SM2",
+  "section": "SM",
+  "numero": 2,
+  "surface_m2": 1087,
+  "center_ue_cm": {
+   "x": -1128666.4,
+   "y": -132762.2
+  }
+ },
+ {
+  "id": "162SV36",
+  "section": "SV",
+  "numero": 36,
+  "surface_m2": 7836,
+  "center_ue_cm": {
+   "x": -832946.5,
+   "y": -903691.2
+  }
+ },
+ {
+  "id": "162RB5",
+  "section": "RB",
+  "numero": 5,
+  "surface_m2": 5823,
+  "center_ue_cm": {
+   "x": -562415.0,
+   "y": -1046509.2
+  }
+ },
+ {
+  "id": "162SI19",
+  "section": "SI",
+  "numero": 19,
+  "surface_m2": 26423,
+  "center_ue_cm": {
+   "x": -738923.0,
+   "y": 487057.1
+  }
+ },
+ {
+  "id": "162RS12",
+  "section": "RS",
+  "numero": 12,
+  "surface_m2": 1262,
+  "center_ue_cm": {
+   "x": 1200502.3,
+   "y": 222508.8
+  }
+ },
+ {
+  "id": "162SL28",
+  "section": "SL",
+  "numero": 28,
+  "surface_m2": 186,
+  "center_ue_cm": {
+   "x": -912346.8,
+   "y": 215548.9
+  }
+ },
+ {
+  "id": "162RT9",
+  "section": "RT",
+  "numero": 9,
+  "surface_m2": 2896,
+  "center_ue_cm": {
+   "x": 1120918.0,
+   "y": 384489.1
+  }
+ },
+ {
+  "id": "162RE9",
+  "section": "RE",
+  "numero": 9,
+  "surface_m2": 212499,
+  "center_ue_cm": {
+   "x": 63057.7,
+   "y": -1031689.4
+  }
+ },
+ {
+  "id": "162ST9",
+  "section": "ST",
+  "numero": 9,
+  "surface_m2": 12996,
+  "center_ue_cm": {
+   "x": -886834.1,
+   "y": -892691.7
+  }
+ },
+ {
+  "id": "162SV21",
+  "section": "SV",
+  "numero": 21,
+  "surface_m2": 3579,
+  "center_ue_cm": {
+   "x": -728142.5,
+   "y": -970991.4
+  }
+ },
+ {
+  "id": "162SM10",
+  "section": "SM",
+  "numero": 10,
+  "surface_m2": 774,
+  "center_ue_cm": {
+   "x": -1107436.6,
+   "y": -94020.2
+  }
+ },
+ {
+  "id": "162RW5",
+  "section": "RW",
+  "numero": 5,
+  "surface_m2": 703,
+  "center_ue_cm": {
+   "x": 914505.8,
+   "y": 674561.9
+  }
+ },
+ {
+  "id": "162SV38",
+  "section": "SV",
+  "numero": 38,
+  "surface_m2": 22265,
+  "center_ue_cm": {
+   "x": -854234.0,
+   "y": -897508.0
+  }
+ },
+ {
+  "id": "162SN8",
+  "section": "SN",
+  "numero": 8,
+  "surface_m2": 1172,
+  "center_ue_cm": {
+   "x": -1201110.6,
+   "y": -249423.2
+  }
+ },
+ {
+  "id": "162SI5",
+  "section": "SI",
+  "numero": 5,
+  "surface_m2": 346,
+  "center_ue_cm": {
+   "x": -761975.6,
+   "y": 427346.2
+  }
+ },
+ {
+  "id": "162RP1",
+  "section": "RP",
+  "numero": 1,
+  "surface_m2": 23183,
+  "center_ue_cm": {
+   "x": 1139927.9,
+   "y": -286192.6
+  }
+ },
+ {
+  "id": "162RH3",
+  "section": "RH",
+  "numero": 3,
+  "surface_m2": 2460,
+  "center_ue_cm": {
+   "x": 128903.7,
+   "y": -1006239.6
+  }
+ },
+ {
+  "id": "162RR4",
+  "section": "RR",
+  "numero": 4,
+  "surface_m2": 73834,
+  "center_ue_cm": {
+   "x": 1193938.1,
+   "y": 9189.1
+  }
+ },
+ {
+  "id": "162SL3",
+  "section": "SL",
+  "numero": 3,
+  "surface_m2": 15527,
+  "center_ue_cm": {
+   "x": -1006862.5,
+   "y": 80194.3
+  }
+ },
+ {
+  "id": "162SR21",
+  "section": "SR",
+  "numero": 21,
+  "surface_m2": 3750,
+  "center_ue_cm": {
+   "x": -1164669.7,
+   "y": -694069.0
+  }
+ },
+ {
+  "id": "162RR1",
+  "section": "RR",
+  "numero": 1,
+  "surface_m2": 33186,
+  "center_ue_cm": {
+   "x": 1171892.4,
+   "y": -69880.1
+  }
+ },
+ {
+  "id": "162RA20",
+  "section": "RA",
+  "numero": 20,
+  "surface_m2": 7417,
+  "center_ue_cm": {
+   "x": -641278.6,
+   "y": -1020565.9
+  }
+ },
+ {
+  "id": "162RK17",
+  "section": "RK",
+  "numero": 17,
+  "surface_m2": 924,
+  "center_ue_cm": {
+   "x": 613870.1,
+   "y": -788353.8
+  }
+ },
+ {
+  "id": "162RL31",
+  "section": "RL",
+  "numero": 31,
+  "surface_m2": 18707,
+  "center_ue_cm": {
+   "x": 732984.3,
+   "y": -727212.3
+  }
+ },
+ {
+  "id": "162RA6",
+  "section": "RA",
+  "numero": 6,
+  "surface_m2": 3572,
+  "center_ue_cm": {
+   "x": -652385.7,
+   "y": -1026747.3
+  }
+ },
+ {
+  "id": "162SR17",
+  "section": "SR",
+  "numero": 17,
+  "surface_m2": 27998,
+  "center_ue_cm": {
+   "x": -1210202.2,
+   "y": -672270.3
+  }
+ },
+ {
+  "id": "162RB12",
+  "section": "RB",
+  "numero": 12,
+  "surface_m2": 32841,
+  "center_ue_cm": {
+   "x": -476551.4,
+   "y": -1081966.3
+  }
+ },
+ {
+  "id": "162ST8",
+  "section": "ST",
+  "numero": 8,
+  "surface_m2": 20616,
+  "center_ue_cm": {
+   "x": -892076.7,
+   "y": -881707.9
+  }
+ },
+ {
+  "id": "162RA1",
+  "section": "RA",
+  "numero": 1,
+  "surface_m2": 23119,
+  "center_ue_cm": {
+   "x": -663835.5,
+   "y": -1023391.8
+  }
+ },
+ {
+  "id": "162RL7",
+  "section": "RL",
+  "numero": 7,
+  "surface_m2": 1528,
+  "center_ue_cm": {
+   "x": 689232.3,
+   "y": -731020.4
+  }
+ },
+ {
+  "id": "162SK5",
+  "section": "SK",
+  "numero": 5,
+  "surface_m2": 5564,
+  "center_ue_cm": {
+   "x": -871164.4,
+   "y": 272093.7
+  }
+ },
+ {
+  "id": "162RW13",
+  "section": "RW",
+  "numero": 13,
+  "surface_m2": 709,
+  "center_ue_cm": {
+   "x": 971096.0,
+   "y": 582980.7
+  }
+ },
+ {
+  "id": "162RX16",
+  "section": "RX",
+  "numero": 16,
+  "surface_m2": 1437,
+  "center_ue_cm": {
+   "x": 847539.2,
+   "y": 761920.3
+  }
+ },
+ {
+  "id": "162SS4",
+  "section": "SS",
+  "numero": 4,
+  "surface_m2": 7537,
+  "center_ue_cm": {
+   "x": -1146058.8,
+   "y": -738168.8
+  }
+ },
+ {
+  "id": "162SV28",
+  "section": "SV",
+  "numero": 28,
+  "surface_m2": 4518,
+  "center_ue_cm": {
+   "x": -787612.0,
+   "y": -941345.0
+  }
+ },
+ {
+  "id": "162SH2",
+  "section": "SH",
+  "numero": 2,
+  "surface_m2": 3092,
+  "center_ue_cm": {
+   "x": -663381.1,
+   "y": 554657.2
+  }
+ },
+ {
+  "id": "162SI17",
+  "section": "SI",
+  "numero": 17,
+  "surface_m2": 535,
+  "center_ue_cm": {
+   "x": -763502.0,
+   "y": 472721.8
+  }
+ },
+ {
+  "id": "162RW6",
+  "section": "RW",
+  "numero": 6,
+  "surface_m2": 807,
+  "center_ue_cm": {
+   "x": 915754.9,
+   "y": 646340.2
+  }
+ },
+ {
+  "id": "162SK6",
+  "section": "SK",
+  "numero": 6,
+  "surface_m2": 17480,
+  "center_ue_cm": {
+   "x": -876412.0,
+   "y": 291585.8
+  }
+ },
+ {
+  "id": "162SA1",
+  "section": "SA",
+  "numero": 1,
+  "surface_m2": 3216,
+  "center_ue_cm": {
+   "x": 336494.8,
+   "y": 1088961.2
+  }
+ },
+ {
+  "id": "162SI1",
+  "section": "SI",
+  "numero": 1,
+  "surface_m2": 30175,
+  "center_ue_cm": {
+   "x": -799442.1,
+   "y": 406940.3
+  }
+ },
+ {
+  "id": "162RT15",
+  "section": "RT",
+  "numero": 15,
+  "surface_m2": 5649,
+  "center_ue_cm": {
+   "x": 1145911.7,
+   "y": 341932.4
+  }
+ },
+ {
+  "id": "162SV3",
+  "section": "SV",
+  "numero": 3,
+  "surface_m2": 5477,
+  "center_ue_cm": {
+   "x": -804089.1,
+   "y": -944343.1
+  }
+ },
+ {
+  "id": "162SI20",
+  "section": "SI",
+  "numero": 20,
+  "surface_m2": 2337,
+  "center_ue_cm": {
+   "x": -723337.9,
+   "y": 491829.3
+  }
+ },
+ {
+  "id": "162RB15",
+  "section": "RB",
+  "numero": 15,
+  "surface_m2": 38956,
+  "center_ue_cm": {
+   "x": -426512.2,
+   "y": -1092612.4
+  }
+ },
+ {
+  "id": "162RV11",
+  "section": "RV",
+  "numero": 11,
+  "surface_m2": 332,
+  "center_ue_cm": {
+   "x": 1030539.8,
+   "y": 522384.9
+  }
+ },
+ {
+  "id": "162SS9",
+  "section": "SS",
+  "numero": 9,
+  "surface_m2": 8889,
+  "center_ue_cm": {
+   "x": -1125472.5,
+   "y": -761976.3
+  }
+ },
+ {
+  "id": "162RV25",
+  "section": "RV",
+  "numero": 25,
+  "surface_m2": 1301,
+  "center_ue_cm": {
+   "x": 1082085.7,
+   "y": 471449.3
+  }
+ },
+ {
+  "id": "162RC2",
+  "section": "RC",
+  "numero": 2,
+  "surface_m2": 48274,
+  "center_ue_cm": {
+   "x": -388778.7,
+   "y": -1092402.9
+  }
+ },
+ {
+  "id": "162RA37",
+  "section": "RA",
+  "numero": 37,
+  "surface_m2": 316,
+  "center_ue_cm": {
+   "x": -664260.5,
+   "y": -1011099.3
+  }
+ },
+ {
+  "id": "162SH7",
+  "section": "SH",
+  "numero": 7,
+  "surface_m2": 6658,
+  "center_ue_cm": {
+   "x": -607980.3,
+   "y": 618711.3
+  }
+ },
+ {
+  "id": "162SM8",
+  "section": "SM",
+  "numero": 8,
+  "surface_m2": 2391,
+  "center_ue_cm": {
+   "x": -1124858.0,
+   "y": -105320.8
+  }
+ },
+ {
+  "id": "162RX5",
+  "section": "RX",
+  "numero": 5,
+  "surface_m2": 499,
+  "center_ue_cm": {
+   "x": 795046.7,
+   "y": 809864.8
+  }
+ },
+ {
+  "id": "162RP13",
+  "section": "RP",
+  "numero": 13,
+  "surface_m2": 35098,
+  "center_ue_cm": {
+   "x": 1135482.3,
+   "y": -172602.6
+  }
+ },
+ {
+  "id": "162SN24",
+  "section": "SN",
+  "numero": 24,
+  "surface_m2": 1207,
+  "center_ue_cm": {
+   "x": -1194225.1,
+   "y": -170326.0
+  }
+ },
+ {
+  "id": "162RI1",
+  "section": "RI",
+  "numero": 1,
+  "surface_m2": 17053,
+  "center_ue_cm": {
+   "x": 297228.3,
+   "y": -929799.5
+  }
+ },
+ {
+  "id": "162RV6",
+  "section": "RV",
+  "numero": 6,
+  "surface_m2": 836,
+  "center_ue_cm": {
+   "x": 1061367.2,
+   "y": 512216.5
+  }
+ },
+ {
+  "id": "162SR22",
+  "section": "SR",
+  "numero": 22,
+  "surface_m2": 2040,
+  "center_ue_cm": {
+   "x": -1167840.7,
+   "y": -690742.7
+  }
+ },
+ {
+  "id": "162RA28",
+  "section": "RA",
+  "numero": 28,
+  "surface_m2": 634,
+  "center_ue_cm": {
+   "x": -654615.1,
+   "y": -1020411.3
+  }
+ },
+ {
+  "id": "162RA40",
+  "section": "RA",
+  "numero": 40,
+  "surface_m2": 988,
+  "center_ue_cm": {
+   "x": -667386.5,
+   "y": -1009943.0
+  }
+ },
+ {
+  "id": "162RI6",
+  "section": "RI",
+  "numero": 6,
+  "surface_m2": 5611,
+  "center_ue_cm": {
+   "x": 350870.6,
+   "y": -910278.3
+  }
+ },
+ {
+  "id": "162RL27",
+  "section": "RL",
+  "numero": 27,
+  "surface_m2": 1995,
+  "center_ue_cm": {
+   "x": 729142.3,
+   "y": -701786.5
+  }
+ },
+ {
+  "id": "162RS10",
+  "section": "RS",
+  "numero": 10,
+  "surface_m2": 56757,
+  "center_ue_cm": {
+   "x": 1223794.3,
+   "y": 220906.0
+  }
+ },
+ {
+  "id": "162SN16",
+  "section": "SN",
+  "numero": 16,
+  "surface_m2": 405,
+  "center_ue_cm": {
+   "x": -1174647.8,
+   "y": -221442.4
+  }
+ },
+ {
+  "id": "162SR4",
+  "section": "SR",
+  "numero": 4,
+  "surface_m2": 8640,
+  "center_ue_cm": {
+   "x": -1196668.1,
+   "y": -615771.4
+  }
+ },
+ {
+  "id": "162RX3",
+  "section": "RX",
+  "numero": 3,
+  "surface_m2": 3143,
+  "center_ue_cm": {
+   "x": 759592.5,
+   "y": 818893.8
+  }
+ },
+ {
+  "id": "162RA10",
+  "section": "RA",
+  "numero": 10,
+  "surface_m2": 43313,
+  "center_ue_cm": {
+   "x": -621180.3,
+   "y": -1031319.2
+  }
+ },
+ {
+  "id": "162RS16",
+  "section": "RS",
+  "numero": 16,
+  "surface_m2": 2368,
+  "center_ue_cm": {
+   "x": 1206082.9,
+   "y": 251507.8
+  }
+ },
+ {
+  "id": "162RK6",
+  "section": "RK",
+  "numero": 6,
+  "surface_m2": 558,
+  "center_ue_cm": {
+   "x": 528631.0,
+   "y": -828312.3
+  }
+ },
+ {
+  "id": "162SL7",
+  "section": "SL",
+  "numero": 7,
+  "surface_m2": 534,
+  "center_ue_cm": {
+   "x": -954899.7,
+   "y": 89964.3
+  }
+ },
+ {
+  "id": "162RX17",
+  "section": "RX",
+  "numero": 17,
+  "surface_m2": 983,
+  "center_ue_cm": {
+   "x": 838378.5,
+   "y": 770746.8
+  }
+ },
+ {
+  "id": "162SN15",
+  "section": "SN",
+  "numero": 15,
+  "surface_m2": 285,
+  "center_ue_cm": {
+   "x": -1169510.5,
+   "y": -225962.9
+  }
+ },
+ {
+  "id": "162RD4",
+  "section": "RD",
+  "numero": 4,
+  "surface_m2": 50591,
+  "center_ue_cm": {
+   "x": -170068.6,
+   "y": -1085044.1
+  }
+ },
+ {
+  "id": "162SN22",
+  "section": "SN",
+  "numero": 22,
+  "surface_m2": 1732,
+  "center_ue_cm": {
+   "x": -1157379.6,
+   "y": -185466.1
+  }
+ },
+ {
+  "id": "162SO1",
+  "section": "SO",
+  "numero": 1,
+  "surface_m2": 39115,
+  "center_ue_cm": {
+   "x": -1219899.8,
+   "y": -307226.7
+  }
+ },
+ {
+  "id": "162RL32",
+  "section": "RL",
+  "numero": 32,
+  "surface_m2": 74626,
+  "center_ue_cm": {
+   "x": 756061.5,
+   "y": -702604.3
+  }
+ },
+ {
+  "id": "162SV26",
+  "section": "SV",
+  "numero": 26,
+  "surface_m2": 3502,
+  "center_ue_cm": {
+   "x": -745052.4,
+   "y": -958187.0
+  }
+ },
+ {
+  "id": "162SV9",
+  "section": "SV",
+  "numero": 9,
+  "surface_m2": 2703,
+  "center_ue_cm": {
+   "x": -756438.5,
+   "y": -962730.4
+  }
+ },
+ {
+  "id": "162RO4",
+  "section": "RO",
+  "numero": 4,
+  "surface_m2": 12917,
+  "center_ue_cm": {
+   "x": 1058577.9,
+   "y": -412482.4
+  }
+ },
+ {
+  "id": "162SS1",
+  "section": "SS",
+  "numero": 1,
+  "surface_m2": 20106,
+  "center_ue_cm": {
+   "x": -1162037.7,
+   "y": -714674.0
+  }
+ },
+ {
+  "id": "162RL21",
+  "section": "RL",
+  "numero": 21,
+  "surface_m2": 8490,
+  "center_ue_cm": {
+   "x": 738036.3,
+   "y": -691146.2
+  }
+ },
+ {
+  "id": "162SR2",
+  "section": "SR",
+  "numero": 2,
+  "surface_m2": 110988,
+  "center_ue_cm": {
+   "x": -1222922.0,
+   "y": -610047.5
+  }
+ },
+ {
+  "id": "162SR6",
+  "section": "SR",
+  "numero": 6,
+  "surface_m2": 4009,
+  "center_ue_cm": {
+   "x": -1214727.1,
+   "y": -627706.6
+  }
+ },
+ {
+  "id": "162RW7",
+  "section": "RW",
+  "numero": 7,
+  "surface_m2": 659,
+  "center_ue_cm": {
+   "x": 930941.6,
+   "y": 657352.2
+  }
+ },
+ {
+  "id": "162RZ2",
+  "section": "RZ",
+  "numero": 2,
+  "surface_m2": 1964,
+  "center_ue_cm": {
+   "x": 558341.3,
+   "y": 1062489.9
+  }
+ },
+ {
+  "id": "162SI27",
+  "section": "SI",
+  "numero": 27,
+  "surface_m2": 6118,
+  "center_ue_cm": {
+   "x": -706020.9,
+   "y": 521069.3
+  }
+ },
+ {
+  "id": "162SR1",
+  "section": "SR",
+  "numero": 1,
+  "surface_m2": 67087,
+  "center_ue_cm": {
+   "x": -1211981.4,
+   "y": -580249.6
+  }
+ },
+ {
+  "id": "162SB4",
+  "section": "SB",
+  "numero": 4,
+  "surface_m2": 1879,
+  "center_ue_cm": {
+   "x": 66285.3,
+   "y": 1004235.1
+  }
+ },
+ {
+  "id": "162RK9",
+  "section": "RK",
+  "numero": 9,
+  "surface_m2": 454,
+  "center_ue_cm": {
+   "x": 508678.4,
+   "y": -842911.3
+  }
+ },
+ {
+  "id": "162RY2",
+  "section": "RY",
+  "numero": 2,
+  "surface_m2": 104,
+  "center_ue_cm": {
+   "x": 651273.3,
+   "y": 1027850.1
+  }
+ },
+ {
+  "id": "162RB6",
+  "section": "RB",
+  "numero": 6,
+  "surface_m2": 18913,
+  "center_ue_cm": {
+   "x": -558062.4,
+   "y": -1058456.4
+  }
+ },
+ {
+  "id": "162SH10",
+  "section": "SH",
+  "numero": 10,
+  "surface_m2": 1790,
+  "center_ue_cm": {
+   "x": -562806.2,
+   "y": 647827.6
+  }
+ },
+ {
+  "id": "162RB14",
+  "section": "RB",
+  "numero": 14,
+  "surface_m2": 39171,
+  "center_ue_cm": {
+   "x": -446234.5,
+   "y": -1087013.6
+  }
+ },
+ {
+  "id": "162SS7",
+  "section": "SS",
+  "numero": 7,
+  "surface_m2": 12299,
+  "center_ue_cm": {
+   "x": -1124359.5,
+   "y": -742791.4
+  }
+ },
+ {
+  "id": "162SN4",
+  "section": "SN",
+  "numero": 4,
+  "surface_m2": 7365,
+  "center_ue_cm": {
+   "x": -1230932.7,
+   "y": -263807.5
+  }
+ },
+ {
+  "id": "162SI10",
+  "section": "SI",
+  "numero": 10,
+  "surface_m2": 3640,
+  "center_ue_cm": {
+   "x": -778221.7,
+   "y": 438590.0
+  }
+ },
+ {
+  "id": "162SN1",
+  "section": "SN",
+  "numero": 1,
+  "surface_m2": 283,
+  "center_ue_cm": {
+   "x": -1205233.3,
+   "y": -289010.8
+  }
+ },
+ {
+  "id": "162SM7",
+  "section": "SM",
+  "numero": 7,
+  "surface_m2": 721,
+  "center_ue_cm": {
+   "x": -1117703.1,
+   "y": -108211.3
+  }
+ },
+ {
+  "id": "162RL23",
+  "section": "RL",
+  "numero": 23,
+  "surface_m2": 1256,
+  "center_ue_cm": {
+   "x": 742704.7,
+   "y": -695427.9
+  }
+ },
+ {
+  "id": "162RO1",
+  "section": "RO",
+  "numero": 1,
+  "surface_m2": 72878,
+  "center_ue_cm": {
+   "x": 1045168.2,
+   "y": -442853.4
+  }
+ },
+ {
+  "id": "162SV4",
+  "section": "SV",
+  "numero": 4,
+  "surface_m2": 14188,
+  "center_ue_cm": {
+   "x": -799732.0,
+   "y": -945624.1
+  }
+ },
+ {
+  "id": "162RT2",
+  "section": "RT",
+  "numero": 2,
+  "surface_m2": 646,
+  "center_ue_cm": {
+   "x": 1105013.2,
+   "y": 432311.3
+  }
+ },
+ {
+  "id": "162SO9",
+  "section": "SO",
+  "numero": 9,
+  "surface_m2": 60667,
+  "center_ue_cm": {
+   "x": -1229549.2,
+   "y": -432145.5
+  }
+ },
+ {
+  "id": "162RX6",
+  "section": "RX",
+  "numero": 6,
+  "surface_m2": 209,
+  "center_ue_cm": {
+   "x": 785773.0,
+   "y": 816299.4
+  }
+ },
+ {
+  "id": "162SV16",
+  "section": "SV",
+  "numero": 16,
+  "surface_m2": 893,
+  "center_ue_cm": {
+   "x": -715533.9,
+   "y": -976109.1
+  }
+ },
+ {
+  "id": "162ST5",
+  "section": "ST",
+  "numero": 5,
+  "surface_m2": 12748,
+  "center_ue_cm": {
+   "x": -929662.1,
+   "y": -872796.4
+  }
+ },
+ {
+  "id": "162RY11",
+  "section": "RY",
+  "numero": 11,
+  "surface_m2": 638,
+  "center_ue_cm": {
+   "x": 708267.3,
+   "y": 890060.2
+  }
+ },
+ {
+  "id": "162RO15",
+  "section": "RO",
+  "numero": 15,
+  "surface_m2": 37118,
+  "center_ue_cm": {
+   "x": 1128382.0,
+   "y": -291036.6
+  }
+ },
+ {
+  "id": "162RL17",
+  "section": "RL",
+  "numero": 17,
+  "surface_m2": 2656,
+  "center_ue_cm": {
+   "x": 749583.7,
+   "y": -679910.5
+  }
+ },
+ {
+  "id": "162SC1",
+  "section": "SC",
+  "numero": 1,
+  "surface_m2": 8311,
+  "center_ue_cm": {
+   "x": -145231.5,
+   "y": 874069.7
+  }
+ },
+ {
+  "id": "162RE4",
+  "section": "RE",
+  "numero": 4,
+  "surface_m2": 2489,
+  "center_ue_cm": {
+   "x": -19851.7,
+   "y": -1062393.5
+  }
+ },
+ {
+  "id": "162RO3",
+  "section": "RO",
+  "numero": 3,
+  "surface_m2": 6024,
+  "center_ue_cm": {
+   "x": 1036863.5,
+   "y": -418114.8
+  }
+ },
+ {
+  "id": "162RL9",
+  "section": "RL",
+  "numero": 9,
+  "surface_m2": 37746,
+  "center_ue_cm": {
+   "x": 704311.8,
+   "y": -727621.5
+  }
+ },
+ {
+  "id": "162RH5",
+  "section": "RH",
+  "numero": 5,
+  "surface_m2": 3427,
+  "center_ue_cm": {
+   "x": 138761.8,
+   "y": -999164.0
+  }
+ },
+ {
+  "id": "162SI3",
+  "section": "SI",
+  "numero": 3,
+  "surface_m2": 7058,
+  "center_ue_cm": {
+   "x": -767195.8,
+   "y": 413315.5
+  }
+ }
+]

@@ -1,0 +1,34 @@
+# Unreal generated
+monke_island/Binaries/
+monke_island/Intermediate/
+monke_island/Saved/
+monke_island/DerivedDataCache/
+monke_island/.vs/
+monke_island/*.sln
+monke_island/*.slnx
+monke_island/*.suo
+monke_island/*.VC.db
+monke_island/*.opensdf
+
+# Claude Code local
+.claude/settings.local.json
+
+# Raw GIS downloads (keep processed refs only)
+docs/reference/map/raw/
+
+# Packaging output
+build/
+
+# Downloaded art sources (large)
+art/textures/
+art/hdri/
+
+# Generated / local
+*.blend1
+__pycache__/
+*.pyc
+monke_island/Plugins/*/Binaries/
+monke_island/Plugins/*/Intermediate/
+
+# Factory worktrees (one per task, see .claude/factory/FACTORY.md)
+.worktrees/
