@@ -13,6 +13,12 @@ namespace FloodTimerMath
 		{
 			return Snapshot;
 		}
+		if (Input.bGameOver)
+		{
+			Snapshot.Mode = EFloodTimerMode::GameOver;
+			Snapshot.SecondsLeft = FMath::Max(0.0, Input.RestartTime - Input.Now);
+			return Snapshot;
+		}
 		if (Input.bResolved || (Input.bSubmersionStarted && Input.Now >= Input.SubmersionEndTime))
 		{
 			Snapshot.Mode = EFloodTimerMode::Over;

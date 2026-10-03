@@ -75,6 +75,8 @@ FFloodTimerInput FFloodTimerSource::Read() const
 		// The replicated phase confirms the submersion: a client never anticipates the server
 		Input.bSubmersionStarted = GameState->GetPhase() >= EExpeditionPhase::Submerging;
 		Input.bResolved = GameState->GetPhase() == EExpeditionPhase::Resolved;
+		Input.bGameOver = GameState->IsTeamWiped();
+		Input.RestartTime = GameState->GetRestartTime();
 		break;
 	}
 	case EFloodTimerSourceKind::FloodActor:

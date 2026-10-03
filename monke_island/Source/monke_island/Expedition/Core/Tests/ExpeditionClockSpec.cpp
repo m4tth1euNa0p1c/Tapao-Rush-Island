@@ -2,6 +2,7 @@
 
 #include "Misc/AutomationTest.h"
 #include "Expedition/Core/ExpeditionClock.h"
+#include "Expedition/Core/ExpeditionGameState.h"
 #include "Expedition/Core/ExpeditionRules.h"
 
 #if WITH_AUTOMATION_TESTS
@@ -199,6 +200,18 @@ void FExpeditionClockSpec::Define()
 			TestEqual(TEXT("submerging at 130 s"), ExpeditionClock::PhaseAt(State, At(130.0), Params), EExpeditionPhase::Submerging);
 			TestEqual(TEXT("late bonus"), ExpeditionClock::TryAddZoneBonus(State, TEXT("ZoneA"), At(130.0), Params), EZoneBonusResult::TooLate);
 			TestEqual(TEXT("still submerging"), ExpeditionClock::PhaseAt(State, At(130.0), Params), EExpeditionPhase::Submerging);
+		});
+	});
+
+	Describe("Game over (T-104)", [this]()
+	{
+		It("is a wipe only when somebody plays and nobody is alive", [this]()
+		{
+			TestFalse(TEXT("nobody spawned yet"), AExpeditionGameState::IsWipe(0, 0));
+			TestFalse(TEXT("solo alive"), AExpeditionGameState::IsWipe(1, 1));
+			TestTrue(TEXT("solo dead"), AExpeditionGameState::IsWipe(1, 0));
+			TestFalse(TEXT("one of four alive"), AExpeditionGameState::IsWipe(4, 1));
+			TestTrue(TEXT("four dead"), AExpeditionGameState::IsWipe(4, 0));
 		});
 	});
 

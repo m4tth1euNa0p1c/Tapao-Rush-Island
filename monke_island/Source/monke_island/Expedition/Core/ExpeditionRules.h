@@ -51,4 +51,16 @@ public:
 	/** Highest extra rise after the submersion (cm), on top of MaxWaterRiseCm; 0 = the sea stops at the end of the submersion */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Flood", meta=(ClampMin="0", Units="cm"))
 	float PostSubmersionMaxRiseCm = 1500.0f;
+
+	/** A dead player stays dead until the end of the expedition: no respawn at the player start */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over")
+	bool bPermadeath = true;
+
+	/** Time between the death of the last player and the return to the restart map (s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over", meta=(ClampMin="0", Units="s"))
+	float GameOverRestartDelay = 8.0f;
+
+	/** Map opened after a game over; empty = GameDefaultMap of the project (L_Boot: new island draw, start in the boat) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over", meta=(AllowedClasses="/Script/Engine.World"))
+	FSoftObjectPath RestartMap;
 };
