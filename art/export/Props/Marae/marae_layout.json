@@ -1,0 +1,1606 @@
+{
+ "site": [
+  -667786.0,
+  -1013264.0,
+  198.0
+ ],
+ "site_yaw": -90.0,
+ "items": [
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Meshes/SM_Marae_Pyramid",
+   "loc": [
+    0,
+    0,
+    0
+   ],
+   "yaw": 0.0,
+   "scale": 1.0,
+   "folder": "Structure"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Meshes/SM_Marae_Altar",
+   "loc": [
+    0,
+    -25.0,
+    180.0
+   ],
+   "yaw": 0.0,
+   "scale": 1.0,
+   "folder": "Structure"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_PearlArtifact",
+   "loc": [
+    0,
+    -25.0,
+    217.0
+   ],
+   "yaw": 0.0,
+   "scale": 1.0,
+   "folder": "Objets"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Offerings",
+   "loc": [
+    -85.0,
+    20.0,
+    180.0
+   ],
+   "yaw": -17.2,
+   "scale": 1.0,
+   "folder": "Objets"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Conch",
+   "loc": [
+    80.0,
+    25.0,
+    181.0
+   ],
+   "yaw": -137.5,
+   "scale": 1.0,
+   "folder": "Objets"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Offerings",
+   "loc": [
+    -95.0,
+    466.0,
+    0.0
+   ],
+   "yaw": 22.9,
+   "scale": 1.0,
+   "folder": "Objets"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Conch",
+   "loc": [
+    225.0,
+    230.0,
+    0.0
+   ],
+   "yaw": -51.6,
+   "scale": 1.0,
+   "folder": "Objets"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Torch",
+   "loc": [
+    -105.0,
+    366.0,
+    0
+   ],
+   "yaw": -230.1,
+   "scale": 1.0,
+   "folder": "Torches"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Torch",
+   "loc": [
+    105.0,
+    366.0,
+    0
+   ],
+   "yaw": -9.0,
+   "scale": 1.0,
+   "folder": "Torches"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Torch",
+   "loc": [
+    -245.0,
+    -195.0,
+    0
+   ],
+   "yaw": -99.0,
+   "scale": 1.0,
+   "folder": "Torches"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Torch",
+   "loc": [
+    245.0,
+    -195.0,
+    0
+   ],
+   "yaw": -80.3,
+   "scale": 1.0,
+   "folder": "Torches"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Torch",
+   "loc": [
+    -145.0,
+    180.0,
+    60.0
+   ],
+   "yaw": -265.0,
+   "scale": 0.741,
+   "folder": "Torches"
+  },
+  {
+   "kind": "bp",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Blueprints/BP_Marae_Torch",
+   "loc": [
+    145.0,
+    180.0,
+    60.0
+   ],
+   "yaw": -243.5,
+   "scale": 0.741,
+   "folder": "Torches"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Meshes/SM_Marae_StoneWall",
+   "loc": [
+    -295.0,
+    -60.0,
+    -12.0
+   ],
+   "yaw": -90.0,
+   "scale": 0.7,
+   "folder": "Structure"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Meshes/SM_Marae_StoneWall",
+   "loc": [
+    290.0,
+    90.0,
+    -12.0
+   ],
+   "yaw": -80.2,
+   "scale": 0.7,
+   "folder": "Structure"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Meshes/SM_Marae_StoneWall",
+   "loc": [
+    160.0,
+    -245.0,
+    -12.0
+   ],
+   "yaw": -5.7,
+   "scale": 0.7,
+   "folder": "Structure"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Marae/Meshes/SM_Marae_StoneWall",
+   "loc": [
+    -190.0,
+    -250.0,
+    -12.0
+   ],
+   "yaw": 11.5,
+   "scale": 0.7,
+   "folder": "Structure"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralBlock_B",
+   "loc": [
+    361.3,
+    -186.7,
+    0
+   ],
+   "yaw": -10.7,
+   "scale": 0.71,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralBlock_B",
+   "loc": [
+    -363.5,
+    230.5,
+    0
+   ],
+   "yaw": -257.6,
+   "scale": 0.95,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralBlock_F",
+   "loc": [
+    84.9,
+    -384.0,
+    0
+   ],
+   "yaw": -291.2,
+   "scale": 0.6,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralBlock_A",
+   "loc": [
+    -129.6,
+    326.0,
+    0
+   ],
+   "yaw": -55.9,
+   "scale": 1.08,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralBlock_F",
+   "loc": [
+    331.2,
+    -210.6,
+    0
+   ],
+   "yaw": -129.2,
+   "scale": 0.77,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralBlock_F",
+   "loc": [
+    172.3,
+    390.4,
+    0
+   ],
+   "yaw": -192.9,
+   "scale": 1.09,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralBlock_F",
+   "loc": [
+    347.1,
+    -159.3,
+    0
+   ],
+   "yaw": -226.2,
+   "scale": 1.04,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    -441.7,
+    198.3,
+    0
+   ],
+   "yaw": -16.5,
+   "scale": 0.71,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    548.4,
+    43.4,
+    0
+   ],
+   "yaw": -311.8,
+   "scale": 0.79,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    -252.7,
+    245.8,
+    0
+   ],
+   "yaw": -133.2,
+   "scale": 0.7,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    -146.8,
+    399.5,
+    0
+   ],
+   "yaw": -25.7,
+   "scale": 0.92,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    201.4,
+    -282.9,
+    0
+   ],
+   "yaw": -356.0,
+   "scale": 0.92,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    -218.3,
+    425.9,
+    0
+   ],
+   "yaw": -279.2,
+   "scale": 0.71,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    134.4,
+    317.0,
+    0
+   ],
+   "yaw": -23.8,
+   "scale": 1.06,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    100.0,
+    -355.3,
+    0
+   ],
+   "yaw": -318.3,
+   "scale": 0.92,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    -32.1,
+    -291.0,
+    0
+   ],
+   "yaw": -202.0,
+   "scale": 0.73,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    317.0,
+    201.5,
+    0
+   ],
+   "yaw": -78.9,
+   "scale": 1.1,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    232.2,
+    -126.8,
+    0
+   ],
+   "yaw": -39.5,
+   "scale": 0.91,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    -321.3,
+    189.1,
+    0
+   ],
+   "yaw": -214.4,
+   "scale": 0.83,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    543.6,
+    84.9,
+    0
+   ],
+   "yaw": -4.1,
+   "scale": 0.96,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    534.5,
+    135.7,
+    0
+   ],
+   "yaw": -94.8,
+   "scale": 0.85,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    -295.8,
+    12.1,
+    0
+   ],
+   "yaw": -225.0,
+   "scale": 1.02,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    297.7,
+    -361.6,
+    0
+   ],
+   "yaw": -194.1,
+   "scale": 0.99,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    -346.4,
+    211.0,
+    0
+   ],
+   "yaw": -40.3,
+   "scale": 0.78,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    22.6,
+    -290.0,
+    0
+   ],
+   "yaw": -204.1,
+   "scale": 0.64,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    238.8,
+    460.9,
+    0
+   ],
+   "yaw": -191.7,
+   "scale": 0.66,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    298.7,
+    88.1,
+    0
+   ],
+   "yaw": -189.9,
+   "scale": 0.9,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    466.1,
+    189.7,
+    0
+   ],
+   "yaw": -248.2,
+   "scale": 0.96,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    480.7,
+    12.5,
+    0
+   ],
+   "yaw": -157.6,
+   "scale": 0.86,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    3.7,
+    -239.5,
+    0
+   ],
+   "yaw": -7.6,
+   "scale": 0.88,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    500.2,
+    -19.2,
+    0
+   ],
+   "yaw": -21.2,
+   "scale": 0.63,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    180.6,
+    186.4,
+    0
+   ],
+   "yaw": -85.6,
+   "scale": 0.93,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    -490.6,
+    104.9,
+    0
+   ],
+   "yaw": -317.5,
+   "scale": 0.89,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    115.4,
+    443.7,
+    0
+   ],
+   "yaw": -68.5,
+   "scale": 0.65,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    -243.6,
+    -269.4,
+    0
+   ],
+   "yaw": -310.8,
+   "scale": 0.63,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    471.2,
+    -160.4,
+    0
+   ],
+   "yaw": -288.1,
+   "scale": 0.65,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    151.4,
+    -326.2,
+    0
+   ],
+   "yaw": -151.8,
+   "scale": 0.74,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    201.3,
+    172.2,
+    0
+   ],
+   "yaw": -290.7,
+   "scale": 1.03,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    569.7,
+    -159.3,
+    0
+   ],
+   "yaw": -300.8,
+   "scale": 1.08,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    213.4,
+    -312.5,
+    0
+   ],
+   "yaw": -76.9,
+   "scale": 0.8,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    133.2,
+    -190.5,
+    0
+   ],
+   "yaw": -140.5,
+   "scale": 1.06,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    -109.1,
+    -412.0,
+    0
+   ],
+   "yaw": -262.8,
+   "scale": 0.99,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    203.2,
+    -253.5,
+    0
+   ],
+   "yaw": -348.6,
+   "scale": 0.89,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    405.3,
+    -128.7,
+    0
+   ],
+   "yaw": -306.3,
+   "scale": 0.63,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    -153.9,
+    257.7,
+    0
+   ],
+   "yaw": -43.1,
+   "scale": 1.05,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    -240.6,
+    110.6,
+    0
+   ],
+   "yaw": -29.5,
+   "scale": 0.93,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    302.1,
+    111.7,
+    0
+   ],
+   "yaw": -257.7,
+   "scale": 0.72,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    326.3,
+    -298.6,
+    0
+   ],
+   "yaw": -164.5,
+   "scale": 1.06,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    470.4,
+    -23.4,
+    0
+   ],
+   "yaw": -202.6,
+   "scale": 0.65,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    -304.8,
+    9.6,
+    0
+   ],
+   "yaw": -125.6,
+   "scale": 0.63,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    -214.0,
+    -194.9,
+    0
+   ],
+   "yaw": -300.0,
+   "scale": 0.95,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    -221.4,
+    331.6,
+    0
+   ],
+   "yaw": -335.3,
+   "scale": 0.65,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    -51.1,
+    -476.2,
+    0
+   ],
+   "yaw": -267.1,
+   "scale": 0.68,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    -398.6,
+    262.2,
+    0
+   ],
+   "yaw": -73.3,
+   "scale": 0.92,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    -345.2,
+    10.0,
+    0
+   ],
+   "yaw": -326.8,
+   "scale": 0.63,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    131.5,
+    205.3,
+    0
+   ],
+   "yaw": -120.0,
+   "scale": 0.67,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    216.4,
+    -296.3,
+    0
+   ],
+   "yaw": -253.9,
+   "scale": 0.88,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    498.8,
+    -216.8,
+    0
+   ],
+   "yaw": -325.2,
+   "scale": 0.87,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_D",
+   "loc": [
+    -269.6,
+    130.7,
+    0
+   ],
+   "yaw": -45.9,
+   "scale": 0.75,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_A",
+   "loc": [
+    266.8,
+    167.1,
+    0
+   ],
+   "yaw": -89.8,
+   "scale": 0.65,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    507.9,
+    71.6,
+    0
+   ],
+   "yaw": -333.1,
+   "scale": 0.72,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    529.7,
+    67.8,
+    0
+   ],
+   "yaw": -317.1,
+   "scale": 0.61,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_B",
+   "loc": [
+    -55.6,
+    -446.1,
+    0
+   ],
+   "yaw": -38.9,
+   "scale": 1.04,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coral/Meshes/SM_CoralRubble_F",
+   "loc": [
+    92.7,
+    -450.2,
+    0
+   ],
+   "yaw": -165.6,
+   "scale": 0.75,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    49.6,
+    -226.6,
+    0.0
+   ],
+   "yaw": -347.9,
+   "scale": 0.95,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_B",
+   "loc": [
+    -169.5,
+    -196.3,
+    0.0
+   ],
+   "yaw": -9.9,
+   "scale": 0.43,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Tuft",
+   "loc": [
+    133.7,
+    -201.2,
+    0.0
+   ],
+   "yaw": -124.4,
+   "scale": 0.84,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_B",
+   "loc": [
+    -284.8,
+    -84.0,
+    0.0
+   ],
+   "yaw": -16.0,
+   "scale": 0.4,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    234.2,
+    -2.0,
+    60.0
+   ],
+   "yaw": -338.3,
+   "scale": 0.87,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -173.3,
+    -183.2,
+    0.0
+   ],
+   "yaw": -238.7,
+   "scale": 0.85,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -106.8,
+    -166.0,
+    60.0
+   ],
+   "yaw": -151.3,
+   "scale": 0.65,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -103.2,
+    169.7,
+    60.0
+   ],
+   "yaw": -146.1,
+   "scale": 0.83,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_B",
+   "loc": [
+    -89.8,
+    -235.1,
+    0.0
+   ],
+   "yaw": -167.3,
+   "scale": 0.51,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -103.7,
+    165.3,
+    60.0
+   ],
+   "yaw": -30.5,
+   "scale": 0.67,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Short",
+   "loc": [
+    -84.3,
+    110.3,
+    120.0
+   ],
+   "yaw": -270.3,
+   "scale": 0.93,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Short",
+   "loc": [
+    42.8,
+    -208.5,
+    0.0
+   ],
+   "yaw": -219.9,
+   "scale": 0.99,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_A",
+   "loc": [
+    -292.4,
+    -66.0,
+    0.0
+   ],
+   "yaw": -87.8,
+   "scale": 0.47,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_A",
+   "loc": [
+    236.7,
+    158.8,
+    0.0
+   ],
+   "yaw": -289.3,
+   "scale": 0.4,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Short",
+   "loc": [
+    -159.0,
+    -28.3,
+    120.0
+   ],
+   "yaw": -288.4,
+   "scale": 0.78,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Tuft",
+   "loc": [
+    163.0,
+    9.8,
+    120.0
+   ],
+   "yaw": -258.8,
+   "scale": 0.85,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Tuft",
+   "loc": [
+    -149.2,
+    -58.4,
+    120.0
+   ],
+   "yaw": -267.6,
+   "scale": 0.96,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -221.2,
+    -57.9,
+    60.0
+   ],
+   "yaw": -279.8,
+   "scale": 0.71,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Short",
+   "loc": [
+    -159.3,
+    130.6,
+    60.0
+   ],
+   "yaw": -84.4,
+   "scale": 0.89,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Short",
+   "loc": [
+    -121.7,
+    -196.4,
+    0.0
+   ],
+   "yaw": -55.0,
+   "scale": 0.75,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_A",
+   "loc": [
+    257.9,
+    -93.1,
+    0.0
+   ],
+   "yaw": -299.7,
+   "scale": 0.37,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    190.8,
+    104.6,
+    60.0
+   ],
+   "yaw": -316.9,
+   "scale": 0.61,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Tuft",
+   "loc": [
+    -115.1,
+    -83.7,
+    120.0
+   ],
+   "yaw": -140.3,
+   "scale": 0.72,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -225.7,
+    44.6,
+    60.0
+   ],
+   "yaw": -175.7,
+   "scale": 0.96,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_A",
+   "loc": [
+    -240.5,
+    -89.0,
+    0.0
+   ],
+   "yaw": -302.4,
+   "scale": 0.53,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_B",
+   "loc": [
+    284.6,
+    30.9,
+    0.0
+   ],
+   "yaw": -9.8,
+   "scale": 0.49,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Short",
+   "loc": [
+    151.1,
+    -139.0,
+    60.0
+   ],
+   "yaw": -117.8,
+   "scale": 0.7,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Tuft",
+   "loc": [
+    -108.0,
+    -166.2,
+    60.0
+   ],
+   "yaw": -342.3,
+   "scale": 0.71,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Short",
+   "loc": [
+    -3.2,
+    -180.8,
+    60.0
+   ],
+   "yaw": -18.7,
+   "scale": 0.9,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Tuft",
+   "loc": [
+    42.5,
+    -254.5,
+    0.0
+   ],
+   "yaw": -341.7,
+   "scale": 0.9,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_A",
+   "loc": [
+    154.8,
+    188.0,
+    0.0
+   ],
+   "yaw": -202.9,
+   "scale": 0.52,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_B",
+   "loc": [
+    -266.3,
+    -49.8,
+    0.0
+   ],
+   "yaw": -269.1,
+   "scale": 0.5,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    158.5,
+    -20.2,
+    120.0
+   ],
+   "yaw": -135.0,
+   "scale": 0.96,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Tuft",
+   "loc": [
+    261.6,
+    -110.9,
+    0.0
+   ],
+   "yaw": -108.5,
+   "scale": 0.88,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -119.1,
+    153.5,
+    60.0
+   ],
+   "yaw": -305.7,
+   "scale": 0.74,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    184.9,
+    -116.7,
+    60.0
+   ],
+   "yaw": -165.4,
+   "scale": 0.96,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -272.6,
+    -101.8,
+    0.0
+   ],
+   "yaw": -330.9,
+   "scale": 0.85,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -227.6,
+    -41.2,
+    60.0
+   ],
+   "yaw": -306.5,
+   "scale": 0.71,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_B",
+   "loc": [
+    -51.1,
+    -243.4,
+    0.0
+   ],
+   "yaw": -136.4,
+   "scale": 0.5,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Grass_Dry",
+   "loc": [
+    -276.1,
+    -8.4,
+    0.0
+   ],
+   "yaw": -122.5,
+   "scale": 0.92,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/GroundCover/Meshes/SM_Fern_A",
+   "loc": [
+    -268.1,
+    23.2,
+    0.0
+   ],
+   "yaw": -272.8,
+   "scale": 0.47,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes/SM_Naupaka_A",
+   "loc": [
+    -460.0,
+    -160.0,
+    0
+   ],
+   "yaw": -22.9,
+   "scale": 0.75,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes/SM_Naupaka_B",
+   "loc": [
+    440.0,
+    -240.0,
+    0
+   ],
+   "yaw": -114.6,
+   "scale": 0.7,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes/SM_Pandanus_Young",
+   "loc": [
+    -420.0,
+    290.0,
+    0
+   ],
+   "yaw": -57.3,
+   "scale": 0.8,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/Shrubs/Meshes/SM_MikiMiki_A",
+   "loc": [
+    500.0,
+    100.0,
+    0
+   ],
+   "yaw": -171.9,
+   "scale": 0.6,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes/SM_CoconutPalm_Leaning_B",
+   "loc": [
+    -650.0,
+    -550.0,
+    0
+   ],
+   "yaw": -34.4,
+   "scale": 0.65,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes/SM_CoconutPalm_Sabre_A",
+   "loc": [
+    680.0,
+    -460.0,
+    0
+   ],
+   "yaw": -149.0,
+   "scale": 0.6,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes/SM_CoconutPalm_Young_A",
+   "loc": [
+    480.0,
+    -620.0,
+    0
+   ],
+   "yaw": -68.8,
+   "scale": 0.55,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coconut/Meshes/SM_Coconut_Brown",
+   "loc": [
+    540.0,
+    -360.0,
+    5.0
+   ],
+   "yaw": -248.5,
+   "scale": 1.0,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coconut/Meshes/SM_Coconut_Green",
+   "loc": [
+    590.0,
+    -410.0,
+    5.0
+   ],
+   "yaw": -232.4,
+   "scale": 1.0,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coconut/Meshes/SM_Coconut_Brown",
+   "loc": [
+    -580.0,
+    -460.0,
+    5.0
+   ],
+   "yaw": -176.6,
+   "scale": 1.0,
+   "folder": "Vegetation"
+  },
+  {
+   "kind": "mesh",
+   "asset": "/Game/MonkeIsland/Environment/Props/Coconut/Meshes/SM_CoconutFrond_Dry_A",
+   "loc": [
+    -520.0,
+    -380.0,
+    2.0
+   ],
+   "yaw": -285.3,
+   "scale": 1.0,
+   "folder": "Vegetation"
+  }
+ ]
+}

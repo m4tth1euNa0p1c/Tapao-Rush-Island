@@ -99,6 +99,20 @@ Maquette `totem-tiki` faite sur le 2e PC (OneDrive\maquette-blender\maquettes\to
 - `T_Totem_Tiki_*_D/_N/_ORM.png` (2K) : textures cuites depuis Poly Haven `palm_tree_bark` (écorce de cocotier teintée bois flotté) — https://polyhaven.com/a/palm_tree_bark — **CC0**. Nacre et creux procéduraux (Blender).
 - Conversion pour Unreal sur ce PC : normale OpenGL → DirectX (canal vert inversé) ; ORM = occlusion 1, rugosité de `_R`, métal 0.
 
+## Marae des Perles (T-075) — art/export/Props/Marae/
+
+Maquette `marae-des-perles` (et ses pièces `marae-*`) faite sur le 2e PC (OneDrive\maquette-blender), lieu sacré fictif. Textures empaquetées par `scripts/props/marae_textures.py` (teinte de la maquette cuite, normale DirectX, ORM) depuis les mêmes sources, toutes **CC0** :
+- `T_Marae_BasaltMoss_*` ← Poly Haven `mossy_rock` — https://polyhaven.com/a/mossy_rock
+- `T_Marae_Basalt_*` ← ambientCG `Rock035` — https://ambientcg.com/view?id=Rock035
+- `T_Marae_BasaltLight_*` ← ambientCG `Rock030` — https://ambientcg.com/view?id=Rock030
+- `T_Marae_CoralBlock_*` ← Poly Haven `coral_ground_02` — https://polyhaven.com/a/coral_ground_02
+- `T_Marae_CoralGravel_*` ← Poly Haven `coral_gravel` — https://polyhaven.com/a/coral_gravel
+- `T_Marae_Wood_*` ← Poly Haven `rough_wood` — https://polyhaven.com/a/rough_wood
+- `T_Marae_Rope_*` ← ambientCG `Rope001` — https://ambientcg.com/view?id=Rope001
+- `T_Marae_Sticks_*` ← Poly Haven `bark_willow` — https://polyhaven.com/a/bark_willow
+- Conque et bol d'offrandes : modèles Poly Haven `lambis_shell` et `wooden_bowl_01` (CC0), matériaux du projet `MI_LambisShell` et `MI_Minka_wooden_bowl_01`.
+- Or, perle noire, cauris, flamme : matériaux procéduraux (aucune texture).
+
 ## Voix des créatures tiki (T-077) — scripts/props/creature_sounds.py
 
 rubberduck, « 80 CC0 creature SFX » et « 80 CC0 creature SFX #2 » — **CC0** (domaine public) — https://opengameart.org/content/80-cc0-creature-sfx et https://opengameart.org/content/80-cc0-creture-sfx-2
@@ -110,3 +124,12 @@ rubberduck, « 80 CC0 creature SFX » et « 80 CC0 creature SFX #2 » — **CC0*
 - `audio/creatures/SW_Tiki_Idle_0N` ← grunt_01/03, weird_07/08/09, breath_02
 - `audio/creatures/SW_Villager_Hurt_0N` ← human_01/04/08, hurt_01/02 ; `SW_Villager_Flee_0N` ← scream_01/02, human_02/03/05 ; `SW_Villager_Death_0N` ← human_06/07, die_04
 Traitement : mono, silences coupés, crête normalisée à -1 dB, fondus de 10 ms. Archives d'origine en cache local dans `art/audio_src/creatures/` (non versionné, retéléchargé par le script).
+
+## Butin commun (T-076) — art/export/Props/Loot/
+
+Maquette `loot-butin-commun` faite sur le 2e PC (OneDrive\maquette-blender). Textures empaquetées par `scripts/props/loot_textures.py` (teinte de la maquette cuite, normale DirectX, ORM), toutes **CC0** :
+- `T_Loot_CoconutHusk_*` ← ambientCG `Bark014` — https://ambientcg.com/view?id=Bark014
+- `T_Loot_CoconutInner_*`, `T_Loot_Wood_*` ← Poly Haven `fine_grained_wood` — https://polyhaven.com/a/fine_grained_wood
+- `T_Loot_Wicker_*`, `T_Loot_Pandanus_*` ← ambientCG `Wicker002` — https://ambientcg.com/view?id=Wicker002
+- `T_Loot_Rope_*` ← ambientCG `Rope001` ; `T_Loot_WoodOld_*` ← Poly Haven `rough_wood` ; `T_Loot_Planks_*` ← Poly Haven `weathered_planks` ; `T_Loot_Stone_*` ← ambientCG `Rock030`
+- Calebasse, graines, coquillages, cordelette : matériau procédural `M_Loot_Speckle` (aucune texture).

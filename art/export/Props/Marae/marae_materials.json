@@ -1,0 +1,273 @@
+{
+  "materials": {
+    "M_Marae_BasaltMoss": {
+      "textures": {
+        "D": "T_Marae_BasaltMoss_D.png",
+        "N": "T_Marae_BasaltMoss_N.png",
+        "ORM": "T_Marae_BasaltMoss_ORM.png"
+      },
+      "tiling": 1.1111,
+      "source": "props/minka/mossy_rock"
+    },
+    "M_Marae_Basalt": {
+      "textures": {
+        "D": "T_Marae_Basalt_D.png",
+        "N": "T_Marae_Basalt_N.png",
+        "ORM": "T_Marae_Basalt_ORM.png"
+      },
+      "tiling": 1.25,
+      "source": "characters/Rock035"
+    },
+    "M_Marae_BasaltLight": {
+      "textures": {
+        "D": "T_Marae_BasaltLight_D.png",
+        "N": "T_Marae_BasaltLight_N.png",
+        "ORM": "T_Marae_BasaltLight_ORM.png"
+      },
+      "tiling": 1.25,
+      "source": "characters/Rock030"
+    },
+    "M_Marae_CoralBlock": {
+      "textures": {
+        "D": "T_Marae_CoralBlock_D.png",
+        "N": "T_Marae_CoralBlock_N.png",
+        "ORM": "T_Marae_CoralBlock_ORM.png"
+      },
+      "tiling": 1.4286,
+      "source": "ground/coral_ground_02"
+    },
+    "M_Marae_CoralGravel": {
+      "textures": {
+        "D": "T_Marae_CoralGravel_D.png",
+        "N": "T_Marae_CoralGravel_N.png",
+        "ORM": "T_Marae_CoralGravel_ORM.png"
+      },
+      "tiling": 0.8333,
+      "source": "ground/coral_gravel"
+    },
+    "M_Marae_Wood": {
+      "textures": {
+        "D": "T_Marae_Wood_D.png",
+        "N": "T_Marae_Wood_N.png",
+        "ORM": "T_Marae_Wood_ORM.png"
+      },
+      "tiling": 1.6667,
+      "source": "characters/rough_wood"
+    },
+    "M_Marae_Rope": {
+      "textures": {
+        "D": "T_Marae_Rope_D.png",
+        "N": "T_Marae_Rope_N.png",
+        "ORM": "T_Marae_Rope_ORM.png"
+      },
+      "tiling": 6.6667,
+      "source": "characters/Rope001"
+    },
+    "M_Marae_Sticks": {
+      "textures": {
+        "D": "T_Marae_Sticks_D.png",
+        "N": "T_Marae_Sticks_N.png",
+        "ORM": "T_Marae_Sticks_ORM.png"
+      },
+      "tiling": 3.3333,
+      "source": "characters/bark_willow"
+    }
+  },
+  "parts": {
+    "SM_Marae_Pyramid": {
+      "sockets": {
+        "summit": [
+          0.0,
+          0.15,
+          1.8
+        ],
+        "stairs_base": [
+          0.0,
+          -4.11,
+          0.0
+        ],
+        "stairs_top": [
+          0.0,
+          -0.95,
+          1.8
+        ],
+        "torch_l": [
+          -1.05,
+          -3.66,
+          0.0
+        ],
+        "torch_r": [
+          1.05,
+          -3.66,
+          0.0
+        ],
+        "tier0_top": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "tier1_top": [
+          0.0,
+          0.0,
+          1.2
+        ],
+        "tier2_top": [
+          0.0,
+          0.0,
+          1.8
+        ]
+      },
+      "physics": {
+        "mass_kg": 21483.6637,
+        "volume_m3": 30.6909481,
+        "com": [
+          0.0151,
+          -0.3356,
+          0.6627
+        ]
+      },
+      "ucx": []
+    },
+    "SM_Marae_Altar": {
+      "sockets": {
+        "top": [
+          0.0,
+          0.0,
+          0.37
+        ]
+      },
+      "physics": {
+        "mass_kg": 296.6277,
+        "volume_m3": 0.4237539,
+        "com": [
+          0.0542,
+          0.0199,
+          0.1531
+        ]
+      },
+      "ucx": [
+        "UCX_SM_Marae_Altar_00"
+      ]
+    },
+    "SM_Marae_StoneWall": {
+      "sockets": {
+        "center": [
+          0.0,
+          0.0,
+          0.3
+        ]
+      },
+      "physics": {
+        "mass_kg": 207.9114,
+        "volume_m3": 0.2970163,
+        "com": [
+          0.1735,
+          0.1322,
+          0.3068
+        ]
+      },
+      "ucx": [
+        "UCX_SM_Marae_StoneWall_00"
+      ]
+    },
+    "SM_Marae_Torch": {
+      "sockets": {
+        "flame": [
+          0.0,
+          0.0,
+          1.5
+        ],
+        "ground": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "physics": {
+        "mass_kg": 4.0752,
+        "volume_m3": 0.0058217,
+        "com": [
+          0.0007,
+          0.0,
+          0.8301
+        ]
+      },
+      "ucx": [
+        "UCX_SM_Marae_Torch_00"
+      ]
+    },
+    "SM_Marae_Offerings": {
+      "sockets": {
+        "top": [
+          0.0,
+          0.0,
+          0.0942
+        ]
+      },
+      "physics": {
+        "mass_kg": 1.5531,
+        "volume_m3": 0.0022187,
+        "com": [
+          0.0197,
+          0.0173,
+          0.0524
+        ]
+      },
+      "ucx": [
+        "UCX_SM_Marae_Offerings_00"
+      ]
+    },
+    "SM_Marae_Conch": {
+      "sockets": {
+        "grab": [
+          0.0,
+          0.0,
+          0.04
+        ]
+      },
+      "physics": {
+        "mass_kg": 0.2286,
+        "volume_m3": 0.0003266,
+        "com": [
+          -0.0002,
+          -0.0096,
+          0.0273
+        ]
+      },
+      "ucx": [
+        "UCX_SM_Marae_Conch_00"
+      ]
+    },
+    "SM_Marae_PearlArtifact": {
+      "sockets": {
+        "base": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pearl": [
+          0.0,
+          0.0,
+          0.185
+        ],
+        "grab": [
+          0.0,
+          0.0,
+          0.185
+        ]
+      },
+      "physics": {
+        "mass_kg": 9.0272,
+        "volume_m3": 0.0128959,
+        "com": [
+          0.0,
+          -0.0,
+          0.1143
+        ]
+      },
+      "ucx": [
+        "UCX_SM_Marae_PearlArtifact_00"
+      ]
+    }
+  }
+}

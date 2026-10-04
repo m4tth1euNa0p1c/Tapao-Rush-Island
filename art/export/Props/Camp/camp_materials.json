@@ -1,0 +1,416 @@
+{
+  "materials": {
+    "M_Camp_Post": {
+      "textures": {
+        "D": "T_Camp_Post_D.png",
+        "N": "T_Camp_Post_N.png",
+        "ORM": "T_Camp_Post_ORM.png"
+      },
+      "tiling": 1.8182,
+      "source": "characters/rough_wood"
+    },
+    "M_Camp_Bark": {
+      "textures": {
+        "D": "T_Camp_Bark_D.png",
+        "N": "T_Camp_Bark_N.png",
+        "ORM": "T_Camp_Bark_ORM.png"
+      },
+      "tiling": 2.2222,
+      "source": "characters/tree_bark_03"
+    },
+    "M_Camp_Planks": {
+      "textures": {
+        "D": "T_Camp_Planks_D.png",
+        "N": "T_Camp_Planks_N.png",
+        "ORM": "T_Camp_Planks_ORM.png"
+      },
+      "tiling": 0.5263,
+      "source": "props/minka/weathered_brown_planks"
+    },
+    "M_Camp_Thatch": {
+      "textures": {
+        "D": "T_Camp_Thatch_D.png",
+        "N": "T_Camp_Thatch_N.png",
+        "ORM": "T_Camp_Thatch_ORM.png"
+      },
+      "tiling": 1.0,
+      "source": "props/minka/reed_roof_04"
+    },
+    "M_Camp_ThatchEdge": {
+      "textures": {
+        "D": "T_Camp_ThatchEdge_D.png",
+        "N": "T_Camp_ThatchEdge_N.png",
+        "ORM": "T_Camp_ThatchEdge_ORM.png"
+      },
+      "tiling": 2.0,
+      "source": "props/minka/thatch_roof_angled"
+    },
+    "M_Camp_Rope": {
+      "textures": {
+        "D": "T_Camp_Rope_D.png",
+        "N": "T_Camp_Rope_N.png",
+        "ORM": "T_Camp_Rope_ORM.png"
+      },
+      "tiling": 12.5,
+      "source": "characters/Rope001"
+    },
+    "M_Camp_Wicker": {
+      "textures": {
+        "D": "T_Camp_Wicker_D.png",
+        "N": "T_Camp_Wicker_N.png",
+        "ORM": "T_Camp_Wicker_ORM.png"
+      },
+      "tiling": 4.5455,
+      "source": "characters/Wicker002"
+    },
+    "M_Camp_Bamboo": {
+      "textures": {
+        "D": "T_Camp_Bamboo_D.png",
+        "N": "T_Camp_Bamboo_N.png",
+        "ORM": "T_Camp_Bamboo_ORM.png"
+      },
+      "tiling": 2.8571,
+      "source": "characters/bamboo_veneer"
+    },
+    "M_Camp_CutWood": {
+      "textures": {
+        "D": "T_Camp_CutWood_D.png",
+        "N": "T_Camp_CutWood_N.png",
+        "ORM": "T_Camp_CutWood_ORM.png"
+      },
+      "tiling": 4.0,
+      "source": "characters/fine_grained_wood"
+    },
+    "M_Camp_Stone": {
+      "textures": {
+        "D": "T_Camp_Stone_D.png",
+        "N": "T_Camp_Stone_N.png",
+        "ORM": "T_Camp_Stone_ORM.png"
+      },
+      "tiling": 2.0,
+      "source": "characters/Rock035"
+    },
+    "M_Camp_StoneLight": {
+      "textures": {
+        "D": "T_Camp_StoneLight_D.png",
+        "N": "T_Camp_StoneLight_N.png",
+        "ORM": "T_Camp_StoneLight_ORM.png"
+      },
+      "tiling": 2.0,
+      "source": "characters/Rock030"
+    },
+    "M_Camp_StoneMoss": {
+      "textures": {
+        "D": "T_Camp_StoneMoss_D.png",
+        "N": "T_Camp_StoneMoss_N.png",
+        "ORM": "T_Camp_StoneMoss_ORM.png"
+      },
+      "tiling": 1.6667,
+      "source": "props/minka/mossy_rock"
+    },
+    "M_Camp_Pandanus": {
+      "textures": {
+        "D": "T_Camp_Pandanus_D.png",
+        "N": "T_Camp_Pandanus_N.png",
+        "ORM": "T_Camp_Pandanus_ORM.png"
+      },
+      "tiling": 5.5556,
+      "source": "characters/Wicker002"
+    },
+    "M_Camp_Linen": {
+      "textures": {
+        "D": "T_Camp_Linen_D.png",
+        "N": "T_Camp_Linen_N.png",
+        "ORM": "T_Camp_Linen_ORM.png"
+      },
+      "tiling": 3.3333,
+      "source": "characters/hessian_230"
+    },
+    "M_Camp_Float": {
+      "textures": {
+        "D": "T_Camp_Float_D.png",
+        "N": "T_Camp_Float_N.png",
+        "ORM": "T_Camp_Float_ORM.png"
+      },
+      "tiling": 12.5,
+      "source": "characters/fine_grained_wood"
+    }
+  },
+  "speckle": {
+    "M_Camp_Charcoal": {
+      "a": [
+        0.03,
+        0.03,
+        0.03
+      ],
+      "b": [
+        0.1,
+        0.09,
+        0.08
+      ],
+      "roughness": 0.9,
+      "scale": 2.0
+    },
+    "M_Camp_Ash": {
+      "a": [
+        0.28,
+        0.27,
+        0.26
+      ],
+      "b": [
+        0.36,
+        0.35,
+        0.33
+      ],
+      "roughness": 0.95,
+      "scale": 1.0
+    },
+    "M_Camp_Fish": {
+      "a": [
+        0.2,
+        0.27,
+        0.32
+      ],
+      "b": [
+        0.55,
+        0.62,
+        0.66
+      ],
+      "roughness": 0.3,
+      "scale": 0.6
+    },
+    "M_Camp_FishFin": {
+      "a": [
+        0.16,
+        0.2,
+        0.24
+      ],
+      "b": [
+        0.26,
+        0.3,
+        0.34
+      ],
+      "roughness": 0.4,
+      "scale": 1.0
+    },
+    "M_Camp_FishEye": {
+      "a": [
+        0.02,
+        0.02,
+        0.02
+      ],
+      "b": [
+        0.03,
+        0.03,
+        0.03
+      ],
+      "roughness": 0.08,
+      "scale": 1.0
+    },
+    "M_Camp_Line": {
+      "a": [
+        0.74,
+        0.68,
+        0.54
+      ],
+      "b": [
+        0.8,
+        0.74,
+        0.6
+      ],
+      "roughness": 0.7,
+      "scale": 1.0
+    },
+    "M_Camp_NetCord": {
+      "a": [
+        0.26,
+        0.2,
+        0.13
+      ],
+      "b": [
+        0.34,
+        0.27,
+        0.18
+      ],
+      "roughness": 0.85,
+      "scale": 1.0
+    },
+    "M_Camp_Hook": {
+      "a": [
+        0.35,
+        0.34,
+        0.33
+      ],
+      "b": [
+        0.45,
+        0.44,
+        0.42
+      ],
+      "roughness": 0.35,
+      "scale": 1.0
+    }
+  },
+  "fire": {
+    "M_Camp_Flame": "flame",
+    "M_Camp_FlameCore": "flame_core",
+    "M_Camp_Embers": "embers"
+  },
+  "parts": {
+    "SM_Camp_Hut": {
+      "label": "CABANE PRINCIPALE",
+      "category": "Construction",
+      "mass_kg": 420.0,
+      "price": 180,
+      "usage": "abri + couchage : sauvegarde / repos (E sur la natte), coffre de stockage ; 1 Bean debout sous la sablière",
+      "sockets": [
+        "SOCKET_door",
+        "SOCKET_bed",
+        "SOCKET_step_bottom",
+        "SOCKET_basket_spot"
+      ],
+      "info": {
+        "footprint_m": [
+          3.16,
+          2.5
+        ],
+        "floor_z": 0.4,
+        "headroom_m": 1.3,
+        "ridge_m": 2.86,
+        "door_w": 1.1,
+        "step_rise_m": 0.133
+      }
+    },
+    "SM_Camp_WorkShelter": {
+      "label": "ABRI DE TRAVAIL",
+      "category": "Construction",
+      "mass_kg": 160.0,
+      "price": 90,
+      "usage": "établi : préparer le poisson (cru -> filets), réparer filet et nasse",
+      "sockets": [
+        "SOCKET_table",
+        "SOCKET_board",
+        "SOCKET_net_hook",
+        "SOCKET_rod_lean"
+      ],
+      "info": {
+        "footprint_m": [
+          2.96,
+          2.24
+        ],
+        "table_h": 0.55,
+        "eave_h": 1.62,
+        "ridge_h": 2.2
+      }
+    },
+    "SM_Camp_Campfire": {
+      "label": "FEU DE CAMP",
+      "category": "Placeable",
+      "mass_kg": 38.0,
+      "price": 12,
+      "usage": "cuire (poisson cru -> grillé, +soin), lumière 6 m, brûle (5 PV/s au contact)",
+      "sockets": [
+        "SOCKET_fire",
+        "SOCKET_cook"
+      ],
+      "info": {
+        "diameter_m": 0.98,
+        "damage_per_s": 5
+      }
+    },
+    "SM_Camp_LogSeat": {
+      "label": "RONDIN-SIÈGE",
+      "category": "Placeable",
+      "mass_kg": 28.0,
+      "price": 4,
+      "usage": "s'asseoir (E) : régénération d'endurance ×2 près du feu",
+      "sockets": [
+        "SOCKET_sit"
+      ],
+      "info": {
+        "seat_h": 0.26
+      }
+    },
+    "SM_Camp_DryingRack": {
+      "label": "SÉCHOIR",
+      "category": "Placeable",
+      "mass_kg": 9.0,
+      "price": 25,
+      "usage": "sécher 4 poissons (3 min) -> poisson séché (ne se périme pas)",
+      "sockets": [
+        "SOCKET_hang"
+      ],
+      "info": {
+        "capacity": 4
+      }
+    },
+    "SM_Camp_Fish": {
+      "label": "POISSON",
+      "category": "Nourriture",
+      "mass_kg": 0.45,
+      "price": 3,
+      "usage": "cru : +5 faim ; grillé : +15 faim +10 PV ; séché : +12 faim, se conserve",
+      "sockets": [
+        "SOCKET_grab"
+      ],
+      "info": {}
+    },
+    "SM_Camp_FishingRod": {
+      "label": "CANNE À PÊCHE",
+      "category": "Outil",
+      "mass_kg": 0.6,
+      "price": 15,
+      "usage": "pêcher depuis la rive / la barque (lancer 8 m), mini-jeu de ferrage",
+      "sockets": [
+        "SOCKET_grip",
+        "SOCKET_tip",
+        "SOCKET_line_end"
+      ],
+      "info": {
+        "length_m": 1.55,
+        "cast_range_m": 8.0
+      }
+    },
+    "SM_Camp_Net": {
+      "label": "FILET",
+      "category": "Outil",
+      "mass_kg": 2.4,
+      "price": 20,
+      "usage": "lancer en zone peu profonde : 1-3 poissons (cercle 1,6 m), usure 10 lancers",
+      "sockets": [
+        "SOCKET_grab.001"
+      ],
+      "info": {
+        "cast_radius_m": 1.6
+      }
+    },
+    "SM_Camp_FishTrap": {
+      "label": "NASSE",
+      "category": "Outil",
+      "mass_kg": 1.1,
+      "price": 12,
+      "usage": "poser dans l'eau : 1 poisson toutes les 4 min (max 3)",
+      "sockets": [
+        "SOCKET_grab.002",
+        "SOCKET_entry"
+      ],
+      "info": {
+        "length_m": 0.62,
+        "capacity_fish": 3
+      }
+    },
+    "SM_Camp_FishBasket": {
+      "label": "PANIER À POISSONS",
+      "category": "Conteneur",
+      "mass_kg": 1.6,
+      "price": 8,
+      "usage": "transporte 6 poissons (porté à 2 mains, ralentit de 10 %)",
+      "sockets": [
+        "SOCKET_grab_l",
+        "SOCKET_grab_r"
+      ],
+      "info": {
+        "capacity_fish": 6
+      }
+    }
+  }
+}
