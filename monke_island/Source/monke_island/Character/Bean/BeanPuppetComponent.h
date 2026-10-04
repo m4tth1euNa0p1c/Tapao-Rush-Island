@@ -90,6 +90,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Stance")
 	FVector CrouchScale = FVector(1.12, 1.12, 0.72);
 
+	/** Body lean into the acceleration, as a fraction of the balance angle atan(a / g) a real body takes (0 = upright) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Motion", meta=(ClampMin="0", ClampMax="1"))
+	float LeanFactor = 0.45f;
+
+	/** Largest lean of the body (deg) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Motion", meta=(ClampMin="0", ClampMax="45", Units="deg"))
+	float MaxLeanDegrees = 14.0f;
+
+	/** Spring of the lean (1/s^2): how fast the body follows the acceleration */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Motion", meta=(ClampMin="1"))
+	float LeanStiffness = 90.0f;
+
+	/** Damping of the lean (1/s): under 2 * sqrt(LeanStiffness) the bean wobbles a little when it stops */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Motion", meta=(ClampMin="0"))
+	float LeanDamping = 13.0f;
+
+	/** Time over which the measured acceleration is smoothed (s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Motion", meta=(ClampMin="0.01", Units="s"))
+	float AccelerationSmoothing = 0.08f;
+
 	/** Height the bean is raised while swimming so its head stays above the water (cm) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Stance")
 	float SwimLift = 60.0f;
@@ -127,6 +147,18 @@ public:
 	/** Delay after the fall before the hat can be picked up again (s) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0", Units="s"))
 	float HatPickupDelay = 1.0f;
+
+	/** The hat comes back on the head by itself this long after falling, once the bean is up (s); 0 = only by touching it */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0", Units="s"))
+	float HatReturnDelay = 5.0f;
+
+	/** A dropped hat farther than this from the bean is considered lost and comes back at once (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0"))
+	float HatLostDistance = 3000.0f;
+
+	/** Duration of the pop when the hat comes back on the head (s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0", Units="s"))
+	float HatPopTime = 0.25f;
 
 	/** Drops the hat now (every machine plays it locally, the hat is cosmetic) */
 	UFUNCTION(BlueprintCallable, Category="Bean|Hat")
@@ -168,6 +200,17 @@ public:
 	/** See GuardUpperArm */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Arms")
 	FVector GuardLowerArm = FVector(-0.25, 0.35, 0.95);
+
+	/** Drives Bones from Source, a hidden component playing an animation of the same skeleton (an item's carry,
+	 *  shot or reload), in local space over the copied pose: the other bones (legs) keep the walk.
+	 *  Call every frame; Alpha 0 or a null Source gives the bones back. */
+	void SetBoneOverrideSource(USkeletalMeshComponent* Source, const TArray<FName>& Bones, float Alpha);
+
+	/** Takes the base pose from Source, a hidden component of the same skeleton playing the bean's own animations
+	 *  (UBeanAnimDriverComponent): every bone's local rotation and the pelvis position, blended by Alpha, in place
+	 *  of the mannequin retarget. Punch / guard arms, the bone override source (musket), the first person arm
+	 *  folding, the lean and the hat still apply on top. Null Source or Alpha 0 = mannequin retarget. */
+	void SetBasePoseSource(USkeletalMeshComponent* Source, float Alpha);
 
 	/** Returns the outfit component, if any */
 	UFUNCTION(BlueprintPure, Category="Bean|Skin")
@@ -236,6 +279,33 @@ private:
 	UPROPERTY(Transient)
 	TObjectPtr<class UIslanderCombatComponent> OwnerCombat;
 
+	/** Applies the bone override source (see SetBoneOverrideSource) on BoneSpaceTransforms and TargetCS */
+	void ApplyBoneOverrideSource();
+
+	/** Applies the base pose source (see SetBasePoseSource) on BoneSpaceTransforms and TargetCS */
+	void ApplyBasePoseSource();
+
+	/** Rebuilds TargetCS from BoneSpaceTransforms (parents come first in the reference skeleton) */
+	void RebuildComponentSpace();
+
+	/** Animated component giving the base pose (see SetBasePoseSource) */
+	TWeakObjectPtr<USkeletalMeshComponent> BasePoseSource;
+
+	/** Weight of the base pose source */
+	float BasePoseAlpha = 0.f;
+
+	/** Animated component driving some bones (see SetBoneOverrideSource) */
+	TWeakObjectPtr<USkeletalMeshComponent> BoneOverrideSource;
+
+	/** Bean bone indices driven by BoneOverrideSource */
+	TArray<int32> BoneOverrideIndices;
+
+	/** Names BoneOverrideIndices were resolved from */
+	TArray<FName> BoneOverrideNames;
+
+	/** Weight of BoneOverrideSource */
+	float BoneOverrideAlpha = 0.f;
+
 	/** Per bean bone: aimed direction override (mesh space) and its weight this frame */
 	TArray<FVector> OverrideDir;
 	TArray<float> OverrideAlpha;
@@ -244,6 +314,7 @@ private:
 	bool bHatDropped = false;
 	bool bWasRagdoll = false;
 	double HatDropTime = 0.0;
+	float HatPopAlpha = 1.f;
 	FTransform HatRelativeTransform = FTransform::Identity;
 	float GrabAlpha = 0.f;
 	bool bBodyHiddenForOwner = false;
@@ -261,7 +332,19 @@ private:
 	float CrouchAlpha = 0.f;
 	float SwimAlpha = 0.f;
 
+	/** Body lean (world, a tilt vector: direction and angle in radians), its speed, and the velocity and
+	 *  acceleration measured last frame */
+	FVector2D Lean = FVector2D::ZeroVector;
+	FVector2D LeanSpeed = FVector2D::ZeroVector;
+	FVector LastVelocity = FVector::ZeroVector;
+	FVector2D SmoothedAcceleration = FVector2D::ZeroVector;
+	bool bHasLastVelocity = false;
+
+	/** Leans the body into the acceleration and the turns (damped spring) */
+	void UpdateLean(float DeltaTime);
+
 	/** Placement of this component when standing on dry land */
+	FQuat BaseRelativeRotation = FQuat::Identity;
 	FVector BaseRelativeLocation = FVector::ZeroVector;
 	FVector BaseRelativeScale = FVector::OneVector;
 

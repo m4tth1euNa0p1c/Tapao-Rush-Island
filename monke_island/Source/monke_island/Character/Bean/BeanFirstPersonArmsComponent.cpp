@@ -45,6 +45,18 @@ void UBeanFirstPersonArmsComponent::BeginPlay()
 	}
 }
 
+void UBeanFirstPersonArmsComponent::SetPoseOverride(const FBeanArmPose& Right, const FBeanArmPose& Left)
+{
+	bPoseOverride = true;
+	OverrideRight = Right;
+	OverrideLeft = Left;
+}
+
+void UBeanFirstPersonArmsComponent::ClearPoseOverride()
+{
+	bPoseOverride = false;
+}
+
 void UBeanFirstPersonArmsComponent::UpdateArm(UStaticMeshComponent* Arm, const FBeanArmPose& Target, float Mirror, float Alpha, float DeltaTime)
 {
 	const FVector Location(Target.Location.X, Target.Location.Y * Mirror, Target.Location.Z);
@@ -80,6 +92,23 @@ void UBeanFirstPersonArmsComponent::TickComponent(float DeltaTime, ELevelTick Ti
 	if (!bShow)
 	{
 		return;
+	}
+
+	// an equipped item (musket) blends its own poses: apply them as they are
+	if (bPoseOverride)
+	{
+		RightArm->SetRelativeLocationAndRotation(OverrideRight.Location, OverrideRight.Rotation);
+		LeftArm->SetRelativeLocationAndRotation(FVector(OverrideLeft.Location.X, -OverrideLeft.Location.Y, OverrideLeft.Location.Z),
+			FRotator(OverrideLeft.Rotation.Pitch, -OverrideLeft.Rotation.Yaw, -OverrideLeft.Rotation.Roll));
+		RightArm->SetRelativeScale3D(FVector(OverrideRight.Stretch, 1.0, 1.0));
+		LeftArm->SetRelativeScale3D(FVector(OverrideLeft.Stretch, -1.0, 1.0));
+		return;
+	}
+	if (RightArm->GetRelativeScale3D().X != 1.0 || LeftArm->GetRelativeScale3D().X != 1.0)
+	{
+		// back from an item that stretched them
+		RightArm->SetRelativeScale3D(FVector(1.0, 1.0, 1.0));
+		LeftArm->SetRelativeScale3D(FVector(1.0, -1.0, 1.0));
 	}
 
 	const UIslanderCombatComponent* Combat = Islander->GetCombatComponent();

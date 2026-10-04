@@ -17,8 +17,8 @@ struct FBeanArmPose
 
 	FBeanArmPose() = default;
 
-	FBeanArmPose(const FVector& InLocation, const FRotator& InRotation)
-		: Location(InLocation), Rotation(InRotation)
+	FBeanArmPose(const FVector& InLocation, const FRotator& InRotation, float InStretch = 1.0f)
+		: Location(InLocation), Rotation(InRotation), Stretch(InStretch)
 	{
 	}
 
@@ -29,6 +29,10 @@ struct FBeanArmPose
 	/** Arm rotation relative to the camera (the arm mesh points along +X) */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Bean")
 	FRotator Rotation = FRotator::ZeroRotator;
+
+	/** Length factor of the arm along +X (rubber arms reaching an item); 1 = mesh length */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Bean", meta=(ClampMin="0.1"))
+	float Stretch = 1.0f;
 };
 
 /**
@@ -86,6 +90,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Arms|Motion", meta=(ClampMin="0"))
 	float BlendSpeed = 18.0f;
 
+	/** Drives both arms from an equipped item (e.g. the musket): poses applied as given, every frame */
+	void SetPoseOverride(const FBeanArmPose& Right, const FBeanArmPose& Left);
+
+	/** Gives the arms back to the procedural poses */
+	void ClearPoseOverride();
+
+	/** True while an item drives the arms */
+	bool HasPoseOverride() const { return bPoseOverride; }
+
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 protected:
@@ -107,4 +120,11 @@ private:
 
 	/** Time accumulator for the sprint pumping */
 	float PumpTime = 0.f;
+
+	/** An item drives the arms */
+	bool bPoseOverride = false;
+
+	/** Arm poses given by the item (the left one is mirrored like the procedural poses) */
+	FBeanArmPose OverrideRight;
+	FBeanArmPose OverrideLeft;
 };

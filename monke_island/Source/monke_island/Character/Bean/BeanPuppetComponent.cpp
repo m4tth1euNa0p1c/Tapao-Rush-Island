@@ -150,6 +150,7 @@ bool UBeanPuppetComponent::InitPuppet()
 	}
 	HatIndex = TargetRef.FindBoneIndex(HatBone);
 	BaseRelativeLocation = GetRelativeLocation();
+	BaseRelativeRotation = GetRelativeRotation().Quaternion();
 	BaseRelativeScale = GetRelativeScale3D();
 
 	// first person camera at the bean's eyes: it follows the crouch squash and the swim lift
@@ -221,6 +222,7 @@ void UBeanPuppetComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	if (bReady && SourceMesh && SourceMesh->GetComponentSpaceTransforms().Num() == SourceRefCS.Num())
 	{
 		UpdateStance(DeltaTime);
+		UpdateLean(DeltaTime);
 		CopyPose();
 	}
 }
@@ -240,6 +242,67 @@ void UBeanPuppetComponent::SetArmOverride(int32 UpperIndex, int32 LowerIndex, co
 		OverrideDir[Entry.Key] = Previous > 0.f ? (OverrideDir[Entry.Key] * Previous + Dir * Alpha).GetSafeNormal() : Dir;
 		OverrideAlpha[Entry.Key] = FMath::Max(Previous, Alpha);
 	}
+}
+
+void UBeanPuppetComponent::UpdateLean(float DeltaTime)
+{
+	const AIslanderCharacter* Islander = Cast<AIslanderCharacter>(GetOwner());
+	const UCharacterMovementComponent* Move = Islander ? Islander->GetCharacterMovement() : nullptr;
+	if (!Move || DeltaTime <= 0.f)
+	{
+		return;
+	}
+
+	// a body leans into its acceleration (starting, braking) and into the turns (centripetal): about atan(a / g)
+	// to keep its balance. Measured from the velocity, so it works the same for remote players (smoothed moves)
+	const FVector Velocity = Islander->GetVelocity();
+	FVector2D Acceleration = FVector2D::ZeroVector;
+	if (bHasLastVelocity)
+	{
+		Acceleration = FVector2D(Velocity - LastVelocity) / DeltaTime;
+	}
+	LastVelocity = Velocity;
+	bHasLastVelocity = true;
+	SmoothedAcceleration = FMath::Lerp(SmoothedAcceleration, Acceleration, FMath::Clamp(DeltaTime / AccelerationSmoothing, 0.f, 1.f));
+
+	// standing on the ground only; upright in the air, in the water, knocked out, and for the owner's first person
+	// view (the camera rides this component)
+	const bool bOwnerView = Islander->IsLocallyControlled() && Islander->IsFirstPerson();
+	const bool bGrounded = Move->IsMovingOnGround() && !Islander->IsRagdoll() && !bOwnerView;
+	FVector2D Target = FVector2D::ZeroVector;
+	if (bGrounded)
+	{
+		const float Gravity = FMath::Max(FMath::Abs(GetWorld()->GetGravityZ()), 1.f);
+		const float Magnitude = SmoothedAcceleration.Size();
+		const float Angle = FMath::Min(LeanFactor * FMath::Atan(Magnitude / Gravity), FMath::DegreesToRadians(MaxLeanDegrees));
+		Target = Magnitude > KINDA_SMALL_NUMBER ? SmoothedAcceleration / Magnitude * Angle : FVector2D::ZeroVector;
+	}
+
+	// damped spring toward the target, in sub steps so a long frame cannot blow it up
+	const int32 Steps = FMath::Clamp(FMath::CeilToInt(DeltaTime / 0.008f), 1, 8);
+	const float Step = DeltaTime / Steps;
+	for (int32 Index = 0; Index < Steps; ++Index)
+	{
+		LeanSpeed += ((Target - Lean) * LeanStiffness - LeanSpeed * LeanDamping) * Step;
+		Lean += LeanSpeed * Step;
+	}
+	const float Limit = FMath::DegreesToRadians(MaxLeanDegrees) * 1.3f;
+	if (Lean.Size() > Limit)
+	{
+		Lean = Lean.GetSafeNormal() * Limit;
+	}
+
+	// tilt about the feet (the pivot of the bean), axis = up x lean direction, expressed in the parent's space
+	FQuat Tilt = FQuat::Identity;
+	const float Angle = Lean.Size();
+	if (Angle > 1e-4f)
+	{
+		const FVector AxisWorld = FVector::CrossProduct(FVector::UpVector, FVector(Lean.X, Lean.Y, 0.f)).GetSafeNormal();
+		const USceneComponent* Parent = GetAttachParent();
+		const FVector AxisLocal = Parent ? Parent->GetComponentQuat().UnrotateVector(AxisWorld) : AxisWorld;
+		Tilt = FQuat(AxisLocal, Angle);
+	}
+	SetRelativeRotation(Tilt * BaseRelativeRotation);
 }
 
 void UBeanPuppetComponent::UpdateStance(float DeltaTime)
@@ -284,15 +347,30 @@ void UBeanPuppetComponent::UpdateStance(float DeltaTime)
 
 		const UIslanderHealthComponent* Health = Knocked->GetHealthComponent();
 		const bool bAlive = !Health || !Health->IsDead();
-		if (bHatDropped && HatComponent && !bRagdoll && bAlive && GetWorld()->GetTimeSeconds() - HatDropTime >= HatPickupDelay)
+		const double SinceDrop = GetWorld()->GetTimeSeconds() - HatDropTime;
+		if (bHatDropped && !bRagdoll && bAlive && SinceDrop >= HatPickupDelay)
 		{
 			const FVector Feet = Knocked->GetActorLocation() - FVector(0.0, 0.0, Knocked->GetSimpleCollisionHalfHeight());
-			if (FVector::Dist2D(HatComponent->GetComponentLocation(), Feet) <= HatPickupRadius
-				&& FMath::Abs(HatComponent->GetComponentLocation().Z - Feet.Z) <= 2.0 * HatPickupRadius)
+			const bool bHatValid = IsValid(HatComponent);
+			const FVector HatLocation = bHatValid ? HatComponent->GetComponentLocation() : Feet;
+			const bool bTouching = bHatValid && FVector::Dist2D(HatLocation, Feet) <= HatPickupRadius
+				&& FMath::Abs(HatLocation.Z - Feet.Z) <= 2.0 * HatPickupRadius;
+			// the hat comes back by itself after a while, or at once if it was lost (destroyed, washed away, far off)
+			const bool bLost = !bHatValid || FVector::Dist(HatLocation, Feet) > HatLostDistance;
+			const bool bReturn = HatReturnDelay > 0.f && SinceDrop >= HatReturnDelay;
+			if (bTouching || bLost || bReturn)
 			{
 				PickUpHat();
 			}
 		}
+	}
+
+	// the hat pops back on the head (scale 0 -> 1)
+	if (HatComponent && !bHatDropped && HatPopAlpha < 1.f)
+	{
+		HatPopAlpha = FMath::Min(1.f, HatPopAlpha + DeltaTime / FMath::Max(HatPopTime, 0.01f));
+		const float Pop = FMath::Sin(HatPopAlpha * UE_HALF_PI) * (1.f + 0.15f * FMath::Sin(HatPopAlpha * UE_PI));
+		HatComponent->SetRelativeScale3D(HatRelativeTransform.GetScale3D() * FMath::Max(Pop, 0.01f));
 	}
 
 	// first person: the hat brim would cover the view (owner only, the others still see it)
@@ -420,6 +498,9 @@ void UBeanPuppetComponent::CopyPose()
 		BoneSpaceTransforms[Index] = Parent == INDEX_NONE ? TargetCS[Index] : TargetCS[Index].GetRelativeTransform(TargetCS[Parent]);
 	}
 
+	ApplyBasePoseSource();
+	ApplyBoneOverrideSource();
+
 	// first person with the body visible: on the owner's machine only, the body's arms fold into the shoulders
 	// (the first person arms take their place); each machine computes its own puppet pose, so the others still see them
 	const AIslanderCharacter* Islander = Cast<AIslanderCharacter>(GetOwner());
@@ -444,6 +525,115 @@ void UBeanPuppetComponent::CopyPose()
 	}
 
 	RefreshBoneTransforms();
+}
+
+void UBeanPuppetComponent::SetBoneOverrideSource(USkeletalMeshComponent* Source, const TArray<FName>& Bones, float Alpha)
+{
+	BoneOverrideAlpha = Source ? FMath::Clamp(Alpha, 0.f, 1.f) : 0.f;
+	if (BoneOverrideSource.Get() != Source || BoneOverrideNames != Bones)
+	{
+		BoneOverrideSource = Source;
+		BoneOverrideNames = Bones;
+		BoneOverrideIndices.Reset();
+		if (Source)
+		{
+			// the source evaluates first, the copy reads its pose of this frame
+			AddTickPrerequisiteComponent(Source);
+		}
+		if (const USkinnedAsset* Asset = GetSkinnedAsset())
+		{
+			for (const FName Bone : Bones)
+			{
+				const int32 Index = Asset->GetRefSkeleton().FindBoneIndex(Bone);
+				if (Index != INDEX_NONE)
+				{
+					BoneOverrideIndices.Add(Index);
+				}
+			}
+		}
+	}
+}
+
+void UBeanPuppetComponent::SetBasePoseSource(USkeletalMeshComponent* Source, float Alpha)
+{
+	BasePoseAlpha = Source ? FMath::Clamp(Alpha, 0.f, 1.f) : 0.f;
+	if (BasePoseSource.Get() != Source)
+	{
+		BasePoseSource = Source;
+		if (Source)
+		{
+			// the source evaluates first, the copy reads its pose of this frame
+			AddTickPrerequisiteComponent(Source);
+		}
+	}
+}
+
+void UBeanPuppetComponent::ApplyBasePoseSource()
+{
+	USkeletalMeshComponent* Source = BasePoseSource.Get();
+	if (!Source || BasePoseAlpha <= KINDA_SMALL_NUMBER || Source->GetSkinnedAsset() != GetSkinnedAsset())
+	{
+		return;
+	}
+	const TArrayView<const FTransform> SourceLocal = Source->GetBoneSpaceTransformsView();
+	if (SourceLocal.Num() != BoneSpaceTransforms.Num())
+	{
+		return;
+	}
+	for (int32 Index = 0; Index < BoneSpaceTransforms.Num(); ++Index)
+	{
+		// the hat keeps its levelling; a punching or guarding arm keeps its procedural direction
+		if (Index == HatIndex)
+		{
+			continue;
+		}
+		const float Override = OverrideAlpha.IsValidIndex(Index) ? OverrideAlpha[Index] : 0.f;
+		const float Alpha = BasePoseAlpha * (1.f - Override);
+		if (Alpha <= KINDA_SMALL_NUMBER)
+		{
+			continue;
+		}
+		BoneSpaceTransforms[Index].SetRotation(FQuat::Slerp(BoneSpaceTransforms[Index].GetRotation(), SourceLocal[Index].GetRotation(), Alpha).GetNormalized());
+		if (Index == PelvisIndex)
+		{
+			// same skeleton: the clip's pelvis height and sway as they are; bone lengths elsewhere stay the bean's
+			BoneSpaceTransforms[Index].SetLocation(FMath::Lerp(BoneSpaceTransforms[Index].GetLocation(), SourceLocal[Index].GetLocation(), Alpha));
+		}
+	}
+	RebuildComponentSpace();
+}
+
+void UBeanPuppetComponent::RebuildComponentSpace()
+{
+	const FReferenceSkeleton& TargetRef = GetSkinnedAsset()->GetRefSkeleton();
+	for (int32 Index = 0; Index < BoneSpaceTransforms.Num(); ++Index)
+	{
+		const int32 Parent = TargetRef.GetParentIndex(Index);
+		TargetCS[Index] = Parent == INDEX_NONE ? BoneSpaceTransforms[Index] : BoneSpaceTransforms[Index] * TargetCS[Parent];
+	}
+}
+
+void UBeanPuppetComponent::ApplyBoneOverrideSource()
+{
+	USkeletalMeshComponent* Source = BoneOverrideSource.Get();
+	if (!Source || BoneOverrideAlpha <= KINDA_SMALL_NUMBER || BoneOverrideIndices.IsEmpty()
+		|| Source->GetSkinnedAsset() != GetSkinnedAsset())
+	{
+		return;
+	}
+	const TArrayView<const FTransform> SourceLocal = Source->GetBoneSpaceTransformsView();
+	if (SourceLocal.Num() != BoneSpaceTransforms.Num())
+	{
+		return;
+	}
+	for (const int32 Index : BoneOverrideIndices)
+	{
+		// rotations only: the bean's bone lengths and the walk's pelvis stay
+		const FQuat Rotation = FQuat::Slerp(BoneSpaceTransforms[Index].GetRotation(), SourceLocal[Index].GetRotation(), BoneOverrideAlpha);
+		BoneSpaceTransforms[Index].SetRotation(Rotation.GetNormalized());
+	}
+	// component space again
+	RebuildComponentSpace();
 }
 
 void UBeanPuppetComponent::HandleOwnerHealthChanged(float NewHealth, float Delta)
@@ -480,8 +670,13 @@ void UBeanPuppetComponent::DropHat(FVector Velocity)
 
 void UBeanPuppetComponent::PickUpHat()
 {
-	if (!HatComponent)
+	// lost for good (destroyed with the world, garbage collected): make a new one
+	if (!IsValid(HatComponent))
 	{
+		HatComponent = nullptr;
+		SpawnSkinParts();
+		bHatDropped = false;
+		HatPopAlpha = 0.f;
 		return;
 	}
 
@@ -490,4 +685,5 @@ void UBeanPuppetComponent::PickUpHat()
 	HatComponent->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform, HatBone);
 	HatComponent->SetRelativeTransform(HatRelativeTransform);
 	bHatDropped = false;
+	HatPopAlpha = 0.f;
 }

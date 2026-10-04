@@ -1,0 +1,1109 @@
+{
+  "format": "bean-anim-manifest/1",
+  "skeleton": {
+    "blender": "SKEL_Bean (art/blender/characters/bean_soldier.blend)",
+    "unreal_default": "/Game/MonkeIsland/Characters/Bean/SK_Bean_Body_Skeleton",
+    "bones": [
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "head",
+      "hat",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "coattail_l",
+      "coattail_r"
+    ]
+  },
+  "export_settings": "FBX : armature 'Armature', FBX_SCALE_NONE, -Y avant / Z haut, os déformants, bake_anim, racine fixe (pas de root motion), 24 i/s.",
+  "slots": {
+    "FullBody": "DefaultGroup.FullBody",
+    "UpperBody": "UpperBody.UpperBody"
+  },
+  "blendspaces": {
+    "BS_Bean_Locomotion": {
+      "axis": "Speed (cm/s)",
+      "samples": [
+        [
+          "A_Bean_Idle",
+          0
+        ],
+        [
+          "A_Bean_Walk",
+          49
+        ],
+        [
+          "A_Bean_Run",
+          112
+        ]
+      ]
+    },
+    "BS_Bean_Carry": {
+      "axis": "Speed (cm/s)",
+      "samples": [
+        [
+          "A_Bean_Carry_Idle",
+          0
+        ],
+        [
+          "A_Bean_Carry_Walk",
+          45
+        ]
+      ]
+    }
+  },
+  "attach_sockets": {
+    "hand_r/musket_grip": {
+      "location_cm": {
+        "x": -0.48,
+        "y": -7.67,
+        "z": -0.03
+      },
+      "rotation": {
+        "pitch": -27.28,
+        "yaw": -113.87,
+        "roll": -160.12
+      }
+    },
+    "hand_r/sabre_grip": {
+      "location_cm": [
+        -0.49,
+        -7.49,
+        -0.04
+      ],
+      "rotation_deg_roll_pitch_yaw": [
+        -34.98,
+        -124.23,
+        85.22
+      ]
+    },
+    "pelvis/scabbard": {
+      "location_cm": [
+        24.23,
+        -19.0,
+        13.32
+      ],
+      "rotation_deg_roll_pitch_yaw": [
+        -150.48,
+        -46.04,
+        67.82
+      ]
+    },
+    "pelvis/sabre_sheathed": {
+      "location_cm": [
+        22.74,
+        -18.78,
+        23.26
+      ],
+      "rotation_deg_roll_pitch_yaw": [
+        -150.48,
+        -46.04,
+        67.82
+      ]
+    },
+    "hand_r/coconut": {
+      "location_cm": [
+        4.91,
+        -12.63,
+        1.59
+      ],
+      "rotation_deg_roll_pitch_yaw": [
+        -106.41,
+        19.75,
+        -41.03
+      ]
+    },
+    "_note": "Valeurs calculées dans Blender (os en espace os, Y inversé, m->cm). Vérifier le roll dans l'aperçu de socket (axes d'os FBX primary Y / secondary X)."
+  },
+  "boat": {
+    "seat": "Bean assis sur une caisse de nage à 0,35 m en arrière des dames de nage (SOCKET_Oarlock_L/R), regard vers la poupe ; origine de Bean = (0,35 ; 0 ; 0,20) dans le repère SM_Barque",
+    "oar_curve_per_frame": [
+      {
+        "frame": 0,
+        "theta_deg": 6.0,
+        "phi_deg": -20
+      },
+      {
+        "frame": 1,
+        "theta_deg": 5.86,
+        "phi_deg": -20
+      },
+      {
+        "frame": 2,
+        "theta_deg": 5.46,
+        "phi_deg": -20
+      },
+      {
+        "frame": 3,
+        "theta_deg": 4.79,
+        "phi_deg": -20
+      },
+      {
+        "frame": 4,
+        "theta_deg": 3.89,
+        "phi_deg": -20
+      },
+      {
+        "frame": 5,
+        "theta_deg": 2.77,
+        "phi_deg": -20
+      },
+      {
+        "frame": 6,
+        "theta_deg": 1.47,
+        "phi_deg": -20
+      },
+      {
+        "frame": 7,
+        "theta_deg": 0.02,
+        "phi_deg": -20
+      },
+      {
+        "frame": 8,
+        "theta_deg": -1.55,
+        "phi_deg": -20
+      },
+      {
+        "frame": 9,
+        "theta_deg": -3.17,
+        "phi_deg": -20
+      },
+      {
+        "frame": 10,
+        "theta_deg": -4.83,
+        "phi_deg": -20
+      },
+      {
+        "frame": 11,
+        "theta_deg": -6.45,
+        "phi_deg": -20
+      },
+      {
+        "frame": 12,
+        "theta_deg": -8.02,
+        "phi_deg": -20
+      },
+      {
+        "frame": 13,
+        "theta_deg": -9.47,
+        "phi_deg": -20
+      },
+      {
+        "frame": 14,
+        "theta_deg": -10.77,
+        "phi_deg": -20
+      },
+      {
+        "frame": 15,
+        "theta_deg": -11.89,
+        "phi_deg": -20
+      },
+      {
+        "frame": 16,
+        "theta_deg": -12.79,
+        "phi_deg": -20
+      },
+      {
+        "frame": 17,
+        "theta_deg": -13.46,
+        "phi_deg": -20
+      },
+      {
+        "frame": 18,
+        "theta_deg": -13.86,
+        "phi_deg": -20
+      },
+      {
+        "frame": 19,
+        "theta_deg": -14.0,
+        "phi_deg": -12
+      },
+      {
+        "frame": 20,
+        "theta_deg": -13.86,
+        "phi_deg": -12
+      },
+      {
+        "frame": 21,
+        "theta_deg": -13.46,
+        "phi_deg": -12
+      },
+      {
+        "frame": 22,
+        "theta_deg": -12.79,
+        "phi_deg": -12
+      },
+      {
+        "frame": 23,
+        "theta_deg": -11.89,
+        "phi_deg": -12
+      },
+      {
+        "frame": 24,
+        "theta_deg": -10.77,
+        "phi_deg": -12
+      },
+      {
+        "frame": 25,
+        "theta_deg": -9.47,
+        "phi_deg": -12
+      },
+      {
+        "frame": 26,
+        "theta_deg": -8.02,
+        "phi_deg": -12
+      },
+      {
+        "frame": 27,
+        "theta_deg": -6.45,
+        "phi_deg": -12
+      },
+      {
+        "frame": 28,
+        "theta_deg": -4.83,
+        "phi_deg": -12
+      },
+      {
+        "frame": 29,
+        "theta_deg": -3.17,
+        "phi_deg": -12
+      },
+      {
+        "frame": 30,
+        "theta_deg": -1.55,
+        "phi_deg": -12
+      },
+      {
+        "frame": 31,
+        "theta_deg": 0.02,
+        "phi_deg": -12
+      },
+      {
+        "frame": 32,
+        "theta_deg": 1.47,
+        "phi_deg": -12
+      },
+      {
+        "frame": 33,
+        "theta_deg": 2.77,
+        "phi_deg": -12
+      },
+      {
+        "frame": 34,
+        "theta_deg": 3.89,
+        "phi_deg": -12
+      },
+      {
+        "frame": 35,
+        "theta_deg": 4.79,
+        "phi_deg": -12
+      },
+      {
+        "frame": 36,
+        "theta_deg": 5.46,
+        "phi_deg": -12
+      },
+      {
+        "frame": 37,
+        "theta_deg": 5.86,
+        "phi_deg": -12
+      },
+      {
+        "frame": 38,
+        "theta_deg": 6.0,
+        "phi_deg": -12
+      }
+    ],
+    "oar_mesh": "SM_Barque_Oar (pivot à la dame de nage, mesh le long de +X) : yaw = 90 - theta (bâbord), -90 + theta (tribord) ; pitch = -phi"
+  },
+  "anims": [
+    {
+      "asset": "A_Bean_Idle",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Idle.fbx",
+      "frames_blender": [
+        1,
+        49
+      ],
+      "length_s": 2.0,
+      "fps": 24,
+      "loop": true,
+      "category": "Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": []
+    },
+    {
+      "asset": "A_Bean_Walk",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Walk.fbx",
+      "frames_blender": [
+        61,
+        99
+      ],
+      "length_s": 1.583,
+      "fps": 24,
+      "loop": true,
+      "category": "Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 0.417
+        },
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.792
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 1.208
+        }
+      ],
+      "no_slide_speed_cm_s": 49
+    },
+    {
+      "asset": "A_Bean_Run",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Run.fbx",
+      "frames_blender": [
+        111,
+        135
+      ],
+      "length_s": 1.0,
+      "fps": 24,
+      "loop": true,
+      "category": "Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 0.25
+        },
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.5
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 0.75
+        }
+      ],
+      "no_slide_speed_cm_s": 112
+    },
+    {
+      "asset": "A_Bean_Jump_Start",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Jump_Start.fbx",
+      "frames_blender": [
+        147,
+        153
+      ],
+      "length_s": 0.25,
+      "fps": 24,
+      "loop": false,
+      "category": "Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_JumpTakeoff",
+          "time_s": 0.208
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Jump_Loop",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Jump_Loop.fbx",
+      "frames_blender": [
+        165,
+        177
+      ],
+      "length_s": 0.5,
+      "fps": 24,
+      "loop": true,
+      "category": "Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": []
+    },
+    {
+      "asset": "A_Bean_Jump_Land",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Jump_Land.fbx",
+      "frames_blender": [
+        189,
+        199
+      ],
+      "length_s": 0.417,
+      "fps": 24,
+      "loop": false,
+      "category": "Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Land",
+          "time_s": 0.083
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Pickup",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Pickup.fbx",
+      "frames_blender": [
+        211,
+        237
+      ],
+      "length_s": 1.083,
+      "fps": 24,
+      "loop": false,
+      "category": "Interaction",
+      "root_motion": false,
+      "montage_slot": "FullBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_PickupAttach",
+          "time_s": 0.625
+        },
+        {
+          "name": "AN_PickupStore",
+          "time_s": 0.958
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Interact",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Interact.fbx",
+      "frames_blender": [
+        249,
+        268
+      ],
+      "length_s": 0.792,
+      "fps": 24,
+      "loop": false,
+      "category": "Interaction",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Interact",
+          "time_s": 0.375
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Eat_Coconut",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Eat_Coconut.fbx",
+      "frames_blender": [
+        280,
+        357
+      ],
+      "length_s": 3.208,
+      "fps": 24,
+      "loop": false,
+      "category": "Interaction",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Drink_Gulp",
+          "time_s": 1.5
+        },
+        {
+          "name": "AN_Drink_Gulp",
+          "time_s": 1.833
+        },
+        {
+          "name": "AN_Drink_Gulp",
+          "time_s": 2.167
+        },
+        {
+          "name": "AN_Heal",
+          "time_s": 2.333
+        },
+        {
+          "name": "AN_Coconut_Throw",
+          "time_s": 2.917
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Carry_Idle",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Carry_Idle.fbx",
+      "frames_blender": [
+        369,
+        407
+      ],
+      "length_s": 1.583,
+      "fps": 24,
+      "loop": true,
+      "category": "Carry",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": []
+    },
+    {
+      "asset": "A_Bean_Carry_Walk",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Carry_Walk.fbx",
+      "frames_blender": [
+        419,
+        457
+      ],
+      "length_s": 1.583,
+      "fps": 24,
+      "loop": true,
+      "category": "Carry",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 0.417
+        },
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.833
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 1.25
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Boat_Sit_Idle",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Boat_Sit_Idle.fbx",
+      "frames_blender": [
+        469,
+        517
+      ],
+      "length_s": 2.0,
+      "fps": 24,
+      "loop": true,
+      "category": "Boat",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": []
+    },
+    {
+      "asset": "A_Bean_Boat_Row",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Boat_Row.fbx",
+      "frames_blender": [
+        529,
+        567
+      ],
+      "length_s": 1.583,
+      "fps": 24,
+      "loop": true,
+      "category": "Boat",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [
+        {
+          "name": "AN_RowStroke_Catch",
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_RowStroke_Splash",
+          "time_s": 0.75
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Hit_React",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Hit_React.fbx",
+      "frames_blender": [
+        579,
+        593
+      ],
+      "length_s": 0.583,
+      "fps": 24,
+      "loop": false,
+      "category": "Reaction",
+      "root_motion": false,
+      "montage_slot": "FullBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_HitFlash",
+          "time_s": 0.042
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Death",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Death.fbx",
+      "frames_blender": [
+        605,
+        643
+      ],
+      "length_s": 1.583,
+      "fps": 24,
+      "loop": false,
+      "category": "Reaction",
+      "root_motion": false,
+      "montage_slot": "FullBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_BodyFall",
+          "time_s": 0.75
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Wave",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Wave.fbx",
+      "frames_blender": [
+        655,
+        693
+      ],
+      "length_s": 1.583,
+      "fps": 24,
+      "loop": false,
+      "category": "Emote",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": []
+    },
+    {
+      "asset": "A_Bean_Celebrate",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Celebrate.fbx",
+      "frames_blender": [
+        705,
+        739
+      ],
+      "length_s": 1.417,
+      "fps": 24,
+      "loop": false,
+      "category": "Emote",
+      "root_motion": false,
+      "montage_slot": "FullBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": []
+    },
+    {
+      "asset": "A_Bean_Sabre_Block",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Block.fbx",
+      "frames_blender": [
+        751,
+        773
+      ],
+      "length_s": 0.917,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_BlockWindow_Begin",
+          "time_s": 0.167
+        },
+        {
+          "name": "AN_BlockImpact",
+          "time_s": 0.458
+        },
+        {
+          "name": "AN_BlockWindow_End",
+          "time_s": 0.667
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Musket_Hold",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Hold.fbx",
+      "frames_blender": [
+        1,
+        25
+      ],
+      "length_s": 1.0,
+      "fps": 24,
+      "loop": true,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [],
+      "prop_anim": null
+    },
+    {
+      "asset": "A_Bean_Musket_Reload",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Reload.fbx",
+      "frames_blender": [
+        1,
+        159
+      ],
+      "length_s": 6.583,
+      "fps": 24,
+      "loop": false,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Reload_HalfCock",
+          "time_s": 0.583
+        },
+        {
+          "name": "AN_Reload_Prime",
+          "time_s": 1.0
+        },
+        {
+          "name": "AN_Reload_Powder",
+          "time_s": 2.708
+        },
+        {
+          "name": "AN_Reload_Ball",
+          "time_s": 3.708
+        },
+        {
+          "name": "AN_Reload_Ram",
+          "time_s": 5.0
+        },
+        {
+          "name": "AN_Reload_Cock",
+          "time_s": 6.083
+        },
+        {
+          "name": "AN_Reload_Complete",
+          "time_s": 6.583
+        }
+      ],
+      "prop_anim": "maquettes/bean-musket-anim/exports/A_Musket_Reload.fbx"
+    },
+    {
+      "asset": "A_Bean_Musket_Aim",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Aim.fbx",
+      "frames_blender": [
+        159,
+        169
+      ],
+      "length_s": 0.417,
+      "fps": 24,
+      "loop": true,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [],
+      "prop_anim": null
+    },
+    {
+      "asset": "A_Bean_Musket_Fire",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Fire.fbx",
+      "frames_blender": [
+        159,
+        189
+      ],
+      "length_s": 1.25,
+      "fps": 24,
+      "loop": false,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_FireTrigger",
+          "time_s": 0.417
+        },
+        {
+          "name": "AN_PanFlash",
+          "time_s": 0.5
+        },
+        {
+          "name": "AN_FireShot",
+          "time_s": 0.542
+        },
+        {
+          "name": "AN_Recoil",
+          "time_s": 0.583
+        }
+      ],
+      "prop_anim": "maquettes/bean-musket-anim/exports/A_Musket_Fire.fbx"
+    },
+    {
+      "asset": "A_Bean_Musket_Lower",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Lower.fbx",
+      "frames_blender": [
+        193,
+        208
+      ],
+      "length_s": 0.625,
+      "fps": 24,
+      "loop": false,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [],
+      "prop_anim": null
+    },
+    {
+      "asset": "A_Bean_Sabre_Draw",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Draw.fbx",
+      "frames_blender": [
+        11,
+        27
+      ],
+      "length_s": 0.667,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Draw_Grab",
+          "time_s": 0.25
+        },
+        {
+          "name": "AN_Draw_AttachToHand",
+          "time_s": 0.5
+        },
+        {
+          "name": "AN_Draw_Complete",
+          "time_s": 0.667
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Sabre_Idle",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Idle.fbx",
+      "frames_blender": [
+        27,
+        34
+      ],
+      "length_s": 0.292,
+      "fps": 24,
+      "loop": true,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": []
+    },
+    {
+      "asset": "A_Bean_Sabre_Slash_R",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Slash_R.fbx",
+      "frames_blender": [
+        34,
+        47
+      ],
+      "length_s": 0.542,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.167
+        },
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.208
+        },
+        {
+          "name": "AN_ComboWindow",
+          "time_s": 0.292
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.333
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Sabre_Slash_L",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Slash_L.fbx",
+      "frames_blender": [
+        47,
+        59
+      ],
+      "length_s": 0.5,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.125
+        },
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.167
+        },
+        {
+          "name": "AN_ComboWindow",
+          "time_s": 0.25
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.292
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Sabre_Finisher",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Finisher.fbx",
+      "frames_blender": [
+        59,
+        85
+      ],
+      "length_s": 1.083,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.042
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.5
+        },
+        {
+          "name": "AN_Dismember_Check",
+          "time_s": 0.583
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.667
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Sabre_Thrust",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Thrust.fbx",
+      "frames_blender": [
+        85,
+        95
+      ],
+      "length_s": 0.417,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.042
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.125
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.292
+        }
+      ]
+    },
+    {
+      "asset": "A_Bean_Sabre_Sheathe",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Sheathe.fbx",
+      "frames_blender": [
+        95,
+        111
+      ],
+      "length_s": 0.667,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Sheathe_Insert",
+          "time_s": 0.208
+        },
+        {
+          "name": "AN_Sheathe_AttachToScabbard",
+          "time_s": 0.458
+        }
+      ]
+    }
+  ]
+}
