@@ -1,0 +1,63 @@
+{
+  "item": "cutlass",
+  "export_name": "SM_Bean_Cutlass",
+  "physics": {
+    "mass_kg": 1.0856,
+    "volume_m3": 0.000216,
+    "com": [
+      0.0687,
+      -0.0067,
+      -0.0034
+    ]
+  },
+  "sockets": {
+    "grip": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "pommel": [
+      -0.09,
+      0.0,
+      0.002
+    ],
+    "guard": [
+      0.062,
+      0.0,
+      0.0
+    ],
+    "blade_mid": [
+      0.2668,
+      0.0,
+      0.0091
+    ],
+    "tip": [
+      0.431,
+      0.0,
+      0.0188
+    ],
+    "edge_mid": [
+      0.2668,
+      0.0,
+      -0.0079
+    ]
+  },
+  "ucx": [
+    "UCX_SM_Bean_Cutlass_00",
+    "UCX_SM_Bean_Cutlass_01"
+  ],
+  "params": {
+    "grip_back": -0.06,
+    "grip_front": 0.055,
+    "guard_x": 0.062,
+    "blade_len": 0.365,
+    "blade_w": 0.034,
+    "blade_w_tip": 0.028,
+    "spine_t": 0.0062,
+    "curve": 0.03,
+    "clip": 0.11,
+    "grip_r": 0.0175,
+    "wire_turns": 8,
+    "knot": true
+  }
+}

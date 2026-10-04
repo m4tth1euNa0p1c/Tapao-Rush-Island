@@ -1,0 +1,60 @@
+{
+  "torch_in_hand_l": {
+    "bone": "hand_l",
+    "object": "SM_Bean_Torch",
+    "frame": 93,
+    "blender_bone_space": {
+      "location_m": [
+        0.00491,
+        0.0731,
+        -0.00045
+      ],
+      "rotation_euler_deg_xyz": [
+        -149.46,
+        -21.53,
+        -85.51
+      ]
+    },
+    "unreal_socket_guess": {
+      "location_cm": [
+        0.49,
+        -7.31,
+        -0.05
+      ],
+      "rotation_deg_roll_pitch_yaw": [
+        -149.46,
+        21.53,
+        85.51
+      ]
+    }
+  },
+  "torch_on_hip_pelvis": {
+    "bone": "pelvis",
+    "object": "SM_Bean_Torch",
+    "frame": 1,
+    "blender_bone_space": {
+      "location_m": [
+        0.33174,
+        0.18,
+        0.02
+      ],
+      "rotation_euler_deg_xyz": [
+        -71.22,
+        158.2,
+        0.0
+      ]
+    },
+    "unreal_socket_guess": {
+      "location_cm": [
+        33.17,
+        -18.0,
+        2.0
+      ],
+      "rotation_deg_roll_pitch_yaw": [
+        -71.22,
+        -158.2,
+        -0.0
+      ]
+    }
+  }
+}

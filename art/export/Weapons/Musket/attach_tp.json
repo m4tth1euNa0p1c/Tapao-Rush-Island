@@ -1,0 +1,56 @@
+{
+  "format": "bean-attach/1",
+  "bone": "hand_r",
+  "skeleton": "SK_Bean_Body (SKEL_Bean, bean_soldier.blend)",
+  "item": "SK_Bean_Musket (pivot = socket grip_r)",
+  "pose": "port d'armes (A_Bean_Musket_Hold)",
+  "blender_bone_space": {
+    "location_m": [
+      -0.00482,
+      0.07675,
+      -0.00033
+    ],
+    "matrix": [
+      [
+        -0.354042,
+        0.908732,
+        -0.134481,
+        -0.004817
+      ],
+      [
+        0.800192,
+        0.234287,
+        -0.523472,
+        0.076746
+      ],
+      [
+        -0.451187,
+        -0.29756,
+        -0.822862,
+        -0.000328
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "unreal_socket_guess": {
+    "location_cm": {
+      "x": -0.48,
+      "y": -7.67,
+      "z": -0.03
+    },
+    "rotation": {
+      "pitch": -27.28,
+      "yaw": -113.87,
+      "roll": -160.12
+    }
+  },
+  "notes": [
+    "Socket à créer sur hand_r (ex. 'musket_grip'), mousquet attaché par son socket grip_r.",
+    "Conversion Blender->UE : Y inversé, m->cm. À valider dans l'aperçu de socket (la convention d'axes d'os FBX primary Y / secondary X peut demander +/-90° de roll)."
+  ]
+}

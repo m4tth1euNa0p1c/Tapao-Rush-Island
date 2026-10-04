@@ -1,0 +1,151 @@
+{
+  "fps": 24,
+  "skeleton": "SK_Bean_Body (SKEL_Bean)",
+  "anims": [
+    {
+      "name": "Torch_Equip",
+      "start": 1,
+      "end": 25,
+      "seconds": 1.0,
+      "category": "Torch",
+      "montage": "UpperBody",
+      "file": "exports/anims/A_Bean_Torch_Equip.fbx",
+      "notifies": [
+        {
+          "name": "AN_Torch_Grab",
+          "frame": 10,
+          "time_s": 0.417
+        },
+        {
+          "name": "AN_Torch_AttachToHand",
+          "frame": 10,
+          "time_s": 0.417
+        },
+        {
+          "name": "AN_Torch_EquipEnd",
+          "frame": 24,
+          "time_s": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Torch_Ignite",
+      "start": 35,
+      "end": 83,
+      "seconds": 2.0,
+      "category": "Torch",
+      "montage": "UpperBody",
+      "file": "exports/anims/A_Bean_Torch_Ignite.fbx",
+      "notifies": [
+        {
+          "name": "AN_Flint_Strike",
+          "frame": 14,
+          "time_s": 0.583
+        },
+        {
+          "name": "AN_Flint_Strike",
+          "frame": 24,
+          "time_s": 1.0
+        },
+        {
+          "name": "AN_Flint_Strike",
+          "frame": 34,
+          "time_s": 1.417
+        },
+        {
+          "name": "AN_Torch_FlameOn",
+          "frame": 34,
+          "time_s": 1.417
+        }
+      ]
+    },
+    {
+      "name": "Torch_Idle",
+      "start": 93,
+      "end": 141,
+      "seconds": 2.0,
+      "loop": true,
+      "category": "Torch",
+      "file": "exports/anims/A_Bean_Torch_Idle.fbx",
+      "notifies": []
+    },
+    {
+      "name": "Torch_Raise_Idle",
+      "start": 151,
+      "end": 199,
+      "seconds": 2.0,
+      "loop": true,
+      "category": "Torch",
+      "file": "exports/anims/A_Bean_Torch_Raise_Idle.fbx",
+      "notifies": []
+    },
+    {
+      "name": "Torch_Light",
+      "start": 209,
+      "end": 247,
+      "seconds": 1.583,
+      "category": "Torch",
+      "montage": "FullBody",
+      "file": "exports/anims/A_Bean_Torch_Light.fbx",
+      "notifies": [
+        {
+          "name": "AN_Ignite_Target",
+          "frame": 16,
+          "time_s": 0.667
+        }
+      ]
+    },
+    {
+      "name": "Torch_Swing",
+      "start": 257,
+      "end": 279,
+      "seconds": 0.917,
+      "category": "Torch",
+      "montage": "UpperBody",
+      "file": "exports/anims/A_Bean_Torch_Swing.fbx",
+      "notifies": [
+        {
+          "name": "AN_Stamina_Consume",
+          "frame": 6,
+          "time_s": 0.25
+        },
+        {
+          "name": "AN_FireSwoosh",
+          "frame": 7,
+          "time_s": 0.292
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "frame": 7,
+          "time_s": 0.292
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "frame": 12,
+          "time_s": 0.5
+        }
+      ]
+    },
+    {
+      "name": "Torch_Unequip",
+      "start": 289,
+      "end": 313,
+      "seconds": 1.0,
+      "category": "Torch",
+      "montage": "UpperBody",
+      "file": "exports/anims/A_Bean_Torch_Unequip.fbx",
+      "notifies": [
+        {
+          "name": "AN_Torch_Extinguish",
+          "frame": 7,
+          "time_s": 0.292
+        },
+        {
+          "name": "AN_Torch_AttachToHip",
+          "frame": 16,
+          "time_s": 0.667
+        }
+      ]
+    }
+  ]
+}

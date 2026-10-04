@@ -1,0 +1,425 @@
+// monke_island
+
+#include "Weapons/TorchItem.h"
+#include "Weapons/CutlassMath.h"
+#include "Character/Bean/BeanPuppetComponent.h"
+#include "Player/IslanderCharacter.h"
+#include "Player/IslanderHealthComponent.h"
+#include "Player/IslanderMovementComponent.h"
+#include "Water/IslandWaterSubsystem.h"
+#include "monke_island.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/PointLightComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "EnhancedInputComponent.h"
+#include "Engine/OverlapResult.h"
+#include "Engine/World.h"
+#include "GameFramework/DamageType.h"
+#include "Kismet/GameplayStatics.h"
+#include "Net/UnrealNetwork.h"
+#include "TimerManager.h"
+
+ATorchItem::ATorchItem()
+{
+	PrimaryActorTick.bCanEverTick = true;
+	// after the puppet built its pose: the torch follows the left hand
+	PrimaryActorTick.TickGroup = TG_PostUpdateWork;
+
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+
+	TorchMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TorchMesh"));
+	TorchMesh->SetupAttachment(RootComponent);
+	TorchMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	TorchMesh->SetCanEverAffectNavigation(false);
+
+	FlameMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("FlameMesh"));
+	FlameMesh->SetupAttachment(TorchMesh);
+	FlameMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	FlameMesh->SetCastShadow(false);
+	FlameMesh->SetVisibility(false);
+
+	Light = CreateDefaultSubobject<UPointLightComponent>(TEXT("Light"));
+	Light->SetupAttachment(TorchMesh);
+	Light->SetIntensityUnits(ELightUnits::Candelas);
+	Light->SetUseTemperature(true);
+	Light->SetSourceRadius(4.0f);
+	Light->SetSoftSourceRadius(12.0f);
+	Light->SetVisibility(false);
+}
+
+void ATorchItem::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(ATorchItem, MoveState);
+	DOREPLIFETIME(ATorchItem, bLit);
+	DOREPLIFETIME_CONDITION(ATorchItem, bRaised, COND_SkipOwner);
+	DOREPLIFETIME(ATorchItem, Fuel);
+}
+
+void ATorchItem::BeginPlay()
+{
+	SpawnTime = GetWorld()->GetTimeSeconds();
+	if (!Rules)
+	{
+		UE_LOG(Logmonke_island, Error, TEXT("Torch %s: no DA_TorchRules, the torch is disabled"), *GetName());
+		Super::BeginPlay();
+		SetActorTickEnabled(false);
+		return;
+	}
+	TorchMesh->SetStaticMesh(Rules->TorchMesh);
+	FlameMesh->SetStaticMesh(Rules->FlameMesh);
+	if (Rules->FlameMaterial)
+	{
+		FlameMesh->SetMaterial(0, Rules->FlameMaterial);
+	}
+	static const FName FlameSocket(TEXT("flame"));
+	static const FName LightSocket(TEXT("light"));
+	FlameMesh->AttachToComponent(TorchMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TorchMesh->DoesSocketExist(FlameSocket) ? FlameSocket : NAME_None);
+	Light->AttachToComponent(TorchMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, TorchMesh->DoesSocketExist(LightSocket) ? LightSocket : NAME_None);
+	// the FBX sockets come in with a scale of 100 (memory: ue-mcp-import-pitfalls)
+	FlameMesh->SetWorldScale3D(FVector::OneVector);
+	Light->SetWorldScale3D(FVector::OneVector);
+	Light->SetTemperature(Rules->LightTemperature);
+	Light->SetCastShadows(Rules->bLightCastsShadows);
+	if (HasAuthority())
+	{
+		Fuel = Rules->BurnTime;
+	}
+	Super::BeginPlay();
+}
+
+void ATorchItem::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	GetWorldTimerManager().ClearAllTimersForObject(this);
+	Super::EndPlay(EndPlayReason);
+}
+
+void ATorchItem::OnAttachedToCarrier()
+{
+	AIslanderCharacter* Carrier = GetCarrier();
+	Puppet = Carrier ? Carrier->FindComponentByClass<UBeanPuppetComponent>() : nullptr;
+	if (Puppet.IsValid())
+	{
+		// rides on the puppet component (scale 1), placed every frame from the hand or the hip
+		TorchMesh->AttachToComponent(Puppet.Get(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+		AddTickPrerequisiteComponent(Puppet.Get());
+	}
+}
+
+bool ATorchItem::IsUsable() const
+{
+	const AIslanderCharacter* Carrier = GetCarrier();
+	if (!IsEquipped() || !Rules || !Carrier || Carrier->IsRagdoll())
+	{
+		return false;
+	}
+	if (const UIslanderHealthComponent* Health = Carrier->GetHealthComponent(); Health && Health->IsDead())
+	{
+		return false;
+	}
+	const UCharacterMovementComponent* Move = Carrier->GetCharacterMovement();
+	return !(Move && Move->IsSwimming());
+}
+
+float ATorchItem::GetLocalMoveElapsed() const
+{
+	return LocalMove == ETorchMove::None ? 0.0f : static_cast<float>(GetWorld()->GetTimeSeconds() - LocalMoveStart);
+}
+
+// ---------------------------------------------------------------- equip, light
+
+void ATorchItem::OnEquippedChanged()
+{
+	if (!Rules)
+	{
+		return;
+	}
+	if (!HasAuthority())
+	{
+		return;
+	}
+	GetWorldTimerManager().ClearTimer(IgniteTimer);
+	GetWorldTimerManager().ClearTimer(FlameTimer);
+	if (IsEquipped())
+	{
+		const bool bArrival = GetWorld()->GetTimeSeconds() - SpawnTime < 0.2;
+		if (!bArrival)
+		{
+			StartMove(ETorchMove::Equip);
+		}
+		// unlit: the flint and steel once it is in hand (no fuel left: it stays out)
+		if (!bLit && Fuel > 0.0f)
+		{
+			GetWorldTimerManager().SetTimer(IgniteTimer, [this]() { if (IsEquipped()) { StartMove(ETorchMove::Ignite); GetWorldTimerManager().SetTimer(FlameTimer, this, &ATorchItem::FlameOn, Rules->FlameOnTime, false); } },
+				bArrival ? 0.1f : Rules->EquipSeconds, false);
+		}
+	}
+	else
+	{
+		// put out and hung back on the hip
+		StartMove(ETorchMove::Unequip);
+		bLit = false;
+		bRaised = false;
+	}
+}
+
+void ATorchItem::FlameOn()
+{
+	if (IsEquipped() && Fuel > 0.0f)
+	{
+		bLit = true;
+	}
+}
+
+void ATorchItem::StartMove(ETorchMove Move)
+{
+	MoveState.Move = Move;
+	++MoveState.Counter;
+	PlayMove(Move);
+	if (Move == ETorchMove::Swing)
+	{
+		GetWorldTimerManager().SetTimer(HitTimer, this, &ATorchItem::ApplySwingHit, Rules->SwingHitTime, false);
+	}
+}
+
+void ATorchItem::OnRep_MoveState()
+{
+	PlayMove(MoveState.Move);
+}
+
+void ATorchItem::PlayMove(ETorchMove Move)
+{
+	LocalMove = Move;
+	LocalMoveStart = GetWorld()->GetTimeSeconds();
+}
+
+// ---------------------------------------------------------------- input
+
+void ATorchItem::BindInput()
+{
+	const AIslanderCharacter* Carrier = GetCarrier();
+	UEnhancedInputComponent* Input = Carrier ? Cast<UEnhancedInputComponent>(Carrier->InputComponent) : nullptr;
+	if (bInputBound || !Input || !Rules)
+	{
+		return;
+	}
+	if (Rules->SwingAction)
+	{
+		Input->BindAction(Rules->SwingAction, ETriggerEvent::Started, this, &ATorchItem::HandleSwing);
+	}
+	if (Rules->RaiseAction)
+	{
+		Input->BindAction(Rules->RaiseAction, ETriggerEvent::Started, this, &ATorchItem::HandleRaiseStarted);
+		Input->BindAction(Rules->RaiseAction, ETriggerEvent::Completed, this, &ATorchItem::HandleRaiseCompleted);
+	}
+	bInputBound = true;
+}
+
+void ATorchItem::HandleSwing()
+{
+	if (IsUsable())
+	{
+		ServerSwing();
+	}
+}
+
+void ATorchItem::HandleRaiseStarted()
+{
+	if (IsUsable())
+	{
+		bRaised = true;
+		ServerSetRaised(true);
+	}
+}
+
+void ATorchItem::HandleRaiseCompleted()
+{
+	bRaised = false;
+	ServerSetRaised(false);
+}
+
+void ATorchItem::ServerSetRaised_Implementation(bool bInRaised)
+{
+	bRaised = bInRaised && IsUsable();
+}
+
+void ATorchItem::ServerSwing_Implementation()
+{
+	if (!IsUsable() || (LocalMove != ETorchMove::None && GetLocalMoveElapsed() < GetLocalMoveDuration()))
+	{
+		return;
+	}
+	const AIslanderCharacter* Carrier = GetCarrier();
+	UIslanderMovementComponent* Move = Carrier ? Carrier->GetIslanderMovement() : nullptr;
+	if (!Move || !CutlassMath::HasStaminaFor(Move->GetStamina(), Move->MaxStamina, Rules->StaminaCostFraction))
+	{
+		return;
+	}
+	Move->ConsumeStamina(CutlassMath::StaminaCost(Move->MaxStamina, Rules->StaminaCostFraction));
+	StartMove(ETorchMove::Swing);
+}
+
+// ---------------------------------------------------------------- blow
+
+void ATorchItem::ApplySwingHit()
+{
+	AIslanderCharacter* Carrier = GetCarrier();
+	if (!Carrier || !IsUsable())
+	{
+		return;
+	}
+	const FVector Origin = Carrier->GetActorLocation();
+	const FVector Forward = FRotator(0.0f, Carrier->GetBaseAimRotation().Yaw, 0.0f).Vector();
+	FCollisionObjectQueryParams Objects(ECC_Pawn);
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(TorchSwing), false, Carrier);
+	Params.AddIgnoredActor(this);
+	TArray<FOverlapResult> Overlaps;
+	GetWorld()->OverlapMultiByObjectType(Overlaps, Origin, FQuat::Identity, Objects, FCollisionShape::MakeSphere(Rules->ReachCm + 80.0f), Params);
+	TSet<AActor*> Done;
+	for (const FOverlapResult& Overlap : Overlaps)
+	{
+		AActor* Target = Overlap.GetActor();
+		const APawn* Pawn = Cast<APawn>(Target);
+		if (!Pawn || Pawn->IsPlayerControlled() || Done.Contains(Target))
+		{
+			continue;
+		}
+		const FVector Offset = Target->GetActorLocation() - Origin;
+		if (FMath::Abs(Offset.Z) > 160.0f || !CutlassMath::IsInSweep(Forward, Offset, Rules->ReachCm + 40.0f, Rules->ArcDegrees))
+		{
+			continue;
+		}
+		Done.Add(Target);
+		const FVector Direction = FVector(Offset.X, Offset.Y, 0.0f).GetSafeNormal();
+		FHitResult Hit(Target, Overlap.GetComponent(), Target->GetActorLocation(), -Direction);
+		UGameplayStatics::ApplyPointDamage(Target, Rules->SwingDamage, Direction, Hit, Carrier->GetController(), this, UDamageType::StaticClass());
+		if (bLit && Rules->BurnPerSecond > 0.0f)
+		{
+			Burn(Target, FMath::RoundToInt(Rules->BurnSeconds));
+		}
+	}
+}
+
+void ATorchItem::Burn(TWeakObjectPtr<AActor> Target, int32 TicksLeft)
+{
+	if (TicksLeft <= 0)
+	{
+		return;
+	}
+	FTimerHandle Handle;
+	GetWorldTimerManager().SetTimer(Handle, [this, Target, TicksLeft]()
+	{
+		if (AActor* Alive = Target.Get())
+		{
+			const AIslanderCharacter* Carrier = GetCarrier();
+			UGameplayStatics::ApplyDamage(Alive, Rules->BurnPerSecond, Carrier ? Carrier->GetController() : nullptr, this, UDamageType::StaticClass());
+			Burn(Target, TicksLeft - 1);
+		}
+	}, 1.0f, false);
+}
+
+// ---------------------------------------------------------------- per frame
+
+void ATorchItem::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	if (!Rules || !GetCarrier())
+	{
+		return;
+	}
+	const bool bUsable = IsUsable();
+	if (IsCarrierLocallyControlled())
+	{
+		BindInput();
+		SetInputContextActive(Rules->MappingContext, Rules->MappingPriority, bUsable);
+		if (!bUsable)
+		{
+			bRaised = false;
+		}
+	}
+	if (LocalMove != ETorchMove::None && GetLocalMoveElapsed() >= GetLocalMoveDuration())
+	{
+		LocalMove = ETorchMove::None;
+	}
+
+	if (HasAuthority())
+	{
+		if (!bUsable)
+		{
+			bRaised = false;
+		}
+		if (bLit)
+		{
+			Fuel = FMath::Max(0.0f, Fuel - DeltaSeconds);
+			// out of fuel, or the head under the water
+			const UIslandWaterSubsystem* Water = UIslandWaterSubsystem::Get(this);
+			const FVector Head = FlameMesh->GetComponentLocation();
+			if (Fuel <= 0.0f || (Water && Head.Z < Water->GetWaterSurfaceAt(Head)) || !IsEquipped())
+			{
+				bLit = false;
+			}
+		}
+	}
+	UpdateAttachment();
+	UpdateFlame(DeltaSeconds);
+}
+
+void ATorchItem::UpdateAttachment()
+{
+	UBeanPuppetComponent* Body = Puppet.Get();
+	if (!Body)
+	{
+		return;
+	}
+	// in the hand from the grab of the equip until the hook of the unequip; on the hip otherwise
+	bool bInHand = IsEquipped();
+	if (LocalMove == ETorchMove::Equip)
+	{
+		bInHand = GetLocalMoveElapsed() >= Rules->AttachToHandTime;
+	}
+	else if (LocalMove == ETorchMove::Unequip)
+	{
+		bInHand = GetLocalMoveElapsed() < Rules->AttachToHipTime;
+	}
+	const FName Bone = bInHand ? Rules->GripBone : Rules->HipBone;
+	if (Body->GetBoneIndex(Bone) == INDEX_NONE)
+	{
+		return;
+	}
+	// component space bones carry the FBX root scale (x100): only location and rotation are used
+	const FTransform BoneCS = Body->GetBoneTransformByName(Bone, EBoneSpaces::ComponentSpace);
+	const FTransform Relative = (bInHand ? Rules->GripInHand : Rules->OnHip) * FTransform(BoneCS.GetRotation(), BoneCS.GetLocation());
+	TorchMesh->SetRelativeTransform(Relative);
+	const AIslanderCharacter* Carrier = GetCarrier();
+	// only seen while in use: the hip keeps no torch on the skin (owner request 2026-10-04)
+	const bool bShow = bInHand && !(Carrier && Carrier->IsRagdoll());
+	if (TorchMesh->bHiddenInGame == bShow)
+	{
+		TorchMesh->SetHiddenInGame(!bShow, true);
+	}
+}
+
+void ATorchItem::UpdateFlame(float DeltaSeconds)
+{
+	RaiseAlpha = FMath::FInterpConstantTo(RaiseAlpha, bRaised ? 1.0f : 0.0f, DeltaSeconds, 1.0f / Rules->RaiseBlendTime);
+	if (FlameMesh->IsVisible() != bLit)
+	{
+		FlameMesh->SetVisibility(bLit);
+		Light->SetVisibility(bLit);
+	}
+	if (!bLit)
+	{
+		return;
+	}
+	// flicker: a slow swell, a fast noise; the flame weakens at the end of the fuel
+	const double T = GetWorld()->GetTimeSeconds();
+	const float Noise = FMath::PerlinNoise1D(static_cast<float>(T * Rules->FlickerNoiseHz));
+	float Flicker = Rules->Flicker.X + Rules->Flicker.Y * FMath::Sin(UE_TWO_PI * Rules->Flicker.Z * T) + Rules->Flicker.W * Noise;
+	if (Rules->WarningTime > 0.0f && Fuel < Rules->WarningTime)
+	{
+		Flicker *= FMath::Lerp(0.45f, 1.0f, Fuel / Rules->WarningTime);
+	}
+	Light->SetIntensity(FMath::Lerp(Rules->LightIntensity, Rules->RaisedLightIntensity, RaiseAlpha) * Flicker);
+	Light->SetAttenuationRadius(FMath::Lerp(Rules->LightRadius, Rules->RaisedLightRadius, RaiseAlpha));
+	Light->SetRelativeLocation(FVector(FMath::PerlinNoise1D(T * 6.0 + 3.1), FMath::PerlinNoise1D(T * 6.0 + 7.7), 0.0));
+}

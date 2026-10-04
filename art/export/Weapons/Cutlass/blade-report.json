@@ -1,0 +1,726 @@
+{
+  "format": "bean-blade-compat/1",
+  "status": "PASS",
+  "summary": {
+    "PASS": 19,
+    "WARN": 0,
+    "FAIL": 0
+  },
+  "checks": [
+    {
+      "id": "scale.cutlass_vs_bean",
+      "status": "PASS",
+      "value": 0.496,
+      "expected": "0,40-0,55",
+      "note": "sabre réel 0,80 m / homme 1,80 m = 0,44"
+    },
+    {
+      "id": "grip.length_vs_mitten",
+      "status": "PASS",
+      "value": 0.115,
+      "expected": ">= 0.109",
+      "note": "la mitaine tient sur la fusée sans toucher garde et pommeau"
+    },
+    {
+      "id": "grip.diameter_vs_mitten",
+      "status": "PASS",
+      "value": 0.273,
+      "expected": "0,22-0,50",
+      "note": ""
+    },
+    {
+      "id": "grip.knuckle_bow_clearance",
+      "status": "PASS",
+      "value": 0.0345,
+      "expected": ">= 0,028 m (épaisseur mitaine)",
+      "note": ""
+    },
+    {
+      "id": "physics.cutlass_balance",
+      "status": "PASS",
+      "value": 0.0687,
+      "expected": "0.052-0.182",
+      "note": "point d'équilibre juste devant la garde (sabre maniable)"
+    },
+    {
+      "id": "carry.scabbard_left_hip",
+      "status": "PASS",
+      "value": "theta 70°, pente 40°, écart 0.015 m",
+      "expected": "sans collision (corps, mains, mousquet au dos, giberne), au-dessus du sol",
+      "note": ""
+    },
+    {
+      "id": "draw.reachable",
+      "status": "PASS",
+      "value": {
+        "pitch_deg": 0,
+        "yaw_deg": -30,
+        "twist_deg": 40,
+        "twist_grab_deg": null,
+        "stretch": 0.909
+      },
+      "expected": "main droite sur la poignée lame sortie (étirement <= 10 %)",
+      "note": "dégainé croisé : le pendant pivote, le buste tourne"
+    },
+    {
+      "id": "draw.pivot_angle",
+      "status": "PASS",
+      "value": 0,
+      "expected": "<= 120°",
+      "note": "rotation du pendant à émerillon"
+    },
+    {
+      "id": "attack.guard.no_self_hit",
+      "status": "PASS",
+      "value": [
+        0.868
+      ],
+      "expected": "toutes les clés sans collision",
+      "note": "torsion 10°, valeurs = portée utilisée / portée max"
+    },
+    {
+      "id": "attack.slash_r.no_self_hit",
+      "status": "PASS",
+      "value": [
+        0.478,
+        0.88,
+        0.98
+      ],
+      "expected": "toutes les clés sans collision",
+      "note": "torsion -25°, valeurs = portée utilisée / portée max"
+    },
+    {
+      "id": "attack.slash_l.no_self_hit",
+      "status": "PASS",
+      "value": [
+        0.977,
+        0.887,
+        0.875
+      ],
+      "expected": "toutes les clés sans collision",
+      "note": "torsion 30°, valeurs = portée utilisée / portée max"
+    },
+    {
+      "id": "attack.thrust.no_self_hit",
+      "status": "PASS",
+      "value": [
+        0.417,
+        0.923
+      ],
+      "expected": "toutes les clés sans collision",
+      "note": "torsion -10°, valeurs = portée utilisée / portée max"
+    },
+    {
+      "id": "attack.finisher.no_self_hit",
+      "status": "PASS",
+      "value": [
+        0.738,
+        0.967,
+        0.98
+      ],
+      "expected": "toutes les clés sans collision",
+      "note": "torsion 15°, valeurs = portée utilisée / portée max"
+    },
+    {
+      "id": "attack.slash_r.hits_mob",
+      "status": "PASS",
+      "value": 4,
+      "expected": "> 0 rayon de lame dans le mob",
+      "note": "mob à 0.78 m devant Bean"
+    },
+    {
+      "id": "attack.slash_l.hits_mob",
+      "status": "PASS",
+      "value": 13,
+      "expected": "> 0 rayon de lame dans le mob",
+      "note": "mob à 0.78 m devant Bean"
+    },
+    {
+      "id": "attack.thrust.hits_mob",
+      "status": "PASS",
+      "value": 5,
+      "expected": "> 0 rayon de lame dans le mob",
+      "note": "mob à 0.78 m devant Bean"
+    },
+    {
+      "id": "attack.finisher.hits_mob",
+      "status": "PASS",
+      "value": 9,
+      "expected": "> 0 rayon de lame dans le mob",
+      "note": "mob à 0.78 m devant Bean"
+    },
+    {
+      "id": "dismember.finisher_halves",
+      "status": "PASS",
+      "value": 0.457,
+      "expected": ">= 0,25 (plus petite moitié)",
+      "note": "le coup vertical coupe le mob en deux moitiés exploitables"
+    },
+    {
+      "id": "stamina.uses_per_bar",
+      "status": "PASS",
+      "value": 9,
+      "expected": ">= 6 coups",
+      "note": "11 % par utilisation"
+    }
+  ],
+  "stamina": {
+    "cost_pct": 11,
+    "uses_full_bar": 9,
+    "after_demo_combo_pct": 67
+  },
+  "cut": {
+    "point": [
+      -0.13280537724494934,
+      -0.6396428346633911,
+      0.5062686800956726
+    ],
+    "normal": [
+      0.899880051612854,
+      0.4347648322582245,
+      -0.03457586467266083
+    ],
+    "halves": [
+      "MOB_CocoWarrior_HalfA",
+      "MOB_CocoWarrior_HalfB"
+    ],
+    "volume_ratio": 0.457
+  },
+  "debug": {
+    "mob_bbox": [
+      [
+        -0.555,
+        -1.072,
+        0.0
+      ],
+      [
+        0.315,
+        -0.488,
+        1.521
+      ]
+    ],
+    "tips": {
+      "guard": [
+        [
+          0.035,
+          -0.462,
+          0.882
+        ]
+      ],
+      "slash_r": [
+        [
+          -0.532,
+          0.416,
+          0.846
+        ],
+        [
+          -0.316,
+          -0.61,
+          0.565
+        ],
+        [
+          -0.126,
+          -0.622,
+          0.497
+        ]
+      ],
+      "slash_l": [
+        [
+          0.293,
+          -0.387,
+          1.088
+        ],
+        [
+          0.116,
+          -0.743,
+          0.553
+        ],
+        [
+          -0.403,
+          -0.711,
+          0.397
+        ]
+      ],
+      "thrust": [
+        [
+          -0.195,
+          -0.481,
+          0.598
+        ],
+        [
+          -0.285,
+          -0.681,
+          0.592
+        ]
+      ],
+      "finisher": [
+        [
+          -0.431,
+          -0.032,
+          1.189
+        ],
+        [
+          0.049,
+          -0.556,
+          1.102
+        ],
+        [
+          0.072,
+          -0.649,
+          0.33
+        ]
+      ]
+    }
+  },
+  "physics_computed": {
+    "cutlass": {
+      "mass_kg": 1.0856,
+      "volume_m3": 0.000216,
+      "com": [
+        0.0687,
+        -0.0067,
+        -0.0034
+      ]
+    },
+    "scabbard": {
+      "mass_kg": 0.5428,
+      "volume_m3": 0.0002121,
+      "com": [
+        0.1445,
+        -0.0198,
+        -0.0536
+      ]
+    }
+  },
+  "placements": {
+    "scabbard": [
+      [
+        0.262,
+        -0.93969,
+        0.21985,
+        0.24228
+      ],
+      [
+        0.71985,
+        0.34202,
+        0.60402,
+        -0.13318
+      ],
+      [
+        -0.64279,
+        -0.0,
+        0.76604,
+        0.41
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "draw": {
+      "pitch_deg": 0,
+      "yaw_deg": -30,
+      "twist_deg": 40,
+      "twist_grab_deg": null,
+      "stretch": 0.909,
+      "scab_end": [
+        [
+          0.58682,
+          -0.64279,
+          0.4924,
+          0.24228
+        ],
+        [
+          0.4924,
+          0.76604,
+          0.41318,
+          -0.13318
+        ],
+        [
+          -0.64279,
+          -0.0,
+          0.76604,
+          0.41
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sword_end": [
+        [
+          0.58682,
+          -0.64279,
+          0.4924,
+          -0.04153
+        ],
+        [
+          0.4924,
+          0.76604,
+          0.41318,
+          -0.39743
+        ],
+        [
+          -0.64279,
+          -0.0,
+          0.76604,
+          0.6501
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "attacks": {
+      "guard": {
+        "twist": 10,
+        "keys": [
+          [
+            [
+              0.38615,
+              0.9221,
+              0.02478,
+              -0.13212
+            ],
+            [
+              -0.44478,
+              0.16259,
+              0.88076,
+              -0.28731
+            ],
+            [
+              0.80812,
+              -0.35112,
+              0.47292,
+              0.525
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      },
+      "slash_r": {
+        "twist": -25,
+        "keys": [
+          [
+            [
+              -0.49771,
+              0.07475,
+              0.86412,
+              -0.3335
+            ],
+            [
+              0.73688,
+              -0.48906,
+              0.46673,
+              0.08931
+            ],
+            [
+              0.4575,
+              0.86904,
+              0.18833,
+              0.645
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              -0.13008,
+              0.0,
+              -0.9915,
+              -0.24099
+            ],
+            [
+              -0.9915,
+              0.0,
+              0.13008,
+              -0.18554
+            ],
+            [
+              0.0,
+              1.0,
+              -0.0,
+              0.565
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              0.33816,
+              0.05124,
+              -0.93969,
+              -0.25369
+            ],
+            [
+              -0.92909,
+              -0.14078,
+              -0.34202,
+              -0.21558
+            ],
+            [
+              -0.14981,
+              0.98871,
+              0.0,
+              0.56155
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      },
+      "slash_l": {
+        "twist": 30,
+        "keys": [
+          [
+            [
+              0.61536,
+              -0.72463,
+              -0.31023,
+              0.0334
+            ],
+            [
+              -0.16488,
+              0.26653,
+              -0.94962,
+              -0.29785
+            ],
+            [
+              0.77081,
+              0.63551,
+              0.04453,
+              0.755
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              0.2628,
+              -0.01338,
+              0.96476,
+              -0.01588
+            ],
+            [
+              -0.96351,
+              0.04904,
+              0.26314,
+              -0.33249
+            ],
+            [
+              -0.05083,
+              -0.99871,
+              -0.0,
+              0.575
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              -0.52031,
+              0.0958,
+              0.84859,
+              -0.19445
+            ],
+            [
+              -0.82935,
+              0.18022,
+              -0.52886,
+              -0.34321
+            ],
+            [
+              -0.20359,
+              -0.97895,
+              -0.01432,
+              0.485
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      },
+      "thrust": {
+        "twist": -10,
+        "keys": [
+          [
+            [
+              0.13685,
+              0.99053,
+              -0.01104,
+              -0.25372
+            ],
+            [
+              -0.98732,
+              0.13729,
+              0.07968,
+              -0.05681
+            ],
+            [
+              0.08044,
+              0.0,
+              0.99676,
+              0.545
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              -0.13372,
+              0.99102,
+              0.0027,
+              -0.22762
+            ],
+            [
+              -0.99081,
+              -0.13375,
+              0.02,
+              -0.25434
+            ],
+            [
+              0.02018,
+              0.0,
+              0.9998,
+              0.565
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      },
+      "finisher": {
+        "twist": 15,
+        "keys": [
+          [
+            [
+              -0.45513,
+              -0.70537,
+              0.54342,
+              -0.24458
+            ],
+            [
+              0.34453,
+              -0.70226,
+              -0.623,
+              -0.16906
+            ],
+            [
+              0.82107,
+              -0.09633,
+              0.56264,
+              0.825
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              0.27917,
+              0.94264,
+              -0.18301,
+              -0.06794
+            ],
+            [
+              -0.65354,
+              0.32615,
+              0.68301,
+              -0.28738
+            ],
+            [
+              0.70353,
+              -0.07107,
+              0.70711,
+              0.785
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              0.31012,
+              0.93562,
+              0.16866,
+              -0.06502
+            ],
+            [
+              -0.69359,
+              0.34399,
+              -0.63293,
+              -0.33821
+            ],
+            [
+              -0.6502,
+              0.0793,
+              0.75562,
+              0.59579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      }
+    },
+    "mob": [
+      -0.11999999731779099,
+      -0.7799999713897705,
+      0.0
+    ]
+  }
+}

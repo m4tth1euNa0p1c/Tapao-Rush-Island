@@ -1,0 +1,58 @@
+{
+  "item": "scabbard",
+  "export_name": "SM_Bean_Scabbard",
+  "physics": {
+    "mass_kg": 0.5428,
+    "volume_m3": 0.0002121,
+    "com": [
+      0.1445,
+      -0.0198,
+      -0.0536
+    ]
+  },
+  "sockets": {
+    "pivot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mouth": [
+      -0.01,
+      -0.02,
+      -0.065
+    ],
+    "axis_dir": [
+      1.0,
+      0.0,
+      0.0
+    ]
+  },
+  "ucx": [
+    "UCX_SM_Bean_Scabbard_00"
+  ],
+  "params": {
+    "blade": {
+      "grip_back": -0.06,
+      "grip_front": 0.055,
+      "guard_x": 0.062,
+      "blade_len": 0.365,
+      "blade_w": 0.034,
+      "blade_w_tip": 0.028,
+      "spine_t": 0.0062,
+      "curve": 0.03,
+      "clip": 0.11,
+      "grip_r": 0.0175,
+      "wire_turns": 8,
+      "knot": true
+    },
+    "frog_offset": 0.045
+  },
+  "fit": {
+    "mouth": [
+      -0.01,
+      -0.02,
+      -0.065
+    ],
+    "length": 0.365
+  }
+}

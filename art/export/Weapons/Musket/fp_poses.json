@@ -1,0 +1,1048 @@
+{
+  "format": "bean-fp-poses/1",
+  "space": "repère caméra Unreal : X avant, Y droite, Z haut ; positions en cm ; rotations FRotator en degrés",
+  "pivots": {
+    "musket": "socket grip_r (main droite)",
+    "arm": "épaule de SM_Bean_FPArm (mesh le long de +X)",
+    "fp_hand_center_in_arm_mesh_cm": {
+      "x": 36.0,
+      "y": -0.0,
+      "z": -1.5
+    }
+  },
+  "notes": [
+    "hold / aim : poses conçues pour la vue FPS (prêt bas-droite / visée guidon centré).",
+    "Clés de phases : poses du rechargement 3e personne ramenées dans une caméra virtuelle qui regarde les mains (view_pitch_deg) : à jouer telles quelles caméra droite, l'action reste dans le champ.",
+    "ramrod_out : 0 = baguette rangée, 1 = sortie / retournée (à appliquer à l'os ramrod de SK_Bean_Musket ou ignorer si A_Musket_Reload est joué).",
+    "Interpolation conseillée entre clés : ease in/out ; timings = timeline.json (24 i/s)."
+  ],
+  "timeline_s": {
+    "idle": [
+      0.0,
+      0.6
+    ],
+    "halfcock": [
+      0.6,
+      1.0
+    ],
+    "prime": [
+      1.0,
+      2.0
+    ],
+    "close": [
+      2.0,
+      2.2
+    ],
+    "cast": [
+      2.2,
+      2.7
+    ],
+    "powder": [
+      2.7,
+      3.7
+    ],
+    "ball": [
+      3.7,
+      4.5
+    ],
+    "draw": [
+      4.5,
+      5.0
+    ],
+    "ram": [
+      5.0,
+      5.6
+    ],
+    "return": [
+      5.6,
+      6.1
+    ],
+    "cock": [
+      6.1,
+      6.6
+    ],
+    "present": [
+      6.6,
+      7.0
+    ],
+    "trigger": [
+      7.0,
+      7.12
+    ],
+    "recoil": [
+      7.12,
+      7.42
+    ],
+    "hold": [
+      7.42,
+      8.02
+    ],
+    "back": [
+      8.02,
+      8.62
+    ],
+    "end": [
+      8.62,
+      9.12
+    ]
+  },
+  "keys": {
+    "hold": {
+      "frame": 179,
+      "time_s": 7.417,
+      "view_pitch_deg": -6.8,
+      "arm_r": {
+        "location": {
+          "x": -7.98,
+          "y": 18.87,
+          "z": -20.49
+        },
+        "rotation": {
+          "pitch": 37.46,
+          "yaw": -16.35,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 3.52,
+          "y": -16.44,
+          "z": -15.72
+        },
+        "rotation": {
+          "pitch": 27.87,
+          "yaw": 10.39,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 20.32,
+          "y": 10.57,
+          "z": 0.22
+        },
+        "rotation": {
+          "pitch": 5.55,
+          "yaw": 35.62,
+          "roll": -4.04
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "aim": {
+      "arm_r": {
+        "location": {
+          "x": -7.1,
+          "y": 19.4,
+          "z": -19.18
+        },
+        "rotation": {
+          "pitch": 16.32,
+          "yaw": -33.69,
+          "roll": 0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 14.46,
+          "y": -11.39,
+          "z": -15.72
+        },
+        "rotation": {
+          "pitch": 12.98,
+          "yaw": 18.76,
+          "roll": -0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 22.0,
+          "y": 0.0,
+          "z": -10.5
+        },
+        "rotation": {
+          "pitch": 0.0,
+          "yaw": 0.0,
+          "roll": 0.0
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "idle": {
+      "frame": 1,
+      "time_s": 0.0,
+      "view_pitch_deg": -44.1,
+      "arm_r": {
+        "location": {
+          "x": 4.58,
+          "y": 16.75,
+          "z": -14.45
+        },
+        "rotation": {
+          "pitch": 22.17,
+          "yaw": -7.46,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 0.77,
+          "y": -17.1,
+          "z": -16.34
+        },
+        "rotation": {
+          "pitch": 33.45,
+          "yaw": 8.86,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 38.19,
+          "y": 12.35,
+          "z": -2.25
+        },
+        "rotation": {
+          "pitch": 55.37,
+          "yaw": -0.93,
+          "roll": 14.64
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "halfcock": {
+      "frame": 15,
+      "time_s": 0.583,
+      "view_pitch_deg": -44.1,
+      "arm_r": {
+        "location": {
+          "x": 4.58,
+          "y": 16.75,
+          "z": -14.45
+        },
+        "rotation": {
+          "pitch": 22.17,
+          "yaw": -7.46,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 0.77,
+          "y": -17.1,
+          "z": -16.34
+        },
+        "rotation": {
+          "pitch": 33.45,
+          "yaw": 8.86,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 38.19,
+          "y": 12.35,
+          "z": -2.25
+        },
+        "rotation": {
+          "pitch": 55.37,
+          "yaw": -0.93,
+          "roll": 14.64
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "prime": {
+      "frame": 25,
+      "time_s": 1.0,
+      "view_pitch_deg": -44.1,
+      "arm_r": {
+        "location": {
+          "x": 4.58,
+          "y": 16.75,
+          "z": -14.45
+        },
+        "rotation": {
+          "pitch": 22.17,
+          "yaw": -7.46,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 0.77,
+          "y": -17.1,
+          "z": -16.34
+        },
+        "rotation": {
+          "pitch": 33.45,
+          "yaw": 8.86,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 38.19,
+          "y": 12.35,
+          "z": -2.25
+        },
+        "rotation": {
+          "pitch": 55.37,
+          "yaw": -0.93,
+          "roll": 14.64
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "close": {
+      "frame": 49,
+      "time_s": 2.0,
+      "view_pitch_deg": -55.0,
+      "arm_r": {
+        "location": {
+          "x": 4.18,
+          "y": 18.26,
+          "z": -15.42
+        },
+        "rotation": {
+          "pitch": 18.07,
+          "yaw": 1.64,
+          "roll": 0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": -1.64,
+          "y": -18.13,
+          "z": -17.38
+        },
+        "rotation": {
+          "pitch": 38.73,
+          "yaw": -2.22,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 39.4,
+          "y": 3.62,
+          "z": 7.12
+        },
+        "rotation": {
+          "pitch": 60.78,
+          "yaw": -40.35,
+          "roll": -17.44
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "cast": {
+      "frame": 54,
+      "time_s": 2.208,
+      "view_pitch_deg": -44.1,
+      "arm_r": {
+        "location": {
+          "x": 4.58,
+          "y": 16.75,
+          "z": -14.45
+        },
+        "rotation": {
+          "pitch": 22.17,
+          "yaw": -7.46,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 0.77,
+          "y": -17.1,
+          "z": -16.34
+        },
+        "rotation": {
+          "pitch": 33.45,
+          "yaw": 8.86,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 38.19,
+          "y": 12.35,
+          "z": -2.25
+        },
+        "rotation": {
+          "pitch": 55.37,
+          "yaw": -0.93,
+          "roll": 14.64
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "powder": {
+      "frame": 66,
+      "time_s": 2.708,
+      "view_pitch_deg": -49.6,
+      "arm_r": {
+        "location": {
+          "x": 33.07,
+          "y": 5.03,
+          "z": -10.32
+        },
+        "rotation": {
+          "pitch": 11.46,
+          "yaw": -18.82,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 1.02,
+          "y": -12.99,
+          "z": -14.72
+        },
+        "rotation": {
+          "pitch": 34.87,
+          "yaw": 39.76,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 66.75,
+          "y": -6.45,
+          "z": -4.63
+        },
+        "rotation": {
+          "pitch": -37.82,
+          "yaw": 82.42,
+          "roll": 159.01
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "ball": {
+      "frame": 90,
+      "time_s": 3.708,
+      "view_pitch_deg": -49.6,
+      "arm_r": {
+        "location": {
+          "x": 33.07,
+          "y": 5.03,
+          "z": -10.32
+        },
+        "rotation": {
+          "pitch": 11.46,
+          "yaw": -18.82,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 1.02,
+          "y": -12.99,
+          "z": -14.72
+        },
+        "rotation": {
+          "pitch": 34.87,
+          "yaw": 39.76,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 66.75,
+          "y": -6.45,
+          "z": -4.63
+        },
+        "rotation": {
+          "pitch": -37.82,
+          "yaw": 82.42,
+          "roll": 159.01
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "draw": {
+      "frame": 109,
+      "time_s": 4.5,
+      "view_pitch_deg": -27.0,
+      "arm_r": {
+        "location": {
+          "x": -5.45,
+          "y": 18.29,
+          "z": -18.46
+        },
+        "rotation": {
+          "pitch": 42.45,
+          "yaw": -33.18,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": -4.31,
+          "y": -17.66,
+          "z": -19.91
+        },
+        "rotation": {
+          "pitch": 27.31,
+          "yaw": 26.25,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 53.19,
+          "y": -24.07,
+          "z": -33.32
+        },
+        "rotation": {
+          "pitch": -24.94,
+          "yaw": 75.77,
+          "roll": 129.87
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "ram": {
+      "frame": 121,
+      "time_s": 5.0,
+      "view_pitch_deg": 0.7,
+      "arm_r": {
+        "location": {
+          "x": -2.49,
+          "y": 17.01,
+          "z": -13.29
+        },
+        "rotation": {
+          "pitch": 56.14,
+          "yaw": -21.57,
+          "roll": 0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": -14.92,
+          "y": -21.8,
+          "z": -23.14
+        },
+        "rotation": {
+          "pitch": 14.19,
+          "yaw": 20.97,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 22.8,
+          "y": -32.75,
+          "z": -54.09
+        },
+        "rotation": {
+          "pitch": -28.69,
+          "yaw": 72.16,
+          "roll": 99.12
+        }
+      },
+      "ramrod_out": 1.0
+    },
+    "return": {
+      "frame": 135,
+      "time_s": 5.583,
+      "view_pitch_deg": 0.7,
+      "arm_r": {
+        "location": {
+          "x": -2.49,
+          "y": 17.01,
+          "z": -13.29
+        },
+        "rotation": {
+          "pitch": 56.14,
+          "yaw": -21.57,
+          "roll": 0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": -14.92,
+          "y": -21.8,
+          "z": -23.14
+        },
+        "rotation": {
+          "pitch": 14.19,
+          "yaw": 20.97,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 22.8,
+          "y": -32.75,
+          "z": -54.09
+        },
+        "rotation": {
+          "pitch": -28.69,
+          "yaw": 72.16,
+          "roll": 99.12
+        }
+      },
+      "ramrod_out": 1.0
+    },
+    "cock": {
+      "frame": 147,
+      "time_s": 6.083,
+      "view_pitch_deg": -43.0,
+      "arm_r": {
+        "location": {
+          "x": 2.83,
+          "y": 16.31,
+          "z": -15.04
+        },
+        "rotation": {
+          "pitch": 22.59,
+          "yaw": -12.16,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 2.03,
+          "y": -16.34,
+          "z": -15.58
+        },
+        "rotation": {
+          "pitch": 32.68,
+          "yaw": 13.29,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 36.84,
+          "y": 15.54,
+          "z": -4.19
+        },
+        "rotation": {
+          "pitch": 53.84,
+          "yaw": 11.29,
+          "roll": 23.13
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "present": {
+      "frame": 159,
+      "time_s": 6.583,
+      "view_pitch_deg": -44.1,
+      "arm_r": {
+        "location": {
+          "x": 4.58,
+          "y": 16.75,
+          "z": -14.45
+        },
+        "rotation": {
+          "pitch": 22.17,
+          "yaw": -7.46,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 0.77,
+          "y": -17.1,
+          "z": -16.34
+        },
+        "rotation": {
+          "pitch": 33.45,
+          "yaw": 8.86,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 38.19,
+          "y": 12.35,
+          "z": -2.25
+        },
+        "rotation": {
+          "pitch": 55.37,
+          "yaw": -0.93,
+          "roll": 14.64
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "trigger": {
+      "frame": 169,
+      "time_s": 7.0,
+      "view_pitch_deg": -6.8,
+      "arm_r": {
+        "location": {
+          "x": -7.98,
+          "y": 18.87,
+          "z": -20.49
+        },
+        "rotation": {
+          "pitch": 37.46,
+          "yaw": -16.35,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 3.52,
+          "y": -16.44,
+          "z": -15.72
+        },
+        "rotation": {
+          "pitch": 27.87,
+          "yaw": 10.39,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 20.32,
+          "y": 10.57,
+          "z": 0.22
+        },
+        "rotation": {
+          "pitch": 5.55,
+          "yaw": 35.62,
+          "roll": -4.04
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "recoil": {
+      "frame": 172,
+      "time_s": 7.125,
+      "view_pitch_deg": -6.8,
+      "arm_r": {
+        "location": {
+          "x": -7.98,
+          "y": 18.87,
+          "z": -20.49
+        },
+        "rotation": {
+          "pitch": 37.46,
+          "yaw": -16.35,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 3.52,
+          "y": -16.44,
+          "z": -15.72
+        },
+        "rotation": {
+          "pitch": 27.87,
+          "yaw": 10.39,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 20.32,
+          "y": 10.57,
+          "z": 0.22
+        },
+        "rotation": {
+          "pitch": 5.55,
+          "yaw": 35.62,
+          "roll": -4.04
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "back": {
+      "frame": 193,
+      "time_s": 8.0,
+      "view_pitch_deg": -6.8,
+      "arm_r": {
+        "location": {
+          "x": -7.98,
+          "y": 18.87,
+          "z": -20.49
+        },
+        "rotation": {
+          "pitch": 37.46,
+          "yaw": -16.35,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 3.52,
+          "y": -16.44,
+          "z": -15.72
+        },
+        "rotation": {
+          "pitch": 27.87,
+          "yaw": 10.39,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 20.32,
+          "y": 10.57,
+          "z": 0.22
+        },
+        "rotation": {
+          "pitch": 5.55,
+          "yaw": 35.62,
+          "roll": -4.04
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "end": {
+      "frame": 208,
+      "time_s": 8.625,
+      "view_pitch_deg": -44.1,
+      "arm_r": {
+        "location": {
+          "x": 4.58,
+          "y": 16.75,
+          "z": -14.45
+        },
+        "rotation": {
+          "pitch": 22.17,
+          "yaw": -7.46,
+          "roll": -0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": 0.77,
+          "y": -17.1,
+          "z": -16.34
+        },
+        "rotation": {
+          "pitch": 33.45,
+          "yaw": 8.86,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 38.19,
+          "y": 12.35,
+          "z": -2.25
+        },
+        "rotation": {
+          "pitch": 55.37,
+          "yaw": -0.93,
+          "roll": 14.64
+        }
+      },
+      "ramrod_out": 0.0
+    },
+    "ram_stroke_1": {
+      "frame": 124,
+      "time_s": 5.125,
+      "view_pitch_deg": -25.6,
+      "arm_r": {
+        "location": {
+          "x": -5.77,
+          "y": 18.52,
+          "z": -18.81
+        },
+        "rotation": {
+          "pitch": 44.58,
+          "yaw": -33.8,
+          "roll": 0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": -4.8,
+          "y": -17.9,
+          "z": -20.21
+        },
+        "rotation": {
+          "pitch": 26.67,
+          "yaw": 25.69,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 51.83,
+          "y": -24.8,
+          "z": -34.88
+        },
+        "rotation": {
+          "pitch": -24.73,
+          "yaw": 75.3,
+          "roll": 128.18
+        }
+      },
+      "ramrod_out": 1.0
+    },
+    "ram_stroke_2": {
+      "frame": 131,
+      "time_s": 5.417,
+      "view_pitch_deg": -23.3,
+      "arm_r": {
+        "location": {
+          "x": -5.79,
+          "y": 18.53,
+          "z": -18.82
+        },
+        "rotation": {
+          "pitch": 46.77,
+          "yaw": -33.72,
+          "roll": 0.0
+        }
+      },
+      "arm_l": {
+        "location": {
+          "x": -5.52,
+          "y": -18.24,
+          "z": -20.61
+        },
+        "rotation": {
+          "pitch": 25.64,
+          "yaw": 25.05,
+          "roll": 0.0
+        },
+        "scale": {
+          "x": 1,
+          "y": -1,
+          "z": 1
+        },
+        "note": "même mesh miroir (échelle Y -1), comme prévu dans SM_Bean_FPArm"
+      },
+      "musket": {
+        "location": {
+          "x": 49.8,
+          "y": -25.68,
+          "z": -37.13
+        },
+        "rotation": {
+          "pitch": -24.66,
+          "yaw": 74.89,
+          "roll": 125.64
+        }
+      },
+      "ramrod_out": 1.0
+    }
+  }
+}
