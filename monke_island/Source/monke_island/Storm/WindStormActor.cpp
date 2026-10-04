@@ -28,34 +28,6 @@ namespace
 
 	/** Actors with this tag are not pushed by the wind (dense objects in free fall, e.g. a falling coconut) */
 	const FName WindShelteredTag(TEXT("WindSheltered"));
-
-	/** Calm zones of a world: actors tagged WindCalmZone with a sphere component (the galleon, owner request
-	 *  2026-10-04: no wind on the ship nor around it while the crew loads it). Looked up once a second. */
-	const TArray<FSphere>& FindWindCalmZones(const UWorld* World)
-	{
-		static const FName CalmZoneTag(TEXT("WindCalmZone"));
-		static TWeakObjectPtr<const UWorld> CachedWorld;
-		static double CachedTime = -1000.0;
-		static TArray<FSphere> Zones;
-		const double Now = World ? World->GetTimeSeconds() : 0.0;
-		if (CachedWorld.Get() != World || Now - CachedTime >= 1.0 || Now < CachedTime)
-		{
-			CachedWorld = World;
-			CachedTime = Now;
-			Zones.Reset();
-			for (TActorIterator<AActor> It(World); World && It; ++It)
-			{
-				if (It->ActorHasTag(CalmZoneTag))
-				{
-					if (const USphereComponent* Sphere = It->FindComponentByClass<USphereComponent>())
-					{
-						Zones.Emplace(Sphere->GetComponentLocation(), Sphere->GetScaledSphereRadius());
-					}
-				}
-			}
-		}
-		return Zones;
-	}
 }
 
 AWindStormActor::AWindStormActor()
@@ -143,10 +115,34 @@ float AWindStormActor::GetShelterFactor(const AActor* Actor) const
 	return Sample.Factor;
 }
 
+const TArray<FSphere>& AWindStormActor::GetCalmZones() const
+{
+	// the galleon and the water around it (owner request 2026-10-04): no wind while the crew loads the ship
+	static const FName CalmZoneTag(TEXT("WindCalmZone"));
+	const UWorld* World = GetWorld();
+	const double Now = World ? World->GetTimeSeconds() : 0.0;
+	if (Now - CalmZonesTime >= 1.0 || Now < CalmZonesTime)
+	{
+		CalmZonesTime = Now;
+		CalmZones.Reset();
+		for (TActorIterator<AActor> It(World); World && It; ++It)
+		{
+			if (It->ActorHasTag(CalmZoneTag))
+			{
+				if (const USphereComponent* Sphere = It->FindComponentByClass<USphereComponent>())
+				{
+					CalmZones.Emplace(Sphere->GetComponentLocation(), Sphere->GetScaledSphereRadius());
+				}
+			}
+		}
+	}
+	return CalmZones;
+}
+
 float AWindStormActor::ComputeShelter(const AActor* Actor, const FVector& Feet) const
 {
 	// calm zones (the galleon and the water around it): no wind at all there
-	for (const FSphere& Zone : FindWindCalmZones(GetWorld()))
+	for (const FSphere& Zone : GetCalmZones())
 	{
 		if (FVector::DistSquared2D(Feet, Zone.Center) <= FMath::Square(Zone.W))
 		{

@@ -8,12 +8,16 @@
 #include "Expedition/Core/ExpeditionTypes.h"
 #include "ExpeditionGameState.generated.h"
 
+class AController;
+class AGameModeBase;
+class APlayerState;
 class UExpeditionRules;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FExpeditionPhaseChangedSignature, EExpeditionPhase, NewPhase, EExpeditionPhase, PreviousPhase);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FExpeditionFloodDeadlineChangedSignature, double, NewFloodStartTime, double, PreviousFloodStartTime);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FExpeditionSubmersionEndedSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FExpeditionTeamWipedSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FExpeditionDaySurvivedSignature);
 
 /**
  *  Shared state of an expedition (cahier §6.1, §21: BP_ExpeditionGameState).
@@ -22,6 +26,9 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FExpeditionTeamWipedSignature);
  *  Rules live in UExpeditionRules (DA_ExpeditionRules); the pure computation lives in ExpeditionClock.
  *  Game over (T-104): with bPermadeath nobody respawns; once every player is dead the server waits
  *  GameOverRestartDelay then travels back to the restart map (L_Boot: new draw, start in the boat).
+ *  End of the day (ADR-006, T-142): at the end of the submersion the players who are not aboard a galleon die;
+ *  with survivors the server waits DayEndTravelDelay then travels to the next island. A player still loading
+ *  (no pawn yet) counts as alive, and a player who leaves is counted out on the next frame.
  */
 UCLASS()
 class MONKE_ISLAND_API AExpeditionGameState : public AGameStateBase
@@ -124,8 +131,23 @@ public:
 	UFUNCTION(BlueprintPure, Category="Expedition")
 	double GetRestartTime() const;
 
-	/** Whether a team is wiped: somebody plays and nobody is alive */
-	static bool IsWipe(int32 PlayersWithPawn, int32 PlayersAlive) { return PlayersWithPawn > 0 && PlayersAlive <= 0; }
+	/** Whether the day ended with survivors: the crew travels to the next island */
+	UFUNCTION(BlueprintPure, Category="Expedition")
+	bool IsDaySurvived() const { return DayEndedTime >= 0.0; }
+
+	/** Whether the expedition is over on this map, lost or survived: a travel follows */
+	UFUNCTION(BlueprintPure, Category="Expedition")
+	bool IsExpeditionOver() const { return IsTeamWiped() || IsDaySurvived(); }
+
+	/** Server time of the travel that follows the end of the expedition (s), negative while it runs */
+	UFUNCTION(BlueprintPure, Category="Expedition")
+	double GetNextTravelTime() const;
+
+	/**
+	 *  Whether a team is wiped: somebody died, nobody is alive and nobody is still loading in.
+	 *  Pending players (logged in, no pawn yet) keep the game going: the host dying during a client's load is no wipe.
+	 */
+	static bool IsWipe(int32 Dead, int32 Alive, int32 Pending) { return Dead > 0 && Alive <= 0 && Pending <= 0; }
 
 	/**
 	 *  Fires on every machine when the phase changes. The server sees every phase in order; a client may skip one
@@ -146,6 +168,10 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="Expedition")
 	FExpeditionTeamWipedSignature OnTeamWiped;
 
+	/** Fires on every machine when the day ends with survivors (the travel to the next island follows) */
+	UPROPERTY(BlueprintAssignable, Category="Expedition")
+	FExpeditionDaySurvivedSignature OnDaySurvived;
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -163,6 +189,10 @@ protected:
 	/** Client: broadcasts the game over */
 	UFUNCTION()
 	void OnRep_TeamWipedTime();
+
+	/** Client: broadcasts the end of the day */
+	UFUNCTION()
+	void OnRep_DayEndedTime();
 
 	/** Server: a watched player died */
 	UFUNCTION()
@@ -208,6 +238,21 @@ private:
 	/** Server: declares the game over when nobody is alive */
 	void CheckTeamWiped();
 
+	/** Server: remembers the players whose character is dead (the body may disappear before the end) */
+	void RecordDeadPlayers();
+
+	/** Server: players dead, alive, and logged in without a character yet */
+	void CountPlayers(int32& OutDead, int32& OutAlive, int32& OutPending);
+
+	/** Server: a player left; the team is counted again on the next frame, once its player state is gone */
+	void HandleLogout(AGameModeBase* GameMode, AController* Exiting);
+
+	/** Server, end of the submersion (ADR-006): kills the players who are not aboard a galleon, then ends the day */
+	void ResolveDelugeEnd();
+
+	/** Server: ends the day for the survivors and schedules the travel to the next island */
+	void EndDay();
+
 	/** Server: travels to the restart map */
 	void RestartFromBoot();
 
@@ -215,8 +260,21 @@ private:
 	UPROPERTY(ReplicatedUsing=OnRep_TeamWipedTime)
 	double TeamWipedTime = -1.0;
 
-	/** Return to the restart map after the game over */
+	/** Server time the day ended with survivors (s), negative before */
+	UPROPERTY(ReplicatedUsing=OnRep_DayEndedTime)
+	double DayEndedTime = -1.0;
+
+	/** Players who died in this expedition */
+	TSet<TWeakObjectPtr<const APlayerState>> DeadPlayers;
+
+	/** Return to the restart map after the game over, or travel to the next island */
 	FTimerHandle RestartTimer;
+
+	/** End of the day in a map without galleon, once the sea reached its highest level */
+	FTimerHandle DayEndTimer;
+
+	/** Players leaving the game */
+	FDelegateHandle LogoutHandle;
 
 	/** Characters spawned during the expedition */
 	FDelegateHandle ActorSpawnedHandle;

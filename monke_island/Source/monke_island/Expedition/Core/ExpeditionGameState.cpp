@@ -6,6 +6,8 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
+#include "Galleon/GalleonActor.h"
+#include "GameFramework/GameModeBase.h"
 #include "GameFramework/PlayerState.h"
 #include "Misc/ConfigCacheIni.h"
 #include "Net/UnrealNetwork.h"
@@ -35,6 +37,7 @@ void AExpeditionGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AExpeditionGameState, Phase);
 	DOREPLIFETIME(AExpeditionGameState, Resolution);
 	DOREPLIFETIME(AExpeditionGameState, TeamWipedTime);
+	DOREPLIFETIME(AExpeditionGameState, DayEndedTime);
 }
 
 void AExpeditionGameState::BeginPlay()
@@ -62,6 +65,7 @@ void AExpeditionGameState::BeginPlay()
 		{
 			WatchPlayerCharacter(*It);
 		}
+		LogoutHandle = FGameModeEvents::GameModeLogoutEvent.AddUObject(this, &AExpeditionGameState::HandleLogout);
 	}
 
 	if (HasAuthority() && bStartOnBeginPlay)
@@ -76,8 +80,11 @@ void AExpeditionGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	{
 		World->GetTimerManager().ClearTimer(PhaseTimer);
 		World->GetTimerManager().ClearTimer(RestartTimer);
+		World->GetTimerManager().ClearTimer(DayEndTimer);
 		World->RemoveOnActorSpawnedHandler(ActorSpawnedHandle);
 	}
+
+	FGameModeEvents::GameModeLogoutEvent.Remove(LogoutHandle);
 
 	Super::EndPlay(EndPlayReason);
 }
@@ -264,6 +271,7 @@ void AExpeditionGameState::SetPhase(EExpeditionPhase NewPhase)
 	if (Phase == EExpeditionPhase::Resolved && Resolution == EExpeditionResolution::Submerged)
 	{
 		OnSubmersionEnded.Broadcast();
+		ResolveDelugeEnd();
 	}
 }
 
@@ -314,7 +322,59 @@ void AExpeditionGameState::WatchPlayerCharacter(AActor* Actor)
 
 void AExpeditionGameState::HandlePlayerDeath(AActor* Killer)
 {
+	RecordDeadPlayers();
 	CheckTeamWiped();
+}
+
+void AExpeditionGameState::HandleLogout(AGameModeBase* GameMode, AController* Exiting)
+{
+	if (!GameMode || GameMode->GetWorld() != GetWorld())
+	{
+		return;
+	}
+	// the player state of the leaver is removed after this event: count the team on the next frame
+	GetWorldTimerManager().SetTimerForNextTick(this, &AExpeditionGameState::CheckTeamWiped);
+}
+
+void AExpeditionGameState::RecordDeadPlayers()
+{
+	for (const APlayerState* PlayerState : PlayerArray)
+	{
+		const AIslanderCharacter* Character = PlayerState ? Cast<AIslanderCharacter>(PlayerState->GetPawn()) : nullptr;
+		const UIslanderHealthComponent* Health = Character ? Character->GetHealthComponent() : nullptr;
+		if (Health && Health->IsDead())
+		{
+			DeadPlayers.Add(PlayerState);
+		}
+	}
+}
+
+void AExpeditionGameState::CountPlayers(int32& OutDead, int32& OutAlive, int32& OutPending)
+{
+	OutDead = 0;
+	OutAlive = 0;
+	OutPending = 0;
+	RecordDeadPlayers();
+	for (const APlayerState* PlayerState : PlayerArray)
+	{
+		if (!PlayerState || PlayerState->IsOnlyASpectator() || PlayerState->IsInactive())
+		{
+			continue;
+		}
+		if (DeadPlayers.Contains(PlayerState))
+		{
+			++OutDead;
+		}
+		else if (Cast<AIslanderCharacter>(PlayerState->GetPawn()))
+		{
+			++OutAlive;
+		}
+		else
+		{
+			// logged in, still loading or not spawned yet: alive until proven otherwise
+			++OutPending;
+		}
+	}
 }
 
 void AExpeditionGameState::CheckTeamWiped()
@@ -323,31 +383,111 @@ void AExpeditionGameState::CheckTeamWiped()
 	{
 		return;
 	}
-	int32 WithPawn = 0;
-	int32 Alive = 0;
-	for (const APlayerState* PlayerState : PlayerArray)
+	if (IsDaySurvived())
 	{
-		const AIslanderCharacter* Character = PlayerState ? Cast<AIslanderCharacter>(PlayerState->GetPawn()) : nullptr;
-		if (!Character)
-		{
-			continue;
-		}
-		++WithPawn;
-		const UIslanderHealthComponent* Health = Character->GetHealthComponent();
-		Alive += Health && !Health->IsDead() ? 1 : 0;
+		// the day already ended with survivors: the travel is on its way
+		return;
 	}
-	if (!IsWipe(WithPawn, Alive))
+	int32 Dead = 0;
+	int32 Alive = 0;
+	int32 Pending = 0;
+	CountPlayers(Dead, Alive, Pending);
+	if (!IsWipe(Dead, Alive, Pending))
 	{
-		UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: a player died, %d of %d still alive"), *ExpeditionId.ToString(), Alive, WithPawn);
+		UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: %d player(s) dead, %d alive, %d still loading"), *ExpeditionId.ToString(), Dead, Alive, Pending);
 		return;
 	}
 
+	GetWorldTimerManager().ClearTimer(DayEndTimer);
 	TeamWipedTime = GetServerWorldTimeSeconds();
 	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: every player is dead at %.2f s, game over, restart in %.1f s"),
 		*ExpeditionId.ToString(), TeamWipedTime, Rules->GameOverRestartDelay);
 	OnTeamWiped.Broadcast();
 	GetWorldTimerManager().SetTimer(RestartTimer, this, &AExpeditionGameState::RestartFromBoot,
 		FMath::Max(Rules->GameOverRestartDelay, UE_KINDA_SMALL_NUMBER), false);
+}
+
+void AExpeditionGameState::ResolveDelugeEnd()
+{
+	if (!HasAuthority() || !Rules || IsExpeditionOver())
+	{
+		return;
+	}
+	TArray<const AGalleonActor*, TInlineAllocator<2>> Galleons;
+	for (TActorIterator<AGalleonActor> It(GetWorld()); It; ++It)
+	{
+		Galleons.Add(*It);
+	}
+	if (!Rules->bGalleonSavesAtDelugeEnd || Galleons.IsEmpty())
+	{
+		// no ship to come back to: the sea keeps rising (T-101), the day ends once it reached its highest level
+		const float Delay = Rules->PostSubmersionRiseCmPerSecond > 0.0f ? Rules->PostSubmersionMaxRiseCm / Rules->PostSubmersionRiseCmPerSecond : 0.0f;
+		UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: end of the submersion without galleon, the day ends in %.0f s"), *ExpeditionId.ToString(), Delay);
+		GetWorldTimerManager().SetTimer(DayEndTimer, this, &AExpeditionGameState::EndDay, FMath::Max(Delay, UE_KINDA_SMALL_NUMBER), false);
+		return;
+	}
+
+	// ADR-006: whoever is not aboard at the end of the deluge dies. The array is copied: a death may travel the world.
+	const TArray<TObjectPtr<APlayerState>> Players = PlayerArray;
+	for (const APlayerState* PlayerState : Players)
+	{
+		AIslanderCharacter* Character = PlayerState ? Cast<AIslanderCharacter>(PlayerState->GetPawn()) : nullptr;
+		UIslanderHealthComponent* Health = Character ? Character->GetHealthComponent() : nullptr;
+		if (!Health || Health->IsDead())
+		{
+			continue;
+		}
+		const bool bAboard = Galleons.ContainsByPredicate([Character](const AGalleonActor* Galleon) { return Galleon->IsActorAboard(Character); });
+		UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: end of the deluge, %s is %s"), *ExpeditionId.ToString(), *GetNameSafe(Character),
+			bAboard ? TEXT("aboard the galleon: survives") : TEXT("not aboard the galleon: dies"));
+		if (!bAboard)
+		{
+			Health->ApplyHealthDamage(1.0e6f, this);
+		}
+	}
+	EndDay();
+}
+
+void AExpeditionGameState::EndDay()
+{
+	if (!HasAuthority() || !Rules || IsExpeditionOver())
+	{
+		return;
+	}
+	int32 Dead = 0;
+	int32 Alive = 0;
+	int32 Pending = 0;
+	CountPlayers(Dead, Alive, Pending);
+	if (Alive + Pending <= 0)
+	{
+		// nobody left to carry on: a wipe when somebody died, an empty server otherwise
+		CheckTeamWiped();
+		return;
+	}
+
+	DayEndedTime = GetServerWorldTimeSeconds();
+	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: the day ends at %.2f s with %d survivor(s) and %d dead, next island in %.1f s"),
+		*ExpeditionId.ToString(), DayEndedTime, Alive + Pending, Dead, Rules->DayEndTravelDelay);
+	OnDaySurvived.Broadcast();
+	GetWorldTimerManager().SetTimer(RestartTimer, this, &AExpeditionGameState::RestartFromBoot,
+		FMath::Max(Rules->DayEndTravelDelay, UE_KINDA_SMALL_NUMBER), false);
+}
+
+void AExpeditionGameState::OnRep_DayEndedTime()
+{
+	if (IsDaySurvived())
+	{
+		OnDaySurvived.Broadcast();
+	}
+}
+
+double AExpeditionGameState::GetNextTravelTime() const
+{
+	if (IsTeamWiped())
+	{
+		return GetRestartTime();
+	}
+	return IsDaySurvived() ? DayEndedTime + (Rules ? Rules->DayEndTravelDelay : 0.0f) : -1.0;
 }
 
 void AExpeditionGameState::OnRep_TeamWipedTime()
