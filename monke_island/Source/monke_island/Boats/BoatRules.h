@@ -6,6 +6,11 @@
 #include "Engine/DataAsset.h"
 #include "BoatRules.generated.h"
 
+class UMaterialInterface;
+class USoundAttenuation;
+class USoundBase;
+class UStaticMesh;
+
 /**
  *  Tunable rules of a rowboat (DA_BoatRules): mass, buoyancy, load and overload, rowing, beaching, sand trail.
  *  Spec: docs/features/boat-rowing.md (ADR-003 for the deviations from the cahier).
@@ -101,7 +106,12 @@ public:
 
 	/** Quadratic water drag along the keel (kg/cm), caps the rowing speed */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Drag", meta=(ClampMin="0"))
-	float ForwardQuadDrag = 2.1f;
+	float ForwardQuadDrag = 1.3f;
+
+	/** Water drag of a fully loaded boat relative to the empty one (it sits deeper): heavier is slower,
+	 *  about 1 / sqrt(scale) of the empty speed at MaxLoadKg (2.8 -> 60 %) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Drag", meta=(ClampMin="1"))
+	float FullLoadDragScale = 2.8f;
 
 	/** Water drag across the keel (kg/s): the boat does not slide sideways */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Drag", meta=(ClampMin="0"))
@@ -109,11 +119,11 @@ public:
 
 	/** Peak force of one oar stroke, both oars together (N) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rowing", meta=(ClampMin="0"))
-	float RowForceN = 2400.0f;
+	float RowForceN = 3400.0f;
 
 	/** Peak yaw torque of a turning stroke (N.m) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rowing", meta=(ClampMin="0"))
-	float TurnTorqueNm = 900.0f;
+	float TurnTorqueNm = 1100.0f;
 
 	/** Duration of one stroke, drive + recovery (s) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rowing", meta=(ClampMin="0.1", Units="s"))
@@ -123,9 +133,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rowing", meta=(ClampMin="0.05", ClampMax="1"))
 	float StrokeDriveFraction = 0.45f;
 
-	/** Speed above which the oars stop pushing (cm/s): the boat is slow */
+	/** Speed above which the oars stop pushing when empty (cm/s), lower when loaded (FullLoadDragScale) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rowing", meta=(ClampMin="0"))
-	float MaxRowSpeed = 160.0f;
+	float MaxRowSpeed = 260.0f;
 
 	/** Oar sweep angle on each side of the perpendicular (degrees) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rowing|Animation", meta=(ClampMin="0", ClampMax="80"))
@@ -155,6 +165,92 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats")
 	float SeatedCapsuleOffsetCm = 60.0f;
 
+	/** Only the rower sits (owner request 2026-10-03): F takes the oars when nobody rows; the other players stand
+	 *  and ride on the boat physically, they cannot sit */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats")
+	bool bOnlyRowerSits = true;
+
+	/** Rowing post, where the rower sits (cm, SM_Barque mesh space, +X bow): centred between the gunwales, 0.35 m
+	 *  forward of the oarlocks so the bean's short arms (0.32 m) reach the oar handles (maquette bean-anim-library,
+	 *  clip A_Bean_Boat_Row). The bean's feet (mesh origin) are put on this point */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats")
+	FVector RowerSeatLocation = FVector(41.7, 0.0, 7.2);
+
+	/** The rower faces the stern, as a real rower and as the clip was made; false faces the bow */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats")
+	bool bRowerFacesStern = true;
+
+	/** Rowing crate the rower sits on (maquette bean-anim-library PROP_RowingCrate, pivot at the bottom centre);
+	 *  none when empty */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats")
+	TObjectPtr<UStaticMesh> RowingCrateMesh;
+
+	/** Placement of the rowing crate on the floor (cm, SM_Barque mesh space) and its scale: its top is under the
+	 *  rower's pelvis (16 cm above the rower's feet in the clip) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats")
+	FTransform RowingCrateTransform = FTransform(FRotator::ZeroRotator, FVector(41.7, 0.0, -10.0), FVector(1.0, 1.0, 0.84));
+
+	/** Oar splashes (UOarSplashComponent, cosmetic): material of the droplets (translucent, per instance custom data 0
+	 *  = opacity); no splash when empty */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash")
+	TObjectPtr<UMaterialInterface> SplashDropletMaterial;
+
+	/** Material of the foam rings on the water (plane, per instance custom data 0 = opacity) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash")
+	TObjectPtr<UMaterialInterface> SplashRingMaterial;
+
+	/** Blade entering the water */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash")
+	TObjectPtr<USoundBase> OarSplashSound;
+
+	/** Blade leaving the water, dripping */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash")
+	TObjectPtr<USoundBase> OarDripSound;
+
+	/** Attenuation of the oar sounds */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash")
+	TObjectPtr<USoundAttenuation> OarSoundAttenuation;
+
+	/** Middle of the oar blade from the pivot, along the oar (cm, SM_Barque_Oar mesh space) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash")
+	float OarBladeCenterCm = 135.0f;
+
+	/** Droplets thrown when a blade enters the water */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash", meta=(ClampMin="0", ClampMax="60"))
+	int32 SplashDroplets = 16;
+
+	/** Speed of those droplets (cm/s), up and away from the blade */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash", meta=(ClampMin="0"))
+	float SplashSpeed = 280.0f;
+
+	/** Size of a droplet (cm) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash", meta=(ClampMin="0.1"))
+	FVector2D DropletSizeCm = FVector2D(1.5f, 4.0f);
+
+	/** Life of a droplet (s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash", meta=(ClampMin="0.05", Units="s"))
+	float DropletLife = 0.75f;
+
+	/** Foam ring of the entry: final radius (cm) and life (s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash", meta=(ClampMin="1"))
+	float RingRadiusCm = 55.0f;
+
+	/** See RingRadiusCm */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash", meta=(ClampMin="0.05", Units="s"))
+	float RingLife = 1.1f;
+
+	/** While the blade drives through the water: a little spray and a small eddy every this often (s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash", meta=(ClampMin="0.02", Units="s"))
+	float WakeInterval = 0.08f;
+
+	/** The oars follow the rower's clip (A_Bean_Boat_Row) when it sends its angles, instead of the procedural stroke */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars")
+	bool bOarsFollowRower = true;
+
+	/** Extra height of the rower over RowerSeatLocation (cm), to fine tune the sitting pose on the post */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats")
+	float RowerHeightOffsetCm = 0.0f;
+
 	/** Speed lost per second and per keel point resting on the ground (fraction) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching", meta=(ClampMin="0"))
 	float BeachedDragPerPoint = 0.35f;
@@ -163,6 +259,47 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching", meta=(ClampMin="0"))
 	float GroundContactDistance = 12.0f;
 
+	/** Push of one player shoving the hull on foot (N): a person leaning into a boat, about 450 N */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Push", meta=(ClampMin="0", Units="N"))
+	float PushForcePerPersonN = 450.0f;
+
+	/** Gap between a player's capsule and the hull within which walking into it pushes it (cm) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Push", meta=(ClampMin="0", Units="cm"))
+	float PushReach = 45.0f;
+
+	/** How straight a player must walk into the hull to push it (cosine between the walk and the hull direction) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Push", meta=(ClampMin="0", ClampMax="1"))
+	float PushMinAlignment = 0.5f;
+
+	/** Pushers counted at most (the hull has room for so many hands) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Push", meta=(ClampMin="1"))
+	int32 MaxPushers = 4;
+
+	/** Share of the boat's weight lifted off the sand while it is pushed or worked free (bow raised, keel skidding):
+	 *  the sand friction drops by as much */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Push", meta=(ClampMin="0", ClampMax="0.9"))
+	float SkidLiftFraction = 0.75f;
+
+	/** Friction of a wet keel on coral sand, used to size the pushes (the engine contact does the actual work) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Push", meta=(ClampMin="0", ClampMax="1.5"))
+	float SandFriction = 0.6f;
+
+	/** Rowing without moving for this long with the keel on the ground frees the boat (s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Unstick", meta=(ClampMin="0", Units="s"))
+	float UnstickAfterSeconds = 2.0f;
+
+	/** Speed under which a rowing, grounded boat counts as stuck (cm/s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Unstick", meta=(ClampMin="0", Units="cm/s"))
+	float StuckSpeed = 15.0f;
+
+	/** Push toward deeper water while freeing a stuck boat (N): a rower working the oars against the sand */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Unstick", meta=(ClampMin="0", Units="N"))
+	float UnstickForceN = 1100.0f;
+
+	/** Distance at which the water depth is probed around the hull to find the way out (cm) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Unstick", meta=(ClampMin="50", Units="cm"))
+	float UnstickProbeDistance = 450.0f;
+
 	/** Distance travelled on the ground between two trail decals (cm) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Trail", meta=(ClampMin="1"))
 	float TrailSpacing = 25.0f;
@@ -170,6 +307,19 @@ public:
 	/** Seconds a trail decal stays before it has faded */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Trail", meta=(ClampMin="0", Units="s"))
 	float TrailLifeSpan = 90.0f;
+
+	/** Objects put in the barque are stowed (owner request 2026-10-04): once an object rests in the cargo volume it
+	 *  rides with the hull, whatever the speed, the swell or the storm, until a player takes it (no collision added) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Cargo")
+	bool bContainLooseCargo = true;
+
+	/** An object counts at rest in the hull under this speed against it (cm/s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Cargo", meta=(ClampMin="0", Units="cm/s", EditCondition="bContainLooseCargo"))
+	float CargoStowMaxSpeed = 80.0f;
+
+	/** Time at rest before the object is stowed (s): one thrown across the hull flies on */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Cargo", meta=(ClampMin="0", Units="s", EditCondition="bContainLooseCargo"))
+	float CargoStowDelay = 0.3f;
 
 	/** Ground speed under which the hull leaves no trail (cm/s) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Trail", meta=(ClampMin="0"))

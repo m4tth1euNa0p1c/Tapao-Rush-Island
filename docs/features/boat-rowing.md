@@ -28,7 +28,7 @@ Une barque qu'on vit physiquement, de façon drôle et lisible :
 4. **Monter à bord.** (F = touche d'interaction commune, T-033 : `ABoatActor` implémente `IIslanderInteractable`.)
    - Dans l'eau, Espace fait sauter hors de l'eau si l'endurance le permet (`JumpStaminaCost`), assez haut pour passer le plat-bord.
    - On peut marcher sur le plancher : la barque est une base mobile.
-   - **F** près d'un siège libre : on s'assoit. Le premier assis prend les rames (le rameur). F encore : on se lève et on descend sur le côté.
+   - **F** près de la barque quand personne ne rame : on prend les rames. Le rameur s'assoit seul, au centre, sur le poste de nage (0,35 m à l'avant des dames de nage, face à la poupe, comme l'animation `A_Bean_Boat_Row`). Les autres joueurs ne s'assoient pas : ils restent debout sur la barque, physiquement (demande du propriétaire du 2026-10-03, `DA_BoatRules.bOnlyRowerSits`). F encore : on se lève et on descend sur le côté.
 5. **Ramer.**
    - Seul le rameur commande, avec Z/W (avant), S (arrière), Q/A (bâbord) et D (droite).
    - Chaque coup de rame dure `StrokePeriod` (1,2 s) avec une poussée en cloche : la barque fait des à-coups puis glisse. Les rames s'animent en phase.

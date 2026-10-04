@@ -2,6 +2,7 @@
 
 #include "Boats/BoatRiderComponent.h"
 #include "Boats/BoatActor.h"
+#include "Boats/BoatPhysics.h"
 #include "Boats/BoatRules.h"
 #include "CanvasItem.h"
 #include "Components/CapsuleComponent.h"
@@ -18,6 +19,8 @@
 #include "InputAction.h"
 #include "InputMappingContext.h"
 #include "Net/UnrealNetwork.h"
+#include "Player/IslanderCharacter.h"
+#include "Weapons/IslanderInventoryComponent.h"
 #include "Player/IslanderHealthComponent.h"
 #include "Player/IslanderMovementComponent.h"
 
@@ -257,11 +260,43 @@ void UBoatRiderComponent::ApplySeat()
 		// seated: no walking, no physical contact with the hull (it would push the boat), follows the seat
 		Move->StopMovementImmediately();
 		Move->DisableMovement();
+		// the hands go to the oars: the item in hand is put away (the inventory refuses one while seated)
+		if (Character->HasAuthority())
+		{
+			if (UIslanderInventoryComponent* Inventory = Character->FindComponentByClass<UIslanderInventoryComponent>();
+				Inventory && Inventory->GetActiveSlot() != INDEX_NONE)
+			{
+				Inventory->SelectSlot(Inventory->GetActiveSlot());
+			}
+		}
 		Capsule->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-		Character->AttachToComponent(SeatedBoat->GetHull(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, Socket);
-		Character->SetActorRelativeLocation(FVector(0.0f, 0.0f, SeatedBoat->GetSeatedCapsuleOffset()));
-		Character->SetActorRelativeRotation(FRotator::ZeroRotator);
+		// the FBX sockets come in rotated (yaw 180, roll 180: Z down): sit upright in the hull frame, facing the bow,
+		// whatever the socket rotation, otherwise the rider hangs upside down inside the keel
+		const UBoatRules* Rules = SeatedBoat->Rules;
+		if (Rules && Rules->bOnlyRowerSits)
+		{
+			// the rower sits on the rowing post, centred between the oarlocks: feet on the post, capsule above
+			const FTransform Hull = SeatedBoat->GetHull()->GetComponentTransform();
+			const FQuat Facing = Hull.GetRotation() * FQuat(FVector::UpVector, Rules->bRowerFacesStern ? UE_PI : 0.0);
+			const FVector Feet = Hull.TransformPosition(Rules->RowerSeatLocation);
+			const FVector Centre = Feet + Facing.GetUpVector() * (Capsule->GetScaledCapsuleHalfHeight() + Rules->RowerHeightOffsetCm);
+			Character->SetActorLocationAndRotation(Centre, Facing.Rotator(), false, nullptr, ETeleportType::TeleportPhysics);
+			Character->AttachToComponent(SeatedBoat->GetHull(), FAttachmentTransformRules::KeepWorldTransform);
+		}
+		else
+		{
+			const FQuat SocketInHull = SeatedBoat->GetHull()->GetSocketTransform(Socket, RTS_Component).GetRotation();
+			const FTransform Seated = BoatPhysics::SeatedRiderRelative(SocketInHull, SeatedBoat->GetSeatedCapsuleOffset());
+			Character->AttachToComponent(SeatedBoat->GetHull(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, Socket);
+			Character->SetActorRelativeLocation(Seated.GetLocation());
+			Character->SetActorRelativeRotation(Seated.GetRotation());
+		}
 		AppliedBoat = SeatedBoat;
+		// rowing reads better from behind: third person while seated, the player's own view back once standing
+		if (AIslanderCharacter* Islander = Cast<AIslanderCharacter>(Character))
+		{
+			Islander->SetForceThirdPerson(true);
+		}
 	}
 	else if (AppliedBoat || Character->GetAttachParentActor())
 	{
@@ -275,6 +310,10 @@ void UBoatRiderComponent::ApplySeat()
 		}
 		Move->SetMovementMode(MOVE_Falling);
 		AppliedBoat = nullptr;
+		if (AIslanderCharacter* Islander = Cast<AIslanderCharacter>(Character))
+		{
+			Islander->SetForceThirdPerson(false);
+		}
 	}
 }
 
@@ -314,20 +353,11 @@ void UBoatRiderComponent::DrawHUD(AHUD* HUD, UCanvas* Canvas)
 	}
 	if (Boat)
 	{
+		// no load counter on screen (owner request 2026-10-04): only the warning when the barque is overloaded
 		const bool bOver = Boat->GetLoadKg() > Boat->GetMaxLoadKg();
-		FString Status = FString::Printf(TEXT("Barque : %.0f / %.0f kg"), Boat->GetLoadKg(), Boat->GetMaxLoadKg());
-		if (Boat->GetBilgeWaterKg() > 1.0f)
-		{
-			Status += FString::Printf(TEXT("  ·  eau %.0f %%"), 100.0f * Boat->GetBilgeFraction());
-		}
-		Lines.Emplace(Status, bOver ? FColor(255, 90, 60) : FColor(235, 225, 200));
 		if (bOver)
 		{
 			Lines.Emplace(TEXT("Surcharge : la barque prend l'eau ! Allégez-la"), FColor(255, 90, 60));
-		}
-		if (SeatedBoat)
-		{
-			Lines.Emplace(SeatedBoat->IsRower(Character) ? TEXT("[Z Q S D] ramer") : TEXT("Passager"), FColor(255, 235, 150));
 		}
 	}
 

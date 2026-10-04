@@ -92,6 +92,14 @@ public:
 	UFUNCTION(BlueprintPure, Category="Boat")
 	bool IsRower(const ACharacter* Character) const;
 
+	/** Cosmetic, every machine: oar angles of the rower's clip this frame (A_Bean_Boat_Row, oar curve of the
+	 *  maquette): Theta sweeps the oars fore and aft, Phi tilts them (deg). Used while fresh, then the oars go back to
+	 *  the procedural stroke */
+	void SetOarAnimOverride(float ThetaDeg, float PhiDeg);
+
+	/** Grip of an oar handle in the world (Side 0 port, 1 starboard), where the rower's hand goes */
+	FVector GetOarHandle(int32 Side) const;
+
 	/** Number of seats (Seat_* sockets) */
 	int32 GetSeatCount() const { return SeatSockets.Num(); }
 
@@ -141,6 +149,10 @@ private:
 	/** Keel contacts: friction on the ground and the sand trail */
 	void UpdateGroundContact(float DeltaSeconds);
 
+	/** Beached or stuck (server): players walking into the hull push it, a boat rowed in vain works itself
+	 *  toward deeper water, and the keel skids on the sand meanwhile */
+	void ApplyShoreForces(float DeltaSeconds);
+
 	/** Oars and water aboard */
 	void UpdateVisuals(float DeltaSeconds);
 
@@ -165,6 +177,14 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	TObjectPtr<UStaticMeshComponent> OarRight;
 
+	/** Rowing crate the rower sits on (DA_BoatRules RowingCrateMesh) */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<UStaticMeshComponent> RowingCrate;
+
+	/** Oar angles sent by the rower's animation (deg) and when they were last sent */
+	FVector2D OarAnimOverride = FVector2D::ZeroVector;
+	double OarAnimOverrideTime = -1.0;
+
 	/** Water shipped, a plane rising inside the hull */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	TObjectPtr<UStaticMeshComponent> BilgeWater;
@@ -172,6 +192,21 @@ private:
 	/** Volume of the hull interior: what overlaps it is aboard */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	TObjectPtr<UBoxComponent> CargoVolume;
+
+	/** A loose object lying aboard: once it rested long enough it is stowed, held where it lies in the hull */
+	struct FLooseCargo
+	{
+		FTransform Local;
+		float RestTime = 0.0f;
+		bool bStowed = false;
+	};
+
+	/** Loose objects lying aboard (server, DA bContainLooseCargo) */
+	TMap<TWeakObjectPtr<UPrimitiveComponent>, FLooseCargo> LooseCargo;
+
+	/** Server: stows the objects resting aboard and carries them with the hull, whatever its speed or the wind,
+	 *  until a player takes them (no collision added, the objects keep simulating) */
+	void KeepCargoAboard(float DeltaSeconds);
 
 	/** Occupant of each seat (nullptr when free) */
 	UPROPERTY(Replicated)
@@ -211,6 +246,15 @@ private:
 
 	/** Phase of each oar's stroke [0, 1) */
 	FVector2D StrokePhase = FVector2D::ZeroVector;
+
+	/** Keel points resting on the ground at the last ground check */
+	int32 GroundedPoints = 0;
+
+	/** Seconds this boat has been rowed without moving with its keel on the sand (server) */
+	float StuckSeconds = 0.0f;
+
+	/** The hull is worked off the sand (pushed or freed): its keel is partly lifted, so it skids */
+	bool bSkidding = false;
 
 	/** Elapsed time for the swell */
 	float SwellTime = 0.0f;

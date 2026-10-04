@@ -13,6 +13,7 @@
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/IslanderHealthComponent.h"
@@ -57,6 +58,11 @@ ABoatActor::ABoatActor()
 	OarRight->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	OarRight->SetCanEverAffectNavigation(false);
 
+	RowingCrate = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RowingCrate"));
+	RowingCrate->SetupAttachment(Hull);
+	RowingCrate->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	RowingCrate->SetCanEverAffectNavigation(false);
+
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> PlaneMesh(TEXT("/Engine/BasicShapes/Plane.Plane"));
 	BilgeWater = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BilgeWater"));
 	BilgeWater->SetupAttachment(Hull);
@@ -86,6 +92,9 @@ void ABoatActor::BeginPlay()
 		UE_LOG(Logmonke_island, Warning, TEXT("%s has no DA_BoatRules: using the default rules"), *GetName());
 		Rules = NewObject<UBoatRules>(this);
 	}
+	// the crate under the rower (cosmetic, no collision: the seated rower does not collide either)
+	RowingCrate->SetStaticMesh(Rules->bOnlyRowerSits ? Rules->RowingCrateMesh.Get() : nullptr);
+	RowingCrate->SetRelativeTransform(Rules->RowingCrateTransform);
 
 	SeatSockets.Reset();
 	for (int32 Index = 0; Index < 16; ++Index)
@@ -171,6 +180,23 @@ float ABoatActor::GetSeatedCapsuleOffset() const
 	return Rules ? Rules->SeatedCapsuleOffsetCm : 0.0f;
 }
 
+void ABoatActor::SetOarAnimOverride(float ThetaDeg, float PhiDeg)
+{
+	OarAnimOverride = FVector2D(ThetaDeg, PhiDeg);
+	OarAnimOverrideTime = GetWorld()->GetTimeSeconds();
+}
+
+FVector ABoatActor::GetOarHandle(int32 Side) const
+{
+	const UStaticMeshComponent* Oar = Side == 0 ? OarLeft : OarRight;
+	if (!Oar)
+	{
+		return GetActorLocation();
+	}
+	// SM_Barque_Oar: along +X from its pivot, handle end at -78 cm, the hand around -70 cm (barque.py oar_pivot)
+	return Oar->GetComponentTransform().TransformPosition(FVector(-70.0, 0.0, 0.0));
+}
+
 bool ABoatActor::IsRower(const ACharacter* Character) const
 {
 	return Character && SeatOccupants.IsValidIndex(RowerSeat) && SeatOccupants[RowerSeat] == Character;
@@ -215,6 +241,12 @@ bool ABoatActor::SitCharacter(ACharacter* Character, int32 SeatIndex)
 	// server-side reach check: a client cannot sit in a boat across the map
 	const float Reach = Rules->SeatReach + 100.0f;
 	if (FVector::DistSquared(Hull->GetSocketLocation(SeatSockets[SeatIndex]), Character->GetActorLocation()) > FMath::Square(Reach))
+	{
+		return false;
+	}
+
+	// only the rower sits: the others ride standing on the boat
+	if (Rules->bOnlyRowerSits && RowerSeat != INDEX_NONE)
 	{
 		return false;
 	}
@@ -288,6 +320,10 @@ bool ABoatActor::CanInteract_Implementation(APawn* User) const
 	{
 		return Rider->GetSeatedBoat() == this;
 	}
+	if (Rules->bOnlyRowerSits && RowerSeat != INDEX_NONE)
+	{
+		return false;
+	}
 	const UIslanderHealthComponent* Health = User->FindComponentByClass<UIslanderHealthComponent>();
 	return (!Health || !Health->IsDead()) && FindFreeSeat(User->GetActorLocation(), Rules->SeatReach) != INDEX_NONE;
 }
@@ -357,6 +393,10 @@ void ABoatActor::Tick(float DeltaSeconds)
 	TArray<ACharacter*> People;
 	float ObjectsKg = 0.0f;
 	GatherPeople(People, ObjectsKg);
+	if (HasAuthority())
+	{
+		KeepCargoAboard(DeltaSeconds);
+	}
 
 	// same forces everywhere from replicated state; the server's simulation corrects the clients
 	if (Hull->IsSimulatingPhysics())
@@ -364,6 +404,10 @@ void ABoatActor::Tick(float DeltaSeconds)
 		ApplyWaterForces(DeltaSeconds, SeaLevel);
 		ApplyLoadForces(People);
 		ApplyRowing(DeltaSeconds);
+		if (HasAuthority())
+		{
+			ApplyShoreForces(DeltaSeconds);
+		}
 	}
 
 	if (HasAuthority())
@@ -383,6 +427,67 @@ void ABoatActor::Tick(float DeltaSeconds)
 			*GetName(), HasAuthority() ? TEXT("srv") : TEXT("cli"),
 			static_cast<float>(Hull->GetComponentTransform().TransformPosition(FVector(0.0f, 0.0f, Rules->KeelLocalZ)).Z) - SeaLevel,
 			*GetActorRotation().ToCompactString(), Hull->GetPhysicsLinearVelocity().Size(), LoadKg, BilgeWaterKg, RowerSeat, People.Num());
+	}
+}
+
+void ABoatActor::KeepCargoAboard(float DeltaSeconds)
+{
+	if (!Rules->bContainLooseCargo || bSunk)
+	{
+		LooseCargo.Reset();
+		return;
+	}
+	// what lies in the hull now: loose physics objects (an object held by a player ignores PhysicsBody: it is carried)
+	FCollisionObjectQueryParams ObjectTypes;
+	ObjectTypes.AddObjectTypesToQuery(ECC_PhysicsBody);
+	ObjectTypes.AddObjectTypesToQuery(ECC_WorldDynamic);
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(BoatLooseCargo), false, this);
+	TArray<FOverlapResult> Overlaps;
+	GetWorld()->OverlapMultiByObjectType(Overlaps, CargoVolume->GetComponentLocation(), CargoVolume->GetComponentQuat(),
+		ObjectTypes, CargoVolume->GetCollisionShape(), Params);
+	auto IsHeld = [](const UPrimitiveComponent* Component) { return Component->GetCollisionResponseToChannel(ECC_PhysicsBody) == ECR_Ignore; };
+	TSet<const UPrimitiveComponent*> Inside;
+	for (const FOverlapResult& Overlap : Overlaps)
+	{
+		UPrimitiveComponent* Component = Overlap.GetComponent();
+		if (Component && Component->IsSimulatingPhysics() && !Cast<APawn>(Overlap.GetActor()) && !IsHeld(Component))
+		{
+			Inside.Add(Component);
+			LooseCargo.FindOrAdd(Component);
+		}
+	}
+
+	const FTransform& HullTransform = Hull->GetComponentTransform();
+	const FVector HullAngular = Hull->GetPhysicsAngularVelocityInRadians();
+	for (auto It = LooseCargo.CreateIterator(); It; ++It)
+	{
+		UPrimitiveComponent* Component = It->Key.Get();
+		FLooseCargo& Cargo = It->Value;
+		// taken by a player, gone, or thrown out before it came to rest: free again
+		if (!Component || !Component->IsSimulatingPhysics() || IsHeld(Component) || (!Cargo.bStowed && !Inside.Contains(Component)))
+		{
+			It.RemoveCurrent();
+			continue;
+		}
+		const FVector HullVelocity = Hull->GetPhysicsLinearVelocityAtPoint(Component->GetComponentLocation());
+		if (Cargo.bStowed)
+		{
+			// stowed: it rides where it lies, at the speed of the hull; acceleration, swell and wind do not move it
+			const FTransform World = Cargo.Local * HullTransform;
+			Component->SetWorldLocationAndRotation(World.GetLocation(), World.GetRotation(), false, nullptr, ETeleportType::TeleportPhysics);
+			Component->SetPhysicsLinearVelocity(Hull->GetPhysicsLinearVelocityAtPoint(World.GetLocation()));
+			Component->SetPhysicsAngularVelocityInRadians(HullAngular);
+			continue;
+		}
+		// at rest in the hull for a moment: stowed
+		const float Relative = static_cast<float>((Component->GetPhysicsLinearVelocity() - HullVelocity).Size());
+		Cargo.RestTime = Relative <= Rules->CargoStowMaxSpeed ? Cargo.RestTime + DeltaSeconds : 0.0f;
+		if (Cargo.RestTime >= Rules->CargoStowDelay)
+		{
+			Cargo.bStowed = true;
+			Cargo.Local = Component->GetComponentTransform().GetRelativeTransform(HullTransform);
+			Cargo.Local.SetScale3D(Component->GetComponentScale());
+		}
 	}
 }
 
@@ -473,7 +578,9 @@ void ABoatActor::ApplyWaterForces(float DeltaSeconds, float SeaLevel)
 	const FVector Velocity = Hull->GetPhysicsLinearVelocity();
 	const float Along = static_cast<float>(Velocity | Forward);
 	const float Across = static_cast<float>(Velocity | Right);
-	const FVector Drag = -Forward * (Rules->ForwardDrag * Along + Rules->ForwardQuadDrag * Along * FMath::Abs(Along))
+	// a loaded boat sits deeper and drags more water: heavier is slower
+	const float LoadScale = BoatPhysics::LoadDragScale(LoadKg, Rules->MaxLoadKg, Rules->FullLoadDragScale);
+	const FVector Drag = -Forward * (LoadScale * (Rules->ForwardDrag * Along + Rules->ForwardQuadDrag * Along * FMath::Abs(Along)))
 		- Right * (Rules->LateralDrag * Across);
 	Hull->AddForce(Drag * Wetness);
 
@@ -525,6 +632,7 @@ void ABoatActor::ApplyRowing(float DeltaSeconds)
 	const FVector Forward = FlatForward(Transform);
 	const float Speed = static_cast<float>(Hull->GetPhysicsLinearVelocity() | Forward);
 
+	const float MaxSpeed = Rules->MaxRowSpeed / FMath::Sqrt(BoatPhysics::LoadDragScale(LoadKg, Rules->MaxLoadKg, Rules->FullLoadDragScale));
 	float Force = 0.0f;
 	float Torque = 0.0f;
 	for (int32 Side = 0; Side < 2; ++Side)
@@ -535,7 +643,7 @@ void ABoatActor::ApplyRowing(float DeltaSeconds)
 			continue;
 		}
 		// the oars stop pushing once the boat goes as fast as a rower can make it go
-		if ((Drive > 0.0f && Speed > Rules->MaxRowSpeed) || (Drive < 0.0f && Speed < -0.6f * Rules->MaxRowSpeed))
+		if ((Drive > 0.0f && Speed > MaxSpeed) || (Drive < 0.0f && Speed < -0.6f * MaxSpeed))
 		{
 			continue;
 		}
@@ -622,11 +730,97 @@ void ABoatActor::UpdateGroundContact(float DeltaSeconds)
 		}
 	}
 
-	// the sand holds a beached hull: friction grows with the keel length resting on the ground
+	// the sand holds a beached hull: friction grows with the keel length resting on the ground (less while skidding)
+	GroundedPoints = Grounded;
 	if (Grounded > 0 && Hull->IsSimulatingPhysics())
 	{
-		const float Friction = Rules->BeachedDragPerPoint * Grounded;
+		const float Friction = Rules->BeachedDragPerPoint * Grounded * (bSkidding ? 0.35f : 1.0f);
 		Hull->AddForce(-GroundVelocity * Hull->GetMass() * Friction);
+	}
+}
+
+void ABoatActor::ApplyShoreForces(float DeltaSeconds)
+{
+	const FTransform Transform = Hull->GetComponentTransform();
+	const FVector Center = Transform.GetLocation();
+	const bool bGrounded = GroundedPoints > 0;
+
+	// players on foot walking into the hull push it (in the water or on the sand), never those standing on it
+	int32 Pushers = 0;
+	if (!bSunk)
+	{
+		FCollisionObjectQueryParams Pawns(ECC_Pawn);
+		FCollisionQueryParams Params(SCENE_QUERY_STAT(BoatPushers), false, this);
+		TArray<FOverlapResult> Overlaps;
+		const float Radius = 0.5f * static_cast<float>(Rules->HullSize.Size()) + Rules->PushReach + 60.0f;
+		GetWorld()->OverlapMultiByObjectType(Overlaps, Center, FQuat::Identity, Pawns, FCollisionShape::MakeSphere(Radius), Params);
+		TSet<const ACharacter*> Seen;
+		for (const FOverlapResult& Overlap : Overlaps)
+		{
+			const ACharacter* Character = Cast<ACharacter>(Overlap.GetActor());
+			if (!Character || Seen.Contains(Character) || Pushers >= Rules->MaxPushers)
+			{
+				continue;
+			}
+			Seen.Add(Character);
+			const UCharacterMovementComponent* Move = Character->GetCharacterMovement();
+			const UBoatRiderComponent* Rider = Character->FindComponentByClass<UBoatRiderComponent>();
+			const UIslanderHealthComponent* Health = Character->FindComponentByClass<UIslanderHealthComponent>();
+			if (!Move || (Rider && Rider->IsSeated()) || (Health && Health->IsDead())
+				|| Character->GetMovementBaseObject() == Hull || !(Move->IsMovingOnGround() || Move->IsSwimming()))
+			{
+				continue;
+			}
+			FVector Point;
+			const float Distance = Hull->GetClosestPointOnCollision(Character->GetActorLocation(), Point);
+			if (Distance < 0.0f)
+			{
+				continue;
+			}
+			const float Gap = Distance - Character->GetSimpleCollisionRadius();
+			const FVector Push = BoatPhysics::PushDirection(Move->GetCurrentAcceleration(), Point - Character->GetActorLocation(), Gap,
+				Rules->PushReach, Rules->PushMinAlignment);
+			if (!Push.IsZero())
+			{
+				++Pushers;
+				// at the hands' height on the hull, not under the keel: a shove, not a flip
+				const FVector At(Point.X, Point.Y, FMath::Max(Point.Z, Center.Z));
+				Hull->AddForceAtLocation(Push * (Rules->PushForcePerPersonN * BoatPhysics::NewtonToUnreal), At);
+			}
+		}
+	}
+
+	// rowed in vain with the keel on the sand: work toward the deepest water around
+	const bool bRowing = RowerSeat != INDEX_NONE && !RowInput.IsZero() && !bSunk;
+	const float Speed = static_cast<float>(Hull->GetPhysicsLinearVelocity().Size2D());
+	StuckSeconds = BoatPhysics::StuckTime(StuckSeconds, bRowing, bGrounded, Speed, Rules->StuckSpeed, DeltaSeconds);
+	bool bFreeing = false;
+	if (StuckSeconds >= Rules->UnstickAfterSeconds && WaterSubsystem)
+	{
+		TArray<float> Depths;
+		TArray<FVector> Directions;
+		const FVector Forward = FlatForward(Transform);
+		for (int32 Index = 0; Index < 8; ++Index)
+		{
+			const FVector Direction = Forward.RotateAngleAxis(45.0f * Index, FVector::UpVector);
+			Directions.Add(Direction);
+			Depths.Add(WaterSubsystem->GetWaterDepthAt(Center + Direction * Rules->UnstickProbeDistance));
+		}
+		const int32 Best = BoatPhysics::DeepestProbe(Depths, WaterSubsystem->GetWaterDepthAt(Center));
+		if (Best != INDEX_NONE)
+		{
+			bFreeing = true;
+			Hull->AddForce(Directions[Best] * (Rules->UnstickForceN * BoatPhysics::NewtonToUnreal));
+		}
+	}
+
+	// worked off the sand: the keel is partly lifted (the bow raised by the pushers, the oars levering), which takes
+	// that much weight off the sand and its friction; never more than the boat's weight, so it never flies
+	bSkidding = bGrounded && (Pushers > 0 || bFreeing);
+	if (bSkidding)
+	{
+		const float WeightKg = Rules->HullMassKg + LoadKg + BilgeWaterKg;
+		Hull->AddForce(FVector(0.0f, 0.0f, Rules->SkidLiftFraction * WeightKg * BoatPhysics::GravityCm));
 	}
 }
 
@@ -647,7 +841,15 @@ void ABoatActor::UpdateVisuals(float DeltaSeconds)
 		const float Base = Side == 0 ? -90.0f : 90.0f;
 		const float ForeSign = Side == 0 ? 1.0f : -1.0f;
 		FRotator Target;
-		if (!bRowing)
+		const bool bAnimated = bRowing && Rules->bOarsFollowRower && OarAnimOverrideTime >= 0.0
+			&& GetWorld()->GetTimeSeconds() - OarAnimOverrideTime < 0.25;
+		if (bAnimated)
+		{
+			// the rower's clip: port yaw theta - 90, starboard 90 - theta (hull frame, +Y starboard), pitch phi
+			const float Theta = OarAnimOverride.X;
+			Target = FRotator(OarAnimOverride.Y, Side == 0 ? Theta - 90.0f : 90.0f - Theta, 0.0f);
+		}
+		else if (!bRowing)
 		{
 			// shipped along the gunwale, blade aft
 			Target = FRotator(-4.0f, Side == 0 ? 170.0f : -170.0f, 0.0f);
@@ -682,7 +884,10 @@ void ABoatActor::UpdateVisuals(float DeltaSeconds)
 				Target = FRotator(Pitch, Base + ForeSign * Direction * Sweep * Rules->OarSweepDeg, 0.0f);
 			}
 		}
-		Oar->SetRelativeRotation(FMath::RInterpTo(Oar->GetRelativeRotation(), Target, DeltaSeconds, 14.0f));
+		// Target is in the hull frame; the oar is attached to an oarlock socket that the FBX import rotated (Z down)
+		const FQuat SocketInHull = Hull->GetSocketTransform(Oar->GetAttachSocketName(), RTS_Component).GetRotation();
+		const FQuat Relative = BoatPhysics::OarRelativeRotation(SocketInHull, Target);
+		Oar->SetRelativeRotation(FMath::QInterpTo(Oar->GetRelativeRotation().Quaternion(), Relative, DeltaSeconds, 14.0f));
 	}
 
 	if (!bRowing)

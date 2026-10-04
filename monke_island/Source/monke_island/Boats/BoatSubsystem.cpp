@@ -59,7 +59,13 @@ void UBoatSubsystem::EnsureRiders()
 	if (bSpawnStarterBoat && !bStarterBoatDone && !bStartPending && GetWorld()->GetFirstPlayerController() && GetWorld()->GetFirstPlayerController()->GetPawn())
 	{
 		bStarterBoatDone = true;
-		if (!TActorIterator<ABoatActor>(GetWorld()))
+		// only on an island: a world without sea surface (the main menu L_MainMenu) gets no boat
+		bool bHasSea = false;
+		for (TActorIterator<AActor> It(GetWorld()); It && !bHasSea; ++It)
+		{
+			bHasSea = It->ActorHasTag(TEXT("IslandWaterSurface"));
+		}
+		if (bHasSea && !TActorIterator<ABoatActor>(GetWorld()))
 		{
 			SpawnBoatNearPlayer();
 		}

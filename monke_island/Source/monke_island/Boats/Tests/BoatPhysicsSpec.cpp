@@ -3,6 +3,8 @@
 #include "Misc/AutomationTest.h"
 #include "Boats/BoatPhysics.h"
 #include "Boats/BoatRules.h"
+#include "Engine/StaticMesh.h"
+#include "Engine/StaticMeshSocket.h"
 #include "Player/IslanderMovementComponent.h"
 
 #if WITH_AUTOMATION_TESTS
@@ -130,7 +132,104 @@ void FBoatPhysicsSpec::Define()
 			}
 			const float Force = Rules->RowForceN * BoatPhysics::NewtonToUnreal * Mean;
 			const float Speed = FMath::Sqrt(Force / Rules->ForwardQuadDrag);
-			TestTrue(TEXT("cruise speed 1-2 m/s"), Speed > 100.0f && Speed < 200.0f);
+			TestTrue(TEXT("cruise speed 2-3 m/s empty (pleasant, still a rowing boat)"), Speed > 200.0f && Speed < 300.0f);
+		});
+
+		It("is slower the heavier it is: about 60 % of the empty speed at full load", [this]()
+		{
+			const float Empty = BoatPhysics::LoadDragScale(0.0f, Rules->MaxLoadKg, Rules->FullLoadDragScale);
+			const float Half = BoatPhysics::LoadDragScale(0.5f * Rules->MaxLoadKg, Rules->MaxLoadKg, Rules->FullLoadDragScale);
+			const float Full = BoatPhysics::LoadDragScale(Rules->MaxLoadKg, Rules->MaxLoadKg, Rules->FullLoadDragScale);
+			TestEqual(TEXT("empty: no extra drag"), Empty, 1.0f);
+			TestTrue(TEXT("heavier, more drag"), Half > Empty && Full > Half);
+			const float Ratio = 1.0f / FMath::Sqrt(Full);
+			TestTrue(TEXT("full load at 55-70 % of the empty speed"), Ratio > 0.55f && Ratio < 0.7f);
+		});
+	});
+
+	Describe("Shore", [this]()
+	{
+		It("is pushed by a player walking into the hull, not by one walking past or away", [this]()
+		{
+			const FVector Into = BoatPhysics::PushDirection(FVector(500.0, 0.0, 0.0), FVector(100.0, 0.0, 0.0), 10.0f, 45.0f, 0.5f);
+			TestTrue(TEXT("walking into it pushes along the walk"), Into.Equals(FVector(1.0, 0.0, 0.0), 0.001));
+			TestTrue(TEXT("walking along the hull does not"), BoatPhysics::PushDirection(FVector(0.0, 500.0, 0.0), FVector(100.0, 0.0, 0.0), 10.0f, 45.0f, 0.5f).IsZero());
+			TestTrue(TEXT("walking away does not"), BoatPhysics::PushDirection(FVector(-500.0, 0.0, 0.0), FVector(100.0, 0.0, 0.0), 10.0f, 45.0f, 0.5f).IsZero());
+			TestTrue(TEXT("standing still does not"), BoatPhysics::PushDirection(FVector::ZeroVector, FVector(100.0, 0.0, 0.0), 0.0f, 45.0f, 0.5f).IsZero());
+			TestTrue(TEXT("too far does not"), BoatPhysics::PushDirection(FVector(500.0, 0.0, 0.0), FVector(100.0, 0.0, 0.0), 80.0f, 45.0f, 0.5f).IsZero());
+		});
+
+		It("lets one player shove an empty beached hull and four push it loaded", [this]()
+		{
+			// skidding keel on sand: friction force = mu * (1 - lifted share) * m * g
+			const float Mu = Rules->SandFriction * (1.0f - Rules->SkidLiftFraction);
+			const float Empty = Mu * Rules->HullMassKg * 9.8f;
+			TestTrue(TEXT("one pusher beats the skid friction of the empty hull"), Rules->PushForcePerPersonN > Empty);
+			const float Loaded = Mu * (Rules->HullMassKg + Rules->MaxLoadKg) * 9.8f;
+			TestTrue(TEXT("the pushers allowed beat it at full load"), Rules->PushForcePerPersonN * Rules->MaxPushers > Loaded);
+		});
+
+		It("counts a stuck boat only while it is rowed, grounded and still", [this]()
+		{
+			float Time = 0.0f;
+			for (int32 Step = 0; Step < 30; ++Step)
+			{
+				Time = BoatPhysics::StuckTime(Time, true, true, 5.0f, Rules->StuckSpeed, 0.1f);
+			}
+			TestTrue(TEXT("3 s of rowing in the sand"), Time >= Rules->UnstickAfterSeconds);
+			TestEqual(TEXT("moving again resets"), BoatPhysics::StuckTime(Time, true, true, 80.0f, Rules->StuckSpeed, 0.1f), 0.0f);
+			TestEqual(TEXT("not rowing resets"), BoatPhysics::StuckTime(Time, false, true, 0.0f, Rules->StuckSpeed, 0.1f), 0.0f);
+			TestEqual(TEXT("afloat resets"), BoatPhysics::StuckTime(Time, true, false, 0.0f, Rules->StuckSpeed, 0.1f), 0.0f);
+		});
+
+		It("frees a stuck boat toward the deepest water, nowhere when it is all sand", [this]()
+		{
+			TestEqual(TEXT("deepest probe"), BoatPhysics::DeepestProbe({0.0f, 10.0f, 45.0f, 20.0f}, 0.0f), 2);
+			TestEqual(TEXT("no way out"), BoatPhysics::DeepestProbe({0.0f, 3.0f, 0.0f}, 0.0f), INDEX_NONE);
+		});
+	});
+
+	Describe("Seats", [this]()
+	{
+		// rider upside down in the keel (T-059): the FBX sockets come in with yaw 180, roll 180
+		It("seats the rider upright above a flipped socket, facing the bow", [this]()
+		{
+			const FTransform Socket(FRotator(0.0, 180.0, 180.0), FVector(-145.0, -42.0, 19.5));
+			const FTransform Rider = BoatPhysics::SeatedRiderRelative(Socket.GetRotation(), Rules->SeatedCapsuleOffsetCm) * Socket;
+			TestTrue(TEXT("up is the hull's up"), Rider.GetUnitAxis(EAxis::Z).Equals(FVector::UpVector, 0.001));
+			TestTrue(TEXT("forward is the bow"), Rider.GetUnitAxis(EAxis::X).Equals(FVector::ForwardVector, 0.001));
+			TestTrue(TEXT("capsule above the seat"), Rider.GetLocation().Equals(Socket.GetLocation() + FVector(0.0, 0.0, Rules->SeatedCapsuleOffsetCm), 0.01));
+		});
+
+		It("orients the oars in the hull frame whatever the oarlock socket rotation", [this]()
+		{
+			const FQuat Socket = FRotator(0.0, 180.0, 180.0).Quaternion();
+			const FRotator Target(-20.0, -90.0, 0.0);
+			const FQuat InHull = Socket * BoatPhysics::OarRelativeRotation(Socket, Target);
+			TestTrue(TEXT("same rotation in the hull frame"), InHull.Equals(Target.Quaternion(), 0.0001));
+		});
+
+		It("seats every SM_Barque seat upright", [this]()
+		{
+			const UStaticMesh* Mesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/MonkeIsland/Boat/Meshes/SM_Barque.SM_Barque"));
+			if (!TestNotNull(TEXT("SM_Barque"), Mesh))
+			{
+				return;
+			}
+			int32 Seats = 0;
+			for (const UStaticMeshSocket* Socket : Mesh->Sockets)
+			{
+				if (!Socket || !Socket->SocketName.ToString().StartsWith(Rules->SeatSocketPrefix))
+				{
+					continue;
+				}
+				++Seats;
+				const FTransform SocketInHull(Socket->RelativeRotation, Socket->RelativeLocation);
+				const FTransform Rider = BoatPhysics::SeatedRiderRelative(SocketInHull.GetRotation(), Rules->SeatedCapsuleOffsetCm) * SocketInHull;
+				TestTrue(FString::Printf(TEXT("%s upright"), *Socket->SocketName.ToString()), Rider.GetUnitAxis(EAxis::Z).Z > 0.999);
+				TestTrue(FString::Printf(TEXT("%s above the seat"), *Socket->SocketName.ToString()), Rider.GetLocation().Z > SocketInHull.GetLocation().Z);
+			}
+			TestEqual(TEXT("4 seats"), Seats, 4);
 		});
 	});
 }
@@ -152,6 +251,12 @@ void FSwimDrowningSpec::Define()
 	{
 		Move->RemoveFromRoot();
 		Move = nullptr;
+	});
+
+	It("keeps an exhausted swimmer afloat (no sinking) and kills it at once (the owner's rule)", [this]()
+	{
+		TestTrue(TEXT("buoyancy of an exhausted swimmer: floats"), Move->DrowningBuoyancy >= 1.0f);
+		TestTrue(TEXT("out of stamina in the water: dead at once"), Move->bExhaustionKillsInWater);
 	});
 
 	It("does not hurt during the grace time", [this]()

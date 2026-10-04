@@ -70,6 +70,70 @@ namespace BoatPhysics
 		return S * S;
 	}
 
+	/**
+	 *  Transform of a seated rider relative to its seat socket: upright in the hull frame, facing the bow,
+	 *  capsule centre CapsuleOffsetCm above the seat, whatever the socket rotation (the FBX sockets come in Z down).
+	 */
+	inline FTransform SeatedRiderRelative(const FQuat& SocketInHull, float CapsuleOffsetCm)
+	{
+		return FTransform(SocketInHull.Inverse(), SocketInHull.UnrotateVector(FVector(0.0, 0.0, CapsuleOffsetCm)));
+	}
+
+	/** Rotation relative to its oarlock socket that gives an oar the rotation TargetInHull in the hull frame */
+	inline FQuat OarRelativeRotation(const FQuat& SocketInHull, const FRotator& TargetInHull)
+	{
+		return SocketInHull.Inverse() * TargetInHull.Quaternion();
+	}
+
+	/**
+	 *  A player walking into the hull pushes it: walking (Accel, horizontal) toward the hull point (ToHull, horizontal)
+	 *  closer than Reach to the capsule surface. Returns the push direction (unit, horizontal) or zero.
+	 */
+	inline FVector PushDirection(const FVector& Accel, const FVector& ToHull, float GapCm, float Reach, float MinAlignment)
+	{
+		const FVector Walk = FVector(Accel.X, Accel.Y, 0.0).GetSafeNormal();
+		const FVector Toward = FVector(ToHull.X, ToHull.Y, 0.0).GetSafeNormal();
+		if (Walk.IsZero() || GapCm > Reach)
+		{
+			return FVector::ZeroVector;
+		}
+		// already touching (gap 0): the hull direction is unreliable, trust the walk
+		if (Toward.IsZero() || (Walk | Toward) >= MinAlignment)
+		{
+			return Walk;
+		}
+		return FVector::ZeroVector;
+	}
+
+	/** Seconds a boat has been stuck: grows while rowing with the keel on the ground without moving, else resets */
+	inline float StuckTime(float Current, bool bRowing, bool bGrounded, float Speed, float StuckSpeed, float DeltaSeconds)
+	{
+		return (bRowing && bGrounded && Speed < StuckSpeed) ? Current + DeltaSeconds : 0.0f;
+	}
+
+	/** Index of the deepest probe (the way out), or INDEX_NONE when none is deeper than Here + 5 cm */
+	inline int32 DeepestProbe(const TArray<float>& Depths, float Here)
+	{
+		int32 Best = INDEX_NONE;
+		float BestDepth = Here + 5.0f;
+		for (int32 Index = 0; Index < Depths.Num(); ++Index)
+		{
+			if (Depths[Index] > BestDepth)
+			{
+				BestDepth = Depths[Index];
+				Best = Index;
+			}
+		}
+		return Best;
+	}
+
+	/** Water drag multiplier of a boat carrying LoadKg: 1 empty, FullLoadScale at MaxLoadKg (and beyond, overloaded) */
+	inline float LoadDragScale(float LoadKg, float MaxLoadKg, float FullLoadScale)
+	{
+		const float Fill = MaxLoadKg > 0.0f ? FMath::Clamp(LoadKg / MaxLoadKg, 0.0f, 1.5f) : 0.0f;
+		return 1.0f + (FMath::Max(1.0f, FullLoadScale) - 1.0f) * Fill;
+	}
+
 	/** Drive of the left and right oars in [-1, 1] from the rowing input (X turn right, Y forward) */
 	inline FVector2D OarDrives(const FVector2D& Input)
 	{
