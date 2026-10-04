@@ -45,6 +45,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock")
 	bool bLoop = true;
 
+	/** Each game starts at a random hour of RandomStartHours (owner request 2026-10-04); the hazards (flood, wind)
+	 *  keep counting the play time, only the sky and the day counter follow the shifted clock */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock")
+	bool bRandomStartHour = true;
+
+	/** Solar hours a game can start at (local time, 0-24) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock", meta=(EditCondition="bRandomStartHour"))
+	FFloatInterval RandomStartHours = FFloatInterval(6.5f, 18.0f);
+
 	/** Seconds between two lighting updates */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock", meta=(ClampMin="0.0", Units="s"))
 	float UpdateInterval = 0.05f;

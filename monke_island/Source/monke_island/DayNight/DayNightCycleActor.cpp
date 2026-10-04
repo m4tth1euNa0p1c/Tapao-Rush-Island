@@ -77,6 +77,14 @@ void ADayNightCycleActor::BeginPlay()
 		Clock.AnchorServerTime = GetServerTime();
 		Clock.AnchorElapsed = StartElapsedSeconds;
 		Clock.Speed = 1.0f;
+		// a random hour of the day for this game (a debug start time keeps the clock as it is)
+		const double Period = DayNightMath::DayPeriod(*Rules);
+		if (Rules->bRandomStartHour && StartElapsedSeconds <= 0.0f && Period > 0.0)
+		{
+			const float Hour = FMath::FRandRange(Rules->RandomStartHours.Min, FMath::Max(Rules->RandomStartHours.Min, Rules->RandomStartHours.Max));
+			Clock.CycleOffset = FMath::Fmod(DayNightMath::ElapsedForHour(*Rules, FMath::Fmod(Hour, 24.0f), 0.0) - Rules->Keys[0].ElapsedSeconds, Period);
+			UE_LOG(Logmonke_island, Log, TEXT("%s: the game starts at %.2f h (cycle %.0f s ahead)"), *GetName(), Hour, Clock.CycleOffset);
+		}
 	}
 
 	BindLevelLights();
@@ -101,12 +109,14 @@ void ADayNightCycleActor::Tick(float DeltaSeconds)
 
 int32 ADayNightCycleActor::GetDayNumber() const
 {
-	return Rules ? DayNightMath::DayNumberAt(*Rules, GetElapsedSeconds()) : 1;
+	return Rules ? DayNightMath::DayNumberAt(*Rules, GetCycleSeconds()) : 1;
 }
 
 double ADayNightCycleActor::GetDayStartElapsed(int32 Day) const
 {
-	return Rules ? DayNightMath::DayStartElapsed(*Rules, Day) : -1.0;
+	// in play time (the hazards count it): the cycle runs CycleOffset ahead
+	const double Start = Rules ? DayNightMath::DayStartElapsed(*Rules, Day) : -1.0;
+	return Start < 0.0 ? Start : FMath::Max(0.0, Start - Clock.CycleOffset);
 }
 
 void ADayNightCycleActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -134,7 +144,7 @@ double ADayNightCycleActor::GetElapsedSeconds() const
 
 float ADayNightCycleActor::GetSolarHour() const
 {
-	return Rules ? static_cast<float>(FMath::Fmod(DayNightMath::SolarHourAt(*Rules, GetElapsedSeconds()), 24.0)) : 12.0f;
+	return Rules ? static_cast<float>(FMath::Fmod(DayNightMath::SolarHourAt(*Rules, GetCycleSeconds()), 24.0)) : 12.0f;
 }
 
 void ADayNightCycleActor::SetSolarHour(float Hour)
@@ -144,8 +154,8 @@ void ADayNightCycleActor::SetSolarHour(float Hour)
 		return;
 	}
 	const double Now = GetServerTime();
-	const double Elapsed = GetElapsedSeconds();
-	Clock.AnchorElapsed = DayNightMath::ElapsedForHour(*Rules, FMath::Fmod(FMath::Max(Hour, 0.0f), 24.0f), Elapsed);
+	const double Cycle = GetCycleSeconds();
+	Clock.AnchorElapsed = FMath::Max(0.0, DayNightMath::ElapsedForHour(*Rules, FMath::Fmod(FMath::Max(Hour, 0.0f), 24.0f), Cycle) - Clock.CycleOffset);
 	Clock.AnchorServerTime = Now;
 	UpdateLighting(true);
 }
@@ -230,7 +240,7 @@ void ADayNightCycleActor::UpdateLighting(bool bForce)
 		return;
 	}
 
-	const double Hour = DayNightMath::SolarHourAt(*Rules, GetElapsedSeconds());
+	const double Hour = DayNightMath::SolarHourAt(*Rules, GetCycleSeconds());
 	const FVector SunENU = DayNightMath::SunDirectionENU(Hour, Rules->LatitudeDeg, Rules->DayOfYear);
 	const FVector SunDir = DayNightMath::ENUToWorld(SunENU, Rules->NorthYawDeg);
 	const double SunElevation = DayNightMath::ElevationDeg(SunDir);

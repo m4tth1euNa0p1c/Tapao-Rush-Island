@@ -43,6 +43,10 @@ struct FDayNightClock
 	/** Clock speed: 1 in play, changed only by the debug commands */
 	UPROPERTY()
 	float Speed = 1.0f;
+
+	/** Cycle time ahead of the play time (s): the random start hour of the game */
+	UPROPERTY()
+	double CycleOffset = 0.0;
 };
 
 /**
@@ -93,6 +97,9 @@ public:
 	/** Elapsed play time of the cycle (s) */
 	UFUNCTION(BlueprintPure, Category="DayNight")
 	double GetElapsedSeconds() const;
+
+	/** Time of the day / night cycle (s): the elapsed play time plus the random start of the game */
+	double GetCycleSeconds() const { return GetElapsedSeconds() + Clock.CycleOffset; }
 
 	/** Local solar hour (0-24) */
 	UFUNCTION(BlueprintPure, Category="DayNight")
