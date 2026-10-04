@@ -348,6 +348,20 @@ Master dans `/Game/MonkeIsland/Materials/M_Horizon_Atoll`, instance `MI_Horizon_
   6. Vérifier : l'éditeur relancé après la fusion (nouveaux types dans l'Asset Manager), *Data Validation* propre sur les 5 assets, `Audit Assets` montre `ExpeditionIsland:FRG_Raraka_0N`. Ensuite, deux PIE successifs depuis `L_Boot` arrivent sur deux fragments différents ; le log `LogMonkeIslands` donne la graine et le fragment tiré.
 - **Limite connue** : tant que les trois définitions partagent `Lvl_Raraka`, un PIE lancé directement sur `Lvl_Raraka` (sans `?Island=`) ne sait pas quel fragment il joue : le registre renvoie le premier trouvé. Passer par `L_Boot`.
 
+### Revue REC : retour sur L_Boot et fragment du GameState (T-141, lot L3, constats 5 et 8)
+- **Constat 5 : retour sur `L_Boot` après une fin de partie** (`ServerTravel`, T-104). Le catalogue est déjà en cache : la grâce de 3 s démarrait dès le `BeginPlay`, et un client lent pouvait être perdu.
+  - `UExpeditionIslandSubsystem` (GameInstance) retient le nombre de joueurs du monde quitté, au moment du voyage. Côté serveur, il écoute `FCoreUObjectDelegates::PreLoadMapWithContext` (voyage non seamless, quand l'ancien monde existe encore) et `FWorldDelegates::OnSeamlessTravelStart`.
+  - `AExpeditionBootGameMode` lit ce nombre une seule fois (`TakeTravelPlayerCount`). En listen server, il attend que `GetNumPlayers()` l'atteigne, dans la limite de `MaxJoinWaitSeconds` depuis le tirage, puis il applique encore la grâce `ListenJoinGraceSeconds` après la dernière arrivée.
+  - Les arrivées sont comptées par `GenericPlayerInitialization`, qui couvre `PostLogin` et le voyage seamless.
+  - Si le plafond est atteint avant que tout le monde soit là, le voyage part quand même, avec un `Warning`.
+  - Règle pure : `AExpeditionBootGameMode::ComputeTravelDelay`, testée par `monke_island.Fragments.BootJoinWait`.
+- **Constat 8 : `FragmentId` du GameState différent de l'île jouée** (PIE direct sur une map à plusieurs fragments).
+  - Côté `Boats/`, `UBoatStartSubsystem::OnArrivalResolved(FragmentId, BoatTransform)` est un délégué natif, déclenché une seule fois côté serveur, quand la barque apparaît à son arrivée. `CallOrRegisterOnArrivalResolved` appelle tout de suite un abonné qui arrive après la résolution. `Boats/` ne dépend pas d'`Expedition/`.
+  - `AExpeditionGameState` (serveur) s'y abonne au `BeginPlay`. Il réécrit `FragmentId` avec l'île réellement jouée et journalise l'écart (`Expedition: the boat starts at …`).
+  - `UExpeditionIslandSubsystem::InjectStartAnchorage(World)` est appelé par le GameState au `BeginPlay` serveur, avant le `Resolve` du tick suivant. Quand l'URL donne `?Island=` et que la définition est chargée et joue cette map, il injecte le mouillage `Start` par `SetArrivalOverride`. Sinon, ce sont les `AExpeditionArrivalPoint` de la map qui servent, comme avant.
+  - Tests : `monke_island.Boats.Start.ArrivalEvent`.
+  - Reste : `ACampSpawner` relit encore `ResolveFragmentIdForWorld` au lieu de `AExpeditionGameState::GetFragmentId()`. Il peut donc diverger de la même façon (dossier `Camps/`, hors de T-141).
+
 ## Départ en barque : ce qui est attendu (T-093 → T-094, T-095)
 Le départ en barque est implémenté dans `Source/monke_island/Boats/` (spec : `boat-rowing.md`, section « Départ en barque »). Il reste à le brancher :
 - **T-082** : `fragments.json` donne, pour chaque fragment, au moins un point d'arrivée sur l'eau. Ce point est à quelques centaines de mètres d'une plage, sur au moins 1,2 m d'eau, avec un cap vers l'île : x, y et lacet.

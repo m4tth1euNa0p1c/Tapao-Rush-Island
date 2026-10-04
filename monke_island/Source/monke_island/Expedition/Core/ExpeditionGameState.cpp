@@ -3,6 +3,7 @@
 #include "Expedition/Core/ExpeditionGameState.h"
 #include "Expedition/Core/ExpeditionRules.h"
 #include "Expedition/Islands/ExpeditionIslandSubsystem.h"
+#include "Boats/BoatStartSubsystem.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -50,10 +51,18 @@ void AExpeditionGameState::BeginPlay()
 		if (const UExpeditionIslandSubsystem* Islands = UExpeditionIslandSubsystem::Get(this))
 		{
 			FragmentId = Islands->ResolveFragmentIdForWorld(GetWorld());
+			// T-141: the Start anchorage of the definition named by ?Island=, before the boat start resolves (next tick)
+			Islands->InjectStartAnchorage(GetWorld());
 		}
 		if (!FragmentId.IsNone())
 		{
 			UE_LOG(Logmonke_island, Log, TEXT("Expedition: playing fragment %s"), *FragmentId.ToString());
+		}
+		// T-141: the boat start may pick another island (map with several fragments, no ?Island=): it has the last word
+		if (UBoatStartSubsystem* BoatStart = UBoatStartSubsystem::Get(this))
+		{
+			ArrivalResolvedHandle = BoatStart->CallOrRegisterOnArrivalResolved(
+				FOnBoatArrivalResolved::FDelegate::CreateUObject(this, &AExpeditionGameState::HandleArrivalResolved));
 		}
 	}
 
@@ -85,8 +94,25 @@ void AExpeditionGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	}
 
 	FGameModeEvents::GameModeLogoutEvent.Remove(LogoutHandle);
+	if (UBoatStartSubsystem* BoatStart = UBoatStartSubsystem::Get(this))
+	{
+		BoatStart->OnArrivalResolved.Remove(ArrivalResolvedHandle);
+	}
+	ArrivalResolvedHandle.Reset();
 
 	Super::EndPlay(EndPlayReason);
+}
+
+void AExpeditionGameState::HandleArrivalResolved(FName ArrivalFragmentId, const FTransform& BoatTransform)
+{
+	if (!HasAuthority() || ArrivalFragmentId.IsNone() || ArrivalFragmentId == FragmentId)
+	{
+		return;
+	}
+	UE_LOG(Logmonke_island, Log, TEXT("Expedition: the boat starts at %s, the fragment played is %s (was %s)"),
+		*BoatTransform.GetLocation().ToCompactString(), *ArrivalFragmentId.ToString(), *FragmentId.ToString());
+	FragmentId = ArrivalFragmentId;
+	ForceNetUpdate();
 }
 
 FExpeditionClockParams AExpeditionGameState::GetParams() const

@@ -35,6 +35,8 @@ Temps au format `m:ss`, arrondi au-dessus (0:00 n'apparaît que quand le temps e
 
 Accessibilité : l'évacuation se distingue par le texte et l'icône, pas seulement par la couleur ; l'alerte est à la fois sonore et visuelle. Police 24 pt (32 px à 1080p, 21 px à 720p, avec la courbe DPI du moteur), contour et ombre noirs sur panneau sombre. Le menu des réglages (T-073) n'a pas encore d'échelle d'interface (§18 : 80–150 %) : le compteur suit la courbe DPI du moteur.
 
+**Jour de la période (ADR-006, T-141)** : quand le GameState porte un `URunStateComponent` (`Run/`, T-109/T-113), la ligne commence par `Jour N/5` (LOCTEXT `RunDay`, « Jour {0}/{1} », 5 = `DaysPerPeriod` de `DA_RunRules`), par exemple `Jour 2/5 · 1:45`. Sans partie en cours (pas de composant), la ligne reste inchangée. Le texte est calculé par `FloodTimerMath::FormatDay` et `ComposeClockLine` (purs, testés dans `monke_island.UI.FloodTimer.Day`) et exposé par `UFloodTimerWidget::GetDayText()`. Le jour est relu à chaque rafraîchissement, depuis l'état répliqué : hôte et clients affichent le même. Dépendance volontairement optionnelle : `Run/` (monk-island-78) n'est pas encore commité. `FloodTimerWidget.cpp` n'inclut `Run/RunStateComponent.h` que si le fichier existe (`__has_include`, macro `MONKE_FLOOD_TIMER_HAS_RUN`). Sans `Run/`, le compteur compile et n'affiche pas de jour. Aucun en-tête réfléchi ne dépend de `Run/`. Une fois `Run/` commité, la condition peut être retirée.
+
 ## Source du temps
 
 Le compteur n'a pas de minuterie propre : chaque rafraîchissement relit la source (`FFloodTimerSource`).

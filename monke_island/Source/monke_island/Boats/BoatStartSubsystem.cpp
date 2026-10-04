@@ -56,8 +56,31 @@ void UBoatStartSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 	ResolveTimer = InWorld.GetTimerManager().SetTimerForNextTick(FTimerDelegate::CreateUObject(this, &UBoatStartSubsystem::Resolve));
 }
 
+FDelegateHandle UBoatStartSubsystem::CallOrRegisterOnArrivalResolved(FOnBoatArrivalResolved::FDelegate&& Delegate)
+{
+	if (bArrivalNotified)
+	{
+		Delegate.ExecuteIfBound(ArrivalFragmentId, ArrivalBoatTransform);
+		return FDelegateHandle();
+	}
+	return OnArrivalResolved.Add(MoveTemp(Delegate));
+}
+
+void UBoatStartSubsystem::NotifyArrivalResolved(FName FragmentId, const FTransform& BoatTransform)
+{
+	if (bArrivalNotified)
+	{
+		return;
+	}
+	bArrivalNotified = true;
+	ArrivalFragmentId = FragmentId;
+	ArrivalBoatTransform = BoatTransform;
+	OnArrivalResolved.Broadcast(FragmentId, BoatTransform);
+}
+
 void UBoatStartSubsystem::Deinitialize()
 {
+	OnArrivalResolved.Clear();
 	if (UWorld* World = GetWorld())
 	{
 		World->GetTimerManager().ClearTimer(ResolveTimer);
@@ -243,6 +266,8 @@ bool UBoatStartSubsystem::SpawnArrivalBoat(const FTransform& PointTransform, FNa
 	ArrivalFragmentId = FragmentId;
 	UE_LOG(Logmonke_island, Log, TEXT("BoatStart: island %s (%s), %s at %s with %d seats"),
 		*FragmentId.ToString(), *Source, *Boat->GetName(), *BoatTransform.GetLocation().ToCompactString(), Boat->GetSeatCount());
+	// T-141: the island really played, for the expedition game state (Boats/ never includes Expedition/)
+	NotifyArrivalResolved(FragmentId, Boat->GetActorTransform());
 
 	// the players already logged in: board now, or as soon as their pawn is spawned
 	for (FConstPlayerControllerIterator It = World->GetPlayerControllerIterator(); It; ++It)

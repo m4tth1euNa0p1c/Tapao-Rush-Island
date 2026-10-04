@@ -278,4 +278,10 @@ private:
 
 	/** Characters spawned during the expedition */
 	FDelegateHandle ActorSpawnedHandle;
+
+	/** Server: the boat start resolved its arrival; FragmentId becomes the island really played (T-141) */
+	void HandleArrivalResolved(FName ArrivalFragmentId, const FTransform& BoatTransform);
+
+	/** Arrival event of the boat start (UBoatStartSubsystem::OnArrivalResolved) */
+	FDelegateHandle ArrivalResolvedHandle;
 };

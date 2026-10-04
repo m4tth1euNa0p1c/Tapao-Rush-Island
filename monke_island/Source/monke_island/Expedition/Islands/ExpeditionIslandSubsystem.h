@@ -40,7 +40,23 @@ public:
 	/** Returns the subsystem of the game instance of the given world, or nullptr */
 	static UExpeditionIslandSubsystem* Get(const UObject* WorldContextObject);
 
+	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+
 	virtual void Deinitialize() override;
+
+	/**
+	 *  Server: players logged in the world this game instance left by its last travel (ServerTravel or seamless), 0 when
+	 *  unknown; reading it forgets it. The boot map waits for them before travelling on (T-141: a slow client coming
+	 *  back to L_Boot after an expedition is not left behind).
+	 */
+	int32 TakeTravelPlayerCount();
+
+	/**
+	 *  Server, before the first frame of a fragment world: when its URL names the fragment (?Island=) and the definition
+	 *  is loaded and plays this map, gives its Start anchorage to the boat start (UBoatStartSubsystem::SetArrivalOverride).
+	 *  True when injected.
+	 */
+	bool InjectStartAnchorage(UWorld* World) const;
 
 	/**
 	 *  Loads the catalog and its definitions (once; a failed load can be retried). Callback runs once: right away
@@ -231,4 +247,14 @@ private:
 
 	/** Fragment drawn last: the next draw avoids it */
 	FName LastPickedFragmentId;
+
+	/** A world of this game instance is about to be replaced: remembers its players (server) */
+	void RecordTravelPlayers(UWorld* World);
+
+	/** Players of the world left by the last travel, 0 when unknown */
+	int32 TravelPlayerCount = 0;
+
+	/** Handles of the travel delegates */
+	FDelegateHandle PreLoadMapHandle;
+	FDelegateHandle SeamlessTravelHandle;
 };

@@ -13,6 +13,7 @@
 #include "Water/IslandWaterSubsystem.h"
 #include "monke_island.h"
 #include "Components/InstancedStaticMeshComponent.h"
+#include "Engine/Level.h"
 #include "Engine/World.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerController.h"
@@ -23,6 +24,29 @@
 #include "Materials/MaterialInterface.h"
 #include "ProceduralMeshComponent.h"
 #include "ProfilingDebugging/CpuProfilerTrace.h"
+
+FFloodActorRank FFloodActorRank::Of(const AActor& Actor)
+{
+	FFloodActorRank Rank;
+	const ULevel* Level = Actor.GetLevel();
+	Rank.bPersistentLevel = Level && Level->IsPersistentLevel();
+	Rank.ActorName = Actor.GetFName().ToString();
+	Rank.LevelName = Level ? UWorld::RemovePIEPrefix(Level->GetOutermost()->GetName()) : FString();
+	return Rank;
+}
+
+bool FFloodActorRank::IsBefore(const FFloodActorRank& Other) const
+{
+	if (bPersistentLevel != Other.bPersistentLevel)
+	{
+		return bPersistentLevel;
+	}
+	if (const int32 ByName = ActorName.Compare(Other.ActorName, ESearchCase::CaseSensitive); ByName != 0)
+	{
+		return ByName < 0;
+	}
+	return LevelName.Compare(Other.LevelName, ESearchCase::CaseSensitive) < 0;
+}
 
 AFloodSimulationActor::AFloodSimulationActor()
 {
@@ -47,7 +71,92 @@ void AFloodSimulationActor::BeginPlay()
 	}
 	bGridSetup = false;
 	bGroundReady = false;
-	// The grid is set up once the clock is known: in expedition mode it stays off (T-103), the global sea rises instead
+	// The grid is set up once the clock is known (in expedition mode on the fragment played, T-103)
+	ResolveDuplicates();
+}
+
+bool AFloodSimulationActor::ResolveDuplicates()
+{
+	// One flood per world: two simulations would cost twice and only one feeds the water surface. Once at BeginPlay,
+	// never per frame. The order is a property of the actors (FFloodActorRank), not of their BeginPlay order, so every
+	// machine keeps the same one, even when a streamed level brings a better ranked actor late.
+	UWorld* World = GetWorld();
+	if (!World)
+	{
+		return true;
+	}
+	AFloodSimulationActor* Kept = this;
+	FFloodActorRank KeptRank = FFloodActorRank::Of(*this);
+	for (TActorIterator<AFloodSimulationActor> It(World); It; ++It)
+	{
+		AFloodSimulationActor* Other = *It;
+		if (Other == this || !IsValid(Other) || Other->bDuplicate)
+		{
+			continue;
+		}
+		const FFloodActorRank OtherRank = FFloodActorRank::Of(*Other);
+		if (OtherRank.IsBefore(KeptRank))
+		{
+			Kept = Other;
+			KeptRank = OtherRank;
+		}
+	}
+	if (Kept != this)
+	{
+		DisableAsDuplicate(*Kept);
+		return false;
+	}
+	for (TActorIterator<AFloodSimulationActor> It(World); It; ++It)
+	{
+		AFloodSimulationActor* Other = *It;
+		if (Other != this && IsValid(Other) && !Other->bDuplicate && Other->HasActorBegunPlay())
+		{
+			Other->DisableAsDuplicate(*this);
+		}
+	}
+	return true;
+}
+
+void AFloodSimulationActor::DisableAsDuplicate(const AFloodSimulationActor& Kept)
+{
+	if (bDuplicate)
+	{
+		return;
+	}
+	bDuplicate = true;
+	UE_LOG(Logmonke_island, Warning, TEXT("%s (%s): another flood actor, %s (%s), is kept in this world, this one is disabled; "
+		"keep a single AFloodSimulationActor per world"), *GetName(), *GetNameSafe(GetLevel() ? GetLevel()->GetOutermost() : nullptr),
+		*Kept.GetName(), *GetNameSafe(Kept.GetLevel() ? Kept.GetLevel()->GetOutermost() : nullptr));
+
+	SetActorTickEnabled(false);
+	if (AExpeditionGameState* GameState = Expedition.Get())
+	{
+		GameState->OnSubmersionEnded.RemoveDynamic(this, &AFloodSimulationActor::HandleSubmersionEnded);
+	}
+	Expedition.Reset();
+	if (UIslandWaterSubsystem* WaterSubsystem = UIslandWaterSubsystem::Get(this))
+	{
+		WaterSubsystem->SetSurfaceProvider(this, nullptr);
+	}
+	for (UProceduralMeshComponent* Chunk : Chunks)
+	{
+		if (Chunk)
+		{
+			Chunk->DestroyComponent();
+		}
+	}
+	Chunks.Reset();
+	ChunkFlat.Reset();
+	if (Apron)
+	{
+		Apron->DestroyComponent();
+		Apron = nullptr;
+	}
+	Grid = FFloodGrid();
+	OutsideSea = FFloodOutsideSea();
+	bGridSetup = false;
+	bGroundReady = false;
+	bStarted = false;
 }
 
 void AFloodSimulationActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -173,7 +282,7 @@ void AFloodSimulationActor::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if (!Rules)
+	if (!Rules || bDuplicate)
 	{
 		return;
 	}
@@ -227,6 +336,7 @@ void AFloodSimulationActor::Tick(float DeltaSeconds)
 	{
 		return;
 	}
+	UpdateApron();
 	MeshTimer -= DeltaSeconds;
 	if (MeshTimer <= 0.0f || ChunkCursor != 0)
 	{
@@ -405,6 +515,7 @@ void AFloodSimulationActor::ReadGroundBatch()
 	{
 		bGroundReady = true;
 		UE_LOG(Logmonke_island, Log, TEXT("%s read the ground: %d x %d cells of %.1f m"), *GetName(), Grid.GetSizeX(), Grid.GetSizeY(), Grid.GetCellSize());
+		SetupOutsideSea();
 	}
 }
 
@@ -454,23 +565,178 @@ void AFloodSimulationActor::Simulate(double FloodSeconds)
 
 bool AFloodSimulationActor::GetFloodSurfaceAt(const FVector& Location, float& OutSurfaceZ) const
 {
-	if (!bStarted || !Rules)
+	if (!bStarted || !Rules || bDuplicate)
 	{
 		return false;
 	}
 	const int32 X = FMath::FloorToInt32((Location.X - Origin.X) / CellCm);
 	const int32 Y = FMath::FloorToInt32((Location.Y - Origin.Y) / CellCm);
-	if (X < 0 || Y < 0 || X >= Grid.GetSizeX() || Y >= Grid.GetSizeY())
+	const bool bInGrid = X >= 0 && Y >= 0 && X < Grid.GetSizeX() && Y < Grid.GetSizeY();
+	bool bWet = false;
+	double GridSurfaceCm = 0.0;
+	double GroundCm = 0.0;
+	if (bInGrid)
+	{
+		const int32 I = Grid.Index(X, Y);
+		bWet = Grid.Depth[I] * 100.0f >= Rules->MinDrawDepthCm;
+		GridSurfaceCm = Grid.Surface(I) * 100.0;
+		GroundCm = Grid.Ground[I] * 100.0;
+	}
+	// T-141: outside the grid the sea of the fragment takes the same rise (no step at the border) and fades far away;
+	// without an outside sea (no expedition, or bRaiseOutsideGrid off) only the wet cells of the grid answer
+	double SurfaceCm = 0.0;
+	if (!OutsideSea.Surface(FVector2D(Location.X, Location.Y), bInGrid, bWet, GridSurfaceCm, GroundCm,
+		BaseSeaLevel * 100.0, HeldRiseCm, SurfaceCm))
 	{
 		return false;
 	}
-	const int32 I = Grid.Index(X, Y);
-	if (Grid.Depth[I] * 100.0f < Rules->MinDrawDepthCm)
-	{
-		return false;
-	}
-	OutSurfaceZ = Grid.Surface(I) * 100.0f;
+	OutSurfaceZ = static_cast<float>(SurfaceCm);
 	return true;
+}
+
+void AFloodSimulationActor::SetupOutsideSea()
+{
+	OutsideSea = FFloodOutsideSea();
+	if (ClockSource != EHazardClockSource::Expedition || !Rules->bRaiseOutsideGrid || !Grid.IsValid())
+	{
+		return;
+	}
+	TRACE_CPUPROFILER_EVENT_SCOPE(AFloodSimulationActor::SetupOutsideSea);
+
+	// the land of the fragment: every cell whose ground stands above the sea, read by the same traces on every machine
+	FBox2D Land(ForceInit);
+	for (int32 Y = 0; Y < Grid.GetSizeY(); ++Y)
+	{
+		for (int32 X = 0; X < Grid.GetSizeX(); ++X)
+		{
+			if (Grid.Ground[Grid.Index(X, Y)] > BaseSeaLevel)
+			{
+				Land += FVector2D(Origin.X + (X + 0.5) * CellCm, Origin.Y + (Y + 0.5) * CellCm);
+			}
+		}
+	}
+	const FBox2D GridBox(Origin, Origin + FVector2D(Grid.GetSizeX() * CellCm, Grid.GetSizeY() * CellCm));
+	OutsideSea = FFloodOutsideSea::Make(GridBox, Land, Rules->OutsideFullRiseMarginCm, Rules->OutsideFadeCm, Rules->EdgeBlendCm);
+	UE_LOG(Logmonke_island, Log, TEXT("%s: the sea of the fragment rises outside the grid up to %.2f km past its border (land %s, margin %.2f km, fade %.2f km); "
+		"farther the map keeps its sea level"), *GetName(), OutsideSea.GetReachCm() / 100000.0, Land.bIsValid ? TEXT("found") : TEXT("none"),
+		Rules->OutsideFullRiseMarginCm / 100000.0f, Rules->OutsideFadeCm / 100000.0f);
+	BuildApron();
+}
+
+void AFloodSimulationActor::BuildApron()
+{
+	if (!OutsideSea.IsValid() || Grid.GetSizeX() < 2 || Grid.GetSizeY() < 2)
+	{
+		return;
+	}
+	TRACE_CPUPROFILER_EVENT_SCOPE(AFloodSimulationActor::BuildApron);
+
+	// the apron starts where the chunks end (the centres of the border cells) and its lattice lands on that edge exactly
+	const FVector2D Inner0 = Origin + FVector2D(0.5 * CellCm);
+	const FVector2D InnerSize((Grid.GetSizeX() - 1) * CellCm, (Grid.GetSizeY() - 1) * CellCm);
+	const int32 KX = FMath::Max(1, FMath::RoundToInt32(InnerSize.X / Rules->ApronCellCm));
+	const int32 KY = FMath::Max(1, FMath::RoundToInt32(InnerSize.Y / Rules->ApronCellCm));
+	const FVector2D Step(InnerSize.X / KX, InnerSize.Y / KY);
+	const double Reach = OutsideSea.GetReachCm() + CellCm;
+	const int32 RX = FMath::CeilToInt32(Reach / Step.X);
+	const int32 RY = FMath::CeilToInt32(Reach / Step.Y);
+	const int32 VX = KX + 2 * RX + 1;
+	const int32 VY = KY + 2 * RY + 1;
+	const FVector ActorLocation = GetActorLocation();
+
+	TArray<FVector> Vertices;
+	TArray<FVector> Normals;
+	TArray<FVector2D> UVs;
+	TArray<double> Weights;
+	Vertices.Reserve(VX * VY);
+	Normals.Reserve(VX * VY);
+	UVs.Reserve(VX * VY);
+	Weights.Reserve(VX * VY);
+	for (int32 J = 0; J < VY; ++J)
+	{
+		for (int32 I = 0; I < VX; ++I)
+		{
+			const FVector2D Point = Inner0 + FVector2D((I - RX) * Step.X, (J - RY) * Step.Y);
+			// Z in units of rise: the component is scaled in Z by the rise, so the mesh is built once
+			const double Weight = OutsideSea.RiseWeight(Point);
+			Weights.Add(Weight);
+			Vertices.Add(FVector(Point.X - ActorLocation.X, Point.Y - ActorLocation.Y, Weight));
+			Normals.Add(FVector::UpVector);
+			UVs.Add(FVector2D(Point.X / 1000.0, Point.Y / 1000.0));
+		}
+	}
+	TArray<int32> Triangles;
+	for (int32 J = 0; J < VY - 1; ++J)
+	{
+		for (int32 I = 0; I < VX - 1; ++I)
+		{
+			const int32 GI = I - RX;
+			const int32 GJ = J - RY;
+			if (GI >= 0 && GI < KX && GJ >= 0 && GJ < KY)
+			{
+				// over the grid: the chunks draw the flood
+				continue;
+			}
+			const int32 A = J * VX + I;
+			const int32 B = A + 1;
+			const int32 C = A + VX;
+			const int32 D = C + 1;
+			if (Weights[A] <= 0.0 && Weights[B] <= 0.0 && Weights[C] <= 0.0 && Weights[D] <= 0.0)
+			{
+				// the sea of the map, untouched
+				continue;
+			}
+			// both windings: the surface is seen from above and from under water
+			Triangles.Append({A, C, B, B, C, D, A, B, C, B, D, C});
+		}
+	}
+	if (Triangles.IsEmpty())
+	{
+		return;
+	}
+
+	Apron = NewObject<UProceduralMeshComponent>(this, TEXT("FloodApron"));
+	Apron->SetupAttachment(RootComponent);
+	Apron->SetUsingAbsoluteRotation(true);
+	Apron->SetUsingAbsoluteScale(true);
+	Apron->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Apron->SetCastShadow(false);
+	Apron->SetVisibility(false);
+	Apron->RegisterComponent();
+	Apron->CreateMeshSection_LinearColor(0, Vertices, Triangles, Normals, UVs, TArray<FLinearColor>(), TArray<FProcMeshTangent>(), false);
+	if (WaterMaterial)
+	{
+		Apron->SetMaterial(0, WaterMaterial);
+	}
+	ApronRiseCm = -1.0;
+	UE_LOG(Logmonke_island, Log, TEXT("%s: apron of %d x %d vertices (%.0f m cells) around the grid"), *GetName(), VX, VY, Step.X / 100.0);
+}
+
+void AFloodSimulationActor::UpdateApron()
+{
+	if (!Apron)
+	{
+		return;
+	}
+	const double Rise = HeldRiseCm;
+	if (ApronRiseCm >= 0.0 && FMath::Abs(Rise - ApronRiseCm) < 0.5)
+	{
+		return;
+	}
+	ApronRiseCm = Rise;
+	const bool bVisible = Rise >= Rules->ApronMinRiseCm;
+	if (Apron->IsVisible() != bVisible)
+	{
+		Apron->SetVisibility(bVisible);
+	}
+	if (!bVisible)
+	{
+		return;
+	}
+	// sunk a little where the rise fades out (no flicker against the sea of the map), exactly on the rise near the grid
+	const double Sink = Rules->ApronSinkCm;
+	Apron->SetRelativeLocation(FVector(0.0, 0.0, BaseSeaLevel * 100.0 - Sink - GetActorLocation().Z));
+	Apron->SetWorldScale3D(FVector(1.0, 1.0, FMath::Max(0.01, Rise + Sink)));
 }
 
 void AFloodSimulationActor::BuildChunk(int32 ChunkIndex)

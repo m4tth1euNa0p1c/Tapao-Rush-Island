@@ -53,6 +53,31 @@ END_DEFINE_SPEC(FFloodTimerSpec)
 
 void FFloodTimerSpec::Define()
 {
+	// T-141, ADR-006: the timer shows the day of the period ("Jour N/5") when a run is in progress
+	Describe("Day", [this]()
+	{
+		It("writes Jour N/5 from the day and the days per period", [this]()
+		{
+			TestEqual(TEXT("day 2 of 5"), FloodTimerMath::FormatDay(2, 5).ToString(), FString(TEXT("Jour 2/5")));
+			TestEqual(TEXT("quota day"), FloodTimerMath::FormatDay(5, 5).ToString(), FString(TEXT("Jour 5/5")));
+		});
+
+		It("writes nothing without a run", [this]()
+		{
+			TestTrue(TEXT("day 0"), FloodTimerMath::FormatDay(0, 5).IsEmpty());
+			TestTrue(TEXT("no period"), FloodTimerMath::FormatDay(1, 0).IsEmpty());
+		});
+
+		It("puts the day before the clock, and leaves the clock alone without a day", [this]()
+		{
+			const FText Clock = FloodTimerMath::FormatClock(105.0);
+			const FString Line = FloodTimerMath::ComposeClockLine(FloodTimerMath::FormatDay(2, 5), Clock).ToString();
+			TestTrue(TEXT("starts with the day"), Line.StartsWith(TEXT("Jour 2/5")));
+			TestTrue(TEXT("ends with the clock"), Line.EndsWith(TEXT("1:45")));
+			TestEqual(TEXT("no day"), FloodTimerMath::ComposeClockLine(FText::GetEmpty(), Clock).ToString(), FString(TEXT("1:45")));
+		});
+	});
+
 	Describe("Format", [this]()
 	{
 		It("writes m:ss with two-digit seconds", [this]()

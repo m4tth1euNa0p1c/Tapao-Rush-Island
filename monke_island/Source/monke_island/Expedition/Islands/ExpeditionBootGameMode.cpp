@@ -5,6 +5,7 @@
 #include "Expedition/Islands/ExpeditionIslandSubsystem.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "GameFramework/Controller.h"
 #include "GameFramework/PlayerController.h"
 #include "Misc/DateTime.h"
 #include "TimerManager.h"
@@ -30,7 +31,9 @@ void AExpeditionBootGameMode::BeginPlay()
 		Fail(EFragmentError::CatalogNotFound);
 		return;
 	}
-	UE_LOG(LogMonkeIslands, Log, TEXT("Boot: loading the island catalog"));
+	// T-141: coming back from an expedition, wait for its players (the catalog is cached, the draw is immediate)
+	ExpectedPlayers = Islands->TakeTravelPlayerCount();
+	UE_LOG(LogMonkeIslands, Log, TEXT("Boot: loading the island catalog (%d player(s) expected)"), ExpectedPlayers);
 	Islands->LoadCatalog(FOnIslandCatalogLoaded::CreateUObject(this, &AExpeditionBootGameMode::HandleCatalogLoaded));
 }
 
@@ -68,18 +71,33 @@ void AExpeditionBootGameMode::HandleCatalogLoaded(EFragmentError Error, const TA
 	ScheduleTravel();
 }
 
+float AExpeditionBootGameMode::ComputeTravelDelay(bool bListenServer, float GraceSeconds, float MaxWaitSeconds, float ElapsedSeconds,
+	int32 NumPlayers, int32 ExpectedPlayers)
+{
+	if (!bListenServer)
+	{
+		return 0.0f;
+	}
+	const float Remaining = FMath::Max(0.0f, MaxWaitSeconds - ElapsedSeconds);
+	if (NumPlayers < ExpectedPlayers)
+	{
+		// players of the previous expedition still on their way: wait for them, never past the cap
+		return Remaining;
+	}
+	return FMath::Min(FMath::Max(0.0f, GraceSeconds), Remaining);
+}
+
 void AExpeditionBootGameMode::ScheduleTravel()
 {
 	FTimerManager& Timers = GetWorldTimerManager();
 	Timers.ClearTimer(TravelTimer);
-	if (GetNetMode() != NM_ListenServer || ListenJoinGraceSeconds <= 0.0f)
+	const int32 NumPlayers = GetNumPlayers();
+	const float Delay = ComputeTravelDelay(GetNetMode() == NM_ListenServer, ListenJoinGraceSeconds, MaxJoinWaitSeconds,
+		static_cast<float>(GetWorld()->GetTimeSeconds() - DrawTime), NumPlayers, ExpectedPlayers);
+	if (GetNetMode() == NM_ListenServer)
 	{
-		Timers.SetTimerForNextTick(FTimerDelegate::CreateUObject(this, &AExpeditionBootGameMode::TravelToIsland));
-		return;
+		UE_LOG(LogMonkeIslands, Log, TEXT("Boot: listen server, travel in %.1f s (%d of %d expected player(s) logged in)"), Delay, NumPlayers, ExpectedPlayers);
 	}
-	const float Remaining = FMath::Max(0.0f, MaxJoinWaitSeconds - static_cast<float>(GetWorld()->GetTimeSeconds() - DrawTime));
-	const float Delay = FMath::Min(ListenJoinGraceSeconds, Remaining);
-	UE_LOG(LogMonkeIslands, Log, TEXT("Boot: listen server, travel in %.1f s (%d player(s) logged in)"), Delay, GetNumPlayers());
 	if (Delay <= 0.0f)
 	{
 		Timers.SetTimerForNextTick(FTimerDelegate::CreateUObject(this, &AExpeditionBootGameMode::TravelToIsland));
@@ -88,10 +106,10 @@ void AExpeditionBootGameMode::ScheduleTravel()
 	Timers.SetTimer(TravelTimer, FTimerDelegate::CreateUObject(this, &AExpeditionBootGameMode::TravelToIsland), Delay, false);
 }
 
-void AExpeditionBootGameMode::PostLogin(APlayerController* NewPlayer)
+void AExpeditionBootGameMode::GenericPlayerInitialization(AController* NewPlayer)
 {
-	Super::PostLogin(NewPlayer);
-	// A client joined while the host waits: restart the grace so it travels too
+	Super::GenericPlayerInitialization(NewPlayer);
+	// A player joined (login or seamless travel) while the host waits: restart the grace so it travels too
 	if (bTravelRequested && TravelTimer.IsValid())
 	{
 		ScheduleTravel();
@@ -100,6 +118,11 @@ void AExpeditionBootGameMode::PostLogin(APlayerController* NewPlayer)
 
 void AExpeditionBootGameMode::TravelToIsland()
 {
+	if (GetNumPlayers() < ExpectedPlayers)
+	{
+		UE_LOG(LogMonkeIslands, Warning, TEXT("Boot: %d of %d expected player(s) after %.0f s, travelling without the others"),
+			GetNumPlayers(), ExpectedPlayers, MaxJoinWaitSeconds);
+	}
 	UExpeditionIslandSubsystem* Islands = UExpeditionIslandSubsystem::Get(this);
 	const EFragmentError Error = Islands ? Islands->TravelToSelectedIsland() : EFragmentError::CatalogNotFound;
 	if (Error != EFragmentError::None)

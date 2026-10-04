@@ -77,6 +77,36 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea")
 	bool bRaiseGlobalSea = false;
 
+	/**
+	 *  Expedition (T-141): past the border of the grid the sea takes the same rise as the open sea of the grid, so a boat
+	 *  or the galleon heading offshore never drops; only around the fragment (see the margin and the fade below).
+	 *  Off: the water past the grid stays at the level of the map (legacy, the border shows a step).
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea|Outside the grid")
+	bool bRaiseOutsideGrid = true;
+
+	/**
+	 *  Expedition: the sea outside the grid takes the full rise over the land of the fragment widened by this margin
+	 *  (and always over the whole grid) (cm). The spawn and the rest of the map, more than 10 km away, stay dry.
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea|Outside the grid", meta=(ClampMin="0", Units="cm", EditCondition="bRaiseOutsideGrid"))
+	float OutsideFullRiseMarginCm = 150000.0f;
+
+	/** Expedition: distance past the full rise over which the rise fades smoothly to none (cm) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea|Outside the grid", meta=(ClampMin="0", Units="cm", EditCondition="bRaiseOutsideGrid"))
+	float OutsideFadeCm = 50000.0f;
+
+	/** Expedition: width of the band inside the border of the grid blended into the outside sea (cm), a few cells */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea|Outside the grid", meta=(ClampMin="0", Units="cm", EditCondition="bRaiseOutsideGrid"))
+	float EdgeBlendCm = 4800.0f;
+
+	/**
+	 *  Expedition: size of a cell of the apron, the surface drawn outside the grid over the rising sea (cm); snapped so
+	 *  the apron meets the border of the grid exactly
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea|Outside the grid", meta=(ClampMin="1000", Units="cm", EditCondition="bRaiseOutsideGrid"))
+	float ApronCellCm = 12800.0f;
+
 	/** Expedition, with bRaiseGlobalSea: smallest move of the global sea level (cm), the surfaces move by steps */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Expedition sea", meta=(ClampMin="0.1", ClampMax="50", Units="cm"))
 	float SeaLevelStepCm = 2.0f;
@@ -155,4 +185,12 @@ public:
 	/** Material of the flood surface (the lagoon water) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Render")
 	TSoftObjectPtr<UMaterialInterface> WaterMaterial;
+
+	/** Below this rise (cm) the apron outside the grid is hidden: the sea of the map shows alone */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Render", meta=(ClampMin="0", Units="cm"))
+	float ApronMinRiseCm = 1.0f;
+
+	/** The apron is sunk this much under the rising sea so its fading edge never flickers against the sea of the map (cm) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Render", meta=(ClampMin="0", Units="cm"))
+	float ApronSinkCm = 2.0f;
 };

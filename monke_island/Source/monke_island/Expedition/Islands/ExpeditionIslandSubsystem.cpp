@@ -12,6 +12,9 @@
 #include "Engine/StreamableManager.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "Boats/BoatStartSubsystem.h"
+#include "GameFramework/GameModeBase.h"
+#include "UObject/UObjectGlobals.h"
 
 UExpeditionIslandSubsystem* UExpeditionIslandSubsystem::Get(const UObject* WorldContextObject)
 {
@@ -20,8 +23,88 @@ UExpeditionIslandSubsystem* UExpeditionIslandSubsystem::Get(const UObject* World
 	return GameInstance ? GameInstance->GetSubsystem<UExpeditionIslandSubsystem>() : nullptr;
 }
 
+void UExpeditionIslandSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+{
+	Super::Initialize(Collection);
+
+	// T-141: the boot map waits for the players of the world left by a travel (a slow client is not left behind).
+	// Non seamless: PreLoadMap fires while the old world is still the world of its context; seamless: its own event.
+	PreLoadMapHandle = FCoreUObjectDelegates::PreLoadMapWithContext.AddWeakLambda(this, [this](const FWorldContext& Context, const FString& /*MapName*/)
+	{
+		if (Context.OwningGameInstance == GetGameInstance())
+		{
+			RecordTravelPlayers(Context.World());
+		}
+	});
+	SeamlessTravelHandle = FWorldDelegates::OnSeamlessTravelStart.AddWeakLambda(this, [this](UWorld* World, const FString& /*LevelName*/)
+	{
+		if (World && World->GetGameInstance() == GetGameInstance())
+		{
+			RecordTravelPlayers(World);
+		}
+	});
+}
+
+void UExpeditionIslandSubsystem::RecordTravelPlayers(UWorld* World)
+{
+	AGameModeBase* GameMode = World && World->GetNetMode() != NM_Client ? World->GetAuthGameMode() : nullptr;
+	if (!GameMode)
+	{
+		return;
+	}
+	TravelPlayerCount = GameMode->GetNumPlayers();
+	UE_LOG(LogMonkeIslands, Log, TEXT("Islands: %d player(s) in %s before the travel"), TravelPlayerCount, *World->GetMapName());
+}
+
+int32 UExpeditionIslandSubsystem::TakeTravelPlayerCount()
+{
+	const int32 Count = TravelPlayerCount;
+	TravelPlayerCount = 0;
+	return Count;
+}
+
+bool UExpeditionIslandSubsystem::InjectStartAnchorage(UWorld* World) const
+{
+	if (!World || World->GetNetMode() == NM_Client)
+	{
+		return false;
+	}
+	const FString OptionMatch = FString::Printf(TEXT("%s="), ExpeditionIslands::FragmentOptionKey);
+	const FName FromOption = ExpeditionIslands::ParseFragmentOption(World->URL.GetOption(*OptionMatch, nullptr));
+	const UExpeditionIslandDefinition* Definition = FromOption.IsNone() ? nullptr : FindLoadedDefinition(FromOption);
+	if (!Definition)
+	{
+		// no ?Island= or its definition is not loaded on this machine: the arrival points of the map are used
+		return false;
+	}
+	const FString WorldPackage = UWorld::RemovePIEPrefix(World->GetOutermost()->GetName());
+	if (Definition->Map.ToSoftObjectPath().GetLongPackageName() != WorldPackage)
+	{
+		UE_LOG(LogMonkeIslands, Warning, TEXT("Islands: %s plays %s, not %s: its Start anchorage is not injected"),
+			*FromOption.ToString(), *Definition->Map.ToString(), *WorldPackage);
+		return false;
+	}
+	FExpeditionAnchorage Start;
+	if (!Definition->FindAnchorageByRole(EAnchorageRole::Start, Start))
+	{
+		UE_LOG(LogMonkeIslands, Warning, TEXT("Islands: %s has no Start anchorage, the arrival points of the map are used"), *FromOption.ToString());
+		return false;
+	}
+	UBoatStartSubsystem* BoatStart = UBoatStartSubsystem::Get(World);
+	if (!BoatStart || !BoatStart->SetArrivalOverride(Start.Transform, FromOption))
+	{
+		return false;
+	}
+	UE_LOG(LogMonkeIslands, Log, TEXT("Islands: boat start of %s on its anchorage %s"), *FromOption.ToString(), *Start.AnchorageId.ToString());
+	return true;
+}
+
 void UExpeditionIslandSubsystem::Deinitialize()
 {
+	FCoreUObjectDelegates::PreLoadMapWithContext.Remove(PreLoadMapHandle);
+	FWorldDelegates::OnSeamlessTravelStart.Remove(SeamlessTravelHandle);
+	PreLoadMapHandle.Reset();
+	SeamlessTravelHandle.Reset();
 	// Every pending load ends with a cancellation, never in silence (ERR-04)
 	if (CatalogState == ECatalogState::Loading)
 	{

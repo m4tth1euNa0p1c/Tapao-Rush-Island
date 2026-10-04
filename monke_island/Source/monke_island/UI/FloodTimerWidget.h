@@ -48,6 +48,10 @@ public:
 	UFUNCTION(BlueprintPure, Category="HUD|Flood Timer")
 	FText GetClockText() const { return ClockText; }
 
+	/** "Jour N/5" shown before the clock (ADR-006), empty without a run in progress */
+	UFUNCTION(BlueprintPure, Category="HUD|Flood Timer")
+	FText GetDayText() const { return DayText; }
+
 	/** Whether the timer reads the expedition clock (false: a standalone flood actor, or nothing) */
 	UFUNCTION(BlueprintPure, Category="HUD|Flood Timer")
 	bool IsReadingExpeditionClock() const { return SourceKind == EFloodTimerSourceKind::Expedition; }
@@ -140,6 +144,12 @@ private:
 
 	/** Last clock line */
 	FText ClockText;
+
+	/** Last day line ("Jour N/5"), empty without a run */
+	FText DayText;
+
+	/** Day of the run read from the game state (URunStateComponent), empty when there is none */
+	FText ReadDayText() const;
 
 	/** Whether the two-clock warning was logged */
 	bool bConflictLogged = false;

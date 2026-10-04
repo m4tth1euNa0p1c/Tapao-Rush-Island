@@ -95,6 +95,12 @@ namespace FloodTimerMath
 
 	/** Whether a deadline change is a zone bonus (the deadline moved later after the start), not the start itself */
 	MONKE_ISLAND_API bool IsZoneBonus(double NewFloodStartTime, double PreviousFloodStartTime);
+
+	/** "Jour N/5", the day in its period (ADR-006); empty without a run (day or days per period below 1) */
+	MONKE_ISLAND_API FText FormatDay(int32 DayIndex, int32 DaysPerPeriod);
+
+	/** The day before the clock ("Jour 2/5 · 1:45"); either part alone when the other is empty */
+	MONKE_ISLAND_API FText ComposeClockLine(const FText& DayText, const FText& ClockText);
 }
 
 /**

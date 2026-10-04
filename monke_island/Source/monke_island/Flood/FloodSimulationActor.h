@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Flood/FloodGrid.h"
+#include "Flood/FloodOutsideSea.h"
 #include "Flood/HazardClock.h"
 #include "FloodSimulationActor.generated.h"
 
@@ -12,6 +13,29 @@ class AExpeditionGameState;
 class UFloodRules;
 class UMaterialInterface;
 class UProceduralMeshComponent;
+
+/**
+ *  Rank of a flood actor among the flood actors of a world (T-141): one simulation per world, the same one kept on every
+ *  machine whatever the order of BeginPlay. The actor of the persistent level first, then the smallest actor name, then
+ *  the smallest level package name (PIE prefix removed).
+ */
+struct MONKE_ISLAND_API FFloodActorRank
+{
+	/** Whether the actor lives in the persistent level of its world */
+	bool bPersistentLevel = false;
+
+	/** Name of the actor (stable: placed in a level, replicated by name) */
+	FString ActorName;
+
+	/** Package of its level, without the PIE prefix */
+	FString LevelName;
+
+	/** Rank of an actor */
+	static FFloodActorRank Of(const AActor& Actor);
+
+	/** Whether this actor is kept before Other */
+	bool IsBefore(const FFloodActorRank& Other) const;
+};
 
 /**
  *  Rising water over the real topography (cahier §5, §6.1 submersion): the sea rises and the water flows inland
@@ -29,6 +53,11 @@ class UProceduralMeshComponent;
  *  ArrivalToGridCenterCm), else on the first pawn, and replicates that centre: every machine reads the same ground.
  *  Chunks that are all under water at the sea level are one flat quad moved with the sea; the other chunks are
  *  rebuilt within a time budget per frame (MeshBudgetMs). The local surface feeds UIslandWaterSubsystem, so wading, swimming and drowning follow the flood.
+ *  Outside the grid (T-141) the sea of the fragment takes the same rise, over the land widened by a margin (about 1.5 km),
+ *  then fades to none (FFloodOutsideSea, DA_FloodRules "Outside the grid"): a boat or the galleon heading offshore never
+ *  drops, and the spawn and the rest of the map stay dry. An apron mesh draws that sea around the grid.
+ *  One flood per world (T-141): a second AFloodSimulationActor (one in the map, one in LI_ExpeditionCore) is disabled
+ *  with a warning; the kept one is chosen by FFloodActorRank, the same on every machine.
  *  Every machine runs the same deterministic steps from the replicated clock; the server's result
  *  is authoritative for gameplay. Debug (non shipping, day / night fallback only): monke.SetTime <s>, monke.FloodNow.
  */
@@ -61,8 +90,18 @@ public:
 	UFUNCTION(BlueprintPure, Category="Flood")
 	float GetCurrentRiseCm() const;
 
-	/** Water surface of the flood at a location (world Z, cm); false outside the grid or where it is dry */
+	/**
+	 *  Water surface of the flood at a location (world Z, cm); false where it is dry, and outside the grid where the sea
+	 *  does not rise (far from the fragment, or before the rise)
+	 */
 	bool GetFloodSurfaceAt(const FVector& Location, float& OutSurfaceZ) const;
+
+	/** Whether this actor was disabled because another flood actor of the world is kept (T-141) */
+	UFUNCTION(BlueprintPure, Category="Flood")
+	bool IsDuplicate() const { return bDuplicate; }
+
+	/** Sea of the fragment outside the grid (invalid until the ground is read, or without expedition) */
+	const FFloodOutsideSea& GetOutsideSea() const { return OutsideSea; }
 
 	/** Clock that drives the rise (Undecided until the game state is known on this machine) */
 	EHazardClockSource GetClockSource() const { return ClockSource; }
@@ -84,6 +123,10 @@ private:
 	UPROPERTY(Transient)
 	TArray<TObjectPtr<UProceduralMeshComponent>> Chunks;
 
+	/** Surface drawn outside the grid over the rising sea of the fragment, scaled in Z by the rise */
+	UPROPERTY(Transient)
+	TObjectPtr<UProceduralMeshComponent> Apron;
+
 	/** Flood surface material, loaded at begin play */
 	UPROPERTY(Transient)
 	TObjectPtr<UMaterialInterface> WaterMaterial;
@@ -93,6 +136,15 @@ private:
 
 	/** Simulation grid (m) */
 	FFloodGrid Grid;
+
+	/** Sea of the fragment outside the grid (T-141) */
+	FFloodOutsideSea OutsideSea;
+
+	/** Rise last applied to the apron (cm), negative before the first */
+	double ApronRiseCm = -1.0;
+
+	/** Disabled: another flood actor of the world is kept */
+	bool bDuplicate = false;
 
 	/** World XY of the corner of the grid (cm) */
 	FVector2D Origin = FVector2D::ZeroVector;
@@ -177,4 +229,19 @@ private:
 
 	/** Rebuilds the surface of one chunk */
 	void BuildChunk(int32 ChunkIndex);
+
+	/** Expedition, once the ground is read: lays the sea outside the grid around the land and builds the apron */
+	void SetupOutsideSea();
+
+	/** Builds the apron mesh around the grid, in units of rise (Z 0 to 1) */
+	void BuildApron();
+
+	/** Moves the apron with the held rise */
+	void UpdateApron();
+
+	/** Keeps one flood actor per world (FFloodActorRank); false when this one is disabled */
+	bool ResolveDuplicates();
+
+	/** Stops this actor for good: tick, chunks, apron, surface provider, expedition delegates */
+	void DisableAsDuplicate(const AFloodSimulationActor& Kept);
 };

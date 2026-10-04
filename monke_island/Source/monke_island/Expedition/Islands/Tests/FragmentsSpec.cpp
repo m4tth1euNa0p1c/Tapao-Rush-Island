@@ -1,6 +1,7 @@
 // monke_island
 
 #include "Misc/AutomationTest.h"
+#include "Expedition/Islands/ExpeditionBootGameMode.h"
 #include "Expedition/Islands/ExpeditionIslandDefinition.h"
 #include "Expedition/Islands/ExpeditionIslandValidation.h"
 #include "Expedition/Islands/FragmentRules.h"
@@ -312,6 +313,38 @@ void FFragmentsSpec::Define()
 		It("ignores a previous fragment that left the catalog", [this, Ids]()
 		{
 			TestTrue(TEXT("value"), ExpeditionIslands::PickFragmentId(Ids, 3, TEXT("FRG_Gone_09")).HasValue());
+		});
+	});
+
+	// T-141 (REC finding 5): back on L_Boot after an expedition, the host waits for the players of that expedition
+	Describe("BootJoinWait", [this]()
+	{
+		const float Grace = 3.0f;
+		const float MaxWait = 15.0f;
+
+		It("travels on the next tick in solo and on a dedicated server", [this, Grace, MaxWait]()
+		{
+			TestEqual(TEXT("not listen"), AExpeditionBootGameMode::ComputeTravelDelay(false, Grace, MaxWait, 0.0f, 1, 4), 0.0f);
+		});
+
+		It("waits up to the cap while expected players are missing, not just the grace", [this, Grace, MaxWait]()
+		{
+			// the catalog is cached: the draw happens at BeginPlay, the host alone, 3 more players on their way
+			TestEqual(TEXT("1 of 4 at the draw"), AExpeditionBootGameMode::ComputeTravelDelay(true, Grace, MaxWait, 0.0f, 1, 4), MaxWait);
+			TestEqual(TEXT("3 of 4 after 5 s"), AExpeditionBootGameMode::ComputeTravelDelay(true, Grace, MaxWait, 5.0f, 3, 4), 10.0f);
+			TestEqual(TEXT("cap reached"), AExpeditionBootGameMode::ComputeTravelDelay(true, Grace, MaxWait, 20.0f, 3, 4), 0.0f);
+		});
+
+		It("gives the grace once everybody is back, capped by the rest of the wait", [this, Grace, MaxWait]()
+		{
+			TestEqual(TEXT("4 of 4 after 5 s"), AExpeditionBootGameMode::ComputeTravelDelay(true, Grace, MaxWait, 5.0f, 4, 4), Grace);
+			TestEqual(TEXT("4 of 4 after 14 s"), AExpeditionBootGameMode::ComputeTravelDelay(true, Grace, MaxWait, 14.0f, 4, 4), 1.0f);
+		});
+
+		It("keeps the plain grace on a first launch (nobody expected)", [this, Grace, MaxWait]()
+		{
+			TestEqual(TEXT("first launch"), AExpeditionBootGameMode::ComputeTravelDelay(true, Grace, MaxWait, 0.0f, 1, 0), Grace);
+			TestEqual(TEXT("no grace"), AExpeditionBootGameMode::ComputeTravelDelay(true, 0.0f, MaxWait, 0.0f, 1, 0), 0.0f);
 		});
 	});
 }

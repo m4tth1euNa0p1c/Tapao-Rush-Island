@@ -53,6 +53,30 @@ namespace FloodTimerMath
 		return FText::Format(LOCTEXT("ClockFormat", "{0}:{1}"), FText::AsNumber(Total / 60, &Plain), FText::AsNumber(Total % 60, &TwoDigits));
 	}
 
+	FText FormatDay(int32 DayIndex, int32 DaysPerPeriod)
+	{
+		if (DayIndex < 1 || DaysPerPeriod < 1)
+		{
+			return FText::GetEmpty();
+		}
+		FNumberFormattingOptions Plain;
+		Plain.UseGrouping = false;
+		return FText::Format(LOCTEXT("RunDay", "Jour {0}/{1}"), FText::AsNumber(DayIndex, &Plain), FText::AsNumber(DaysPerPeriod, &Plain));
+	}
+
+	FText ComposeClockLine(const FText& DayText, const FText& ClockText)
+	{
+		if (DayText.IsEmpty())
+		{
+			return ClockText;
+		}
+		if (ClockText.IsEmpty())
+		{
+			return DayText;
+		}
+		return FText::Format(LOCTEXT("DayAndClock", "{0} · {1}"), DayText, ClockText);
+	}
+
 	bool IsZoneBonus(double NewFloodStartTime, double PreviousFloodStartTime)
 	{
 		// The start of the expedition moves the deadline from 0 (never started); a bonus moves a real deadline later

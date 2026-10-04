@@ -47,6 +47,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Boot", meta=(ClampMin="0", Units="s"))
 	float MaxJoinWaitSeconds = 15.0f;
 
+	/**
+	 *  Listen server: delay before the travel (s). While fewer than ExpectedPlayers are logged in (the players of the
+	 *  world left before coming back here, T-141), the rest of MaxWaitSeconds; then GraceSeconds, capped by that rest.
+	 *  Solo and dedicated: 0 (next tick). Pure, tested by monke_island.Fragments.BootJoinWait.
+	 */
+	static float ComputeTravelDelay(bool bListenServer, float GraceSeconds, float MaxWaitSeconds, float ElapsedSeconds,
+		int32 NumPlayers, int32 ExpectedPlayers);
+
 	/** Error of the boot (None while it runs or once the travel started) */
 	UFUNCTION(BlueprintPure, Category="Boot")
 	EFragmentError GetBootError() const { return BootError; }
@@ -58,8 +66,8 @@ protected:
 	/** No pawn on the boot map: the players only wait for the travel */
 	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
 
-	/** A client joined during the grace: wait for the others before the travel */
-	virtual void PostLogin(APlayerController* NewPlayer) override;
+	/** A player joined (login or seamless travel) during the wait: wait for the others before the travel */
+	virtual void GenericPlayerInitialization(AController* NewPlayer) override;
 
 private:
 
@@ -86,4 +94,7 @@ private:
 
 	/** The travel was requested: the boot runs once */
 	bool bTravelRequested = false;
+
+	/** Players of the world left before coming back to the boot map (0: first launch, nobody to wait for) */
+	int32 ExpectedPlayers = 0;
 };

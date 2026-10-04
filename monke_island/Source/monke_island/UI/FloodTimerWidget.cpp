@@ -16,6 +16,15 @@
 #include "TimerManager.h"
 #include "monke_island.h"
 
+// T-141, ADR-006: the day of the run comes from Run/ (URunStateComponent, T-109/T-113 of monk-island-78), not yet
+// committed. Optional on purpose: without Run/ the timer builds and simply shows no day.
+#if __has_include("Run/RunStateComponent.h")
+#include "Run/RunStateComponent.h"
+#define MONKE_FLOOD_TIMER_HAS_RUN 1
+#else
+#define MONKE_FLOOD_TIMER_HAS_RUN 0
+#endif
+
 #define LOCTEXT_NAMESPACE "MonkeFloodTimer"
 
 void UFloodTimerWidget::SetRules(UHudTimerRules* InRules)
@@ -183,6 +192,17 @@ FText UFloodTimerWidget::MakeClockText(const FFloodTimerSnapshot& InSnapshot)
 	}
 }
 
+FText UFloodTimerWidget::ReadDayText() const
+{
+#if MONKE_FLOOD_TIMER_HAS_RUN
+	if (const URunStateComponent* Run = URunStateComponent::Get(this))
+	{
+		return FloodTimerMath::FormatDay(Run->GetDayIndex(), Run->GetDaysPerPeriod());
+	}
+#endif
+	return FText::GetEmpty();
+}
+
 void UFloodTimerWidget::Refresh()
 {
 	ResolveSource();
@@ -200,7 +220,9 @@ void UFloodTimerWidget::Refresh()
 
 	Snapshot = FloodTimerMath::Evaluate(Source.Read());
 	const FFloodTimerEvents Events = Presenter.Update(Snapshot);
-	ClockText = MakeClockText(Snapshot);
+	// the day of the run before the clock ("Jour 2/5 · 1:45", ADR-006), read from the replicated state at each refresh
+	DayText = ReadDayText();
+	ClockText = Snapshot.Mode == EFloodTimerMode::Hidden ? MakeClockText(Snapshot) : FloodTimerMath::ComposeClockLine(DayText, MakeClockText(Snapshot));
 
 	const UHudTimerRules& R = GetRules();
 	const bool bUrgent = Snapshot.Mode == EFloodTimerMode::Countdown && Snapshot.SecondsLeft <= R.UrgentSeconds;

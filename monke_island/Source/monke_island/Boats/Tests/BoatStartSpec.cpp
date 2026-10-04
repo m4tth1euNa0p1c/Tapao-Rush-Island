@@ -3,6 +3,8 @@
 #include "Misc/AutomationTest.h"
 #include "Boats/BoatStart.h"
 #include "Boats/BoatStartRules.h"
+#include "Boats/BoatStartSubsystem.h"
+#include "UObject/StrongObjectPtr.h"
 #include "Kismet/GameplayStatics.h"
 
 #if WITH_AUTOMATION_TESTS
@@ -15,6 +17,40 @@ END_DEFINE_SPEC(FBoatStartSpec)
 
 void FBoatStartSpec::Define()
 {
+	// T-141 (REC finding 8): the island really played reaches the expedition through an event, Boats/ stays independent
+	Describe("ArrivalEvent", [this]()
+	{
+		It("tells the fragment and the boat transform once, to listeners before and after the event", [this]()
+		{
+			TStrongObjectPtr<UBoatStartSubsystem> BoatStart(NewObject<UBoatStartSubsystem>());
+			const FTransform Boat(FRotator(0.0f, 35.0f, 0.0f), FVector(1200.0, -800.0, 20.0));
+			int32 Calls = 0;
+			FName Seen;
+			FVector SeenLocation = FVector::ZeroVector;
+			BoatStart->CallOrRegisterOnArrivalResolved(FOnBoatArrivalResolved::FDelegate::CreateLambda(
+				[&Calls, &Seen, &SeenLocation](FName FragmentId, const FTransform& Transform)
+				{
+					++Calls;
+					Seen = FragmentId;
+					SeenLocation = Transform.GetLocation();
+				}));
+			TestEqual(TEXT("nothing before the arrival"), Calls, 0);
+
+			BoatStart->NotifyArrivalResolved(TEXT("FRG_Raraka_07"), Boat);
+			BoatStart->NotifyArrivalResolved(TEXT("FRG_Raraka_02"), FTransform::Identity);
+			TestEqual(TEXT("fired once"), Calls, 1);
+			TestEqual(TEXT("fragment"), Seen, FName(TEXT("FRG_Raraka_07")));
+			TestTrue(TEXT("boat transform"), SeenLocation.Equals(Boat.GetLocation()));
+			TestEqual(TEXT("arrival fragment kept"), BoatStart->GetArrivalFragmentId(), FName(TEXT("FRG_Raraka_07")));
+
+			FName Late;
+			const FDelegateHandle Handle = BoatStart->CallOrRegisterOnArrivalResolved(FOnBoatArrivalResolved::FDelegate::CreateLambda(
+				[&Late](FName FragmentId, const FTransform&) { Late = FragmentId; }));
+			TestEqual(TEXT("a late listener is called right away"), Late, FName(TEXT("FRG_Raraka_07")));
+			TestFalse(TEXT("and not registered"), Handle.IsValid());
+		});
+	});
+
 	BeforeEach([this]()
 	{
 		// points as UBoatStartSubsystem sorts them: by fragment, two points for the second fragment

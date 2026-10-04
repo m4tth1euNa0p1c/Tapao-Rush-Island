@@ -14,6 +14,9 @@ class APawn;
 class APlayerController;
 class UBoatStartRules;
 
+/** Server: the boat start chose its arrival and the boat is on the water (fragment of the arrival, boat transform) */
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnBoatArrivalResolved, FName /*FragmentId*/, const FTransform& /*BoatTransform*/);
+
 /**
  *  Start in the boat (T-093, ADR-004): on the server, once the world has begun play, picks the arrival point
  *  of the fragment named by the ?Island= URL option (random and seeded without it), spawns the boat there on
@@ -63,7 +66,28 @@ public:
 	/** Fragment of the arrival point used, NAME_None when the start was not in the boat */
 	FName GetArrivalFragmentId() const { return ArrivalFragmentId; }
 
+	/**
+	 *  Server, once: the arrival is resolved and the boat spawned there (T-141). Other domains (the expedition game state)
+	 *  listen to learn the island really played without Boats/ depending on them. Not fired when the start is not in
+	 *  the boat. Prefer CallOrRegisterOnArrivalResolved, which also serves a listener that comes after the event.
+	 */
+	FOnBoatArrivalResolved OnArrivalResolved;
+
+	/** Calls Delegate now when the arrival is already resolved with a boat, else registers it on OnArrivalResolved */
+	FDelegateHandle CallOrRegisterOnArrivalResolved(FOnBoatArrivalResolved::FDelegate&& Delegate);
+
 private:
+
+	friend class FBoatStartSpec;
+
+	/** Records the resolved arrival and fires OnArrivalResolved, once */
+	void NotifyArrivalResolved(FName FragmentId, const FTransform& BoatTransform);
+
+	/** Transform of the boat at the resolved arrival */
+	FTransform ArrivalBoatTransform = FTransform::Identity;
+
+	/** OnArrivalResolved fired */
+	bool bArrivalNotified = false;
 
 	/** Chooses the point, spawns the boat and boards the players already there (server, once) */
 	void Resolve();
