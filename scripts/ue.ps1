@@ -161,9 +161,10 @@ switch ($Command) {
     }
 
     'package' {
+        # -nocompileeditor : les binaires editeur viennent du dernier build (UBT refuse de les recompiler editeur ouvert)
         $out = Join-Path $Root 'build\package'
         & $RunUAT BuildCookRun "-project=$Uproject" -platform=Win64 "-clientconfig=$Config" `
-            -build -cook -stage -pak -archive "-archivedirectory=$out" -noP4 -utf8output -unattended
+            -build -nocompileeditor -cook -stage -pak -archive "-archivedirectory=$out" -noP4 -utf8output -unattended
         $code = $LASTEXITCODE
         if ($code -eq 0) { Write-Host "[ue] Package : $out" }
         exit $code
