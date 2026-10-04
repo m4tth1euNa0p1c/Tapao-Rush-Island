@@ -156,6 +156,7 @@ void UTapaoUISubsystem::HandlePreLoadMap(const FString& MapName)
 	bInGame = false;
 	DeathTime = -1.0;
 	bPausedGame = false;
+	GetGameInstance()->GetTimerManager().ClearTimer(CurtainTimer);
 	GetGameInstance()->GetTimerManager().ClearTimer(GameTimer);
 	GetGameInstance()->GetTimerManager().ClearTimer(AutosaveTimer);
 	RemoveFromViewport(Confirm);
@@ -289,6 +290,12 @@ void UTapaoUISubsystem::RemoveFromViewport(TSharedPtr<SWidget>& Widget)
 
 void UTapaoUISubsystem::RefocusScreen()
 {
+	const UGameInstance* GameInstance = GetGameInstance();
+	const USettingsSubsystem* Settings = GameInstance ? GameInstance->GetSubsystem<USettingsSubsystem>() : nullptr;
+	if (Settings && Settings->IsMenuOpen())
+	{
+		return;
+	}
 	for (const TSharedPtr<SWidget>* Screen : { &Confirm, &EndScreen, &Pause, &Splash, &MainMenu })
 	{
 		if (Screen->IsValid())
@@ -370,8 +377,19 @@ void UTapaoUISubsystem::HideCurtain()
 	if (UGameInstance* GameInstance = GetGameInstance())
 	{
 		GameInstance->GetTimerManager().ClearTimer(CurtainTimer);
+		// A client can finish loading before its local controller arrives. Keep the curtain until input can follow.
+		if (bInGame && !GameInstance->GetFirstLocalPlayerController())
+		{
+			CurtainTimer = GameInstance->GetTimerManager().SetTimerForNextTick(this, &UTapaoUISubsystem::HideCurtain);
+			return;
+		}
 	}
 	RemoveFromViewport(Curtain);
+	if (bInGame)
+	{
+		// Map travel preserves the viewport's UI-only mode. Restore capture after loading, just like closing pause.
+		RefocusScreen();
+	}
 }
 
 void UTapaoUISubsystem::ShowHud()

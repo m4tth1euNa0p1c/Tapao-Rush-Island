@@ -79,6 +79,7 @@ public:
 	float GameOverDelay = 1.5f;
 
 private:
+	friend class FTapaoInputSpec;
 
 	void HandlePreLoadMap(const FString& MapName);
 	void HandleWorldActorsInitialized(const FActorsInitializedParams& Params);
