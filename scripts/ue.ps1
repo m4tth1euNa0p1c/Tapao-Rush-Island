@@ -28,6 +28,8 @@ param(
 
     [int]$Frames = 1800,
 
+    [string]$Version = '0.1.0',
+
     [switch]$Force
 )
 
@@ -158,11 +160,39 @@ switch ($Command) {
     }
 
     'package' {
+        if (Test-EditorRunning) {
+            Write-Host '[ue] Editeur partage ouvert : coordonner sa fermeture avec son proprietaire avant packaging.'
+            exit 3
+        }
+        $heavy = Get-CimInstance Win32_Process | Where-Object {
+            $_.Name -match '^(UnrealEditor-Cmd|UnrealBuildTool|AutomationTool)\.exe$' -or
+            ($_.Name -eq 'dotnet.exe' -and $_.CommandLine -match 'UnrealBuildTool|AutomationTool')
+        }
+        if ($heavy) {
+            Write-Host '[ue] Un processus Unreal lourd est actif : attendre avant packaging.'
+            exit 3
+        }
+        $drive = New-Object System.IO.DriveInfo([System.IO.Path]::GetPathRoot($Root))
+        if ($drive.AvailableFreeSpace -le 15GB) {
+            Write-Host '[ue] Packaging refuse : plus de 15 Gio libres requis.'
+            exit 3
+        }
+        $metadata = Join-Path $PSScriptRoot 'build_metadata.py'
+        python $metadata stamp --version $Version
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
         $out = Join-Path $Root 'build\package'
+        # Never replace a prior package: a unique version owns its archive directory.
+        $buildInfo = Get-Content -Raw (Join-Path $ProjectDir 'Saved\BuildMetadata\build.json') | ConvertFrom-Json
+        $out = Join-Path $out $buildInfo.version
+        $crashArgs = if ($Config -eq 'Development') { @('-CrashReporter') } else { @() }
         & $RunUAT BuildCookRun "-project=$Uproject" -platform=Win64 "-clientconfig=$Config" `
-            -build -cook -stage -pak -archive "-archivedirectory=$out" -noP4 -utf8output -unattended
+            -build -cook -stage -pak -iostore -nodebuginfo -archive "-archivedirectory=$out" -noP4 -utf8output -unattended @crashArgs
         $code = $LASTEXITCODE
-        if ($code -eq 0) { Write-Host "[ue] Package : $out" }
+        if ($code -eq 0) {
+            python $metadata archive --package $out
+            $code = $LASTEXITCODE
+            if ($code -eq 0) { Write-Host "[ue] Package : $out ; symboles hors package dans Saved/Symbols" }
+        }
         exit $code
     }
 }
