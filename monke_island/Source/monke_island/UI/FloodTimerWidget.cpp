@@ -166,17 +166,18 @@ void UFloodTimerWidget::ResolveSource()
 
 FText UFloodTimerWidget::MakeClockText(const FFloodTimerSnapshot& InSnapshot)
 {
+	// the clock alone, top right (owner request 2026-10-04): the panel colour and the water icon tell the evacuation
 	const FText Time = FloodTimerMath::FormatClock(InSnapshot.SecondsLeft);
 	switch (InSnapshot.Mode)
 	{
 	case EFloodTimerMode::Countdown:
-		return FText::Format(LOCTEXT("Countdown", "Montée des eaux dans {0}"), Time);
+		return FText::Format(LOCTEXT("CountdownBare", "{0}"), Time);
 	case EFloodTimerMode::Evacuation:
-		return FText::Format(LOCTEXT("Evacuation", "Évacuation ! Extraction dans {0}"), Time);
+		return FText::Format(LOCTEXT("EvacuationBare", "{0}"), Time);
 	case EFloodTimerMode::Over:
 		return LOCTEXT("Over", "Île submergée : l'eau monte encore, montez dans la barque !");
 	case EFloodTimerMode::GameOver:
-		return FText::Format(LOCTEXT("GameOver", "Fin de partie : nouvelle expédition dans {0}"), Time);
+		return FText::Format(LOCTEXT("GameOverBare", "{0}"), Time);
 	default:
 		return FText::GetEmpty();
 	}

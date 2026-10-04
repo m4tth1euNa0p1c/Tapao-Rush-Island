@@ -1,6 +1,8 @@
 // monke_island
 
 #include "Player/IslanderHUD.h"
+#include "UI/Tapao/TapaoUISubsystem.h"
+#include "Engine/GameInstance.h"
 #include "DayNight/DayNightCycleActor.h"
 #include "Storm/WindStormActor.h"
 #include "CanvasItem.h"
@@ -16,6 +18,11 @@
 #include "Player/IslanderCombatComponent.h"
 #include "Player/IslanderHealthComponent.h"
 #include "Player/IslanderMovementComponent.h"
+#include "Weapons/InventoryItemActor.h"
+#include "Weapons/InventoryItemDefinition.h"
+#include "Weapons/IslanderInventoryComponent.h"
+#include "Weapons/MusketWeapon.h"
+#include "Weapons/CutlassWeapon.h"
 
 float AIslanderHUD::DrawBar(float X, float Y, float Scale, float Fraction, const FLinearColor& Color, const FString& Label)
 {
@@ -51,13 +58,17 @@ void AIslanderHUD::DrawHUD()
 	const float X = Margin.X * Scale;
 	float Y = Canvas->ClipY - Margin.Y * Scale;
 
-	if (const UIslanderMovementComponent* Move = Cast<UIslanderMovementComponent>(Character->GetCharacterMovement()))
+	// the TAPAO HUD draws the gauges when it is up (UTapaoUISubsystem); these provisional bars stand in otherwise
+	const UGameInstance* GameInstance = GetGameInstance();
+	const UTapaoUISubsystem* Tapao = GameInstance ? GameInstance->GetSubsystem<UTapaoUISubsystem>() : nullptr;
+	const bool bBars = !Tapao || !Tapao->IsHudShown();
+	if (const UIslanderMovementComponent* Move = bBars ? Cast<UIslanderMovementComponent>(Character->GetCharacterMovement()) : nullptr)
 	{
 		const bool bExhausted = Move->IsExhausted();
 		Y = DrawBar(X, Y, Scale, Move->GetStaminaFraction(), bExhausted ? ExhaustedColor : StaminaColor,
 			bExhausted ? TEXT("Endurance - épuisé") : TEXT("Endurance"));
 	}
-	if (const UIslanderHealthComponent* Health = Character->FindComponentByClass<UIslanderHealthComponent>())
+	if (const UIslanderHealthComponent* Health = bBars ? Character->FindComponentByClass<UIslanderHealthComponent>() : nullptr)
 	{
 		Y = DrawBar(X, Y, Scale, Health->GetHealthFraction(), HealthColor,
 			Health->IsDead() ? TEXT("Santé - mort") : FString::Printf(TEXT("Santé %.0f"), Health->GetHealth()));
@@ -199,6 +210,115 @@ void AIslanderHUD::DrawHUD()
 				Small.EnableShadow(FLinearColor::Black);
 				Canvas->DrawItem(Small);
 				LineY += 16.0f * Scale;
+			}
+		}
+	}
+
+	// inventory slots at the bottom centre, ammunition of the musket above them (T-069)
+	if (const UIslanderInventoryComponent* Inventory = Character->FindComponentByClass<UIslanderInventoryComponent>())
+	{
+		const int32 SlotCount = Inventory->SlotCount;
+		// with the TAPAO HUD the lines below sit centred on its item bar (4 slots of 64 px, 18 px from the bottom)
+		const FVector2D SlotSize = bBars ? FVector2D(118.0f * Scale, 34.0f * Scale) : FVector2D(64.0f * Scale, 64.0f * Scale);
+		const float Gap = 6.0f * Scale;
+		const float Left = Canvas->ClipX * 0.5f - (SlotCount * SlotSize.X + (SlotCount - 1) * Gap) * 0.5f;
+		const float Top = bBars ? Canvas->ClipY - Margin.Y * Scale - SlotSize.Y : Canvas->ClipY - (18.0f + 64.0f + 4.0f) * Scale;
+		const float Centre = Canvas->ClipX * 0.5f;
+		// the TAPAO HUD has its own item bar: this provisional strip only stands in without it
+		for (int32 Slot = 0; bBars && Slot < SlotCount; ++Slot)
+		{
+			const FVector2D Pos(Left + Slot * (SlotSize.X + Gap), Top);
+			const bool bActive = Slot == Inventory->GetActiveSlot();
+			FCanvasTileItem Back(Pos, SlotSize, FLinearColor(0.0f, 0.0f, 0.0f, bActive ? 0.6f : 0.35f));
+			Back.BlendMode = SE_BLEND_Translucent;
+			Canvas->DrawItem(Back);
+			if (bActive)
+			{
+				FCanvasBoxItem Box(Pos, SlotSize);
+				Box.SetColor(FLinearColor(1.0f, 0.82f, 0.25f));
+				Canvas->DrawItem(Box);
+			}
+			const AInventoryItemActor* Item = Inventory->GetItem(Slot);
+			const UInventoryItemDefinition* Definition = Item ? Item->GetDefinition() : nullptr;
+			const FString Label = FString::Printf(TEXT("%d  %s"), Slot + 1, Definition ? *Definition->DisplayName.ToString() : TEXT(""));
+			FCanvasTextItem Text(Pos + FVector2D(8.0f, 9.0f) * Scale, FText::FromString(Label), GEngine->GetSmallFont(),
+				bActive ? FLinearColor(1.0f, 0.82f, 0.25f) : FLinearColor(1.0f, 1.0f, 1.0f, 0.8f));
+			Text.Scale = FVector2D(Scale, Scale);
+			Text.EnableShadow(FLinearColor::Black);
+			Canvas->DrawItem(Text);
+		}
+
+		if (const AMusketWeapon* Musket = Cast<AMusketWeapon>(Inventory->GetEquippedItem()))
+		{
+			const int32 Total = Musket->GetPouchBalls() + (Musket->IsLoaded() ? 1 : 0);
+			FString Line = FString::Printf(TEXT("%s · %d balles"), Musket->IsLoaded() ? TEXT("Chargé") : TEXT("Vide"), Total);
+			if (Musket->IsReloading())
+			{
+				Line = FString::Printf(TEXT("Rechargement %.0f %% · %d balles"), Musket->GetReloadProgress() * 100.0f, Total);
+			}
+			else if (!Musket->IsLoaded())
+			{
+				Line += Total > 0 ? TEXT("  (R recharger)") : TEXT("  (plus de balles)");
+			}
+			const float LineY = Top - 22.0f * Scale;
+			if (Musket->IsReloading())
+			{
+				const float BarWidth = SlotCount * SlotSize.X + (SlotCount - 1) * Gap;
+				FCanvasTileItem Bar(FVector2D(Left, Top - 6.0f * Scale), FVector2D(BarWidth * Musket->GetReloadProgress(), 3.0f * Scale), FLinearColor(1.0f, 0.82f, 0.25f, 0.9f));
+				Bar.BlendMode = SE_BLEND_Translucent;
+				Canvas->DrawItem(Bar);
+			}
+			FCanvasTextItem Ammo(FVector2D(Centre, LineY), FText::FromString(Line), GEngine->GetSmallFont(), FLinearColor(1.0f, 0.92f, 0.7f, 0.95f));
+			Ammo.bCentreX = true;
+			Ammo.Scale = FVector2D(Scale, Scale);
+			Ammo.EnableShadow(FLinearColor::Black);
+			Canvas->DrawItem(Ammo);
+		}
+
+		// cutlass: charge of the finisher, edge, damage numbers of the last blows (T-070)
+		if (const ACutlassWeapon* Cutlass = Cast<ACutlassWeapon>(Inventory->GetEquippedItem()))
+		{
+			FString Line = Cutlass->IsParrying() ? TEXT("Parade") : TEXT("Sabre");
+			Line += FString::Printf(TEXT(" · fil %.0f %%"), Cutlass->GetSharpness() * 100.0f);
+			if (const UIslanderMovementComponent* CutlassMove = Cast<UIslanderMovementComponent>(Character->GetCharacterMovement());
+				CutlassMove && Cutlass->Rules && CutlassMove->GetStaminaFraction() < Cutlass->Rules->StaminaCostFraction)
+			{
+				Line += TEXT("  (trop essoufflé)");
+			}
+			if (const float Charge = Cutlass->GetChargeProgress(); Charge > 0.0f)
+			{
+				const float BarWidth = SlotCount * SlotSize.X + (SlotCount - 1) * Gap;
+				FCanvasTileItem Bar(FVector2D(Left, Top - 6.0f * Scale), FVector2D(BarWidth * Charge, 3.0f * Scale),
+					Charge >= 1.0f ? FLinearColor(1.0f, 0.3f, 0.2f, 0.95f) : FLinearColor(1.0f, 0.82f, 0.25f, 0.9f));
+				Bar.BlendMode = SE_BLEND_Translucent;
+				Canvas->DrawItem(Bar);
+			}
+			FCanvasTextItem Edge(FVector2D(Centre, Top - 22.0f * Scale), FText::FromString(Line), GEngine->GetSmallFont(), FLinearColor(1.0f, 0.92f, 0.7f, 0.95f));
+			Edge.bCentreX = true;
+			Edge.Scale = FVector2D(Scale, Scale);
+			Edge.EnableShadow(FLinearColor::Black);
+			Canvas->DrawItem(Edge);
+
+			const double Now = GetWorld()->GetTimeSeconds();
+			for (const FCutlassHitMarker& Marker : Cutlass->GetHitMarkers())
+			{
+				const float Age = static_cast<float>(Now - Marker.Time);
+				if (Age > 1.2f)
+				{
+					continue;
+				}
+				const FVector Screen = Project(Marker.Location + FVector(0.0f, 0.0f, 40.0f * Age), false);
+				if (Screen.Z <= 0.0f)
+				{
+					continue;
+				}
+				const FString Number = Marker.bKill ? FString::Printf(TEXT("-%.0f  TRANCHÉ !"), Marker.Damage) : FString::Printf(TEXT("-%.0f"), Marker.Damage);
+				FCanvasTextItem Damage(FVector2D(Screen.X, Screen.Y), FText::FromString(Number), GEngine->GetMediumFont(),
+					FLinearColor(1.0f, 0.18f, 0.12f, FMath::Clamp(1.2f - Age, 0.0f, 1.0f)));
+				Damage.Scale = FVector2D(Scale, Scale);
+				Damage.bCentreX = true;
+				Damage.EnableShadow(FLinearColor::Black);
+				Canvas->DrawItem(Damage);
 			}
 		}
 	}

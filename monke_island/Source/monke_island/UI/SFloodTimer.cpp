@@ -22,12 +22,6 @@ namespace
 		Font.OutlineSettings.OutlineColor = FLinearColor(0.0f, 0.0f, 0.0f, 0.85f);
 		return Font;
 	}
-
-	const FSlateBrush* PanelBrush()
-	{
-		static const FSlateRoundedBoxBrush Brush(FLinearColor::White, 8.0f);
-		return &Brush;
-	}
 }
 
 void SFloodTimer::Construct(const FArguments& InArgs)
@@ -43,18 +37,18 @@ void SFloodTimer::Construct(const FArguments& InArgs)
 		SNew(SSafeZone)
 		[
 			SNew(SBox)
-			.HAlign(HAlign_Center)
+			.HAlign(HAlign_Right)
 			.VAlign(VAlign_Top)
-			.Padding(FMargin(0.0f, Style.TopMargin, 0.0f, 0.0f))
+			.Padding(FMargin(0.0f, Style.TopMargin, Style.TopMargin, 0.0f))
 			[
 				SNew(SVerticalBox)
-				+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)
+				+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Right)
 				[
 					SNew(SBorder)
 					.Visibility(this, &SFloodTimer::GetPanelVisibility)
-					.BorderImage(PanelBrush())
-					.BorderBackgroundColor(this, &SFloodTimer::GetPanelColor)
-					.Padding(FMargin(18.0f, 8.0f))
+					// no frame around the clock (owner request 2026-10-04): its colour tells the alert and the evacuation
+					.BorderImage(FCoreStyle::Get().GetBrush("NoBorder"))
+					.Padding(FMargin(0.0f))
 					.RenderTransform(this, &SFloodTimer::GetPulseTransform)
 					.RenderTransformPivot(FVector2D(0.5f, 0.5f))
 					[
@@ -85,18 +79,18 @@ void SFloodTimer::Construct(const FArguments& InArgs)
 						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
 						[
 							SAssignNew(ClockText, STextBlock)
-							.Font(TimerFont(Style.ClockFontSize, TEXT("Bold")))
+							.Font(TimerFont(Style.ClockFontSize, TEXT("Light")))
 							.ColorAndOpacity(this, &SFloodTimer::GetClockColor)
 							.ShadowOffset(FVector2D(1.0f, 1.0f))
 							.ShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.8f))
 						]
 					]
 				]
-				+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center).Padding(0.0f, 6.0f, 0.0f, 0.0f)
+				+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Right).Padding(0.0f, 6.0f, 0.0f, 0.0f)
 				[
 					SAssignNew(NotificationText, STextBlock)
 					.Visibility(this, &SFloodTimer::GetNotificationVisibility)
-					.Font(TimerFont(Style.NotificationFontSize, TEXT("Bold")))
+					.Font(TimerFont(Style.NotificationFontSize, TEXT("Light")))
 					.ColorAndOpacity(Style.ZoneSecuredColor)
 					.ShadowOffset(FVector2D(1.0f, 1.0f))
 					.ShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.9f))

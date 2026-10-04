@@ -4,6 +4,7 @@
 #include "Settings/SettingsMath.h"
 #include "Settings/SettingsRules.h"
 #include "Settings/SSettingsMenu.h"
+#include "UI/Tapao/TapaoUISubsystem.h"
 #include "monke_island.h"
 #include "AudioDevice.h"
 #include "Camera/CameraComponent.h"
@@ -38,8 +39,8 @@ public:
 			return false;
 		}
 		const FKey Key = InKeyEvent.GetKey();
-		// in the editor Escape stops the play session: it only closes an open menu there
-		const bool bToggleKey = Key == EKeys::F10 || (Key == EKeys::Escape && (!GIsEditor || Subsystem->IsMenuOpen()));
+		// Escape opens the TAPAO pause (UTapaoUISubsystem, its OPTIONS button opens this menu): here it only closes
+		const bool bToggleKey = Key == EKeys::F10 || (Key == EKeys::Escape && Subsystem->IsMenuOpen());
 		if (!bToggleKey || (!Subsystem->IsMenuOpen() && !Subsystem->HasViewportFocus()))
 		{
 			return false;
@@ -351,5 +352,10 @@ void USettingsSubsystem::CloseMenu()
 	{
 		Controller->SetInputMode(FInputModeGameOnly());
 		Controller->SetShowMouseCursor(false);
+	}
+	// opened from the TAPAO main menu or pause: that screen takes the input back
+	if (UTapaoUISubsystem* Tapao = GetGameInstance() ? GetGameInstance()->GetSubsystem<UTapaoUISubsystem>() : nullptr)
+	{
+		Tapao->RefocusScreen();
 	}
 }

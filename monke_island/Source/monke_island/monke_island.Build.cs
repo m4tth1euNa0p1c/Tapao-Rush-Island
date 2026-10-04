@@ -23,7 +23,14 @@ public class monke_island : ModuleRules
 			"ProceduralMeshComponent"
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] { });
+		// loading screen between maps (UI/Tapao)
+		PrivateDependencyModuleNames.AddRange(new string[] { "MoviePlayer" });
+
+		// editor tools (vegetation reimport keeping the asset identities): never in a game build
+		if (Target.bBuildEditor)
+		{
+			PrivateDependencyModuleNames.AddRange(new string[] { "UnrealEd", "Json" });
+		}
 
 		PublicIncludePaths.AddRange(new string[] {
 			"monke_island",

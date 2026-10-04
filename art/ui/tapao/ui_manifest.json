@@ -1,0 +1,1446 @@
+{
+  "format": "tapao-ui-manifest/1",
+  "game": "TAPAO: Rush Island",
+  "pixel_density": "@2x (200 px / unité Blender)",
+  "fonts": {
+    "title": "factory/assets/fonts/PirataOne-Regular.ttf (OFL)",
+    "ui": "factory/assets/fonts/AlegreyaSC-Black.ttf (OFL)",
+    "text": "factory/assets/fonts/AlegreyaSC-Bold.ttf (OFL)"
+  },
+  "colors": {
+    "cream": "#FAE8BE",
+    "ink": "#28160C",
+    "gold": "#FFC450",
+    "health": "#E83C28",
+    "stamina": "#AAE646",
+    "fuel": "#FFB432"
+  },
+  "sprites": {
+    "logo": {
+      "file": "sprites/raw/logo.png",
+      "size_px": [
+        2800,
+        1720
+      ],
+      "kind": "logo"
+    },
+    "btn_wide_blank": {
+      "file": "sprites/raw/btn_wide_blank.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": null,
+      "states": {
+        "hover": "sprites/states/btn_wide_blank_hover.png",
+        "pressed": "sprites/states/btn_wide_blank_pressed.png",
+        "disabled": "sprites/states/btn_wide_blank_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_jouer": {
+      "file": "sprites/raw/btn_jouer.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "JOUER",
+      "states": {
+        "hover": "sprites/states/btn_jouer_hover.png",
+        "pressed": "sprites/states/btn_jouer_pressed.png",
+        "disabled": "sprites/states/btn_jouer_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_continuer": {
+      "file": "sprites/raw/btn_continuer.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "CONTINUER",
+      "states": {
+        "hover": "sprites/states/btn_continuer_hover.png",
+        "pressed": "sprites/states/btn_continuer_pressed.png",
+        "disabled": "sprites/states/btn_continuer_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_nouvelle_partie": {
+      "file": "sprites/raw/btn_nouvelle_partie.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "NOUVELLE PARTIE",
+      "states": {
+        "hover": "sprites/states/btn_nouvelle_partie_hover.png",
+        "pressed": "sprites/states/btn_nouvelle_partie_pressed.png",
+        "disabled": "sprites/states/btn_nouvelle_partie_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_options": {
+      "file": "sprites/raw/btn_options.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "OPTIONS",
+      "states": {
+        "hover": "sprites/states/btn_options_hover.png",
+        "pressed": "sprites/states/btn_options_pressed.png",
+        "disabled": "sprites/states/btn_options_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_credits": {
+      "file": "sprites/raw/btn_credits.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "CRÉDITS",
+      "states": {
+        "hover": "sprites/states/btn_credits_hover.png",
+        "pressed": "sprites/states/btn_credits_pressed.png",
+        "disabled": "sprites/states/btn_credits_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_quitter": {
+      "file": "sprites/raw/btn_quitter.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "QUITTER",
+      "states": {
+        "hover": "sprites/states/btn_quitter_hover.png",
+        "pressed": "sprites/states/btn_quitter_pressed.png",
+        "disabled": "sprites/states/btn_quitter_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_reprendre": {
+      "file": "sprites/raw/btn_reprendre.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "REPRENDRE",
+      "states": {
+        "hover": "sprites/states/btn_reprendre_hover.png",
+        "pressed": "sprites/states/btn_reprendre_pressed.png",
+        "disabled": "sprites/states/btn_reprendre_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_menu_principal": {
+      "file": "sprites/raw/btn_menu_principal.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "MENU PRINCIPAL",
+      "states": {
+        "hover": "sprites/states/btn_menu_principal_hover.png",
+        "pressed": "sprites/states/btn_menu_principal_pressed.png",
+        "disabled": "sprites/states/btn_menu_principal_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_recommencer": {
+      "file": "sprites/raw/btn_recommencer.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "RECOMMENCER",
+      "states": {
+        "hover": "sprites/states/btn_recommencer_hover.png",
+        "pressed": "sprites/states/btn_recommencer_pressed.png",
+        "disabled": "sprites/states/btn_recommencer_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_retour": {
+      "file": "sprites/raw/btn_retour.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "RETOUR",
+      "states": {
+        "hover": "sprites/states/btn_retour_hover.png",
+        "pressed": "sprites/states/btn_retour_pressed.png",
+        "disabled": "sprites/states/btn_retour_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_appliquer": {
+      "file": "sprites/raw/btn_appliquer.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "APPLIQUER",
+      "states": {
+        "hover": "sprites/states/btn_appliquer_hover.png",
+        "pressed": "sprites/states/btn_appliquer_pressed.png",
+        "disabled": "sprites/states/btn_appliquer_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_inventaire": {
+      "file": "sprites/raw/btn_inventaire.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "INVENTAIRE",
+      "states": {
+        "hover": "sprites/states/btn_inventaire_hover.png",
+        "pressed": "sprites/states/btn_inventaire_pressed.png",
+        "disabled": "sprites/states/btn_inventaire_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "btn_carte": {
+      "file": "sprites/raw/btn_carte.png",
+      "size_px": [
+        1200,
+        300
+      ],
+      "kind": "button",
+      "nine": [
+        110,
+        80
+      ],
+      "label": "CARTE",
+      "states": {
+        "hover": "sprites/states/btn_carte_hover.png",
+        "pressed": "sprites/states/btn_carte_pressed.png",
+        "disabled": "sprites/states/btn_carte_disabled.png"
+      },
+      "unreal_margin": [
+        0.0917,
+        0.2667
+      ]
+    },
+    "tab_audio": {
+      "file": "sprites/raw/tab_audio.png",
+      "size_px": [
+        660,
+        220
+      ],
+      "kind": "tab",
+      "label": "AUDIO",
+      "states": {
+        "hover": "sprites/states/tab_audio_hover.png",
+        "pressed": "sprites/states/tab_audio_pressed.png",
+        "disabled": "sprites/states/tab_audio_disabled.png"
+      }
+    },
+    "tab_video": {
+      "file": "sprites/raw/tab_video.png",
+      "size_px": [
+        660,
+        220
+      ],
+      "kind": "tab",
+      "label": "VIDÉO",
+      "states": {
+        "hover": "sprites/states/tab_video_hover.png",
+        "pressed": "sprites/states/tab_video_pressed.png",
+        "disabled": "sprites/states/tab_video_disabled.png"
+      }
+    },
+    "tab_commandes": {
+      "file": "sprites/raw/tab_commandes.png",
+      "size_px": [
+        660,
+        220
+      ],
+      "kind": "tab",
+      "label": "COMMANDES",
+      "states": {
+        "hover": "sprites/states/tab_commandes_hover.png",
+        "pressed": "sprites/states/tab_commandes_pressed.png",
+        "disabled": "sprites/states/tab_commandes_disabled.png"
+      }
+    },
+    "tab_blank": {
+      "file": "sprites/raw/tab_blank.png",
+      "size_px": [
+        660,
+        220
+      ],
+      "kind": "tab",
+      "label": null,
+      "states": {
+        "hover": "sprites/states/tab_blank_hover.png",
+        "pressed": "sprites/states/tab_blank_pressed.png",
+        "disabled": "sprites/states/tab_blank_disabled.png"
+      }
+    },
+    "icon_pause": {
+      "file": "sprites/raw/icon_pause.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_pause_hover.png",
+        "pressed": "sprites/states/icon_pause_pressed.png",
+        "disabled": "sprites/states/icon_pause_disabled.png"
+      }
+    },
+    "icon_play": {
+      "file": "sprites/raw/icon_play.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_play_hover.png",
+        "pressed": "sprites/states/icon_play_pressed.png",
+        "disabled": "sprites/states/icon_play_disabled.png"
+      }
+    },
+    "icon_settings": {
+      "file": "sprites/raw/icon_settings.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_settings_hover.png",
+        "pressed": "sprites/states/icon_settings_pressed.png",
+        "disabled": "sprites/states/icon_settings_disabled.png"
+      }
+    },
+    "icon_close": {
+      "file": "sprites/raw/icon_close.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_close_hover.png",
+        "pressed": "sprites/states/icon_close_pressed.png",
+        "disabled": "sprites/states/icon_close_disabled.png"
+      }
+    },
+    "icon_back": {
+      "file": "sprites/raw/icon_back.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_back_hover.png",
+        "pressed": "sprites/states/icon_back_pressed.png",
+        "disabled": "sprites/states/icon_back_disabled.png"
+      }
+    },
+    "icon_home": {
+      "file": "sprites/raw/icon_home.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_home_hover.png",
+        "pressed": "sprites/states/icon_home_pressed.png",
+        "disabled": "sprites/states/icon_home_disabled.png"
+      }
+    },
+    "icon_map": {
+      "file": "sprites/raw/icon_map.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_map_hover.png",
+        "pressed": "sprites/states/icon_map_pressed.png",
+        "disabled": "sprites/states/icon_map_disabled.png"
+      }
+    },
+    "icon_bag": {
+      "file": "sprites/raw/icon_bag.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_bag_hover.png",
+        "pressed": "sprites/states/icon_bag_pressed.png",
+        "disabled": "sprites/states/icon_bag_disabled.png"
+      }
+    },
+    "icon_sound_on": {
+      "file": "sprites/raw/icon_sound_on.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_sound_on_hover.png",
+        "pressed": "sprites/states/icon_sound_on_pressed.png",
+        "disabled": "sprites/states/icon_sound_on_disabled.png"
+      }
+    },
+    "icon_sound_off": {
+      "file": "sprites/raw/icon_sound_off.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_sound_off_hover.png",
+        "pressed": "sprites/states/icon_sound_off_pressed.png",
+        "disabled": "sprites/states/icon_sound_off_disabled.png"
+      }
+    },
+    "icon_plus": {
+      "file": "sprites/raw/icon_plus.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_plus_hover.png",
+        "pressed": "sprites/states/icon_plus_pressed.png",
+        "disabled": "sprites/states/icon_plus_disabled.png"
+      }
+    },
+    "icon_minus": {
+      "file": "sprites/raw/icon_minus.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_minus_hover.png",
+        "pressed": "sprites/states/icon_minus_pressed.png",
+        "disabled": "sprites/states/icon_minus_disabled.png"
+      }
+    },
+    "icon_arrow_left": {
+      "file": "sprites/raw/icon_arrow_left.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_arrow_left_hover.png",
+        "pressed": "sprites/states/icon_arrow_left_pressed.png",
+        "disabled": "sprites/states/icon_arrow_left_disabled.png"
+      }
+    },
+    "icon_arrow_right": {
+      "file": "sprites/raw/icon_arrow_right.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_arrow_right_hover.png",
+        "pressed": "sprites/states/icon_arrow_right_pressed.png",
+        "disabled": "sprites/states/icon_arrow_right_disabled.png"
+      }
+    },
+    "icon_check": {
+      "file": "sprites/raw/icon_check.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_check_hover.png",
+        "pressed": "sprites/states/icon_check_pressed.png",
+        "disabled": "sprites/states/icon_check_disabled.png"
+      }
+    },
+    "icon_info": {
+      "file": "sprites/raw/icon_info.png",
+      "size_px": [
+        320,
+        320
+      ],
+      "kind": "icon_button",
+      "states": {
+        "hover": "sprites/states/icon_info_hover.png",
+        "pressed": "sprites/states/icon_info_pressed.png",
+        "disabled": "sprites/states/icon_info_disabled.png"
+      }
+    },
+    "hud_heart": {
+      "file": "sprites/raw/hud_heart.png",
+      "size_px": [
+        220,
+        220
+      ],
+      "kind": "hud_icon"
+    },
+    "hud_bolt": {
+      "file": "sprites/raw/hud_bolt.png",
+      "size_px": [
+        220,
+        220
+      ],
+      "kind": "hud_icon"
+    },
+    "hud_flame": {
+      "file": "sprites/raw/hud_flame.png",
+      "size_px": [
+        220,
+        220
+      ],
+      "kind": "hud_icon"
+    },
+    "hud_sun": {
+      "file": "sprites/raw/hud_sun.png",
+      "size_px": [
+        220,
+        220
+      ],
+      "kind": "hud_icon"
+    },
+    "hud_coin": {
+      "file": "sprites/raw/hud_coin.png",
+      "size_px": [
+        220,
+        220
+      ],
+      "kind": "hud_icon"
+    },
+    "hud_pearl": {
+      "file": "sprites/raw/hud_pearl.png",
+      "size_px": [
+        220,
+        220
+      ],
+      "kind": "hud_icon"
+    },
+    "hud_ball": {
+      "file": "sprites/raw/hud_ball.png",
+      "size_px": [
+        220,
+        220
+      ],
+      "kind": "hud_icon"
+    },
+    "hud_hourglass": {
+      "file": "sprites/raw/hud_hourglass.png",
+      "size_px": [
+        220,
+        220
+      ],
+      "kind": "hud_icon"
+    },
+    "hud_swords": {
+      "file": "sprites/raw/hud_swords.png",
+      "size_px": [
+        220,
+        220
+      ],
+      "kind": "hud_icon"
+    },
+    "bar_health": {
+      "file": "sprites/raw/bar_health.png",
+      "size_px": [
+        1280,
+        200
+      ],
+      "kind": "bar_frame",
+      "fill_window_px": [
+        190,
+        44,
+        1060,
+        112
+      ]
+    },
+    "bar_stamina": {
+      "file": "sprites/raw/bar_stamina.png",
+      "size_px": [
+        1280,
+        200
+      ],
+      "kind": "bar_frame",
+      "fill_window_px": [
+        190,
+        44,
+        1060,
+        112
+      ]
+    },
+    "bar_fuel": {
+      "file": "sprites/raw/bar_fuel.png",
+      "size_px": [
+        1280,
+        200
+      ],
+      "kind": "bar_frame",
+      "fill_window_px": [
+        190,
+        44,
+        1060,
+        112
+      ]
+    },
+    "bar_blank": {
+      "file": "sprites/raw/bar_blank.png",
+      "size_px": [
+        1280,
+        200
+      ],
+      "kind": "bar_frame",
+      "fill_window_px": [
+        190,
+        44,
+        1060,
+        112
+      ]
+    },
+    "counter_plate": {
+      "file": "sprites/raw/counter_plate.png",
+      "size_px": [
+        680,
+        200
+      ],
+      "kind": "counter"
+    },
+    "counter_plate_b": {
+      "file": "sprites/raw/counter_plate_b.png",
+      "size_px": [
+        680,
+        200
+      ],
+      "kind": "counter"
+    },
+    "slot_0": {
+      "file": "sprites/raw/slot_0.png",
+      "size_px": [
+        340,
+        340
+      ],
+      "kind": "slot",
+      "states": {
+        "hover": "sprites/states/slot_0_hover.png",
+        "pressed": "sprites/states/slot_0_pressed.png",
+        "disabled": "sprites/states/slot_0_disabled.png"
+      }
+    },
+    "slot_1": {
+      "file": "sprites/raw/slot_1.png",
+      "size_px": [
+        340,
+        340
+      ],
+      "kind": "slot",
+      "states": {
+        "hover": "sprites/states/slot_1_hover.png",
+        "pressed": "sprites/states/slot_1_pressed.png",
+        "disabled": "sprites/states/slot_1_disabled.png"
+      }
+    },
+    "slot_2": {
+      "file": "sprites/raw/slot_2.png",
+      "size_px": [
+        340,
+        340
+      ],
+      "kind": "slot",
+      "states": {
+        "hover": "sprites/states/slot_2_hover.png",
+        "pressed": "sprites/states/slot_2_pressed.png",
+        "disabled": "sprites/states/slot_2_disabled.png"
+      }
+    },
+    "slot_3": {
+      "file": "sprites/raw/slot_3.png",
+      "size_px": [
+        340,
+        340
+      ],
+      "kind": "slot",
+      "states": {
+        "hover": "sprites/states/slot_3_hover.png",
+        "pressed": "sprites/states/slot_3_pressed.png",
+        "disabled": "sprites/states/slot_3_disabled.png"
+      }
+    },
+    "slot_4": {
+      "file": "sprites/raw/slot_4.png",
+      "size_px": [
+        340,
+        340
+      ],
+      "kind": "slot",
+      "states": {
+        "hover": "sprites/states/slot_4_hover.png",
+        "pressed": "sprites/states/slot_4_pressed.png",
+        "disabled": "sprites/states/slot_4_disabled.png"
+      }
+    },
+    "key_e": {
+      "file": "sprites/raw/key_e.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_e_hover.png",
+        "pressed": "sprites/states/key_e_pressed.png",
+        "disabled": "sprites/states/key_e_disabled.png"
+      }
+    },
+    "key_f": {
+      "file": "sprites/raw/key_f.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_f_hover.png",
+        "pressed": "sprites/states/key_f_pressed.png",
+        "disabled": "sprites/states/key_f_disabled.png"
+      }
+    },
+    "key_q": {
+      "file": "sprites/raw/key_q.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_q_hover.png",
+        "pressed": "sprites/states/key_q_pressed.png",
+        "disabled": "sprites/states/key_q_disabled.png"
+      }
+    },
+    "key_r": {
+      "file": "sprites/raw/key_r.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_r_hover.png",
+        "pressed": "sprites/states/key_r_pressed.png",
+        "disabled": "sprites/states/key_r_disabled.png"
+      }
+    },
+    "key_v": {
+      "file": "sprites/raw/key_v.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_v_hover.png",
+        "pressed": "sprites/states/key_v_pressed.png",
+        "disabled": "sprites/states/key_v_disabled.png"
+      }
+    },
+    "key_1": {
+      "file": "sprites/raw/key_1.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_1_hover.png",
+        "pressed": "sprites/states/key_1_pressed.png",
+        "disabled": "sprites/states/key_1_disabled.png"
+      }
+    },
+    "key_2": {
+      "file": "sprites/raw/key_2.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_2_hover.png",
+        "pressed": "sprites/states/key_2_pressed.png",
+        "disabled": "sprites/states/key_2_disabled.png"
+      }
+    },
+    "key_3": {
+      "file": "sprites/raw/key_3.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_3_hover.png",
+        "pressed": "sprites/states/key_3_pressed.png",
+        "disabled": "sprites/states/key_3_disabled.png"
+      }
+    },
+    "key_4": {
+      "file": "sprites/raw/key_4.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_4_hover.png",
+        "pressed": "sprites/states/key_4_pressed.png",
+        "disabled": "sprites/states/key_4_disabled.png"
+      }
+    },
+    "key_tab": {
+      "file": "sprites/raw/key_tab.png",
+      "size_px": [
+        280,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_tab_hover.png",
+        "pressed": "sprites/states/key_tab_pressed.png",
+        "disabled": "sprites/states/key_tab_disabled.png"
+      }
+    },
+    "key_echap": {
+      "file": "sprites/raw/key_echap.png",
+      "size_px": [
+        360,
+        200
+      ],
+      "kind": "key",
+      "states": {
+        "hover": "sprites/states/key_echap_hover.png",
+        "pressed": "sprites/states/key_echap_pressed.png",
+        "disabled": "sprites/states/key_echap_disabled.png"
+      }
+    },
+    "badge_1": {
+      "file": "sprites/raw/badge_1.png",
+      "size_px": [
+        150,
+        150
+      ],
+      "kind": "badge"
+    },
+    "badge_2": {
+      "file": "sprites/raw/badge_2.png",
+      "size_px": [
+        150,
+        150
+      ],
+      "kind": "badge"
+    },
+    "badge_3": {
+      "file": "sprites/raw/badge_3.png",
+      "size_px": [
+        150,
+        150
+      ],
+      "kind": "badge"
+    },
+    "badge_4": {
+      "file": "sprites/raw/badge_4.png",
+      "size_px": [
+        150,
+        150
+      ],
+      "kind": "badge"
+    },
+    "slider_track": {
+      "file": "sprites/raw/slider_track.png",
+      "size_px": [
+        1240,
+        120
+      ],
+      "kind": "slider"
+    },
+    "slider_knob": {
+      "file": "sprites/raw/slider_knob.png",
+      "size_px": [
+        160,
+        160
+      ],
+      "kind": "slider"
+    },
+    "checkbox_off": {
+      "file": "sprites/raw/checkbox_off.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "checkbox"
+    },
+    "checkbox_on": {
+      "file": "sprites/raw/checkbox_on.png",
+      "size_px": [
+        200,
+        200
+      ],
+      "kind": "checkbox"
+    },
+    "compass_bar": {
+      "file": "sprites/raw/compass_bar.png",
+      "size_px": [
+        1840,
+        220
+      ],
+      "kind": "compass"
+    },
+    "panel_parchment": {
+      "file": "sprites/raw/panel_parchment.png",
+      "size_px": [
+        2000,
+        1400
+      ],
+      "kind": "panel",
+      "nine": [
+        140,
+        140
+      ],
+      "unreal_margin": [
+        0.07,
+        0.1
+      ]
+    },
+    "ribbon_blank": {
+      "file": "sprites/raw/ribbon_blank.png",
+      "size_px": [
+        1440,
+        340
+      ],
+      "kind": "ribbon",
+      "label": null
+    },
+    "ribbon_pause": {
+      "file": "sprites/raw/ribbon_pause.png",
+      "size_px": [
+        1440,
+        340
+      ],
+      "kind": "ribbon",
+      "label": "PAUSE"
+    },
+    "ribbon_options": {
+      "file": "sprites/raw/ribbon_options.png",
+      "size_px": [
+        1440,
+        340
+      ],
+      "kind": "ribbon",
+      "label": "OPTIONS"
+    },
+    "ribbon_inventaire": {
+      "file": "sprites/raw/ribbon_inventaire.png",
+      "size_px": [
+        1440,
+        340
+      ],
+      "kind": "ribbon",
+      "label": "INVENTAIRE"
+    },
+    "ribbon_naufrage": {
+      "file": "sprites/raw/ribbon_naufrage.png",
+      "size_px": [
+        1440,
+        340
+      ],
+      "kind": "ribbon",
+      "label": "NAUFRAGÉ !"
+    },
+    "ribbon_ile_conquise": {
+      "file": "sprites/raw/ribbon_ile_conquise.png",
+      "size_px": [
+        1440,
+        340
+      ],
+      "kind": "ribbon",
+      "label": "ÎLE CONQUISE !"
+    },
+    "ribbon_chargement": {
+      "file": "sprites/raw/ribbon_chargement.png",
+      "size_px": [
+        1440,
+        340
+      ],
+      "kind": "ribbon",
+      "label": "CHARGEMENT"
+    },
+    "minimap_frame": {
+      "file": "sprites/raw/minimap_frame.png",
+      "size_px": [
+        960,
+        960
+      ],
+      "kind": "minimap",
+      "window_radius_px": 336
+    },
+    "panel_tooltip": {
+      "file": "sprites/raw/panel_tooltip.png",
+      "size_px": [
+        1200,
+        800
+      ],
+      "kind": "panel",
+      "nine": [
+        140,
+        140
+      ],
+      "unreal_margin": [
+        0.1167,
+        0.175
+      ]
+    },
+    "item_musket": {
+      "file": "sprites/items/item_musket.png",
+      "label": "Mousquet",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SK_Bean_Musket"
+    },
+    "item_cutlass": {
+      "file": "sprites/items/item_cutlass.png",
+      "label": "Sabre",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_Cutlass"
+    },
+    "item_torch": {
+      "file": "sprites/items/item_torch.png",
+      "label": "Torche",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_Torch"
+    },
+    "item_trumpet": {
+      "file": "sprites/items/item_trumpet.png",
+      "label": "Trompette",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_Trumpet"
+    },
+    "item_powder_horn": {
+      "file": "sprites/items/item_powder_horn.png",
+      "label": "Poire à poudre",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_PowderHorn"
+    },
+    "item_pouch": {
+      "file": "sprites/items/item_pouch.png",
+      "label": "Sacoche à balles",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_BallPouch"
+    },
+    "item_ball": {
+      "file": "sprites/items/item_ball.png",
+      "label": "Balle de mousquet",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_MusketBall"
+    },
+    "item_flint": {
+      "file": "sprites/items/item_flint.png",
+      "label": "Silex",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_Flint"
+    },
+    "item_cloth": {
+      "file": "sprites/items/item_cloth.png",
+      "label": "Chiffon",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_Cloth"
+    },
+    "item_whetstone": {
+      "file": "sprites/items/item_whetstone.png",
+      "label": "Pierre à aiguiser",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_Whetstone"
+    },
+    "item_sword_oil": {
+      "file": "sprites/items/item_sword_oil.png",
+      "label": "Huile",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Bean_SwordOil"
+    },
+    "item_camp_fishing_rod": {
+      "file": "sprites/items/item_camp_fishing_rod.png",
+      "label": "Canne à pêche",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Camp_FishingRod"
+    },
+    "item_camp_fish": {
+      "file": "sprites/items/item_camp_fish.png",
+      "label": "Poisson",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Camp_Fish"
+    },
+    "item_camp_net": {
+      "file": "sprites/items/item_camp_net.png",
+      "label": "Filet",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Camp_Net"
+    },
+    "item_camp_fish_trap": {
+      "file": "sprites/items/item_camp_fish_trap.png",
+      "label": "Nasse",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Camp_FishTrap"
+    },
+    "item_camp_fish_basket": {
+      "file": "sprites/items/item_camp_fish_basket.png",
+      "label": "Panier à poissons",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Camp_FishBasket"
+    },
+    "item_loot_coconut_bowl": {
+      "file": "sprites/items/item_loot_coconut_bowl.png",
+      "label": "Bol en coco",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_CoconutBowl"
+    },
+    "item_loot_basket": {
+      "file": "sprites/items/item_loot_basket.png",
+      "label": "Panier usé",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_Basket"
+    },
+    "item_loot_rope_coil": {
+      "file": "sprites/items/item_loot_rope_coil.png",
+      "label": "Corde",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_RopeCoil"
+    },
+    "item_loot_shells_tied": {
+      "file": "sprites/items/item_loot_shells_tied.png",
+      "label": "Coquillages liés",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_TiedShells"
+    },
+    "item_loot_wooden_spoon": {
+      "file": "sprites/items/item_loot_wooden_spoon.png",
+      "label": "Cuillère",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_WoodenSpoon"
+    },
+    "item_loot_calabash": {
+      "file": "sprites/items/item_loot_calabash.png",
+      "label": "Calebasse",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_Calabash"
+    },
+    "item_loot_line_spool": {
+      "file": "sprites/items/item_loot_line_spool.png",
+      "label": "Bobine de ligne",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_LineSpool"
+    },
+    "item_loot_rolled_mat": {
+      "file": "sprites/items/item_loot_rolled_mat.png",
+      "label": "Natte",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_RolledMat"
+    },
+    "item_loot_smooth_stone": {
+      "file": "sprites/items/item_loot_smooth_stone.png",
+      "label": "Galet",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_SmoothStone"
+    },
+    "item_loot_wooden_comb": {
+      "file": "sprites/items/item_loot_wooden_comb.png",
+      "label": "Peigne",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_WoodenComb"
+    },
+    "item_loot_seed_necklace": {
+      "file": "sprites/items/item_loot_seed_necklace.png",
+      "label": "Collier",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_SeedNecklace"
+    },
+    "item_loot_small_chest": {
+      "file": "sprites/items/item_loot_small_chest.png",
+      "label": "Coffret",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Loot_SmallChest"
+    },
+    "item_marae_artifact": {
+      "file": "sprites/items/item_marae_artifact.png",
+      "label": "Artefact des Perles",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Marae_PearlArtifact"
+    },
+    "item_marae_conch": {
+      "file": "sprites/items/item_marae_conch.png",
+      "label": "Conque",
+      "size_px": [
+        512,
+        512
+      ],
+      "kind": "item_icon",
+      "export": "SM_Marae_Conch"
+    }
+  },
+  "fills": {
+    "health": "sprites/fills/fill_health.png",
+    "stamina": "sprites/fills/fill_stamina.png",
+    "fuel": "sprites/fills/fill_fuel.png",
+    "gold": "sprites/fills/fill_gold.png",
+    "bg": "sprites/fills/fill_background.png"
+  },
+  "screens": {
+    "main_menu": "screens/01_menu_principal.png",
+    "hud_day": "screens/02_hud_jour.png",
+    "hud_night": "screens/03_hud_nuit_torche.png",
+    "pause": "screens/04_pause.png",
+    "options": "screens/05_options.png",
+    "inventory": "screens/06_inventaire.png",
+    "game_over": "screens/07_naufrage.png",
+    "victory": "screens/08_ile_conquise.png",
+    "loading": "screens/09_chargement.png"
+  }
+}
