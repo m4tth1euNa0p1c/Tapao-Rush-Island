@@ -99,7 +99,7 @@ public:
 
 	/**
 	 *  Server: draws a fragment of the loaded catalog from Seed and chooses it (T-094: random island at launch until
-	 *  the hub of L4). Never the previously drawn fragment twice in a row, unless the catalog offers only one.
+	 *  the hub of L4). Avoids the last RecentIslandCount played islands, relaxing oldest entries when necessary.
 	 */
 	UFUNCTION(BlueprintCallable, Category="Expedition|Islands")
 	EFragmentError PickRandomIsland(int32 Seed);
@@ -107,6 +107,9 @@ public:
 	/** Fragment drawn last by PickRandomIsland in this game instance, None before the first draw */
 	UFUNCTION(BlueprintPure, Category="Expedition|Islands")
 	FName GetLastPickedFragmentId() const { return LastPickedFragmentId; }
+
+	/** Server: records an actual expedition start, once per ExpeditionId (selection alone does not count). */
+	void RecordPlayedIsland(FName FragmentId, const FGuid& ExpeditionId);
 
 	/**
 	 *  Server: travels to the chosen fragment (<map>?Island=<id>, read by the boat of T-093): OpenLevel-like client
@@ -229,6 +232,12 @@ private:
 	/** Next definition request id */
 	uint32 NextRequestId = 1;
 
-	/** Fragment drawn last: the next draw avoids it */
+	/** Played islands, oldest first; retained across world travel, never replicated */
+	TArray<FName> RecentPlayedIslandIds;
+
+	/** Makes duplicate start notifications idempotent */
+	FGuid LastRecordedExpeditionId;
+
+	/** Fragment drawn last, for diagnostics and legacy Blueprint consumers */
 	FName LastPickedFragmentId;
 };

@@ -181,22 +181,67 @@ TValueOrError<FString, EFragmentError> ExpeditionIslands::BuildTravelURL(const U
 
 int32 ExpeditionIslands::PickIndex(int32 Count, int32 Seed, int32 ExcludedIndex)
 {
+	return PickIndex(Count, Seed, MakeArrayView(&ExcludedIndex, 1));
+}
+
+int32 ExpeditionIslands::PickIndex(int32 Count, int32 Seed, TConstArrayView<int32> RecentIndices)
+{
 	if (Count <= 0)
 	{
 		return INDEX_NONE;
 	}
-	if (Count == 1)
+	TArray<int32> LastPlayed;
+	LastPlayed.Init(INDEX_NONE, Count);
+	for (int32 Position = 0; Position < RecentIndices.Num(); ++Position)
 	{
-		return 0;
+		if (LastPlayed.IsValidIndex(RecentIndices[Position]))
+		{
+			LastPlayed[RecentIndices[Position]] = Position;
+		}
+	}
+	int32 Oldest = LastPlayed[0];
+	for (const int32 Position : LastPlayed)
+	{
+		Oldest = FMath::Min(Oldest, Position);
+	}
+	TArray<int32> Candidates;
+	for (int32 Index = 0; Index < Count; ++Index)
+	{
+		if (LastPlayed[Index] == Oldest)
+		{
+			Candidates.Add(Index);
+		}
 	}
 	FRandomStream Stream(Seed);
-	if (ExcludedIndex < 0 || ExcludedIndex >= Count)
+	return Candidates[Stream.RandRange(0, Candidates.Num() - 1)];
+}
+
+TValueOrError<FName, EFragmentError> ExpeditionIslands::PickFragmentId(TConstArrayView<FName> FragmentIds, int32 Seed, TConstArrayView<FName> RecentIds, int32 HistoryCount)
+{
+	if (FragmentIds.IsEmpty())
 	{
-		return Stream.RandRange(0, Count - 1);
+		return MakeError(EFragmentError::CatalogEmpty);
 	}
-	// Draw among the others, then skip over the excluded slot: uniform over the Count - 1 remaining fragments
-	const int32 Drawn = Stream.RandRange(0, Count - 2);
-	return Drawn >= ExcludedIndex ? Drawn + 1 : Drawn;
+	TArray<int32> Indices;
+	const int32 First = FMath::Max(0, RecentIds.Num() - FMath::Clamp(HistoryCount, 0, 1024));
+	for (int32 Position = First; Position < RecentIds.Num(); ++Position)
+	{
+		Indices.Add(FragmentIds.IndexOfByKey(RecentIds[Position]));
+	}
+	return MakeValue(FragmentIds[PickIndex(FragmentIds.Num(), Seed, Indices)]);
+}
+
+void ExpeditionIslands::RememberPlayedIsland(TArray<FName>& RecentIds, FName FragmentId, int32 HistoryCount)
+{
+	const int32 Capacity = FMath::Clamp(HistoryCount, 0, 1024);
+	if (Capacity > 0 && IsValidFragmentId(FragmentId))
+	{
+		RecentIds.Add(FragmentId);
+	}
+	if (RecentIds.Num() > Capacity)
+	{
+		RecentIds.RemoveAt(0, RecentIds.Num() - Capacity, EAllowShrinking::No);
+	}
 }
 
 TValueOrError<FName, EFragmentError> ExpeditionIslands::PickFragmentId(TConstArrayView<FName> FragmentIds, int32 Seed, FName PreviousFragmentId)

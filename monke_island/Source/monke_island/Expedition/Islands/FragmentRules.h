@@ -18,6 +18,10 @@ class MONKE_ISLAND_API UFragmentRules : public UDataAsset
 
 public:
 
+	/** Number of played islands excluded from the next draw; zero disables history */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Selection", meta=(ClampMin="0", ClampMax="1024"))
+	int32 RecentIslandCount = 8;
+
 	/** Maximum delay of the load of the catalog or of a definition before it fails (s, cahier §16) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Loading", meta=(ClampMin="1", Units="s"))
 	float LoadTimeoutSeconds = 60.0f;

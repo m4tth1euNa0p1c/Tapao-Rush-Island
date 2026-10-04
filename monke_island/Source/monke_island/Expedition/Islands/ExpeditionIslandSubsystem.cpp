@@ -490,7 +490,7 @@ EFragmentError UExpeditionIslandSubsystem::PickRandomIsland(int32 Seed)
 			Ids.Add(Definition->FragmentId);
 		}
 	}
-	const TValueOrError<FName, EFragmentError> Picked = ExpeditionIslands::PickFragmentId(Ids, Seed, LastPickedFragmentId);
+	const TValueOrError<FName, EFragmentError> Picked = ExpeditionIslands::PickFragmentId(Ids, Seed, RecentPlayedIslandIds, GetRules().RecentIslandCount);
 	if (Picked.HasError())
 	{
 		UE_LOG(LogMonkeIslands, Warning, TEXT("Islands: random pick failed (%s)"), ExpeditionIslands::LexErrorName(Picked.GetError()));
@@ -505,6 +505,17 @@ EFragmentError UExpeditionIslandSubsystem::PickRandomIsland(int32 Seed)
 		LastPickedFragmentId = Picked.GetValue();
 	}
 	return Error;
+}
+
+void UExpeditionIslandSubsystem::RecordPlayedIsland(FName FragmentId, const FGuid& ExpeditionId)
+{
+	if (!HasSelectionAuthority() || !ExpeditionId.IsValid() || ExpeditionId == LastRecordedExpeditionId
+		|| !ExpeditionIslands::IsValidFragmentId(FragmentId))
+	{
+		return;
+	}
+	ExpeditionIslands::RememberPlayedIsland(RecentPlayedIslandIds, FragmentId, GetRules().RecentIslandCount);
+	LastRecordedExpeditionId = ExpeditionId;
 }
 
 EFragmentError UExpeditionIslandSubsystem::TravelToSelectedIsland()

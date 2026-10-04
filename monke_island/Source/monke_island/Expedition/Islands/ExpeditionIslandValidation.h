@@ -43,6 +43,15 @@ namespace ExpeditionIslands
 	 */
 	[[nodiscard]] MONKE_ISLAND_API int32 PickIndex(int32 Count, int32 Seed, int32 ExcludedIndex);
 
+	/** History is oldest first. If every island is excluded, allow the least recently played one(s). */
+	[[nodiscard]] MONKE_ISLAND_API int32 PickIndex(int32 Count, int32 Seed, TConstArrayView<int32> RecentIndices);
+
+	/** Same catalog order, seed and history produce the same draw. Invalid history ids are ignored. */
+	[[nodiscard]] MONKE_ISLAND_API TValueOrError<FName, EFragmentError> PickFragmentId(TConstArrayView<FName> FragmentIds, int32 Seed, TConstArrayView<FName> RecentIds, int32 HistoryCount);
+
+	/** Bounded oldest-first history. Invalid ids are ignored; zero/negative capacity clears history. */
+	MONKE_ISLAND_API void RememberPlayedIsland(TArray<FName>& RecentIds, FName FragmentId, int32 HistoryCount);
+
 	/** Fragment drawn among FragmentIds from Seed, never PreviousFragmentId twice in a row unless it is the only one */
 	[[nodiscard]] MONKE_ISLAND_API TValueOrError<FName, EFragmentError> PickFragmentId(TConstArrayView<FName> FragmentIds, int32 Seed, FName PreviousFragmentId);
 

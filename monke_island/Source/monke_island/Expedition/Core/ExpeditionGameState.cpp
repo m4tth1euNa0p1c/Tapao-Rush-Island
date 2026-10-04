@@ -110,6 +110,10 @@ bool AExpeditionGameState::StartExpedition()
 	ExpeditionId = FGuid::NewGuid();
 	ClockState = ExpeditionClock::Start(Now, Params);
 	Resolution = EExpeditionResolution::None;
+	if (UExpeditionIslandSubsystem* Islands = UExpeditionIslandSubsystem::Get(this))
+	{
+		Islands->RecordPlayedIsland(FragmentId, ExpeditionId);
+	}
 
 	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: started at %.2f s, flood at %.2f s"),
 		*ExpeditionId.ToString(), ClockState.StartTime, ClockState.FloodStartTime);
