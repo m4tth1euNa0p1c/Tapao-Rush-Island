@@ -1,0 +1,271 @@
+{
+ "fragment": "FRG_Raraka_01",
+ "tolerance_m": 0.15,
+ "sources": {
+  "DT_Raraka_Palms.csv": {
+   "in_box": 3161,
+   "kept": 2147
+  },
+  "DT_Raraka_Hard_00.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Hard_01.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Hard_02.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Hard_03.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Hard_04.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Hard_05.csv": {
+   "in_box": 9940,
+   "kept": 6863
+  },
+  "DT_Raraka_Hard_06.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Hard_07.csv": {
+   "in_box": 2327,
+   "kept": 117
+  },
+  "DT_Raraka_Soft_00.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_01.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_02.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_03.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_04.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_05.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_06.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_07.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_08.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_09.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_10.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_11.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_12.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_13.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_14.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_15.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_16.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_17.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_18.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_19.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_20.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_21.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_22.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_23.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_24.csv": {
+   "in_box": 5932,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_25.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_26.csv": {
+   "in_box": 19559,
+   "kept": 12036
+  },
+  "DT_Raraka_Soft_27.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_28.csv": {
+   "in_box": 18494,
+   "kept": 15603
+  },
+  "DT_Raraka_Soft_29.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_30.csv": {
+   "in_box": 0,
+   "kept": 0
+  },
+  "DT_Raraka_Soft_31.csv": {
+   "in_box": 0,
+   "kept": 0
+  }
+ },
+ "meshes": {
+  "SM_CoconutPalm_DeadSnag_A": 67,
+  "SM_CoconutPalm_Fallen_A": 4,
+  "SM_CoconutPalm_Juvenile_A": 1950,
+  "SM_CoconutPalm_Juvenile_B": 1322,
+  "SM_CoconutPalm_Leaning_A": 204,
+  "SM_CoconutPalm_Leaning_B": 288,
+  "SM_CoconutPalm_SCurve_A": 220,
+  "SM_CoconutPalm_Sabre_A": 34,
+  "SM_CoconutPalm_Sabre_B": 10,
+  "SM_CoconutPalm_Straight_A": 609,
+  "SM_CoconutPalm_Straight_B": 590,
+  "SM_CoconutPalm_Young_A": 185,
+  "SM_CoconutPalm_Young_B": 209,
+  "SM_Coconut_Brown": 1195,
+  "SM_Coconut_Green": 314,
+  "SM_Coconut_Yellow": 172,
+  "SM_CoralBlock_A": 169,
+  "SM_CoralBlock_B": 143,
+  "SM_CoralBlock_C": 104,
+  "SM_CoralBlock_D": 70,
+  "SM_CoralBlock_E": 49,
+  "SM_CoralBlock_F": 31,
+  "SM_Driftwood_A": 13,
+  "SM_Driftwood_B": 5,
+  "SM_MikiMiki_A": 1373,
+  "SM_MikiMiki_B": 948,
+  "SM_MikiMiki_C": 930,
+  "SM_Pandanus_A": 232,
+  "SM_Pandanus_B": 254,
+  "SM_Pandanus_Young": 236,
+  "SM_Tahinu_A": 99,
+  "SM_Tahinu_B": 85,
+  "SM_CoconutFrond_Dry_A": 412,
+  "SM_CoconutFrond_Dry_B": 396,
+  "SM_CoconutPalm_Sprout_A": 247,
+  "SM_CoconutPalm_Sprout_B": 274,
+  "SM_CoralRubble_A": 176,
+  "SM_CoralRubble_B": 180,
+  "SM_CoralRubble_C": 165,
+  "SM_CoralRubble_D": 175,
+  "SM_CoralRubble_E": 171,
+  "SM_CoralRubble_F": 171,
+  "SM_CoralRubble_G": 165,
+  "SM_CoralRubble_H": 184,
+  "SM_Fern_A": 3485,
+  "SM_Fern_B": 3513,
+  "SM_Grass_Dry": 697,
+  "SM_Grass_Short": 793,
+  "SM_Grass_Tuft": 371,
+  "SM_Ipomoea_A": 103,
+  "SM_Ipomoea_B": 141,
+  "SM_LambisShell": 31,
+  "SM_Naupaka_A": 5075,
+  "SM_Naupaka_B": 3846,
+  "SM_Naupaka_C": 3881
+ },
+ "dropped_changed_terrain": 22647,
+ "blocks": [
+  {
+   "name": "DT_FRG_Raraka_01_Hard_00",
+   "physics": "Hard",
+   "rows": 9127,
+   "bounds_cm": [
+    1139112.2,
+    83360.9,
+    1266672.9,
+    332892.0
+   ],
+   "file": "docs/reference/map/raw/raraka_fragments/FRG_Raraka_01/vegetation/DT_FRG_Raraka_01_Hard_00.csv"
+  },
+  {
+   "name": "DT_FRG_Raraka_01_Soft_00",
+   "physics": "Soft",
+   "rows": 13819,
+   "bounds_cm": [
+    1202339.5,
+    107854.7,
+    1253979.7,
+    198954.5
+   ],
+   "file": "docs/reference/map/raw/raraka_fragments/FRG_Raraka_01/vegetation/DT_FRG_Raraka_01_Soft_00.csv"
+  },
+  {
+   "name": "DT_FRG_Raraka_01_Soft_01",
+   "physics": "Soft",
+   "rows": 13820,
+   "bounds_cm": [
+    1165767.3,
+    198966.9,
+    1255271.9,
+    305512.0
+   ],
+   "file": "docs/reference/map/raw/raraka_fragments/FRG_Raraka_01/vegetation/DT_FRG_Raraka_01_Soft_01.csv"
+  }
+ ],
+ "totals": {
+  "Hard": 9127,
+  "Soft": 27639
+ },
+ "changed_terrain_px": 372617
+}

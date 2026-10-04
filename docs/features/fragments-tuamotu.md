@@ -390,6 +390,56 @@ Le départ en barque est implémenté dans `Source/monke_island/Boats/` (spec : 
 - Les définitions créées vides s'enregistrent d'abord sous leur nom d'asset : une nouvelle analyse de l'Asset Manager a été nécessaire. Le script ne règle pas ce point : après une création, relancer l'éditeur ou modifier un réglage de l'Asset Manager.
 - `Lvl_Raraka` reste une map intérimaire : pas encore de fragments découpés (T-083 à T-089).
 
+## Intégration T-089 (lot L3, 2026-10-04, preuve `testé éditeur`)
+Périmètre : `FRG_Raraka_01` seulement. Les 19 autres définitions pointent toujours vers `Lvl_Raraka`.
+
+**Reproduction** (depuis la racine, arbre principal, éditeur ouvert, aucun PIE) :
+```
+python scripts/map/fragments/build_fragment.py raraka FRG_Raraka_01            # puis --check
+python scripts/map/fragments/build_horizon.py raraka FRG_Raraka_01
+python scripts/map/fragments/fragment_vegetation.py raraka FRG_Raraka_01      # végétation filtrée, 3 blocs CSV
+python scripts/editor/setup_fragment_map.py FRG_Raraka_01 --part <partie> [--tile N]
+```
+Chaque partie produit un script pour `ProgrammaticToolset.execute_tool_script` (MCP `unreal`). Elles sont idempotentes et sauvegardent à la fin. Ordre : `material`, `assets`, `tile` (N de 0 à 13, une tuile par appel, environ 10 s chacune, pour ménager la RAM), `vegetation`, `maps`, `core`, ouvrir `L_Frag_Raraka_01`, `level`, `wire`. Le mouillage du galion des 20 définitions : `python scripts/editor/setup_fragments.py --part galleon`.
+
+**Assets** :
+- `/Game/MonkeIsland/Map/Fragments/FRG_Raraka_01/` (et non `Environment/Fragments/`, comme le disait la table d'en-tête) :
+  - `Terrain/SM_Frag_Raraka_01_Terrain_<x>_<y>` : 14 tuiles, 1 634 304 triangles. Nanite (repli à 100 %), collision complexe (`CTF_UseComplexAsSimple`), enveloppe convexe retirée. OBJ en cm, même convention d'axes que `Lvl_Raraka` ;
+  - `T_FRG_Raraka_01_Masks` (2048², linéaire, `TC_Masks`) et `MI_FRG_Raraka_01_Terrain` (parent `M_Terrain_Atoll`, paramètre `Masks`) ;
+  - `SM_FRG_Raraka_01_Water` (2 048 triangles, `M_Water_Lagoon`, sans collision) ;
+  - `SM_FRG_Raraka_01_Horizon` (10 911 triangles, sans collision) ;
+  - `Vegetation/DT_FRG_Raraka_01_{Hard_00, Soft_00, Soft_01}` (GameplayTagTableRow) : 9 127, 13 819 et 13 820 lignes.
+- `/Game/MonkeIsland/Materials/M_Horizon_Atoll` (Unlit, opaque, une face ; 39 nœuds, aucune texture ; tous les paramètres de la recette, groupe `Horizon`) et `/Game/MonkeIsland/Map/Fragments/Materials/MI_Horizon_Raraka`.
+- `/Game/MonkeIsland/Maps/Fragments/LI_ExpeditionCore` : ciel et soleil, SkyAtmosphere, SkyLight, brouillard et nuages, réglés comme dans `Lvl_Raraka` ; `DayNightCycle`, `WindStorm`, `FloodSimulation` et `CoconutFallDirector` ; `CampSpawner`, `LootScatterSpawner`, `GalleonSpawner` et `TikiDirector`, avec les mêmes `DA_*` que `Lvl_Raraka`.
+- `/Game/MonkeIsland/Maps/Fragments/L_Frag_Raraka_01` :
+  - les tuiles, l'eau (tag `IslandWaterSurface`) et l'horizon (sans ombre, sans collision, hors distance fields et ray tracing, sans distance maximale) ;
+  - `ARR_FRG_Raraka_01` (`AExpeditionArrivalPoint`) et `PlayerStart_Fallback` (plage visée, 15 m à l'intérieur ; cet îlot fait 30 m de large) ;
+  - 3 volumes PCG (`PCG_Raraka_VegHard` et `VegSoft`, la DataTable en paramètre), `BP_VillageSpawner` (valeurs par défaut) et l'instance `LI_ExpeditionCore` ;
+  - GameMode Override : `BP_IslandGameMode`.
+- `DA_Island_Raraka_01.Map` = `L_Frag_Raraka_01`. Les 20 `DA_Island_Raraka_NN` reçoivent un mouillage `Galleon` (`galleon_anchor`, `bAvailableDuringSubmersion`), sans toucher aux trois autres.
+
+**Végétation** (`fragment_vegetation.py`) : on garde une instance si elle est dans l'emprise du terrain et si, sur les 3 × 3 pixels autour d'elle, le terrain du fragment s'écarte de celui de Raraka de 0,15 m au plus. Les motu exclus, devenus platier, et le fond abaissé de la marge perdent donc tout. Résultat : 36 766 instances gardées et 22 647 retirées. Aperçu : `fragments/FRG_Raraka_01/preview_vegetation.png` (vert = gardé, rouge = retiré). Les meshes sont les mêmes (`Environment/Vegetation`, `/Props`), donc le dégagement des villages fonctionne (2 233 plantes dégagées). Génération PCG : environ 4 s par bloc.
+
+**Choix réseau** : `BP_VillageSpawner` est répliqué (`bAlwaysRelevant`). Il est posé directement dans `L_Frag`, pas dans la LI. Les autres acteurs répliqués (`DayNightCycle`, `WindStorm`, `FloodSimulation`) sont dans la LI. En PIE hôte + client, le client charge la LI (`LogLevelInstance: Loaded 1 levels`), sa grille d'inondation est centrée au même point que celle de l'hôte, le vent suit l'horloge, le compteur s'affiche et les 6 villages sont construits. Aucun avertissement `LogNet`.
+
+**Vérifié en éditeur** (captures dans `docs/production/captures/T-089/`) :
+- PIE sur `L_Frag_Raraka_01` sans `?Island=` : le fragment est résolu par le registre (`BoatStart: island FRG_Raraka_01`). On voit :
+  - la barque au point d'arrivée, le bean aux rames, puis sur le pont du galion de 19 (`01_pie_depart`) ;
+  - le compteur « Montée des eaux » et le HUD ;
+  - 6 villages (Z1 à Z3 et H1 à H3, 623 instances, 166 lumières), 2 marae et 8 camps, 2 407 objets de butin, 7 totems ;
+  - la grille d'inondation centrée sur l'arrivée (T-103).
+- Tour (Simulate) : 8 vues à 0,9–1,7 km (`tour_*`) et des vues de près, depuis la barque et la côte (`02` à `12`) : aucun mur, bord de terrain ni motu tranché. Les coupes nord et sud finissent en platier en pente douce. L'horizon est rendu (sable et canopée), mais clairsemé : FRG_01 a peu de motu à moins de 4 km, et le premier est à 2,5 km (`10`, `11`, `09`).
+- PIE depuis `L_Boot` : le catalogue est chargé et le tirage aléatoire tombe sur FRG_Raraka_14 (`Lvl_Raraka?Island=FRG_Raraka_14`). L'entrée fonctionne toujours, mais le tirage de FRG_01 n'a pas été forcé : il faut `bUseFixedSeed` dans `BP_BootGameMode`, qui n'est pas à T-089.
+- PIE à 2 (hôte + client) : voir « Choix réseau » (`13_pie_hote_client`).
+
+**Chiffres** : terrain de 1,63 M triangles (Nanite) ; horizon de 10,9 k ; 36,8 k instances de végétation contre plus de 800 k dans `Lvl_Raraka`. Mémoire de l'éditeur, tout chargé : 11,7 Go de working set et 15,2 Go privés (non isolée : l'éditeur est partagé). **Temps d'image non mesuré** : le MCP n'exécute pas de console (`stat unit`), et l'éditeur en arrière-plan est bridé (`max tick rate 3`). Mesure à faire en standalone (T-091, `/ue-profile`).
+
+**Défauts et suites** :
+- Le galion (`GalleonSpawner`, 19) est ancré 25 m **devant** la barque, entre elle et l'île (`02_barque_arrivee`). Le mouillage `Galleon` des DA est maintenant disponible pour 19 : il se trouve 50 m derrière.
+- `Shark_Lagoon`, les acteurs `Marae_*` posés à la main et les marqueurs de village de `Lvl_Raraka` sont propres à cette map et n'ont pas été repris : marae, camps et villages viennent des spawners.
+- Aucune mesure de l'eau sous la marge de 1,5 km (bord du terrain à −30 m) : rien de visible depuis la surface sur les captures. Une vue sous-marine reste à faire.
+- Critère 3 (tour complet en barque) non fait : pas de pilotage ZQSD par le MCP.
+
 ## Critères d'acceptation
 1. Aucune frontière de fragment ne traverse la terre. Un test automatique sur `fragments.json` vérifie l'intersection entre frontière et terre, hors hoa synthétique.
 2. Huit captures prises depuis la côte et depuis la barque, en faisant le tour : aucun bord, mur, motu tranché ni trou de terrain visible.
