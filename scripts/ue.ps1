@@ -79,19 +79,22 @@ function Invoke-Build([switch]$Clean) {
 $LockScript = Join-Path $PSScriptRoot 'editor_lock.py'
 $LockOwner  = if ($env:MONKE_LOCK_OWNER) { $env:MONKE_LOCK_OWNER } else { "ue.ps1@$env:USERNAME-pid$PID" }
 $TookLock   = $false
+function Invoke-Lock([string[]]$LockArgs, [switch]$Quiet) {
+    # native stderr + $ErrorActionPreference='Stop' raises NativeCommandError in PowerShell 5.1: relax it here
+    $previous = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    try { $out = & python $LockScript @LockArgs 2>&1; $code = $LASTEXITCODE } finally { $ErrorActionPreference = $previous }
+    if (-not $Quiet) { $out | ForEach-Object { Write-Host $_ } }
+    return $code
+}
 if ($Command -in 'build', 'rebuild', 'test', 'editor', 'clean', 'package') {
-    python $LockScript check --owner $LockOwner
-    if ($LASTEXITCODE -ne 0 -and -not $Force) {
+    if ((Invoke-Lock @('check', '--owner', $LockOwner)) -ne 0 -and -not $Force) {
         Write-Host "[ue] Editeur verrouille par une autre session (voir ci-dessus) : attends, ou demande-lui (python scripts/editor_lock.py status)." -ForegroundColor Red
         exit 3
     }
-    if ($Command -ne 'editor') {
-        # already held (by this owner, checked above)? keep it; free? take it for the command
-        python $LockScript check --owner '__nobody__' 2>$null | Out-Null
-        if ($LASTEXITCODE -eq 0) {
-            python $LockScript acquire --owner $LockOwner --reason "ue.ps1 $Command" --minutes 45 | Out-Null
-            $TookLock = $true
-        }
+    # free (nobody holds it)? take it for the command; held by this owner? keep it as is
+    if ($Command -ne 'editor' -and (Invoke-Lock @('check', '--owner', '__nobody__') -Quiet) -eq 0) {
+        $null = Invoke-Lock @('acquire', '--owner', $LockOwner, '--reason', "ue.ps1 $Command", '--minutes', '45')
+        $TookLock = $true
     }
 }
 
@@ -167,5 +170,5 @@ switch ($Command) {
     }
 }
 } finally {
-    if ($TookLock) { python $LockScript release --owner $LockOwner | Out-Null }
+    if ($TookLock) { $null = Invoke-Lock @('release', '--owner', $LockOwner) }
 }
