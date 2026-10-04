@@ -117,6 +117,15 @@ private:
 	/** Shelter per actor */
 	mutable TMap<TWeakObjectPtr<const AActor>, FWindShelterSample> ShelterCache;
 
+	/** Calm zones of this world (actors tagged WindCalmZone with a sphere component), looked up once a second */
+	const TArray<FSphere>& GetCalmZones() const;
+
+	/** Calm zones found by the last lookup; per wind actor, so two PIE worlds never share them */
+	mutable TArray<FSphere> CalmZones;
+
+	/** World time of the last lookup of the calm zones */
+	mutable double CalmZonesTime = -1000.0;
+
 	/** Shelter check behind the obstacles upwind of a point (1 in the open) */
 	float ComputeShelter(const AActor* Actor, const FVector& Feet) const;
 

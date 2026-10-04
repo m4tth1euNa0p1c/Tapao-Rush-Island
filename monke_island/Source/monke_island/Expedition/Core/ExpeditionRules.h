@@ -56,6 +56,17 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over")
 	bool bPermadeath = true;
 
+	/**
+	 *  ADR-006: at the end of the submersion every player who is not aboard a galleon dies; the others go on to
+	 *  the next day. In a map without galleon nobody is killed: the day ends once the sea reached its highest level.
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over")
+	bool bGalleonSavesAtDelugeEnd = true;
+
+	/** Time between the end of a day with survivors and the travel to the next island (s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over", meta=(ClampMin="0", Units="s"))
+	float DayEndTravelDelay = 10.0f;
+
 	/** Time between the death of the last player and the return to the restart map (s) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over", meta=(ClampMin="0", Units="s"))
 	float GameOverRestartDelay = 8.0f;

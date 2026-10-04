@@ -207,11 +207,13 @@ void FExpeditionClockSpec::Define()
 	{
 		It("is a wipe only when somebody plays and nobody is alive", [this]()
 		{
-			TestFalse(TEXT("nobody spawned yet"), AExpeditionGameState::IsWipe(0, 0));
-			TestFalse(TEXT("solo alive"), AExpeditionGameState::IsWipe(1, 1));
-			TestTrue(TEXT("solo dead"), AExpeditionGameState::IsWipe(1, 0));
-			TestFalse(TEXT("one of four alive"), AExpeditionGameState::IsWipe(4, 1));
-			TestTrue(TEXT("four dead"), AExpeditionGameState::IsWipe(4, 0));
+			TestFalse(TEXT("nobody spawned yet"), AExpeditionGameState::IsWipe(0, 0, 0));
+			TestFalse(TEXT("solo alive"), AExpeditionGameState::IsWipe(0, 1, 0));
+			TestTrue(TEXT("solo dead"), AExpeditionGameState::IsWipe(1, 0, 0));
+			TestFalse(TEXT("one of four alive"), AExpeditionGameState::IsWipe(3, 1, 0));
+			TestTrue(TEXT("four dead"), AExpeditionGameState::IsWipe(4, 0, 0));
+			TestFalse(TEXT("host dead while a client still loads"), AExpeditionGameState::IsWipe(1, 0, 1));
+			TestFalse(TEXT("everybody left, nobody died"), AExpeditionGameState::IsWipe(0, 0, 0));
 		});
 	});
 
