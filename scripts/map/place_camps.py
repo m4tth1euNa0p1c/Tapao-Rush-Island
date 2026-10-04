@@ -27,7 +27,7 @@ VILLAGE_MARGIN_M = 60.0
 MOTUTAPU_CLEAR_M = 300.0
 MARAE = (-6677.86, -10132.64)   # m, UE frame (scripts/props/marae_layout.py)
 MARAE_CLEAR_M = 80.0
-SPACING_M = 120.0
+SPACING_M = 45.0
 FRAGMENT_VILLAGE_CLEAR_CM = 12000.0   # no camp on the village sites of a fragment (cm)
 VILLAGE_INDEX_MARGIN_CM = 4000.0      # beyond the zone of each generated village or hamlet (villages/fragments/index.json)
 

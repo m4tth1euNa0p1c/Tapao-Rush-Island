@@ -80,9 +80,9 @@ public:
 
 	/** Marae put in the played fragment */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0"))
-	int32 CountPerFragment = 2;
+	int32 CountPerFragment = 8;
 
 	/** No marae closer than this to the players at the start (cm): it is found by exploring */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0"))
-	float MinDistanceFromPlayers = 15000.0f;
+	float MinDistanceFromPlayers = 8000.0f;
 };
