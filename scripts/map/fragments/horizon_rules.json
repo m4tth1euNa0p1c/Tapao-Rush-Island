@@ -1,0 +1,69 @@
+{
+  "_doc": "Parametres de build_horizon.py (T-084, ADR-004 §4 Horizon, docs/features/fragments-tuamotu.md section Horizon). Silhouette du reste de l'atoll vue depuis un fragment : bande de sable basse + ruban de canopee, un seul materiau (M_Horizon_Atoll). Distances en metres, surfaces en hectares. Les tableaux *_by_dist sont interpoles lineairement sur dist_m (distance horizontale au centre du fragment).",
+  "clip": {
+    "_doc": "Rien dans la boite jouable du fragment (box_cm de fragments.json = emprise de la terre + segment.box_margin_m) ni a moins de min_land_dist_m de sa terre. margin_m eloigne encore la silhouette du bord de la boite (decimation et jupe de sable comprises). Pres de la coupe, la canopee s'abaisse sur taper_m et disparait a moins de taper_min_m : le motu tranche finit en fleche de sable basse, jamais en mur.",
+    "margin_m": 60.0,
+    "min_land_dist_m": 1500.0,
+    "taper_min_m": 80.0,
+    "taper_m": 500.0
+  },
+  "lod": {
+    "_doc": "Niveau de detail selon la distance au centre du fragment. tol_m : tolerance de Douglas-Peucker du contour ; crown_spacing_m : pas des couronnes sur le bord de la canopee ; min_area_ha : plus petit ilot garde. Au-dela de liseret_m, les motu sont reduits a un liseret (contour grossier, canopee basse sans couronnes marquees).",
+    "dist_m": [1500.0, 4000.0, 9000.0, 20000.0],
+    "tol_m": [2.5, 5.0, 10.0, 20.0],
+    "crown_spacing_m": [16.0, 26.0, 50.0, 90.0],
+    "crown_amp_m": [2.2, 2.0, 1.2, 0.6],
+    "min_area_ha": [0.03, 0.08, 0.4, 1.0],
+    "liseret_m": 9000.0
+  },
+  "sand": {
+    "_doc": "Bande de sable : plateau a top_m au-dessus du niveau moyen de la mer (crete de plage typique de Raraka : 0,5 a 3,6 m, heightmap_16), jupe qui plonge a bottom_m sous l'eau a skirt_out_m vers le large pour que le bas se fonde dans l'eau quel que soit le niveau d'eau du jeu. Masque lisse par smooth_m avant le contour.",
+    "top_m": 1.4,
+    "bottom_m": -1.5,
+    "skirt_out_m": 10.0,
+    "smooth_m": 5.0
+  },
+  "canopy": {
+    "_doc": "Ruban de canopee : vegetation = canal R de T_Raraka_Masks > veg_threshold ou cocoteraie (cocoteraies.geojson), a plus de beach_m du rivage, lissee par smooth_m. Hauteur = thicket_m (fourre / foret basse) -> coco_m (cocoteraie, plus haute et plus dense), + bruit lent noise_amp_m de longueur d'onde noise_wavelength_m + couronnes en dents de scie (lod.crown_amp_m) + palmiers emergents (emergent_prob, +emergent_m). Le sommet est rentre de top_inset_m (masse arrondie, pas un mur).",
+    "veg_threshold": 0.15,
+    "beach_m": 14.0,
+    "smooth_m": 15.0,
+    "min_area_ha": 0.05,
+    "thicket_m": 15.5,
+    "coco_m": 22.5,
+    "coco_blur_m": 40.0,
+    "noise_amp_m": 1.5,
+    "noise_wavelength_m": 220.0,
+    "emergent_prob": 0.12,
+    "emergent_m": 3.0,
+    "liseret_scale": 0.85,
+    "top_inset_m": 7.0,
+    "base_m": 1.1
+  },
+  "curvature": {
+    "_doc": "UE est plat : on abaisse chaque sommet de d^2 / (2 k R) (d = distance au centre du fragment, R = rayon terrestre, k = refraction standard 7/6) pour que les motu lointains s'enfoncent sous l'horizon comme en vrai (environ 1,7 m a 5 km, 6,7 m a 10 km, 27 m a 20 km).",
+    "enabled": true,
+    "earth_radius_m": 6371000.0,
+    "refraction_k": 1.1667
+  },
+  "uv": {
+    "_doc": "UV0 pour un seul materiau : U = etage vertical (0 bas de la jupe de sable sous l'eau, sand_top_u haut du sable, canopy_base_u pied de la canopee, 1 sommet de la canopee) ; V = brume precalculee (0 a haze_near_m, 1 a haze_far_m, lineaire). Le materiau peut aussi utiliser la distance camera reelle.",
+    "sand_top_u": 0.2,
+    "canopy_base_u": 0.3,
+    "haze_near_m": 1500.0,
+    "haze_far_m": 20000.0
+  },
+  "budget": {
+    "_doc": "Budget de triangles du maillage d'horizon d'un fragment (un seul draw, sans ombre) : warn_tris = alerte, max_tris = echec.",
+    "warn_tris": 60000,
+    "max_tris": 90000
+  },
+  "preview": {
+    "_doc": "Apercus : vue de dessus de l'atoll (top_px de large) et vue rasante depuis le centre du fragment (oeil a eye_m, 4 bandes de 90 deg a pano_px_per_deg, plus une bande 360 deg exageree verticalement de pano_exaggeration).",
+    "top_px": 1800,
+    "eye_m": 2.0,
+    "pano_px_per_deg": 18.0,
+    "pano_rows_deg": [-0.6, 1.4],
+    "pano_exaggeration": 8.0
+  }
+}

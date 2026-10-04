@@ -241,6 +241,65 @@ Paramètres : sections `terrain` et `galleon` de `rules.json`. Données lues com
 - **Taille des OBJ** : 1,4 à 2 M triangles et environ 100 Mo d'OBJ par fragment. Un pas de 2 pixels (`mesh_step_px`) diviserait ce volume par 4, au prix d'une pente moins fine aux plages.
 - Relancer `find_fragments.py` recalcule les `stats` globales de `fragments.json` (segments jouables, rejets) en comptant les fragments gelés comme pris. Cette différence existait avant T-083 ; les fragments, eux, restent identiques.
 
+## Horizon (T-084 pipeline, T-089 import, lot L3)
+Le reste de l'anneau reste visible au loin : silhouettes de sable et de canopée, sans gameplay. Statut : pipeline exécuté sur les 20 fragments, **aucun asset UE créé** (import et matériau : T-089).
+
+### Maillage : `build_horizon.py`
+- **Commande** : `python scripts/map/fragments/build_horizon.py raraka FRG_Raraka_01` (ou `--all`). Durée : environ 10 s par fragment. Paramètres : `scripts/map/fragments/horizon_rules.json`, chacun documenté.
+- **Contenu** : tous les motu réels (`rivage.geojson`) hors de la boîte jouable (`box_cm`) + 60 m. Chaque motu donne :
+  - une **bande de sable** à +1,4 m, avec une jupe qui plonge à -1,5 m, 10 m vers le large ;
+  - un **ruban de canopée** de 15,5 m (fourré, forêt) à 22,5 m (cocoteraies, `cocoteraies.geojson`), posé sur la végétation (masque R de `T_Raraka_Masks` + cocoteraies, à plus de 14 m du rivage). Le ruban est irrégulier : bruit lent ±1,5 m, couronnes en dents de scie tous les 16 à 90 m selon la distance, palmiers émergents de +3 m. Le sommet est rentré de 7 m, ce qui donne une masse arrondie et non un mur.
+- **Coupe** : le motu voisin coupé par la boîte perd sa canopée sur 500 m. Il finit en flèche de sable basse, jamais en motu tranché.
+- **LOD** selon la distance au centre du fragment, par interpolation sur 1,5, 4, 9 et 20 km :
+  - tolérance du contour de 2,5 à 20 m ;
+  - îlots gardés à partir de 0,03 à 1 ha ;
+  - au-delà de 9 km, **liseré** : contour grossier, canopée à 85 % sans palmiers émergents.
+- **Courbure terrestre** : elle est incluse. UE est plat, donc chaque sommet est abaissé de d²/(2kR), avec la réfraction standard k = 7/6. Cela donne 1,7 m à 5 km, 6,7 m à 10 km et 27 m à 20 km. L'autre rive du lagon (20 à 25 km) ne montre plus que des cimes, comme en vrai. Effet de bord : le bas des motu lointains est sous z = 0, donc il faut un plan d'eau opaque à cette distance.
+- **Sorties** :
+  - `docs/reference/map/raw/raraka_fragments/<FRG>/SM_<FRG>_Horizon.obj` : non versionné, régénérable. Écrit par `build_terrain.write_obj`, donc dans le même repère que les tuiles de Raraka (cm, (est, nord, haut) → UE (x, -y, z)), non recentré.
+  - `docs/reference/map/raraka/fragments/<FRG>/horizon_top.png` (vue de dessus), `horizon_pano.png` (vue rasante à 2 m depuis le centre du fragment : 4 × 90° à l'échelle vraie, plus 360° exagéré × 8) et `horizon.json` (budget, contrôles, emprise).
+- **UV0** (un seul matériau, ni vertex color ni texture) :
+  - **U = étage vertical** : 0 = bas de la jupe sous l'eau, 0,2 = haut du sable, 0,3 = pied de la canopée, 1 = cime ;
+  - **V = brume précalculée** : 0 à 1,5 km, 1 à 20 km du centre du fragment, linéaire.
+- **Contrôles** (le script sort en code 1 s'ils échouent) :
+  - aucun triangle ne touche la boîte jouable (test des axes séparateurs en plan) ;
+  - aucun sommet ni centre de triangle à moins de 1,5 km de la terre du fragment ;
+  - au plus `max_tris` triangles.
+
+  Résultat, sur les 20 fragments : 0 triangle dans une boîte, distance minimale de 1 557 m (FRG_18) à 2 333 m (FRG_03).
+- **Budget** : alerte à 60 000 triangles, échec à 90 000. Mesuré : 8 845 à 13 277 triangles (moyenne 11 984), environ 45 % sable et 55 % canopée ; un seul draw, sans ombre. Les triangles de dessus repliés (`facing_down`, au plus 145, soit environ 1 %) se voient seulement d'avion.
+
+### Recette `M_Horizon_Atoll` (à créer en T-089)
+Master dans `/Game/MonkeIsland/Materials/M_Horizon_Atoll`, instance `MI_Horizon_Raraka` dans `/Game/MonkeIsland/Environment/Fragments/Materials/`.
+- **Modèle** : **Unlit** de préférence (aucun coût Lumen ; la couleur ne suit pas le soleil, donc `Brightness` et `NightDim` l'assombrissent avec l'heure). En repli, *Default Lit* sans texture (Roughness 1, Specular 0) si l'unlit tranche trop avec le ciel ; Substrate : un seul Slab, même logique. Opaque, One-sided (les faces sont orientées vers l'extérieur ; si l'import les inverse, corriger l'import, pas passer en Two-Sided).
+- **Couleur selon U** (`TexCoord[0].R`) :
+  - `SandColor` (sable corallien sec vu de loin, sRGB ~ #D9CDA8) de U = 0 à `SandTopU` (0,2) ;
+  - puis `CanopyLowColor` (pied, sous les couronnes, ~ #22381F) → `CanopyTopColor` (cimes éclairées, ~ #45633A) de `CanopyBaseU` (0,3) à 1, par `SmoothStep`.
+- **Bas fondu dans l'eau** : sous `WaterFadeHeight` (0,4 m au-dessus du niveau d'eau), la couleur tend vers `WaterTint` (bleu du lagon au loin). Calcul : `saturate((AbsoluteWorldPosition.z - WaterLevel) / WaterFadeHeight)`. `WaterLevel` : scalaire à 0 par défaut. La montée de l'eau ne touche que la grille locale du fragment (T-103) : l'horizon reste au niveau de la mer. Si un jour la mer globale monte, brancher un Material Parameter Collection écrit par `UIslandWaterSubsystem` (à créer, il n'existe pas aujourd'hui).
+- **Brume selon la distance** : `HazeAmount = 1 - exp(-max(0, PixelDepth - HazeStart) / HazeDistance)`, mélangée vers `HazeColor`.
+  - Valeurs de départ : `HazeStart` 1 500 m, `HazeDistance` 9 000 m, `HazeColor` ~ #B9D2E6 ; `HazeColor` peut être relié à la couleur de l'horizon du SkyAtmosphere par MPC.
+  - `V` donne la même information précalculée (repli si l'on évite `PixelDepth`).
+  - Un `ExponentialHeightFog` léger s'ajoute déjà sur un matériau lit. Sur un unlit, appliquer le brouillard (*Apply Fogging*, réglage du matériau) et réduire la brume du matériau pour ne pas compter deux fois.
+- **Paramètres exposés** (chacun avec sa description) : `SandColor`, `CanopyLowColor`, `CanopyTopColor`, `SandTopU`, `CanopyBaseU`, `WaterTint`, `WaterFadeHeight`, `HazeColor`, `HazeStart`, `HazeDistance`, `Brightness` (0,6 à 1 selon l'heure) et `NightDim` (§8 : à la nuit, les silhouettes deviennent sombres sur le ciel, sans émission propre).
+- **Coût visé** : moins de 60 instructions pixel, aucun échantillonnage de texture. À vérifier avec `ue-performance-engineer`.
+
+### Réglages de l'acteur (T-089)
+- **Import** : `SM_FRG_Raraka_NN_Horizon` dans `/Game/MonkeIsland/Environment/Fragments/<FRG>/`.
+  - Échelle 1 (OBJ en cm), normales lisses calculées, **pas de collision** (UCX absent, collision auto retirée, *Collision Complexity* sans simple ni complexe) ;
+  - Nanite au choix : un seul maillage ≈ 12 k triangles, culling sans enjeu.
+- **Placement** : un `StaticMeshActor` à l'origine du repère de Raraka, décalé de l'offset du fragment si `build_fragment.py` (T-083) recentre la map (`fragment_center_cm` est dans `horizon.json`).
+- **Composant** :
+  - `Cast Shadow` désactivé, `Affect Distance Field Lighting` et `Affect Dynamic Indirect Lighting` désactivés ;
+  - `Collision Presets` = `NoCollision`, `Can Ever Affect Navigation` désactivé ;
+  - `Visible in Ray Tracing` désactivé, `Receives Decals` désactivé.
+- **Distance** : `Min Draw Distance` 0 (le maillage commence à 1,5 km). Pas de `Max Draw Distance` : l'horizon doit rester visible. HLOD inutile, puisque c'est déjà le niveau de détail le plus bas.
+- **Validation** : `CaptureViewport` avant / après, depuis la plage et depuis la barque à l'arrivée, puis en vue aérienne. Comparer à `horizon_pano.png`. Une capture de nuit (§8).
+
+### Limites
+- La végétation vient du masque de l'atlas, une classification approximative : quelques motu réellement boisés apparaissent en sable seul (arc sud-ouest).
+- La courbure suppose le joueur près du centre du fragment. À 1 km du centre, l'erreur est d'environ 1,4 m à 10 km.
+- L'aperçu panoramique est un rendu logiciel par ordre de profondeur, sans l'eau ni le fragment : il sert à contrôler la forme, pas le rendu final.
+
 ## Côté jeu (C++, T-087 / T-088)
 - `UExpeditionIslandDefinition` (`UPrimaryDataAsset`, type d'asset primaire `ExpeditionIsland`). Il contient :
   - la map en `TSoftObjectPtr<UWorld>`, l'identifiant `FRG_*` et le nom affiché (String Table) ;
