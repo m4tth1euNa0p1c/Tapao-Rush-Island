@@ -6,7 +6,9 @@
 #include "UI/Tapao/TapaoSaveGame.h"
 #include "UI/Tapao/TapaoStyle.h"
 #include "UI/Tapao/TapaoUISkin.h"
+#include "Expedition/Core/ExpeditionGameState.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Run/RunStateComponent.h"
 #include "Settings/SettingsSubsystem.h"
 #include "monke_island.h"
 #include "Engine/Engine.h"
@@ -70,6 +72,19 @@ private:
 
 	TWeakObjectPtr<UTapaoUISubsystem> Owner;
 };
+
+namespace
+{
+	/** Line of the loading screens: the day in its period (URunStateComponent of the game state, ADR-006); the first
+	 *  day of the first period while no run state is there yet */
+	FText MakeDayLine(const UGameInstance* GameInstance)
+	{
+		const URunStateComponent* Run = GameInstance ? URunStateComponent::Get(GameInstance->GetWorld()) : nullptr;
+		const int32 Day = Run ? FMath::Max(Run->GetDayIndex(), 1) : 1;
+		const int32 Period = Run ? FMath::Max(Run->GetPeriodIndex(), 1) : 1;
+		return FText::Format(NSLOCTEXT("TapaoUI", "DayLine", "Jour {0} / Période {1}"), Day, Period);
+	}
+}
 
 bool UTapaoUISubsystem::ShouldCreateSubsystem(UObject* Outer) const
 {
@@ -156,6 +171,7 @@ void UTapaoUISubsystem::HandlePreLoadMap(const FString& MapName)
 	bInGame = false;
 	DeathTime = -1.0;
 	bPausedGame = false;
+	GetGameInstance()->GetTimerManager().ClearTimer(CurtainTimer);
 	GetGameInstance()->GetTimerManager().ClearTimer(GameTimer);
 	GetGameInstance()->GetTimerManager().ClearTimer(AutosaveTimer);
 	RemoveFromViewport(Confirm);
@@ -170,7 +186,7 @@ void UTapaoUISubsystem::HandlePreLoadMap(const FString& MapName)
 		FLoadingScreenAttributes Attributes;
 		Attributes.bAutoCompleteWhenLoadingCompletes = true;
 		Attributes.MinimumLoadingScreenDisplayTime = Skin->MinLoadingSeconds;
-		Attributes.WidgetLoadingScreen = SNew(STapaoLoading).Style(Style);
+		Attributes.WidgetLoadingScreen = SNew(STapaoLoading).Style(Style).Tip(MakeDayLine(GetGameInstance()));
 		GetMoviePlayer()->SetupLoadingScreen(Attributes);
 	}
 }
@@ -289,6 +305,12 @@ void UTapaoUISubsystem::RemoveFromViewport(TSharedPtr<SWidget>& Widget)
 
 void UTapaoUISubsystem::RefocusScreen()
 {
+	const UGameInstance* GameInstance = GetGameInstance();
+	const USettingsSubsystem* Settings = GameInstance ? GameInstance->GetSubsystem<USettingsSubsystem>() : nullptr;
+	if (Settings && Settings->IsMenuOpen())
+	{
+		return;
+	}
 	for (const TSharedPtr<SWidget>* Screen : { &Confirm, &EndScreen, &Pause, &Splash, &MainMenu })
 	{
 		if (Screen->IsValid())
@@ -359,7 +381,7 @@ void UTapaoUISubsystem::ShowCurtain()
 	}
 	if (!Curtain.IsValid())
 	{
-		Curtain = SNew(STapaoLoading).Style(Style);
+		Curtain = SNew(STapaoLoading).Style(Style).Tip(MakeDayLine(GetGameInstance()));
 		AddToViewport(Curtain.ToSharedRef(), 1100, false);
 	}
 	GetGameInstance()->GetTimerManager().SetTimer(CurtainTimer, this, &UTapaoUISubsystem::HideCurtain, FMath::Max(Skin->MinLoadingSeconds, 0.1f), false);
@@ -370,8 +392,19 @@ void UTapaoUISubsystem::HideCurtain()
 	if (UGameInstance* GameInstance = GetGameInstance())
 	{
 		GameInstance->GetTimerManager().ClearTimer(CurtainTimer);
+		// A client can finish loading before its local controller arrives. Keep the curtain until input can follow.
+		if (bInGame && !GameInstance->GetFirstLocalPlayerController())
+		{
+			CurtainTimer = GameInstance->GetTimerManager().SetTimerForNextTick(this, &UTapaoUISubsystem::HideCurtain);
+			return;
+		}
 	}
 	RemoveFromViewport(Curtain);
+	if (bInGame)
+	{
+		// Map travel preserves the viewport's UI-only mode. Restore capture after loading, just like closing pause.
+		RefocusScreen();
+	}
 }
 
 void UTapaoUISubsystem::ShowHud()
@@ -526,6 +559,14 @@ void UTapaoUISubsystem::PollGame()
 	const APlayerController* Controller = GameInstance ? GameInstance->GetFirstLocalPlayerController() : nullptr;
 	const APawn* Pawn = Controller ? Controller->GetPawn() : nullptr;
 	const UIslanderHealthComponent* Health = Pawn ? Pawn->FindComponentByClass<UIslanderHealthComponent>() : nullptr;
+	// the day is survived (ADR-006: alive aboard the galleon at the end of the deluge): ÎLE CONQUISE ! for the living
+	const UWorld* World = GameInstance ? GameInstance->GetWorld() : nullptr;
+	const AExpeditionGameState* Expedition = World ? World->GetGameState<AExpeditionGameState>() : nullptr;
+	if (Expedition && Expedition->IsDaySurvived() && Health && !Health->IsDead() && !EndScreen.IsValid())
+	{
+		NotifyVictory();
+		return;
+	}
 	if (!Health || !Health->IsDead() || EndScreen.IsValid())
 	{
 		if (Health && !Health->IsDead())

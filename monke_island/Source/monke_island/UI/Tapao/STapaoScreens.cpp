@@ -351,6 +351,15 @@ void STapaoLoading::Construct(const FArguments& InArgs)
 			[
 				MakeSprite(*S, TEXT("logo"), 620.0f)
 			]
+			// "Jour N / Période P" (ADR-006), passed as the line of the screen; nothing when empty
+			+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center).Padding(0.0f, 6.0f)
+			[
+				SNew(STextBlock)
+				.Visibility(InArgs._Tip.IsEmpty() ? EVisibility::Collapsed : EVisibility::HitTestInvisible)
+				.Text(InArgs._Tip)
+				.Font(S->Font(ETapaoFont::Title, 44, 2))
+				.ColorAndOpacity(Skin ? Skin->Cream : FLinearColor::White)
+			]
 			+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center).Padding(0.0f, 10.0f)
 			[
 				// 25 % finer than the kit's gauge (owner request 2026-10-04)
