@@ -139,3 +139,7 @@ Maquette `loot-butin-commun` faite sur le 2e PC (OneDrive\maquette-blender). Tex
 - `T_Loot_Wicker_*`, `T_Loot_Pandanus_*` ← ambientCG `Wicker002` — https://ambientcg.com/view?id=Wicker002
 - `T_Loot_Rope_*` ← ambientCG `Rope001` ; `T_Loot_WoodOld_*` ← Poly Haven `rough_wood` ; `T_Loot_Planks_*` ← Poly Haven `weathered_planks` ; `T_Loot_Stone_*` ← ambientCG `Rock030`
 - Calebasse, graines, coquillages, cordelette : matériau procédural `M_Loot_Speckle` (aucune texture).
+
+## Sons du compteur d'inondation — scripts/props/hud_timer_sounds.py
+
+Générés par script, projet (synthèse numpy, aucune source externe, aucune licence tierce) : `audio/ui/S_HudTimer_Alert` (double bip 880 Hz, 0,35 s), `audio/ui/S_HudTimer_Evacuation` (corne 180→260 Hz, 1,2 s), `audio/ui/S_HudTimer_ZoneSecured` (carillon de 3 notes, 0,6 s). 44,1 kHz mono 16 bits, crête à -6 dBFS.
