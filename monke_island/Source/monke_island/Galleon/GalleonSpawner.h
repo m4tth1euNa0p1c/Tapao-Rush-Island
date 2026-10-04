@@ -50,4 +50,7 @@ private:
 
 	FTimerHandle Timer;
 	int32 Attempts = 0;
+
+	/** Times the island catalog was waited for (a map played without the boot map loads it here) */
+	int32 CatalogWaits = 0;
 };

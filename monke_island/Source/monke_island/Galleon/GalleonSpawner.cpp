@@ -22,6 +22,9 @@ namespace
 	/** The barque of the start is waited for this many times, twice a second */
 	constexpr int32 MaxAttempts = 40;
 
+	/** The island catalog is waited for this many times, twice a second, before the search around the arrival */
+	constexpr int32 MaxCatalogWaits = 8;
+
 	/** Mooring of the galleon given by the island data (role Galleon of the fragment whose Start anchorage is where the
 	 *  barque waits, T-089 / fragments.json galleon_anchor); false when the catalog has none in the frame of this map */
 	bool FindCataloguedAnchorage(const UObject* Context, const FVector& BoatLocation, float MaxStartDistance, FVector& OutLocation)
@@ -104,12 +107,32 @@ bool AGalleonSpawner::FindAnchorage(const ABoatActor* Boat, FVector& OutLocation
 	const float Sea = Water ? Water->GetSeaLevel() : 0.0f;
 	const FVector2D Arrival(Boat->GetActorLocation());
 	const int32 Directions = FMath::Max(Rules->SearchDirections, 4);
+
+	// where the land lies around the arrival: the ship anchors on the other side, never between the barque and the island
+	FVector2D Land = FVector2D::ZeroVector;
+	for (int32 Index = 0; Index < Directions; ++Index)
+	{
+		const float Angle = UE_TWO_PI * Index / Directions;
+		const FVector2D Ray(FMath::Cos(Angle), FMath::Sin(Angle));
+		for (float Distance = Rules->SearchStep; Distance <= Rules->MaxDistanceFromArrival; Distance += Rules->SearchStep * 4.0f)
+		{
+			if (DepthAt(Arrival + Ray * Distance, Sea, Boat) <= 0.0f)
+			{
+				Land += Ray / FMath::Max(Distance, 1.0f);
+				break;
+			}
+		}
+	}
+	const float Seaward = Land.IsNearlyZero() ? 0.0f : FMath::Atan2(-Land.Y, -Land.X);
+
 	for (float Distance = Rules->MinDistanceFromArrival; Distance <= Rules->MaxDistanceFromArrival; Distance += Rules->SearchStep)
 	{
 		for (int32 Index = 0; Index < Directions; ++Index)
 		{
+			// seaward first, then alternately on each side of it
+			const float Side = (Index % 2 == 0 ? 1.0f : -1.0f) * static_cast<float>((Index + 1) / 2);
 			// the ship's +X points away from the arrival: its ladder side (-X) faces it; its bow (+Y) lies along the shore
-			const float Angle = UE_TWO_PI * Index / Directions;
+			const float Angle = Seaward + UE_TWO_PI * Side / Directions;
 			const FVector2D Away(FMath::Cos(Angle), FMath::Sin(Angle));
 			const FVector2D Along(-Away.Y, Away.X);
 			const FVector2D Centre = Arrival + Away * Distance;
@@ -146,6 +169,16 @@ void AGalleonSpawner::TryAnchor()
 		{
 			GetWorldTimerManager().ClearTimer(Timer);
 			UE_LOG(Logmonke_island, Warning, TEXT("%s: no barque at the start, no galleon"), *GetName());
+		}
+		return;
+	}
+	// the moorings are in the island catalog: a map played without the boot map has not loaded it yet
+	if (UExpeditionIslandSubsystem* Islands = UExpeditionIslandSubsystem::Get(this);
+		Islands && !Islands->IsCatalogLoaded() && Islands->GetCatalogError() == EFragmentError::None && CatalogWaits < MaxCatalogWaits)
+	{
+		if (CatalogWaits++ == 0)
+		{
+			Islands->RequestCatalog();
 		}
 		return;
 	}
