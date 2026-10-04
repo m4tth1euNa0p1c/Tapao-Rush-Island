@@ -47,3 +47,11 @@ T-129, mais échec global sur les trois dépendances de base déjà relevées T-
 UHT passe. Preuve : code écrit, tests Python 7/7 ; C++ non validé en build complet,
 non testé headless/éditeur/réseau. Galleon a depuis été commité sur main (eea515e),
 les branches T-128/T-129 restent sur leur base 383d923 pour une intégration ciblée.
+
+À la gate INT, fusionner les raccords GameState avec T-128/T-141/T-142, sans
+écraser leurs transitions. Les nouveaux appels de mort du déluge de T-142 devront
+passer explicitement Drowning ; les anciens appels à deux paramètres restent
+Unknown. Recette prévue après compilation éditeur coordonnée :
+`ue.ps1 test -Filter monke_island.Telemetry`, puis `monke.py report` avec ce filtre,
+`--min-tests 5` et le `--since` horodaté avant lancement. Les cinq causes et
+la lecture de DeathCause sur un client demandent ensuite une recette en jeu.
