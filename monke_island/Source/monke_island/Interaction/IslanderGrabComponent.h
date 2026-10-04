@@ -71,6 +71,20 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Grab", meta=(ClampMin="0"))
 	float AngularDamping = 100.0f;
 
+	/** Lowest the held object goes when the player looks down (degrees below the horizon): looking at one's feet
+	 *  keeps it in front, never under the body */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Grab", meta=(ClampMin="0", ClampMax="89", Units="deg"))
+	float MaxHoldPitchDownDeg = 45.0f;
+
+	/** Farthest the handle target may lead the held object (cm): caps the spring force on what it presses against */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Grab", meta=(ClampMin="1"))
+	float MaxTargetLead = 80.0f;
+
+	/** Bodies at least this heavy (kg), and anything static, stop the held object instead of being shoved by the
+	 *  handle: a boat hull under the holder's feet must not be pushed by its own passenger (lighter objects are bumped) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Grab", meta=(ClampMin="0"))
+	float HeavyBodyMassKg = 150.0f;
+
 	/** Speed given by a throw at full strength (cm/s) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Grab", meta=(ClampMin="0"))
 	float ThrowSpeed = 900.0f;
@@ -119,6 +133,14 @@ public:
 	/** Pull strength of one holder, 1 at or under LiftMassKg per holder */
 	static float ComputeStrength(float MassKg, int32 Holders, float InLiftMassKg, float MinFraction);
 
+	/** Where the held object goes: eyes, a hold direction pitched no lower than MaxHoldPitchDownDeg, and the
+	 *  view yaw (from the control rotation: the yaw of a straight-down look vector is undefined and made it spin) */
+	void GetHoldAim(FVector& OutEyes, FVector& OutDirection, float& OutYaw) const;
+
+	/** Handle target for the held object: stops at static or heavy obstacles (a boat hull, a wall) instead of
+	 *  pressing into them, slides along them, never leads the object by more than MaxTargetLead (server) */
+	FVector ClampHoldTarget(const FVector& Desired) const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -164,8 +186,17 @@ private:
 	void ApplyCarriedWeight();
 
 	/** Object held now */
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing=OnRep_HeldComponent)
 	TObjectPtr<UPrimitiveComponent> HeldComponent;
+
+	/** Ghosts the newly held object, restores the one let go (every machine) */
+	UFUNCTION()
+	void OnRep_HeldComponent(UPrimitiveComponent* PreviousHeld);
+
+	/** A held object passes through the other physics bodies (a boat hull, loose props): its hand spring would
+	 *  otherwise shove them, the boat under the holder's feet first; ClampHoldTarget still stops it at their
+	 *  surface. Back to its profile once nobody holds it */
+	void SetHeldGhost(UPrimitiveComponent* Component, bool bGhost) const;
 
 	/** Share of the held mass carried by this player (kg), slows the owner */
 	UPROPERTY(ReplicatedUsing=OnRep_HeldMass)

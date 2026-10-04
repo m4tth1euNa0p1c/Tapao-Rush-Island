@@ -1,6 +1,7 @@
 // monke_island
 
 #include "Interaction/IslanderGrabComponent.h"
+#include "Engine/CollisionProfile.h"
 #include "Camera/CameraComponent.h"
 #include "Components/PrimitiveComponent.h"
 #include "Engine/World.h"
@@ -73,6 +74,17 @@ void UIslanderGrabComponent::GetEyes(FVector& OutLocation, FVector& OutDirection
 		: Character->GetPawnViewLocation();
 	const FRotator View = Character->GetController() ? Character->GetController()->GetControlRotation() : Character->GetBaseAimRotation();
 	OutDirection = View.Vector();
+}
+
+void UIslanderGrabComponent::GetHoldAim(FVector& OutEyes, FVector& OutDirection, float& OutYaw) const
+{
+	FVector Look;
+	GetEyes(OutEyes, Look);
+	const ACharacter* Character = GetCharacter();
+	const FRotator View = Character->GetController() ? Character->GetController()->GetControlRotation() : Character->GetBaseAimRotation();
+	OutYaw = View.Yaw;
+	const float Pitch = FMath::Clamp(FRotator::NormalizeAxis(View.Pitch), -MaxHoldPitchDownDeg, 75.0f);
+	OutDirection = FRotator(Pitch, View.Yaw, 0.0f).Vector();
 }
 
 UPrimitiveComponent* UIslanderGrabComponent::FindGrabTarget(FVector& OutGrabPoint) const
@@ -292,8 +304,12 @@ void UIslanderGrabComponent::Grab(UPrimitiveComponent* Target, const FVector& Gr
 	}
 
 	HeldComponent = Target;
+	SetHeldGhost(Target, true);
 	HoldDistance = FMath::Clamp(static_cast<float>(FVector::Dist(Eyes, GrabPoint)), MinHoldDistance, MaxHoldDistance);
-	const FQuat ViewYaw = FRotator(0.0f, Direction.Rotation().Yaw, 0.0f).Quaternion();
+	FVector AimEyes, AimDirection;
+	float Yaw = 0.0f;
+	GetHoldAim(AimEyes, AimDirection, Yaw);
+	const FQuat ViewYaw = FRotator(0.0f, Yaw, 0.0f).Quaternion();
 	RotationOffset = ViewYaw.Inverse() * Target->GetComponentQuat();
 	Handle->GrabComponentAtLocationWithRotation(Target, NAME_None, GrabPoint, Target->GetComponentRotation());
 	SetComponentTickEnabled(true);
@@ -355,6 +371,7 @@ void UIslanderGrabComponent::Release(bool bThrow)
 		Handle->ReleaseComponent();
 	}
 	HeldComponent = nullptr;
+	SetHeldGhost(Component, false);
 	HeldMass = 0.0f;
 	ApplyCarriedWeight();
 	SetComponentTickEnabled(false);
@@ -389,6 +406,42 @@ void UIslanderGrabComponent::ServerAdjustHoldDistance_Implementation(float Notch
 	HoldDistance = FMath::Clamp(HoldDistance + FMath::Clamp(Notches, -3.0f, 3.0f) * WheelStep, MinHoldDistance, MaxHoldDistance);
 }
 
+void UIslanderGrabComponent::OnRep_HeldComponent(UPrimitiveComponent* PreviousHeld)
+{
+	if (PreviousHeld && PreviousHeld != HeldComponent)
+	{
+		SetHeldGhost(PreviousHeld, false);
+	}
+	if (HeldComponent)
+	{
+		SetHeldGhost(HeldComponent, true);
+	}
+}
+
+void UIslanderGrabComponent::SetHeldGhost(UPrimitiveComponent* Component, bool bGhost) const
+{
+	if (!IsValid(Component))
+	{
+		return;
+	}
+	if (bGhost)
+	{
+		Component->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Ignore);
+		// nor the holder's capsule: an object pressed against its own carrier pushed and spun the player
+		Component->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
+		return;
+	}
+	// another player still holds it: stays a ghost
+	if (CountHolders(Component) > 0)
+	{
+		return;
+	}
+	FCollisionResponseTemplate Profile;
+	const bool bProfile = UCollisionProfile::Get()->GetProfileTemplate(Component->GetCollisionProfileName(), Profile);
+	Component->SetCollisionResponseToChannel(ECC_PhysicsBody, bProfile ? Profile.ResponseToChannels.GetResponse(ECC_PhysicsBody) : ECR_Block);
+	Component->SetCollisionResponseToChannel(ECC_Pawn, bProfile ? Profile.ResponseToChannels.GetResponse(ECC_Pawn) : ECR_Block);
+}
+
 void UIslanderGrabComponent::OnRep_HeldMass()
 {
 	ApplyCarriedWeight();
@@ -403,6 +456,57 @@ void UIslanderGrabComponent::ApplyCarriedWeight()
 			Move->SetCarriedWeight(HeldMass);
 		}
 	}
+}
+
+FVector UIslanderGrabComponent::ClampHoldTarget(const FVector& Desired) const
+{
+	// the handle is a spring with no force limit: a target inside a hull or a wall pulls the object into it with
+	// everything it has, and a boat under the holder's feet is thrown in the air. The target stops where the
+	// held object would hit something static or heavy, slides along it, and never leads by more than MaxTargetLead.
+	const FVector From = HeldComponent->GetComponentLocation();
+	const FVector Lead = (Desired - From).GetClampedToMaxSize(MaxTargetLead);
+	if (Lead.IsNearlyZero(0.5))
+	{
+		return From + Lead;
+	}
+
+	// the held object ignores physics bodies (SetHeldGhost): sweep its bounds by object type to still see the hull
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(IslanderGrabHold), false, GetOwner());
+	Params.AddIgnoredActor(HeldComponent->GetOwner());
+	FCollisionObjectQueryParams Objects;
+	Objects.AddObjectTypesToQuery(ECC_WorldStatic);
+	Objects.AddObjectTypesToQuery(ECC_WorldDynamic);
+	Objects.AddObjectTypesToQuery(ECC_PhysicsBody);
+	Objects.AddObjectTypesToQuery(ECC_Pawn);
+	const FCollisionShape Shape = FCollisionShape::MakeBox(HeldComponent->Bounds.BoxExtent * 0.9);
+	TArray<FHitResult> Hits;
+	GetWorld()->SweepMultiByObjectType(Hits, From, From + Lead, FQuat::Identity, Objects, Shape, Params);
+	for (const FHitResult& Hit : Hits)
+	{
+		const UPrimitiveComponent* Other = Hit.GetComponent();
+		const bool bBlocks = Other
+			&& (!Other->IsSimulatingPhysics() || Other->GetMass() >= HeavyBodyMassKg || Cast<APawn>(Hit.GetActor()) != nullptr);
+		if (!bBlocks)
+		{
+			continue;
+		}
+		const FVector Normal = Hit.bStartPenetrating && Hit.Normal.IsNearlyZero() ? -Lead.GetSafeNormal() : FVector(Hit.Normal);
+		if ((Lead | Normal) >= 0.0)
+		{
+			// moving away from what it rests on (lifting off the floor): free
+			continue;
+		}
+		const float Time = Hit.bStartPenetrating ? 0.0f : FMath::Max(0.0f, Hit.Time - 0.02f);
+		// up to the obstacle, then along its surface only (never into it)
+		FVector Rest = Lead * (1.0f - Time);
+		Rest = FVector::VectorPlaneProject(Rest, Normal);
+		if ((Rest | Normal) < 0.0)
+		{
+			Rest -= Normal * (Rest | Normal);
+		}
+		return From + Lead * Time + Rest;
+	}
+	return From + Lead;
 }
 
 void UIslanderGrabComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -434,8 +538,24 @@ void UIslanderGrabComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	Handle->SetAngularStiffness(AngularStiffness * Strength);
 	Handle->SetAngularDamping(AngularDamping * Strength);
 
-	const FQuat ViewYaw = FRotator(0.0f, Direction.Rotation().Yaw, 0.0f).Quaternion();
-	Handle->SetTargetLocationAndRotation(Eyes + Direction * HoldDistance, (ViewYaw * RotationOffset).Rotator());
+	FVector AimEyes, AimDirection;
+	float Yaw = 0.0f;
+	GetHoldAim(AimEyes, AimDirection, Yaw);
+	FVector Desired = AimEyes + AimDirection * HoldDistance;
+	// never inside the holder's own body: in front of the capsule, whatever the look
+	if (const ACharacter* Character = GetCharacter())
+	{
+		const FVector Body = Character->GetActorLocation();
+		const float Keep = Character->GetSimpleCollisionRadius() + static_cast<float>(HeldComponent->Bounds.BoxExtent.Size2D()) + 5.0f;
+		const FVector Flat(Desired.X - Body.X, Desired.Y - Body.Y, 0.0);
+		if (Flat.SizeSquared() < FMath::Square(Keep))
+		{
+			const FVector Forward = FRotator(0.0f, Yaw, 0.0f).Vector();
+			Desired = FVector(Body.X, Body.Y, Desired.Z) + Forward * Keep;
+		}
+	}
+	const FQuat ViewYaw = FRotator(0.0f, Yaw, 0.0f).Quaternion();
+	Handle->SetTargetLocationAndRotation(ClampHoldTarget(Desired), (ViewYaw * RotationOffset).Rotator());
 
 	// the holder carries its share of the weight (slows it, costs stamina)
 	const float Share = Mass / FMath::Max(1, Holders);
