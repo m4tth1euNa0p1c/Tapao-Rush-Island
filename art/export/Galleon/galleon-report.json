@@ -1,0 +1,247 @@
+{
+  "info": {
+    "scale": "Bean 1,05 m : galion réel ~38 m pour 1,80 m -> 22 m de coque ici (x 0,58)",
+    "length_hull_m": 22.0,
+    "length_overall_m": 28.5,
+    "beam_m": 6.0,
+    "draft_m": 1.7,
+    "air_draft_m": 17.6,
+    "main_deck_z_m": 1.6,
+    "bulwark_m": 0.7,
+    "quarterdeck_z_m": 2.9,
+    "poop_deck_z_m": 4.0,
+    "cabin_headroom_m": 1.3
+  },
+  "exports": {
+    "SM_Galleon": {
+      "fbx": "exports/SM_Galleon.fbx",
+      "tris": 68040,
+      "ucx": 10,
+      "sockets": [
+        "helm",
+        "boarding_ladder",
+        "barque_dock",
+        "barque_davit",
+        "cargo_hatch",
+        "captain_cabin",
+        "bean_spawn",
+        "anchor_port",
+        "anchor_starboard",
+        "flag",
+        "bell",
+        "rudder_hinge"
+      ]
+    },
+    "SM_Galleon_Sails": {
+      "fbx": "exports/SM_Galleon_Sails.fbx",
+      "tris": 3064,
+      "ucx": 0,
+      "sockets": []
+    },
+    "SM_Galleon_Rigging": {
+      "fbx": "exports/SM_Galleon_Rigging.fbx",
+      "tris": 3744,
+      "ucx": 0,
+      "sockets": []
+    },
+    "SM_Galleon_Flag": {
+      "fbx": "exports/SM_Galleon_Flag.fbx",
+      "tris": 536,
+      "ucx": 0,
+      "sockets": [],
+      "pivot_in_SM_Galleon_m": [
+        0.0,
+        11.43,
+        7.5
+      ]
+    },
+    "SM_Galleon_Wheel": {
+      "fbx": "exports/SM_Galleon_Wheel.fbx",
+      "tris": 1624,
+      "ucx": 0,
+      "sockets": [],
+      "pivot_in_SM_Galleon_m": [
+        0.0,
+        5.0,
+        3.85
+      ]
+    },
+    "SM_Galleon_Rudder": {
+      "fbx": "exports/SM_Galleon_Rudder.fbx",
+      "tris": 228,
+      "ucx": 0,
+      "sockets": [],
+      "pivot_in_SM_Galleon_m": [
+        0.0,
+        11.05,
+        0.0
+      ]
+    }
+  },
+  "buoyancy": {
+    "pontoons": [
+      {
+        "name": "P_P0",
+        "location_m": [
+          1.22,
+          -7.5,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_S0",
+        "location_m": [
+          -1.22,
+          -7.5,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_P1",
+        "location_m": [
+          1.93,
+          -3.0,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_S1",
+        "location_m": [
+          -1.93,
+          -3.0,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_P2",
+        "location_m": [
+          2.08,
+          1.5,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_S2",
+        "location_m": [
+          -2.08,
+          1.5,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_P3",
+        "location_m": [
+          1.92,
+          6.0,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_S3",
+        "location_m": [
+          -1.92,
+          6.0,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_Bow",
+        "location_m": [
+          0,
+          -9.6,
+          -0.3
+        ],
+        "radius_m": 0.8
+      },
+      {
+        "name": "P_Stern",
+        "location_m": [
+          0,
+          9.8,
+          -0.4
+        ],
+        "radius_m": 0.9
+      }
+    ],
+    "mass_kg": 42000,
+    "center_of_mass_m": [
+      0.0,
+      0.6,
+      -0.4
+    ],
+    "linear_damping": 0.4,
+    "angular_damping": 1.2,
+    "waterline_z_m": 0.0,
+    "note": "Water plugin : BuoyancyComponent sur BP_Galleon (pontons ci-dessus, en cm dans Unreal : x100)."
+  },
+  "sockets": {
+    "helm": [
+      0.0,
+      5.0,
+      3.65
+    ],
+    "boarding_ladder": [
+      -3.3,
+      0.9,
+      0.15
+    ],
+    "barque_dock": [
+      -4.3,
+      0.9,
+      0.0
+    ],
+    "barque_davit": [
+      -4.3,
+      2.9,
+      3.3
+    ],
+    "cargo_hatch": [
+      0.0,
+      -3.0,
+      1.7
+    ],
+    "captain_cabin": [
+      0.0,
+      6.4,
+      1.6
+    ],
+    "bean_spawn": [
+      0.0,
+      -1.6,
+      1.6
+    ],
+    "anchor_port": [
+      3.0,
+      -8.6,
+      0.9
+    ],
+    "anchor_starboard": [
+      -3.0,
+      -8.6,
+      0.9
+    ],
+    "flag": [
+      0.0,
+      11.43,
+      7.5
+    ],
+    "bell": [
+      0.0,
+      -6.55,
+      3.3
+    ],
+    "rudder_hinge": [
+      0.0,
+      11.05,
+      0.0
+    ]
+  }
+}
