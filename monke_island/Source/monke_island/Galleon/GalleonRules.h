@@ -81,6 +81,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Sway", meta=(ClampMin="1", Units="cm/s"))
 	float FloodFollowSpeed = 60.0f;
 
+	/** No wind within this distance of the anchored ship (cm): on the decks and on the water around, the crew loads
+	 *  the cargo without being pushed (AWindStormActor reads the WindCalmZone sphere); 0 = wind as elsewhere */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Sway", meta=(ClampMin="0", Units="cm"))
+	float WindCalmRadius = 4000.0f;
+
 	// ------------------------------------------------------------------ aboard
 
 	/** Volume of the players aboard: decks, cabin, top of the ladder (hull frame, cm) */

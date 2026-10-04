@@ -12,6 +12,7 @@
 #include "monke_island.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/CollisionProfile.h"
 #include "Engine/OverlapResult.h"
@@ -111,6 +112,17 @@ void AGalleonActor::ApplyRules()
 	AboardVolume->SetBoxExtent(Rules->AboardExtent, false);
 	CargoVolume->SetRelativeLocation(Rules->CargoCentre);
 	CargoVolume->SetBoxExtent(Rules->CargoExtent, false);
+	// calm zone of the wind around the ship (shape only, read by AWindStormActor)
+	if (Rules->WindCalmRadius > 0.0f)
+	{
+		Tags.AddUnique(TEXT("WindCalmZone"));
+		USphereComponent* Calm = NewObject<USphereComponent>(this, TEXT("WindCalmZone"));
+		Calm->SetupAttachment(Anchor);
+		Calm->SetSphereRadius(Rules->WindCalmRadius, false);
+		Calm->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		Calm->SetCanEverAffectNavigation(false);
+		Calm->RegisterComponent();
+	}
 	UE_LOG(Logmonke_island, Log, TEXT("%s: galleon anchored at %s"), *GetName(), *GetActorLocation().ToCompactString());
 }
 
