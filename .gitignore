@@ -33,3 +33,8 @@ monke_island/Plugins/*/Intermediate/
 # Factory worktrees (one per task, see .claude/factory/FACTORY.md)
 .worktrees/
 art/audio_src/
+
+# Verrou de l'éditeur partagé (scripts/editor_lock.py)
+.claude/factory/editor.lock.json
+.claude/factory/editor.lock.tmp
+.claude/factory/editor.lock.log

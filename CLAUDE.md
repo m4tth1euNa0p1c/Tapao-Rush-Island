@@ -33,11 +33,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ue.ps1 build     # U
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ue.ps1 test -Filter monke_island.X
 python scripts/chantier.py --env                                              # tableau de chantier
 ```
+Éditeur partagé entre sessions (Claude + Codex) : **verrou obligatoire** avant fermeture, build principal, tests headless ou relance — `python scripts/editor_lock.py status | acquire --owner <session> --reason … | close-editor | release` (vérifié par `ue.ps1`, propriétaire dans `MONKE_LOCK_OWNER`).
 Éditeur ouvert → compiler par **Live Coding via MCP**, seulement pour du code dans les corps de fonctions ; tout changement de header réfléchi exige l'éditeur fermé et un build.
 
 ## MCP
 - `unreal` : plugin officiel UE 5.8 « Unreal MCP » sur `http://127.0.0.1:8000/mcp` (jamais `localhost` : IPv4 seulement), démarré avec l'éditeur. Mode tool search : `list_toolsets` → `describe_toolset` → `call_tool`. Toolsets, limites et astuces : skill `ue-editor`.
-- `blender` : Blender MCP (addon à connecter dans Blender) ; skill `blender-asset`.
+- `blender` : Blender MCP (addon à connecter dans Blender) ; skill `blender-asset`. **Depuis le 2026-10-03, les maquettes sont faites sur le 2e PC** (Claude Code + Blender) et récupérées dans `C:\Users\matth\OneDrive\maquette-blender` (lecture seule, fichier synchronisé avant import) ; ce PC se concentre sur l'intégration gameplay et l'orchestration.
 
 ## Équipe et chantier
 - Qui fait quoi : table dans `.claude/agents/ue-producer.md` ; cellules et environnements : `.claude/factory/FACTORY.md`. Pipeline d'une feature : `/ue-feature`. Lancer une vague : `/factory wave` ; passer REC / INT / PROD : `/factory-gate`.

@@ -74,6 +74,28 @@ function Invoke-Build([switch]$Clean) {
     exit $LASTEXITCODE
 }
 
+# Verrou de l'editeur partage (scripts/editor_lock.py) : une seule session a la fois compile l'arbre principal,
+# lance la suite headless, (re)lance l'editeur, nettoie ou package. Proprietaire : $env:MONKE_LOCK_OWNER.
+$LockScript = Join-Path $PSScriptRoot 'editor_lock.py'
+$LockOwner  = if ($env:MONKE_LOCK_OWNER) { $env:MONKE_LOCK_OWNER } else { "ue.ps1@$env:USERNAME-pid$PID" }
+$TookLock   = $false
+if ($Command -in 'build', 'rebuild', 'test', 'editor', 'clean', 'package') {
+    python $LockScript check --owner $LockOwner
+    if ($LASTEXITCODE -ne 0 -and -not $Force) {
+        Write-Host "[ue] Editeur verrouille par une autre session (voir ci-dessus) : attends, ou demande-lui (python scripts/editor_lock.py status)." -ForegroundColor Red
+        exit 3
+    }
+    if ($Command -ne 'editor') {
+        # already held (by this owner, checked above)? keep it; free? take it for the command
+        python $LockScript check --owner '__nobody__' 2>$null | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            python $LockScript acquire --owner $LockOwner --reason "ue.ps1 $Command" --minutes 45 | Out-Null
+            $TookLock = $true
+        }
+    }
+}
+
+try {
 switch ($Command) {
     'build'   { Invoke-Build }
     'rebuild' { Invoke-Build -Clean }
@@ -143,4 +165,7 @@ switch ($Command) {
         if ($code -eq 0) { Write-Host "[ue] Package : $out" }
         exit $code
     }
+}
+} finally {
+    if ($TookLock) { python $LockScript release --owner $LockOwner | Out-Null }
 }
