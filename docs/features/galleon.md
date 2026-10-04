@@ -7,7 +7,9 @@ Le galion est le point de départ et de retour de chaque île : l'équipage appa
 
 ## V1 livrée (lot L5, base de T-111 à T-113)
 - **Acteur `AGalleonActor`** (`Source/monke_island/Galleon/`), répliqué, cinématique :
-  - suit le niveau de la mer (montée des eaux comprise) ;
+  - suit l'eau là où il est ancré : la mer, ou l'inondation locale du fragment quand elle la dépasse (montée lissée, jusqu'à la fin de la submersion) ;
+  - zone sans vent autour du navire (sphère `WindCalmZone`, lue par `AWindStormActor`) : ni les joueurs, ni la barque, ni les objets n'y sont poussés ;
+  - lampe dans la cabine du capitaine ;
   - balancement cosmétique identique sur toutes les machines (horloge serveur) : roulis, tangage, pilonnement ;
   - ponts, escaliers, pavois et cabine praticables : collision complexe de `SM_Galleon` ;
   - voiles, gréement, pavillon, barre et gouvernail en pièces séparées, sans collision.
@@ -22,7 +24,7 @@ Le galion est le point de départ et de retour de chaque île : l'équipage appa
   - `PlaceOnDeck(Character, Index)` : poser un joueur sur le pont ;
   - sockets de la coque : `helm`, `cargo_hatch`, `boarding_ladder`, `barque_dock`, `barque_davit`, `bean_spawn`, `captain_cabin`, `anchor_*`, `bell`, `flag`, `rudder_hinge`.
 - **Début de partie `AGalleonSpawner`** (serveur, posé dans `Lvl_Raraka`) : 2 s après le départ, quand la barque attend à l'arrivée du fragment, il
-  1. cherche autour de l'arrivée, du plus près au plus loin, la première eau assez profonde sous toute la coque ;
+  1. prend le mouillage de rôle `Galleon` de l'île jouée (`DA_Island_*`, calculé depuis `fragments.json`) s'il existe dans le repère de la carte ; sinon cherche autour de l'arrivée, du plus près au plus loin, la première eau assez profonde sous toute la coque ;
   2. ancre le galion, flanc de l'échelle tourné vers l'arrivée ;
   3. pose l'équipage sur le pont (les joueurs quittent leur siège de barque) ;
   4. amarre la barque au dock.
@@ -37,12 +39,16 @@ Le galion est le point de départ et de retour de chaque île : l'équipage appa
 | Délai avant l'ancrage | 2 s |
 | Portée de l'échelle | 4,2 m |
 | Barque amarrée | à moins de 4,5 m du dock et à moins de 40 cm/s |
+| Zone sans vent | 40 m autour du navire |
+| Suivi de l'eau | 60 cm/s au plus |
+| Lampe de cabine | 5 cd, rayon 6,5 m, 2 300 K |
 | Joueurs sur le pont au départ / barque amarrée au départ | oui / oui |
 
 ## Hors V1 (tâches suivantes)
 - Barre, voiles, vote de départ, palan vers la cale (T-112) ; `L_Galleon` et état de partie (T-113) ; vente et registre (T-114).
 - Contrainte douce d'amarrage : la barque est posée au dock au départ, elle n'est pas retenue ensuite.
 - Cale intérieure : la maquette ne la modélise pas encore (seule la cabine du capitaine est meublée) ; le pavillon n'a pas sa croix de Saint-Georges (matériau uni).
+- CA-G6 à vérifier : pendant la submersion, le pont reste au-dessus de l'eau ; près du navire, un coup de vent ne pousse plus personne.
 - Flottaison simulée (42 t, 10 pontons du rapport de maquette) : non retenue en V1, voir ADR-005.
 
 ## Critères d'acceptation

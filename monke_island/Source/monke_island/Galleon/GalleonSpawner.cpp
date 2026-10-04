@@ -4,6 +4,9 @@
 #include "Galleon/GalleonActor.h"
 #include "Galleon/GalleonRules.h"
 #include "Boats/BoatActor.h"
+#include "Expedition/Islands/ExpeditionIslandDefinition.h"
+#include "Expedition/Islands/ExpeditionIslandSubsystem.h"
+#include "Expedition/Islands/ExpeditionIslandTypes.h"
 #include "Water/IslandWaterSubsystem.h"
 #include "monke_island.h"
 #include "Components/BillboardComponent.h"
@@ -18,6 +21,40 @@ namespace
 {
 	/** The barque of the start is waited for this many times, twice a second */
 	constexpr int32 MaxAttempts = 40;
+
+	/** Mooring of the galleon given by the island data (role Galleon of the fragment whose Start anchorage is where the
+	 *  barque waits, T-089 / fragments.json galleon_anchor); false when the catalog has none in the frame of this map */
+	bool FindCataloguedAnchorage(const UObject* Context, const FVector& BoatLocation, float MaxStartDistance, FVector& OutLocation)
+	{
+		const UExpeditionIslandSubsystem* Islands = UExpeditionIslandSubsystem::Get(Context);
+		if (!Islands)
+		{
+			return false;
+		}
+		const UExpeditionIslandDefinition* Played = nullptr;
+		double BestDistSq = FMath::Square(static_cast<double>(MaxStartDistance));
+		for (const UExpeditionIslandDefinition* Definition : Islands->GetOfferedDefinitions())
+		{
+			FExpeditionAnchorage Start;
+			if (Definition && Definition->FindAnchorageByRole(EAnchorageRole::Start, Start))
+			{
+				// the data is in the frame of this map only if its start is where the barque really waits
+				const double DistSq = FVector::DistSquared2D(Start.Transform.GetLocation(), BoatLocation);
+				if (DistSq < BestDistSq)
+				{
+					BestDistSq = DistSq;
+					Played = Definition;
+				}
+			}
+		}
+		FExpeditionAnchorage Mooring;
+		if (!Played || !Played->FindAnchorageByRole(EAnchorageRole::Galleon, Mooring))
+		{
+			return false;
+		}
+		OutLocation = Mooring.Transform.GetLocation();
+		return true;
+	}
 }
 
 AGalleonSpawner::AGalleonSpawner()
@@ -116,7 +153,19 @@ void AGalleonSpawner::TryAnchor()
 
 	FVector Location;
 	float Yaw = 0.0f;
-	if (!FindAnchorage(Boat, Location, Yaw))
+	const UIslandWaterSubsystem* Water = UIslandWaterSubsystem::Get(this);
+	const float Sea = Water ? Water->GetSeaLevel() : 0.0f;
+	FVector Catalogued;
+	if (FindCataloguedAnchorage(this, Boat->GetActorLocation(), Rules->MaxDistanceFromArrival, Catalogued)
+		&& DepthAt(FVector2D(Catalogued), Sea, Boat) >= Rules->MinDepthCm)
+	{
+		// the mooring of the island data, the ladder side turned to the arrival
+		const FVector2D Away = (FVector2D(Catalogued) - FVector2D(Boat->GetActorLocation())).GetSafeNormal();
+		Location = FVector(Catalogued.X, Catalogued.Y, Sea);
+		Yaw = FMath::RadiansToDegrees(FMath::Atan2(Away.Y, Away.X));
+		UE_LOG(Logmonke_island, Log, TEXT("%s: mooring of the island data"), *GetName());
+	}
+	else if (!FindAnchorage(Boat, Location, Yaw))
 	{
 		UE_LOG(Logmonke_island, Warning, TEXT("%s: no water %.0f cm deep within %.0f m of %s, no galleon"), *GetName(),
 			Rules->MinDepthCm, Rules->MaxDistanceFromArrival / 100.0f, *Boat->GetName());

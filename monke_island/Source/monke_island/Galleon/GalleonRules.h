@@ -116,6 +116,27 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Aboard")
 	bool bPlayersStartOnDeck = true;
 
+	/** Lamp of the captain's cabin: socket of the hull, height above it (cm), intensity (cd, 0 = no lamp), radius (cm)
+	 *  and colour temperature (K) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Aboard")
+	FName CabinLightSocket = TEXT("captain_cabin");
+
+	/** See CabinLightSocket */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Aboard", meta=(Units="cm"))
+	float CabinLightHeight = 95.0f;
+
+	/** See CabinLightSocket */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Aboard", meta=(ClampMin="0"))
+	float CabinLightIntensity = 5.0f;
+
+	/** See CabinLightSocket */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Aboard", meta=(ClampMin="0", Units="cm"))
+	float CabinLightRadius = 650.0f;
+
+	/** See CabinLightSocket */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Aboard", meta=(ClampMin="1000"))
+	float CabinLightTemperature = 2300.0f;
+
 	// ------------------------------------------------------------------ boarding ladder
 
 	/** Foot of the boarding ladder on the flank (socket of the hull) */

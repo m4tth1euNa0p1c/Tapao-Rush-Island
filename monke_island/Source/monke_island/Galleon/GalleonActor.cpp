@@ -12,6 +12,7 @@
 #include "monke_island.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/PointLightComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/CollisionProfile.h"
@@ -112,6 +113,20 @@ void AGalleonActor::ApplyRules()
 	AboardVolume->SetBoxExtent(Rules->AboardExtent, false);
 	CargoVolume->SetRelativeLocation(Rules->CargoCentre);
 	CargoVolume->SetBoxExtent(Rules->CargoExtent, false);
+	// lamp of the captain's cabin (it has no window worth the name)
+	if (Rules->CabinLightIntensity > 0.0f && Hull->DoesSocketExist(Rules->CabinLightSocket))
+	{
+		UPointLightComponent* Lamp = NewObject<UPointLightComponent>(this, TEXT("CabinLight"));
+		Lamp->SetupAttachment(Hull);
+		Lamp->SetRelativeLocation(Hull->GetSocketTransform(Rules->CabinLightSocket, RTS_Component).GetLocation() + FVector(0.0, 0.0, Rules->CabinLightHeight));
+		Lamp->SetIntensityUnits(ELightUnits::Candelas);
+		Lamp->SetIntensity(Rules->CabinLightIntensity);
+		Lamp->SetAttenuationRadius(Rules->CabinLightRadius);
+		Lamp->SetUseTemperature(true);
+		Lamp->SetTemperature(Rules->CabinLightTemperature);
+		Lamp->SetCastShadows(false);
+		Lamp->RegisterComponent();
+	}
 	// calm zone of the wind around the ship (shape only, read by AWindStormActor)
 	if (Rules->WindCalmRadius > 0.0f)
 	{
