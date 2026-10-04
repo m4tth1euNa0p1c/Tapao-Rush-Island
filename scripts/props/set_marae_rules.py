@@ -41,6 +41,9 @@ def main():
             unreal.log_warning(f"[marae] missing {item['asset']}")
             continue
         name = item["asset"].rsplit("/", 1)[-1]
+        # no palm nor bush in the marae itself (owner request 2026-10-04): the site stands clear, seen from afar
+        if "/Vegetation/Palms/" in item["asset"] or "/Vegetation/Shrubs/" in item["asset"]:
+            continue
         if item["kind"] == "mesh":
             piece = unreal.MaraePiece()
             piece.set_editor_property("mesh", asset)

@@ -72,7 +72,7 @@ public:
 
 	/** Vegetation cleared around the centre (cm) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Site", meta=(ClampMin="0"))
-	float ClearRadius = 950.0f;
+	float ClearRadius = 1400.0f;
 
 	/** Quiet zone of the marae (tag TikiQuietZone): no tiki, no totem, no camp, no scattered loot (cm) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Site", meta=(ClampMin="0"))
@@ -80,9 +80,22 @@ public:
 
 	/** Marae put in the played fragment */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0"))
-	int32 CountPerFragment = 8;
+	int32 CountPerFragment = 12;
 
-	/** No marae closer than this to the players at the start (cm): it is found by exploring */
+	/** Marae guaranteed near the arrival (owner feedback 2026-10-04: see one or two from the barque, like the
+	 *  villages): the free spots nearest to the players between NearMinDistance and NearMaxDistance, placed first */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0"))
+	int32 GuaranteedNearCount = 2;
+
+	/** See GuaranteedNearCount (cm, from the players at the start) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0", Units="cm"))
+	float NearMinDistance = 3000.0f;
+
+	/** See GuaranteedNearCount */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0", Units="cm"))
+	float NearMaxDistance = 40000.0f;
+
+	/** No other marae closer than this to the players at the start (cm): they are found by exploring */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0"))
 	float MinDistanceFromPlayers = 8000.0f;
 };

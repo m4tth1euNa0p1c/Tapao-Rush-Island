@@ -168,12 +168,51 @@ void ACampSpawner::SpawnCamps()
 
 	// the marae of the fragment first, on a spot away from the players (found by exploring); the camps keep off it
 	TArray<FVector> Taken;
+	TSet<int32> UsedByMarae;
 	if (Fragment && MaraeRules && MaraeClass)
 	{
-		for (int32 Pos = Order.Num() - 1; Pos >= 0 && Marae.Num() < MaraeRules->CountPerFragment; --Pos)
+		// the guaranteed ones first: the spots nearest to the players within the near band, seen from the arrival
+		TArray<int32> NearFirst;
+		if (!Players.IsEmpty())
 		{
+			auto DistSqToPlayers = [&Players, &Spots](int32 Index)
+			{
+				double Best = TNumericLimits<double>::Max();
+				for (const FVector& Player : Players)
+				{
+					Best = FMath::Min(Best, FVector::DistSquared2D(Spots[Index], Player));
+				}
+				return Best;
+			};
+			for (int32 Pos = 0; Pos < Order.Num(); ++Pos)
+			{
+				const double DistSq = DistSqToPlayers(Order[Pos]);
+				if (DistSq >= FMath::Square(static_cast<double>(MaraeRules->NearMinDistance)) && DistSq <= FMath::Square(static_cast<double>(MaraeRules->NearMaxDistance)))
+				{
+					NearFirst.Add(Order[Pos]);
+				}
+			}
+			NearFirst.Sort([&DistSqToPlayers](int32 A, int32 B) { return DistSqToPlayers(A) < DistSqToPlayers(B); });
+		}
+		int32 NearPlaced = 0;
+		for (int32 Pass = 0; Pass < 2; ++Pass)
+		{
+		const bool bNearPass = Pass == 0;
+		const int32 Candidates = bNearPass ? NearFirst.Num() : Order.Num();
+		for (int32 Step = 0; Step < Candidates && Marae.Num() < MaraeRules->CountPerFragment; ++Step)
+		{
+			if (bNearPass && NearPlaced >= MaraeRules->GuaranteedNearCount)
+			{
+				break;
+			}
+			const int32 Pos = bNearPass ? Order.IndexOfByKey(NearFirst[Step]) : Order.Num() - 1 - Step;
+			if (!Order.IsValidIndex(Pos))
+			{
+				continue;
+			}
 			const FVector& Spot = Spots[Order[Pos]];
-			if (Order[Pos] == Nearest || IsQuiet(Spot) || !LootMath::IsFarFromAll(Spot, Players, MaraeRules->MinDistanceFromPlayers)
+			const float MinFromPlayers = bNearPass ? MaraeRules->NearMinDistance : MaraeRules->MinDistanceFromPlayers;
+			if ((!bNearPass && Order[Pos] == Nearest) || IsQuiet(Spot) || !LootMath::IsFarFromAll(Spot, Players, MinFromPlayers)
 				|| !LootMath::IsFarFromAll(Spot, Taken, MinSpacing))
 			{
 				continue;
@@ -189,8 +228,12 @@ void ACampSpawner::SpawnCamps()
 			Marae.Add(Site);
 			Taken.Add(Spot);
 			Quiet.Emplace(Spot, MaraeRules->QuietRadius + Rules->QuietRadius);
-			Order.RemoveAt(Pos);
+			// the spot is used: marked, and dropped from the camp draw below
+			UsedByMarae.Add(Order[Pos]);
+			NearPlaced += bNearPass ? 1 : 0;
 		}
+		}
+		Order.RemoveAll([&UsedByMarae](int32 Index) { return UsedByMarae.Contains(Index); });
 	}
 
 	const int32 MaraeCount = Taken.Num();
