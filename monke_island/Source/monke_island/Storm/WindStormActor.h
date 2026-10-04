@@ -28,7 +28,7 @@ struct FWindShelterSample
  *  expedition, gusts count from its start and the ultra violent wind sets in at the start of the submersion
  *  (or ExpeditionStormLeadSeconds before); without expedition, the day / night clock and DeadlineDay (fallback).
  *  A building or a bush upwind shelters what stands behind it. During a gust the wind
- *  makes the characters drift (additive root motion, predicted), pushes the free physics objects and the boats
+ *  makes the characters drift (additive root motion, predicted), pushes free physics objects except sheltered actors (boats)
  *  in proportion to the area they offer to the wind, drives the engine wind (foliage, cloth)
  *  and darkens the sky through the day / night cycle.
  *  The wind is a pure function of the replicated clock, so every machine computes the same gusts; forces are
@@ -132,6 +132,6 @@ private:
 	/** Finds the physics bodies near the players and drops the shelter samples of destroyed actors */
 	void RefreshPushedBodies();
 
-	/** Pushes characters, physics objects and boats */
+	/** Pushes characters and exposed physics objects; boats are sheltered from wind */
 	void ApplyForces(float DeltaSeconds);
 };

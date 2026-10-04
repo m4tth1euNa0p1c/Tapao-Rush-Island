@@ -154,7 +154,7 @@ float AWindStormActor::ComputeShelter(const AActor* Actor, const FVector& Feet) 
 FVector AWindStormActor::GetWindAccelerationOn(const AActor* Actor) const
 {
 	const UPrimitiveComponent* Body = Actor ? Cast<UPrimitiveComponent>(Actor->GetRootComponent()) : nullptr;
-	if (!Rules || !Body || Wind.IsNearlyZero())
+	if (!Rules || !Body || Actor->ActorHasTag(WindShelteredTag) || Wind.IsNearlyZero())
 	{
 		return FVector::ZeroVector;
 	}
@@ -336,7 +336,7 @@ void AWindStormActor::ApplyForces(float DeltaSeconds)
 	{
 		return;
 	}
-	// free physics objects and boats: pressure (grows with the square of the wind) times the area facing the wind, replicated physics pushed by the server
+	// free physics objects: pressure times exposed area, applied by the server; WindSheltered actors (boats) are excluded
 	// the drag works on the speed relative to the air: an object carried as fast as the wind is no longer pushed
 	PushedBodiesTimer -= DeltaSeconds;
 	if (PushedBodiesTimer <= 0.0f)

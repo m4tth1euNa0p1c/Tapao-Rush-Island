@@ -24,6 +24,9 @@
 
 namespace
 {
+	/** Boats keep their buoyancy and rowing physics, but never receive storm wind forces. */
+	const FName BoatWindShelteredTag(TEXT("WindSheltered"));
+
 	/** Flattened forward axis of a transform */
 	FVector FlatForward(const FTransform& Transform)
 	{
@@ -50,6 +53,7 @@ ABoatActor::ABoatActor()
 	Hull->SetCanEverAffectNavigation(false);
 	// owner request 2026-10-04: a player never lifts the boat with the grab (E); it is pushed on the sand and rowed
 	Tags.AddUnique(UIslanderGrabComponent::NoGrabTag);
+	Tags.AddUnique(BoatWindShelteredTag);
 
 	OarLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OarLeft"));
 	OarLeft->SetupAttachment(Hull, TEXT("Oarlock_L"));
@@ -88,6 +92,8 @@ ABoatActor::ABoatActor()
 void ABoatActor::BeginPlay()
 {
 	Super::BeginPlay();
+	// Existing Blueprints and placed boats may override the native tag array: enforce the wind exclusion at runtime.
+	Tags.AddUnique(BoatWindShelteredTag);
 
 	WaterSubsystem = UIslandWaterSubsystem::Get(this);
 	if (!Rules)
