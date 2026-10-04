@@ -31,6 +31,8 @@ Method (parameters in scripts/map/fragments/rules.json, never in the code):
   7. Arrival of the boat (the game starts in the boat, on the water, in front of the fragment): lagoon side first,
      200-350 m from the shore, at least 1.5 m of water along the straight line to a beach or cove of the fragment
      (except the final approach), no reef flat nor pinnacle on the way, far from the other motu; bow toward the beach.
+  8. Galleon mooring (ADR-005, T-083): a fragment without galleon_anchor gets one, computed on the terrain of the
+     fragment by build_fragment.py (back from the arrival along the bow axis to >= 4 m of water on a 40 m disk).
 Outputs: fragments.json, preview_fragments.png (whole atoll), preview_<FRG>.png (one per fragment), then the check
 of check_fragments.py (non-zero exit code on failure).
 Frame: UE cm of terrain/georef.json (origin = centre of the extent, X = east, Y = south, Z = up).
@@ -816,6 +818,12 @@ def preview_fragment(path, A, F, fr, kept, R):
         tri = [p0 + fwd * 30, p0 - fwd * 15 + side * 12, p0 - fwd * 15 - side * 12]
         dr.polygon([px(q) for q in tri], fill=(255, 255, 255), outline=(0, 0, 0))
         dr.text(px(p0 - fwd * 40), "arrivee barque", fill=(255, 255, 255), font=f, anchor="mm")
+    ga = fr.get("galleon_anchor")
+    if ga:
+        q = px(np.array(ga["location_cm"][:2]) / 100.0)
+        rr = max(4, ga["radius_m"] * m_px)
+        dr.ellipse([q[0] - rr, q[1] - rr, q[0] + rr, q[1] + rr], outline=(255, 140, 0), width=3)
+        dr.text((q[0], q[1] + rr + 10), f"galion ({ga['depth_m']:.1f} m)", fill=(255, 140, 0), font=f, anchor="mm")
     # scale bar 500 m
     x0, y0 = 20, img.size[1] - 30
     dr.line([(x0, y0), (x0 + 500 * m_px, y0)], fill=(255, 255, 255), width=4)
@@ -826,8 +834,9 @@ def preview_fragment(path, A, F, fr, kept, R):
             f"coupes {n_nat} nat. / {n_syn} synth., note {fr['scores']['total']:.1f}")
     leg = ["terre gardee : sable / vert = vegetation / vert fonce = cocoteraie / olive = fourre ; gris = terre exclue",
            "rouge = hoa synthetique a creuser ; cyan = coupe naturelle ; cercles blancs = zones de village (85 m) ;",
-           "carre rose = marae (gras = retenu) ; cercles cyan = criques ; points bleus = mouillages ; fleche = arrivee barque"]
-    dr.rectangle([0, 0, img.size[0], 82], fill=(0, 0, 0))
+           "carre rose = marae (gras = retenu) ; cercles cyan = criques ; points bleus = mouillages ; fleche = arrivee barque ;",
+           "cercle orange = mouillage du galion (ADR-005, disque de 40 m)"]
+    dr.rectangle([0, 0, img.size[0], 100], fill=(0, 0, 0))
     dr.text((8, 4), head, fill=(255, 255, 255), font=fl.font(15))
     for i, t in enumerate(leg):
         dr.text((8, 26 + 18 * i), t, fill=(200, 200, 200), font=fl.font(13))
@@ -966,6 +975,10 @@ def main():
         log(f"{fid} : {fr['kind']}, {fr['land_ha']:.1f} ha, {fr['ring_km']:.2f} km, note {fr['scores']['total']}, "
             f"arrivee {fr['arrival']['side']} a {fr['arrival']['shore_dist_m']:.0f} m, approche {fr['arrival']['final_approach_m']:.0f} m")
     frags = sorted(keep + new_frags, key=lambda f: f["id"])
+    import build_fragment as bfr
+    for fr in frags:                 # galleon mooring (ADR-005): computed once, then frozen with the fragment
+        if not fr.get("galleon_anchor"):
+            fr["galleon_anchor"] = bfr.galleon_anchor(A, fr, R, bfr.FragmentTerrain(A, fr, R))
     s_poly, p_poly = ring.polyline(50.0)
     doc = {
         "version": VERSION, "island": args.island,

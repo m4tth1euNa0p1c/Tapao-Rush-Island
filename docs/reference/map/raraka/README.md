@@ -123,6 +123,13 @@ Classes de l'atlas identifiées sur Raraka (couleur de rendu → classe) : (93,1
   - 4 groupes de cabanes isolées (2 à 9 cabanes légères chacun, BD TOPO) : 50 m autour du bâti sans site de village ni de marae.
 - Aperçus : `fragments/preview_fragments.png` (atoll), `fragments/preview_FRG_Raraka_NN.png` (vignettes).
 - Limite principale : la bathymétrie est estimée. Le platier côté lagon fait environ 150 m de large, donc la barque finit son approche sur 35 à 120 m de platier.
+- **Terrain des fragments** (T-083, `scripts/map/fragments/build_fragment.py raraka FRG_Raraka_NN | --all`, contrôle `--check` ou `check_fragments.py raraka`) :
+  - même repère monde que `Lvl_Raraka` (décalage nul) : les données de placement de Raraka se reprennent telles quelles ;
+  - dans la boîte (1,5 km de marge) : la terre exclue devient du platier ; au-delà de 300 m de la terre gardée, le fond descend à 3° jusqu'à −30 m ; hoa synthétiques de 48 à 62 m, −2 m au centre, plage côté fragment, pente ≤ 7° ; terre gardée = exactement le polygone ;
+  - `fragments/<FRG>/georef.json` (boîte, tuiles, masques, contrôles) et aperçus `preview_relief|classes|masks|ombrage.png` ;
+  - `raw/raraka_fragments/<FRG>/` (régénérable) : tuiles OBJ `SM_Frag_Raraka_NN_Terrain_x_y` au pas de 4,59 m, plan d'eau `SM_Frag_Raraka_NN_Water`, `T_Frag_Raraka_NN_Masks.png` (RGBA comme `T_Raraka_Masks`), `heightmap_16.png` ;
+  - `galleon_anchor` dans `fragments.json` (ADR-005) : mouillage du galion derrière l'arrivée de la barque, au moins 4 m d'eau sur 40 m de rayon. Il a de 4,0 à 31,9 m de fond et se trouve à 324–413 m de la plage. Le cercle orange le montre sur les vignettes ;
+  - résultat du 2026-10-04 : 20 fragments construits, 0 échec. Détail et limites : section « Terrain des fragments » de la spec.
 
 ## Dans Unreal
 - Niveau `/Game/MonkeIsland/Maps/Lvl_Raraka` (dupliqué du template Basic : soleil, SkyAtmosphere, nuages volumétriques, brouillard).
