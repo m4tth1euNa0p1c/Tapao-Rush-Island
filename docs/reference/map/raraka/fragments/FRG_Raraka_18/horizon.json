@@ -1,0 +1,69 @@
+{
+  "fragment": "FRG_Raraka_18",
+  "generator": "scripts/map/fragments/build_horizon.py",
+  "rules": "horizon_rules.json",
+  "obj": "docs/reference/map/raw/raraka_fragments/FRG_Raraka_18/SM_FRG_Raraka_18_Horizon.obj",
+  "mesh": "SM_FRG_Raraka_18_Horizon",
+  "material": "M_Horizon_Atoll",
+  "frame": "UE cm de terrain/georef.json (repere de Raraka, pas recentre sur le fragment) ; OBJ ecrit par build_terrain.write_obj (est, nord, haut) -> UE (x, -y, z)",
+  "fragment_center_cm": [
+    -1227330.8,
+    -485192.8
+  ],
+  "vertices": 9112,
+  "triangles": 13264,
+  "triangles_by_part": {
+    "sand": 6173,
+    "canopy": 7091
+  },
+  "sand_islets": 125,
+  "canopy_patches": 77,
+  "triangles_by_distance_km": {
+    "0-4": 3589,
+    "4-9": 3527,
+    ">9": 6148
+  },
+  "distance_m": {
+    "min": 2131.0,
+    "max": 25828.1
+  },
+  "height_m": {
+    "min": -46.37,
+    "max": 25.83
+  },
+  "bounds_cm": [
+    [
+      -1243435.7,
+      -1066862.2,
+      -4637.3
+    ],
+    [
+      1256293.0,
+      1114059.7,
+      2583.4
+    ]
+  ],
+  "checks": {
+    "ok": true,
+    "triangles_in_box": 0,
+    "min_vertex_dist_to_fragment_land_m": 1557.4,
+    "min_centroid_dist_to_fragment_land_m": 1560.9,
+    "max_edge_m": 3618.2,
+    "required_min_dist_m": 1500.0,
+    "triangles": 13264,
+    "budget_warn": 60000,
+    "budget_max": 90000,
+    "within_budget": true,
+    "_facing_down": "triangles tournes vers le bas (dessus de canopee replie par le retrait du sommet ou la decimation) : invisibles depuis le sol, simple trou vu d'avion ; informatif",
+    "facing_down": 97
+  },
+  "sources": [
+    "Trait de cote et cocoteraies : Te Fenua / DAF, Licence Ouverte Etalab 2.0",
+    "Masques de vegetation : build_terrain.py (atlas IRD 2005 + trait de cote)"
+  ],
+  "seconds": 10.3,
+  "previews": [
+    "docs/reference/map/raraka/fragments/FRG_Raraka_18/horizon_top.png",
+    "docs/reference/map/raraka/fragments/FRG_Raraka_18/horizon_pano.png"
+  ]
+}
