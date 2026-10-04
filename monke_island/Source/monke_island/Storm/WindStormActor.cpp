@@ -1,6 +1,7 @@
 // monke_island
 
 #include "Storm/WindStormActor.h"
+#include "Components/SphereComponent.h"
 #include "Storm/WindMath.h"
 #include "Storm/WindRules.h"
 #include "DayNight/DayNightCycleActor.h"
@@ -27,6 +28,34 @@ namespace
 
 	/** Actors with this tag are not pushed by the wind (dense objects in free fall, e.g. a falling coconut) */
 	const FName WindShelteredTag(TEXT("WindSheltered"));
+
+	/** Calm zones of a world: actors tagged WindCalmZone with a sphere component (the galleon, owner request
+	 *  2026-10-04: no wind on the ship nor around it while the crew loads it). Looked up once a second. */
+	const TArray<FSphere>& FindWindCalmZones(const UWorld* World)
+	{
+		static const FName CalmZoneTag(TEXT("WindCalmZone"));
+		static TWeakObjectPtr<const UWorld> CachedWorld;
+		static double CachedTime = -1000.0;
+		static TArray<FSphere> Zones;
+		const double Now = World ? World->GetTimeSeconds() : 0.0;
+		if (CachedWorld.Get() != World || Now - CachedTime >= 1.0 || Now < CachedTime)
+		{
+			CachedWorld = World;
+			CachedTime = Now;
+			Zones.Reset();
+			for (TActorIterator<AActor> It(World); World && It; ++It)
+			{
+				if (It->ActorHasTag(CalmZoneTag))
+				{
+					if (const USphereComponent* Sphere = It->FindComponentByClass<USphereComponent>())
+					{
+						Zones.Emplace(Sphere->GetComponentLocation(), Sphere->GetScaledSphereRadius());
+					}
+				}
+			}
+		}
+		return Zones;
+	}
 }
 
 AWindStormActor::AWindStormActor()
@@ -116,6 +145,14 @@ float AWindStormActor::GetShelterFactor(const AActor* Actor) const
 
 float AWindStormActor::ComputeShelter(const AActor* Actor, const FVector& Feet) const
 {
+	// calm zones (the galleon and the water around it): no wind at all there
+	for (const FSphere& Zone : FindWindCalmZones(GetWorld()))
+	{
+		if (FVector::DistSquared2D(Feet, Zone.Center) <= FMath::Square(Zone.W))
+		{
+			return 0.0f;
+		}
+	}
 	const FVector Direction = Wind.GetSafeNormal2D();
 	if (Direction.IsNearlyZero() || Rules->ShelterDistance <= 0.0f)
 	{
@@ -154,7 +191,7 @@ float AWindStormActor::ComputeShelter(const AActor* Actor, const FVector& Feet) 
 FVector AWindStormActor::GetWindAccelerationOn(const AActor* Actor) const
 {
 	const UPrimitiveComponent* Body = Actor ? Cast<UPrimitiveComponent>(Actor->GetRootComponent()) : nullptr;
-	if (!Rules || !Body || Wind.IsNearlyZero())
+	if (!Rules || !Body || Actor->ActorHasTag(WindShelteredTag) || Wind.IsNearlyZero())
 	{
 		return FVector::ZeroVector;
 	}
@@ -336,7 +373,7 @@ void AWindStormActor::ApplyForces(float DeltaSeconds)
 	{
 		return;
 	}
-	// free physics objects and boats: pressure (grows with the square of the wind) times the area facing the wind, replicated physics pushed by the server
+	// free physics objects: pressure times exposed area, applied by the server; WindSheltered actors (boats) are excluded
 	// the drag works on the speed relative to the air: an object carried as fast as the wind is no longer pushed
 	PushedBodiesTimer -= DeltaSeconds;
 	if (PushedBodiesTimer <= 0.0f)
