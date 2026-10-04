@@ -1,4 +1,10 @@
-# Sources (toutes CC0)
+# Sources artistiques
+
+Les ressources listées ci-dessous comme CC0 ne couvrent pas les polices, le
+moteur ou les données géographiques. Les [crédits complétés](../docs/legal/CREDITS.md)
+et l'[inventaire des licences](../docs/legal/licenses-inventory.md), datés du
+4 octobre 2026 (T-130), distinguent les preuves disponibles des autorisations
+manquantes. Les dates et sommes de contrôle par téléchargement restent à compléter.
 
 - `palm/palm_tree_bark` — tronc de cocotier gris blanchi par le soleil — https://polyhaven.com/a/palm_tree_bark
 - `palm/palm_bark` — tronc de cocotier sombre / humide, base du stipe — https://polyhaven.com/a/palm_bark

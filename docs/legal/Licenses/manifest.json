@@ -1,0 +1,68 @@
+[
+  {
+    "file": "libOgg_v1.3.5.LICENSE.txt",
+    "source": "UE_5.8/Engine/Source/ThirdParty/Licenses/libOgg_v1.3.5.LICENSE.txt",
+    "sha256": "5fb6446b87d1f34591866f48b58c76a2ece79f1bd8f45c7aeda85fcab3ed313f",
+    "status": "Texte candidat local ; version exacte de la DLL a confirmer."
+  },
+  {
+    "file": "libvorbis_v1.3.7.LICENSE.txt",
+    "source": "UE_5.8/Engine/Source/ThirdParty/Licenses/libvorbis_v1.3.7.LICENSE.txt",
+    "sha256": "89577ca6182c3b6c18b88a644d252c686401b941df3332ce0d53a3a6233c61d8",
+    "status": "Texte candidat local ; version exacte de la DLL a confirmer."
+  },
+  {
+    "file": "MsQuic_License.txt",
+    "source": "UE_5.8/Engine/Source/ThirdParty/Licenses/MsQuic_License.txt",
+    "sha256": "e304810fe2fb375c33279911fe91f0d45b51b2a5163742e8345fc7f136a71bda",
+    "status": "Texte candidat local ; version exacte de la DLL a confirmer."
+  },
+  {
+    "file": "oneTBB_LICENSE.txt",
+    "source": "UE_5.8/Engine/Source/ThirdParty/Licenses/oneTBB_LICENSE.txt",
+    "sha256": "a7bf4bcf31a8ff9d004976f7a1253eeb49ce3169ddaf5f83da12b99dd279b0c3",
+    "status": "Texte candidat local ; version exacte de la DLL a confirmer."
+  },
+  {
+    "file": "Freetype2.14.1_License.TXT",
+    "source": "UE_5.8/Engine/Source/ThirdParty/Licenses/Freetype2.14.1_License.TXT",
+    "sha256": "308dca54b5aaa4a6ba0880621fe3bcf287956821aa948430263062a8333625c0",
+    "status": "Texte candidat local ; version exacte de la DLL a confirmer."
+  },
+  {
+    "file": "Onnxruntime_v1.24.1.license",
+    "source": "UE_5.8/Engine/Source/ThirdParty/Licenses/Onnxruntime_v1.24.1.license",
+    "sha256": "cea1491b0028e7cd8de1301c9af0f08a0d2ceab8256f18e0cb246834cb7b0446",
+    "status": "Texte candidat local ; version exacte de la DLL a confirmer."
+  },
+  {
+    "file": "DirectML_v1.15.4.license",
+    "source": "UE_5.8/Engine/Source/ThirdParty/Licenses/DirectML_v1.15.4.license",
+    "sha256": "82e90cab57f42e8b8624f5b39a0f4cc4446cdf2b926ac0db69dba55a7b6f6bed",
+    "status": "Texte candidat local ; version exacte de la DLL a confirmer."
+  },
+  {
+    "file": "Vulkan_License.txt",
+    "source": "UE_5.8/Engine/Source/ThirdParty/Licenses/Vulkan_License.txt",
+    "sha256": "5d74e254edb277de04a18a9ab65d4d7e31a462f83244a3e99dd1dbafcffe5823",
+    "status": "Texte candidat local ; version exacte de la DLL a confirmer."
+  },
+  {
+    "file": "Aftermath_NVAPI_License.txt",
+    "source": "UE_5.8/Engine/Source/ThirdParty/Licenses/Aftermath_NVAPI_License.txt",
+    "sha256": "6eb29635057cff751ccb7135e5751710713a9a26b129b7b25cfbcfff6a6d1328",
+    "status": "Texte candidat local ; version exacte de la DLL a confirmer."
+  },
+  {
+    "file": "OFL_PirataOne.txt",
+    "source": "art/ui/tapao/fonts/OFL_PirataOne.txt",
+    "sha256": "e8ad3f3de5baeff6bac6e711d8c406e0a6b8a61d2944741532d8965d893a2681",
+    "status": "Police source : texte local."
+  },
+  {
+    "file": "OFL_AlegreyaSC.txt",
+    "source": "art/ui/tapao/fonts/OFL_AlegreyaSC.txt",
+    "sha256": "f6f60d5d4cf4f4b1fc4e41353c897a2f5a16e6396c0cd8fa8bdfd2f4586a9a68",
+    "status": "Police source : texte local."
+  }
+]
