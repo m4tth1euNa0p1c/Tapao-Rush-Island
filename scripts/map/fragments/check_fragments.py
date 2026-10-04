@@ -14,6 +14,14 @@ batiments.geojson are read again):
   - the 1.5 km box contains the land;
   - the arrival of the boat: z = 0, 200-350 m from the kept shore, far from the other land, enough water on the
     straight line to its beach (no land, reef flat nor pinnacle before the final approach), bow toward the beach.
+Terrain of the fragment (recomputed in memory by build_fragment.py, T-083; skipped with --no-terrain):
+  - the kept land is intact (height > 0 exactly on the polygon), no excluded land is left in the box;
+  - slope <= rules.terrain.max_slope_deg on the hoa and the new shores; synthetic hoa 40-80 m wide, 1.5-3 m deep in
+    the middle, with a beach on the side of the fragment;
+  - floor of the margin <= edge_max_floor_m at the edge of the box;
+  - a navigable ring (>= boat_min_depth_m of water) goes round the kept land, the arrival is on it;
+  - galleon mooring (ADR-005): >= 4 m of water on its 40 m disk, no pinnacle, inside the box, behind the arrival
+    on the bow axis.
 """
 import argparse
 import json
@@ -28,6 +36,7 @@ from scipy.spatial import cKDTree
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import fraglib as fl  # noqa: E402
+import build_fragment as bf  # noqa: E402
 
 
 def check_fragment(A, fr, R, mot_tree, errors, warn):
@@ -167,7 +176,7 @@ def fl_cm(p):
     return [round(float(p[0]) * 100), round(float(p[1]) * 100)]
 
 
-def run(island, data_root=None, rules=None, A=None, path=None):
+def run(island, data_root=None, rules=None, A=None, path=None, terrain=True):
     R = fl.load_rules(rules)
     path = Path(path) if path else fl.ROOT / "docs" / "reference" / "map" / island / "fragments" / "fragments.json"
     if not path.exists():
@@ -192,6 +201,14 @@ def run(island, data_root=None, rules=None, A=None, path=None):
             errors.append(f"{fr['id']}: identifiant invalide")
         K = check_fragment(A, fr, R, mot_tree, errors, warn)
         union += K.astype(np.uint8)
+        if terrain:
+            T = bf.FragmentTerrain(A, fr, R)
+            terr_errors, met = bf.check_terrain(A, fr, R, T)
+            errors.extend(f"{fr['id']}: terrain : {e}" for e in terr_errors)
+            ga = fr.get("galleon_anchor") or {}
+            print(f"[check] {fr['id']} terrain : pente max nouvelles rives {met['max_slope_new_shores_deg']} deg, bord "
+                  f"{met['edge_max_floor_m']} m, galion {met.get('galleon_depth_m')} m de fond a "
+                  f"{ga.get('beach_dist_m')} m de la plage")
     if (union > 1).any():
         errors.append(f"des fragments partagent de la terre ({int((union > 1).sum())} pixels)")
     if doc.get("prototype") and doc["prototype"]["id"] not in ids:
@@ -210,8 +227,9 @@ def main():
     ap.add_argument("--data-root", default=None)
     ap.add_argument("--rules", default=None)
     ap.add_argument("--file", default=None, help="fragments.json to check (default: the one of the island)")
+    ap.add_argument("--no-terrain", action="store_true", help="skip the terrain checks of build_fragment.py")
     a = ap.parse_args()
-    sys.exit(run(a.island, a.data_root, a.rules, path=a.file))
+    sys.exit(run(a.island, a.data_root, a.rules, path=a.file, terrain=not a.no_terrain))
 
 
 if __name__ == "__main__":

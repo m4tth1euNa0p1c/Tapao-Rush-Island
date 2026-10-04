@@ -153,10 +153,93 @@ L'archipel `FRG_Raraka_02` a une note à peine supérieure (44,4 contre 44,1). M
    - cous étroits des grands motu.
 
    Il note ensuite chaque segment (taille, sites de village et de marae, criques, cocoteraie et fourré) et écrit `fragments.json`, avec mémoire et identifiants stables comme `villages.json`, ainsi que des aperçus. Les fragments retenus sont **gelés**.
-2. **`build_fragment.py raraka FRG_Raraka_01`** (T-083). Il découpe le terrain dans la boîte du fragment, marge comprise, à partir des classes et des hauteurs de `build_terrain.py`. Il retire la terre exclue (remplacée par le profil platier → lagon ou océan), creuse les hoa synthétiques et fait descendre la marge en pente douce. Il recalcule les masques (sable et sable mouillé sur les nouvelles rives) et sort des tuiles Nanite, avec `georef.json` pour le décalage par rapport au repère de Raraka.
+2. **`build_fragment.py raraka FRG_Raraka_01`** (T-083). Il découpe le terrain dans la boîte du fragment, marge comprise, à partir des classes et des hauteurs de `build_terrain.py`. Il retire la terre exclue (remplacée par le profil platier → lagon ou océan), creuse les hoa synthétiques et fait descendre la marge en pente douce. Il recalcule les masques (sable et sable mouillé sur les nouvelles rives) et sort des tuiles Nanite, avec `georef.json` (décalage nul : même repère que Raraka). Détail plus bas, section « Terrain des fragments (T-083) ».
 3. **`build_horizon.py raraka FRG_Raraka_01`** (T-084). Il produit la silhouette du reste de l'atoll vu depuis le fragment.
 4. **Contenu** (T-085, T-086). On réutilise les générateurs existants : cocotiers, végétation, villages, marae, loot, totems. Ils sont **filtrés sur le polygone du fragment et recentrés**. On ajoute mouillages, crique et départs.
 5. **Import** (T-089). Commandlet si l'éditeur est fermé, MCP sinon. Résultat : `L_Frag_Raraka_01` avec `LI_ExpeditionCore`.
+
+## Terrain des fragments (T-083, lot L3, 2026-10-04)
+Commandes (depuis la racine du dépôt) :
+
+```
+python scripts/map/fragments/build_fragment.py raraka FRG_Raraka_01 [FRG_Raraka_NN ...] [--all]
+       [--check] [--anchors | --force-anchors] [--no-mesh] [--data-root <checkout LFS>]
+python scripts/map/fragments/check_fragments.py raraka [--no-terrain]   # contrôles T-082 + terrain + galion
+```
+
+Paramètres : sections `terrain` et `galleon` de `rules.json`. Données lues comme T-082 (pointeurs LFS → arbre principal ou `--data-root`) : `terrain/heightmap_16.png` + `georef.json` (hauteurs de `build_terrain.py`, pente du fond ≤ 7° de T-068), atlas IRD, trait de côte, `T_Raraka_Masks.png`. `build_terrain.py` n'est pas modifié : on réutilise `classify_atlas`, `rasterize_coastline` (via `fraglib`), `smoothstep`, `grid_mesh` et `write_obj` (conversion d'axes calibrée).
+
+**Repère** (décision de la session principale) : un fragment garde les **coordonnées monde de `Lvl_Raraka`**, sans recentrage. Le décalage vaut 0 ; villages, camps, marae, arrivées et grille d'inondation se reprennent tels quels dans `L_Frag_*`. `georef.json` du fragment donne sa boîte et l'emprise du terrain en cm monde.
+
+**Méthode**, sur la fenêtre de la boîte (grille source, 4,59 m par pixel) :
+1. Hauteurs et classes de `build_terrain.py`.
+2. **Terre exclue** (tout motu hors du polygone gardé) → platier à −0,4 m.
+3. **Fin du platier** : au-delà de 300 m de la terre gardée, le fond ne remonte jamais au-dessus d'une rampe qui part du platier et descend à 3° jusqu'à −30 m. Le platier qui continuait vers les motu exclus s'arrête donc en pente douce ; l'océan, plus profond, reste tel quel. Les pinacles du lagon sont gardés, sauf à moins de 300 m du bord. Les taches de l'atlas classées « pinacle » le long de la couronne (anticrénelage) ne le sont pas.
+4. **Hoa synthétique** : un chenal le long de la ligne de coupe, −2 m au centre, qui remonte à 4,8° jusqu'à la ligne d'eau, à `hoa_width_m / 2` (30 m) de la ligne. De part et d'autre de la nouvelle ligne d'eau, le sol suit 4,8° : la terre gardée y gagne une plage. L'autre rive est de la terre exclue : elle devient du platier à −0,4 m (sa plage existe dans la map du fragment voisin).
+5. **Terre gardée = exactement le polygone** de `fragments.json` : hauteur > 0 dessus, < 0 partout ailleurs. Les pixels qui bordent une nouvelle ligne d'eau valent ±0,08 m.
+6. **Masques** (même format RGBA que `T_Raraka_Masks` : R végétation, G sable, B récif, A humidité), rééchantillonnés depuis ceux de l'atoll. Sur la terre exclue et le fond abaissé : récif sur le platier peu profond, sable au-delà ; sable au fond du hoa. Sur les nouvelles rives : sable sur 15 m et sable mouillé sur 4 m.
+7. **Mouillage du galion** (ADR-005) : `galleon_anchor` {`location_cm`, `yaw_deg`, `depth_m`, `center_depth_m`, `radius_m`, `behind_arrival_m`, `beach_dist_m`}. On part du point d'arrivée de la barque et on recule vers le large le long de l'axe de la proue, par pas de 5 m, à partir de 50 m pour que le galion ne recouvre pas la barque. On retient le premier point où **tout le disque de 40 m** a au moins 4 m d'eau, sans pinacle à moins de 60 m du centre et à plus de 140 m du bord de la boîte. Le cap du galion est celui de la barque, proue vers l'île. `depth_m` est le point le moins profond du disque. Le mouillage est calculé une fois puis gelé avec le fragment : `find_fragments.py` ne le calcule que s'il manque, et `--force-anchors` le recalcule.
+
+**Contrôles** (`build_fragment.py --check`, et `check_fragments.py` par défaut) :
+- terre gardée intacte (hauteur > 0 exactement sur le polygone) et aucune terre exclue dans la boîte ;
+- pente ≤ 7° sur chaque triangle du maillage, sur les hoa et les nouvelles rives (pinacles exclus) ;
+- hoa de 40 à 80 m à la ligne d'eau, fond de −1,5 à −3 m au centre, plage côté fragment ;
+- fond ≤ −10 m sur tout le bord de la boîte ;
+- un **anneau navigable** d'au moins 1,2 m d'eau fait le tour de la terre : les hauts-fonds qui contiennent la terre gardée ne touchent pas le bord. L'arrivée de la barque et le galion sont sur l'eau navigable reliée au large ;
+- galion : au moins 4 m sur tout le disque, pas de pinacle, dans la boîte, derrière l'arrivée sur l'axe de la proue.
+
+**Sorties**
+- `docs/reference/map/raw/raraka_fragments/<FRG>/` (régénérable, ignoré par git) :
+  - `SM_Frag_Raraka_NN_Terrain_<x>_<y>.obj` : tuiles de 256 × 256 pixels, maillage au pas de 4,59 m (deux fois plus fin que `Lvl_Raraka`). Les tuiles entièrement sous −80 m sont omises ;
+  - `SM_Frag_Raraka_NN_Water.obj` : plan d'eau à z = 0, boîte + 15 km ;
+  - `T_Frag_Raraka_NN_Masks.png` : 2048², UV0 sur l'emprise du terrain ;
+  - `heightmap_16.png` : bornes dans `georef.json`.
+- `docs/reference/map/raraka/fragments/<FRG>/` :
+  - `georef.json` : repère, boîte, fenêtre source, tuiles, eau, masques, règles, mouillage du galion, résultats des contrôles ;
+  - aperçus `preview_relief.png`, `preview_classes.png`, `preview_masks.png`, `preview_ombrage.png`. On y voit la limite des hauts-fonds (anneau de la barque), l'arrivée et le galion.
+- Les vignettes `preview_FRG_Raraka_NN.png` montrent aussi le galion (cercle orange).
+
+**Résultats du 2026-10-04 : les 20 fragments sont construits, 0 échec** (`build_fragment.py raraka --all` puis `check_fragments.py raraka` : 0 échec, en 31 s). Le fond vaut −30 m sur tout le bord de la boîte, partout. Il y a 12 à 20 tuiles et 1,4 à 2,0 M triangles par fragment.
+
+| Id | Arrivée | Galion : fond min / centre (m) | Galion : recul depuis l'arrivée / distance à la plage (m) | Terre exclue retirée (ha) | Pente max nouvelles rives | Hoa (largeur à la ligne d'eau, m) |
+|---|---|---|---|---|---|---|
+| **FRG_Raraka_01** | lagon | 7,9 / 8,4 | 50 / 324 | 28,1 | 3,0° | — |
+| FRG_Raraka_02 | lagon | 4,0 / 8,1 | 55 / 351 | 61,5 | 3,1° | — |
+| FRG_Raraka_03 | océan | 18,4 / 23,4 | 50 / 334 | 10,2 | 3,1° | — |
+| FRG_Raraka_04 | lagon | 4,1 / 7,2 | 105 / 401 | 73,1 | 5,6° | 53 |
+| FRG_Raraka_05 | océan | 28,3 / 33,1 | 50 / 332 | 34,3 | 3,3° | — |
+| FRG_Raraka_06 | lagon | 9,5 / 10,1 | 50 / 328 | 52,6 | 6,8° | 60 |
+| FRG_Raraka_07 | océan | 30,8 / 35,3 | 50 / 328 | 51,6 | 6,8° | 50 |
+| FRG_Raraka_08 | lagon | 4,4 / 8,2 | 205 / 413 | 43,3 | 6,8° | 62 |
+| FRG_Raraka_09 | lagon | 5,2 / 6,0 | 50 / 332 | 83,4 | 6,8° | 48 |
+| FRG_Raraka_10 | océan | 13,5 / 18,4 | 50 / 326 | 35,3 | 3,2° | — |
+| FRG_Raraka_11 | lagon | 10,2 / 10,9 | 50 / 340 | 67,4 | 6,8° | 58, 49 |
+| FRG_Raraka_12 | océan | 15,4 / 20,2 | 50 / 350 | 27,3 | 3,5° | — |
+| FRG_Raraka_13 | lagon | 4,5 / 5,3 | 50 / 330 | 90,2 | 5,7° | 57, 51 |
+| FRG_Raraka_14 | lagon | 8,2 / 8,5 | 50 / 326 | 125,7 | 5,6° | 62, 50 |
+| FRG_Raraka_15 | lagon | 5,0 / 7,5 | 50 / 330 | 107,6 | 6,4° | 58, 51 |
+| FRG_Raraka_16 | océan | 24,6 / 29,2 | 50 / 338 | 108,1 | 6,3° | 61, 51 |
+| FRG_Raraka_17 | océan | 17,0 / 21,7 | 50 / 336 | 102,9 | 6,8° | 57, 50 |
+| FRG_Raraka_18 | océan | 31,3 / 36,0 | 50 / 328 | 94,4 | 6,8° | 62, 51 |
+| FRG_Raraka_19 | océan | 14,3 / 19,2 | 50 / 328 | 30,7 | 3,2° | — |
+| FRG_Raraka_20 | océan | 31,9 / 36,6 | 50 / 332 | 86,6 | 6,8° | 61, 51 |
+
+- Les contrôles ont été testés à rebours. Sur une copie corrompue (galion posé sur la plage, galion absent), `check_fragments.py` sort en échec. Avec des règles dégradées (rampe à 0,2°, pente des rives à 9°), `build_fragment.py --check` signale le bord à −0,4 m, l'anneau de barque fermé et une pente de 10,4° sur le hoa (code 1).
+- Tous les hoa ont −2 m au centre. Quand la coupe élargit un hoa naturel peu profond, le centre mesure de −1,8 à −2 m.
+- Le galion mouille presque partout 50 m derrière l'arrivée, soit le recul minimal. Seuls FRG_04 (105 m) et FRG_08 (205 m) doivent reculer davantage pour trouver 4 m sur tout le disque.
+
+![FRG_Raraka_01, relief](../reference/map/raraka/fragments/FRG_Raraka_01/preview_relief.png)
+
+**Limites (à revoir en recette T-089, critères 2 et 3)**
+- **La bathymétrie reste estimée** (`build_terrain.py`, pas de relevé SHOM ou IRD). La rampe de marge, le platier laissé à la place des motu exclus et les hoa synthétiques sont des constructions de jeu, pas des données.
+- Les profondeurs du galion en découlent. Le fond minimal de 4 m (FRG_02, 04, 08, 13) n'est garanti que sur cette estimation.
+- **Pas de vérification en jeu** : aucun import Unreal, ni PIE, ni tour en barque n'a été fait (c'est T-089). Les critères 2 et 3 ne sont vérifiés que par contrôle automatique et aperçus.
+- **Atlas IRD en escalier** : côté océan, le bord du platier et du tombant suit les pixels de l'atlas (4,6 m). C'est déjà le cas dans `Lvl_Raraka`. On le voit sur l'ombrage, sous l'eau.
+- **Bout d'un motu scindé** : vu d'avion, il est rectiligne, puisque la ligne de coupe est droite. La plage et la pente douce l'adoucissent au sol.
+- **Rive opposée d'un hoa** : dans la map du fragment, c'est un haut-fond de platier (−0,4 m), pas une plage émergée. La terre de l'autre côté appartient au fragment voisin ou à l'horizon (T-084).
+- **Bord du terrain** : il s'arrête à la boîte, à −30 m ou plus profond, sans jupe. Sous l'eau, on pourrait voir le vide au-delà de 1,5 km : à vérifier avec le brouillard d'eau en T-089.
+- **Taille des OBJ** : 1,4 à 2 M triangles et environ 100 Mo d'OBJ par fragment. Un pas de 2 pixels (`mesh_step_px`) diviserait ce volume par 4, au prix d'une pente moins fine aux plages.
+- Relancer `find_fragments.py` recalcule les `stats` globales de `fragments.json` (segments jouables, rejets) en comptant les fragments gelés comme pris. Cette différence existait avant T-083 ; les fragments, eux, restent identiques.
 
 ## Côté jeu (C++, T-087 / T-088)
 - `UExpeditionIslandDefinition` (`UPrimaryDataAsset`, type d'asset primaire `ExpeditionIsland`). Il contient :

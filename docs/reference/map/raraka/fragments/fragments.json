@@ -129,6 +129,53 @@
    "max_synthetic_cuts": 0,
    "arrival_side": "lagon"
   },
+  "terrain": {
+   "_doc": "Terrain d'un fragment (build_fragment.py, T-083). Hauteurs en m (z = 0 niveau moyen de la mer), distances en m. Bathymetrie estimee (build_terrain.py), pas de releve.",
+   "mesh_step_px": 1,
+   "_mesh_step_px": "pas du maillage en pixels de la grille source (4,59 m) : 1 = deux fois plus fin que Lvl_Raraka (9,18 m)",
+   "tile_px": 256,
+   "skip_tile_below_m": -80.0,
+   "water_plane_margin_m": 15000.0,
+   "water_plane_cells": 32,
+   "masks_size": 2048,
+   "land_min_m": 0.05,
+   "water_max_m": -0.05,
+   "shore_edge_m": 0.08,
+   "_edge": "hauteur des pixels de part et d'autre de la ligne d'eau des nouvelles rives (+/-) ; land_min_m / water_max_m garantissent terre > 0 et eau < 0",
+   "shore_slope_deg": 4.8,
+   "max_slope_deg": 7.0,
+   "_shore": "nouvelles rives (hoa synthetiques) : le sol suit une pente de shore_slope_deg de part et d'autre de la ligne d'eau ; le controle exige <= max_slope_deg sur chaque triangle du maillage (un triangle a cheval sur une diagonale peut atteindre sqrt(2) x la pente de consigne : 4,8 deg donne au plus 6,8 deg)",
+   "excluded_land_floor_m": -0.4,
+   "_excluded": "la terre exclue (motu hors fragment) devient du platier a cette profondeur (= REEF_FLAT_DEPTH de build_terrain.py)",
+   "rim_keep_m": 300.0,
+   "rim_fall_deg": 3.0,
+   "far_floor_m": -30.0,
+   "_rim": "au-dela de rim_keep_m de la terre gardee, le fond ne remonte jamais au-dessus d'une rampe qui part du platier et descend a rim_fall_deg jusqu'a far_floor_m (lagon profond) : le platier qui continuait vers les motu exclus s'arrete en pente douce ; l'ocean plus profond reste tel quel",
+   "pinnacle_keep_m": 30.0,
+   "edge_fade_m": 300.0,
+   "pinnacle_min_rim_m": 150.0,
+   "_pinnacle": "les pinacles du lagon (et pinacle_keep_m autour) ne sont pas abaisses par la rampe, sauf a moins de edge_fade_m du bord de la boite ; seuls comptent les pinacles a plus de pinnacle_min_rim_m de la couronne (terre + platier) : pres de la couronne, ce sont des taches d'anticrenelage de l'atlas",
+   "edge_max_floor_m": -10.0,
+   "hoa_center_depth_m": 2.0,
+   "hoa_depth_range_m": [
+    1.5,
+    3.0
+   ],
+   "hoa_zone_extra_m": 50.0,
+   "beach_m": 15.0,
+   "wet_m": 4.0,
+   "boat_min_depth_m": 1.2,
+   "_boat": "anneau navigable : la barque doit pouvoir faire le tour de la terre gardee sur au moins boat_min_depth_m d'eau"
+  },
+  "galleon": {
+   "_doc": "Mouillage du galion (ADR-005) : depuis le point d'arrivee de la barque, on recule vers le large le long de l'axe de la proue, par pas de step_m, a partir de start_offset_m (le galion ne recouvre pas la barque), jusqu'au premier point ou tout le disque de radius_m a au moins min_depth_m d'eau, sans pinacle a moins de radius_m + pinnacle_clearance_m, et a plus de radius_m + edge_clearance_m du bord de la boite. Cap du galion = cap de la barque (proue vers l'ile). Profondeurs = terrain du fragment (estimees).",
+   "radius_m": 40.0,
+   "min_depth_m": 4.0,
+   "step_m": 5.0,
+   "start_offset_m": 50.0,
+   "pinnacle_clearance_m": 20.0,
+   "edge_clearance_m": 100.0
+  },
   "score": {
    "_doc": "Note d'un segment (plus haut = mieux). Les sites manquants rendent le segment non jouable (pas de note).",
    "village_capacity": 0.6,
@@ -618,6 +665,21 @@
     "line_m": 274.0,
     "min_depth_m": 1.5,
     "final_approach_m": 90.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     1176313.7,
+     166315.7,
+     0.0
+    ],
+    "yaw_deg": 0.0,
+    "depth_m": 7.91,
+    "center_depth_m": 8.4,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 324.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -924,6 +986,21 @@
     "line_m": 296.0,
     "min_depth_m": 1.51,
     "final_approach_m": 120.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     1108997.1,
+     -133151.3,
+     0.0
+    ],
+    "yaw_deg": -10.0,
+    "depth_m": 4.01,
+    "center_depth_m": 8.12,
+    "radius_m": 40.0,
+    "behind_arrival_m": 55.0,
+    "beach_dist_m": 351.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -1259,6 +1336,21 @@
     "line_m": 284.0,
     "min_depth_m": 1.53,
     "final_approach_m": 120.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     710347.8,
+     1028309.9,
+     0.0
+    ],
+    "yaw_deg": -140.0,
+    "depth_m": 18.4,
+    "center_depth_m": 23.42,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 334.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -1548,6 +1640,21 @@
     "line_m": 296.0,
     "min_depth_m": 1.5,
     "final_approach_m": 90.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     1057450.4,
+     -321069.2,
+     0.0
+    ],
+    "yaw_deg": -30.0,
+    "depth_m": 4.06,
+    "center_depth_m": 7.18,
+    "radius_m": 40.0,
+    "behind_arrival_m": 105.0,
+    "beach_dist_m": 401.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -1890,6 +1997,21 @@
     "line_m": 282.0,
     "min_depth_m": 1.53,
     "final_approach_m": 35.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -868740.8,
+     406154.1,
+     0.0
+    ],
+    "yaw_deg": -20.0,
+    "depth_m": 28.3,
+    "center_depth_m": 33.11,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 332.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -2243,6 +2365,21 @@
     "line_m": 278.0,
     "min_depth_m": 1.77,
     "final_approach_m": 60.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -196327.8,
+     -1047488.7,
+     0.0
+    ],
+    "yaw_deg": -80.0,
+    "depth_m": 9.5,
+    "center_depth_m": 10.05,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 328.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -2571,6 +2708,21 @@
     "line_m": 278.0,
     "min_depth_m": 1.53,
     "final_approach_m": 35.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -1284039.5,
+     -418405.0,
+     0.0
+    ],
+    "yaw_deg": 20.0,
+    "depth_m": 30.82,
+    "center_depth_m": 35.33,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 328.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -2876,6 +3028,21 @@
     "line_m": 208.0,
     "min_depth_m": 1.51,
     "final_approach_m": 90.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     192564.9,
+     -920775.0,
+     0.0
+    ],
+    "yaw_deg": -70.0,
+    "depth_m": 4.39,
+    "center_depth_m": 8.16,
+    "radius_m": 40.0,
+    "behind_arrival_m": 205.0,
+    "beach_dist_m": 413.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -3253,6 +3420,21 @@
     "line_m": 282.0,
     "min_depth_m": 1.51,
     "final_approach_m": 90.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     582824.7,
+     -760157.9,
+     0.0
+    ],
+    "yaw_deg": -60.0,
+    "depth_m": 5.25,
+    "center_depth_m": 5.95,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 332.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -3569,6 +3751,21 @@
     "line_m": 276.0,
     "min_depth_m": 3.78,
     "final_approach_m": 90.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -940667.7,
+     274731.6,
+     0.0
+    ],
+    "yaw_deg": -20.0,
+    "depth_m": 13.54,
+    "center_depth_m": 18.38,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 326.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -3864,6 +4061,21 @@
     "line_m": 290.0,
     "min_depth_m": 2.0,
     "final_approach_m": 35.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -395558.0,
+     -1050593.6,
+     0.0
+    ],
+    "yaw_deg": -110.0,
+    "depth_m": 10.22,
+    "center_depth_m": 10.93,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 340.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -4192,6 +4404,21 @@
     "line_m": 300.0,
     "min_depth_m": 2.09,
     "final_approach_m": 120.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -821056.0,
+     478366.6,
+     0.0
+    ],
+    "yaw_deg": -30.0,
+    "depth_m": 15.37,
+    "center_depth_m": 20.19,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 350.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -4455,6 +4682,21 @@
     "line_m": 280.0,
     "min_depth_m": 1.51,
     "final_approach_m": 90.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     675452.8,
+     -699001.6,
+     0.0
+    ],
+    "yaw_deg": -30.0,
+    "depth_m": 4.46,
+    "center_depth_m": 5.33,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 330.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -4710,6 +4952,21 @@
     "line_m": 276.0,
     "min_depth_m": 1.53,
     "final_approach_m": 90.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     791006.2,
+     -597280.8,
+     0.0
+    ],
+    "yaw_deg": -40.0,
+    "depth_m": 8.15,
+    "center_depth_m": 8.46,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 326.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -4965,6 +5222,21 @@
     "line_m": 280.0,
     "min_depth_m": 1.52,
     "final_approach_m": 90.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     1004501.5,
+     -403409.2,
+     0.0
+    ],
+    "yaw_deg": -40.0,
+    "depth_m": 4.95,
+    "center_depth_m": 7.5,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 330.0,
+    "side": "lagon",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -5232,6 +5504,21 @@
     "line_m": 288.0,
     "min_depth_m": 2.09,
     "final_approach_m": 90.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -945523.9,
+     -915738.6,
+     0.0
+    ],
+    "yaw_deg": 50.0,
+    "depth_m": 24.65,
+    "center_depth_m": 29.19,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 338.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -5479,6 +5766,21 @@
     "line_m": 286.0,
     "min_depth_m": 1.53,
     "final_approach_m": 120.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -1154162.4,
+     -787567.5,
+     0.0
+    ],
+    "yaw_deg": 40.0,
+    "depth_m": 16.97,
+    "center_depth_m": 21.66,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 336.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -5725,6 +6027,21 @@
     "line_m": 278.0,
     "min_depth_m": 1.53,
     "final_approach_m": 35.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -1281286.6,
+     -451438.7,
+     0.0
+    ],
+    "yaw_deg": 20.0,
+    "depth_m": 31.34,
+    "center_depth_m": 35.98,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 328.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -6054,6 +6371,21 @@
     "line_m": 278.0,
     "min_depth_m": 1.53,
     "final_approach_m": 120.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -1209973.3,
+     -120016.8,
+     0.0
+    ],
+    "yaw_deg": -60.0,
+    "depth_m": 14.35,
+    "center_depth_m": 19.16,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 328.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   },
   {
@@ -6317,6 +6649,21 @@
     "line_m": 282.0,
     "min_depth_m": 2.92,
     "final_approach_m": 35.0
+   },
+   "galleon_anchor": {
+    "location_cm": [
+     -1259640.0,
+     -647942.8,
+     0.0
+    ],
+    "yaw_deg": 20.0,
+    "depth_m": 31.89,
+    "center_depth_m": 36.64,
+    "radius_m": 40.0,
+    "behind_arrival_m": 50.0,
+    "beach_dist_m": 332.0,
+    "side": "ocean",
+    "method": "rules.galleon : recul depuis l'arrivee le long de l'axe de la proue ; profondeur = point le moins profond du disque (terrain du fragment, bathymetrie estimee)"
    }
   }
  ]
