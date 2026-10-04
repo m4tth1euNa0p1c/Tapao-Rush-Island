@@ -13,6 +13,7 @@
 #include "Slate/SceneViewport.h"
 #include "TimerManager.h"
 #include "UI/Tapao/TapaoUISubsystem.h"
+#include "Widgets/Input/SButton.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/SViewport.h"
 
@@ -89,7 +90,8 @@ void FTapaoInputSpec::Define()
 
 	It("keeps pause interactive if it was opened during the loading curtain", [this]()
 	{
-		UI->Pause = SNew(SBox);
+		// The real STapaoPause supports keyboard focus; use a focusable stand-in too.
+		UI->Pause = SNew(SButton);
 		UI->HideCurtain();
 		TestFalse(TEXT("curtain removed"), UI->Curtain.IsValid());
 		TestTrue(TEXT("pause keeps UI input"), Viewport->IgnoreInput());
