@@ -79,6 +79,9 @@ sa session propriétaire a été demandée, sans fermeture ni arrêt de PIE par 
 Les builds T-142 puis T-129 ont également été observés ; T-131 attend leur fin
 avant toute nouvelle compilation. Le verrou utilisé est celui de la racine
 principale, propriétaire `codex-78`, jamais un verrou indépendant du worktree.
+Dernier constat à 05:51 : après restitution de notre verrou, `monk-island-aa`
+a réservé la ressource jusqu'à 06:15 pour build éditeur, headless et relance
+(T-142/T-140/T-141). T-131 n'utilise pas cette fenêtre détenue par une autre session.
 
 ## Reprise de la validation
 

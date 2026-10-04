@@ -8,6 +8,7 @@ et montage des tests Save corrigés.
 Preuve : cible jeu compilée sur `eb1d46c`, résultat `Succeeded` ; journaux et
 empreintes dans ce dossier. Build éditeur et tests headless **non exécutés** :
 l'éditeur d'une autre session reste ouvert, sa fermeture étant interdite par le mandat.
+La ressource est ensuite réservée par `monk-island-aa`.
 
 Report main arrêté : quatre fichiers joueur ont des modifications non commitées.
 Faire versionner ces changements par leurs propriétaires, reprendre main dans
