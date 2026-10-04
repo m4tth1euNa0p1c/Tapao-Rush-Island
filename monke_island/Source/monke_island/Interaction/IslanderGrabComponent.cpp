@@ -87,6 +87,8 @@ void UIslanderGrabComponent::GetHoldAim(FVector& OutEyes, FVector& OutDirection,
 	OutDirection = FRotator(Pitch, View.Yaw, 0.0f).Vector();
 }
 
+const FName UIslanderGrabComponent::NoGrabTag(TEXT("NoGrab"));
+
 UPrimitiveComponent* UIslanderGrabComponent::FindGrabTarget(FVector& OutGrabPoint) const
 {
 	FVector Eyes, Direction;
@@ -100,7 +102,8 @@ UPrimitiveComponent* UIslanderGrabComponent::FindGrabTarget(FVector& OutGrabPoin
 	}
 
 	UPrimitiveComponent* Component = Hit.GetComponent();
-	if (!Component || !Component->IsSimulatingPhysics() || Cast<APawn>(Hit.GetActor()))
+	if (!Component || !Component->IsSimulatingPhysics() || Cast<APawn>(Hit.GetActor())
+		|| (Hit.GetActor() && Hit.GetActor()->ActorHasTag(NoGrabTag)))
 	{
 		return nullptr;
 	}
@@ -278,6 +281,11 @@ void UIslanderGrabComponent::Grab(UPrimitiveComponent* Target, const FVector& Gr
 	const AIslanderCharacter* Islander = Cast<AIslanderCharacter>(GetCharacter());
 	if (!Handle || HeldComponent || !Target || !Target->IsSimulatingPhysics() || Cast<APawn>(Target->GetOwner())
 		|| (Islander && Islander->IsRagdoll()))
+	{
+		return;
+	}
+	// server re-check: a client cannot grab what the rules forbid
+	if (Target->GetOwner() && Target->GetOwner()->ActorHasTag(NoGrabTag))
 	{
 		return;
 	}

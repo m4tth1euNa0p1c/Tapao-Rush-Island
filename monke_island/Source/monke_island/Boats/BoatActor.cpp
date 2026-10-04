@@ -1,6 +1,7 @@
 // monke_island
 
 #include "Boats/BoatActor.h"
+#include "Interaction/IslanderGrabComponent.h"
 #include "Boats/BoatPhysics.h"
 #include "Boats/BoatRiderComponent.h"
 #include "Boats/BoatRules.h"
@@ -47,6 +48,8 @@ ABoatActor::ABoatActor()
 	Hull->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	Hull->SetSimulatePhysics(true);
 	Hull->SetCanEverAffectNavigation(false);
+	// owner request 2026-10-04: a player never lifts the boat with the grab (E); it is pushed on the sand and rowed
+	Tags.AddUnique(UIslanderGrabComponent::NoGrabTag);
 
 	OarLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OarLeft"));
 	OarLeft->SetupAttachment(Hull, TEXT("Oarlock_L"));
