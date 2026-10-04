@@ -1,0 +1,191 @@
+Log started at 10/04/2026 05:31:48 (2026-10-04T03:31:48Z)
+Resolved project argument C:\Users\matth\monk-island\.worktrees\T-128\monke_island\monke_island.uproject to C:\Users\matth\monk-island\.worktrees\T-128\monke_island\monke_island.uproject
+No config file at C:\ProgramData\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\matth\AppData\Local\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\matth\Documents\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Configuration will be read from:
+  C:\Users\matth\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No project scope config file at C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Saved\UnrealBuildTool\BuildConfiguration.xml. Creating default.
+Reading configuration file from: C:\Users\matth\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from: C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Saved\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from: C:\Users\matth\AppData\Local\UnrealEngine\Intermediate\Build\UnrealBuildTool.Env.BuildConfiguration.xml
+Setting temp directory to 'C:\Users\matth\AppData\Local\Temp\UnrealBuildTool\eb6d2d82'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (1)
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (2)
+Found Windows 10 SDK version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Win64 Installed SDK(s): MinVersion_Sdk=10.0.19041.0, MaxVersion_Sdk=10.9.99999.0, CurrentVersion_Sdk=10.0.26100.0, Version_AutoSdk=10.0.22621.0, CurrentVersion_AutoSdk=
+        Registering build platform: Win64 - buildable: True
+    Registering build platform: UnrealBuildTool.VisionOSPlatformFactory
+Command line: "C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" monke_island Win64 Development -Project=C:\Users\matth\monk-island\.worktrees\T-128\monke_island\monke_island.uproject -WaitMutex
+Log file: C:\Users\matth\AppData\Local\UnrealBuildTool\Log.txt
+Deleting old log file: C:\Users\matth\AppData\Local\UnrealBuildTool\Log-backup-2026.10.02-19.35.11.txt
+Deleting old log file: C:\Users\matth\AppData\Local\UnrealBuildTool\Log-backup-2026.10.02-19.35.11.json
+
+Determining max actions to execute in parallel (20 physical cores, 20 logical cores)
+  Executing up to 20 processes, one per physical core
+Using 'git status' to determine working set for adaptive non-unity build (C:\Users\matth\monk-island\.worktrees\T-128).
+Creating makefile for monke_island (no existing makefile)
+UbaStorageServer - Database loaded from C:\ProgramData\Epic\UnrealBuildAccelerator\cas\casdb (v32) in <1ms (contained 0 entries estimated to 0b)
+UbaServer - Listening on 0.0.0.0:1345
+Skipping C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5Rules.dll: File is installed
+Skipping C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5ProgramRules.dll: File is installed
+Compiler: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe
+Linker: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Library Manager: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Resource Compiler: C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\rc.exe
+Resource Converter: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cvtres.exe
+Using EngineIncludeOrderVersion.Unreal5_8 for target monke_island.Target.cs
+Building UnrealGame - monke_island - Win64 - Development
+VerseVMBytecodeGenerator.Generate, generating CPP headers in: 'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode'
+	Writing out generated header file. Changed:False Path:'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode\VVMBytecodeOps.gen.h'
+	Writing out generated header file. Changed:False Path:'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode\VVMBytecodesAndCaptures.gen.h'
+	Writing out generated header file. Changed:False Path:'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode\VVMMakeCapturesFuncs.gen.h'
+	Writing out generated header file. Changed:False Path:'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode\VVMCaptureSwitch.gen.h'
+Found 4 shared PCH headers (listed in order of preference):
+	Engine
+	Slate
+	CoreUObject
+	Core
+Parsing headers for monke_island
+  Running Internal UnrealHeaderTool C:\Users\matth\monk-island\.worktrees\T-128\monke_island\monke_island.uproject C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Intermediate\Build\Win64\monke_island\monke_island.uhtmanifest -WarningsAsErrors -installed
+UHT compiled-in object format Default
+Step - Parse Headers
+Step - Populate symbol table
+Step - Exports
+       Exporter Stats skipped
+       Exporter Json skipped
+       Running exporter CodeGen
+UHT processed monke_island in 1.1385203 seconds (242 generated files written)
+Checking for live coding mutex: Global\LiveCoding_C++Users+matth+monk-island+.worktrees+T-128+monke_island+Binaries+Win64+monke_island.exe
+Building monke_island...
+===== Toolchain Information =====
+Using ISPC compiler (C:\Program Files\Epic Games\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35229 toolchain (C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.26100.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from monke_island unity file: ExpeditionGameState.cpp, ExpeditionIslandSubsystem.cpp, ExpeditionIslandValidation.cpp, IslandHistorySpec.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 18 action(s)
+  CPU 20 physical cores, 20 logical cores
+  Memory 31.65 GB physical, 49.21 GB/54.45 GB committed
+  UBA Storage capacity 40 GB
+  UBA RootDir C:\ProgramData\Epic\UnrealBuildAccelerator
+Cache bucket 2953582316 used. Action: Compile [x64] SharedPCH.Engine.Project.ValApi.ValExpApi.Cpp20.cpp ()
+Cache bucket 3639664738 used. Action: Compile [x64] ExpeditionGameState.cpp ()
+Cache bucket 3084607794 used. Action: Compile Resource [x64] monke_island-Default.rc2 ()
+Cache bucket 136926991 used. Action: Link [x64] monke_island.exe ()
+All processes queued
+[1/18] Compile [x64] SharedPCH.Engine.Project.ValApi.ValExpApi.Cpp20.cpp
+[2/18] Copy monke_island-Default.rc2
+[3/18] Copy D3D12Core.dll
+[4/18] Copy d3d12SDKLayers.dll
+[5/18] Copy DirectML.dll
+[6/18] Copy tbb12.dll
+[7/18] Copy tbbmalloc.dll
+[8/18] Compile [x64] ExpeditionGameState.cpp
+[9/18] Compile [x64] ExpeditionIslandSubsystem.cpp
+[10/18] Compile [x64] ExpeditionIslandValidation.cpp
+[11/18] Compile [x64] IslandHistorySpec.cpp
+[12/18] Compile [x64] Module.monke_island.1.cpp
+[13/18] Compile [x64] Module.monke_island.2.cpp
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Boats\BoatRiderComponent.cpp(298,14): error C2039: 'SetForceThirdPerson' n'est pas membre de 'AIslanderCharacter'
+			Islander->SetForceThirdPerson(true);
+			          ^
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Player\IslanderCharacter.h(28,24): note: voir la déclaration de 'AIslanderCharacter'
+class MONKE_ISLAND_API AIslanderCharacter : public ACharacter
+                       ^
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Boats\BoatRiderComponent.cpp(315,14): error C2039: 'SetForceThirdPerson' n'est pas membre de 'AIslanderCharacter'
+			Islander->SetForceThirdPerson(false);
+			          ^
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Player\IslanderCharacter.h(28,24): note: voir la déclaration de 'AIslanderCharacter'
+class MONKE_ISLAND_API AIslanderCharacter : public ACharacter
+                       ^
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Boats\Tests\BoatPhysicsSpec.cpp(259,69): error C2039: 'bExhaustionKillsInWater' n'est pas membre de 'UIslanderMovementComponent'
+		TestTrue(TEXT("out of stamina in the water: dead at once"), Move->bExhaustionKillsInWater);
+		                                                                  ^
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Player\IslanderMovementComponent.h(20,24): note: voir la déclaration de 'UIslanderMovementComponent'
+class MONKE_ISLAND_API UIslanderMovementComponent : public UCharacterMovementComponent
+                       ^
+ Compile [x64] Module.monke_island.2.cpp: Exited with error code 2 . The build will fail.
+ Compile [x64] Module.monke_island.2.cpp: WorkingDirectory C:\Program Files\Epic Games\UE_5.8\Engine\Source
+ Compile [x64] Module.monke_island.2.cpp: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe @"C:/Users/matth/monk-island/.worktrees/T-128/monke_island/Intermediate/Build/Win64/x64/UnrealGame/Development/monke_island/Module.monke_island.2.cpp.obj.rsp" 
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Boats\Tests\BoatPhysicsSpec.cpp(259,3): error C2661: 'FAutomationTestBase::TestTrue' : aucune fonction surchargée ne nécessite 1 arguments
+		TestTrue(TEXT("out of stamina in the water: dead at once"), Move->bExhaustionKillsInWater);
+		^
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Boats\Tests\BoatPhysicsSpec.cpp(259,3): note: lors de la tentative de mise en correspondance de la liste des arguments '(const wchar_t [42])'
+[14/18] Compile [x64] Module.monke_island.3.cpp
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Galleon\GalleonSpawner.cpp(54,63): error C2838: 'Galleon' : nom qualifié non conforme dans une déclaration de membre
+		if (!Played || !Played->FindAnchorageByRole(EAnchorageRole::Galleon, Mooring))
+		                                                            ^
+ Compile [x64] Module.monke_island.3.cpp: Exited with error code 2 . The build will fail.
+ Compile [x64] Module.monke_island.3.cpp: WorkingDirectory C:\Program Files\Epic Games\UE_5.8\Engine\Source
+ Compile [x64] Module.monke_island.3.cpp: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe @"C:/Users/matth/monk-island/.worktrees/T-128/monke_island/Intermediate/Build/Win64/x64/UnrealGame/Development/monke_island/Module.monke_island.3.cpp.obj.rsp" 
+C:\Users\matth\monk-island\.worktrees\T-128\monke_island\Source\monke_island\Galleon\GalleonSpawner.cpp(54,63): error C2065: 'Galleon' : identificateur non déclaré
+[15/18] Compile [x64] Module.monke_island.4.cpp
+[16/18] Compile Resource [x64] monke_island-Default.rc2
+
+Total time in Unreal Build Accelerator local executor: 59.17 seconds
+UbaStorageServer - Database saved in 1ms (0 file entries, 0 cas entries. deleted 0 dropped cas files)
+CompilationResultException: OtherCompilationError
+   at UnrealBuildTool.ActionGraph.InternalExecuteActions(ActionExecutor Executor, List`1 ActionsToExecute, ILogger Logger)
+   at UnrealBuildTool.ActionGraph.ExecuteActionsAsync(BuildConfiguration BuildConfiguration, List`1 ActionsToExecute, List`1 TargetDescriptors, ILogger Logger, ActionExecutor executor)
+   at UnrealBuildTool.BuildMode.BuildAsync(List`1 Targets, BuildConfiguration BuildConfiguration, BuildOptions Options, FileReference WriteOutdatedActionsFile, CppDependencyCache cppDependencyCache, ILogger Logger, String ActionTypeFilter, ActionExecutor executor)
+   at UnrealBuildTool.BuildMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger)
+   at UnrealBuildTool.BuildMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger)
+   at UnrealBuildTool.UnrealBuildTool.Main(String[] ArgumentsArray)
+WriteFileIfChanged() wrote 0 changed files of 1 requested writes.
+
+Timeline:
+[  0.000]  +0.318 Main
+   0.017          [  0.017]  +0.108 Apply XmlConfig
+   0.127          [  0.127]  +0.057 AddTelemetry
+   0.204          [  0.204]  +0.113 RegisterPlatforms
+[  0.356]  +0.021 ParseCommandLine
+[  0.445]  +0.030 EngineRulesPlugins
+[  0.478]  +0.020 EngineRulesFetchDirs
+[  0.505]  +0.009 EngineRulesAssembly
+[  0.515]  +0.002 ProgramRulesAssembly
+[  0.518]  +0.012 ProjectRulesAssembly
+[  0.530]  +0.205 CreateTargetRules
+[  0.776]  +0.002 CppDependencyCache
+[  0.785]  +1.602 monke_island Win64 Development
+   0.785          [  0.000]  +0.296 <unknown>
+   1.081          [  0.296]  +0.590 UHTModules
+   1.752          [  0.967]  +0.099 UHTManifest
+   1.852          [  1.067]  +1.142 UHT
+   1.852             1.067          [  0.000]  +0.254 <unknown>
+   2.106             1.321          [  0.254]  +0.000 GitWait
+   2.106             1.321          [  0.254]  +0.279 <unknown>
+   2.386             1.600          [  0.533]  +0.000 WaitOnWrites
+   2.388             1.602          [  0.535]  +0.038 SavingMakefile
+   2.426             1.641          [  0.574]  +0.568 <unknown>
+[  2.388]  +0.608 <unknown>
+[  2.996]  +0.012 UHTTimestamps
+[  3.015]  +0.000 CppDependencyCache
+[  3.015]  +0.047 Preparing ActionGraph
+   3.025          [  0.010]  +0.004 LinkActions
+   3.030             0.014          [  0.004]  +0.000 DetectActionGraphCycles
+   3.030          [  0.015]  +0.000 GatherPrerequisiteActions
+   3.032          [  0.016]  +0.000 CppDependencyCacheWait
+   3.032          [  0.017]  +0.014 GatherOutdatedActions
+   3.049          [  0.033]  +0.002 LinkActions
+   3.049             0.033          [  0.000]  +0.000 DetectActionGraphCycles
+   3.054          [  0.038]  +0.000 DeleteOutdatedProducedItems
+   3.054          [  0.039]  +0.004 SaveActionHistory
+   3.060          [  0.044]  +0.002 CreateDirectoriesForProducedItems
+[  3.075]  +0.090 GarbageCollect
+[  3.165] +59.084 <unknown>
+[ 62.250]  +0.000 DisconnectCache
+[ 62.254]  +0.206 SaveCasTable
+[ 62.463]  +0.044 Saving caches
+[ 62.524]  +0.001 TelemetryService.FlushEvents
+[ 62.526]
+
+Result: Failed (OtherCompilationError)
+Total execution time: 62.53 seconds

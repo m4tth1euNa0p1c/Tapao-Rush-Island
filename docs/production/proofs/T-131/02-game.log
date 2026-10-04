@@ -1,0 +1,158 @@
+Log started at 10/04/2026 05:38:18 (2026-10-04T03:38:18Z)
+Resolved project argument C:\Users\matth\monk-island\.worktrees\T-131\monke_island\monke_island.uproject to C:\Users\matth\monk-island\.worktrees\T-131\monke_island\monke_island.uproject
+No config file at C:\ProgramData\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\matth\AppData\Local\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\matth\Documents\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Configuration will be read from:
+  C:\Users\matth\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\XmlConfigCache.bin): C:\Users\matth\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\XmlConfigCache.bin): C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Saved\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\XmlConfigCache.bin): C:\Users\matth\AppData\Local\UnrealEngine\Intermediate\Build\UnrealBuildTool.Env.BuildConfiguration.xml
+Setting temp directory to 'C:\Users\matth\AppData\Local\Temp\UnrealBuildTool\eb6d2d82'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (1)
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (2)
+Found Windows 10 SDK version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Win64 Installed SDK(s): MinVersion_Sdk=10.0.19041.0, MaxVersion_Sdk=10.9.99999.0, CurrentVersion_Sdk=10.0.26100.0, Version_AutoSdk=10.0.22621.0, CurrentVersion_AutoSdk=
+        Registering build platform: Win64 - buildable: True
+    Registering build platform: UnrealBuildTool.VisionOSPlatformFactory
+Command line: "C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" monke_island Win64 Development -Project=C:\Users\matth\monk-island\.worktrees\T-131\monke_island\monke_island.uproject -WaitMutex
+Log file: C:\Users\matth\AppData\Local\UnrealBuildTool\Log.txt
+Deleting old log file: C:\Users\matth\AppData\Local\UnrealBuildTool\Log-backup-2026.10.02-19.35.11.txt
+Deleting old log file: C:\Users\matth\AppData\Local\UnrealBuildTool\Log-backup-2026.10.02-19.35.11.json
+
+Determining max actions to execute in parallel (20 physical cores, 20 logical cores)
+  Executing up to 20 processes, one per physical core
+Using 'git status' to determine working set for adaptive non-unity build (C:\Users\matth\monk-island\.worktrees\T-131).
+UbaStorageServer - Database loaded from C:\ProgramData\Epic\UnrealBuildAccelerator\cas\casdb (v32) in <1ms (contained 0 entries estimated to 0b)
+UbaServer - Listening on 0.0.0.0:1345
+Skipping C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5Rules.dll: File is installed
+Skipping C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5ProgramRules.dll: File is installed
+C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Source\monke_island\Expedition\Core\Tests\ExpeditionClockSpec.cpp was not part of source working set and should be
+Invalidating makefile for monke_island (working set of source files changed)
+Compiler: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe
+Linker: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Library Manager: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Resource Compiler: C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\rc.exe
+Resource Converter: C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cvtres.exe
+Using EngineIncludeOrderVersion.Unreal5_8 for target monke_island.Target.cs
+Building UnrealGame - monke_island - Win64 - Development
+VerseVMBytecodeGenerator.Generate, generating CPP headers in: 'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode'
+	Writing out generated header file. Changed:False Path:'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode\VVMBytecodeOps.gen.h'
+	Writing out generated header file. Changed:False Path:'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode\VVMBytecodesAndCaptures.gen.h'
+	Writing out generated header file. Changed:False Path:'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode\VVMMakeCapturesFuncs.gen.h'
+	Writing out generated header file. Changed:False Path:'C:\Program Files\Epic Games\UE_5.8\Engine\Intermediate\Build\Win64\UnrealGame\Inc\CoreUObject\VerseVMBytecode\VVMCaptureSwitch.gen.h'
+UnrealHeaderTool needs to run because SavedTimestamp is older than HeaderFileTimestamp (C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Source\monke_island\Expedition\Core\ExpeditionRules.h) for module monke_island
+Found 4 shared PCH headers (listed in order of preference):
+	Engine
+	Slate
+	CoreUObject
+	Core
+Parsing headers for monke_island
+  Running Internal UnrealHeaderTool C:\Users\matth\monk-island\.worktrees\T-131\monke_island\monke_island.uproject C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\Win64\monke_island\monke_island.uhtmanifest -WarningsAsErrors -installed
+UHT compiled-in object format Default
+Step - Parse Headers
+Updating C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\Win64\x64\UnrealGame\Development\monke_island\Module.monke_island.3.cpp: contents have changed. Saving previous version to C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\Win64\x64\UnrealGame\Development\monke_island\Module.monke_island.3.cpp.old.
+Updating C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\Win64\x64\UnrealGame\Development\monke_island\Module.monke_island.4.cpp: contents have changed. Saving previous version to C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\Win64\x64\UnrealGame\Development\monke_island\Module.monke_island.4.cpp.old.
+Updating C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\Win64\x64\UnrealGame\Development\monke_island\LiveCodingInfo.json: contents have changed. Saving previous version to C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\Win64\x64\UnrealGame\Development\monke_island\LiveCodingInfo.json.old.
+Updating C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\Win64\x64\monke_island\Development\monke_island.exe.rsp: contents have changed. Saving previous version to C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Intermediate\Build\Win64\x64\monke_island\Development\monke_island.exe.rsp.old.
+Step - Populate symbol table
+Step - Exports
+       Exporter Stats skipped
+       Exporter Json skipped
+       Running exporter CodeGen
+UHT processed monke_island in 0.9893643 seconds (9 generated files written)
+Checking for live coding mutex: Global\LiveCoding_C++Users+matth+monk-island+.worktrees+T-131+monke_island+Binaries+Win64+monke_island.exe
+Building monke_island...
+===== Toolchain Information =====
+Using ISPC compiler (C:\Program Files\Epic Games\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35229 toolchain (C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.26100.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from monke_island unity file: ExpeditionClockSpec.cpp, ExpeditionIslandTypes.cpp, PacificationTypes.cpp, PacificationZone.cpp, SermonSpec.cpp, IslanderCharacter.cpp, IslanderMovementComponent.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 14 action(s)
+  CPU 20 physical cores, 20 logical cores
+  Memory 31.65 GB physical, 49.5 GB/55.46 GB committed
+  UBA Storage capacity 40 GB
+  UBA RootDir C:\ProgramData\Epic\UnrealBuildAccelerator
+Cache bucket 1591534972 used. Action: Compile [x64] ExpeditionClockSpec.cpp ()
+Cache bucket 136926991 used. Action: Link [x64] monke_island.exe ()
+All processes queued
+[1/14] Compile [x64] ExpeditionClockSpec.cpp
+[2/14] Compile [x64] ExpeditionIslandTypes.cpp
+[3/14] Compile [x64] IslanderCharacter.cpp
+[4/14] Compile [x64] IslanderMovementComponent.cpp
+[5/14] Compile [x64] Module.monke_island.1.cpp
+[6/14] Compile [x64] Module.monke_island.2.cpp
+[7/14] Compile [x64] Module.monke_island.3.cpp
+[8/14] Compile [x64] Module.monke_island.4.cpp
+[9/14] Compile [x64] Module.monke_island.5.cpp
+[10/14] Compile [x64] PacificationTypes.cpp
+[11/14] Compile [x64] PacificationZone.cpp
+[12/14] Compile [x64] SermonSpec.cpp
+[13/14] Link [x64] monke_island.exe
+   Création de la bibliothèque C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Binaries\Win64\monke_island.lib et de l'objet C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Binaries\Win64\monke_island.exp
+[14/14] WriteMetadata monke_island.target [NoUba]
+
+Total time in Unreal Build Accelerator local executor: 78.87 seconds
+Output binary: C:\Users\matth\monk-island\.worktrees\T-131\monke_island\Binaries\Win64\monke_island.exe
+UbaStorageServer - Database saved in 1ms (0 file entries, 0 cas entries. deleted 0 dropped cas files)
+WriteFileIfChanged() wrote 0 changed files of 1 requested writes.
+
+Timeline:
+[  0.000]  +0.298 Main
+   0.018          [  0.018]  +0.084 Apply XmlConfig
+   0.104          [  0.104]  +0.054 AddTelemetry
+   0.176          [  0.176]  +0.121 RegisterPlatforms
+[  0.322]  +0.019 ParseCommandLine
+[  0.386]  +0.056 LoadMakefile
+   0.410          [  0.024]  +0.023 EngineRulesPlugins
+   0.436          [  0.050]  +0.005 EngineRulesFetchDirs
+[  0.447]  +0.000 FindPlugins
+[  0.448]  +0.009 EngineRulesAssembly
+   0.451          [  0.003]  +0.021 MakefileValid
+   0.458             0.009          [  0.006]  +0.003 ProgramRulesAssembly
+   0.461             0.013          [  0.009]  +0.011 ProjectRulesAssembly
+   0.473             0.025          [  0.021]  +0.190 CreateTargetRules
+[  0.458]  +0.242 <unknown>
+[  0.700]  +0.002 CppDependencyCache
+[  0.721]  +0.961 monke_island Win64 Development
+   0.721          [  0.000]  +0.278 <unknown>
+   0.999          [  0.278]  +0.024 UHTModules
+   1.096          [  0.375]  +0.116 UHTManifest
+   1.212          [  0.491]  +0.992 UHT
+   1.212             0.491          [  0.000]  +0.467 <unknown>
+   1.680             0.958          [  0.467]  +0.000 WaitOnWrites
+   1.682             0.961          [  0.469]  +0.027 SavingMakefile
+   1.709             0.988          [  0.496]  +0.495 <unknown>
+[  1.682]  +0.524 <unknown>
+[  2.206]  +0.007 UHTTimestamps
+[  2.220]  +0.000 CppDependencyCache
+[  2.221]  +0.051 Preparing ActionGraph
+   2.229          [  0.008]  +0.003 LinkActions
+   2.232             0.011          [  0.003]  +0.000 DetectActionGraphCycles
+   2.233          [  0.012]  +0.000 GatherPrerequisiteActions
+   2.234          [  0.013]  +0.000 CppDependencyCacheWait
+   2.234          [  0.013]  +0.027 GatherOutdatedActions
+   2.264          [  0.043]  +0.002 LinkActions
+   2.264             0.043          [  0.000]  +0.000 DetectActionGraphCycles
+   2.268          [  0.047]  +0.000 DeleteOutdatedProducedItems
+   2.268          [  0.047]  +0.002 SaveActionHistory
+   2.272          [  0.051]  +0.000 CreateDirectoriesForProducedItems
+[  2.281]  +0.107 GarbageCollect
+[  2.389] +78.758 <unknown>
+[ 81.147]  +0.000 Deploying targets
+[ 81.149]  +0.000 DisconnectCache
+[ 81.153]  +0.032 SaveCasTable
+[ 81.190]  +0.039 Saving caches
+[ 81.230]  +0.001 TelemetryService.FlushEvents
+[ 81.233]
+
+Result: Succeeded
+Total execution time: 81.23 seconds
