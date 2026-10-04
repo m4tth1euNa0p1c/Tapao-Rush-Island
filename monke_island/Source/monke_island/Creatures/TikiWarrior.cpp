@@ -1,6 +1,7 @@
 // monke_island
 
 #include "Creatures/TikiWarrior.h"
+#include "Core/DeathCause.h"
 #include "Creatures/TikiDirector.h"
 #include "Creatures/TikiMath.h"
 #include "Creatures/TikiRules.h"
@@ -202,7 +203,7 @@ void ATikiWarrior::StrikeNow()
 		Done.Add(Victim);
 		// without the arm holding its weapon, it strikes with the other fist
 		const float Damage = Rules->AttackDamage * (IsMaimed() ? Rules->MaimedDamageScale : 1.0f);
-		UGameplayStatics::ApplyDamage(Victim, Damage, GetController(), this, nullptr);
+		UGameplayStatics::ApplyDamage(Victim, Damage, GetController(), this, UTikiDamageType::StaticClass());
 		if (ACharacter* VictimCharacter = Cast<ACharacter>(Victim))
 		{
 			VictimCharacter->LaunchCharacter(Forward * Rules->AttackKnockback + FVector(0.0f, 0.0f, 150.0f), true, false);

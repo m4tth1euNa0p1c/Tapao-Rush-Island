@@ -1,6 +1,7 @@
 // monke_island
 
 #include "Expedition/Core/ExpeditionGameState.h"
+#include "Telemetry/ExpeditionEvents.h"
 #include "Expedition/Core/ExpeditionRules.h"
 #include "Expedition/Islands/ExpeditionIslandSubsystem.h"
 #include "Engine/Engine.h"
@@ -111,8 +112,9 @@ bool AExpeditionGameState::StartExpedition()
 	ClockState = ExpeditionClock::Start(Now, Params);
 	Resolution = EExpeditionResolution::None;
 
-	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: started at %.2f s, flood at %.2f s"),
-		*ExpeditionId.ToString(), ClockState.StartTime, ClockState.FloodStartTime);
+	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: started at %.2f s, flood at %.2f s schema=1 build=%s rules_hash=%s"),
+		*ExpeditionId.ToString(), ClockState.StartTime, ClockState.FloodStartTime,
+		*ExpeditionEvents::BuildVersion(), *ExpeditionEvents::RulesHash(*Rules));
 
 	OnFloodDeadlineChanged.Broadcast(ClockState.FloodStartTime, PreviousFloodStartTime);
 	RefreshPhase();

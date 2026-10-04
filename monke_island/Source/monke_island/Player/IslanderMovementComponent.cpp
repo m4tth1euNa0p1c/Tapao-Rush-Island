@@ -199,7 +199,7 @@ void UIslanderMovementComponent::TickComponent(float DeltaTime, ELevelTick TickT
 		{
 			if (UIslanderHealthComponent* Health = CharacterOwner->FindComponentByClass<UIslanderHealthComponent>())
 			{
-				Health->ApplyHealthDamage(Damage, nullptr);
+				Health->ApplyHealthDamage(Damage, nullptr, EDeathCause::Drowning);
 			}
 		}
 	}

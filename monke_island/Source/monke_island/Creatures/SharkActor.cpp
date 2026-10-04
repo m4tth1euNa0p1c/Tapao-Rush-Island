@@ -1,6 +1,7 @@
 // monke_island
 
 #include "Creatures/SharkActor.h"
+#include "Core/DeathCause.h"
 #include "Creatures/SharkRules.h"
 #include "Player/IslanderHealthComponent.h"
 #include "Water/IslandWaterSubsystem.h"
@@ -301,7 +302,7 @@ APawn* ASharkActor::FindPrey(float Radius) const
 void ASharkActor::Bite(APawn* Victim)
 {
 	LastBiteTime = GetWorld()->GetTimeSeconds();
-	UGameplayStatics::ApplyDamage(Victim, Rules->AttackDamage, GetController(), this, nullptr);
+	UGameplayStatics::ApplyDamage(Victim, Rules->AttackDamage, GetController(), this, USharkDamageType::StaticClass());
 	if (ACharacter* Character = Cast<ACharacter>(Victim))
 	{
 		const FVector Away = (Victim->GetActorLocation() - GetActorLocation()).GetSafeNormal2D();

@@ -1,6 +1,7 @@
 // monke_island
 
 #include "Player/IslanderHealthComponent.h"
+#include "Telemetry/ExpeditionEvents.h"
 #include "GameFramework/Actor.h"
 #include "Net/UnrealNetwork.h"
 #include "monke_island.h"
@@ -27,6 +28,7 @@ void UIslanderHealthComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProper
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UIslanderHealthComponent, Health);
+	DOREPLIFETIME(UIslanderHealthComponent, DeathCause);
 	DOREPLIFETIME(UIslanderHealthComponent, bDead);
 	DOREPLIFETIME(UIslanderHealthComponent, LastDamageCauser);
 }
@@ -46,12 +48,13 @@ float UIslanderHealthComponent::ComputeFallDamage(float LandingSpeed, float Safe
 
 void UIslanderHealthComponent::HandleTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-	ApplyHealthDamage(Damage, DamageCauser);
+	const UMonkeDamageType* MonkeDamage = Cast<UMonkeDamageType>(DamageType);
+	ApplyHealthDamage(Damage, DamageCauser, MonkeDamage ? MonkeDamage->Cause : EDeathCause::Unknown);
 }
 
-float UIslanderHealthComponent::ApplyHealthDamage(float Amount, AActor* DamageCauser)
+float UIslanderHealthComponent::ApplyHealthDamage(float Amount, AActor* DamageCauser, EDeathCause Cause)
 {
-	if (!GetOwner() || !GetOwner()->HasAuthority() || bDead || Amount <= 0.0f)
+	if (!GetOwner() || !GetOwner()->HasAuthority() || bDead || !FMath::IsFinite(Amount) || Amount <= 0.0f)
 	{
 		return 0.0f;
 	}
@@ -59,12 +62,16 @@ float UIslanderHealthComponent::ApplyHealthDamage(float Amount, AActor* DamageCa
 	const float OldHealth = Health;
 	Health = FMath::Max(0.0f, Health - Amount);
 	LastDamageCauser = DamageCauser;
+	if (Health <= 0.0f)
+	{
+		DeathCause = Cause;
+	}
 	OnHealthChanged.Broadcast(Health, Health - OldHealth);
 
 	if (Health <= 0.0f)
 	{
 		bDead = true;
-		UE_LOG(Logmonke_island, Log, TEXT("%s died (killer: %s)"), *GetNameSafe(GetOwner()), *GetNameSafe(DamageCauser));
+		ExpeditionEvents::LogDeath(*this, DeathCause);
 		OnDeath.Broadcast(DamageCauser);
 	}
 	return OldHealth - Health;
@@ -103,7 +110,7 @@ float UIslanderHealthComponent::ApplyFallDamage(float LandingSpeed)
 	{
 		UE_LOG(Logmonke_island, Log, TEXT("%s fall at %.0f cm/s: %.0f damage"), *GetNameSafe(GetOwner()), LandingSpeed, Damage);
 	}
-	return ApplyHealthDamage(Damage, nullptr);
+	return ApplyHealthDamage(Damage, nullptr, EDeathCause::Fall);
 }
 
 void UIslanderHealthComponent::ResetHealth()
@@ -116,6 +123,7 @@ void UIslanderHealthComponent::ResetHealth()
 	const float OldHealth = Health;
 	Health = MaxHealth;
 	bDead = false;
+	DeathCause = EDeathCause::Unknown;
 	LastDamageCauser = nullptr;
 	OnHealthChanged.Broadcast(Health, Health - OldHealth);
 }

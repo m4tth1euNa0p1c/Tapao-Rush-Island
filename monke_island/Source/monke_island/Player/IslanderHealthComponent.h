@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Core/DeathCause.h"
 #include "IslanderHealthComponent.generated.h"
 
 class AController;
@@ -57,9 +58,13 @@ public:
 	UFUNCTION(BlueprintPure, Category="Health")
 	bool IsDead() const { return bDead; }
 
+	/** Cause of the fatal hit, replicated for the spectator and death recap. */
+	UFUNCTION(BlueprintPure, Category="Health")
+	EDeathCause GetDeathCause() const { return DeathCause; }
+
 	/** Removes health (server only); returns the damage actually applied */
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Health")
-	float ApplyHealthDamage(float Amount, AActor* DamageCauser);
+	float ApplyHealthDamage(float Amount, AActor* DamageCauser, EDeathCause Cause = EDeathCause::Unknown);
 
 	/** Restores health (server only), capped at MaxHealth and refused once dead; returns the health actually restored */
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Health")
@@ -94,6 +99,10 @@ protected:
 	void OnRep_Health(float OldHealth);
 
 private:
+
+	/** Set before death notifications, cleared by ResetHealth. */
+	UPROPERTY(Replicated)
+	EDeathCause DeathCause = EDeathCause::Unknown;
 
 	/** Current health */
 	UPROPERTY(ReplicatedUsing=OnRep_Health)

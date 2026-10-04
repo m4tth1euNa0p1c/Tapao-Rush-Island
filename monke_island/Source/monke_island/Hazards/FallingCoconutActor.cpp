@@ -99,7 +99,7 @@ void AFallingCoconutActor::HandleHit(UPrimitiveComponent* HitComponent, AActor* 
 	UE_LOG(Logmonke_island, Log, TEXT("%s knocked out %s at %.0f cm/s"), *GetName(), *Islander->GetName(), ImpactSpeed);
 	if (UIslanderHealthComponent* Health = Islander->FindComponentByClass<UIslanderHealthComponent>())
 	{
-		Health->ApplyHealthDamage(Rules->KnockoutDamage, this);
+		Health->ApplyHealthDamage(Rules->KnockoutDamage, this, EDeathCause::Coconut);
 	}
 	Islander->Knockout(Velocity * Rules->KnockoutVelocityShare);
 }
