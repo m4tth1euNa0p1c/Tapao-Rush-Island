@@ -95,7 +95,10 @@ public:
 
 	/** True while the first person view is selected */
 	UFUNCTION(BlueprintPure, Category="Camera")
-	bool IsFirstPerson() const { return bFirstPerson; }
+	bool IsFirstPerson() const { return bFirstPerson && !bForceThirdPerson; }
+
+	/** Forces the third person view while true (seated in a boat), the player's choice comes back afterwards */
+	void SetForceThirdPerson(bool bForce);
 
 	/** Returns the first person camera */
 	UFUNCTION(BlueprintPure, Category="Camera")
@@ -314,4 +317,7 @@ private:
 
 	/** First person view selected */
 	bool bFirstPerson = false;
+
+	/** Third person forced by the situation (seated in a boat) */
+	bool bForceThirdPerson = false;
 };

@@ -68,14 +68,14 @@ void AIslanderCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	bFirstPerson = bStartInFirstPerson;
-	ApplyViewMode(bFirstPerson, bFirstPerson);
+	ApplyViewMode(IsFirstPerson(), IsFirstPerson());
 }
 
 void AIslanderCharacter::ToggleView()
 {
 	bFirstPerson = !bFirstPerson;
 	// knocked out: the view stays third person until the body stands up
-	ApplyViewMode(bFirstPerson, bFirstPerson && !bIsRagdoll);
+	ApplyViewMode(IsFirstPerson(), IsFirstPerson() && !bIsRagdoll);
 	if (!HasAuthority())
 	{
 		ServerSetFirstPerson(bFirstPerson);
@@ -85,7 +85,17 @@ void AIslanderCharacter::ToggleView()
 void AIslanderCharacter::ServerSetFirstPerson_Implementation(bool bInFirstPerson)
 {
 	bFirstPerson = bInFirstPerson;
-	ApplyViewMode(bFirstPerson, bFirstPerson && !bIsRagdoll);
+	ApplyViewMode(IsFirstPerson(), IsFirstPerson() && !bIsRagdoll);
+}
+
+void AIslanderCharacter::SetForceThirdPerson(bool bForce)
+{
+	if (bForceThirdPerson == bForce)
+	{
+		return;
+	}
+	bForceThirdPerson = bForce;
+	ApplyViewMode(IsFirstPerson(), IsFirstPerson() && !bIsRagdoll);
 }
 
 void AIslanderCharacter::ApplyViewMode(bool bInFirstPerson, bool bFirstPersonCamera)
@@ -539,7 +549,7 @@ void AIslanderCharacter::StartRagdoll(FVector InitialVelocity)
 
 	// the camera follows the body, in third person while knocked out
 	CameraBoom->AttachToComponent(MeshComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, RagdollPelvisBone);
-	ApplyViewMode(bFirstPerson, false);
+	ApplyViewMode(IsFirstPerson(), false);
 
 	GetWorldTimerManager().SetTimer(RagdollTimer, this, &AIslanderCharacter::TryRecoverFromRagdoll, FMath::Max(RagdollMinDuration, 0.01f), false);
 }
@@ -584,5 +594,5 @@ void AIslanderCharacter::TryRecoverFromRagdoll()
 
 	bIsRagdoll = false;
 	GetCharacterMovement()->SetMovementMode(MOVE_Falling);
-	ApplyViewMode(bFirstPerson, bFirstPerson);
+	ApplyViewMode(IsFirstPerson(), IsFirstPerson());
 }

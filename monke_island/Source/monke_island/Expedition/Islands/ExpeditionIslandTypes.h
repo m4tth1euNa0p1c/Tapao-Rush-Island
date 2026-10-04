@@ -56,7 +56,9 @@ enum class EAnchorageRole : uint8
 	/** Cove near the resources: short trips, more danger */
 	Resources,
 	/** Fallback exit: long trips, safe during the end of the expedition */
-	Fallback
+	Fallback,
+	/** Mooring of the galleon offshore (ADR-005): at least 4 m deep on its whole swing circle, behind the boat start */
+	Galleon
 };
 
 /**

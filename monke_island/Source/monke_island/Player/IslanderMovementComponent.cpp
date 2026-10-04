@@ -194,7 +194,15 @@ void UIslanderMovementComponent::TickComponent(float DeltaTime, ELevelTick TickT
 		// out of stamina in the water: the body sinks, then drowning hurts (ADR-003 B-04)
 		const bool bDrowning = IsDrowning();
 		Buoyancy = bDrowning ? DrowningBuoyancy : DefaultBuoyancy;
-		const float Damage = UpdateDrowning(DeltaTime, bDrowning);
+		float Damage = UpdateDrowning(DeltaTime, bDrowning);
+		if (bDrowning && bExhaustionKillsInWater)
+		{
+			// no stamina left to keep the head up: dead at once, the body floats (AIslanderCharacter ragdoll buoyancy)
+			if (const UIslanderHealthComponent* Health = CharacterOwner->FindComponentByClass<UIslanderHealthComponent>())
+			{
+				Damage = FMath::Max(Damage, Health->GetHealth() + 1.0f);
+			}
+		}
 		if (Damage > 0.0f && CharacterOwner->HasAuthority())
 		{
 			if (UIslanderHealthComponent* Health = CharacterOwner->FindComponentByClass<UIslanderHealthComponent>())

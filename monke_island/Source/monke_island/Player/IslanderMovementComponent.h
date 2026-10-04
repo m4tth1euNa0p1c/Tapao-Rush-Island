@@ -109,9 +109,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Swimming", meta=(ClampMin="0", ClampMax="1"))
 	float WaterJumpMaxImmersion = 0.95f;
 
-	/** Buoyancy of a swimmer out of stamina: below 1 the body slowly sinks (ADR-003 B-04) */
+	/** Buoyancy of a swimmer out of stamina: 1.2 floats like any swimmer, no sinking (owner's choice 2026-10-03);
+	 *  below 1 the body would slowly sink (ADR-003 B-04) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Drowning", meta=(ClampMin="0"))
-	float DrowningBuoyancy = 0.85f;
+	float DrowningBuoyancy = 1.2f;
+
+	/** A swimmer whose stamina runs out dies at once (the corpse floats); false = drowning hurts over time
+	 *  after DrownGraceTime at DrownDamagePerSecond */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Drowning")
+	bool bExhaustionKillsInWater = true;
 
 	/** Seconds out of stamina in the water before drowning hurts */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Drowning", meta=(ClampMin="0", Units="s"))
