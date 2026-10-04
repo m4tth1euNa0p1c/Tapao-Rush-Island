@@ -108,6 +108,20 @@ Principe : un **ragdoll actif**. L'animation donne une pose cible, et la physiqu
 - [ ] Aucune déformation majeure aux épaules, coudes et genoux sur repos, marche, course, saut, nage, portage et mort.
 - [ ] Wobble visible à la marche, sans tremblement à l'arrêt (le corps se stabilise en moins d'une seconde).
 - [ ] Ragdoll déclenché par un choc au-delà du seuil, puis relevé automatique ; jamais bloqué sous le terrain.
-- [ ] Chapeau : oscille, tombe au-delà du seuil, se ramasse ; réplication vérifiée en hôte + client.
+- [ ] Chapeau : tombe après un coup/ragdoll, reste au sol après le relevé, après plus de 5 s et au-delà de 30 m du joueur ; aucun ramassage au contact. S'approcher, viser et appuyer sur **F — Remettre le chapeau** pour le remettre. Refus à distance, derrière un obstacle, pendant le ragdoll, après la mort ou pour un autre joueur ; réplication vérifiée en hôte + client.
 - [ ] Quatre beans affichés simultanément, avec quatre skins différents, et coût mesuré (`/ue-profile`).
 - [ ] Corps masqué dans la caméra 1re personne sans disparaître pour les autres ; ombres correctes.
+
+### Chapeau au sol — T-123 (demande du 2026-10-04)
+
+Le ramassage explicite remplace le retour automatique de T-034. `UBeanPuppetComponent`
+cache le chapeau porté et crée un `ABeanDroppedHat` physique répliqué, sans durée de vie.
+La touche F passe par l'interaction existante ; le serveur vérifie le propriétaire,
+le délai de ramassage, la distance réelle au chapeau, la visibilité et l'état du joueur.
+Seul ce ramassage détruit l'objet au sol et réaffiche le chapeau porté. Un chapeau
+détruit ou éloigné n'est jamais recréé automatiquement ; le départ du personnage
+nettoie son objet. `HatReturnDelay` et `HatLostDistance` sont conservés uniquement
+pour compatibilité des anciens assets et ne commandent plus aucun retour.
+
+Tests de non-régression : `monke_island.Character.BeanHat` (monde physique et
+interaction réels ; ils ne constituent pas une recette réseau hôte/client).

@@ -9,6 +9,8 @@
 class USkeletalMeshComponent;
 class UStaticMesh;
 class UStaticMeshComponent;
+class ABeanDroppedHat;
+class APawn;
 
 /** One source bone driving one bean bone */
 USTRUCT(BlueprintType)
@@ -140,7 +142,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0"))
 	float HatDropKick = 280.0f;
 
-	/** The bean picks its hat back up when its feet come this close (cm) */
+	/** Maximum distance from the feet for the explicit hat interaction (F), in cm */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0"))
 	float HatPickupRadius = 90.0f;
 
@@ -148,21 +150,24 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0", Units="s"))
 	float HatPickupDelay = 1.0f;
 
-	/** The hat comes back on the head by itself this long after falling, once the bean is up (s); 0 = only by touching it */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0", Units="s"))
+	/** Legacy serialized setting, ignored: a dropped hat only returns through interaction */
+	UPROPERTY(meta=(DeprecatedProperty, DeprecationMessage="Use F to pick up the hat; automatic return is disabled."))
 	float HatReturnDelay = 5.0f;
 
-	/** A dropped hat farther than this from the bean is considered lost and comes back at once (cm) */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0"))
+	/** Legacy serialized setting, ignored: distance never respawns the hat */
+	UPROPERTY(meta=(DeprecatedProperty, DeprecationMessage="Dropped hats stay in the world until picked up."))
 	float HatLostDistance = 3000.0f;
 
 	/** Duration of the pop when the hat comes back on the head (s) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0", Units="s"))
 	float HatPopTime = 0.25f;
 
-	/** Drops the hat now (every machine plays it locally, the hat is cosmetic) */
-	UFUNCTION(BlueprintCallable, Category="Bean|Hat")
+	/** Drops one replicated physical hat (server only) */
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Bean|Hat")
 	void DropHat(FVector Velocity);
+
+	/** Equips this component's dropped hat after the server validates an explicit interaction */
+	bool TryPickUpHat(ABeanDroppedHat* Hat, APawn* User);
 
 	/** True while the hat lies on the ground */
 	UFUNCTION(BlueprintPure, Category="Bean|Hat")
@@ -225,6 +230,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 private:
 
@@ -240,8 +246,9 @@ private:
 	/** Blends the stance (crouch squash, swim lift) and the punch / guard arm overrides */
 	void UpdateStance(float DeltaTime);
 
-	/** Puts the hat back on the head */
-	void PickUpHat();
+	/** Shows the worn hat only while equipped, including for late joining clients */
+	UFUNCTION()
+	void OnRep_HatDropped();
 
 	/** Hat drop on damage (bound to the owner's health) */
 	UFUNCTION()
@@ -311,9 +318,16 @@ private:
 	TArray<float> OverrideAlpha;
 
 	int32 HatIndex = INDEX_NONE;
+
+	/** Equipment state is authoritative even if the dropped actor becomes irrelevant or is destroyed */
+	UPROPERTY(ReplicatedUsing=OnRep_HatDropped)
 	bool bHatDropped = false;
+
+	/** The only hat this component may equip, owned and checked by the server */
+	UPROPERTY(Transient)
+	TObjectPtr<ABeanDroppedHat> DroppedHat;
+
 	bool bWasRagdoll = false;
-	double HatDropTime = 0.0;
 	float HatPopAlpha = 1.f;
 	FTransform HatRelativeTransform = FTransform::Identity;
 	float GrabAlpha = 0.f;
