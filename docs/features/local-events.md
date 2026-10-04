@@ -39,3 +39,11 @@ Validation du 2026-10-04 : 7/7 tests Python réussis ; export des logs existants
 valide pas le nouveau C++. Cinq Automation Specs écrites, non exécutées.
 Compilation en attente : UBT T-142 occupe la machine ; base 383d923 déjà connue
 incomplète par le build T-128. Aucun PIE ni éditeur arrêté par cette tâche.
+
+Après libération de T-142 : build cible jeu tenté deux fois. Deux diagnostics
+C4456 de la nouvelle spec corrigés ; seconde compilation sans diagnostic sur
+T-129, mais échec global sur les trois dépendances de base déjà relevées T-128
+(SetForceThirdPerson, bExhaustionKillsInWater, EAnchorageRole::Galleon).
+UHT passe. Preuve : code écrit, tests Python 7/7 ; C++ non validé en build complet,
+non testé headless/éditeur/réseau. Galleon a depuis été commité sur main (eea515e),
+les branches T-128/T-129 restent sur leur base 383d923 pour une intégration ciblée.

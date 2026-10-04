@@ -49,17 +49,17 @@ void FExpeditionEventsSpec::Define()
 		{
 			if (!It->HasAnyPropertyFlags(CPF_Edit)) { continue; }
 			Rules.Reset(NewObject<UExpeditionRules>());
-			if (const FFloatProperty* Property = CastField<FFloatProperty>(*It))
+			if (const FFloatProperty* FloatProperty = CastField<FFloatProperty>(*It))
 			{
-				Property->SetPropertyValue_InContainer(Rules.Get(), Property->GetPropertyValue_InContainer(Rules.Get()) + 1.0f);
+				FloatProperty->SetPropertyValue_InContainer(Rules.Get(), FloatProperty->GetPropertyValue_InContainer(Rules.Get()) + 1.0f);
 			}
-			else if (const FIntProperty* Property = CastField<FIntProperty>(*It))
+			else if (const FIntProperty* IntProperty = CastField<FIntProperty>(*It))
 			{
-				Property->SetPropertyValue_InContainer(Rules.Get(), Property->GetPropertyValue_InContainer(Rules.Get()) + 1);
+				IntProperty->SetPropertyValue_InContainer(Rules.Get(), IntProperty->GetPropertyValue_InContainer(Rules.Get()) + 1);
 			}
-			else if (const FBoolProperty* Property = CastField<FBoolProperty>(*It))
+			else if (const FBoolProperty* BoolProperty = CastField<FBoolProperty>(*It))
 			{
-				Property->SetPropertyValue_InContainer(Rules.Get(), !Property->GetPropertyValue_InContainer(Rules.Get()));
+				BoolProperty->SetPropertyValue_InContainer(Rules.Get(), !BoolProperty->GetPropertyValue_InContainer(Rules.Get()));
 			}
 			else if (It->GetFName() == TEXT("RestartMap"))
 			{
