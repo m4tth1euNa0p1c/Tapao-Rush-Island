@@ -172,7 +172,8 @@ bool UIslanderGrabComponent::FindInteractionTarget(AActor*& OutInteractable, UPr
 		return true;
 	}
 	UPrimitiveComponent* Component = Hit.GetComponent();
-	if (Component && Component->IsSimulatingPhysics() && !Cast<APawn>(Actor))
+	if (Component && Component->IsSimulatingPhysics() && !Cast<APawn>(Actor)
+		&& !(Actor && Actor->ActorHasTag(NoGrabTag)))
 	{
 		OutPhysics = Component;
 		return true;
