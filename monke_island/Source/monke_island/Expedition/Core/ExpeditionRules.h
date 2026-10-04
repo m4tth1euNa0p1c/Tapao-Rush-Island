@@ -22,7 +22,7 @@ public:
 
 	/** Time from the start of the expedition to the flood deadline without any pacified zone (s) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock", meta=(ClampMin="0", Units="s"))
-	float InitialFloodDelay = 120.0f;
+	float InitialFloodDelay = 540.0f;
 
 	/** Time added to the flood deadline, for the whole team, by the first pacification of a zone (s) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock", meta=(ClampMin="0", Units="s"))

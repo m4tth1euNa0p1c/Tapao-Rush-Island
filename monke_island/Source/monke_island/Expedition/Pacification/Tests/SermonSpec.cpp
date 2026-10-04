@@ -5,6 +5,8 @@
 #include "Expedition/Pacification/PacificationTypes.h"
 #include "Expedition/Pacification/PacificationZone.h"
 #include "Expedition/Pacification/RoyalFlag.h"
+#include "Expedition/Core/ExpeditionGameState.h"
+#include "Expedition/Core/ExpeditionRules.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "AIController.h"
@@ -22,6 +24,7 @@ BEGIN_DEFINE_SPEC(FSermonSpec, "monke_island.Expedition.Sermon",
 	UPacificationRules* Rules = nullptr;
 	UWorld* World = nullptr;
 	APacificationZone* Zone = nullptr;
+	AExpeditionGameState* Expedition = nullptr;
 	int32 PacifiedCount = 0;
 	ESermonInterruptReason LastInterrupt = ESermonInterruptReason::None;
 
@@ -45,6 +48,13 @@ BEGIN_DEFINE_SPEC(FSermonSpec, "monke_island.Expedition.Sermon",
 	void SetTime(double Seconds)
 	{
 		World->TimeSeconds = Seconds;
+	}
+
+	/** Both the sermon and the authoritative clock observe the same server instant */
+	void UpdateSermon(double Seconds)
+	{
+		SetTime(Seconds);
+		Zone->ServerUpdateSermon(Seconds);
 	}
 
 	/** Objective without threats, flag planted by a pawn standing at the socket */
@@ -167,6 +177,11 @@ void FSermonSpec::Define()
 			Context.SetCurrentWorld(World);
 			World->InitializeActorsForPlay(FURL());
 			SetTime(0.0);
+			Expedition = World->SpawnActor<AExpeditionGameState>();
+			Expedition->bStartOnBeginPlay = false;
+			Expedition->Rules = NewObject<UExpeditionRules>(Expedition);
+			World->SetGameState(Expedition);
+			TestTrue(TEXT("expedition started"), Expedition->StartExpedition());
 
 			Zone = World->SpawnActor<APacificationZone>(APacificationZone::StaticClass(), FTransform::Identity);
 			Zone->SetRules(Rules);
@@ -181,6 +196,7 @@ void FSermonSpec::Define()
 		AfterEach([this]()
 		{
 			Zone = nullptr;
+			Expedition = nullptr;
 			if (World)
 			{
 				GEngine->ShutdownWorldNetDriver(World);
@@ -232,18 +248,18 @@ void FSermonSpec::Define()
 			SetTime(10.0);
 			TestEqual(TEXT("start"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::Accepted);
 
-			Zone->ServerUpdateSermon(29.9);
+			UpdateSermon(29.9);
 			TestEqual(TEXT("not yet"), Zone->GetZoneState(), EZoneState::Securing);
 			TestEqual(TEXT("no bonus before the end"), PacifiedCount, 0);
 
-			Zone->ServerUpdateSermon(30.0);
+			UpdateSermon(30.0);
 			TestEqual(TEXT("pacified"), Zone->GetZoneState(), EZoneState::Pacified);
 			TestEqual(TEXT("one bonus"), PacifiedCount, 1);
 
-			Zone->ServerUpdateSermon(31.0);
+			UpdateSermon(31.0);
 			SetTime(40.0);
 			TestEqual(TEXT("not farmable"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::WrongState);
-			Zone->ServerUpdateSermon(80.0);
+			UpdateSermon(80.0);
 			TestEqual(TEXT("still one bonus"), PacifiedCount, 1);
 			TestTrue(TEXT("awarded"), Zone->WasPacificationAwarded());
 		});
@@ -257,9 +273,9 @@ void FSermonSpec::Define()
 			TestEqual(TEXT("second refused"), Zone->TryStartSermon(Second), EPacificationRequestResult::OfficiantBusy);
 			TestEqual(TEXT("repeat keeps the progress"), Zone->TryStartSermon(First), EPacificationRequestResult::AlreadyOfficiant);
 
-			Zone->ServerUpdateSermon(20.0);
+			UpdateSermon(20.0);
 			TestEqual(TEXT("second after the end"), Zone->TryStartSermon(Second), EPacificationRequestResult::WrongState);
-			Zone->ServerUpdateSermon(20.0);
+			UpdateSermon(20.0);
 			TestEqual(TEXT("one success"), PacifiedCount, 1);
 		});
 
@@ -271,10 +287,10 @@ void FSermonSpec::Define()
 
 			Officiant->SetActorRotation(FRotator(0.0, 170.0, 0.0));
 			Officiant->SetActorLocation(FVector(55.0, 4.0, 0.0));
-			Zone->ServerUpdateSermon(10.0);
+			UpdateSermon(10.0);
 			TestEqual(TEXT("not interrupted"), LastInterrupt, ESermonInterruptReason::None);
 			TestEqual(TEXT("still officiant"), Zone->GetOfficiant(), Officiant);
-			Zone->ServerUpdateSermon(20.0);
+			UpdateSermon(20.0);
 			TestEqual(TEXT("pacified"), PacifiedCount, 1);
 		});
 
@@ -283,14 +299,14 @@ void FSermonSpec::Define()
 			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
 			PlantFlagWithoutThreats(Officiant);
 			Zone->TryStartSermon(Officiant);
-			Zone->ServerUpdateSermon(15.0);
+			UpdateSermon(15.0);
 
 			Officiant->SetActorLocation(FVector(50.0 + Rules->PositionToleranceCm + 1.0, 0.0, 0.0));
-			Zone->ServerUpdateSermon(16.0);
+			UpdateSermon(16.0);
 			TestEqual(TEXT("moved"), LastInterrupt, ESermonInterruptReason::Moved);
 			TestNull(TEXT("no officiant"), Zone->GetOfficiant());
 			TestEqual(TEXT("progress reset"), Zone->GetSermonProgress01(), 0.0f);
-			Zone->ServerUpdateSermon(25.0);
+			UpdateSermon(25.0);
 			TestEqual(TEXT("no bonus"), PacifiedCount, 0);
 			TestEqual(TEXT("flag stays"), Zone->GetZoneState(), EZoneState::Securing);
 		});
@@ -311,7 +327,7 @@ void FSermonSpec::Define()
 			APawn* Second = SpawnPawn(FVector(-50.0, 0.0, 0.0));
 			PlantFlagWithoutThreats(First);
 			Zone->TryStartSermon(First);
-			Zone->ServerUpdateSermon(15.0);
+			UpdateSermon(15.0);
 
 			Zone->StopSermon(Second);
 			TestEqual(TEXT("only the officiant can release"), Zone->GetOfficiant(), First);
@@ -320,10 +336,10 @@ void FSermonSpec::Define()
 
 			SetTime(15.0);
 			TestEqual(TEXT("second starts"), Zone->TryStartSermon(Second), EPacificationRequestResult::Accepted);
-			Zone->ServerUpdateSermon(20.0);
+			UpdateSermon(20.0);
 			TestEqual(TEXT("no cumulated time"), PacifiedCount, 0);
 			TestEqual(TEXT("quarter"), Zone->GetSermonProgress01(), 0.25f, 0.001f);
-			Zone->ServerUpdateSermon(35.0);
+			UpdateSermon(35.0);
 			TestEqual(TEXT("full 20 s of the second"), PacifiedCount, 1);
 		});
 
@@ -334,7 +350,7 @@ void FSermonSpec::Define()
 			Zone->TryStartSermon(Officiant);
 			Officiant->Destroy();
 			TestEqual(TEXT("lost"), LastInterrupt, ESermonInterruptReason::OfficiantLost);
-			Zone->ServerUpdateSermon(25.0);
+			UpdateSermon(25.0);
 			TestEqual(TEXT("no bonus"), PacifiedCount, 0);
 		});
 
@@ -363,7 +379,7 @@ void FSermonSpec::Define()
 			TestEqual(TEXT("start"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::Accepted);
 
 			ThreatHealth->ResetHealth();
-			Zone->ServerUpdateSermon(5.0);
+			UpdateSermon(5.0);
 			TestEqual(TEXT("threat in perimeter"), LastInterrupt, ESermonInterruptReason::ThreatInPerimeter);
 			TestEqual(TEXT("refused while inside"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::ThreatsRemaining);
 
@@ -396,7 +412,7 @@ void FSermonSpec::Define()
 			TestEqual(TEXT("death"), LastInterrupt, ESermonInterruptReason::OfficiantDied);
 			TestNull(TEXT("no officiant"), Zone->GetOfficiant());
 			TestEqual(TEXT("dead but not destroyed counts as dead"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::InvalidPawn);
-			Zone->ServerUpdateSermon(30.0);
+			UpdateSermon(30.0);
 			TestEqual(TEXT("no bonus"), PacifiedCount, 0);
 		});
 
@@ -414,7 +430,7 @@ void FSermonSpec::Define()
 			Zone->TryStartSermon(Officiant);
 
 			Controller->UnPossess();
-			Zone->ServerUpdateSermon(5.0);
+			UpdateSermon(5.0);
 			TestEqual(TEXT("lost"), LastInterrupt, ESermonInterruptReason::OfficiantLost);
 		});
 
@@ -436,18 +452,121 @@ void FSermonSpec::Define()
 			TestEqual(TEXT("busy elsewhere"), Other->TryStartSermon(Officiant), EPacificationRequestResult::OfficiantBusy);
 		});
 
+		It("commits the 120 s team bonus after 20 s and only once on the real GameState", [this]()
+		{
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+			TestEqual(TEXT("Standard deadline without a sermon"), Expedition->GetFloodStartTime(), 540.0);
+			SetTime(55.0);
+			TestEqual(TEXT("start"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::Accepted);
+			TestEqual(TEXT("automatic expedition binding"), Zone->GetExpeditionId(), Expedition->GetExpeditionId());
+			UpdateSermon(74.9);
+			TestEqual(TEXT("no early bonus"), Expedition->GetBonusedZoneCount(), 0);
+			Zone->OnZonePacifiedNative.AddLambda([this](const FGuid&, FName, double)
+			{
+				TestTrue(TEXT("bonus committed before success event"), Expedition->HasZoneBonus(Zone->GetZoneId()));
+				TestEqual(TEXT("deadline visible to listeners"), Expedition->GetFloodStartTime(), 660.0);
+			});
+			UpdateSermon(75.0);
+			TestEqual(TEXT("pacified"), Zone->GetZoneState(), EZoneState::Pacified);
+			TestEqual(TEXT("remaining time"), Expedition->GetTimeBeforeSubmersion(), 585.0);
+			UpdateSermon(76.0);
+			TestEqual(TEXT("repeat refused"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::WrongState);
+			TestEqual(TEXT("one event"), PacifiedCount, 1);
+			TestEqual(TEXT("one bonus"), Expedition->GetBonusedZoneCount(), 1);
+			TestEqual(TEXT("deadline unchanged by repeats"), Expedition->GetFloodStartTime(), 660.0);
+		});
+
+		It("refuses a sermon without an expedition clock", [this]()
+		{
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+			World->SetGameState(nullptr);
+			TestEqual(TEXT("no clock"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::NoExpedition);
+			TestEqual(TEXT("no success"), PacifiedCount, 0);
+			World->SetGameState(Expedition);
+		});
+
+		It("refuses a zone from another expedition", [this]()
+		{
+			Zone->SetExpeditionId(FGuid::NewGuid());
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+			TestEqual(TEXT("stale expedition"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::WrongExpedition);
+			TestEqual(TEXT("no bonus"), Expedition->GetBonusedZoneCount(), 0);
+		});
+
+		It("refuses an unidentified zone", [this]()
+		{
+			Zone->SetZoneId(NAME_None);
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+			TestEqual(TEXT("invalid id"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::InvalidZone);
+		});
+
+		It("refuses to start when the full sermon would end at the flood deadline", [this]()
+		{
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+			SetTime(520.0);
+			TestEqual(TEXT("equality loses"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::TooLate);
+			TestNull(TEXT("no officiant"), Zone->GetOfficiant());
+		});
+
+		It("does not pacify at the deadline even if the phase timer has not fired", [this]()
+		{
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+			SetTime(519.0);
+			TestEqual(TEXT("start before deadline"), Zone->TryStartSermon(Officiant), EPacificationRequestResult::Accepted);
+			UpdateSermon(540.0);
+			TestEqual(TEXT("submerged"), Zone->GetZoneState(), EZoneState::Submerged);
+			TestEqual(TEXT("no success"), PacifiedCount, 0);
+			TestFalse(TEXT("not awarded"), Zone->WasPacificationAwarded());
+			TestEqual(TEXT("deadline unchanged"), Expedition->GetFloodStartTime(), 540.0);
+		});
+
+		It("stops the officiant when the GameState enters submersion", [this]()
+		{
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+			Zone->TryStartSermon(Officiant);
+			SetTime(540.0);
+			TestEqual(TEXT("clock settles its phase"), Expedition->AddZoneBonus(TEXT("LateZone")), EZoneBonusResult::TooLate);
+			TestEqual(TEXT("phase propagated"), Zone->GetZoneState(), EZoneState::Submerged);
+			TestEqual(TEXT("interrupted"), LastInterrupt, ESermonInterruptReason::ZoneSubmerged);
+			TestNull(TEXT("officiant released"), Zone->GetOfficiant());
+		});
+
+		It("does not announce pacification when the clock refuses the zone limit", [this]()
+		{
+			Expedition->Rules->ZonesCount = 1;
+			TestEqual(TEXT("another zone used the limit"), Expedition->AddZoneBonus(TEXT("Other")), EZoneBonusResult::Granted);
+			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
+			PlantFlagWithoutThreats(Officiant);
+			Zone->TryStartSermon(Officiant);
+			AddExpectedError(TEXT("bonus of zone 'Zone_Test' refused"), EAutomationExpectedErrorFlags::Contains, 1);
+			AddExpectedError(TEXT("bonus refused"), EAutomationExpectedErrorFlags::Contains, 1);
+			UpdateSermon(20.0);
+			TestEqual(TEXT("not pacified"), Zone->GetZoneState(), EZoneState::Securing);
+			TestFalse(TEXT("not awarded"), Zone->WasPacificationAwarded());
+			TestEqual(TEXT("no success"), PacifiedCount, 0);
+			TestEqual(TEXT("failure exposed"), LastInterrupt, ESermonInterruptReason::BonusRefused);
+			TestEqual(TEXT("deadline unchanged"), Expedition->GetFloodStartTime(), 660.0);
+		});
+
 		It("sends the expedition id with the single pacification", [this]()
 		{
-			const FGuid Expedition = FGuid::NewGuid();
+			const FGuid ExpeditionId = Expedition->GetExpeditionId();
 			FGuid Received;
-			Zone->SetExpeditionId(Expedition);
+			Zone->SetExpeditionId(ExpeditionId);
 			Zone->OnZonePacifiedNative.AddLambda([&Received](const FGuid& Id, FName, double) { Received = Id; });
 
 			APawn* Officiant = SpawnPawn(FVector(50.0, 0.0, 0.0));
 			PlantFlagWithoutThreats(Officiant);
 			Zone->TryStartSermon(Officiant);
-			Zone->ServerUpdateSermon(20.0);
-			TestEqual(TEXT("expedition"), Received, Expedition);
+			UpdateSermon(20.0);
+			TestEqual(TEXT("expedition"), Received, ExpeditionId);
 			TestEqual(TEXT("once"), PacifiedCount, 1);
 		});
 	});

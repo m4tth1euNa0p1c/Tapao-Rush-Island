@@ -4,6 +4,7 @@
 #include "Save/SaveSubsystem.h"
 #include "Save/SaveFileFormat.h"
 #include "Save/SG_Campaign.h"
+#include "Engine/GameInstance.h"
 #include "HAL/FileManager.h"
 #include "HAL/PlatformProcess.h"
 #include "Math/RandomStream.h"
@@ -23,6 +24,8 @@ namespace MonkeSaveTests
 	{
 		/** Temporary folder */
 		FString Root;
+		/** Required outer of UGameInstanceSubsystem; kept alive for every subsystem of this rig */
+		TStrongObjectPtr<UGameInstance> GameInstance;
 		/** Main subsystem */
 		TStrongObjectPtr<USaveSubsystem> Save;
 		/** Final results received by the main subsystem */
@@ -30,6 +33,7 @@ namespace MonkeSaveTests
 
 		FRig()
 		{
+			GameInstance.Reset(NewObject<UGameInstance>(GetTransientPackage()));
 			Root = FPaths::ProjectSavedDir() / TEXT("Automation") / TEXT("MonkeSaveTests") / FGuid::NewGuid().ToString(EGuidFormats::Digits);
 			IFileManager::Get().MakeDirectory(*Root, true);
 			Save = MakeSubsystem();
@@ -55,7 +59,7 @@ namespace MonkeSaveTests
 		/** New subsystem on the temporary folder */
 		TStrongObjectPtr<USaveSubsystem> MakeSubsystem()
 		{
-			TStrongObjectPtr<USaveSubsystem> Subsystem(NewObject<USaveSubsystem>(GetTransientPackage()));
+			TStrongObjectPtr<USaveSubsystem> Subsystem(NewObject<USaveSubsystem>(GameInstance.Get()));
 			const bool bRootAccepted = Subsystem->InitializeWithRoot(Root);
 			ensureMsgf(bRootAccepted, TEXT("test root refused"));
 			return Subsystem;

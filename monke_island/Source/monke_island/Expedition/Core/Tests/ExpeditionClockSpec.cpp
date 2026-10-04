@@ -26,6 +26,9 @@ void FExpeditionClockSpec::Define()
 	{
 		Rules = NewObject<UExpeditionRules>();
 		Rules->AddToRoot();
+		// Historical 120 s custom preset exercises the same clock with short boundaries.
+		// Standard v1.4 is covered separately below and by the zone/GameState integration specs.
+		Rules->InitialFloodDelay = 120.0f;
 		Params = FExpeditionClockParams::FromRules(*Rules);
 		// Arbitrary non zero start: the rules must hold relative to the start, not to the world time
 		StartTime = 1000.0;
@@ -38,7 +41,7 @@ void FExpeditionClockSpec::Define()
 		Rules = nullptr;
 	});
 
-	Describe("Cahier defaults", [this]()
+	Describe("Custom 120 s preset", [this]()
 	{
 		It("uses 120 s before the flood, +120 s per zone, 60 s of submersion, 3 zones", [this]()
 		{
@@ -55,6 +58,31 @@ void FExpeditionClockSpec::Define()
 			TestEqual(TEXT("water"), ExpeditionClock::WaterRiseCm(NotStarted, At(500.0), Params), 0.0);
 			FExpeditionClockState Copy = NotStarted;
 			TestEqual(TEXT("bonus"), ExpeditionClock::TryAddZoneBonus(Copy, TEXT("ZoneA"), At(10.0), Params), EZoneBonusResult::NotStarted);
+		});
+	});
+
+	Describe("Standard v1.4", [this]()
+	{
+		It("floods at 540 s and resolves at 600 s without pacification", [this]()
+		{
+			const FExpeditionClockParams Standard = FExpeditionClockParams::FromRules(*GetDefault<UExpeditionRules>());
+			const FExpeditionClockState Clock = ExpeditionClock::Start(StartTime, Standard);
+			TestEqual(TEXT("flood"), Clock.FloodStartTime, At(540.0));
+			TestEqual(TEXT("resolution"), ExpeditionClock::SubmersionEndTime(Clock, Standard), At(600.0));
+			TestEqual(TEXT("before flood"), ExpeditionClock::PhaseAt(Clock, At(539.9), Standard), EExpeditionPhase::Exploring);
+			TestEqual(TEXT("at flood"), ExpeditionClock::PhaseAt(Clock, At(540.0), Standard), EExpeditionPhase::Submerging);
+			TestEqual(TEXT("at resolution"), ExpeditionClock::PhaseAt(Clock, At(600.0), Standard), EExpeditionPhase::Resolved);
+		});
+
+		It("moves the Standard deadline to 660 then 780 s with two zones", [this]()
+		{
+			const FExpeditionClockParams Standard = FExpeditionClockParams::FromRules(*GetDefault<UExpeditionRules>());
+			FExpeditionClockState Clock = ExpeditionClock::Start(StartTime, Standard);
+			TestEqual(TEXT("first"), ExpeditionClock::TryAddZoneBonus(Clock, TEXT("A"), At(75.0), Standard), EZoneBonusResult::Granted);
+			TestEqual(TEXT("first deadline"), Clock.FloodStartTime, At(660.0));
+			TestEqual(TEXT("remaining at 75"), ExpeditionClock::TimeBeforeSubmersion(Clock, At(75.0)), 585.0);
+			TestEqual(TEXT("second"), ExpeditionClock::TryAddZoneBonus(Clock, TEXT("B"), At(200.0), Standard), EZoneBonusResult::Granted);
+			TestEqual(TEXT("second deadline"), Clock.FloodStartTime, At(780.0));
 		});
 	});
 

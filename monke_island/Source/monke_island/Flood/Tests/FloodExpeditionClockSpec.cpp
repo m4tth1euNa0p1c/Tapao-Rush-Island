@@ -36,6 +36,8 @@ void FFloodExpeditionClockSpec::Define()
 	{
 		ExpeditionRules = NewObject<UExpeditionRules>();
 		ExpeditionRules->AddToRoot();
+		// Explicit short custom preset; Standard v1.4 (540 s) is covered by Expedition.Clock.Standard v1.4.
+		ExpeditionRules->InitialFloodDelay = 120.0f;
 		FloodRules = NewObject<UFloodRules>();
 		FloodRules->AddToRoot();
 		Params = FExpeditionClockParams::FromRules(*ExpeditionRules);

@@ -38,6 +38,8 @@ void FStormExpeditionSpec::Define()
 	{
 		ExpeditionRules = NewObject<UExpeditionRules>();
 		ExpeditionRules->AddToRoot();
+		// Explicit short custom preset; Standard v1.4 (540 s) is covered by Expedition.Clock.Standard v1.4.
+		ExpeditionRules->InitialFloodDelay = 120.0f;
 		WindRules = NewObject<UWindRules>();
 		WindRules->AddToRoot();
 		// Keep the gusts out of the way: only the ultra violent wind is under test

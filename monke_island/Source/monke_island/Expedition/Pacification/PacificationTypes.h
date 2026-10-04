@@ -42,7 +42,9 @@ enum class ESermonInterruptReason : uint8
 	/** A living designated threat is inside the perimeter */
 	ThreatInPerimeter,
 	/** The zone went under water */
-	ZoneSubmerged
+	ZoneSubmerged,
+	/** The expedition changed or its clock refused the bonus: no pacification was committed */
+	BonusRefused
 };
 
 /** Answer of the server to a flag or sermon request: lets the caller show why it was refused */
@@ -72,7 +74,15 @@ enum class EPacificationRequestResult : uint8
 	/** Designated threats are still alive (plant) or one is inside the perimeter (sermon) */
 	ThreatsRemaining,
 	/** The flag could not be spawned */
-	SpawnFailed
+	SpawnFailed,
+	/** No active expedition clock is available */
+	NoExpedition,
+	/** The zone belongs to another expedition */
+	WrongExpedition,
+	/** A zone must have a stable identifier before it can grant time */
+	InvalidZone,
+	/** The full sermon cannot finish strictly before the flood deadline */
+	TooLate
 };
 
 /**

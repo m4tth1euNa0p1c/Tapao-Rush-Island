@@ -5,19 +5,21 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Expedition/Pacification/PacificationTypes.h"
+#include "Expedition/Core/ExpeditionTypes.h"
 #include "PacificationZone.generated.h"
 
 class APawn;
 class ARoyalFlag;
 class AController;
+class AExpeditionGameState;
 class UDamageType;
 class UPacificationRules;
 class USceneComponent;
 
-/** Zone pacified: the expedition clock grants its bonus (once per ExpeditionId and ZoneId) */
+/** Zone pacified: the expedition clock has committed its bonus (once per ExpeditionId and ZoneId) */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnZonePacifiedSignature, FGuid, ExpeditionId, FName, ZoneId, double, ServerTime);
 
-/** Native twin of OnZonePacified, for C++ systems (expedition clock) */
+/** Native twin of OnZonePacified, for C++ observers after the bonus was committed */
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnZonePacifiedNative, const FGuid& /*ExpeditionId*/, FName /*ZoneId*/, double /*ServerTime*/);
 
 /** Sermon progress moved (0 when it was reset, 1 when it completed) */
@@ -38,7 +40,7 @@ DECLARE_MULTICAST_DELEGATE_TwoParams(FOnSermonInterruptedNative, FName /*ZoneId*
  *  still. Server authoritative: every request goes through TryPlantFlag / TryStartSermon / StopSermon (called by the
  *  PlayerController server RPC), the server checks the interruptions every frame of the sermon and validates the
  *  deadline itself; client animations or sounds never validate anything. OnZonePacified fires once per zone.
- *  The zone does not grant time itself: the expedition clock listens to OnZonePacified.
+ *  Completion commits AddZoneBonus on the expedition game state before publishing Pacified or OnZonePacified.
  */
 UCLASS(Blueprintable)
 class MONKE_ISLAND_API APacificationZone : public AActor
@@ -66,8 +68,8 @@ public:
 	void StopSermon(APawn* Officiant);
 
 	/**
-	 *  The zone went under water: stops any sermon, no pacification any more (server). The expedition clock must call
-	 *  it on every zone in the frame the submersion starts, so no sermon can complete after that instant.
+	 *  The zone went under water: stops any sermon, no pacification any more (server). The bound expedition phase
+	 *  event calls this; active sermons also check the deadline before the phase timer fires.
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Pacification")
 	void SetSubmerged();
@@ -114,7 +116,13 @@ public:
 
 	/** Sets the expedition this zone belongs to, sent with OnZonePacified (server, before the objective starts) */
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Pacification")
-	void SetExpeditionId(const FGuid& InExpeditionId) { ExpeditionId = InExpeditionId; }
+	void SetExpeditionId(const FGuid& InExpeditionId)
+	{
+		if (HasAuthority() && ZoneState == EZoneState::Undiscovered)
+		{
+			ExpeditionId = InExpeditionId;
+		}
+	}
 
 	/** Expedition this zone belongs to */
 	UFUNCTION(BlueprintPure, Category="Pacification")
@@ -228,6 +236,9 @@ private:
 	/** Officiant whose damage and destruction events are bound (server only) */
 	TWeakObjectPtr<APawn> BoundOfficiant;
 
+	/** Clock bound when the first sermon starts; phase events stop the ritual at submersion */
+	TWeakObjectPtr<AExpeditionGameState> BoundExpedition;
+
 	/** True once OnZonePacified was broadcast: never twice for this zone */
 	bool bPacificationAwarded = false;
 
@@ -287,6 +298,10 @@ private:
 	/** Officiant pawn destroyed */
 	UFUNCTION()
 	void HandleOfficiantDestroyed(AActor* DestroyedActor);
+
+	/** The server clock entered submersion or resolved the expedition */
+	UFUNCTION()
+	void HandleExpeditionPhaseChanged(EExpeditionPhase NewPhase, EExpeditionPhase PreviousPhase);
 
 	/** State replicated */
 	UFUNCTION()

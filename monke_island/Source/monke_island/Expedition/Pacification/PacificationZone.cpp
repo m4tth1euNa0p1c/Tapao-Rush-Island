@@ -4,6 +4,7 @@
 #include "Expedition/Pacification/PacificationParticipant.h"
 #include "Expedition/Pacification/PacificationRules.h"
 #include "Expedition/Pacification/RoyalFlag.h"
+#include "Expedition/Core/ExpeditionGameState.h"
 #include "Components/SceneComponent.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -95,6 +96,11 @@ void APacificationZone::BeginPlay()
 
 void APacificationZone::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	if (AExpeditionGameState* Expedition = BoundExpedition.Get())
+	{
+		Expedition->OnPhaseChanged.RemoveDynamic(this, &APacificationZone::HandleExpeditionPhaseChanged);
+	}
+	BoundExpedition.Reset();
 	UnbindOfficiant();
 	UnbindThreats();
 	Sermon.Reset();
@@ -229,6 +235,29 @@ EPacificationRequestResult APacificationZone::TryStartSermon(APawn* Officiant)
 		return EPacificationRequestResult::ThreatsRemaining;
 	}
 
+	AExpeditionGameState* Expedition = AExpeditionGameState::Get(this);
+	if (!IsValid(Expedition) || !Expedition->GetExpeditionId().IsValid()
+		|| Expedition->GetPhase() == EExpeditionPhase::Preparing)
+	{
+		return EPacificationRequestResult::NoExpedition;
+	}
+	if (ZoneId.IsNone())
+	{
+		return EPacificationRequestResult::InvalidZone;
+	}
+	if (ExpeditionId.IsValid() && ExpeditionId != Expedition->GetExpeditionId())
+	{
+		return EPacificationRequestResult::WrongExpedition;
+	}
+	if (Expedition->GetPhase() != EExpeditionPhase::Exploring
+		|| Expedition->GetTimeBeforeSubmersion() <= Rules->SermonDuration)
+	{
+		return EPacificationRequestResult::TooLate;
+	}
+
+	ExpeditionId = Expedition->GetExpeditionId();
+	BoundExpedition = Expedition;
+	Expedition->OnPhaseChanged.AddUniqueDynamic(this, &APacificationZone::HandleExpeditionPhaseChanged);
 	const double Now = GetServerTime();
 	Sermon.Begin(Officiant, Officiant->GetActorLocation(), Now, Officiant->GetController() != nullptr);
 	BindOfficiant(Officiant);
@@ -282,6 +311,19 @@ void APacificationZone::ServerUpdateSermon(double ServerTime)
 		return;
 	}
 
+	const AExpeditionGameState* Expedition = BoundExpedition.Get();
+	if (!IsValid(Expedition) || Expedition != AExpeditionGameState::Get(this)
+		|| ExpeditionId != Expedition->GetExpeditionId())
+	{
+		InterruptSermon(ESermonInterruptReason::BonusRefused);
+		return;
+	}
+	if (Expedition->GetPhase() >= EExpeditionPhase::Submerging || Expedition->GetTimeBeforeSubmersion() <= 0.0)
+	{
+		SetSubmerged();
+		return;
+	}
+
 	APawn* Officiant = Sermon.Officiant;
 	FSermonObservation Observation;
 	Observation.bOfficiantValid = IsValid(Officiant) && !Officiant->IsActorBeingDestroyed();
@@ -330,11 +372,10 @@ void APacificationZone::InterruptSermon(ESermonInterruptReason Reason)
 void APacificationZone::CompleteSermon(double ServerTime)
 {
 	const FString OfficiantName = GetNameSafe(Sermon.Officiant);
+	// Clear the active sermon before AddZoneBonus broadcasts clock events: reentrant calls cannot complete it twice.
 	UnbindOfficiant();
 	Sermon.Reset();
 	SetActorTickEnabled(false);
-	SetSermonProgress(1.0f, true);
-	SetZoneState(EZoneState::Pacified);
 
 	if (bPacificationAwarded)
 	{
@@ -342,15 +383,32 @@ void APacificationZone::CompleteSermon(double ServerTime)
 		ensureMsgf(false, TEXT("PacificationZone %s validated twice"), *ZoneId.ToString());
 		return;
 	}
-	bPacificationAwarded = true;
-
-	if (!ExpeditionId.IsValid())
+	AExpeditionGameState* Expedition = BoundExpedition.Get();
+	const EZoneBonusResult Result = IsValid(Expedition) && ExpeditionId == Expedition->GetExpeditionId()
+		? Expedition->AddZoneBonus(ZoneId) : EZoneBonusResult::NotStarted;
+	if (Result != EZoneBonusResult::Granted)
 	{
-		UE_LOG(Logmonke_island, Warning, TEXT("PacificationZone %s pacified without an ExpeditionId: the clock cannot tell expeditions apart"), *ZoneId.ToString());
+		SetSermonProgress(0.0f, true);
+		UE_LOG(Logmonke_island, Warning, TEXT("PacificationZone %s: bonus refused (%s), zone not pacified"),
+			*ZoneId.ToString(), *UEnum::GetValueAsString(Result));
+		OnSermonInterrupted.Broadcast(ZoneId, ESermonInterruptReason::BonusRefused);
+		OnSermonInterruptedNative.Broadcast(ZoneId, ESermonInterruptReason::BonusRefused);
+		return;
 	}
+	bPacificationAwarded = true;
+	SetSermonProgress(1.0f, true);
+	SetZoneState(EZoneState::Pacified);
 	UE_LOG(Logmonke_island, Log, TEXT("PacificationZone %s pacified by %s at %.2f s (expedition %s)"), *ZoneId.ToString(), *OfficiantName, ServerTime, *ExpeditionId.ToString());
 	OnZonePacified.Broadcast(ExpeditionId, ZoneId, ServerTime);
 	OnZonePacifiedNative.Broadcast(ExpeditionId, ZoneId, ServerTime);
+}
+
+void APacificationZone::HandleExpeditionPhaseChanged(EExpeditionPhase NewPhase, EExpeditionPhase PreviousPhase)
+{
+	if (NewPhase >= EExpeditionPhase::Submerging)
+	{
+		SetSubmerged();
+	}
 }
 
 void APacificationZone::SetZoneState(EZoneState NewState)
@@ -626,5 +684,5 @@ void APacificationZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME(APacificationZone, SermonProgress);
 	DOREPLIFETIME(APacificationZone, Flag);
 	DOREPLIFETIME(APacificationZone, RemainingThreats);
-	DOREPLIFETIME_CONDITION(APacificationZone, ExpeditionId, COND_InitialOnly);
+	DOREPLIFETIME(APacificationZone, ExpeditionId);
 }
