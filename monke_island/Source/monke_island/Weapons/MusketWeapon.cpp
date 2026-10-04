@@ -496,13 +496,13 @@ void AMusketWeapon::SpawnShotEffects()
 	USkeletalMeshComponent* Mesh = FirstPersonMesh->bHiddenInGame ? ThirdPersonMesh.Get() : FirstPersonMesh.Get();
 	static const FName MuzzleSocket(TEXT("muzzle"));
 	const bool bHasMuzzle = Mesh->DoesSocketExist(MuzzleSocket);
-	const FVector Muzzle = bHasMuzzle ? Mesh->GetSocketLocation(MuzzleSocket) : Mesh->GetComponentLocation();
+	const FVector MuzzleLocation = bHasMuzzle ? Mesh->GetSocketLocation(MuzzleSocket) : Mesh->GetComponentLocation();
 	const FVector Forward = Mesh->GetComponentQuat().GetForwardVector();
 	Recoil = 1.0f;
 
 	if (Rules->FireSound)
 	{
-		UGameplayStatics::PlaySoundAtLocation(this, Rules->FireSound, Muzzle);
+		UGameplayStatics::PlaySoundAtLocation(this, Rules->FireSound, MuzzleLocation);
 	}
 
 	// flame and light, attached to the muzzle so they follow the recoil
@@ -562,7 +562,7 @@ void AMusketWeapon::SpawnShotEffects()
 		}
 		const float MeshDiameter = FMath::Max(Rules->SmokeMesh->GetBounds().BoxExtent.GetMax() * 2.0f, 1.0f);
 		static const FName PanSocket(TEXT("pan"));
-		const FVector Pan = Mesh->DoesSocketExist(PanSocket) ? Mesh->GetSocketLocation(PanSocket) : Muzzle;
+		const FVector PanLocation = Mesh->DoesSocketExist(PanSocket) ? Mesh->GetSocketLocation(PanSocket) : MuzzleLocation;
 		const int32 Count = FMath::Min(Rules->SmokePuffs, SmokeComponents.Num());
 		for (int32 Index = 0; Index < Count; ++Index)
 		{
@@ -578,7 +578,7 @@ void AMusketWeapon::SpawnShotEffects()
 			Puff.EndSize = Rules->SmokeSize.Y * FMath::FRandRange(0.7f, 1.2f) * (bPanPuff ? 0.5f : 1.0f) / MeshDiameter;
 			Puff.bActive = true;
 			UStaticMeshComponent* Component = SmokeComponents[Index];
-			Component->SetWorldLocation(bPanPuff ? Pan : Muzzle + Forward * 3.0f);
+			Component->SetWorldLocation(bPanPuff ? PanLocation : MuzzleLocation + Forward * 3.0f);
 			Component->SetWorldRotation(FRotator(FMath::FRandRange(0.0f, 360.0f), FMath::FRandRange(0.0f, 360.0f), 0.0f));
 			Component->SetWorldScale3D(FVector(Puff.StartSize));
 			Component->SetVisibility(true);
