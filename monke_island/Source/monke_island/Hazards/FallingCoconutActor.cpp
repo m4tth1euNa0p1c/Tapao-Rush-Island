@@ -27,6 +27,10 @@ AFallingCoconutActor::AFallingCoconutActor()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	RootComponent = Mesh;
 	Mesh->SetCollisionProfileName(UCollisionProfile::PhysicsActor_ProfileName);
+	// owner request 2026-10-04: a nut falling on the boat shoved it backwards. A falling nut passes through the
+	// physics bodies (boat hull, loose props); it still lands on the ground and knocks the players out (capsule).
+	// Once somebody picked it up and let go, the grab restores the profile: a nut put in the boat rests in it.
+	Mesh->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Ignore);
 	Mesh->SetSimulatePhysics(true);
 	Mesh->SetNotifyRigidBodyCollision(true);
 	Mesh->BodyInstance.bUseCCD = true;

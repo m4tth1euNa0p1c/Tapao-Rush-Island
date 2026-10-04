@@ -47,6 +47,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Grab", meta=(ClampMin="0.1"))
 	float LiftMassKg = 25.0f;
 
+	/** Actors with this tag are never grabbed, whatever their mass (the boat, the galleon: they are pushed or rowed) */
+	static const FName NoGrabTag;
+
 	/** Objects heavier than this cannot be grabbed at all (kg) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Grab", meta=(ClampMin="0"))
 	float MaxGrabMassKg = 400.0f;
