@@ -24,7 +24,17 @@ public class monke_island : ModuleRules
 		});
 
 		// loading screen between maps (UI/Tapao)
-		PrivateDependencyModuleNames.AddRange(new string[] { "MoviePlayer" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "MoviePlayer", "PhysicsCore" });
+
+		// blood of the tiki creatures (Creatures/TikiBlood, T-153): Niagara effects spawned from C++
+		PrivateDependencyModuleNames.Add("Niagara");
+
+		// key of a player across the islands (Run/RunSubsystem: FUniqueNetIdRepl::ToString, ADR-007)
+		PrivateDependencyModuleNames.Add("CoreOnline");
+
+		// proximity voice chat (Voice/, T-263): the engine's VoIP through the online subsystem (NULL: a local voice
+		// session per world, the voice interface, the talking state); plugins listed in monke_island.uproject
+		PrivateDependencyModuleNames.AddRange(new string[] { "OnlineSubsystem", "OnlineSubsystemUtils" });
 
 		// editor tools (vegetation reimport keeping the asset identities): never in a game build
 		if (Target.bBuildEditor)
