@@ -1,0 +1,761 @@
+{
+  "task": "T-179",
+  "meshes": {
+    "SM_CrownOfTheLastAriki_LOD0": {
+      "source": "artefacts-polynesiens/exports/SM_CrownOfTheLastAriki_LOD0.fbx",
+      "size_cm": [
+        24.0126,
+        22.0093,
+        16.5079
+      ],
+      "triangles": 106301,
+      "faces_by_material": {
+        "MAT_CrownOfTheLastAriki": 39999,
+        "MAT_Nacre_Pinctada": 9784,
+        "MAT_Gold_Aged": 16322,
+        "MAT_Gem_Sapphire": 104,
+        "MAT_Gem_Ruby": 252,
+        "MAT_Pearl_White": 8732,
+        "MAT_Gem_Emerald": 46,
+        "MAT_Feather_Aged": 140
+      },
+      "ucx_count": 9,
+      "sockets": [
+        "SOCKET_GRAB_POINT",
+        "SOCKET_INSPECT_POINT"
+      ]
+    },
+    "SM_CrownOfTheLastAriki_LOD1": {
+      "source": "artefacts-polynesiens/exports/SM_CrownOfTheLastAriki_LOD1.fbx",
+      "size_cm": [
+        24.018,
+        22.0021,
+        16.5079
+      ],
+      "triangles": 47080,
+      "faces_by_material": {
+        "MAT_CrownOfTheLastAriki": 19946,
+        "MAT_Nacre_Pinctada": 3540,
+        "MAT_Gold_Aged": 6016,
+        "MAT_Gem_Sapphire": 104,
+        "MAT_Gem_Ruby": 252,
+        "MAT_Pearl_White": 5208,
+        "MAT_Gem_Emerald": 46,
+        "MAT_Feather_Aged": 70
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_CrownOfTheLastAriki_LOD2": {
+      "source": "artefacts-polynesiens/exports/SM_CrownOfTheLastAriki_LOD2.fbx",
+      "size_cm": [
+        24.0287,
+        21.9565,
+        16.5079
+      ],
+      "triangles": 13703,
+      "faces_by_material": {
+        "MAT_CrownOfTheLastAriki": 7929,
+        "MAT_Nacre_Pinctada": 1396,
+        "MAT_Gold_Aged": 1422,
+        "MAT_Gem_Sapphire": 46,
+        "MAT_Gem_Ruby": 78,
+        "MAT_Gem_Emerald": 46,
+        "MAT_Feather_Aged": 40
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_EclipseStone_LOD0": {
+      "source": "artefacts-polynesiens/exports/SM_EclipseStone_LOD0.fbx",
+      "size_cm": [
+        44.9903,
+        44.9903,
+        12.6465
+      ],
+      "triangles": 68756,
+      "faces_by_material": {
+        "MAT_EclipseStone": 30000,
+        "MAT_Gold_Aged": 17784,
+        "MAT_Gem_Sapphire": 2196,
+        "MAT_Pearl_Black": 576
+      },
+      "ucx_count": 10,
+      "sockets": [
+        "SOCKET_GRAB_POINT",
+        "SOCKET_INSPECT_POINT"
+      ]
+    },
+    "SM_EclipseStone_LOD1": {
+      "source": "artefacts-polynesiens/exports/SM_EclipseStone_LOD1.fbx",
+      "size_cm": [
+        45.009,
+        45.0205,
+        12.6465
+      ],
+      "triangles": 25356,
+      "faces_by_material": {
+        "MAT_EclipseStone": 15000,
+        "MAT_Gold_Aged": 4812,
+        "MAT_Gem_Sapphire": 948,
+        "MAT_Pearl_Black": 160
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_EclipseStone_LOD2": {
+      "source": "artefacts-polynesiens/exports/SM_EclipseStone_LOD2.fbx",
+      "size_cm": [
+        44.9539,
+        44.9357,
+        12.6465
+      ],
+      "triangles": 12436,
+      "faces_by_material": {
+        "MAT_EclipseStone": 6000,
+        "MAT_Gold_Aged": 2944,
+        "MAT_Gem_Sapphire": 768,
+        "MAT_Pearl_Black": 160
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_FishGodFragment_LOD0": {
+      "source": "artefacts-polynesiens/exports/SM_FishGodFragment_LOD0.fbx",
+      "size_cm": [
+        23.9968,
+        29.9494,
+        55.0009
+      ],
+      "triangles": 84168,
+      "faces_by_material": {
+        "MAT_FishGodFragment": 60000,
+        "MAT_Gold_Aged": 11034,
+        "MAT_Gem_Emerald": 576,
+        "MAT_Gem_Sapphire": 288,
+        "MAT_Pearl_White": 784,
+        "MAT_Gem_Ruby": 234
+      },
+      "ucx_count": 4,
+      "sockets": [
+        "SOCKET_GRAB_POINT",
+        "SOCKET_INSPECT_POINT"
+      ]
+    },
+    "SM_FishGodFragment_LOD1": {
+      "source": "artefacts-polynesiens/exports/SM_FishGodFragment_LOD1.fbx",
+      "size_cm": [
+        23.9837,
+        29.9415,
+        54.9984
+      ],
+      "triangles": 39292,
+      "faces_by_material": {
+        "MAT_FishGodFragment": 30000,
+        "MAT_Gold_Aged": 4422,
+        "MAT_Gem_Emerald": 160,
+        "MAT_Gem_Sapphire": 80,
+        "MAT_Pearl_White": 280,
+        "MAT_Gem_Ruby": 234
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_FishGodFragment_LOD2": {
+      "source": "artefacts-polynesiens/exports/SM_FishGodFragment_LOD2.fbx",
+      "size_cm": [
+        24.0261,
+        29.8406,
+        55.0428
+      ],
+      "triangles": 18524,
+      "faces_by_material": {
+        "MAT_FishGodFragment": 12000,
+        "MAT_Gold_Aged": 3082,
+        "MAT_Gem_Emerald": 100,
+        "MAT_Gem_Sapphire": 50,
+        "MAT_Pearl_White": 280,
+        "MAT_Gem_Ruby": 234
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_HeartOfTheReef_LOD0": {
+      "source": "artefacts-polynesiens/exports/SM_HeartOfTheReef_LOD0.fbx",
+      "size_cm": [
+        50.0228,
+        40.0375,
+        32.5777
+      ],
+      "triangles": 119352,
+      "faces_by_material": {
+        "MAT_HeartOfTheReef": 70000,
+        "MAT_Gold_Aged": 24229,
+        "MAT_Pearl_White": 984,
+        "MAT_Gem_Ruby": 520
+      },
+      "ucx_count": 3,
+      "sockets": [
+        "SOCKET_GRAB_POINT",
+        "SOCKET_INSPECT_POINT"
+      ]
+    },
+    "SM_HeartOfTheReef_LOD1": {
+      "source": "artefacts-polynesiens/exports/SM_HeartOfTheReef_LOD1.fbx",
+      "size_cm": [
+        49.9752,
+        40.0523,
+        32.6852
+      ],
+      "triangles": 51792,
+      "faces_by_material": {
+        "MAT_HeartOfTheReef": 35000,
+        "MAT_Gold_Aged": 8367,
+        "MAT_Pearl_White": 304,
+        "MAT_Gem_Ruby": 220
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_HeartOfTheReef_LOD2": {
+      "source": "artefacts-polynesiens/exports/SM_HeartOfTheReef_LOD2.fbx",
+      "size_cm": [
+        49.7744,
+        39.9417,
+        32.5998
+      ],
+      "triangles": 22964,
+      "faces_by_material": {
+        "MAT_HeartOfTheReef": 14000,
+        "MAT_Gold_Aged": 4391,
+        "MAT_Pearl_White": 202,
+        "MAT_Gem_Ruby": 160
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_MoonPearl_LOD0": {
+      "source": "artefacts-polynesiens/exports/SM_MoonPearl_LOD0.fbx",
+      "size_cm": [
+        2.3015,
+        2.2003,
+        2.862
+      ],
+      "triangles": 14302,
+      "faces_by_material": {
+        "MAT_MoonPearl": 6000,
+        "MAT_Gold_Aged": 4354,
+        "MAT_Gem_Sapphire": 174
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_GRAB_POINT",
+        "SOCKET_INSPECT_POINT"
+      ]
+    },
+    "SM_MoonPearl_LOD1": {
+      "source": "artefacts-polynesiens/exports/SM_MoonPearl_LOD1.fbx",
+      "size_cm": [
+        2.3005,
+        2.2006,
+        2.8486
+      ],
+      "triangles": 6522,
+      "faces_by_material": {
+        "MAT_MoonPearl": 3000,
+        "MAT_Gold_Aged": 1838,
+        "MAT_Gem_Sapphire": 174
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_MoonPearl_LOD2": {
+      "source": "artefacts-polynesiens/exports/SM_MoonPearl_LOD2.fbx",
+      "size_cm": [
+        2.2998,
+        2.1988,
+        2.8486
+      ],
+      "triangles": 3072,
+      "faces_by_material": {
+        "MAT_MoonPearl": 1200,
+        "MAT_Gold_Aged": 1045
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_RedPearlOfRaraka_LOD0": {
+      "source": "artefacts-polynesiens/exports/SM_RedPearlOfRaraka_LOD0.fbx",
+      "size_cm": [
+        2.2671,
+        2.1799,
+        2.7803
+      ],
+      "triangles": 30394,
+      "faces_by_material": {
+        "MAT_RedPearlOfRaraka": 6000,
+        "MAT_Gold_Aged": 12398,
+        "MAT_Gem_Ruby": 290
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_GRAB_POINT",
+        "SOCKET_INSPECT_POINT"
+      ]
+    },
+    "SM_RedPearlOfRaraka_LOD1": {
+      "source": "artefacts-polynesiens/exports/SM_RedPearlOfRaraka_LOD1.fbx",
+      "size_cm": [
+        2.2671,
+        2.1799,
+        2.7681
+      ],
+      "triangles": 5414,
+      "faces_by_material": {
+        "MAT_RedPearlOfRaraka": 3000,
+        "MAT_Gold_Aged": 1242,
+        "MAT_Gem_Ruby": 290
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_RedPearlOfRaraka_LOD2": {
+      "source": "artefacts-polynesiens/exports/SM_RedPearlOfRaraka_LOD2.fbx",
+      "size_cm": [
+        2.2037,
+        2.0115,
+        2.7681
+      ],
+      "triangles": 1740,
+      "faces_by_material": {
+        "MAT_RedPearlOfRaraka": 1200,
+        "MAT_Gold_Aged": 338
+      },
+      "ucx_count": 0,
+      "sockets": []
+    },
+    "SM_Temple_Ahu": {
+      "source": "temple-reliquaire/exports/SM_Temple_Ahu.fbx",
+      "size_cm": [
+        972.3442,
+        497.7515,
+        380.3881
+      ],
+      "triangles": 53268,
+      "faces_by_material": {
+        "MAT-Temple_Coral": 8544,
+        "MAT-Temple_BasaltMoss": 8814,
+        "MAT-Temple_Basalt": 6780,
+        "MAT-Temple_WoodWeathered": 2263
+      },
+      "ucx_count": 9,
+      "sockets": [
+        "SOCKET_Offering",
+        "SOCKET_StairFoot",
+        "SOCKET_StairTop",
+        "SOCKET_Summit",
+        "SOCKET_Torch_L",
+        "SOCKET_Torch_R"
+      ]
+    },
+    "SM_Temple_CourtPaving": {
+      "source": "temple-reliquaire/exports/SM_Temple_CourtPaving.fbx",
+      "size_cm": [
+        1440.0001,
+        1440.0001,
+        10.6587
+      ],
+      "triangles": 7839,
+      "faces_by_material": {
+        "MAT-Temple_Coral": 2551,
+        "MAT-Temple_BasaltMoss": 685,
+        "MAT-Temple_Basalt": 237
+      },
+      "ucx_count": 1,
+      "sockets": []
+    },
+    "SM_Temple_Debris_BrokenUnu": {
+      "source": "temple-reliquaire/exports/SM_Temple_Debris_BrokenUnu.fbx",
+      "size_cm": [
+        151.9954,
+        44.7406,
+        8.3199
+      ],
+      "triangles": 932,
+      "faces_by_material": {
+        "MAT-Temple_WoodWeathered": 414
+      },
+      "ucx_count": 2,
+      "sockets": [
+        "SOCKET_Center"
+      ]
+    },
+    "SM_Temple_Debris_FallenStone": {
+      "source": "temple-reliquaire/exports/SM_Temple_Debris_FallenStone.fbx",
+      "size_cm": [
+        164.6303,
+        71.5516,
+        26.5484
+      ],
+      "triangles": 384,
+      "faces_by_material": {
+        "MAT-Temple_BasaltMoss": 192
+      },
+      "ucx_count": 2,
+      "sockets": [
+        "SOCKET_Center"
+      ]
+    },
+    "SM_Temple_Debris_StonePile": {
+      "source": "temple-reliquaire/exports/SM_Temple_Debris_StonePile.fbx",
+      "size_cm": [
+        146.8298,
+        125.28,
+        60.0331
+      ],
+      "triangles": 1440,
+      "faces_by_material": {
+        "MAT-Temple_BasaltMoss": 408,
+        "MAT-Temple_Basalt": 192,
+        "MAT-Temple_Coral": 120
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_Center"
+      ]
+    },
+    "SM_Temple_FareIaManaha": {
+      "source": "temple-reliquaire/exports/SM_Temple_FareIaManaha.fbx",
+      "size_cm": [
+        550.0,
+        606.5977,
+        458.5056
+      ],
+      "triangles": 32342,
+      "faces_by_material": {
+        "MAT-Temple_Post": 2498,
+        "MAT-Temple_Planks": 1094,
+        "MAT-Temple_Rope": 3472,
+        "MAT-Temple_Pandanus": 8953
+      },
+      "ucx_count": 20,
+      "sockets": [
+        "SOCKET_Door",
+        "SOCKET_Relic_BlackSharkHook",
+        "SOCKET_Relic_CallingConch",
+        "SOCKET_Relic_DeadReefConch",
+        "SOCKET_Relic_MotherTurtleScute",
+        "SOCKET_Relic_NavigationShellMap",
+        "SOCKET_Relic_NavigatorRope",
+        "SOCKET_Relic_SacredPaddleFragment",
+        "SOCKET_Relic_SharkEye",
+        "SOCKET_Relic_ThunderShell",
+        "SOCKET_Relic_WhiteTurtleSkull",
+        "SOCKET_StairFoot",
+        "SOCKET_Torch_Stairs"
+      ]
+    },
+    "SM_Temple_Fata": {
+      "source": "temple-reliquaire/exports/SM_Temple_Fata.fbx",
+      "size_cm": [
+        114.0,
+        84.0,
+        140.3203
+      ],
+      "triangles": 1392,
+      "faces_by_material": {
+        "MAT-Temple_Post": 132,
+        "MAT-Temple_Planks": 48,
+        "MAT-Temple_Rope": 320,
+        "MAT-Temple_Bark": 154
+      },
+      "ucx_count": 5,
+      "sockets": [
+        "SOCKET_Offering"
+      ]
+    },
+    "SM_Temple_Gate": {
+      "source": "temple-reliquaire/exports/SM_Temple_Gate.fbx",
+      "size_cm": [
+        305.4983,
+        71.2325,
+        265.6892
+      ],
+      "triangles": 4948,
+      "faces_by_material": {
+        "MAT-Temple_BasaltMoss": 516,
+        "MAT-Temple_Basalt": 216,
+        "MAT-Temple_WoodWeathered": 942,
+        "MAT-Temple_Rope": 800
+      },
+      "ucx_count": 5,
+      "sockets": [
+        "SOCKET_Guardian_L",
+        "SOCKET_Guardian_R",
+        "SOCKET_Threshold",
+        "SOCKET_Torch_L",
+        "SOCKET_Torch_R"
+      ]
+    },
+    "SM_Temple_Palisade_2m": {
+      "source": "temple-reliquaire/exports/SM_Temple_Palisade_2m.fbx",
+      "size_cm": [
+        199.6283,
+        22.8496,
+        216.3192
+      ],
+      "triangles": 1776,
+      "faces_by_material": {
+        "MAT-Temple_Bark": 322,
+        "MAT-Temple_Post": 64,
+        "MAT-Temple_Rope": 448
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_Snap_L",
+        "SOCKET_Snap_R"
+      ]
+    },
+    "SM_Temple_Palisade_2m_Fallen": {
+      "source": "temple-reliquaire/exports/SM_Temple_Palisade_2m_Fallen.fbx",
+      "size_cm": [
+        204.9119,
+        185.3627,
+        220.3496
+      ],
+      "triangles": 1800,
+      "faces_by_material": {
+        "MAT-Temple_Bark": 354,
+        "MAT-Temple_Post": 96,
+        "MAT-Temple_Rope": 384
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_Snap_L",
+        "SOCKET_Snap_R"
+      ]
+    },
+    "SM_Temple_RelicAltar": {
+      "source": "temple-reliquaire/exports/SM_Temple_RelicAltar.fbx",
+      "size_cm": [
+        379.5643,
+        436.6044,
+        160.8789
+      ],
+      "triangles": 3200,
+      "faces_by_material": {
+        "MAT-Temple_Coral": 862,
+        "MAT-Temple_BasaltMoss": 458,
+        "MAT-Temple_Basalt": 162,
+        "MAT-Temple_CoralGravel": 66
+      },
+      "ucx_count": 8,
+      "sockets": [
+        "SOCKET_Approach",
+        "SOCKET_Bean_Stand",
+        "SOCKET_Relic_CrownOfTheLastAriki",
+        "SOCKET_Relic_EclipseStone",
+        "SOCKET_Relic_FishGodFragment",
+        "SOCKET_Relic_HeartOfTheReef",
+        "SOCKET_Relic_MoonPearl",
+        "SOCKET_Relic_RedPearlOfRaraka"
+      ]
+    },
+    "SM_Temple_StandingStone_A": {
+      "source": "temple-reliquaire/exports/SM_Temple_StandingStone_A.fbx",
+      "size_cm": [
+        55.3772,
+        23.2564,
+        138.3842
+      ],
+      "triangles": 300,
+      "faces_by_material": {
+        "MAT-Temple_Coral": 150
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_Ground",
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Temple_StandingStone_B": {
+      "source": "temple-reliquaire/exports/SM_Temple_StandingStone_B.fbx",
+      "size_cm": [
+        70.8477,
+        26.4106,
+        178.4981
+      ],
+      "triangles": 300,
+      "faces_by_material": {
+        "MAT-Temple_BasaltMoss": 150
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_Ground",
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Temple_StandingStone_C": {
+      "source": "temple-reliquaire/exports/SM_Temple_StandingStone_C.fbx",
+      "size_cm": [
+        44.5872,
+        19.4513,
+        106.4569
+      ],
+      "triangles": 300,
+      "faces_by_material": {
+        "MAT-Temple_Basalt": 150
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_Ground",
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Temple_TikiGuardian_A": {
+      "source": "temple-reliquaire/exports/SM_Temple_TikiGuardian_A.fbx",
+      "size_cm": [
+        52.0387,
+        51.734,
+        194.1455
+      ],
+      "triangles": 3106,
+      "faces_by_material": {
+        "MAT-Temple_TikiWood": 1531
+      },
+      "ucx_count": 2,
+      "sockets": [
+        "SOCKET_Ground"
+      ]
+    },
+    "SM_Temple_TikiGuardian_B": {
+      "source": "temple-reliquaire/exports/SM_Temple_TikiGuardian_B.fbx",
+      "size_cm": [
+        52.0387,
+        52.8214,
+        190.0
+      ],
+      "triangles": 3106,
+      "faces_by_material": {
+        "MAT-Temple_TikiWood": 1531
+      },
+      "ucx_count": 2,
+      "sockets": [
+        "SOCKET_Ground"
+      ]
+    },
+    "SM_Temple_TikiGuardian_C": {
+      "source": "temple-reliquaire/exports/SM_Temple_TikiGuardian_C.fbx",
+      "size_cm": [
+        47.0482,
+        47.8306,
+        145.0
+      ],
+      "triangles": 3106,
+      "faces_by_material": {
+        "MAT-Temple_BasaltMoss": 1531
+      },
+      "ucx_count": 2,
+      "sockets": [
+        "SOCKET_Ground"
+      ]
+    },
+    "SM_Temple_Torch": {
+      "source": "temple-reliquaire/exports/SM_Temple_Torch.fbx",
+      "size_cm": [
+        14.0,
+        14.0,
+        185.9999
+      ],
+      "triangles": 2400,
+      "faces_by_material": {
+        "MAT-Temple_Post": 753,
+        "MAT-Temple_Rope": 549,
+        "M_Marae_Flame": 201,
+        "M_Marae_FlameCore": 110
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_Flame",
+        "SOCKET_Ground"
+      ]
+    },
+    "SM_Temple_Wall_3m": {
+      "source": "temple-reliquaire/exports/SM_Temple_Wall_3m.fbx",
+      "size_cm": [
+        306.3002,
+        73.9331,
+        89.0014
+      ],
+      "triangles": 4704,
+      "faces_by_material": {
+        "MAT-Temple_BasaltMoss": 1416,
+        "MAT-Temple_Basalt": 378,
+        "MAT-Temple_Coral": 558
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_Snap_L",
+        "SOCKET_Snap_R"
+      ]
+    },
+    "SM_Temple_Wall_3m_Breach": {
+      "source": "temple-reliquaire/exports/SM_Temple_Wall_3m_Breach.fbx",
+      "size_cm": [
+        304.9696,
+        193.1636,
+        95.7267
+      ],
+      "triangles": 3000,
+      "faces_by_material": {
+        "MAT-Temple_Basalt": 300,
+        "MAT-Temple_BasaltMoss": 846,
+        "MAT-Temple_Coral": 354
+      },
+      "ucx_count": 2,
+      "sockets": [
+        "SOCKET_Passage",
+        "SOCKET_Snap_L",
+        "SOCKET_Snap_R"
+      ]
+    },
+    "SM_Temple_Wall_3m_Ruined": {
+      "source": "temple-reliquaire/exports/SM_Temple_Wall_3m_Ruined.fbx",
+      "size_cm": [
+        309.9368,
+        209.8468,
+        94.5837
+      ],
+      "triangles": 4128,
+      "faces_by_material": {
+        "MAT-Temple_Coral": 660,
+        "MAT-Temple_BasaltMoss": 1014,
+        "MAT-Temple_Basalt": 390
+      },
+      "ucx_count": 3,
+      "sockets": [
+        "SOCKET_Snap_L",
+        "SOCKET_Snap_R"
+      ]
+    },
+    "SM_Temple_Wall_Corner": {
+      "source": "temple-reliquaire/exports/SM_Temple_Wall_Corner.fbx",
+      "size_cm": [
+        87.7676,
+        88.0182,
+        104.5862
+      ],
+      "triangles": 2124,
+      "faces_by_material": {
+        "MAT-Temple_BasaltMoss": 630,
+        "MAT-Temple_Basalt": 96,
+        "MAT-Temple_Coral": 336
+      },
+      "ucx_count": 1,
+      "sockets": [
+        "SOCKET_Top"
+      ]
+    }
+  },
+  "finished_at": "2026-10-06T19:01:42.564258+00:00"
+}

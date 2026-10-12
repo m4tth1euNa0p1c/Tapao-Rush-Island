@@ -1,0 +1,1692 @@
+"""
+Temple-reliquaire (Marae Ana-Pu'a, fictif) : modules SM_Temple_* d'un marae en ruine et de sa fare-ia-manaha.
+
+Toutes les cotes viennent de maquettes/temple-reliquaire/maquette.json (params.modules), échelle Bean 1,05 m :
+contremarches 16,5 cm, passages >= 1,0 m, linteaux >= 1,6 m, plateaux de présentation 0,6-0,8 m.
+
+Réutilise : marae_kit (pbr CC0, StoneBatch, build_pyramid, build_torch), camp_kit (Batch, thatch_slope),
+totem_kit (sections super-ellipse + visages analytiques, SANS cuisson Cycles), bean_kit (join_parts, make_ucx,
+make_sockets). Les kits existants ne sont pas modifiés : les comportements différents sont enveloppés ici.
+
+Conventions : mètres, Z haut, avant = -Y, pivot au sol au centre de l'emprise du corps principal.
+MODULES = {clé: (nom d'export, builder(coll, p) -> res)} ; res au format bean_kit
+({"parts", "sockets", "ucx", "params", "keep_uv"}) ; assemble(clé, coll, p) fusionne, crée UCX_ / SOCKET_ et
+respecte le budget de triangles (DECIMATE collapse si nécessaire) et la limite de 4 matériaux.
+"""
+
+import json
+import math
+import os
+import random
+
+import bmesh
+import bpy
+from mathutils import Matrix, Vector, noise
+
+import bean_kit as K
+import camp_kit as CK
+import marae_kit as MK
+import totem_kit as TK
+
+V = K.V
+TAU = 2 * math.pi
+I3 = Matrix.Identity(3)
+SPEC = os.path.join(K.ROOT, "maquettes", "temple-reliquaire", "maquette.json")
+ARTEFACTS = os.path.join(K.ROOT, "maquettes", "artefacts-polynesiens", "maquette.json")
+_SPEC_CACHE = {}
+
+
+def spec_params():
+    if "p" not in _SPEC_CACHE:
+        with open(SPEC, encoding="utf-8") as fh:
+            _SPEC_CACHE["p"] = json.load(fh)["params"]
+    return _SPEC_CACHE["p"]
+
+
+def artefact_dims():
+    if "a" not in _SPEC_CACHE:
+        out = {}
+        try:
+            with open(ARTEFACTS, encoding="utf-8") as fh:
+                for a in json.load(fh)["gameplay"]["artifacts"]:
+                    out[a["id"]] = a.get("dims_m")
+        except (OSError, KeyError, ValueError):
+            pass
+        _SPEC_CACHE["a"] = out
+    return _SPEC_CACHE["a"]
+
+
+# ----------------------------------------------------------------------------
+# Matériaux (MAT-Temple_*, textures CC0 1K-2K de art/textures, via marae_kit.pbr)
+
+def mats():
+    P = MK.pbr
+    return {
+        "moss": P("MAT-Temple_BasaltMoss", "props/minka/mossy_rock", tile=0.9, tint=(0.92, 0.95, 0.88)),
+        "basalt": P("MAT-Temple_Basalt", "characters/Rock035", tile=0.8, tint=(1.32, 1.30, 1.26)),
+        "coral": P("MAT-Temple_Coral", "ground/coral_ground_02", tile=0.7, tint=(0.80, 0.78, 0.72), sat=0.3),
+        "gravel": P("MAT-Temple_CoralGravel", "ground/coral_gravel", tile=0.55, tint=(0.92, 0.90, 0.86), sat=0.35),
+        "wood": P("MAT-Temple_WoodWeathered", "characters/rough_wood", tile=0.6, tint=(0.70, 0.66, 0.60), sat=0.3),
+        "post": P("MAT-Temple_Post", "characters/rough_wood", tile=0.55, tint=(0.70, 0.60, 0.50), sat=0.55),
+        "planks": P("MAT-Temple_Planks", "props/minka/weathered_brown_planks", tile=1.9, tint=(0.90, 0.84, 0.76),
+                    sat=0.6),
+        "thatch": P("MAT-Temple_Pandanus", "props/minka/reed_roof_04", tile=1.0, tint=(0.86, 0.76, 0.60), sat=0.55),
+        "rope": P("MAT-Temple_Rope", "characters/Rope001", tile=0.08, tint=(0.82, 0.74, 0.58)),
+        "bark": P("MAT-Temple_Bark", "characters/tree_bark_03", tile=0.45, tint=(0.72, 0.66, 0.58)),
+    }
+
+
+def tiki_wood_mat():
+    """Bois patiné des tiki : rough_wood gris + creux assombris (noeud AO, EEVEE ; pas de cuisson)."""
+    m = bpy.data.materials.get("MAT-Temple_TikiWood")
+    if m:
+        return m
+    m = mats()["wood"].copy()
+    m.name = "MAT-Temple_TikiWood"
+    nt = m.node_tree
+    bsdf = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
+    link = bsdf.inputs["Base Color"].links[0] if bsdf.inputs["Base Color"].links else None
+    if link:
+        ao = nt.nodes.new("ShaderNodeAmbientOcclusion")
+        ao.inputs["Distance"].default_value = 0.12
+        mix = nt.nodes.new("ShaderNodeMix")
+        mix.data_type = "RGBA"
+        mix.blend_type = "MULTIPLY"
+        mix.inputs[0].default_value = 0.85
+        src = link.from_socket
+        nt.links.new(src, mix.inputs[6])
+        ramp = nt.nodes.new("ShaderNodeMapRange")
+        ramp.inputs["From Min"].default_value = 0.0
+        ramp.inputs["To Min"].default_value = 0.25
+        nt.links.new(ao.outputs["AO"], ramp.inputs["Value"])
+        nt.links.new(ramp.outputs["Result"], mix.inputs[7])
+        nt.links.new(mix.outputs[2], bsdf.inputs["Base Color"])
+    return m
+
+
+def ghost_mat():
+    """Gabarits fil de fer des RARE (pas de mesh exporté) : trait clair légèrement émissif."""
+    m = bpy.data.materials.get("MAT-Temple_Ghost")
+    if m:
+        return m
+    m = bpy.data.materials.new("MAT-Temple_Ghost")
+    m.use_nodes = True
+    b = next(n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+    b.inputs["Base Color"].default_value = (0.75, 0.92, 1.0, 1)
+    b.inputs["Emission Color"].default_value = (0.55, 0.85, 1.0, 1)
+    b.inputs["Emission Strength"].default_value = 1.5
+    m.diffuse_color = (0.6, 0.85, 1.0, 1)
+    return m
+
+
+# ----------------------------------------------------------------------------
+# Helpers géométrie
+
+def rbox_pts(c, s, rz=0.0, R=None):
+    R = R or Matrix.Rotation(rz, 3, "Z")
+    c = Vector(c)
+    return [c + R @ Vector((sx * s[0] / 2, sy * s[1] / 2, sz * s[2] / 2))
+            for sx in (-1, 1) for sy in (-1, 1) for sz in (-1, 1)]
+
+
+def prism_pts(c, r, z0, z1, n=8):
+    return [Vector((c[0] + r * math.cos(TAU * k / n), c[1] + r * math.sin(TAU * k / n), z))
+            for k in range(n) for z in (z0, z1)]
+
+
+def pick3(rng, w=(0.45, 0.35, 0.20)):
+    x = rng.random()
+    acc = 0.0
+    for i, wi in enumerate(w):
+        acc += wi
+        if x < acc:
+            return i
+    return len(w) - 1
+
+
+def lash(batch, c, axis, r, mat, wraps=2, minor=0.009, npts=10, segs=4, pitch=None):
+    """Ligature légère (moins de triangles que camp_kit.Batch.lashing)."""
+    axis = Vector(axis).normalized()
+    u = axis.orthogonal().normalized()
+    w = axis.cross(u)
+    pitch = pitch or minor * 2.2
+    for k in range(wraps):
+        cc = Vector(c) + axis * (k - (wraps - 1) / 2) * pitch
+        pts = [cc + (u * math.cos(TAU * i / npts) + w * math.sin(TAU * i / npts)) * (r + minor) for i in range(npts)]
+        batch.tube(pts, minor, mat, segs=segs, closed=True)
+
+
+def dry_wall(sb, rng, origin, ang, length, inward, hfun, z0=0.0, depth=(0.26, 0.34), rows=(0.15, 0.26),
+             mw=(0.55, 0.20, 0.25), batter=0.03, sl=(0.26, 0.60), mats_idx=(0, 1, 2)):
+    """Parement de pierres sèches (marae_kit.StoneBatch) le long de l'axe local X depuis `origin`, tourné de `ang`.
+    La face est sur y local = 0, `inward` = +1/-1 vers le coeur du mur ; hfun(t) = hauteur résiduelle (ruine)."""
+    R = Matrix.Rotation(ang, 3, "Z")
+    o = Vector(origin)
+    hmax = max(hfun(length * k / 60) for k in range(61))
+    z, row = z0, 0
+    while z < z0 + hmax - 0.06:
+        rh = rng.uniform(*rows)
+        if z0 + hmax - (z + rh) < 0.09:
+            rh = z0 + hmax - z
+        t = rng.uniform(0.0, 0.03)
+        first = True
+        while t < length - 0.07:
+            s = rng.uniform(*sl) * (1.35 if rng.random() < 0.12 else 1.0)
+            if row % 2 and first:
+                s *= 0.55                       # demi-pierre : joints croisés d'une assise à l'autre
+            first = False
+            s = min(s, length - t)
+            mid = t + s / 2
+            if z + rh * 0.5 <= z0 + hfun(mid):
+                dep = rng.uniform(*depth)
+                lean = batter * (z - z0)
+                loc = Vector((mid, inward * (dep / 2 + lean - rng.uniform(0.0, 0.025)),
+                              z + rh / 2 + rng.uniform(-0.008, 0.008)))
+                sb.stone(o + R @ loc, (s - 0.012, dep, rh * rng.uniform(0.95, 1.08)),
+                         rot_z=ang + rng.uniform(-0.06, 0.06), mat=mats_idx[pick3(rng, mw)])
+            t += s + rng.uniform(0.0, 0.018)
+        z += rh
+        row += 1
+
+
+def coping(sb, rng, origin, ang, length, width, z, ok=lambda t: True, mat_w=(0.55, 0.15, 0.30), th=0.09,
+           mats_idx=(0, 1, 2)):
+    """Chaperon de dalles plates posées en travers du mur."""
+    R = Matrix.Rotation(ang, 3, "Z")
+    o = Vector(origin)
+    t = rng.uniform(0.0, 0.02)
+    while t < length - 0.06:
+        s = min(rng.uniform(0.32, 0.62), length - t)
+        mid = t + s / 2
+        if ok(mid):
+            sb.stone(o + R @ Vector((mid, rng.uniform(-0.015, 0.015), z + th / 2)),
+                     (s - 0.015, width * rng.uniform(0.88, 0.99), th * rng.uniform(0.9, 1.1)),
+                     rot_z=ang + rng.uniform(-0.05, 0.05), mat=mats_idx[pick3(rng, mat_w)], round_=0.22, bump=0.14,
+                     tilt=0.025)
+        t += s + rng.uniform(0.004, 0.02)
+
+
+def rubble(sb, rng, n, xr, yr, zr=0.0, size=(0.12, 0.34), mw=(0.45, 0.35, 0.20), avoid=None, mats_idx=(0, 1, 2)):
+    """Pierres éboulées posées au sol (à moitié enfoncées)."""
+    for _ in range(n * 3):
+        if n <= 0:
+            break
+        p = Vector((rng.uniform(*xr), rng.uniform(*yr), 0.0))
+        if avoid and avoid(p):
+            continue
+        s = rng.uniform(*size)
+        h = s * rng.uniform(0.45, 0.7)
+        sb.stone(Vector((p.x, p.y, zr + h * 0.32)), (s, s * rng.uniform(0.6, 1.0), h), rot_z=rng.uniform(0, TAU),
+                 mat=mats_idx[pick3(rng, mw)], tilt=0.35)
+        n -= 1
+
+
+def rough_block_bm(size, rng, cuts=3, taper=0.22, amp=0.03, round_=0.12, shoulder=0.18):
+    """Bloc de pierre brut (pierre dressée, dossier) : cube subdivisé, effilé, bruit de Perlin. Base à z=0."""
+    tmp = bmesh.new()
+    bmesh.ops.create_cube(tmp, size=1.0)
+    bmesh.ops.subdivide_edges(tmp, edges=tmp.edges[:], cuts=cuts, use_grid_fill=True)
+    sx, sy, sz = size
+    off = Vector((rng.uniform(0, 50), rng.uniform(0, 50), rng.uniform(0, 50)))
+    for v in tmp.verts:
+        co = v.co.copy()
+        n = co.normalized()
+        co = co.lerp(n * 0.62, round_)
+        zt = max(0.0, min(1.0, co.z + 0.5))
+        k = 1.0 - taper * zt ** 1.5
+        p = Vector((co.x * sx * k, co.y * sy * k, co.z * sz))
+        if zt > 0.75:
+            p.z -= (abs(co.x) * 2) ** 2 * shoulder * sz * (zt - 0.75) / 0.25 * 0.5
+        d = noise.noise(p * 2.6 + off) * amp + noise.noise(p * 8.0 + off) * amp * 0.35
+        p += Vector((n.x * 1.0, n.y * 1.0, n.z * 0.4)) * d
+        v.co = p + Vector((0, 0, sz / 2))
+    return tmp
+
+
+def poly_prism_bm(outline, y0, y1):
+    """Extrusion d'un contour (x, z) entre y0 et y1 (planche sculptée vue de face, face avant = -Y)."""
+    tmp = bmesh.new()
+    front = [tmp.verts.new((x, y0, z)) for x, z in outline]
+    back = [tmp.verts.new((x, y1, z)) for x, z in outline]
+    tmp.faces.new(front)
+    tmp.faces.new(back[::-1])
+    n = len(outline)
+    for i in range(n):
+        j = (i + 1) % n
+        try:
+            tmp.faces.new((front[j], front[i], back[i], back[j]))
+        except ValueError:
+            pass
+    bmesh.ops.recalc_face_normals(tmp, faces=tmp.faces)
+    return tmp
+
+
+def _clip(poly, lo, hi, rng, jag):
+    """Coupe un contour (x, z) dans la bande lo <= z <= hi ; les bords de coupe sont déchiquetés (cassure)."""
+    def clip_half(pts, keep, edge_z):
+        out = []
+        n = len(pts)
+        for i in range(n):
+            a, b = pts[i], pts[(i + 1) % n]
+            ka, kb = keep(a), keep(b)
+            if ka:
+                out.append(a)
+            if ka != kb:
+                t = (edge_z - a[1]) / (b[1] - a[1])
+                out.append((a[0] + t * (b[0] - a[0]), edge_z, "cut"))
+        return out
+    pts = [(x, z) for x, z in poly]
+    if lo is not None:
+        pts = clip_half(pts, lambda q: q[1] >= lo, lo)
+    if hi is not None:
+        pts = clip_half(pts, lambda q: q[1] <= hi, hi)
+    res = []
+    n = len(pts)
+    for i in range(n):
+        a, b = pts[i], pts[(i + 1) % n]
+        res.append((a[0], a[1]))
+        if len(a) == 3 and len(b) == 3 and abs(a[1] - b[1]) < 1e-6:
+            sign = 1 if (hi is not None and abs(a[1] - hi) < 1e-6) else -1
+            for k in range(1, 6):
+                t = k / 6
+                res.append((a[0] + t * (b[0] - a[0]), a[1] + sign * rng.uniform(-jag, jag * 0.4)))
+    return res
+
+
+def unu_outline(h, w, rng):
+    """Silhouette d'une planche unu (fictive) : flancs en dents de scie, oreilles, créneaux en tête."""
+    hw = w / 2
+    right = [(hw * 0.92, 0.0)]
+    z = 0.12 * h
+    zig_top = 0.56 * h
+    step = 0.11
+    while z + step < zig_top:
+        right += [(hw, z), (hw - 0.035, z + step / 2)]
+        z += step
+    right += [(hw, zig_top), (hw + 0.07, 0.63 * h), (hw + 0.075, 0.68 * h), (hw - 0.01, 0.71 * h),
+              (hw * 0.86, 0.80 * h), (hw, 0.88 * h), (hw, h - 0.07)]
+    top = [(hw, h - 0.07), (hw * 0.62, h - 0.07), (hw * 0.62, h), (hw * 0.2, h), (hw * 0.2, h - 0.07),
+           (-hw * 0.2, h - 0.07), (-hw * 0.2, h), (-hw * 0.62, h), (-hw * 0.62, h - 0.07), (-hw, h - 0.07)]
+    left = [(-x, zz) for x, zz in reversed(right)]
+    pts = right[:-1] + top + left[1:]
+    out = []
+    for p in pts:
+        if not out or (abs(out[-1][0] - p[0]) > 1e-5 or abs(out[-1][1] - p[1]) > 1e-5):
+            out.append(p)
+    return out
+
+
+def unu_motifs(h, w):
+    """Motifs en relief (vagues, zigzags, poisson générique) : polylignes (x, z) sur la face avant."""
+    hw = w / 2
+    lines = []
+    zz = [(hw * 0.55 * (1 if k % 2 else -1), 0.16 * h + k * 0.055) for k in range(7)]
+    lines.append(zz)
+    for zc in (0.48 * h, 0.53 * h):
+        lines.append([(-hw * 0.7 + i * hw * 1.4 / 12, zc + 0.022 * math.sin(i * math.pi / 2.5)) for i in range(13)])
+    fc = 0.70 * h
+    fish = [(-hw * 0.55, fc), (-hw * 0.2, fc + 0.05), (hw * 0.25, fc + 0.035), (hw * 0.45, fc + 0.07),
+            (hw * 0.45, fc - 0.07), (hw * 0.25, fc - 0.035), (-hw * 0.2, fc - 0.05), (-hw * 0.55, fc)]
+    lines.append(fish)
+    lines.append([(-hw * 0.5, 0.85 * h + 0.02 * ((-1) ** i)) for i in range(1)] +
+                 [(-hw * 0.5 + i * hw / 6, 0.85 * h + 0.025 * ((-1) ** i)) for i in range(7)])
+    return lines
+
+
+def add_unu(batch, mat, M4, h, w, t, rng, lo=None, hi=None, motif_r=0.011):
+    """Planche unu dans `batch`, transformée par M4 (repère local : x largeur, y épaisseur, z hauteur)."""
+    poly = unu_outline(h, w, rng)
+    if lo is not None or hi is not None:
+        poly = _clip(poly, lo, hi, rng, 0.05)
+    tmp = poly_prism_bm(poly, -t / 2, t / 2)
+    tmp.transform(M4)
+    tmp.normal_update()
+    batch.add_bm(tmp, mat, smooth=False, uv_size=1.0)
+    for line in unu_motifs(h, w):
+        seg = [p for p in line if (lo is None or p[1] > lo + 0.03) and (hi is None or p[1] < hi - 0.03)]
+        if len(seg) < 2:
+            continue
+        for side in (-1, 1):
+            pts = [M4 @ Vector((x, side * (t / 2 + motif_r * 0.15), z)) for x, z in seg]
+            batch.tube(pts, motif_r, mat, segs=5, caps=False)
+
+
+# ----------------------------------------------------------------------------
+# Finalisation commune
+
+def remap_materials(ob, mapping):
+    me = ob.data
+    old = list(me.materials)
+    new, idx = [], []
+    for m in old:
+        t = mapping.get(m.name, m) if m else m
+        if t not in new:
+            new.append(t)
+        idx.append(new.index(t))
+    if new == old:
+        return
+    mi = [0] * len(me.polygons)
+    me.polygons.foreach_get("material_index", mi)
+    me.materials.clear()                       # (remet les index à 0 : on les réécrit après)
+    for m in new:
+        me.materials.append(m)
+    me.polygons.foreach_set("material_index", [idx[i] if i < len(idx) else 0 for i in mi])
+    me.update()
+
+
+def tri_count(ob):
+    return sum(len(p.vertices) - 2 for p in ob.data.polygons)
+
+
+def fit_budget(ob, max_tris):
+    """DECIMATE (collapse) appliqué si le module dépasse son budget ; retourne (tris avant, tris après)."""
+    before = tri_count(ob)
+    if not max_tris or before <= max_tris:
+        return before, before
+    for _ in range(3):
+        cur = tri_count(ob)
+        if cur <= max_tris:
+            break
+        mod = ob.modifiers.new("Decimate", "DECIMATE")
+        mod.decimate_type = "COLLAPSE"
+        mod.ratio = max(0.05, max_tris * 0.96 / cur)
+        dg = bpy.context.evaluated_depsgraph_get()
+        me = bpy.data.meshes.new_from_object(ob.evaluated_get(dg))
+        old = ob.data
+        ob.modifiers.clear()
+        ob.data = me
+        bpy.data.meshes.remove(old)
+        me.name = ob.name
+    return before, tri_count(ob)
+
+
+def budget_for(name):
+    tm = spec_params()["budget"]["tris_max"]
+    if name in tm:
+        return tm[name]
+    for k, v in tm.items():
+        if k.endswith("*") and name.startswith(k[:-1]):
+            return v
+    return None
+
+
+def assemble(key, coll, p=None):
+    """Construit le module `key` à l'origine : fusion, UCX_ (enfants), SOCKET_ (enfants), budget, 4 matériaux."""
+    export_name, builder = MODULES[key]
+    res = builder(coll, p)
+    ucx_objs = K.make_ucx(export_name, res["ucx"], coll)
+    mesh = K.join_parts(export_name, res["parts"], coll, keep_uv=True)
+    remap_materials(mesh, res.get("remap", {}))
+    raw, tris = fit_budget(mesh, budget_for(export_name))
+    for u in ucx_objs:
+        u.parent = mesh
+    socks = K.make_sockets(mesh, res["sockets"], coll)
+    rots = res.get("socket_rot", {})
+    for s in socks:
+        r = rots.get(s.name[len("SOCKET_"):])
+        if r:
+            s.rotation_euler = [math.radians(a) for a in r]
+        s.empty_display_size = 0.08
+    info = dict(res.get("info", {}))
+    info.update(tris_raw=raw, tris=tris, materials=[m.name for m in mesh.data.materials],
+                budget=budget_for(export_name))
+    res.update(object=mesh, ucx_objects=ucx_objs, socket_objects=socks, export_name=export_name, info=info, key=key)
+    return res
+
+
+def _res(parts, sockets, ucx, p, **extra):
+    return {"parts": {"root": [o for o in parts if o is not None]}, "sockets": sockets, "ucx": ucx, "params": p,
+            "keep_uv": True, **extra}
+
+
+def _mod(key):
+    return dict(spec_params()["modules"][key])
+
+
+def _sockets(d):
+    return {k: ("root", Vector(v)) for k, v in d.items()}
+
+
+class LiteStones(MK.StoneBatch):
+    """marae_kit.StoneBatch dont les petites pierres n'ont qu'une subdivision : budget tenu sans DECIMATE."""
+    big = 0.45
+
+    def stone(self, center, size, rot_z=0.0, mat=0, round_=0.10, bump=0.22, tilt=0.05):
+        r = self.rng
+        cuts = 2 if max(size) >= self.big else 1
+        tmp = bmesh.new()
+        bmesh.ops.create_cube(tmp, size=1.0)
+        bmesh.ops.subdivide_edges(tmp, edges=tmp.edges[:], cuts=cuts, use_grid_fill=True)
+        sx, sy, sz = size
+        rnd = round_ * (1.6 if cuts == 1 else 1.0)
+        for v in tmp.verts:
+            co = v.co
+            co = co.lerp(co.normalized() * 0.62, rnd)
+            co = Vector((co.x * sx, co.y * sy, co.z * sz))
+            k = bump * min(sx, sy, sz)
+            co += Vector((r.uniform(-k, k), r.uniform(-k, k), r.uniform(-k, k) * 0.5))
+            v.co = co
+        R = Matrix.Rotation(rot_z, 4, "Z") @ Matrix.Rotation(r.uniform(-tilt, tilt), 4, "X") @             Matrix.Rotation(r.uniform(-tilt, tilt), 4, "Y")
+        tmp.transform(Matrix.Translation(center) @ R)
+        tmp.to_mesh(self.tmp_me)
+        tmp.free()
+        n0 = len(self.bm.faces)
+        self.bm.from_mesh(self.tmp_me)
+        self.bm.faces.ensure_lookup_table()
+        for i in range(n0, len(self.bm.faces)):
+            self.bm.faces[i].material_index = mat
+            self.bm.faces[i].smooth = True
+
+
+def stone_batch(name, M, seed, mats_list=("moss", "basalt", "coral")):
+    return LiteStones(name, [M[k] for k in mats_list], seed)
+
+
+# ----------------------------------------------------------------------------
+# Ahu (sanctuaire à gradins)
+
+def build_ahu(coll, p=None):
+    p = {**_mod("ahu"), **(p or {})}
+    M = mats()
+    pp = dict(p["pyramid_params"])
+    pp["tiers"] = [tuple(t) for t in pp["tiers"]]
+    rng = random.Random(pp.get("seed", 31) + 1)
+    pyr = MK.build_pyramid(coll, pp)
+    parts = list(pyr["parts"]["root"])
+    stones = parts[0]
+    info = dict(pyr["info"])
+    th = pp["tier_h"]
+    top_z = info["height"]
+    tiers = pp["tiers"]
+    # --- ruine : pierres de parement manquantes (assises hautes, angles), hors escalier
+    removed = _ruin_islands(stones, rng, tiers, th, pp["stair_w"])
+    # --- éboulis au pied (avant et côtés seulement : l'arrière est contre le muret nord)
+    sb = stone_batch("Ahu_Fallen", M, 77)
+    w0, d0 = tiers[0]
+    n_fall = min(34, 10 + removed)
+    for _ in range(n_fall * 3):
+        if n_fall <= 0:
+            break
+        side = rng.random()
+        out = abs(rng.gauss(0.25, 0.22)) + 0.08
+        if side < 0.5:
+            pt = Vector((rng.uniform(-w0 / 2, w0 / 2), -d0 / 2 - out, 0))
+            if abs(pt.x) < pp["stair_w"] / 2 + 0.55:
+                continue
+        else:
+            sx = -1 if side < 0.75 else 1
+            pt = Vector((sx * (w0 / 2 + out), rng.uniform(-d0 / 2, d0 / 2 - 0.3), 0))
+        s = rng.uniform(0.14, 0.36)
+        h = s * rng.uniform(0.45, 0.7)
+        sb.stone(pt + Vector((0, 0, h * 0.3)), (s, s * rng.uniform(0.6, 1.0), h), rot_z=rng.uniform(0, TAU),
+                 mat=pick3(rng), tilt=0.35)
+        n_fall -= 1
+    # --- dossiers de pierre (prêtres / chefs) sur le dernier gradin
+    br = p["backrests"]
+    for x in br["x_local"]:
+        sx, sy, sz = br["size_m"]
+        tmp = rough_block_bm((sx, sy, sz + 0.12), rng, cuts=3, taper=0.18, amp=0.02)
+        tmp.transform(Matrix.Translation((x, br["y_local"], top_z - 0.12)) @
+                      Matrix.Rotation(rng.uniform(-0.05, 0.05), 4, "Z") @ Matrix.Rotation(-0.06, 4, "X"))
+        _bm_into(sb, tmp, 0)
+    fallen = sb.finish(coll)
+    # --- planches unu
+    u = p["unu_boards"]
+    wood = CK.Batch("Ahu_Unu")
+    n = u["count"]
+    ucx = []
+    for i in range(n):
+        x = (i - (n - 1) / 2) * u["spacing_m"]
+        h = u["heights_m"][i]
+        lean = rng.uniform(-0.03, 0.03)
+        M4 = (Matrix.Translation((x, u["y_local"], top_z - 0.12)) @ Matrix.Rotation(lean, 4, "Y") @
+              Matrix.Rotation(rng.uniform(-0.04, 0.04), 4, "Z"))
+        hh = h + 0.12
+        if u["broken"][i]:
+            add_unu(wood, M["wood"], M4, hh, u["width_m"], u["thickness_m"], rng, hi=0.55 * hh)
+            hh = 0.55 * hh
+        else:
+            add_unu(wood, M["wood"], M4, hh, u["width_m"], u["thickness_m"], rng)
+        ucx.append((f"unu{i}", None, rbox_pts((x, u["y_local"], top_z + (hh - 0.12) / 2),
+                                              (u["width_m"] + 0.16, u["thickness_m"] + 0.02, hh - 0.12))))
+    unu = wood.finish(coll)
+    parts += [fallen, unu]
+    # --- collisions : 3 gradins + rampe d'escalier + unu
+    tcol = [("tier%d" % i, None, rbox_pts((0, 0, i * th + th / 2), (w, d, th))) for i, (w, d) in enumerate(tiers)]
+    sw = pp["stair_w"] + 0.6
+    y0, y1 = info["stair_y0"], -tiers[-1][1] / 2
+    ramp = [Vector((sx * sw / 2, y, z)) for sx in (-1, 1) for (y, z) in ((y0, 0.0), (y1, 0.0), (y1, top_z))]
+    ucx = tcol + [("stairs", None, ramp)] + ucx
+    sockets = _sockets(p["sockets"])
+    remap = {"M_Marae_BasaltMoss": M["moss"], "M_Marae_Basalt": M["basalt"], "M_Marae_BasaltLight": M["coral"],
+             "M_Marae_CoralBlock": M["coral"], "M_Marae_CoralGravel": M["moss"]}
+    info.update(stones_removed=removed, unu=n)
+    return _res(parts, sockets, ucx, p, info=info, remap=remap)
+
+
+def _islands(bm):
+    bm.faces.ensure_lookup_table()
+    seen = set()
+    out = []
+    for f in bm.faces:
+        if f.index in seen:
+            continue
+        stack = [f]
+        seen.add(f.index)
+        isl = []
+        while stack:
+            g = stack.pop()
+            isl.append(g)
+            for e in g.edges:
+                for h in e.link_faces:
+                    if h.index not in seen:
+                        seen.add(h.index)
+                        stack.append(h)
+        out.append(isl)
+    return out
+
+
+def _ruin_islands(ob, rng, tiers, th, stair_w):
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    kill = []
+    for isl in _islands(bm):
+        vs = {v for f in isl for v in f.verts}
+        c = sum((v.co for v in vs), Vector()) / len(vs)
+        if abs(c.x) < stair_w / 2 + 0.5 and c.y < -tiers[-1][1] / 2 + 0.1:
+            continue                                         # escalier praticable intact
+        tier = min(int(c.z / th), len(tiers) - 1)
+        w, d = tiers[tier]
+        edge = (abs(c.x) > w / 2 - 0.45) or (abs(c.y) > d / 2 - 0.45)
+        if not edge:
+            continue
+        ztop = (tier + 1) * th
+        corner = abs(c.x) > w / 2 - 0.7 and abs(c.y) > d / 2 - 0.5
+        prob = 0.05
+        if c.z > ztop - 0.12:
+            prob = 0.22                                       # chaperon / assise haute
+        if corner:
+            prob += 0.18
+        if c.z < 0.2:
+            prob = 0.0
+        if rng.random() < prob:
+            kill.append(vs)
+    allv = set()
+    for vs in kill:
+        allv |= vs
+    bmesh.ops.delete(bm, geom=list(allv), context="VERTS")
+    bm.to_mesh(ob.data)
+    bm.free()
+    return len(kill)
+
+
+# ----------------------------------------------------------------------------
+# Autel des reliques (6 LEGENDARY)
+
+def _plinth_top(rid, r):
+    d = artefact_dims().get(rid)
+    if r["plinth"]["shape"] == "box" and d:
+        return [round(d[0] + 0.12, 3), round(d[1] + 0.12, 3)]
+    return r["plinth"].get("top")
+
+
+def build_relic_altar(coll, p=None):
+    p = {**_mod("relic_altar"), **(p or {})}
+    M = mats()
+    rng = random.Random(41)
+    sb = stone_batch("Altar_Stones", M, 41)
+    dais = p["dais"]
+    R0, H0 = dais["radius_m"], dais["height_m"]
+    # bordure de dalles de corail dressées (quelques-unes manquantes ou basculées)
+    n = 30
+    for k in range(n):
+        a = TAU * (k + rng.uniform(-0.12, 0.12)) / n
+        if k in (7, 19) or rng.random() < 0.05:
+            continue
+        tilt_out = 0.0 if rng.random() > 0.15 else rng.uniform(0.08, 0.22)
+        rr = R0 - 0.075 + tilt_out * 0.2
+        ln = TAU * R0 / n * rng.uniform(0.86, 0.97)
+        hz = H0 + 0.10
+        c = Vector((rr * math.cos(a), rr * math.sin(a), hz / 2 - 0.10 + rng.uniform(-0.01, 0.012)))
+        sb.stone(c, (ln, 0.13, hz), rot_z=a + math.pi / 2, mat=2 if rng.random() < 0.7 else 0, round_=0.12,
+                 bump=0.10, tilt=0.02 + tilt_out)
+    # dalles basculées tombées hors du dais
+    for a in (TAU * 7.2 / n, TAU * 19.1 / n):
+        c = Vector(((R0 + 0.32) * math.cos(a), (R0 + 0.32) * math.sin(a), 0.07))
+        sb.stone(c, (0.42, 0.24, 0.12), rot_z=a + 0.3, mat=2, round_=0.12, bump=0.1, tilt=0.12)
+    # plinthes
+    ucx = []
+    sockets, srot = {}, {}
+    info = {"plinths": {}}
+    wood_or_light = 2
+    for rid, r in p["relics"].items():
+        th = math.radians(r["angle_deg_from_+Y"])
+        x, y = r["plinth_xy"]
+        pl = r["plinth"]
+        h = pl["h"]
+        base = H0
+        Rz = Matrix.Rotation(th, 3, "Z")
+        shape = pl["shape"]
+        if shape == "box":
+            tx, ty = _plinth_top(rid, r)
+            sb.stone(Vector((x, y, base + (h - 0.07) / 2 - 0.03)), (tx + 0.07, ty + 0.07, h - 0.07 + 0.06),
+                     rot_z=th + rng.uniform(-0.02, 0.02), mat=0 if rng.random() < 0.6 else 1, round_=0.08,
+                     bump=0.10, tilt=0.006)
+            sb.stone(Vector((x, y, base + h - 0.035)), (tx, ty, 0.07), rot_z=th, mat=wood_or_light, round_=0.10,
+                     bump=0.03, tilt=0.0)
+            ucx.append((f"plinth_{rid}", None, rbox_pts((x, y, base + h / 2), (tx + 0.08, ty + 0.08, h), th)))
+            if pl.get("backstone"):
+                bx, by, bz = pl["backstone"]
+                off = Rz @ Vector((0, ty / 2 + by / 2 + 0.05, 0))
+                tmp = rough_block_bm((bx, by, bz + 0.1), rng, cuts=3, taper=0.25, amp=0.025)
+                tmp.transform(Matrix.Translation((x + off.x, y + off.y, base - 0.1)) @ Matrix.Rotation(th, 4, "Z") @
+                              Matrix.Rotation(0.05, 4, "X"))
+                _bm_into(sb, tmp, 0)
+                ucx.append((f"back_{rid}", None, rbox_pts((x + off.x, y + off.y, base + bz / 2), (bx, by, bz), th)))
+            info["plinths"][rid] = {"shape": "box", "top_m": [tx, ty], "h_m": h}
+        elif shape == "drum":
+            rad = pl["radius"]
+            tmp = _drum_bm(rad, h - 0.06, 18, rng)
+            tmp.transform(Matrix.Translation((x, y, base)))
+            _bm_into(sb, tmp, 0)
+            tmp = _drum_bm(rad - 0.015, 0.06, 18, rng, amp=0.004)
+            tmp.transform(Matrix.Translation((x, y, base + h - 0.06)))
+            _bm_into(sb, tmp, wood_or_light)
+            ucx.append((f"plinth_{rid}", None, prism_pts((x, y), rad + 0.02, base, base + h, 10)))
+            info["plinths"][rid] = {"shape": "drum", "radius_m": rad, "h_m": h}
+        else:
+            tx, ty = pl["top"]
+            sb.stone(Vector((x, y, base + (h - 0.08) / 2 - 0.02)), (tx + 0.04, ty + 0.04, h - 0.08 + 0.04),
+                     rot_z=th, mat=1, round_=0.08, bump=0.09, tilt=0.004)
+            tmp = _cup_bm(0.13, 0.085, pl["cup_radius"], pl["cup_depth"], 20)
+            tmp.transform(Matrix.Translation((x, y, base + h - 0.085)))
+            _bm_into(sb, tmp, wood_or_light)
+            ucx.append((f"plinth_{rid}", None, rbox_pts((x, y, base + h / 2), (0.27, 0.27, h), th)))
+            info["plinths"][rid] = {"shape": "pillar_cup", "top_m": [tx, ty], "h_m": h,
+                                    "cup": [pl["cup_radius"], pl["cup_depth"]]}
+        sname = r["socket"][len("SOCKET_"):]
+        sz = base + h - (pl.get("cup_depth", 0.0) if shape == "pillar_cup" else 0.0)
+        sockets[sname] = ("root", Vector((x, y, round(sz, 4))))
+        srot[sname] = (0, 0, r["angle_deg_from_+Y"])
+        info["plinths"][rid]["socket_z"] = round(sz, 4)
+    stones = sb.finish(coll)
+    # remplissage de gravier corallien (disque) sous les dalles
+    fill = _disc_obj("Altar_Fill", R0 - 0.1, H0 - 0.012, 32, M["gravel"], coll)
+    for k, v in p.get("sockets_extra", {}).items():
+        sockets[k] = ("root", Vector(v))
+    ucx.insert(0, ("dais", None, prism_pts((0, 0), R0, 0.0, H0, 16)))
+    return _res([stones, fill], sockets, ucx, p, info=info, socket_rot=srot)
+
+
+def _bm_into(sb, tmp, mat):
+    me = bpy.data.meshes.new("_tmp")
+    tmp.to_mesh(me)
+    tmp.free()
+    n0 = len(sb.bm.faces)
+    sb.bm.from_mesh(me)
+    bpy.data.meshes.remove(me)
+    sb.bm.faces.ensure_lookup_table()
+    for i in range(n0, len(sb.bm.faces)):
+        sb.bm.faces[i].material_index = mat
+        sb.bm.faces[i].smooth = True
+
+
+def _drum_bm(r, h, segs, rng, amp=0.012):
+    tmp = bmesh.new()
+    rings = []
+    for z in (0.0, h * 0.5, h):
+        ring = []
+        for i in range(segs):
+            a = TAU * i / segs
+            rr = r + rng.uniform(-amp, amp)
+            ring.append(tmp.verts.new((rr * math.cos(a), rr * math.sin(a), z + (rng.uniform(-amp, amp) * 0.3
+                                                                              if 0 < z < h else 0))))
+        rings.append(ring)
+    for k in range(len(rings) - 1):
+        for i in range(segs):
+            j = (i + 1) % segs
+            tmp.faces.new((rings[k][i], rings[k][j], rings[k + 1][j], rings[k + 1][i]))
+    tmp.faces.new(rings[0][::-1])
+    tmp.faces.new(rings[-1])
+    bmesh.ops.recalc_face_normals(tmp, faces=tmp.faces)
+    return tmp
+
+
+def _cup_bm(r, h, cr, cd, segs):
+    """Bénitier de pierre : cylindre court, cupule centrale (rayon cr, profondeur cd)."""
+    prof = [(0.0, h - cd), (cr * 0.5, h - cd * 0.8), (cr, h - 0.001), (cr + 0.012, h), (r - 0.012, h),
+            (r, h - 0.012), (r * 0.97, 0.0)]
+    tmp = bmesh.new()
+    rings = []
+    for rr, z in prof:
+        if rr == 0.0:
+            rings.append([tmp.verts.new((0, 0, z))])
+            continue
+        rings.append([tmp.verts.new((rr * math.cos(TAU * i / segs), rr * math.sin(TAU * i / segs), z))
+                      for i in range(segs)])
+    for k in range(len(rings) - 1):
+        a, b = rings[k], rings[k + 1]
+        for i in range(segs):
+            j = (i + 1) % segs
+            if len(a) == 1:
+                tmp.faces.new((a[0], b[i], b[j]))
+            else:
+                tmp.faces.new((a[i], b[i], b[j], a[j]))
+    tmp.faces.new(rings[-1][::-1])
+    bmesh.ops.recalc_face_normals(tmp, faces=tmp.faces)
+    return tmp
+
+
+def _disc_obj(name, r, ztop, segs, mat, coll, z0=0.0):
+    tmp = _drum_bm(r, ztop - z0, segs, random.Random(3), amp=0.0)
+    tmp.transform(Matrix.Translation((0, 0, z0)))
+    me = bpy.data.meshes.new(name)
+    tmp.to_mesh(me)
+    tmp.free()
+    me.materials.append(mat)
+    ob = bpy.data.objects.new(name, me)
+    coll.objects.link(ob)
+    MK.box_uv_mesh(me, ob.matrix_world, 1.0)
+    return ob
+
+
+# ----------------------------------------------------------------------------
+# Pavage de la cour
+
+def _clip_halfplane(poly, n, d):
+    """Garde la partie du polygone convexe (liste de Vector 2D) où n.p <= d."""
+    out = []
+    k = len(poly)
+    for i in range(k):
+        a, b = poly[i], poly[(i + 1) % k]
+        da, db = n.dot(a) - d, n.dot(b) - d
+        if da <= 0:
+            out.append(a)
+        if (da <= 0) != (db <= 0):
+            out.append(a + (b - a) * (da / (da - db)))
+    return out
+
+
+def build_court_paving(coll, p=None):
+    """Dallage en opus incertum : cellules de Voronoi (sites en disque de Poisson) rétrécies d'un joint,
+    bornées autour du dais et de l'ahu ; ~30 % de dalles manquantes par plaques (bruit) + bords ruinés."""
+    p = {**_mod("court_paving"), **(p or {})}
+    M = mats()
+    rng = random.Random(p.get("seed", 5))
+    sx, sy = p["size_m"]
+    th = p["thickness_m"]
+    top = p["top_z_m"]
+    lay = spec_params()["scene_layout"]
+    pav = Vector(lay["court_paving"]["pos"])
+    dc = Vector(lay["relic_altar"]["pos"]) - pav
+    dais_c = Vector((dc.x, dc.y))
+    dais_r = spec_params()["modules"]["relic_altar"]["dais"]["radius_m"] + 0.06
+    ac = Vector(lay["ahu"]["pos"]) - pav
+    ahu = spec_params()["modules"]["ahu"]
+    w0, d0 = ahu["pyramid_params"]["tiers"][0]
+    stair_w = ahu["pyramid_params"]["stair_w"] + 0.6
+    stair_y = ac.y + ahu["derived"]["stair_foot_y"] - 0.04
+    ahu_y = ac.y - d0 / 2 - 0.12
+    ahu_x = w0 / 2 + 0.12
+    lo, hi = p["slab_m"]
+    cell = 0.4
+    grid, sites = {}, []
+    for _ in range(40000):
+        r = rng.uniform(lo * 0.62, hi * 0.5)
+        q = Vector((rng.uniform(-sx / 2, sx / 2), rng.uniform(-sy / 2, sy / 2)))
+        if (q - dais_c).length < dais_r + 0.1:
+            continue
+        if abs(q.x - ac.x) < ahu_x and q.y > ahu_y:
+            continue
+        if abs(q.x - ac.x) < stair_w / 2 and q.y > stair_y:
+            continue
+        gx, gy = int(q.x // cell), int(q.y // cell)
+        ok = True
+        for i in range(gx - 2, gx + 3):
+            for j in range(gy - 2, gy + 3):
+                for (q2, r2) in grid.get((i, j), ()):
+                    if (q2 - q).length < (r + r2) * 0.72:
+                        ok = False
+                        break
+                if not ok:
+                    break
+            if not ok:
+                break
+        if ok:
+            grid.setdefault((gx, gy), []).append((q, r))
+            sites.append((q, r))
+    off = Vector((rng.uniform(0, 50), rng.uniform(0, 50), 0))
+    bm = bmesh.new()
+    kept, area = 0, 0.0
+    joint = 0.028
+    for q, r in sites:
+        poly = [q + Vector((math.cos(TAU * k / 10), math.sin(TAU * k / 10))) * 0.6 for k in range(10)]
+        gx, gy = int(q.x // cell), int(q.y // cell)
+        for i in range(gx - 3, gx + 4):
+            for j in range(gy - 3, gy + 4):
+                for (q2, _r2) in grid.get((i, j), ()):
+                    if q2 is q:
+                        continue
+                    dv = q2 - q
+                    if dv.length > 1.0 or dv.length < 1e-6:
+                        continue
+                    n = dv.normalized()
+                    poly = _clip_halfplane(poly, n, n.dot((q + q2) / 2) - joint / 2)
+        for n, d in ((Vector((1, 0)), sx / 2), (Vector((-1, 0)), sx / 2), (Vector((0, 1)), sy / 2),
+                     (Vector((0, -1)), sy / 2)):
+            poly = _clip_halfplane(poly, n, d)
+        nd = (q - dais_c).normalized()
+        poly = _clip_halfplane(poly, -nd, -(nd.dot(dais_c) + dais_r))
+        if abs(q.x - ac.x) < ahu_x + 0.5 and q.y < ahu_y + 0.3:
+            poly = _clip_halfplane(poly, Vector((0, 1)), ahu_y)
+        if q.y > ahu_y - 0.3 and abs(q.x - ac.x) >= ahu_x:
+            sgn = 1 if q.x > ac.x else -1
+            poly = _clip_halfplane(poly, Vector((-sgn, 0)), -(sgn * ac.x + ahu_x))
+        if abs(q.x - ac.x) < stair_w / 2 + 0.5 and q.y < stair_y + 0.3 and q.y < ahu_y:
+            poly = _clip_halfplane(poly, Vector((0, 1)), stair_y)
+        elif q.y > stair_y - 0.3 and abs(q.x - ac.x) >= stair_w / 2 and q.y < ahu_y:
+            sgn = 1 if q.x > ac.x else -1
+            poly = _clip_halfplane(poly, Vector((-sgn, 0)), -(sgn * ac.x + stair_w / 2))
+        if len(poly) < 3:
+            continue
+        nz = noise.noise(Vector((q.x * 0.35, q.y * 0.35, 0)) + off)
+        edge = max(abs(q.x) / (sx / 2), abs(q.y) / (sy / 2))
+        miss = 0.12 + (0.5 if nz > 0.28 else 0.0) + (0.25 if edge > 0.93 else 0.0)
+        if rng.random() < miss:
+            continue
+        c = sum(poly, Vector((0, 0))) / len(poly)
+        a2 = 0.0
+        for i in range(len(poly)):
+            a2 += poly[i].x * poly[(i + 1) % len(poly)].y - poly[(i + 1) % len(poly)].x * poly[i].y
+        if abs(a2) / 2 < 0.03:
+            continue
+        area += abs(a2) / 2
+        kept += 1
+        tilt = (rng.uniform(-0.035, 0.035), rng.uniform(-0.035, 0.035)) if rng.random() < 0.22 else (0.0, 0.0)
+        heave = rng.uniform(-0.01, 0.004) + (0.018 if rng.random() < 0.05 else 0.0)
+        ztop = top + heave
+        tops, bots = [], []
+        for v in poly:
+            d = v - c
+            dz = tilt[0] * d.x + tilt[1] * d.y
+            ins = c + d * (1 - min(0.35, 0.022 / max(d.length, 1e-3)))
+            tops.append(bm.verts.new((ins.x, ins.y, ztop + dz + rng.uniform(-0.003, 0.003))))
+            bots.append(bm.verts.new((v.x, v.y, ztop - th + dz)))
+        x = rng.random()
+        mi = 0 if x < 0.74 else (2 if x < 0.91 else 1)
+        try:
+            f = bm.faces.new(tops)
+        except ValueError:
+            continue
+        f.material_index = mi
+        nn = len(poly)
+        for k in range(nn):
+            g = bm.faces.new((bots[k], bots[(k + 1) % nn], tops[(k + 1) % nn], tops[k]))
+            g.material_index = mi
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    me = bpy.data.meshes.new("Court_Paving")
+    bm.to_mesh(me)
+    bm.free()
+    for m in (M["coral"], M["basalt"], M["moss"]):
+        me.materials.append(m)
+    ob = bpy.data.objects.new("Court_Paving", me)
+    coll.objects.link(ob)
+    MK.box_uv_mesh(me, ob.matrix_world, 1.0)
+    ucx = [("court", None, rbox_pts((0, 0, top / 2), (sx, sy, top)))]
+    info = {"slabs": kept, "sites": len(sites), "coverage": round(area / (sx * sy), 3)}
+    return _res([ob], {}, ucx, p, info=info)
+
+
+# ----------------------------------------------------------------------------
+# Murets (droit, ruiné, brèche, angle)
+
+CAP = 0.09
+
+
+def _wall_common(name, p, hfun, cap_ok, seed, extra=None):
+    M = mats()
+    rng = random.Random(seed)
+    L, W, H = p["size_m"]
+    sb = stone_batch(name, M, seed)
+    for side in (-1, 1):
+        dry_wall(sb, rng, (-L / 2, side * W / 2, 0), 0.0, L, -side, hfun)
+    coping(sb, rng, (-L / 2, 0, 0), 0.0, L, W, H - CAP, ok=cap_ok)
+    if extra:
+        extra(sb, rng)
+    return sb.finish(coll_of(p)), rng
+
+
+def coll_of(p):
+    return p["_coll"]
+
+
+def build_wall_straight(coll, p=None):
+    p = {**_mod("wall_straight"), **(p or {}), "_coll": coll}
+    L, W, H = p["size_m"]
+    ob, _ = _wall_common("Wall_Stones", p, lambda t: H - CAP, lambda t: True, 61)
+    ucx = [("wall", None, rbox_pts((0, 0, H / 2), (L, W, H)))]
+    return _res([ob], _sockets(p["sockets"]), ucx, _clean(p))
+
+
+def _clean(p):
+    return {k: v for k, v in p.items() if not k.startswith("_")}
+
+
+def build_wall_ruined(coll, p=None):
+    p = {**_mod("wall_ruined"), **(p or {}), "_coll": coll}
+    L, W, H = p["size_m"]
+
+    def hf(t):
+        a = abs(t - L / 2)
+        jag = 0.05 * math.sin(t * 17.0) + 0.03 * math.sin(t * 41.0)
+        if a >= 0.95:
+            return H - CAP
+        if a >= 0.55:
+            return 0.28 + (a - 0.55) / 0.40 * (H - CAP - 0.28) + jag
+        return 0.24 + jag
+
+    def extra(sb, rng):
+        rubble(sb, rng, 16, (-0.9, 0.9), (-0.95, -0.32), size=(0.12, 0.32))
+        rubble(sb, rng, 12, (-0.9, 0.9), (0.32, 0.95), size=(0.12, 0.32))
+        rubble(sb, rng, 5, (-0.6, 0.6), (-0.2, 0.2), zr=0.22, size=(0.12, 0.22))
+    ob, _ = _wall_common("WallRuined_Stones", p, hf, lambda t: abs(t - L / 2) >= 1.0, 62, extra)
+    ucx = [("stump_l", None, rbox_pts((-L / 2 + 0.375, 0, H / 2), (0.75, W, H))),
+           ("stump_r", None, rbox_pts((L / 2 - 0.375, 0, H / 2), (0.75, W, H))),
+           ("low", None, rbox_pts((0, 0, 0.15), (1.5, W, 0.30)))]
+    return _res([ob], {"Snap_L": ("root", V(-L / 2, 0, 0)), "Snap_R": ("root", V(L / 2, 0, 0))}, ucx, _clean(p))
+
+
+def build_wall_breach(coll, p=None):
+    p = {**_mod("wall_breach"), **(p or {}), "_coll": coll}
+    L, W, H = p["size_m"]
+    gap = p["passage_width_m"] / 2
+
+    def hf(t):
+        a = abs(t - L / 2)
+        if a < gap:
+            return -1.0
+        if a < gap + 0.3:
+            return 0.30 + (a - gap) / 0.3 * (H - CAP - 0.30) + 0.05 * math.sin(t * 23)
+        return H - CAP
+
+    def extra(sb, rng):
+        avoid = lambda q: abs(q.x) < gap + 0.05            # noqa: E731  passage dégagé
+        rubble(sb, rng, 8, (-L / 2 + 0.2, L / 2 - 0.2), (-1.0, -0.36), size=(0.12, 0.30), avoid=avoid)
+        rubble(sb, rng, 8, (-L / 2 + 0.2, L / 2 - 0.2), (0.36, 1.0), size=(0.12, 0.30), avoid=avoid)
+    ob, _ = _wall_common("WallBreach_Stones", p, hf, lambda t: abs(t - L / 2) >= gap + 0.35, 63, extra)
+    seg = L / 2 - gap
+    ucx = [("side_l", None, rbox_pts((-L / 2 + seg / 2, 0, H / 2), (seg, W, H))),
+           ("side_r", None, rbox_pts((L / 2 - seg / 2, 0, H / 2), (seg, W, H)))]
+    socks = {"Snap_L": ("root", V(-L / 2, 0, 0)), "Snap_R": ("root", V(L / 2, 0, 0)),
+             "Passage": ("root", V(0, 0, 0))}
+    return _res([ob], socks, ucx, _clean(p), info={"passage_m": 2 * gap})
+
+
+def build_wall_corner(coll, p=None):
+    p = {**_mod("wall_corner"), **(p or {})}
+    M = mats()
+    rng = random.Random(64)
+    sx, sy, H = p["size_m"]
+    hx, hy = sx / 2, sy / 2
+    sb = stone_batch("WallCorner_Stones", M, 64)
+    cap = 0.13
+    hf = lambda t: H - cap                                  # noqa: E731
+    for origin, ang, ln in (((-hx, -hy, 0), 0.0, sx), ((hx, hy, 0), math.pi, sx),
+                            ((-hx, hy, 0), -math.pi / 2, sy), ((hx, -hy, 0), math.pi / 2, sy)):
+        dry_wall(sb, rng, origin, ang, ln, 1, hf, depth=(0.22, 0.30), sl=(0.22, 0.42))
+    sb.stone(V(0, 0, H - cap / 2), (sx + 0.06, sy + 0.06, cap), rot_z=rng.uniform(-0.1, 0.1), mat=0, round_=0.2,
+             bump=0.1, tilt=0.02)
+    ob = sb.finish(coll)
+    ucx = [("corner", None, rbox_pts((0, 0, H / 2), (sx, sy, H)))]
+    return _res([ob], {"Top": ("root", V(0, 0, H))}, ucx, p)
+
+
+# ----------------------------------------------------------------------------
+# Portique d'entrée
+
+def build_gate(coll, p=None):
+    p = {**_mod("gate"), **(p or {})}
+    M = mats()
+    rng = random.Random(71)
+    L, W, Htot = p["size_m"]
+    op = p["opening_m"]
+    pw, pd, ph = p["posts_m"]
+    lx, ly, lz = p["lintel_m"]
+    lzc = p["lintel_z_center"]
+    wall_h = spec_params()["modules"]["wall_straight"]["size_m"][2]
+    px = op["width"] / 2 + pw / 2                       # axe des poteaux : 0,95
+    stub0 = px + pw / 2                                 # début des moignons de muret : 1,10
+    sb = stone_batch("Gate_Stones", M, 71, ("moss", "basalt"))
+    for sx in (-1, 1):
+        x0 = stub0 if sx > 0 else -L / 2
+        ln = L / 2 - stub0
+        for side in (-1, 1):
+            dry_wall(sb, rng, (x0, side * W / 2, 0), 0.0, ln, -side, lambda t: wall_h - CAP, mw=(0.55, 0.45),
+                     mats_idx=(0, 1))
+        coping(sb, rng, (x0, 0, 0), 0.0, ln, W, wall_h - CAP, mat_w=(0.6, 0.4), mats_idx=(0, 1))
+    stones = sb.finish(coll)
+    wood = CK.Batch("Gate_Wood")
+    for sx in (-1, 1):
+        x = sx * px
+        wood.box((x, 0, ph / 2 - 0.1), (pw, pd, ph + 0.2), M["wood"], bevel=0.02, jitter=0.008, rng=rng,
+                 long_u=False)
+        # sculptures : zigzags en relief sur les deux faces + bandeaux de cordage
+        for face in (-1, 1):
+            yy = face * (pd / 2 + 0.004)
+            zz = [V(x + 0.085 * (1 if k % 2 else -1), yy, 0.35 + k * 0.11) for k in range(13)]
+            wood.tube(zz, 0.017, M["wood"], segs=5, caps=False)
+            for zc in (1.88, 1.96):
+                wood.tube([V(x - pw / 2 + 0.02, yy, zc), V(x + pw / 2 - 0.02, yy, zc)], 0.014, M["wood"], segs=5,
+                          caps=False)
+        for zc in (0.22, 1.80):
+            lash(wood, (x, 0, zc), (0, 0, 1), pw * 0.71, M["rope"], wraps=3, minor=0.012, npts=10, segs=4)
+        # pommeau sculpté au-dessus du linteau
+        wood.tube([V(x, 0, lzc + lz / 2 - 0.02), V(x, 0, lzc + lz / 2 + 0.04), V(x, 0, lzc + lz / 2 + 0.10),
+                   V(x, 0, Htot)], [0.10, 0.12, 0.085, 0.02], M["wood"], segs=10)
+    wood.box((0, 0, lzc), (lx, ly, lz), M["wood"], bevel=0.02, jitter=0.01, rng=rng, long_u=True)
+    for face in (-1, 1):
+        yy = face * (ly / 2 + 0.004)
+        wave = [V(-lx / 2 + 0.25 + i * (lx - 0.5) / 30, yy, lzc + 0.045 * math.sin(i * math.pi / 3.0))
+                for i in range(31)]
+        wood.tube(wave, 0.015, M["wood"], segs=5, caps=False)
+        zz = [V(-lx / 2 + 0.25 + i * (lx - 0.5) / 22, yy, lzc - lz / 2 + 0.05 + (0.035 if i % 2 else 0.0))
+              for i in range(23)]
+        wood.tube(zz, 0.012, M["wood"], segs=5, caps=False)
+    for sx in (-1, 1):
+        for dx in (-0.2, 0.2):
+            lash(wood, (sx * px + dx, 0, lzc), (1, 0, 0), 0.20, M["rope"], wraps=2, minor=0.012, npts=10, segs=4)
+    wd = wood.finish(coll)
+    ucx = [("side_l", None, rbox_pts((-(L / 2 + px - pw / 2) / 2, 0, wall_h / 2), (L / 2 - px + pw / 2, W, wall_h))),
+           ("side_r", None, rbox_pts(((L / 2 + px - pw / 2) / 2, 0, wall_h / 2), (L / 2 - px + pw / 2, W, wall_h))),
+           ("post_l", None, rbox_pts((-px, 0, ph / 2), (pw, pd, ph))),
+           ("post_r", None, rbox_pts((px, 0, ph / 2), (pw, pd, ph))),
+           ("lintel", None, rbox_pts((0, 0, lzc), (lx, ly, lz)))]
+    info = {"opening_m": [round(2 * (px - pw / 2), 3), round(lzc - lz / 2, 3)]}
+    return _res([stones, wd], _sockets(p["sockets"]), ucx, p, info=info)
+
+
+# ----------------------------------------------------------------------------
+# Palissade
+
+def build_palisade(coll, p=None, fallen=False):
+    p = {**_mod("palisade"), **(p or {})}
+    M = mats()
+    rng = random.Random(81 if not fallen else 82)
+    L, W, H = p["size_m"]
+    d0, d1 = p["pole_d_m"]
+    sp = p["pole_spacing_m"]
+    wood = CK.Batch("Palisade_Wood" + ("_Fallen" if fallen else ""))
+    n = int(round(L / sp))
+    xs = [-L / 2 + sp / 2 + i * sp for i in range(n)]
+    tops = []
+    for i, x in enumerate(xs):
+        r = rng.uniform(d0, d1) / 2
+        h = H * rng.uniform(0.9, 1.04)
+        lean = Matrix.Identity(3)
+        if fallen and i in (3, 4, 5, 9):
+            lean = Matrix.Rotation(rng.uniform(0.25, 0.55) * (1 if i % 2 else -1), 3, "X") @ \
+                Matrix.Rotation(rng.uniform(-0.15, 0.15), 3, "Y")
+            h *= rng.uniform(0.7, 0.95)
+        base = V(x + rng.uniform(-0.01, 0.01), rng.uniform(-0.012, 0.012), -0.3)
+        pts = [base + lean @ V(0, 0, z) for z in (0.0, 0.3 + (h - 0.12) * 0.5, 0.3 + h - 0.12, 0.3 + h)]
+        wood.tube(pts, [r * 1.05, r, r * 0.9, 0.006], M["bark"], segs=7, rng=rng, wobble=0.05)
+        tops.append(pts)
+    if fallen:                                           # deux pieux couchés au pied
+        for k in range(2):
+            y = -0.35 - 0.12 * k
+            a = rng.uniform(-0.25, 0.25)
+            c = V(rng.uniform(-0.4, 0.4), y, 0.05)
+            dv = V(math.cos(a), math.sin(a), 0) * rng.uniform(0.75, 0.9)
+            wood.tube([c - dv, c, c + dv + V(0, 0, 0.01)], [0.055, 0.052, 0.01], M["bark"], segs=7)
+    for zc in p["lashing_z"]:
+        for side in (-1, 1):
+            y = side * 0.085
+            if fallen and zc > 1.0:
+                wood.tube([V(-L / 2 + 0.02, y, zc), V(-0.45, y, zc - 0.02), V(-0.12, y + side * 0.08, zc - 0.32)],
+                          0.03, M["post"], segs=7)
+                pts = [V(L / 2 - 0.02, y, zc), V(0.55, y, zc - 0.01), V(0.25, y + side * 0.1, zc - 0.42)]
+            else:
+                pts = [V(-L / 2 + 0.02, y, zc + rng.uniform(-0.01, 0.01)), V(0, y, zc + rng.uniform(-0.02, 0.02)),
+                       V(L / 2 - 0.02, y, zc + rng.uniform(-0.01, 0.01))]
+            wood.tube(pts, 0.03, M["post"], segs=7)
+        for i, x in enumerate(xs):
+            if i % 2 == 0 and not (fallen and i in (3, 4, 5, 9)):
+                lash(wood, (x, 0, zc), (0, 0, 1), 0.07, M["rope"], wraps=1, minor=0.008, npts=8, segs=4)
+    ob = wood.finish(coll)
+    ucx = [("palisade", None, rbox_pts((0, 0, H / 2), (L, max(W, 0.2), H)))]
+    return _res([ob], _sockets(p["sockets"]), ucx, p, info={"poles": n, "fallen": fallen})
+
+
+def build_palisade_fallen(coll, p=None):
+    return build_palisade(coll, p, fallen=True)
+
+
+# ----------------------------------------------------------------------------
+# Fare-ia-manaha (maison des reliques sur pilotis)
+
+def build_fare(coll, p=None):
+    p = {**_mod("fare_ia_manaha"), **(p or {})}
+    M = mats()
+    rng = random.Random(91)
+    dk = p["deck"]
+    dz = dk["top_z_m"]
+    DW, DD = dk["size_m"]
+    hw, hd = DW / 2, DD / 2
+    wl = p["walls"]
+    eave_h = wl["eave_height_above_deck_m"]
+    rf = p["roof"]
+    ridge_z = dz + rf["ridge_above_deck_m"]
+    yb = wl["y_range"][1] - 0.05                       # mur arrière (axe) : 1,75
+    yf = wl["y_range"][0] + 0.05                       # mur avant (axe) : -0.95
+    xw = hw - 0.05                                     # murs latéraux (axe) : 2,15
+    slope = (ridge_z - (dz + eave_h)) / yb             # pente des pans (faîtage en y = 0)
+    roof_z = lambda y: ridge_z - slope * abs(y)        # noqa: E731
+    fr = CK.Batch("Fare_Frame")
+    # --- pilotis + coupelles anti-rats
+    st = p["stilts"]
+    rg = st["rat_guard"]
+    for x in st["grid_x"]:
+        for y in st["grid_y"]:
+            r = st["diameter_m"] / 2
+            fr.log((x, y, -0.3), (x, y, dz - 0.17), r, r * 0.92, M["post"], rng, segs=10, bend=0.008, n=4)
+            fr.tube([V(x, y, rg["z_m"] - 0.07), V(x, y, rg["z_m"] + 0.07)], [rg["radius_m"], r + 0.012],
+                    M["planks"], segs=16, caps=False)
+            fr.tube([V(x, y, rg["z_m"] - 0.075), V(x, y, rg["z_m"] - 0.07)], [rg["radius_m"] + 0.004,
+                                                                             rg["radius_m"]],
+                    M["planks"], segs=16, caps=False)
+            lash(fr, (x, y, rg["z_m"] + 0.085), (0, 0, 1), r, M["rope"], wraps=2, minor=0.009)
+    # --- poutres porteuses (le long de X) + plancher (planches le long de Y)
+    for y in st["grid_y"]:
+        fr.log((-hw - 0.05, y, dz - 0.12), (hw + 0.05, y, dz - 0.12), 0.065, 0.06, M["post"], rng, segs=8, n=4)
+    pl_w = 0.2
+    n_pl = int(DW / pl_w)
+    for k in range(n_pl):
+        x = -hw + pl_w / 2 + k * DW / n_pl
+        y0, y1 = -hd, hd
+        if k in (2,):
+            y0 = -hd + 0.45                              # planche cassée sur le porche
+        if k in (n_pl - 3,):
+            y1 = hd - 0.6
+        ln = y1 - y0
+        fr.box((x + rng.uniform(-0.006, 0.006), (y0 + y1) / 2, dz - 0.025), (DW / n_pl - 0.012, ln, 0.05),
+               M["planks"], R=Matrix.Rotation(rng.uniform(-0.006, 0.006), 3, "Z"), bevel=0.006, long_u=True)
+    # --- poteaux d'ossature, sablières, faîtière, chevrons
+    corners = [(-xw, yf), (xw, yf), (-xw, yb), (xw, yb)]
+    for x, y in corners:
+        fr.log((x, y, dz - 0.05), (x, y, roof_z(y) - 0.03), 0.06, 0.055, M["post"], rng, segs=8, n=3)
+    for x in (-xw, xw):
+        fr.log((x, 0.0, dz - 0.05), (x, 0.0, ridge_z), 0.065, 0.06, M["post"], rng, segs=8, n=3)
+    for x in (-xw, xw):                                    # poteaux du porche
+        fr.log((x, -hd + 0.06, dz - 0.05), (x, -hd + 0.06, roof_z(-hd) - 0.05), 0.06, 0.055, M["post"], rng, segs=8,
+               n=3)
+    ov = rf["overhang_m"]
+    gx = hw + ov
+    for y in (yf, yb, -hd + 0.06):
+        fr.log((-gx + 0.1, y, roof_z(y) - 0.02), (gx - 0.1, y, roof_z(y) - 0.02), 0.05, 0.048, M["post"], rng, segs=8,
+               n=4)
+    fr.log((-gx, 0, ridge_z), (gx, 0, ridge_z), 0.065, 0.06, M["post"], rng, segs=8, n=4)
+    ye = hd + ov
+    for x in [-gx + 0.12 + k * (2 * gx - 0.24) / 7 for k in range(8)]:
+        for sg in (-1, 1):
+            fr.log((x, 0, ridge_z + 0.02), (x, sg * ye, roof_z(ye) + 0.02), 0.035, 0.03, M["post"], rng, segs=6, n=3)
+    # --- murs à claire-voie (perches verticales espacées de 5 cm + lisses)
+    walls = CK.Batch("Fare_Walls")
+    door = p["door"]
+    dhw = door["width_m"] / 2
+    dtop = dz + door["height_m"]
+    pole_r = 0.024
+    pitch = 2 * pole_r + 0.05
+
+    def pole_line(a, b, top_fn, skip=None, broken=None):
+        a, b = Vector(a), Vector(b)
+        L = (b - a).length
+        dv = (b - a).normalized()
+        n = int(L / pitch)
+        for i in range(n):
+            c = a + dv * (L * (i + 0.5) / n)
+            if skip and skip(c):
+                continue
+            z1 = top_fn(c) - 0.04
+            z0 = dz - 0.02
+            lean = V(0, 0, 0)
+            if broken and broken(c):
+                z1 = z0 + rng.uniform(0.4, 1.1)
+                if rng.random() < 0.35:
+                    lean = Vector((c.x, c.y - 0.4, 0)).normalized() * rng.uniform(0.1, 0.3)
+            walls.tube([V(c.x, c.y, z0), V(c.x, c.y, z1) + lean], [pole_r * rng.uniform(0.85, 1.1)] * 2, M["post"],
+                       segs=5, caps=True)
+        for zr in (dz + 0.30, dz + 1.45):
+            walls.tube([a + V(0, 0, zr - a.z), b + V(0, 0, zr - b.z)], 0.022, M["post"], segs=6)
+            for i in range(0, max(1, int(L / 0.6))):
+                c = a + dv * min(L, 0.3 + i * 0.6)
+                if skip and skip(c):
+                    continue
+                if broken and broken(c):
+                    continue
+                lash(walls, (c.x, c.y, zr), (0, 0, 1), pole_r + 0.012, M["rope"], wraps=1, minor=0.007, npts=8,
+                     segs=4)
+    flat_top = lambda c: roof_z(c.y)                         # noqa: E731
+    back_broken = lambda c: -2.0 < c.x < -1.35              # noqa: E731  pan effondré (arrière)
+    side_broken = lambda c: c.x < 0 and -0.9 < c.y < -0.45  # noqa: E731  pan effondré (ouest)
+    pole_line((-xw + 0.05, yb, dz), (xw - 0.05, yb, dz), flat_top, broken=back_broken)
+    pole_line((-xw, yf + 0.05, dz), (-xw, yb - 0.05, dz), flat_top, broken=side_broken)
+    pole_line((xw, yf + 0.05, dz), (xw, yb - 0.05, dz), flat_top)
+    in_door = lambda c: abs(c.x) < dhw + 0.06               # noqa: E731
+    pole_line((-xw + 0.05, yf, dz), (xw - 0.05, yf, dz), flat_top, skip=in_door)
+    # porte : jambages, linteau sculpté (unu miniature), perches au-dessus
+    for sx in (-1, 1):
+        walls.log((sx * (dhw + 0.05), yf, dz - 0.02), (sx * (dhw + 0.05), yf, roof_z(yf) - 0.03), 0.045, 0.042,
+                  M["post"], rng, segs=8, n=3)
+    walls.box((0, yf - 0.03, dtop + 0.07), (2 * dhw + 0.35, 0.05, 0.14), M["post"], bevel=0.01, long_u=False)
+    zz = [V(-dhw - 0.1 + i * (2 * dhw + 0.2) / 16, yf - 0.058, dtop + 0.07 + (0.035 if i % 2 else -0.035))
+          for i in range(17)]
+    walls.tube(zz, 0.011, M["post"], segs=5, caps=False)
+    for i in range(int((2 * dhw + 0.1) / pitch)):
+        x = -dhw - 0.02 + (i + 0.5) * pitch
+        walls.tube([V(x, yf, dtop + 0.14), V(x, yf, roof_z(yf) - 0.04)], [pole_r] * 2, M["post"], segs=5)
+    # --- escalier (6 contremarches de 16,5 cm, girons 0,30) + rampes ligaturées
+    stp = p["stairs"]
+    ns, rise, tread, sw = stp["steps"], stp["rise_m"], stp["tread_m"], stp["width_m"]
+    y_top = -hd
+    y_foot = y_top - ns * tread                            # -3,6
+    for k in range(1, ns):
+        yc = y_foot + tread * k + tread / 2
+        fr.box((rng.uniform(-0.01, 0.01), yc, rise * k - 0.025), (sw, tread + 0.03, 0.05), M["planks"],
+               R=Matrix.Rotation(rng.uniform(-0.012, 0.012), 3, "Z"), bevel=0.006, long_u=True)
+    ang = math.atan2(dz, ns * tread - tread)
+    for sx in (-1, 1):
+        x = sx * (sw / 2 + 0.04)
+        mid = V(x, (y_foot + tread + y_top) / 2, dz / 2 - 0.05)
+        ln = math.hypot(dz, (ns - 1) * tread) + 0.15
+        fr.box(mid, (0.06, ln, 0.14), M["post"], R=Matrix.Rotation(ang, 3, "X"), bevel=0.01, long_u=False)
+        # rampes : poteaux + perche à 0,55 m au-dessus des nez de marche
+        p0 = V(x + sx * 0.06, y_foot + tread * 0.5, -0.2)
+        p1 = V(x + sx * 0.06, y_top - 0.08, -0.2)
+        t0 = p0 + V(0, 0, 0.2 + rise + 0.55)
+        t1 = p1 + V(0, 0, 0.2 + dz + 0.6)
+        fr.log(p0, t0 + V(0, 0, 0.04), 0.04, 0.036, M["post"], rng, segs=7, n=3)
+        fr.log(p1, t1 + V(0, 0, 0.04), 0.04, 0.036, M["post"], rng, segs=7, n=3)
+        fr.log(t0, t1, 0.028, 0.026, M["post"], rng, segs=6, n=4)
+        lash(fr, t0, (0, 0, 1), 0.04, M["rope"], wraps=2, minor=0.008)
+        lash(fr, t1, (0, 0, 1), 0.04, M["rope"], wraps=2, minor=0.008)
+    # --- toit de pandanus : 2 pans (trou dans le pan +Y = est en scène), rouleau de faîtage
+    roof = CK.Batch("Fare_Thatch")
+    tz = 0.07
+    CK.thatch_slope(roof, M["thatch"], -gx, gx, (0.0, ridge_z + tz), (-(ye + 0.04), roof_z(ye + 0.04) + tz),
+                    rows=7, thick=0.07, rng=rng, step=0.05, fringe=0.14)
+    back = CK.Batch("Fare_ThatchBack")
+    CK.thatch_slope(back, M["thatch"], -gx, gx, (0.0, ridge_z + tz), ((ye + 0.04), roof_z(ye + 0.04) + tz),
+                    rows=7, thick=0.07, rng=rng, step=0.05, fringe=0.14)
+    hole = (0.15, 1.15, 0.85, 1.6)                        # x0, x1, y0, y1 (trou 1,0 x 0,7 au-dessus de l'étagère)
+    kill = [f for f in back.bm.faces if hole[0] < f.calc_center_median().x < hole[1]
+            and hole[2] < f.calc_center_median().y < hole[3]]
+    bmesh.ops.delete(back.bm, geom=kill, context="FACES")
+    for i in range(9):                                    # brins pendants au bord du trou
+        x = rng.uniform(hole[0], hole[1])
+        y = hole[2] + (hole[3] - hole[2]) * rng.choice((0.0, 1.0))
+        z = roof_z(y) + tz
+        back.tube([V(x, y, z), V(x + rng.uniform(-0.03, 0.03), y + rng.uniform(-0.05, 0.05), z - rng.uniform(0.15, 0.3))],
+                  [0.01, 0.003], M["thatch"], segs=4)
+    roof.tube([V(-gx - 0.05, 0, ridge_z + 0.17), V(gx + 0.05, 0, ridge_z + 0.17)], 0.11, M["thatch"], segs=12)
+    for x in [-gx + 0.2 + k * (2 * gx - 0.4) / 6 for k in range(7)]:
+        lash(roof, (x, 0, ridge_z + 0.17), (1, 0, 0), 0.11, M["rope"], wraps=2, minor=0.009, npts=12, segs=4)
+    # --- mobilier : étagère 2 niveaux, râtelier, lutrin, petit socle
+    fu = p["furniture"]
+    sh = fu["shelf"]
+    y0s, y1s = sh["y_range"][0], min(sh["y_range"][1], yb - 0.06)
+    for k in range(sh["cells"] + 1):
+        x = sh["x_range"][0] + k * sh["cell_w_m"]
+        for y in (y0s + 0.03, y1s - 0.03):
+            fr.box((x, y, dz + 0.46), (0.06, 0.06, 0.92), M["post"], bevel=0.008, long_u=False)
+    for lv in sh["levels_above_deck_m"]:
+        fr.box(((sh["x_range"][0] + sh["x_range"][1]) / 2, (y0s + y1s) / 2, dz + lv - sh["plank_thickness_m"] / 2),
+               (sh["x_range"][1] - sh["x_range"][0] + 0.12, y1s - y0s, sh["plank_thickness_m"]), M["planks"],
+               bevel=0.006, long_u=True)
+    ss = fu["small_stand_SharkEye_m"]
+    sk = p["relics"]["SharkEye"]["socket_local"]
+    fr.box((sk[0], sk[1], dz + sh["levels_above_deck_m"][0] + ss[2] / 2), ss, M["planks"], bevel=0.008)
+    pr = fu["paddle_rack"]
+    for y in pr["pegs_y"]:
+        a = V(-xw + 0.02, y, dz + pr["pegs_z_above_deck_m"] - 0.01)
+        fr.tube([a, a + V(0.17, 0, 0.025)], [0.018, 0.015], M["post"], segs=6)
+    le = fu["lectern"]
+    lx, ly = le["pos_local"]
+    bx, by, bt = le["board_m"]
+    top = dz + le["top_z_above_deck_m"]
+    Rb = Matrix.Rotation(math.radians(-le["tilt_deg"]), 3, "Y")
+    fr.box((lx, ly, top - bt / 2), (bx, by, bt), M["planks"], R=Rb, bevel=0.006, long_u=True)
+    fr.log((lx + 0.05, ly, dz), (lx + 0.05, ly, top - 0.09), 0.045, 0.04, M["post"], rng, segs=8, n=3)
+    for a in (0.0, math.pi / 2):
+        fr.box((lx + 0.05, ly, dz + 0.03), (0.42, 0.06, 0.06), M["post"], R=Matrix.Rotation(a, 3, "Z"), bevel=0.008)
+    # ligatures d'ossature
+    for x, y in corners:
+        lash(fr, (x, y, roof_z(y) - 0.08), (0, 0, 1), 0.06, M["rope"], wraps=3, minor=0.01)
+        lash(fr, (x, y, dz + 0.1), (0, 0, 1), 0.06, M["rope"], wraps=2, minor=0.01)
+    parts = [fr.finish(coll), walls.finish(coll), roof.finish(coll), back.finish(coll)]
+    # --- sockets
+    sockets, srot = {}, {}
+    for rid, r in p["relics"].items():
+        nm = r["socket"][len("SOCKET_"):]
+        sockets[nm] = ("root", Vector(r["socket_local"]))
+        srot[nm] = r.get("rot_deg", [0, 0, 0])
+    for k, v in p["sockets_extra"].items():
+        sockets[k] = ("root", Vector(v))
+    # --- collisions
+    ucx = [("floor", None, rbox_pts((0, 0, dz - 0.06), (DW, DD, 0.12)))]
+    for x in st["grid_x"]:
+        for y in st["grid_y"]:
+            ucx.append((f"stilt_{x:+.0f}_{y:+.1f}", None, prism_pts((x, y), st["diameter_m"] / 2 + 0.01, 0.0,
+                                                                   dz - 0.12, 8)))
+    ramp = [Vector((sx * (sw / 2 + 0.1), y, z)) for sx in (-1, 1)
+            for (y, z) in ((y_foot - 0.05, 0.0), (y_top, 0.0), (y_top, dz))]
+    ucx.append(("stairs", None, ramp))
+    wh = lambda y: roof_z(y) - dz                         # noqa: E731
+    ucx += [("wall_back", None, rbox_pts((0, yb, dz + wh(yb) / 2), (DW, 0.1, wh(yb)))),
+            ("wall_west", None, rbox_pts((-xw, (yf + yb) / 2, dz + eave_h / 2), (0.1, yb - yf, eave_h))),
+            ("wall_east", None, rbox_pts((xw, (yf + yb) / 2, dz + eave_h / 2), (0.1, yb - yf, eave_h))),
+            ("jamb_west", None, rbox_pts(((-xw - dhw - 0.05) / 2, yf, dz + wh(yf) / 2), (xw - dhw - 0.05, 0.1, wh(yf)))),
+            ("jamb_east", None, rbox_pts(((xw + dhw + 0.05) / 2, yf, dz + wh(yf) / 2), (xw - dhw - 0.05, 0.1, wh(yf))))]
+    for sg in (-1, 1):
+        pts = []
+        for x in (-gx, gx):
+            for y in (0.0, sg * ye):
+                for dzz in (0.0, 0.12):
+                    pts.append(Vector((x, y, roof_z(y) + dzz)))
+        ucx.append(("roof_front" if sg < 0 else "roof_back", None, pts))
+    ucx.append(("shelf", None, rbox_pts(((sh["x_range"][0] + sh["x_range"][1]) / 2, (y0s + y1s) / 2, dz + 0.46),
+                                        (sh["x_range"][1] - sh["x_range"][0] + 0.12, y1s - y0s, 0.92))))
+    ucx.append(("lectern", None, rbox_pts((lx, ly, dz + le["top_z_above_deck_m"] / 2), (bx, by, le["top_z_above_deck_m"]))))
+    info = {"deck_z": dz, "ridge_z": round(ridge_z + 0.28, 3), "door_m": [door["width_m"], door["height_m"]],
+            "interior_m": [round(2 * (xw - 0.05), 2), round(yb - 0.05 - (yf + 0.05), 2)],
+            "clear_height_min_m": round(roof_z(yb) - dz, 3), "steps": ns, "rise_m": rise,
+            "roof_hole_m": [round(hole[1] - hole[0], 2), round(hole[3] - hole[2], 2)]}
+    return _res(parts, sockets, ucx, p, info=info, socket_rot=srot)
+
+
+# ----------------------------------------------------------------------------
+# Tiki gardiens (méthode totem_kit à l'échelle, sans cuisson)
+
+def _tiki_variant(variant):
+    """Variante 'gardien' enregistrée à l'exécution dans totem_kit.VARIANTS (fichier non modifié) :
+    un seul grand visage en tête (celui du haut de la variante d'origine), corps libre pour les mains."""
+    key = "TEMPLE_" + variant
+    if key not in TK.VARIANTS:
+        src = TK.VARIANTS[variant]
+        f = dict(src["faces"][0])
+        f["zc"] = 0.40
+        TK.VARIANTS[key] = {"faces": [f], "crown": src["crown"]}
+    return key
+
+
+def _tiki_rows(cfg):
+    zs = [0.0, 0.012, 0.03, 0.05, 0.075]
+    for f in cfg["faces"]:
+        zs += [f["zc"] - 0.085 + i * 0.0095 for i in range(19)]
+    zs += [0.295, 0.475, 0.50, 0.52, 0.535, 0.545, 0.55]
+    return sorted(set(round(z, 4) for z in zs))
+
+
+def _tiki_base_xy(i, z, crown):
+    s = TK.radius_profile(z, crown)
+    t = 2 * i / TK.SEGS
+    t = t if t <= 1.0 else t - 2.0
+    a = math.pi * math.copysign(abs(t) ** 1.45, t)
+    c, sn = math.cos(a), math.sin(a)
+    ex = 2 / 2.6
+    x = TK.RD * s * math.copysign(abs(c) ** ex, c)
+    y = TK.R * s * math.copysign(abs(sn) ** ex, sn)
+    if crown == "crest" and z > 0.47:
+        x += 0.012 * math.exp(-(y / 0.02) ** 2) * (z - 0.47) / 0.08
+    return x, y
+
+
+def _amplify_carving(ob, vkey, amp):
+    """Creuse davantage les traits (à 1,9 m les reliefs du totem de 0,55 m seraient trop timides)."""
+    cfg = TK.VARIANTS[vkey]
+    rows = _tiki_rows(cfg)
+    vs = ob.data.vertices
+    if len(vs) < len(rows) * TK.SEGS:
+        return False
+    for r, z in enumerate(rows):
+        for i in range(TK.SEGS):
+            v = vs[r * TK.SEGS + i]
+            bx, by = _tiki_base_xy(i, z, cfg["crown"])
+            if abs(v.co.y - by) > 1e-4 or abs(v.co.z - z) > 1e-4:
+                return False
+            v.co.x = bx + (v.co.x - bx) * amp
+    return True
+
+
+def build_tiki(coll, p=None, variant="A"):
+    p = {**_mod("tiki_guardian"), **(p or {})}
+    v = p["variants"][variant]
+    H = v["height_m"]
+    sz = H / TK.H
+    sxy = (p["base_m"][0] / (2 * TK.RD * 1.2)) * (0.95 if variant == "C" else 1.0)
+    vkey = _tiki_variant(variant)
+    crown = TK.VARIANTS[vkey]["crown"]
+    ob = TK.build_mesh(f"Tiki_{variant}", vkey, coll)
+    amplified = _amplify_carving(ob, vkey, 1.35)
+    ob.data.transform(Matrix.Rotation(-math.pi / 2, 4, "Z") @ Matrix.Diagonal((sxy, sxy, sz, 1)))
+    # UV en mètres (texture de bois en fil vertical, pas de cuisson)
+    circ = TAU * (TK.R + TK.RD) / 2 * sxy
+    uvl = ob.data.uv_layers.active
+    for lp in uvl.data:
+        u, w = lp.uv
+        lp.uv = (u / 0.78 * circ, w / 0.98 * H)
+    M = mats()
+    mat = tiki_wood_mat() if v["material"] == "bois" else M["moss"]
+    ob.data.materials.append(mat)
+    ob.data.update()
+
+    def surf(a, zo, off):
+        s = TK.radius_profile(zo, crown)
+        c, sn = math.cos(a), math.sin(a)
+        ex = 2 / 2.6
+        xo = TK.RD * s * math.copysign(abs(c) ** ex, c)
+        yo = TK.R * s * math.copysign(abs(sn) ** ex, sn)
+        q = Vector((yo * sxy, -xo * sxy, zo * sz))
+        n = Vector((q.x, q.y, 0)).normalized()
+        return q + n * off
+    face = TK.VARIANTS[vkey]["faces"][0]
+
+    def surf_lat(yl, zo, off):
+        """Point de la face avant (repère final) à l'abscisse latérale yl (unités du totem), décalé de off (m)."""
+        s = TK.radius_profile(zo, crown)
+        A, B = TK.RD * s, TK.R * s
+        x = A * max(0.0, 1 - min(1.0, abs(yl / B)) ** 2.6) ** (1 / 2.6)
+        x += TK.face_disp(yl, zo, face)[0] * 1.35
+        return Vector((yl * sxy, -x * sxy - off, zo * sz))
+    # traits du visage en relief : yeux en amande cernés, arcade, bouche ouverte cernée
+    arms = CK.Batch("Tiki_Arms")
+    fr = 0.016 * H / 1.9
+    ex, ez = face["eye"]
+    for side in (-1, 1):
+        loop = []
+        for k in range(18):
+            t = TAU * k / 18
+            yl = side * face["eye_y"] * 1.08 + ex * 1.45 * math.cos(t)
+            dz = 0.030 + ez * 1.5 * math.sin(t) * (1 - 0.25 * math.cos(t) ** 2)
+            loop.append(surf_lat(yl, face["zc"] + dz, fr * 0.2))
+        arms.tube(loop, fr, mat, segs=6, closed=True)
+    brow = [surf_lat(-0.066 + 0.132 * k / 12, face["zc"] + 0.064 + 0.006 * math.sin(math.pi * k / 12), fr * 0.3)
+            for k in range(13)]
+    arms.tube(brow, [fr * 1.3] * 13, mat, segs=6)
+    mw, mh = face["mouth"]
+    loop = []
+    for k in range(22):
+        t = TAU * k / 22
+        loop.append(surf_lat(mw * 1.3 * math.cos(t), face["zc"] - 0.048 + mh * 1.6 * math.sin(t), fr * 0.2))
+    arms.tube(loop, fr * 1.1, mat, segs=6, closed=True)
+    # bras sculptés, mains jointes sur le ventre (relief) ; épaules noyées dans le corps
+    ar = 0.042 * H / 1.9
+    for side in (-1, 1):
+        path = [(1.40, 0.292, -ar * 0.9), (1.45, 0.268, ar * 0.1), (1.40, 0.235, ar * 0.4), (1.18, 0.200, ar * 0.45),
+                (0.80, 0.178, ar * 0.45), (0.45, 0.170, ar * 0.45), (0.20, 0.172, ar * 0.45)]
+        pts = [surf(side * a, zo, off) for a, zo, off in path]
+        arms.tube(pts, [ar * 1.3, ar * 1.3, ar * 1.15, ar * 1.05, ar, ar * 0.95, ar * 0.9], mat, segs=8)
+        hand = [surf(side * a, zo, ar * 0.5) for a, zo in ((0.26, 0.171), (0.13, 0.168), (0.03, 0.166))]
+        arms.tube(hand, [ar * 1.15, ar * 1.25, ar * 0.8], mat, segs=8)
+        for k in range(3):                                  # doigts
+            zo = 0.160 + k * 0.006
+            f = [surf(side * a, zo, ar * 0.55) for a, zo in ((0.20, zo), (0.06, zo - 0.003))]
+            arms.tube(f, [ar * 0.32, ar * 0.26], mat, segs=5)
+    arm_ob = arms.finish(coll)
+    bw = 2 * TK.RD * 1.2 * sxy
+    ucx = [("body", None, rbox_pts((0, 0, H * 0.45), (bw * 1.05, bw * 1.05, H * 0.9))),
+           ("head", None, rbox_pts((0, -0.02, H * 0.95), (bw * 0.85, bw * 0.95, H * 0.1)))]
+    return _res([ob, arm_ob], _sockets(p["sockets"]), ucx, p,
+                info={"variant": variant, "height_m": H, "material": mat.name, "carving_amplified": amplified})
+
+
+# ----------------------------------------------------------------------------
+# Pierres dressées
+
+def build_standing_stone(coll, p=None, variant="A"):
+    p = {**_mod("standing_stone"), **(p or {})}
+    M = mats()
+    sx, sy, sz = p["variants"][variant]
+    emb = p["embed_m"]
+    rng = random.Random({"A": 101, "B": 102, "C": 103}[variant])
+    tmp = rough_block_bm((sx, sy, sz + emb), rng, cuts=4, taper=0.28, amp=0.035, shoulder=0.35)
+    tmp.transform(Matrix.Translation((0, 0, -emb)) @ Matrix.Rotation(rng.uniform(-0.04, 0.04), 4, "Y"))
+    mat = {"A": M["coral"], "B": M["moss"], "C": M["basalt"]}[variant]
+    me = bpy.data.meshes.new(f"StandingStone_{variant}")
+    tmp.to_mesh(me)
+    tmp.free()
+    me.materials.append(mat)
+    for poly in me.polygons:
+        poly.use_smooth = True
+    ob = bpy.data.objects.new(me.name, me)
+    coll.objects.link(ob)
+    MK.box_uv_mesh(me, ob.matrix_world, 1.0)
+    ucx = [("stone", [ob], None)]
+    return _res([ob], {"Ground": ("root", V(0, 0, 0)), "Top": ("root", V(0, 0, sz))}, ucx, p,
+                info={"variant": variant, "size_m": [sx, sy, sz]})
+
+
+# ----------------------------------------------------------------------------
+# Torche, fata, débris
+
+def build_torch(coll, p=None):
+    p = {**_mod("torch"), **(p or {})}
+    res = MK.build_torch(coll, {"height": 1.35, "light": False})
+    M = mats()
+    res["remap"] = {"M_Marae_Wood": M["post"], "M_Marae_Sticks": M["post"], "M_Marae_Rope": M["rope"]}
+    res["sockets"] = {"Flame": ("root", V(0, 0, 1.5)), "Ground": ("root", V(0, 0, 0))}
+    res["params"] = p
+    res["info"] = {"flame_z_m": 1.5}
+    return res
+
+
+def build_fata(coll, p=None):
+    p = {**_mod("fata"), **(p or {})}
+    M = mats()
+    rng = random.Random(111)
+    W, D, H = p["size_m"]
+    dzk = p["deck_z_m"]
+    wood = CK.Batch("Fata_Wood")
+    hx, hy = W / 2 - 0.06, D / 2 - 0.06
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            x, y = sx * hx, sy * hy
+            wood.log((x, y, -0.3), (x + sx * 0.02, y + sy * 0.02, H), 0.045, 0.035, M["post"], rng, segs=8, n=4)
+            wood.tube([V(x, y, 0.42), V(x, y, 0.52)], [0.13, 0.05], M["planks"], segs=12, caps=False)
+            lash(wood, (x, y, dzk - 0.06), (0, 0, 1), 0.045, M["rope"], wraps=2, minor=0.008)
+    for sy in (-1, 1):
+        wood.log((-W / 2, sy * hy, dzk - 0.06), (W / 2, sy * hy, dzk - 0.06), 0.03, 0.028, M["post"], rng, segs=6, n=3)
+    n = 11
+    for k in range(n):
+        x = -W / 2 + 0.05 + k * (W - 0.1) / (n - 1)
+        wood.log((x, -D / 2, dzk - 0.015), (x, D / 2, dzk - 0.015), 0.018, 0.017, M["bark"], rng, segs=6, n=3,
+                 bend=0.005)
+    ob = wood.finish(coll)
+    ucx = [("deck", None, rbox_pts((0, 0, dzk - 0.04), (W, D, 0.08)))]
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            ucx.append((f"post_{sx}{sy}", None, rbox_pts((sx * hx, sy * hy, H / 2), (0.1, 0.1, H))))
+    return _res([ob], _sockets(p["sockets"]), ucx, p, info={"deck_z_m": dzk})
+
+
+def build_debris(coll, p=None, kind="StonePile"):
+    p = {**_mod("debris"), **(p or {})}
+    M = mats()
+    rng = random.Random({"StonePile": 121, "FallenStone": 122, "BrokenUnu": 123}[kind])
+    q = p[kind]
+    sx, sy, sz = q["size_m"]
+    ucx = []
+    parts = []
+    if kind == "StonePile":
+        sb = stone_batch("Debris_StonePile", M, 121)
+        for i in range(30):
+            a = rng.uniform(0, TAU)
+            rr = math.sqrt(rng.random())
+            x, y = rr * math.cos(a) * sx / 2 * 0.85, rr * math.sin(a) * sy / 2 * 0.85
+            hh = (sz - 0.12) * max(0.0, 1 - rr ** 1.5)
+            s = rng.uniform(0.16, 0.36)
+            h = s * rng.uniform(0.5, 0.75)
+            sb.stone(V(x, y, hh * rng.uniform(0.6, 1.0) + h * 0.4), (s, s * rng.uniform(0.6, 1.0), h),
+                     rot_z=rng.uniform(0, TAU), mat=pick3(rng), tilt=0.35)
+        parts.append(sb.finish(coll))
+        ucx.append(("pile", None, [V(sx / 2 * math.cos(a), sy / 2 * math.sin(a), 0) for a in
+                                   [TAU * k / 10 for k in range(10)]] + [V(0, 0, sz)] +
+                    [V(sx / 4 * math.cos(a), sy / 4 * math.sin(a), sz * 0.7) for a in [TAU * k / 6 for k in range(6)]]))
+    elif kind == "FallenStone":
+        b = spec_params()["modules"]["standing_stone"]["variants"]["B"]
+        w = CK.Batch("Debris_FallenStone")
+        for k, (ln, x0, rz) in enumerate(((0.92, -0.38, 0.04), (0.66, 0.46, -0.12))):
+            tmp = rough_block_bm((b[0] * 0.95, b[1], ln), rng, cuts=3, taper=0.1 if k == 0 else 0.3, amp=0.03,
+                                 shoulder=0.0 if k == 0 else 0.3)
+            # couchée : l'axe de hauteur devient X, face large vers le haut
+            tmp.transform(Matrix.Translation((x0, 0, b[1] / 2 - 0.03)) @ Matrix.Rotation(rz, 4, "Z") @
+                          Matrix.Rotation(math.pi / 2, 4, "Y") @
+                          Matrix.Rotation(math.pi / 2, 4, "Z") @ Matrix.Translation((0, 0, -ln / 2)))
+            tmp.normal_update()
+            w.add_bm(tmp, M["moss"], smooth=True, uv_size=1.0)
+            ucx.append((f"piece{k}", None, rbox_pts((x0, 0, b[1] / 2), (ln, b[0] * 0.95, b[1]), rz)))
+        parts.append(w.finish(coll))
+    else:
+        u = spec_params()["modules"]["ahu"]["unu_boards"]
+        w = CK.Batch("Debris_BrokenUnu")
+        H = 1.5
+        for k, (lo, hi, x0, rz) in enumerate(((None, 0.82, -0.75, 0.05), (0.86, None, 0.12, -0.22))):
+            M4 = (Matrix.Translation((x0, 0.04 * k, u["thickness_m"] / 2 + 0.004)) @ Matrix.Rotation(rz, 4, "Z") @
+                  Matrix.Rotation(math.pi / 2, 4, "Y") @ Matrix.Rotation(math.pi / 2, 4, "Z") @
+                  Matrix.Translation((0, 0, -(lo or 0.0))))
+            ln = (hi or H) - (lo or 0.0)
+            c = Vector((x0, 0.04 * k, 0)) + Matrix.Rotation(rz, 3, "Z") @ Vector((ln / 2, 0, 0))
+            ucx.append((f"piece{k}", None, rbox_pts((c.x, c.y, u["thickness_m"] / 2 + 0.004),
+                                                    (ln, u["width_m"] + 0.16, u["thickness_m"] + 0.01), rz)))
+            add_unu(w, M["wood"], M4, H, u["width_m"], u["thickness_m"], rng, lo=lo, hi=hi)
+        parts.append(w.finish(coll))
+    return _res(parts, {"Center": ("root", V(0, 0, 0))}, ucx, p, info={"kind": kind})
+
+
+# ----------------------------------------------------------------------------
+# Registre des modules
+
+MODULES = {
+    "ahu": ("SM_Temple_Ahu", build_ahu),
+    "relic_altar": ("SM_Temple_RelicAltar", build_relic_altar),
+    "court_paving": ("SM_Temple_CourtPaving", build_court_paving),
+    "wall_straight": ("SM_Temple_Wall_3m", build_wall_straight),
+    "wall_ruined": ("SM_Temple_Wall_3m_Ruined", build_wall_ruined),
+    "wall_breach": ("SM_Temple_Wall_3m_Breach", build_wall_breach),
+    "wall_corner": ("SM_Temple_Wall_Corner", build_wall_corner),
+    "gate": ("SM_Temple_Gate", build_gate),
+    "palisade": ("SM_Temple_Palisade_2m", build_palisade),
+    "palisade_fallen": ("SM_Temple_Palisade_2m_Fallen", build_palisade_fallen),
+    "fare_ia_manaha": ("SM_Temple_FareIaManaha", build_fare),
+    "torch": ("SM_Temple_Torch", build_torch),
+    "fata": ("SM_Temple_Fata", build_fata),
+}
+for _v in ("A", "B", "C"):
+    MODULES["tiki_" + _v] = ("SM_Temple_TikiGuardian_" + _v,
+                             (lambda v: (lambda coll, p=None: build_tiki(coll, p, v)))(_v))
+    MODULES["standing_stone_" + _v] = ("SM_Temple_StandingStone_" + _v,
+                                       (lambda v: (lambda coll, p=None: build_standing_stone(coll, p, v)))(_v))
+for _k in ("StonePile", "FallenStone", "BrokenUnu"):
+    MODULES["debris_" + _k] = ("SM_Temple_Debris_" + _k,
+                               (lambda k: (lambda coll, p=None: build_debris(coll, p, k)))(_k))
+
+K.ITEMS.update({"temple_" + k: v for k, v in MODULES.items()})

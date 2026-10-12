@@ -1144,5 +1144,294 @@
   "kind": "A",
   "skeleton": "SKEL_BrambleStalker",
   "character": "CHR_Mob_BrambleStalker"
+ },
+ "SM_CoconutPalm_Straight_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Straight_A.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 8,
+  "group": "palms",
+  "size_m": [
+   10.03,
+   10.58,
+   23.67
+  ],
+  "verts": 83058
+ },
+ "SM_CoconutPalm_Straight_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Straight_B.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 6,
+  "group": "palms",
+  "size_m": [
+   10.44,
+   10.32,
+   20.1
+  ],
+  "verts": 71618
+ },
+ "SM_CoconutPalm_Leaning_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Leaning_A.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 7,
+  "group": "palms",
+  "size_m": [
+   12.38,
+   9.66,
+   19.25
+  ],
+  "verts": 82248
+ },
+ "SM_CoconutPalm_Leaning_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Leaning_B.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 5,
+  "group": "palms",
+  "size_m": [
+   10.11,
+   10.4,
+   16.7
+  ],
+  "verts": 81683
+ },
+ "SM_CoconutPalm_Sabre_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Sabre_A.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 5,
+  "group": "palms",
+  "size_m": [
+   11.59,
+   9.94,
+   14.65
+  ],
+  "verts": 84338
+ },
+ "SM_CoconutPalm_Sabre_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Sabre_B.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 4,
+  "group": "palms",
+  "size_m": [
+   10.78,
+   9.55,
+   10.92
+  ],
+  "verts": 72348
+ },
+ "SM_CoconutPalm_SCurve_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_SCurve_A.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 6,
+  "group": "palms",
+  "size_m": [
+   10.07,
+   10.29,
+   19.04
+  ],
+  "verts": 82298
+ },
+ "SM_CoconutPalm_Fallen_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Fallen_A.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 6,
+  "group": "palms",
+  "size_m": [
+   13.83,
+   9.99,
+   12.9
+  ],
+  "verts": 81329
+ },
+ "SM_CoconutPalm_Young_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Young_A.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 1,
+  "group": "palms",
+  "size_m": [
+   11.05,
+   10.92,
+   6.69
+  ],
+  "verts": 62893
+ },
+ "SM_CoconutPalm_Young_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Young_B.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark",
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 2,
+  "group": "palms",
+  "size_m": [
+   9.96,
+   11.28,
+   8.61
+  ],
+  "verts": 63563
+ },
+ "SM_CoconutPalm_Juvenile_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Juvenile_A.fbx",
+  "slots": [
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase",
+   "M_CoconutPalm_Nut"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "palms",
+  "size_m": [
+   5.61,
+   5.89,
+   2.71
+  ],
+  "verts": 22608
+ },
+ "SM_CoconutPalm_Juvenile_B": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_Juvenile_B.fbx",
+  "slots": [
+   "M_CoconutPalm_Leaf",
+   "M_CoconutPalm_LeafBase"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "palms",
+  "size_m": [
+   3.81,
+   3.02,
+   1.49
+  ],
+  "verts": 12658
+ },
+ "SM_CoconutPalm_DeadSnag_A": {
+  "folder": "/Game/MonkeIsland/Environment/Vegetation/Palms/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Vegetation/SM_CoconutPalm_DeadSnag_A.fbx",
+  "slots": [
+   "M_CoconutPalm_Bark"
+  ],
+  "foliage": true,
+  "ucx": 4,
+  "group": "palms",
+  "size_m": [
+   1.62,
+   1.22,
+   9.77
+  ],
+  "verts": 1727
+ },
+ "SM_WindLeaf_PalmLeaflet": {
+  "folder": "/Game/MonkeIsland/Environment/Wind/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Wind/SM_WindLeaf_PalmLeaflet.fbx",
+  "slots": [
+   "MI_CoconutPalm_Leaf"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "wind",
+  "size_m": [
+   0.3,
+   0.05,
+   0.01
+  ],
+  "verts": 21
+ },
+ "SM_WindLeaf_Naupaka": {
+  "folder": "/Game/MonkeIsland/Environment/Wind/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Wind/SM_WindLeaf_Naupaka.fbx",
+  "slots": [
+   "MI_Naupaka_Leaf"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "wind",
+  "size_m": [
+   0.16,
+   0.08,
+   0.01
+  ],
+  "verts": 21
+ },
+ "SM_WindLeaf_Dry": {
+  "folder": "/Game/MonkeIsland/Environment/Wind/Meshes",
+  "fbx": "C:/Users/matth/monk-island/art/export/Wind/SM_WindLeaf_Dry.fbx",
+  "slots": [
+   "MI_Tahinu_Leaf"
+  ],
+  "foliage": true,
+  "ucx": 0,
+  "group": "wind",
+  "size_m": [
+   0.13,
+   0.08,
+   0.02
+  ],
+  "verts": 21
  }
 }

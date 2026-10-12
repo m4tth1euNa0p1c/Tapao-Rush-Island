@@ -1,0 +1,105 @@
+{
+  "files": [
+    {
+      "source": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\artefacts-polynesiens\\exports\\SM_CrownOfTheLastAriki_LOD0.fbx",
+      "before": {
+        "mesh": "SM_CrownOfTheLastAriki_LOD0.001",
+        "collision": [
+          "UCX_SM_CrownOfTheLastAriki_LOD0_01",
+          "UCX_SM_CrownOfTheLastAriki_LOD0_02",
+          "UCX_SM_CrownOfTheLastAriki_LOD0_03",
+          "UCX_SM_CrownOfTheLastAriki_LOD0_04",
+          "UCX_SM_CrownOfTheLastAriki_LOD0_05",
+          "UCX_SM_CrownOfTheLastAriki_LOD0_06",
+          "UCX_SM_CrownOfTheLastAriki_LOD0_07",
+          "UCX_SM_CrownOfTheLastAriki_LOD0_08",
+          "UCX_SM_CrownOfTheLastAriki_LOD0_09"
+        ]
+      },
+      "mesh": "SM_CrownOfTheLastAriki",
+      "ucx_count": 9,
+      "repaired": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\repaired_collisions\\SM_CrownOfTheLastAriki_LOD0.fbx",
+      "sha256": "9839b51a7f939ea6103bed6148450ab06d43c5d35326b6c77f368ca331c157c2"
+    },
+    {
+      "source": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\artefacts-polynesiens\\exports\\SM_EclipseStone_LOD0.fbx",
+      "before": {
+        "mesh": "SM_EclipseStone_LOD0.001",
+        "collision": [
+          "UCX_SM_EclipseStone_LOD0_01",
+          "UCX_SM_EclipseStone_LOD0_02",
+          "UCX_SM_EclipseStone_LOD0_03",
+          "UCX_SM_EclipseStone_LOD0_04",
+          "UCX_SM_EclipseStone_LOD0_05",
+          "UCX_SM_EclipseStone_LOD0_06",
+          "UCX_SM_EclipseStone_LOD0_07",
+          "UCX_SM_EclipseStone_LOD0_08",
+          "UCX_SM_EclipseStone_LOD0_09",
+          "UCX_SM_EclipseStone_LOD0_10"
+        ]
+      },
+      "mesh": "SM_EclipseStone",
+      "ucx_count": 10,
+      "repaired": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\repaired_collisions\\SM_EclipseStone_LOD0.fbx",
+      "sha256": "5a21f4252928e3cf3efc3f37e76989c5c7a6237bd0117dc08976ae9378ccb92d"
+    },
+    {
+      "source": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\artefacts-polynesiens\\exports\\SM_FishGodFragment_LOD0.fbx",
+      "before": {
+        "mesh": "SM_FishGodFragment_LOD0.001",
+        "collision": [
+          "UCX_SM_FishGodFragment_LOD0_01",
+          "UCX_SM_FishGodFragment_LOD0_02",
+          "UCX_SM_FishGodFragment_LOD0_03",
+          "UCX_SM_FishGodFragment_LOD0_04"
+        ]
+      },
+      "mesh": "SM_FishGodFragment",
+      "ucx_count": 4,
+      "repaired": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\repaired_collisions\\SM_FishGodFragment_LOD0.fbx",
+      "sha256": "647f159659dcc612bdd76dc991881753205ea33f91e92470835f69e5e6b5bd66"
+    },
+    {
+      "source": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\artefacts-polynesiens\\exports\\SM_HeartOfTheReef_LOD0.fbx",
+      "before": {
+        "mesh": "SM_HeartOfTheReef_LOD0.001",
+        "collision": [
+          "UCX_SM_HeartOfTheReef_LOD0_01",
+          "UCX_SM_HeartOfTheReef_LOD0_02",
+          "UCX_SM_HeartOfTheReef_LOD0_03"
+        ]
+      },
+      "mesh": "SM_HeartOfTheReef",
+      "ucx_count": 3,
+      "repaired": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\repaired_collisions\\SM_HeartOfTheReef_LOD0.fbx",
+      "sha256": "1720ebc597597f2e40803ed75d32091115010fe832d26b2aabcecc1f639ec5c9"
+    },
+    {
+      "source": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\artefacts-polynesiens\\exports\\SM_MoonPearl_LOD0.fbx",
+      "before": {
+        "mesh": "SM_MoonPearl_LOD0.001",
+        "collision": [
+          "UCX_SM_MoonPearl_LOD0_01"
+        ]
+      },
+      "mesh": "SM_MoonPearl",
+      "ucx_count": 1,
+      "repaired": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\repaired_collisions\\SM_MoonPearl_LOD0.fbx",
+      "sha256": "54d4b17c30f9a63b7192903a42360840e17908d819aeca91b9ce82a48e2a8c50"
+    },
+    {
+      "source": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\artefacts-polynesiens\\exports\\SM_RedPearlOfRaraka_LOD0.fbx",
+      "before": {
+        "mesh": "SM_RedPearlOfRaraka_LOD0.001",
+        "collision": [
+          "UCX_SM_RedPearlOfRaraka_LOD0_01"
+        ]
+      },
+      "mesh": "SM_RedPearlOfRaraka",
+      "ucx_count": 1,
+      "repaired": "C:\\Users\\matth\\monk-island\\art\\export\\OneDriveShowcase\\20261006\\repaired_collisions\\SM_RedPearlOfRaraka_LOD0.fbx",
+      "sha256": "af0fadac1295d63d4d76cd82bffc4c52780dd83e64e2bdfe80bc5b1e3e191c6d"
+    }
+  ],
+  "finished_at": "2026-10-06T20:23:40.836922+00:00"
+}

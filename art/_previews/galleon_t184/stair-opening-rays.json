@@ -1,0 +1,286 @@
+[
+  {
+    "y": -5.3,
+    "layers": [
+      {
+        "z": 0.2,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": 0.11,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": -1.474,
+        "material": "M_Galleon_Wale"
+      },
+      {
+        "z": -1.6735,
+        "material": "M_Galleon_Pitch"
+      },
+      {
+        "z": -1.794,
+        "material": "M_Galleon_Wale"
+      }
+    ]
+  },
+  {
+    "y": -4.9,
+    "layers": [
+      {
+        "z": 1.4436,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 1.3736,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 0.2,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": 0.11,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": -1.4753,
+        "material": "M_Galleon_Wale"
+      },
+      {
+        "z": -1.6748,
+        "material": "M_Galleon_Pitch"
+      },
+      {
+        "z": -1.7953,
+        "material": "M_Galleon_Wale"
+      }
+    ]
+  },
+  {
+    "y": -4.5,
+    "layers": [
+      {
+        "z": 1.3127,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 1.2427,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 1.1785,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 1.1151,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 0.2,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": 0.11,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": -1.4763,
+        "material": "M_Galleon_Wale"
+      },
+      {
+        "z": -1.6759,
+        "material": "M_Galleon_Pitch"
+      },
+      {
+        "z": -1.7963,
+        "material": "M_Galleon_Wale"
+      }
+    ]
+  },
+  {
+    "y": -4,
+    "layers": [
+      {
+        "z": 0.92,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 0.85,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 0.2,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": 0.11,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": -1.4774,
+        "material": "M_Galleon_Wale"
+      },
+      {
+        "z": -1.677,
+        "material": "M_Galleon_Pitch"
+      },
+      {
+        "z": -1.7974,
+        "material": "M_Galleon_Wale"
+      }
+    ]
+  },
+  {
+    "y": -3.5,
+    "layers": [
+      {
+        "z": 0.6582,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 0.5882,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 0.2,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": 0.11,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": -1.4783,
+        "material": "M_Galleon_Wale"
+      },
+      {
+        "z": -1.6778,
+        "material": "M_Galleon_Pitch"
+      },
+      {
+        "z": -1.7983,
+        "material": "M_Galleon_Wale"
+      }
+    ]
+  },
+  {
+    "y": -3,
+    "layers": [
+      {
+        "z": 0.3964,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 0.3264,
+        "material": "M_Galleon_OakLight"
+      },
+      {
+        "z": 0.2,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": 0.11,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": -1.4789,
+        "material": "M_Galleon_Wale"
+      },
+      {
+        "z": -1.6785,
+        "material": "M_Galleon_Pitch"
+      },
+      {
+        "z": -1.7989,
+        "material": "M_Galleon_Wale"
+      }
+    ]
+  },
+  {
+    "y": -2.5,
+    "layers": [
+      {
+        "z": 1.61,
+        "material": "M_Galleon_DarkRecess"
+      },
+      {
+        "z": 1.555,
+        "material": "M_Galleon_OakDark"
+      },
+      {
+        "z": 1.52,
+        "material": "M_Galleon_OakDark"
+      },
+      {
+        "z": 1.11,
+        "material": "M_Galleon_DarkRecess"
+      },
+      {
+        "z": -1.4794,
+        "material": "M_Galleon_Wale"
+      },
+      {
+        "z": -1.679,
+        "material": "M_Galleon_Pitch"
+      },
+      {
+        "z": -1.7994,
+        "material": "M_Galleon_Wale"
+      }
+    ]
+  },
+  {
+    "y": -2.1,
+    "layers": [
+      {
+        "z": 1.8356,
+        "material": "M_Galleon_OakDark"
+      },
+      {
+        "z": 1.6155,
+        "material": "M_Galleon_OakDark"
+      },
+      {
+        "z": 1.6052,
+        "material": "M_Galleon_Spar"
+      },
+      {
+        "z": 1.555,
+        "material": "M_Galleon_OakDark"
+      },
+      {
+        "z": 1.52,
+        "material": "M_Galleon_OakDark"
+      },
+      {
+        "z": 1.37,
+        "material": "M_Galleon_OakDark"
+      },
+      {
+        "z": 0.2,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": 0.11,
+        "material": "M_Galleon_Deck"
+      },
+      {
+        "z": -1.33,
+        "material": "M_Galleon_OakDark"
+      },
+      {
+        "z": -1.4796,
+        "material": "M_Galleon_Wale"
+      },
+      {
+        "z": -1.5934,
+        "material": "M_Galleon_Spar"
+      },
+      {
+        "z": -1.63,
+        "material": "M_Galleon_OakDark"
+      }
+    ]
+  }
+]

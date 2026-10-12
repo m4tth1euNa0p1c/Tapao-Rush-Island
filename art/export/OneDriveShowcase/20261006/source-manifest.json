@@ -1,0 +1,781 @@
+{
+  "task": "T-179",
+  "staged_at": "2026-10-06T19:00:49.545370+00:00",
+  "files": {
+    "artefacts-polynesiens/artifacts-report.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\artifacts-report.json",
+      "bytes": 103634,
+      "sha256": "f097f5962846c2b49cae4735f2b334d202e03ff60fb6012c612414d7f54d728d",
+      "mtime_ns": 1791303576000000000
+    },
+    "artefacts-polynesiens/build-report.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\build-report.json",
+      "bytes": 85677,
+      "sha256": "593e9a15a8b5c0d3a2afddd09437f5546c38b5d963b019fc6132481eb7ae81ff",
+      "mtime_ns": 1791303712000000000
+    },
+    "artefacts-polynesiens/maquette.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\maquette.json",
+      "bytes": 53752,
+      "sha256": "47a366f4c7b50ab508d7d81520f57eef7b89d8b4537432d4346bef7397e072e0",
+      "mtime_ns": 1791300481000000000
+    },
+    "artefacts-polynesiens/exports/SM_CrownOfTheLastAriki_LOD0.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_CrownOfTheLastAriki_LOD0.fbx",
+      "bytes": 9452220,
+      "sha256": "007f493e1b9caa2ef5f511ce167f0e9037b4d79db9cd7fcf9f39a90501daec0e",
+      "mtime_ns": 1791303257000000000
+    },
+    "artefacts-polynesiens/exports/SM_CrownOfTheLastAriki_LOD1.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_CrownOfTheLastAriki_LOD1.fbx",
+      "bytes": 4505852,
+      "sha256": "a3df6009b0d5e65d588d8dc4d37e10597715553a62127736e0a6e4b52ac9f55e",
+      "mtime_ns": 1791303262000000000
+    },
+    "artefacts-polynesiens/exports/SM_CrownOfTheLastAriki_LOD2.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_CrownOfTheLastAriki_LOD2.fbx",
+      "bytes": 1573996,
+      "sha256": "c36a46809af9fff83bf5fa61dbaf5a21f9b75fb138e19f810f465ba5f1daf176",
+      "mtime_ns": 1791303266000000000
+    },
+    "artefacts-polynesiens/exports/SM_EclipseStone_LOD0.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_EclipseStone_LOD0.fbx",
+      "bytes": 6429020,
+      "sha256": "eb34b7f1f41c3d899f7e37a2090743682317e25f3c28cfe919058bda4cedda18",
+      "mtime_ns": 1791301438000000000
+    },
+    "artefacts-polynesiens/exports/SM_EclipseStone_LOD1.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_EclipseStone_LOD1.fbx",
+      "bytes": 2691004,
+      "sha256": "492d6fbd49a0033e61f1734e5c10376bc68b49c4c2c78e14579e98de59016599",
+      "mtime_ns": 1791301442000000000
+    },
+    "artefacts-polynesiens/exports/SM_EclipseStone_LOD2.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_EclipseStone_LOD2.fbx",
+      "bytes": 1295932,
+      "sha256": "14884fe835c020259828e753f3a04ec28326bbb553c5970994f94b5be513f4a2",
+      "mtime_ns": 1791301445000000000
+    },
+    "artefacts-polynesiens/exports/SM_FishGodFragment_LOD0.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_FishGodFragment_LOD0.fbx",
+      "bytes": 10831260,
+      "sha256": "04509966ee736d5d9d7a94ee84e72609d4131a8ad5a2ee602ab71565e88adb8d",
+      "mtime_ns": 1791301974000000000
+    },
+    "artefacts-polynesiens/exports/SM_FishGodFragment_LOD1.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_FishGodFragment_LOD1.fbx",
+      "bytes": 5305644,
+      "sha256": "ab1b09e27831735c6c74aca99252232da4aa9dd2d69f5cf69ee634ed9c17d522",
+      "mtime_ns": 1791301978000000000
+    },
+    "artefacts-polynesiens/exports/SM_FishGodFragment_LOD2.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_FishGodFragment_LOD2.fbx",
+      "bytes": 2396796,
+      "sha256": "674a0e09e17b07b58ae845d524c01f48a8d119f025d0f529e993eebfeb0a8a21",
+      "mtime_ns": 1791301982000000000
+    },
+    "artefacts-polynesiens/exports/SM_HeartOfTheReef_LOD0.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_HeartOfTheReef_LOD0.fbx",
+      "bytes": 12192380,
+      "sha256": "e4c3b3b832dc3af7273b313f569e5c874184212f5a1644730aea0135cfdf480d",
+      "mtime_ns": 1791300976000000000
+    },
+    "artefacts-polynesiens/exports/SM_HeartOfTheReef_LOD1.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_HeartOfTheReef_LOD1.fbx",
+      "bytes": 5693420,
+      "sha256": "6bd3a060bc11c99d32f87e0d5722040630e6af9dec32fc18988385cb10003b46",
+      "mtime_ns": 1791300981000000000
+    },
+    "artefacts-polynesiens/exports/SM_HeartOfTheReef_LOD2.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_HeartOfTheReef_LOD2.fbx",
+      "bytes": 2504492,
+      "sha256": "f142a945cc30e73b88da581630aa6eb6a93482d5a58bc7a63bae1526ad534ded",
+      "mtime_ns": 1791300984000000000
+    },
+    "artefacts-polynesiens/exports/SM_MoonPearl_LOD0.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_MoonPearl_LOD0.fbx",
+      "bytes": 1201452,
+      "sha256": "88e6be5d00cc8251d38f19dd5790bac43095de9eb602bdc5a8f3155b93a0ea74",
+      "mtime_ns": 1791302312000000000
+    },
+    "artefacts-polynesiens/exports/SM_MoonPearl_LOD1.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_MoonPearl_LOD1.fbx",
+      "bytes": 591580,
+      "sha256": "bc43f140b3634e3a47214d32a8622d0a89ea4978a8e3ae7ea416745e674148ae",
+      "mtime_ns": 1791302313000000000
+    },
+    "artefacts-polynesiens/exports/SM_MoonPearl_LOD2.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_MoonPearl_LOD2.fbx",
+      "bytes": 277260,
+      "sha256": "4220656edc72ee2d19a6fb26b27d585020822d711689598cacdf082b47e62c5c",
+      "mtime_ns": 1791302314000000000
+    },
+    "artefacts-polynesiens/exports/SM_RedPearlOfRaraka_LOD0.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_RedPearlOfRaraka_LOD0.fbx",
+      "bytes": 2307004,
+      "sha256": "f29ea2e2ee7b3d2c9d3fbb689f4052933113b19511b61bf13e8b9777abe6c66e",
+      "mtime_ns": 1791302715000000000
+    },
+    "artefacts-polynesiens/exports/SM_RedPearlOfRaraka_LOD1.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_RedPearlOfRaraka_LOD1.fbx",
+      "bytes": 517708,
+      "sha256": "153c4c2bf2a9b0f0809319b97f166328efe76e03442461a944dd7bba808a78b6",
+      "mtime_ns": 1791302716000000000
+    },
+    "artefacts-polynesiens/exports/SM_RedPearlOfRaraka_LOD2.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\exports\\SM_RedPearlOfRaraka_LOD2.fbx",
+      "bytes": 182716,
+      "sha256": "412fafc504484cfb64e42f952c5e205bc500bfe83bbb41847a0a90409b1c5086",
+      "mtime_ns": 1791302717000000000
+    },
+    "artefacts-polynesiens/textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_AO.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\CrownOfTheLastAriki\\T_CrownOfTheLastAriki_AO.png",
+      "bytes": 1217180,
+      "sha256": "84b61240230114f5929d87c87bef31afd1ed405d48e80e16291e55a5bad3195d",
+      "mtime_ns": 1791303236000000000
+    },
+    "artefacts-polynesiens/textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_BaseColor.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\CrownOfTheLastAriki\\T_CrownOfTheLastAriki_BaseColor.png",
+      "bytes": 11466951,
+      "sha256": "317beb340c52fc0cd63d297c5b846a8d8474b56e96a433b8021e58d5bf2834e3",
+      "mtime_ns": 1791303101000000000
+    },
+    "artefacts-polynesiens/textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_Normal.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\CrownOfTheLastAriki\\T_CrownOfTheLastAriki_Normal.png",
+      "bytes": 16085248,
+      "sha256": "7718396058a932cee2bff79601b5d54b9177be15aae85d75b066dd9dc7c898e2",
+      "mtime_ns": 1791303164000000000
+    },
+    "artefacts-polynesiens/textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_Normal_DX.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\CrownOfTheLastAriki\\T_CrownOfTheLastAriki_Normal_DX.png",
+      "bytes": 16080770,
+      "sha256": "28f820501dd2d955ed5c34f093fd457e04ffba60bd7c42c594fafde17f69fc91",
+      "mtime_ns": 1791303239000000000
+    },
+    "artefacts-polynesiens/textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_ORM.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\CrownOfTheLastAriki\\T_CrownOfTheLastAriki_ORM.png",
+      "bytes": 5766153,
+      "sha256": "9b09ff4ced0f09adb557fc6279e2db9513bed03dc385f9a3d61ff8c7568d46a5",
+      "mtime_ns": 1791303241000000000
+    },
+    "artefacts-polynesiens/textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_Roughness.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\CrownOfTheLastAriki\\T_CrownOfTheLastAriki_Roughness.png",
+      "bytes": 5163366,
+      "sha256": "b3cf33269fd225c4c807c0a7cd7c5419cfd3cc95b3ae609bff0e715126817712",
+      "mtime_ns": 1791303131000000000
+    },
+    "artefacts-polynesiens/textures/EclipseStone/T_EclipseStone_AO.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\EclipseStone\\T_EclipseStone_AO.png",
+      "bytes": 9976215,
+      "sha256": "627f86eff4b00eb172aafedc79c3cf3266b4eaae1e5180143bf8e43943ecf19c",
+      "mtime_ns": 1791301403000000000
+    },
+    "artefacts-polynesiens/textures/EclipseStone/T_EclipseStone_BaseColor.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\EclipseStone\\T_EclipseStone_BaseColor.png",
+      "bytes": 15352945,
+      "sha256": "75cf7a4d0d6d7d5d48b279fe98a80b592f9aaffeb29d56d9fe5e355055e4a6e3",
+      "mtime_ns": 1791301282000000000
+    },
+    "artefacts-polynesiens/textures/EclipseStone/T_EclipseStone_Emissive.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\EclipseStone\\T_EclipseStone_Emissive.png",
+      "bytes": 220209,
+      "sha256": "cfa2a02075b3ff02ea44d921846e237a53b29db5709b12f55734eed98a6fac64",
+      "mtime_ns": 1791301423000000000
+    },
+    "artefacts-polynesiens/textures/EclipseStone/T_EclipseStone_Normal.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\EclipseStone\\T_EclipseStone_Normal.png",
+      "bytes": 22469419,
+      "sha256": "a76252e1b7c6efbff5695209d7001ca87334ad5b3ea85a230043afe43dd52a1c",
+      "mtime_ns": 1791301335000000000
+    },
+    "artefacts-polynesiens/textures/EclipseStone/T_EclipseStone_Normal_DX.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\EclipseStone\\T_EclipseStone_Normal_DX.png",
+      "bytes": 22471205,
+      "sha256": "cd44435ae8bc85dd18abb584a86a96247e379080198630738f26308086b79cf2",
+      "mtime_ns": 1791301426000000000
+    },
+    "artefacts-polynesiens/textures/EclipseStone/T_EclipseStone_ORM.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\EclipseStone\\T_EclipseStone_ORM.png",
+      "bytes": 12611586,
+      "sha256": "e36b051581b6a54da7b104cee417705a6090b17392ee027426091a25872971c4",
+      "mtime_ns": 1791301429000000000
+    },
+    "artefacts-polynesiens/textures/EclipseStone/T_EclipseStone_Roughness.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\EclipseStone\\T_EclipseStone_Roughness.png",
+      "bytes": 5150255,
+      "sha256": "d73820eadaa4a5c0a53c48bfd103af1624782cdce44d34da7d6ebc01907a2655",
+      "mtime_ns": 1791301307000000000
+    },
+    "artefacts-polynesiens/textures/FishGodFragment/T_FishGodFragment_AO.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\FishGodFragment\\T_FishGodFragment_AO.png",
+      "bytes": 8697313,
+      "sha256": "69f9963769a67d2b11ebcce5b7299d0cab566c4da5f4b7bff00870d3501be240",
+      "mtime_ns": 1791301919000000000
+    },
+    "artefacts-polynesiens/textures/FishGodFragment/T_FishGodFragment_BaseColor.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\FishGodFragment\\T_FishGodFragment_BaseColor.png",
+      "bytes": 13368776,
+      "sha256": "be4f62c99b31ab8073c58f5e59291c315602e10812a66853980134ee4259930d",
+      "mtime_ns": 1791301769000000000
+    },
+    "artefacts-polynesiens/textures/FishGodFragment/T_FishGodFragment_Emissive.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\FishGodFragment\\T_FishGodFragment_Emissive.png",
+      "bytes": 220209,
+      "sha256": "cfa2a02075b3ff02ea44d921846e237a53b29db5709b12f55734eed98a6fac64",
+      "mtime_ns": 1791301934000000000
+    },
+    "artefacts-polynesiens/textures/FishGodFragment/T_FishGodFragment_Metallic.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\FishGodFragment\\T_FishGodFragment_Metallic.png",
+      "bytes": 385106,
+      "sha256": "1fe261501544237d9473633430a80172198c7e86185cd6f00140ec78afe69bf6",
+      "mtime_ns": 1791301959000000000
+    },
+    "artefacts-polynesiens/textures/FishGodFragment/T_FishGodFragment_Normal.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\FishGodFragment\\T_FishGodFragment_Normal.png",
+      "bytes": 22912099,
+      "sha256": "adfdbfc4f0bf7a9a42dc32304444884fd5e95bb5aee19d0b22c1ede1c6d9de11",
+      "mtime_ns": 1791301832000000000
+    },
+    "artefacts-polynesiens/textures/FishGodFragment/T_FishGodFragment_Normal_DX.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\FishGodFragment\\T_FishGodFragment_Normal_DX.png",
+      "bytes": 22911866,
+      "sha256": "87a610c99c11aebf036ff4ab2ca139b62a15a3e00ebfec1822a0fba1251edae4",
+      "mtime_ns": 1791301962000000000
+    },
+    "artefacts-polynesiens/textures/FishGodFragment/T_FishGodFragment_ORM.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\FishGodFragment\\T_FishGodFragment_ORM.png",
+      "bytes": 11850081,
+      "sha256": "bfc6f407ac4292dc5721e78e55f16f19edb0977f6971f193acc070a5f3716447",
+      "mtime_ns": 1791301965000000000
+    },
+    "artefacts-polynesiens/textures/FishGodFragment/T_FishGodFragment_Roughness.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\FishGodFragment\\T_FishGodFragment_Roughness.png",
+      "bytes": 5568211,
+      "sha256": "c04fc24989708652ca2a4aaa13685085e10b619e5009d0ee6cd9e47a28b73579",
+      "mtime_ns": 1791301800000000000
+    },
+    "artefacts-polynesiens/textures/HeartOfTheReef/T_HeartOfTheReef_AO.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\HeartOfTheReef\\T_HeartOfTheReef_AO.png",
+      "bytes": 12409064,
+      "sha256": "e9f6ef77ffddc06a9a9e3895dda220c0c68898b5d93621412280d66003c7823e",
+      "mtime_ns": 1791300921000000000
+    },
+    "artefacts-polynesiens/textures/HeartOfTheReef/T_HeartOfTheReef_BaseColor.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\HeartOfTheReef\\T_HeartOfTheReef_BaseColor.png",
+      "bytes": 18184621,
+      "sha256": "3f30b2f670590d1b4c73c44ea238451051be99149f7c137c51901ffe0c5c5f9e",
+      "mtime_ns": 1791303841000000000
+    },
+    "artefacts-polynesiens/textures/HeartOfTheReef/T_HeartOfTheReef_Emissive.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\HeartOfTheReef\\T_HeartOfTheReef_Emissive.png",
+      "bytes": 482522,
+      "sha256": "4b091d714cd5648da7fb1af546925f0e52970f44b8056022a525543733fb0349",
+      "mtime_ns": 1791300956000000000
+    },
+    "artefacts-polynesiens/textures/HeartOfTheReef/T_HeartOfTheReef_Normal.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\HeartOfTheReef\\T_HeartOfTheReef_Normal.png",
+      "bytes": 23355682,
+      "sha256": "1a5ae37f610db7526a89702f713e4cbad7f2648bc996925a256c07de544a142a",
+      "mtime_ns": 1791303900000000000
+    },
+    "artefacts-polynesiens/textures/HeartOfTheReef/T_HeartOfTheReef_Normal_DX.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\HeartOfTheReef\\T_HeartOfTheReef_Normal_DX.png",
+      "bytes": 23356195,
+      "sha256": "0f77f204892f348acdbc3f0744271c6d005414bb1d09a434b779542bdc867d7e",
+      "mtime_ns": 1791300959000000000
+    },
+    "artefacts-polynesiens/textures/HeartOfTheReef/T_HeartOfTheReef_ORM.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\HeartOfTheReef\\T_HeartOfTheReef_ORM.png",
+      "bytes": 15078691,
+      "sha256": "e42bd9a8f74c83da3050430079d515f0bd8fb67975d838783637f61add895354",
+      "mtime_ns": 1791300962000000000
+    },
+    "artefacts-polynesiens/textures/HeartOfTheReef/T_HeartOfTheReef_Roughness.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\HeartOfTheReef\\T_HeartOfTheReef_Roughness.png",
+      "bytes": 6465453,
+      "sha256": "08876c1b2b445d55313cc979641d7fa17cf76dc56630ca639bf045723f03b5e9",
+      "mtime_ns": 1791303870000000000
+    },
+    "artefacts-polynesiens/textures/MoonPearl/MAT_RECIPE.txt": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\MoonPearl\\MAT_RECIPE.txt",
+      "bytes": 1858,
+      "sha256": "d5374c050d063b965bc4254478e17fece8a0dfb118e079e4239a0c8863658268",
+      "mtime_ns": 1791302646000000000
+    },
+    "artefacts-polynesiens/textures/MoonPearl/T_MoonPearl_AO.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\MoonPearl\\T_MoonPearl_AO.png",
+      "bytes": 61307,
+      "sha256": "f429466cab51839c38c72564ef0ac8ab8011f16d4039f14dffb5ff5d3bd8ad18",
+      "mtime_ns": 1791302298000000000
+    },
+    "artefacts-polynesiens/textures/MoonPearl/T_MoonPearl_BaseColor.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\MoonPearl\\T_MoonPearl_BaseColor.png",
+      "bytes": 1666145,
+      "sha256": "05a71665e6d8dcfc0e80255615ebf34876c87e6ed9ad0c1d5de68cfd0978adbf",
+      "mtime_ns": 1791302260000000000
+    },
+    "artefacts-polynesiens/textures/MoonPearl/T_MoonPearl_Emissive.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\MoonPearl\\T_MoonPearl_Emissive.png",
+      "bytes": 1736872,
+      "sha256": "a002f1e349e74c67cd498e9f4b48d11bc936ea25812d125a233039a7d3c26a91",
+      "mtime_ns": 1791302308000000000
+    },
+    "artefacts-polynesiens/textures/MoonPearl/T_MoonPearl_Normal.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\MoonPearl\\T_MoonPearl_Normal.png",
+      "bytes": 1557210,
+      "sha256": "f6ca8a36c1cf9e3b1689317a2ec8f5774c4adaf69ab1a94d4ca7fe927f052615",
+      "mtime_ns": 1791302283000000000
+    },
+    "artefacts-polynesiens/textures/MoonPearl/T_MoonPearl_Normal_DX.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\MoonPearl\\T_MoonPearl_Normal_DX.png",
+      "bytes": 1557435,
+      "sha256": "e6753b8cdb1aa2b106d96758dc895ef359d6b7c0ad293292ce08119dd0a55349",
+      "mtime_ns": 1791302309000000000
+    },
+    "artefacts-polynesiens/textures/MoonPearl/T_MoonPearl_ORM.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\MoonPearl\\T_MoonPearl_ORM.png",
+      "bytes": 675509,
+      "sha256": "97bc43c1e5b9153efeabef7f3d6221e649977996ab006072c473337961975d2f",
+      "mtime_ns": 1791302309000000000
+    },
+    "artefacts-polynesiens/textures/MoonPearl/T_MoonPearl_Roughness.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\MoonPearl\\T_MoonPearl_Roughness.png",
+      "bytes": 679260,
+      "sha256": "0b243ea47ef5461b6c83d280e1805c4b227f08a020d4edbc1a3f3d475803a9e1",
+      "mtime_ns": 1791302272000000000
+    },
+    "artefacts-polynesiens/textures/RedPearlOfRaraka/MAT_RECIPE.txt": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\RedPearlOfRaraka\\MAT_RECIPE.txt",
+      "bytes": 1858,
+      "sha256": "d5374c050d063b965bc4254478e17fece8a0dfb118e079e4239a0c8863658268",
+      "mtime_ns": 1791303041000000000
+    },
+    "artefacts-polynesiens/textures/RedPearlOfRaraka/T_RedPearlOfRaraka_AO.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\RedPearlOfRaraka\\T_RedPearlOfRaraka_AO.png",
+      "bytes": 76809,
+      "sha256": "020e0f5534b575d0e7d820b4025640ecd7ceff96e4e9aca33de9c8d6b7ab5389",
+      "mtime_ns": 1791302700000000000
+    },
+    "artefacts-polynesiens/textures/RedPearlOfRaraka/T_RedPearlOfRaraka_BaseColor.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\RedPearlOfRaraka\\T_RedPearlOfRaraka_BaseColor.png",
+      "bytes": 1428565,
+      "sha256": "7d6e778c5a7923338d4720651c76002804ed8c594a780ea168bc21acb299d62a",
+      "mtime_ns": 1791302666000000000
+    },
+    "artefacts-polynesiens/textures/RedPearlOfRaraka/T_RedPearlOfRaraka_Emissive.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\RedPearlOfRaraka\\T_RedPearlOfRaraka_Emissive.png",
+      "bytes": 55235,
+      "sha256": "5630edf42913f842e57308503a7e0977e721d09027a12c453b8878c22108cd37",
+      "mtime_ns": 1791302710000000000
+    },
+    "artefacts-polynesiens/textures/RedPearlOfRaraka/T_RedPearlOfRaraka_Normal.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\RedPearlOfRaraka\\T_RedPearlOfRaraka_Normal.png",
+      "bytes": 1434219,
+      "sha256": "72781f2ea5804905a1990eac77c3e80a9a1d06fe4f1cdf06270fad06c6289a8b",
+      "mtime_ns": 1791302687000000000
+    },
+    "artefacts-polynesiens/textures/RedPearlOfRaraka/T_RedPearlOfRaraka_Normal_DX.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\RedPearlOfRaraka\\T_RedPearlOfRaraka_Normal_DX.png",
+      "bytes": 1434641,
+      "sha256": "cc1775c6e0b023cbebaf72f99dffd31b50322034ba4ac68cb789ccee7a7df5e5",
+      "mtime_ns": 1791302710000000000
+    },
+    "artefacts-polynesiens/textures/RedPearlOfRaraka/T_RedPearlOfRaraka_ORM.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\RedPearlOfRaraka\\T_RedPearlOfRaraka_ORM.png",
+      "bytes": 632927,
+      "sha256": "46bf1b43ac4497db19125cdf6070c73504b3b96582964fc6c4dc3ef035216f1e",
+      "mtime_ns": 1791302711000000000
+    },
+    "artefacts-polynesiens/textures/RedPearlOfRaraka/T_RedPearlOfRaraka_Roughness.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\RedPearlOfRaraka\\T_RedPearlOfRaraka_Roughness.png",
+      "bytes": 623712,
+      "sha256": "2853408cf7e34d597eaa956ff0c2c7f1f58b3d740ffa831dd57fbab09a0157da",
+      "mtime_ns": 1791302677000000000
+    },
+    "artefacts-polynesiens/textures/Shared/T_Feather_Aged_Color.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\Shared\\T_Feather_Aged_Color.png",
+      "bytes": 1319442,
+      "sha256": "680db3f9317d9d97a5f4179ae260f7e89e4dc8275bce73f9a5777d3d981aa8da",
+      "mtime_ns": 1791298824000000000
+    },
+    "artefacts-polynesiens/textures/Shared/T_Feather_Aged_Normal.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\Shared\\T_Feather_Aged_Normal.png",
+      "bytes": 984089,
+      "sha256": "48192f50c283fcfda4080c1951b16b46d86b098e85ef95f317b5d7723e6d8b8c",
+      "mtime_ns": 1791298824000000000
+    },
+    "artefacts-polynesiens/textures/Shared/T_Gold_Aged_Color.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\Shared\\T_Gold_Aged_Color.jpg",
+      "bytes": 3417487,
+      "sha256": "f971774f116ecc682ea33bce8240674294ebcfc4444671b4266b69eeabc15e6d",
+      "mtime_ns": 1791296399000000000
+    },
+    "artefacts-polynesiens/textures/Shared/T_Gold_Aged_Normal.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\Shared\\T_Gold_Aged_Normal.jpg",
+      "bytes": 2285983,
+      "sha256": "d27bd624a9440b12eae0654d7a34cbbb1c872b494a57fb2557b17e2cca3b960e",
+      "mtime_ns": 1791296399000000000
+    },
+    "artefacts-polynesiens/textures/Shared/T_Gold_Aged_Roughness.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\Shared\\T_Gold_Aged_Roughness.jpg",
+      "bytes": 1907110,
+      "sha256": "2836dd4d22ef4ed2a502c1b8736231f324200ea6f540c93aa716da6d24e8d623",
+      "mtime_ns": 1791296399000000000
+    },
+    "artefacts-polynesiens/textures/Shared/T_Gold_Scratches.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\Shared\\T_Gold_Scratches.jpg",
+      "bytes": 1319288,
+      "sha256": "1110e1d57de695158126add0db6fbf59386654a6a73713638652ae64831a4c6a",
+      "mtime_ns": 1791296399000000000
+    },
+    "artefacts-polynesiens/textures/Shared/T_Gold_Scratches_Normal.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\Shared\\T_Gold_Scratches_Normal.jpg",
+      "bytes": 4749803,
+      "sha256": "a2c309a8e72ad1c349852989c79698c485f6520f973e2c483f0d5e845fab8334",
+      "mtime_ns": 1791296399000000000
+    },
+    "artefacts-polynesiens/textures/Shared/T_Nacre_Pinctada_Color.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\Shared\\T_Nacre_Pinctada_Color.png",
+      "bytes": 1338469,
+      "sha256": "e6868a05e7e36a5cc8a47d474e6ec940ed1e753e2693c4d4ef741cc95199e577",
+      "mtime_ns": 1791299075000000000
+    },
+    "artefacts-polynesiens/textures/Shared/T_Nacre_Pinctada_Normal.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\artefacts-polynesiens\\textures\\Shared\\T_Nacre_Pinctada_Normal.png",
+      "bytes": 2195144,
+      "sha256": "78190211b3d15ddb5459adc6faad772bec0339b002c407a242130d976545a14d",
+      "mtime_ns": 1791299075000000000
+    },
+    "temple-reliquaire/maquette.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\maquette.json",
+      "bytes": 46974,
+      "sha256": "3c6a4becb67fc26b83f5b92169ad87fdd786a41cc252e414e975cd1d8cac5cd9",
+      "mtime_ns": 1791312619000000000
+    },
+    "temple-reliquaire/temple-report.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\temple-report.json",
+      "bytes": 38630,
+      "sha256": "bf144c94f3cdf076ee140e860924e642e612e2598d06a147d8bc9ce4817ac48f",
+      "mtime_ns": 1791312549000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Ahu.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Ahu.fbx",
+      "bytes": 1721036,
+      "sha256": "99b79edd79a0fdfff287e9e5f0c77d002c3c5e14b025a463b5c235b3388535ad",
+      "mtime_ns": 1791312526000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_CourtPaving.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_CourtPaving.fbx",
+      "bytes": 316540,
+      "sha256": "842e7ee367df42848dc59c73199378494a111eda1e9f9e6ae9973efa96957322",
+      "mtime_ns": 1791312522000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Debris_BrokenUnu.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Debris_BrokenUnu.fbx",
+      "bytes": 44492,
+      "sha256": "3d7382a978a777819bcd35b7dd06691a53c003bdb932a1bc3924cb2453b79b88",
+      "mtime_ns": 1791312533000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Debris_FallenStone.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Debris_FallenStone.fbx",
+      "bytes": 34572,
+      "sha256": "5fb937ec2a5a0c8458efbc85d4fdb10cbe864765d37ab8f8e42d465199cd2634",
+      "mtime_ns": 1791312533000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Debris_StonePile.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Debris_StonePile.fbx",
+      "bytes": 74204,
+      "sha256": "fcd34594793114ee6f59b90c641a7bda58b9b8bc91aa48053a8940ca71812595",
+      "mtime_ns": 1791312532000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_FareIaManaha.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_FareIaManaha.fbx",
+      "bytes": 865452,
+      "sha256": "749f62fd7071bfc5f37438d084ca871fb5b42621f91520e856bf64a30eabe6b8",
+      "mtime_ns": 1791312530000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Fata.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Fata.fbx",
+      "bytes": 65180,
+      "sha256": "a4e2d0c706dfaaae92fd51f98df8b6ce10393cc7918ef998be52ae986a3da40b",
+      "mtime_ns": 1791312532000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Gate.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Gate.fbx",
+      "bytes": 152716,
+      "sha256": "6d38c28cfe7dadb2d4025614689313e9211b3be1edd2dc732f13f39169adde14",
+      "mtime_ns": 1791312527000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Palisade_2m.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Palisade_2m.fbx",
+      "bytes": 62332,
+      "sha256": "d1dff04b2b6c90713aad0a6fe16b8f3238a9abf850caabaf3984cf9c4767426c",
+      "mtime_ns": 1791312529000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Palisade_2m_Fallen.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Palisade_2m_Fallen.fbx",
+      "bytes": 65084,
+      "sha256": "120e462bd6b3ba28bdd117812439b11d14c1fc8b675a5f0ddc6a06a4a1d0486c",
+      "mtime_ns": 1791312529000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_RelicAltar.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_RelicAltar.fbx",
+      "bytes": 145740,
+      "sha256": "b4762035a1b8b21091d0bc14a4bc472da21287063cc114bf689f2ade0eed3432",
+      "mtime_ns": 1791312524000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_StandingStone_A.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_StandingStone_A.fbx",
+      "bytes": 35676,
+      "sha256": "52a98a28158b3be009f600eb106e7e37c5f187f8e7874d82720aff644472154f",
+      "mtime_ns": 1791312531000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_StandingStone_B.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_StandingStone_B.fbx",
+      "bytes": 36028,
+      "sha256": "8495fa2591322d9c1c28c5c66635e1c60c668a37827a35eed0763f90173c531c",
+      "mtime_ns": 1791312531000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_StandingStone_C.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_StandingStone_C.fbx",
+      "bytes": 36284,
+      "sha256": "33450cc3fd3e6a2994f0b381de1dbd25c86b2ad56559b85c77b2d94553b41ef9",
+      "mtime_ns": 1791312532000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_TikiGuardian_A.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_TikiGuardian_A.fbx",
+      "bytes": 86156,
+      "sha256": "e6b4ed78e30645154308e609cca0c5ac0815bcdbfb4bd2ccae7027e19d93e137",
+      "mtime_ns": 1791312531000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_TikiGuardian_B.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_TikiGuardian_B.fbx",
+      "bytes": 87532,
+      "sha256": "05bc95c1233d02a8a7267412204cbb64bca7c2b2de7ed8c010861622dfb1c638",
+      "mtime_ns": 1791312531000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_TikiGuardian_C.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_TikiGuardian_C.fbx",
+      "bytes": 86428,
+      "sha256": "16cdf2b18a92eefade4cf1237089d3f7479ecb5137293d741bb11e9dd6436950",
+      "mtime_ns": 1791312531000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Torch.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Torch.fbx",
+      "bytes": 93052,
+      "sha256": "fea69756b38609faa119e1fe8404f16976bdee295a986c9a5f7e7c09fb6a135e",
+      "mtime_ns": 1791312532000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Wall_3m.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Wall_3m.fbx",
+      "bytes": 174460,
+      "sha256": "4fb763096d4673ae980e738251bcb2bcef4881d407160fef5b40ad24e83de953",
+      "mtime_ns": 1791312527000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Wall_3m_Breach.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Wall_3m_Breach.fbx",
+      "bytes": 124732,
+      "sha256": "fc2bc01e66af8f78b5f30ed9f04fe1cb97be063c7c8ebc837ae52fd70840610b",
+      "mtime_ns": 1791312528000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Wall_3m_Ruined.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Wall_3m_Ruined.fbx",
+      "bytes": 163372,
+      "sha256": "410f8a30d1b417ce59d8e420912d1b4b642358478205a2fb8b498dadfa6224d2",
+      "mtime_ns": 1791312528000000000
+    },
+    "temple-reliquaire/exports/SM_Temple_Wall_Corner.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\temple-reliquaire\\exports\\SM_Temple_Wall_Corner.fbx",
+      "bytes": 94636,
+      "sha256": "396bddcaf96385d0758fe9f2876cf2855f92fe44eea823a3360effcec1abd7e4",
+      "mtime_ns": 1791312529000000000
+    },
+    "TempleTextures/props/minka/mossy_rock/mossy_rock_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\mossy_rock\\mossy_rock_diff_1k.jpg",
+      "bytes": 1124438,
+      "sha256": "4dbf37f1b0465c9c8914213163923be159716f5b97fb6946437b6c5e143ef540",
+      "mtime_ns": 1791001387017955300
+    },
+    "TempleTextures/props/minka/mossy_rock/mossy_rock_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\mossy_rock\\mossy_rock_rough_1k.jpg",
+      "bytes": 780918,
+      "sha256": "0a18bdeb08444b730170b0477f13940ce6cd4d82d06137df661f96d1e2a6a66e",
+      "mtime_ns": 1791001387024796000
+    },
+    "TempleTextures/props/minka/mossy_rock/mossy_rock_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\mossy_rock\\mossy_rock_nor_gl_1k.jpg",
+      "bytes": 995727,
+      "sha256": "232cdd6a9fdfd01bb8bb1f8f604c53dbca79fa0d3d7995edf85c9945757aa8df",
+      "mtime_ns": 1791001387021465100
+    },
+    "TempleTextures/characters/Rock035/Rock035_1K-JPG_Color.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rock035\\Rock035_1K-JPG_Color.jpg",
+      "bytes": 1453569,
+      "sha256": "7d387e01cad601ce49c35d9d9161f7f8f097de0e32e60f8f2108ae1787854ccf",
+      "mtime_ns": 1791001388239025900
+    },
+    "TempleTextures/characters/Rock035/Rock035_1K-JPG_Roughness.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rock035\\Rock035_1K-JPG_Roughness.jpg",
+      "bytes": 668189,
+      "sha256": "1b3834e6d15be99c06653688ed6c43b492163f6eaacfa56bd7397cf59165e8d6",
+      "mtime_ns": 1791001388274257400
+    },
+    "TempleTextures/characters/Rock035/Rock035_1K-JPG_NormalGL.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rock035\\Rock035_1K-JPG_NormalGL.jpg",
+      "bytes": 2522360,
+      "sha256": "003dcaa856ce97d2673379a26a444cc0637f0cdd46d7f5de5c3dd263dfbf3f76",
+      "mtime_ns": 1791001388269432800
+    },
+    "TempleTextures/ground/coral_ground_02/coral_ground_02_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_ground_02\\coral_ground_02_diff_2k.jpg",
+      "bytes": 2728909,
+      "sha256": "2905e2711da7e5945bd0e92d22277102c30d58388f9dd3719611c80646e03797",
+      "mtime_ns": 1791001385861610000
+    },
+    "TempleTextures/ground/coral_ground_02/coral_ground_02_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_ground_02\\coral_ground_02_rough_2k.jpg",
+      "bytes": 2127529,
+      "sha256": "1d648b8051d29238c92083710d0ede686113bbe98470054c477c42cd4649dea9",
+      "mtime_ns": 1791001386002043600
+    },
+    "TempleTextures/ground/coral_ground_02/coral_ground_02_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_ground_02\\coral_ground_02_nor_gl_2k.jpg",
+      "bytes": 4453312,
+      "sha256": "9d97d761d7bae874cbda178c8d3d8ed22c8ac88b03754c58b3519e4ec8373e34",
+      "mtime_ns": 1791001385920456900
+    },
+    "TempleTextures/ground/coral_gravel/coral_gravel_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_gravel\\coral_gravel_diff_2k.jpg",
+      "bytes": 3228843,
+      "sha256": "f1cef85165af97b22fe9d992bdcda08f0c24889d41aa54b918a7cb88b1bc4cf2",
+      "mtime_ns": 1791001385795280300
+    },
+    "TempleTextures/ground/coral_gravel/coral_gravel_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_gravel\\coral_gravel_rough_2k.jpg",
+      "bytes": 2106597,
+      "sha256": "257ed8646a51f7b0ebd57f96bff23fab420e4992da075ccf4403082ff9a2f4f5",
+      "mtime_ns": 1791001385831182900
+    },
+    "TempleTextures/ground/coral_gravel/coral_gravel_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_gravel\\coral_gravel_nor_gl_2k.jpg",
+      "bytes": 5157744,
+      "sha256": "7e1100f5dade34c07001ba82a28f13f3bbd1411d0fe1c7210a60c64900cd20d9",
+      "mtime_ns": 1791001385810466800
+    },
+    "TempleTextures/characters/rough_wood/rough_wood_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\rough_wood\\rough_wood_diff_1k.jpg",
+      "bytes": 567074,
+      "sha256": "abc46d8e3163d911220f4ec3a4043b68d2b0c6d750513f80871211acfefb2a98",
+      "mtime_ns": 1791001388561292300
+    },
+    "TempleTextures/characters/rough_wood/rough_wood_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\rough_wood\\rough_wood_rough_1k.jpg",
+      "bytes": 195056,
+      "sha256": "4e9ea9962a7e8b69057937e6723c4b0134b949c1ee5cdb5f3687a54113027b09",
+      "mtime_ns": 1791001388552632300
+    },
+    "TempleTextures/characters/rough_wood/rough_wood_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\rough_wood\\rough_wood_nor_gl_1k.jpg",
+      "bytes": 790334,
+      "sha256": "3d1c6f098b66d93e52071b41834dd14a424d8cd2f7c4130c62dc062acfa65011",
+      "mtime_ns": 1791001388567420500
+    },
+    "TempleTextures/props/minka/weathered_brown_planks/weathered_brown_planks_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\weathered_brown_planks\\weathered_brown_planks_diff_1k.jpg",
+      "bytes": 226049,
+      "sha256": "94833feda44e025a9139f7b5723ea84e4f0258d3b54939a79e1013c133085e29",
+      "mtime_ns": 1791001386977746400
+    },
+    "TempleTextures/props/minka/weathered_brown_planks/weathered_brown_planks_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\weathered_brown_planks\\weathered_brown_planks_rough_1k.jpg",
+      "bytes": 234672,
+      "sha256": "b80c45969d8299ca5f21de969f0269138a5e3e78e51fc911af809683d99c5bc9",
+      "mtime_ns": 1791001386991113100
+    },
+    "TempleTextures/props/minka/weathered_brown_planks/weathered_brown_planks_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\weathered_brown_planks\\weathered_brown_planks_nor_gl_1k.jpg",
+      "bytes": 223250,
+      "sha256": "8d38f02f121c0e58eaedc19cd668faea21381ae3ff4d5332cd90de75e6683393",
+      "mtime_ns": 1791001386980231900
+    },
+    "TempleTextures/props/minka/reed_roof_04/reed_roof_04_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\reed_roof_04\\reed_roof_04_diff_2k.jpg",
+      "bytes": 2585643,
+      "sha256": "1dca21bfddcce2c594619ffe1ce77c44530d43caebbb19a914db72a51f11a85e",
+      "mtime_ns": 1791001386723119100
+    },
+    "TempleTextures/props/minka/reed_roof_04/reed_roof_04_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\reed_roof_04\\reed_roof_04_rough_2k.jpg",
+      "bytes": 1263557,
+      "sha256": "e96e063dad51aca5dc27ad7ec8e3d05b14491310b03de9c671100e961c438dc2",
+      "mtime_ns": 1791001386711355900
+    },
+    "TempleTextures/props/minka/reed_roof_04/reed_roof_04_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\reed_roof_04\\reed_roof_04_nor_gl_2k.jpg",
+      "bytes": 4381563,
+      "sha256": "dfdeb50539e722fe1c870211cda02b94f142dc7d954cb158c0f831438ce6f507",
+      "mtime_ns": 1791001386702626200
+    },
+    "TempleTextures/characters/Rope001/Rope001_1K-JPG_Color.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_Color.jpg",
+      "bytes": 527156,
+      "sha256": "ce37f5da3b4762a2264d2d9a7f133f7caf8809f42f1216da506301e84f212e97",
+      "mtime_ns": 1791001388178220600
+    },
+    "TempleTextures/characters/Rope001/Rope001_1K-JPG_Roughness.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_Roughness.jpg",
+      "bytes": 248515,
+      "sha256": "b7092a728f1ef9165d52afea65a6c96d9ce927ff1150073afd86263c43f92054",
+      "mtime_ns": 1791001388171335700
+    },
+    "TempleTextures/characters/Rope001/Rope001_1K-JPG_NormalGL.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_NormalGL.jpg",
+      "bytes": 860675,
+      "sha256": "bf1e55638aa756bd2512b0f6ab9de2fb5ceb9fc5db159607cf6b872cca9bb7fc",
+      "mtime_ns": 1791001388169330300
+    },
+    "TempleTextures/characters/tree_bark_03/tree_bark_03_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\tree_bark_03\\tree_bark_03_diff_1k.jpg",
+      "bytes": 1046404,
+      "sha256": "2b48c669a1787d708b1c10b3c726fddf9007099d5eb8873e316d388a8079a12b",
+      "mtime_ns": 1791001388119036200
+    },
+    "TempleTextures/characters/tree_bark_03/tree_bark_03_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\tree_bark_03\\tree_bark_03_rough_1k.jpg",
+      "bytes": 464563,
+      "sha256": "109a881a79323e6b66311880884d4b6a2001dfb0ec3a6c51d107dd109a655d9a",
+      "mtime_ns": 1791001388128644300
+    },
+    "TempleTextures/characters/tree_bark_03/tree_bark_03_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\tree_bark_03\\tree_bark_03_nor_gl_1k.jpg",
+      "bytes": 1255491,
+      "sha256": "36d355a7cb1d5158aa4ae8d36792ec1a4e47434063d7d13d0c56dfeb805c237f",
+      "mtime_ns": 1791001388121551700
+    },
+    "SourceReferences/temple_kit.py.txt": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\temple_kit.py",
+      "bytes": 77247,
+      "sha256": "6c2ff185dc1507030adb5b9a66be1c03835d107c691f1a9a390b27d9d3536c2a",
+      "mtime_ns": 1791312293000000000
+    },
+    "SourceReferences/marae_kit.py.txt": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\marae_kit.py",
+      "bytes": 28257,
+      "sha256": "a2453df6ab99e229ce3bbd1355043d6890abef0f8ea73b4914d2b36e1407adc2",
+      "mtime_ns": 1791053086000000000
+    },
+    "SourceReferences/treasure.py.txt": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\artifacts\\treasure.py",
+      "bytes": 78450,
+      "sha256": "19e16e6ebe0d5ba388a327b92cf00eaa5e6564582f1c6dbfab80faf14ec189d1",
+      "mtime_ns": 1791300391000000000
+    },
+    "SourceReferences/art_SOURCES.md": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\SOURCES.md",
+      "bytes": 8402,
+      "sha256": "194db5ccc48ead76c7028f34b2c544aeb4783e3c426f74d68375efecb31f82b0",
+      "mtime_ns": 1791050349000000000
+    }
+  },
+  "metadata_refreshed_at": "2026-10-06T19:35:54.267717+00:00"
+}

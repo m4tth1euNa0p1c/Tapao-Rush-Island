@@ -1,0 +1,1349 @@
+{
+  "$schema": "../../factory/schema/maquette.schema.json",
+  "format": "maquette/1",
+  "id": "artefacts-polynesiens",
+  "title": "Artefacts polynésiens des Tuamotu · 31 reliques game-ready (Unreal)",
+  "description": "Collection de 31 artefacts, reliques, objets de pêche et objets rituels fictionnels inspirés des Tuamotu, loot physiquement manipulable pour un jeu coopératif d'exploration. Réalisme matériel (PBR, patine, sel, sable, usure) et respect culturel prioritaires ; surnaturel discret, jamais fantasy. ÉCHELLE RÉELLE (1 BU = 1 m, mannequin 1,80 m) demandée par le brief, contrairement aux autres loots du projet à l'échelle de Bean (~0,7) : hypothèse à confirmer ; une constante unique du kit (params.world_scale) permettra de basculer à l'échelle de Bean. Toute la géométrie est produite par scripts/artifacts.py, qui délègue au kit factory/kits/artifacts/ (un module par objet + pipeline commun) ; construction incrémentale dans l'ordre de gameplay.artifacts (Heart of the Reef d'abord), params.build liste les objets construits. Chaque objet : high-detail, game mesh LOD0/1/2, UV + LightmapUV, PBR cuites, UCX, GRAB/INSPECT, exports FBX + GLB. Hypothèses : masses et valeurs = valeurs gameplay du brief (non recalculées) ; dims_m = hors-tout en pose de repos [X, Y, Z] ; cotes manquantes du brief (perle rouge, pectoral, couronne, conques, crâne...) déduites de références réelles.",
+  "brief": "Concevoir et modéliser dans Blender 31 artefacts / reliques / objets de pêche / objets rituels fictionnels inspirés du folklore polynésien (Tuamotu), loot d'un jeu coopératif d'exploration et de récupération. Semi-photoréalisme, matériaux PBR vieillis (sel, sable, humidité, soleil), asymétrie, fabrication artisanale ; éviter cartoon, saturation, fantasy européenne, motifs pseudo-maoris génériques, copies de pièces sacrées. Ne pas mélanger Tuamotu / Société / Marquises / Hawaii / Māori / Rapa Nui : toute référence extérieure = objet importé, échangé ou d'épave. Chaque objet : échelle réelle, masse, centre de gravité, collision simple UCX, GRAB_POINT (+INSPECT_POINT), pivot et pose au sol cohérents, silhouette lisible dans l'obscurité ; high-detail, game mesh, LOD0/1/2, UV + LightmapUV, matériaux MAT_* réutilisables, textures 1K/2K/4K, collection POLYNESIAN_ARTIFACTS > COMMON/RARE/SACRED/LEGENDARY > objet ; noms internes anglais SM_/UCX_/MAT_/T_ ; export FBX/GLB ; 12 checks QA ; rendus de contrôle 6 vues + 3/4 + closeup matériau + situation (lumière naturelle et lampe torche). Priorité : Heart of the Reef, Drowned Ancestor Ti'i, Double Ti'i, Fish-God Fragment, Eclipse Stone, Mouth-Sewn Idol, Pearl-Eyed Idol, Taaroa Paddle, Moon Pearl, Red Pearl of Raraka, Shell of the Dead Reef, Drum of the Other Shore, Tahiri of the Wind, Shark-Tooth Pectoral, Navigation Shell Map, puis le reste. Objectif : le joueur hésite entre « ça vaut une fortune » et « on ne devrait pas toucher à ça ». Brief complet : BRIEF.md.",
+  "version": "0.1.0",
+  "status": "built",
+  "tags": [
+    "artefact",
+    "relique",
+    "loot",
+    "polynésie",
+    "tuamotu",
+    "rituel",
+    "pêche",
+    "unreal",
+    "game-ready",
+    "pbr",
+    "échelle-réelle"
+  ],
+  "params": {
+    "world_scale": 1.0,
+    "world_scale_note": "Constante unique du kit (SCALE). 1.0 = échelle réelle (brief). ~0.7 = échelle de Bean, comme les autres loots du projet.",
+    "build": [
+      "HeartOfTheReef",
+      "EclipseStone",
+      "FishGodFragment",
+      "MoonPearl",
+      "RedPearlOfRaraka",
+      "CrownOfTheLastAriki"
+    ],
+    "build_note": "Objets réellement construits à ce build, dans l'ordre de gameplay.artifacts ; à étendre au fil des itérations (bump minor).",
+    "mannequin_height_m": 1.8,
+    "layout": "Objets alignés sur X par ordre de construction, espacement = plus grande dimension + 0,3 m ; mannequin GEO-Mannequin_180 côté X négatif ; sol neutre.",
+    "kit": "factory/kits/artifacts/",
+    "treasure_note": "Tresor : ornements europeens posterieurs (or, perles, rubis, saphirs, emeraudes) en sous-maillage non cuit (factory/kits/artifacts/treasure.py, voir DESIGN.md)."
+  },
+  "gameplay": {
+    "role": "Loot d'exploration : artefacts, reliques, objets de pêche et rituels fictionnels d'un atoll abandonné des Tuamotu, de valeur moyenne à très élevée, dont certains portent un état surnaturel discret.",
+    "usage": "Ramasser (GRAB_POINT ; une main si < 2 kg et < 0,4 m, sinon deux mains) ; inspecter (INSPECT_POINT, rotation libre à < 50 cm) ; transporter (la masse pénalise la vitesse) ; jeter (physique, collision UCX) ; vendre (value) ; activer (objets à states : HeartOfTheReef Dormant/Active, EclipseStone Normal/Eclipse_Active, MoonPearl Normal/Supernatural, VoiceStone Material_Normal/Material_Revealed, MouthSewnIdol Thread_Intact/Thread_Cut ; DrownedAncestorTii révèle des entités invisibles côté jeu) ; voler (entre joueurs / PNJ) ; briser lorsque prévu (breakable=true : CoconutOfTheDead, CrownOfTheLastAriki, ObsidianMirror ; proposition à confirmer) ; placer dans un environnement physique (pose de repos stable).",
+    "tier_rule": {
+      "LEGENDARY": "valeur >= 2000, OU valeur >= 1000 ET état surnaturel matériel (Active / Eclipse_Active / Supernatural). Textures 4K (sauf objets < 3 cm : 2K).",
+      "SACRED": "nature rituelle, cérémonielle ou insigne de rang (ti'i, idole, pierre rituelle, tambour, pagaie de divinité, parure, objet de prestige) ET 500 <= valeur < 2000, sans état surnaturel matériel.",
+      "RARE": "valeur >= 300 et ni SACRED ni LEGENDARY (objets naturels ou utilitaires d'exception, ou rituels de valeur < 500).",
+      "COMMON": "valeur < 300.",
+      "note": "Les states purement physiques (Thread_Cut) ou d'éclairage (Material_Revealed) ne rendent pas LEGENDARY. Le tier pilote la collection et la résolution de texture."
+    },
+    "physics": {
+      "scale": "Échelle réelle : 1 BU = 1 m ; transforms appliquées (scale 1/1/1) avant export.",
+      "pivot": "Origine au centre de l'emprise au sol en pose de repos (Z=0 au point de contact) ; centre de masse réel exporté en propriété custom (com_m).",
+      "collision": "UCX_<Id>_01.. convexes simplifiées (1 à 6 hulls), jamais le high-poly.",
+      "mass": "mass_kg = masse gameplay du brief, appliquée en override Unreal (MassInKgOverride). Plusieurs pierres sont plus légères que leur volume réel de basalte (ex. VoiceStone 11 kg vs ~60 kg physiques) : choix gameplay assumé.",
+      "silhouette": "Silhouette lisible à 5 m et en lampe torche (CHECK 1-2)."
+    },
+    "artifacts": [
+      {
+        "num": "31",
+        "id": "HeartOfTheReef",
+        "name_fr": "Cœur du Récif",
+        "tier": "LEGENDARY",
+        "nature": "surnaturel",
+        "mass_kg": 18.0,
+        "value": 6000,
+        "dims_m": [
+          0.5,
+          0.4,
+          0.32
+        ],
+        "materials": [
+          "MAT_HeartOfTheReef",
+          "MAT_Coral_Dead",
+          "MAT_Coral_Red",
+          "MAT_Salt_Deposit",
+          "MAT_Shell_Tropical",
+          "MAT_Basalt_Oceanic"
+        ],
+        "states": [
+          {
+            "name": "Dormant",
+            "material": "MAT_HeartOfTheReef",
+            "desc": "Aucun glow."
+          },
+          {
+            "name": "Active",
+            "material": "MAT_HeartOfTheReef_Active",
+            "desc": "Très légère lueur rouge sombre issue des fissures internes uniquement (masque d'émission sur les fissures, intensité faible, pas de bloom)."
+          }
+        ],
+        "grab": "À deux mains : deux creux latéraux naturels (flancs ±X, à mi-hauteur) ; GRAB_POINT au centre de masse, légèrement au-dessus (Z ≈ 0,17).",
+        "rest_pose": "Posé sur sa face la plus large et plate (base de roche), pointe du « cœur » vers le bas-avant ; origine au centre de l'emprise au sol, Z=0.",
+        "texture_res": "4K",
+        "tris_lod0": 70000,
+        "situations": [
+          "fond marin",
+          "marae abandonné",
+          "pierre"
+        ],
+        "breakable": false,
+        "culture": "Objet entièrement fictionnel. Matériaux d'atoll (corail mort, carbonate, coquillages) : cohérent avec les Tuamotu. Forme vaguement cardiaque, jamais anatomique ; aucun motif gravé.",
+        "lore": "Masse de corail minéralisé arrachée au tombant du récif ; certains disent qu'elle bat encore quand la marée remonte.",
+        "anim": {
+          "name": "Pulse",
+          "property": "scale",
+          "keys": [
+            1.0,
+            1.015,
+            1.0
+          ],
+          "cycle_s": 4.0,
+          "loop": true,
+          "note": "Uniforme autour du centre de masse ; exportée comme action FBX, ou rejouée par timeline dans Unreal (brief : cycle 3 à 5 s)."
+        }
+      },
+      {
+        "num": "01",
+        "id": "DrownedAncestorTii",
+        "name_fr": "Ti'i de l'Ancêtre Noyé",
+        "tier": "SACRED",
+        "nature": "rituel",
+        "mass_kg": 8.0,
+        "value": 850,
+        "dims_m": [
+          0.24,
+          0.2,
+          0.55
+        ],
+        "materials": [
+          "MAT_DrownedAncestorTii",
+          "MAT_Basalt_Oceanic",
+          "MAT_Nacre_White",
+          "MAT_Salt_Deposit"
+        ],
+        "states": [],
+        "grab": "À deux mains : une sous la base, l'autre autour du cou/épaules ; GRAB_POINT sur la taille (Z ≈ 0,22).",
+        "rest_pose": "Debout sur sa base irrégulière, face vers -Y.",
+        "texture_res": "2K",
+        "tris_lod0": 50000,
+        "situations": [
+          "fond marin",
+          "marae abandonné",
+          "sable"
+        ],
+        "breakable": false,
+        "culture": "Ti'i : terme Société/Tuamotu (tiki ailleurs). Forme originale (tête trop grande, yeux larges, bras contre le torse, jambes courtes), à ne pas calquer sur un ti'i ou tiki de musée. Yeux en nacre facultatifs. Les Tuamotu sont des atolls coralliens sans roche volcanique : tout objet en basalte y est forcément importé (Mangareva, îles de la Société, Pitcairn) ; à présenter comme pierre rapportée d'une île haute.",
+        "lore": "Effigie d'un navigateur disparu en mer. Permet de percevoir certaines entités invisibles ; présence inquiétante sans signe magique visible.",
+        "notes": [
+          "Aucun state matériel : la perception d'entités est gérée côté jeu."
+        ]
+      },
+      {
+        "num": "02",
+        "id": "DoubleTii",
+        "name_fr": "Ti'i Double",
+        "tier": "SACRED",
+        "nature": "rituel",
+        "mass_kg": 5.0,
+        "value": 1400,
+        "dims_m": [
+          0.22,
+          0.16,
+          0.4
+        ],
+        "materials": [
+          "MAT_DoubleTii",
+          "MAT_Basalt_Oceanic",
+          "MAT_Salt_Deposit",
+          "MAT_Shell_Tropical"
+        ],
+        "states": [],
+        "grab": "À une ou deux mains autour des épaules communes ; GRAB_POINT au centre (Z ≈ 0,20).",
+        "rest_pose": "Debout, une figure face -Y, l'autre face +Y ; base anciennement enterrée (teinte et grain de sable plus marqués sur les 6 cm du bas).",
+        "texture_res": "2K",
+        "tris_lod0": 40000,
+        "situations": [
+          "marae abandonné",
+          "sable",
+          "pierre"
+        ],
+        "breakable": false,
+        "culture": "Figures dos à dos originales (aucune référence à une pièce existante). Les Tuamotu sont des atolls coralliens sans roche volcanique : tout objet en basalte y est forcément importé (Mangareva, îles de la Société, Pitcairn) ; à présenter comme pierre rapportée d'une île haute.",
+        "lore": "Deux visages, deux mondes : celui des vivants (devant) et celui de l'autre rive (derrière). Un coquillage est coincé dans la fissure traversante."
+      },
+      {
+        "num": "30",
+        "id": "FishGodFragment",
+        "name_fr": "Fragment du Dieu-Poisson",
+        "tier": "LEGENDARY",
+        "nature": "rituel",
+        "mass_kg": 9.0,
+        "value": 4500,
+        "dims_m": [
+          0.24,
+          0.3,
+          0.55
+        ],
+        "materials": [
+          "MAT_FishGodFragment",
+          "MAT_Basalt_Oceanic",
+          "MAT_Salt_Deposit"
+        ],
+        "states": [],
+        "grab": "À deux mains sous les « épaules » et contre la base ; GRAB_POINT au centre (Z ≈ 0,24).",
+        "rest_pose": "Debout sur la cassure basse (fragment), face humanoïde vers -Y ; profil (±X) lisible comme un poisson.",
+        "texture_res": "4K",
+        "tris_lod0": 60000,
+        "situations": [
+          "marae abandonné",
+          "fond marin",
+          "pierre"
+        ],
+        "breakable": false,
+        "culture": "Fictionnel, inspiré librement des formes anthropomorphes et marines d'Océanie orientale ; aucune divinité identifiable. Érosion de plusieurs siècles. Les Tuamotu sont des atolls coralliens sans roche volcanique : tout objet en basalte y est forcément importé (Mangareva, îles de la Société, Pitcairn) ; à présenter comme pierre rapportée d'une île haute.",
+        "lore": "Morceau d'une statue plus grande ; de face un homme, de profil un poisson. Personne ne sait laquelle est la vraie forme."
+      },
+      {
+        "num": "29",
+        "id": "EclipseStone",
+        "name_fr": "Pierre de l'Éclipse",
+        "tier": "LEGENDARY",
+        "nature": "surnaturel",
+        "mass_kg": 14.0,
+        "value": 3500,
+        "dims_m": [
+          0.45,
+          0.45,
+          0.12
+        ],
+        "materials": [
+          "MAT_EclipseStone",
+          "MAT_Basalt_Oceanic"
+        ],
+        "states": [
+          {
+            "name": "Normal",
+            "material": "MAT_EclipseStone",
+            "desc": "Basalte presque noir, très mat."
+          },
+          {
+            "name": "Eclipse_Active",
+            "material": "MAT_EclipseStone_EclipseActive",
+            "desc": "Albedo encore abaissé ; l'assombrissement de l'environnement immédiat est fait par le moteur (light function / post-process local), PAS par émission négative."
+          }
+        ],
+        "grab": "À deux mains par le bord, ou une main passée dans le trou central ; GRAB_POINT dans le trou central (Z ≈ 0,06).",
+        "rest_pose": "À plat sur une face (axe du trou = Z).",
+        "texture_res": "4K",
+        "tris_lod0": 30000,
+        "situations": [
+          "marae abandonné",
+          "pierre",
+          "plancher de cabane"
+        ],
+        "breakable": false,
+        "culture": "Disque de basalte original (pas de pierre de marae copiée), trou central irrégulier (Ø ~0,07 m). Mat extrême : albedo très bas, roughness élevée, sans émission noire. Les Tuamotu sont des atolls coralliens sans roche volcanique : tout objet en basalte y est forcément importé (Mangareva, îles de la Société, Pitcairn) ; à présenter comme pierre rapportée d'une île haute.",
+        "lore": "Pierre qui boit la lumière ; lors de l'éclipse, l'air autour d'elle semble s'assombrir."
+      },
+      {
+        "num": "20",
+        "id": "MouthSewnIdol",
+        "name_fr": "Idole à Bouche Cousue",
+        "tier": "SACRED",
+        "nature": "rituel",
+        "mass_kg": 2.0,
+        "value": 980,
+        "dims_m": [
+          0.13,
+          0.11,
+          0.35
+        ],
+        "materials": [
+          "MAT_MouthSewnIdol",
+          "MAT_Wood_Tropical_Aged",
+          "MAT_Rope_Coconut",
+          "MAT_Coconut_Fiber"
+        ],
+        "states": [
+          {
+            "name": "Thread_Intact",
+            "mesh": "SM_MouthSewnIdol_Thread_Intact",
+            "desc": "Couture fermée autour de la tête."
+          },
+          {
+            "name": "Thread_Cut",
+            "mesh": "SM_MouthSewnIdol_Thread_Cut",
+            "desc": "Couture tranchée, brins pendants (mesh séparé, même pivot)."
+          }
+        ],
+        "grab": "À une main autour du corps ; GRAB_POINT Z ≈ 0,14.",
+        "rest_pose": "Debout, face -Y.",
+        "texture_res": "2K",
+        "tris_lod0": 30000,
+        "situations": [
+          "marae abandonné",
+          "plancher de cabane",
+          "pierre"
+        ],
+        "breakable": false,
+        "culture": "Sculpture bois originale ; ligature en fibre de coco (sennit), technique attestée partout en Polynésie orientale. Aucune pratique rituelle réelle présentée comme authentique.",
+        "lore": "On lui a fermé la bouche. Personne ne se souvient de ce qu'elle disait.",
+        "separate_meshes": [
+          "Couture (Thread) séparée du corps, deux variantes Intact/Cut"
+        ]
+      },
+      {
+        "num": "21",
+        "id": "PearlEyedIdol",
+        "name_fr": "Idole aux Yeux de Nacre",
+        "tier": "SACRED",
+        "nature": "rituel",
+        "mass_kg": 4.0,
+        "value": 1300,
+        "dims_m": [
+          0.17,
+          0.14,
+          0.45
+        ],
+        "materials": [
+          "MAT_PearlEyedIdol",
+          "MAT_Wood_Tropical_Aged",
+          "MAT_Nacre_White"
+        ],
+        "states": [],
+        "grab": "À une main autour de la taille ; GRAB_POINT Z ≈ 0,18.",
+        "rest_pose": "Debout, face -Y.",
+        "texture_res": "2K",
+        "tris_lod0": 35000,
+        "situations": [
+          "marae abandonné",
+          "plancher de cabane"
+        ],
+        "breakable": false,
+        "culture": "Bois sombre sculpté, incrustations de nacre (Pinctada margaritifera, abondante aux Tuamotu). Forme originale.",
+        "lore": "Ses yeux renvoient la lampe comme ceux d'un animal dans la nuit.",
+        "notes": [
+          "Caractéristique principale : yeux à roughness très basse et spéculaire fort, à valider en rendu lampe torche."
+        ]
+      },
+      {
+        "num": "16",
+        "id": "TaaroaPaddle",
+        "name_fr": "Pagaie de Taaroa",
+        "tier": "SACRED",
+        "nature": "rituel",
+        "mass_kg": 9.0,
+        "value": 1800,
+        "dims_m": [
+          1.8,
+          0.24,
+          0.05
+        ],
+        "materials": [
+          "MAT_TaaroaPaddle",
+          "MAT_Wood_Tropical_Aged",
+          "MAT_Nacre_White"
+        ],
+        "states": [],
+        "grab": "À deux mains sur le manche comme pour pagayer : GRAB_POINT au tiers supérieur du manche, second appui au collet.",
+        "rest_pose": "Couchée à plat, pale à plat, longueur selon X.",
+        "texture_res": "2K",
+        "tris_lod0": 30000,
+        "situations": [
+          "plancher de cabane",
+          "sable",
+          "marae abandonné"
+        ],
+        "breakable": false,
+        "culture": "Totalement fictionnelle. « Ta'aroa » est la forme tahitienne (Société) ; aux Tuamotu on dirait plutôt Tangaroa/Tagaroa : présenter la pagaie comme venue des îles de la Société, ou garder le nom du brief (à confirmer). Pale fonctionnelle, pas de lame fantasy ; incrustations de nacre discrètes.",
+        "lore": "Pagaie cérémonielle trop lourde pour un homme ordinaire."
+      },
+      {
+        "num": "05",
+        "id": "MoonPearl",
+        "name_fr": "Perle de la Lune",
+        "tier": "LEGENDARY",
+        "nature": "surnaturel",
+        "mass_kg": 0.05,
+        "value": 1200,
+        "dims_m": [
+          0.023,
+          0.022,
+          0.021
+        ],
+        "materials": [
+          "MAT_MoonPearl",
+          "MAT_Nacre_Black"
+        ],
+        "states": [
+          {
+            "name": "Normal",
+            "material": "MAT_MoonPearl",
+            "desc": "Noir profond, iridescence bleu pétrole / vert / violet discret ; aucune émission."
+          },
+          {
+            "name": "Supernatural",
+            "material": "MAT_MoonPearl_Supernatural",
+            "desc": "Variante subtile : orient plus intense et très faible lueur froide, sans halo."
+          }
+        ],
+        "grab": "Entre deux doigts ; GRAB_POINT au centre.",
+        "rest_pose": "Posée, léger méplat vers le bas (pas parfaitement sphérique).",
+        "texture_res": "2K",
+        "tris_lod0": 6000,
+        "situations": [
+          "sable",
+          "plancher de cabane"
+        ],
+        "breakable": false,
+        "culture": "Perle de Pinctada margaritifera (perle noire de Tahiti), produit emblématique des Tuamotu : cohérent.",
+        "lore": "Une perle trop grande pour être née d'une seule huître.",
+        "notes": [
+          "Texture 2K et non 4K malgré LEGENDARY : objet de 2 cm (exception à la règle §5).",
+          "Masse 50 g du brief (une perle réelle de 23 mm pèse ~15 g) : valeur gameplay conservée."
+        ]
+      },
+      {
+        "num": "06",
+        "id": "RedPearlOfRaraka",
+        "name_fr": "Perle Rouge de Raraka",
+        "tier": "LEGENDARY",
+        "nature": "précieux",
+        "mass_kg": 0.05,
+        "value": 2800,
+        "dims_m": [
+          0.021,
+          0.02,
+          0.023
+        ],
+        "materials": [
+          "MAT_RedPearlOfRaraka",
+          "MAT_Nacre_Black"
+        ],
+        "states": [],
+        "grab": "Entre deux doigts ; GRAB_POINT au centre.",
+        "rest_pose": "Posée sur le côté (perle légèrement en goutte).",
+        "texture_res": "2K",
+        "tris_lod0": 6000,
+        "situations": [
+          "sable",
+          "plancher de cabane"
+        ],
+        "breakable": false,
+        "culture": "Raraka est un atoll réel des Tuamotu, lié à la perliculture : cohérent. Le rouge vient de couches internes (subsurface / couche translucide), jamais d'une peinture de surface.",
+        "lore": "Les plongeurs disent qu'elle a été trouvée dans une huître qui saignait.",
+        "notes": [
+          "Diamètre non donné par le brief : 21-23 mm supposé (comme la Perle de la Lune).",
+          "Texture 2K (objet de 2 cm)."
+        ]
+      },
+      {
+        "num": "11",
+        "id": "DeadReefConch",
+        "name_fr": "Conque du Récif Mort",
+        "tier": "RARE",
+        "nature": "naturel",
+        "mass_kg": 3.0,
+        "value": 1100,
+        "dims_m": [
+          0.44,
+          0.21,
+          0.19
+        ],
+        "materials": [
+          "MAT_DeadReefConch",
+          "MAT_Shell_Tropical",
+          "MAT_Coral_Dead",
+          "MAT_Salt_Deposit"
+        ],
+        "states": [],
+        "grab": "À une main dans l'ouverture ou à deux mains ; GRAB_POINT sur la spire (Z ≈ 0,10).",
+        "rest_pose": "Couchée, ouverture vers le haut-côté, apex vers +X.",
+        "texture_res": "2K",
+        "tris_lod0": 50000,
+        "situations": [
+          "fond marin",
+          "sable",
+          "pierre"
+        ],
+        "breakable": false,
+        "culture": "Même espèce que la Conque de l'Appel (triton, Charonia tritonis), très ancienne et colonisée (corail mort, tubes de serpules, algues sèches). Silhouette d'exception donnée par les concrétions.",
+        "lore": "Une conque restée si longtemps au fond que le récif a commencé à la digérer."
+      },
+      {
+        "num": "14",
+        "id": "DrumOfTheOtherShore",
+        "name_fr": "Tambour de l'Autre Rive",
+        "tier": "SACRED",
+        "nature": "rituel",
+        "mass_kg": 7.0,
+        "value": 900,
+        "dims_m": [
+          0.35,
+          0.35,
+          0.6
+        ],
+        "materials": [
+          "MAT_DrumOfTheOtherShore",
+          "MAT_DrumOfTheOtherShore_Membrane",
+          "MAT_Wood_Tropical_Aged",
+          "MAT_Rope_Coconut"
+        ],
+        "states": [],
+        "grab": "À deux mains par le fût, ou une main par les ligatures ; GRAB_POINT au tiers haut du fût.",
+        "rest_pose": "Debout sur son pied, membrane en haut.",
+        "texture_res": "2K",
+        "tris_lod0": 45000,
+        "situations": [
+          "marae abandonné",
+          "plancher de cabane"
+        ],
+        "breakable": false,
+        "culture": "Tambour vertical à membrane de type pahu (Polynésie orientale), PAS un tō'ere (tambour à fente). Membrane traditionnellement en peau de requin. Le pahu étant surtout documenté aux îles de la Société, le présenter comme objet rapporté (« de l'autre rive »). Forme originale.",
+        "lore": "Il résonne parfois tout seul, au rythme d'une pirogue qu'on ne voit pas.",
+        "separate_meshes": [
+          "SM_DrumOfTheOtherShore_Membrane : mesh séparé, même pivot, pour animation de vibration"
+        ]
+      },
+      {
+        "num": "07",
+        "id": "TahiriOfTheWind",
+        "name_fr": "Tahiri du Vent",
+        "tier": "SACRED",
+        "nature": "cérémoniel",
+        "mass_kg": 1.0,
+        "value": 750,
+        "dims_m": [
+          0.5,
+          0.12,
+          0.05
+        ],
+        "materials": [
+          "MAT_TahiriOfTheWind",
+          "MAT_Wood_Tropical_Aged",
+          "MAT_Coconut_Fiber",
+          "MAT_Rope_Coconut",
+          "MAT_Shell_Tropical"
+        ],
+        "states": [],
+        "grab": "Par le manche, à une main ; GRAB_POINT au milieu du manche.",
+        "rest_pose": "Couché à plat, manche vers -X, fibres étalées vers +X.",
+        "texture_res": "2K",
+        "tris_lod0": 25000,
+        "situations": [
+          "plancher de cabane",
+          "marae abandonné"
+        ],
+        "breakable": false,
+        "culture": "Inspiré du chasse-mouches cérémoniel (insigne de rang) mais volontairement fictionnalisé ; aucune copie de manche sculpté connu.",
+        "lore": "On dit qu'agiter le tahiri change la direction du vent.",
+        "rig": {
+          "armature": "SK_TahiriOfTheWind",
+          "bones": [
+            "Bone_Handle",
+            "Bone_Fibers_01",
+            "Bone_Fibers_02"
+          ],
+          "note": "Chaîne Bone_Handle -> Bone_Fibers_01 -> Bone_Fibers_02 ; fibres skinnées pour simulation légère / physique de chaîne Unreal. Export skeletal (SK_) en plus du static."
+        },
+        "notes": [
+          "Longueur 0,50 m (brief : 0,45-0,55) : manche 0,26 m + fibres 0,24 m."
+        ]
+      },
+      {
+        "num": "09",
+        "id": "SharkToothPectoral",
+        "name_fr": "Collier aux Dents de Ma'o",
+        "tier": "SACRED",
+        "nature": "cérémoniel",
+        "mass_kg": 1.5,
+        "value": 900,
+        "dims_m": [
+          0.32,
+          0.26,
+          0.04
+        ],
+        "materials": [
+          "MAT_SharkToothPectoral",
+          "MAT_Shark_Tooth",
+          "MAT_Rope_Coconut",
+          "MAT_Shell_Tropical",
+          "MAT_Coconut_Fiber"
+        ],
+        "states": [],
+        "grab": "Par le cordon de cou ou à plat dans la main ; GRAB_POINT au centre du plastron.",
+        "rest_pose": "À plat, dents vers -Y, cordon replié.",
+        "texture_res": "2K",
+        "tris_lod0": 30000,
+        "situations": [
+          "plancher de cabane",
+          "sable"
+        ],
+        "breakable": false,
+        "culture": "Ornement de rang en fibres, dents de requin (ma'o) et coquillages, sans métal. Forme originale, pas de copie de pièce muséale.",
+        "lore": "Chaque dent a été prise sur un requin différent.",
+        "notes": [
+          "4 à 6 variantes de dents instanciées avec scale/rotation légèrement différents.",
+          "Dimensions non données par le brief : plastron en croissant 0,32 × 0,26 m supposé."
+        ]
+      },
+      {
+        "num": "23",
+        "id": "NavigationShellMap",
+        "name_fr": "Carte de Coquillages",
+        "tier": "RARE",
+        "nature": "savoir",
+        "mass_kg": 1.0,
+        "value": 750,
+        "dims_m": [
+          0.55,
+          0.4,
+          0.03
+        ],
+        "materials": [
+          "MAT_NavigationShellMap",
+          "MAT_Wood_Tropical_Aged",
+          "MAT_Coconut_Fiber",
+          "MAT_Shell_Tropical"
+        ],
+        "states": [],
+        "grab": "À deux mains par le cadre ; GRAB_POINT au centre.",
+        "rest_pose": "À plat.",
+        "texture_res": "2K",
+        "tris_lod0": 30000,
+        "situations": [
+          "plancher de cabane",
+          "sable"
+        ],
+        "breakable": false,
+        "culture": "Objet fictif inspiré très librement des aides mnémoniques de navigation océaniennes ; NE PAS reproduire les stick charts des îles Marshall (grille, courbes de houle typiques). Bâtonnets ligaturés, coquillages = îles.",
+        "lore": "Les coquillages ne correspondent à aucun atoll connu."
+      },
+      {
+        "num": "03",
+        "id": "HiroFishhook",
+        "name_fr": "Metau de Hiro",
+        "tier": "SACRED",
+        "nature": "cérémoniel",
+        "mass_kg": 0.4,
+        "value": 520,
+        "dims_m": [
+          0.22,
+          0.09,
+          0.025
+        ],
+        "materials": [
+          "MAT_HiroFishhook",
+          "MAT_Nacre_White",
+          "MAT_Bone_Aged",
+          "MAT_Wood_Tropical_Aged",
+          "MAT_Rope_Coconut"
+        ],
+        "states": [],
+        "grab": "Par la hampe, entre pouce et index ; GRAB_POINT sur la ligature de tête.",
+        "rest_pose": "Couché à plat, pointe vers +X.",
+        "texture_res": "1K",
+        "tris_lod0": 15000,
+        "situations": [
+          "plancher de cabane",
+          "sable"
+        ],
+        "breakable": false,
+        "culture": "Hameçon composite (hampe en nacre, pointe en os, renfort bois, ligatures sennit) : technique attestée aux Tuamotu. Hiro est une figure de la tradition des îles de la Société (Raiatea) : rattacher l'objet à cette tradition. Jamais monobloc.",
+        "lore": "Hameçon cérémoniel prêté à Hiro, qui pêchait ce qu'on ne doit pas pêcher.",
+        "notes": [
+          "Petit cordon de suspension inclus.",
+          "Longueur 0,22 m (brief : 0,18-0,25)."
+        ]
+      },
+      {
+        "num": "04",
+        "id": "BlackSharkHook",
+        "name_fr": "Hameçon Noir du Requin",
+        "tier": "RARE",
+        "nature": "pêche",
+        "mass_kg": 0.8,
+        "value": 680,
+        "dims_m": [
+          0.3,
+          0.14,
+          0.045
+        ],
+        "materials": [
+          "MAT_BlackSharkHook",
+          "MAT_Wood_Tropical_Aged",
+          "MAT_Nacre_White",
+          "MAT_Rope_Coconut"
+        ],
+        "states": [],
+        "grab": "Par la hampe ; GRAB_POINT au milieu de la hampe.",
+        "rest_pose": "Couché à plat, corde lovée à côté.",
+        "texture_res": "2K",
+        "tris_lod0": 20000,
+        "situations": [
+          "plancher de cabane",
+          "sable",
+          "fond marin"
+        ],
+        "breakable": false,
+        "culture": "Grand hameçon à requin en bois très sombre (type bois de fer / Casuarina, présent aux Tuamotu), pointe en coquillage ou nacre, ligatures végétales épaisses.",
+        "lore": "Assez grand pour un requin qui n'existe plus.",
+        "notes": [
+          "Corde attachée de 0,50 m (brief : 0,40-0,60) ; dims_m = corps de l'hameçon seul."
+        ]
+      },
+      {
+        "num": "08",
+        "id": "AncientMaoTooth",
+        "name_fr": "Dent du Ma'o Ancien",
+        "tier": "COMMON",
+        "nature": "naturel",
+        "mass_kg": 0.3,
+        "value": 240,
+        "dims_m": [
+          0.11,
+          0.08,
+          0.02
+        ],
+        "materials": [
+          "MAT_AncientMaoTooth",
+          "MAT_Shark_Tooth",
+          "MAT_Rope_Coconut"
+        ],
+        "states": [],
+        "grab": "Entre pouce et index par la racine ; GRAB_POINT sur le cordon.",
+        "rest_pose": "À plat.",
+        "texture_res": "1K",
+        "tris_lod0": 8000,
+        "situations": [
+          "sable",
+          "plancher de cabane"
+        ],
+        "breakable": false,
+        "culture": "Dent de grand requin de taille exceptionnelle (rappelle une dent fossile), racine présente, bord encore partiellement tranchant, cordon tressé autour de la racine.",
+        "lore": "Personne n'a jamais vu le requin qui l'a perdue."
+      },
+      {
+        "num": "10",
+        "id": "CallingConch",
+        "name_fr": "Conque de l'Appel",
+        "tier": "RARE",
+        "nature": "rituel",
+        "mass_kg": 2.4,
+        "value": 450,
+        "dims_m": [
+          0.4,
+          0.18,
+          0.16
+        ],
+        "materials": [
+          "MAT_CallingConch",
+          "MAT_Shell_Tropical",
+          "MAT_Salt_Deposit"
+        ],
+        "states": [],
+        "grab": "À une main, doigts dans l'ouverture ; GRAB_POINT dans l'ouverture ; embouchure à l'apex.",
+        "rest_pose": "Couchée, apex (embouchure) vers +X.",
+        "texture_res": "2K",
+        "tris_lod0": 35000,
+        "situations": [
+          "sable",
+          "marae abandonné"
+        ],
+        "breakable": false,
+        "culture": "Triton (Charonia tritonis) aménagé en trompe (pū) : objet attesté dans toute la Polynésie, Tuamotu compris.",
+        "lore": "Son appel porte d'un motu à l'autre."
+      },
+      {
+        "num": "12",
+        "id": "ManaStone",
+        "name_fr": "Pierre du Mana",
+        "tier": "SACRED",
+        "nature": "rituel",
+        "mass_kg": 6.0,
+        "value": 600,
+        "dims_m": [
+          0.28,
+          0.26,
+          0.22
+        ],
+        "materials": [
+          "MAT_ManaStone",
+          "MAT_Basalt_Oceanic"
+        ],
+        "states": [],
+        "grab": "À deux mains ; zones polies par la manipulation = points de prise ; GRAB_POINT au centre.",
+        "rest_pose": "Posée sur sa face la plus plate.",
+        "texture_res": "2K",
+        "tris_lod0": 25000,
+        "situations": [
+          "marae abandonné",
+          "pierre"
+        ],
+        "breakable": false,
+        "culture": "Étrangeté par la géométrie naturelle seulement ; petits sillons et 3 à 4 motifs géométriques usés ; aucune rune lumineuse. « Mana » est pan-polynésien : ne pas en faire un pouvoir caricatural. Les Tuamotu sont des atolls coralliens sans roche volcanique : tout objet en basalte y est forcément importé (Mangareva, îles de la Société, Pitcairn) ; à présenter comme pierre rapportée d'une île haute.",
+        "lore": "Les mains de plusieurs générations l'ont polie au même endroit."
+      },
+      {
+        "num": "13",
+        "id": "VoiceStone",
+        "name_fr": "Pierre des Voix",
+        "tier": "SACRED",
+        "nature": "rituel",
+        "mass_kg": 11.0,
+        "value": 1500,
+        "dims_m": [
+          0.4,
+          0.28,
+          0.2
+        ],
+        "materials": [
+          "MAT_VoiceStone",
+          "MAT_Basalt_Oceanic"
+        ],
+        "states": [
+          {
+            "name": "Material_Normal",
+            "material": "MAT_VoiceStone",
+            "desc": "Gravures visibles uniquement en lumière rasante."
+          },
+          {
+            "name": "Material_Revealed",
+            "material": "MAT_VoiceStone_Revealed",
+            "desc": "Contraste des gravures (AO / roughness / normal) légèrement renforcé, sans néon ni émission."
+          }
+        ],
+        "grab": "À deux mains par les extrémités ; GRAB_POINT au centre.",
+        "rest_pose": "À plat sur sa plus grande face, gravures vers le haut.",
+        "texture_res": "2K",
+        "tris_lod0": 30000,
+        "situations": [
+          "marae abandonné",
+          "pierre"
+        ],
+        "breakable": false,
+        "culture": "Gravures originales très anciennes, partiellement effacées ; certaines lisibles seulement en lumière rasante (portées par normal/height map). Les Tuamotu sont des atolls coralliens sans roche volcanique : tout objet en basalte y est forcément importé (Mangareva, îles de la Société, Pitcairn) ; à présenter comme pierre rapportée d'une île haute.",
+        "lore": "Dans la lumière rasante du soir, de nouvelles gravures apparaissent."
+      },
+      {
+        "num": "15",
+        "id": "SacredPaddleFragment",
+        "name_fr": "Fragment de Pagaie Sacrée",
+        "tier": "RARE",
+        "nature": "rituel",
+        "mass_kg": 4.0,
+        "value": 380,
+        "dims_m": [
+          0.9,
+          0.17,
+          0.04
+        ],
+        "materials": [
+          "MAT_SacredPaddleFragment",
+          "MAT_Wood_Tropical_Aged"
+        ],
+        "states": [],
+        "grab": "À une main sur le reste de manche ; GRAB_POINT à 0,15 m de la cassure.",
+        "rest_pose": "Couché à plat.",
+        "texture_res": "2K",
+        "tris_lod0": 20000,
+        "situations": [
+          "sable",
+          "plancher de cabane"
+        ],
+        "breakable": false,
+        "culture": "Pagaie brisée anciennement : fibres du bois à la cassure, érosion, bois blanchi par la mer, décoration sculptée très discrète et originale.",
+        "lore": "Ce qui reste d'une pagaie de chef perdue dans un naufrage."
+      },
+      {
+        "num": "17",
+        "id": "WhiteTurtleSkull",
+        "name_fr": "Crâne de Tortue Blanche",
+        "tier": "RARE",
+        "nature": "naturel",
+        "mass_kg": 3.5,
+        "value": 520,
+        "dims_m": [
+          0.22,
+          0.15,
+          0.13
+        ],
+        "materials": [
+          "MAT_WhiteTurtleSkull",
+          "MAT_Bone_Aged",
+          "MAT_Salt_Deposit"
+        ],
+        "states": [],
+        "grab": "À une main par l'arrière du crâne ; GRAB_POINT au sommet du crâne.",
+        "rest_pose": "Posé sur la mâchoire, rostre vers -Y.",
+        "texture_res": "2K",
+        "tris_lod0": 25000,
+        "situations": [
+          "sable",
+          "marae abandonné"
+        ],
+        "breakable": false,
+        "culture": "Crâne anatomiquement crédible de tortue verte (Chelonia mydas). La tortue était un animal sacré en Polynésie orientale (offrandes de marae) : traitement sobre, jamais monstrueux.",
+        "lore": "Blanchi par des années de soleil sur un marae oublié.",
+        "notes": [
+          "3,5 kg du brief, bien au-dessus d'un crâne réel (~0,5-1 kg) : valeur gameplay conservée."
+        ]
+      },
+      {
+        "num": "18",
+        "id": "MotherTurtleScute",
+        "name_fr": "Écaille de la Tortue-Mère",
+        "tier": "RARE",
+        "nature": "naturel",
+        "mass_kg": 0.2,
+        "value": 1000,
+        "dims_m": [
+          0.18,
+          0.14,
+          0.012
+        ],
+        "materials": [
+          "MAT_MotherTurtleScute"
+        ],
+        "states": [],
+        "grab": "Entre doigts et paume ; GRAB_POINT au centre.",
+        "rest_pose": "À plat, face bombée vers le haut.",
+        "texture_res": "1K",
+        "tris_lod0": 6000,
+        "situations": [
+          "sable",
+          "plancher de cabane"
+        ],
+        "breakable": false,
+        "culture": "Plaque de carapace fictive inspirée de la tortue imbriquée (brun sombre à reflets dorés naturels), bords très usés.",
+        "lore": "Arrachée à une tortue qu'on disait plus vieille que l'atoll."
+      },
+      {
+        "num": "19",
+        "id": "SharkEye",
+        "name_fr": "Œil du Requin",
+        "tier": "RARE",
+        "nature": "naturel",
+        "mass_kg": 0.1,
+        "value": 700,
+        "dims_m": [
+          0.07,
+          0.065,
+          0.05
+        ],
+        "materials": [
+          "MAT_SharkEye"
+        ],
+        "states": [],
+        "grab": "Dans la paume ; GRAB_POINT au centre.",
+        "rest_pose": "Posé sur sa face la plus plate, « pupille » vers le haut.",
+        "texture_res": "1K",
+        "tris_lod0": 6000,
+        "situations": [
+          "sable",
+          "plancher de cabane"
+        ],
+        "breakable": false,
+        "culture": "Curiosité géologique : pierre bleu-gris polie à inclusion centrale ; aucune gemme exotique.",
+        "lore": "On jure qu'elle cligne quand on lui tourne le dos."
+      },
+      {
+        "num": "22",
+        "id": "NavigatorRope",
+        "name_fr": "Corde du Navigateur",
+        "tier": "RARE",
+        "nature": "savoir",
+        "mass_kg": 1.2,
+        "value": 300,
+        "dims_m": [
+          0.3,
+          0.3,
+          0.08
+        ],
+        "materials": [
+          "MAT_NavigatorRope",
+          "MAT_Rope_Coconut",
+          "MAT_Shell_Tropical"
+        ],
+        "states": [],
+        "grab": "Enroulée : par le dessus de la glène ; déroulée : par l'extrémité nouée ; GRAB_POINT au centre de la glène.",
+        "rest_pose": "Glène à plat (variante enroulée) ; variante déroulée en serpentin au sol.",
+        "texture_res": "2K",
+        "tris_lod0": 30000,
+        "situations": [
+          "plancher de cabane",
+          "sable"
+        ],
+        "breakable": false,
+        "culture": "Corde ancienne en fibre de coco (sennit), 3 m, nœuds distinctifs (mémoire de route) et petits coquillages attachés.",
+        "lore": "Chaque nœud est une île, chaque coquillage une nuit en mer.",
+        "variants": [
+          {
+            "name": "Coiled",
+            "mesh": "SM_NavigatorRope_Coiled",
+            "dims_m": [
+              0.3,
+              0.3,
+              0.08
+            ]
+          },
+          {
+            "name": "Uncoiled",
+            "mesh": "SM_NavigatorRope_Uncoiled",
+            "dims_m": [
+              1.6,
+              0.6,
+              0.05
+            ]
+          }
+        ],
+        "notes": [
+          "Curve + Geometry Nodes puis conversion en mesh pour l'export ; Ø corde 0,018 m ; longueur 3 m."
+        ]
+      },
+      {
+        "num": "24",
+        "id": "CoconutOfTheDead",
+        "name_fr": "Noix de Coco des Morts",
+        "tier": "COMMON",
+        "nature": "rituel",
+        "mass_kg": 1.5,
+        "value": 180,
+        "dims_m": [
+          0.15,
+          0.13,
+          0.13
+        ],
+        "materials": [
+          "MAT_CoconutOfTheDead",
+          "MAT_Coconut_Fiber"
+        ],
+        "states": [],
+        "grab": "À une main ; GRAB_POINT au centre.",
+        "rest_pose": "Posée sur le flanc, les trois pores vers -Y (lecture « visage »).",
+        "texture_res": "1K",
+        "tris_lod0": 12000,
+        "situations": [
+          "sable",
+          "marae abandonné",
+          "plancher de cabane"
+        ],
+        "breakable": true,
+        "culture": "Noix de coco presque blanchie, fissurée, fibres sèches ; les trois pores naturels suggèrent un visage, rien n'est sculpté.",
+        "lore": "On la retrouve toujours tournée vers celui qui la regarde."
+      },
+      {
+        "num": "25",
+        "id": "CrownOfTheLastAriki",
+        "name_fr": "Couronne du Dernier Ariki",
+        "tier": "LEGENDARY",
+        "nature": "cérémoniel",
+        "mass_kg": 0.9,
+        "value": 2200,
+        "dims_m": [
+          0.24,
+          0.22,
+          0.16
+        ],
+        "materials": [
+          "MAT_CrownOfTheLastAriki",
+          "MAT_Coconut_Fiber",
+          "MAT_Shell_Tropical",
+          "MAT_Nacre_White",
+          "MAT_Rope_Coconut"
+        ],
+        "states": [],
+        "grab": "À deux mains par le bandeau ; GRAB_POINT sur le bandeau arrière.",
+        "rest_pose": "Posée à plat sur le bandeau.",
+        "texture_res": "4K",
+        "tris_lod0": 40000,
+        "situations": [
+          "marae abandonné",
+          "plancher de cabane"
+        ],
+        "breakable": true,
+        "culture": "Bandeau cérémoniel original (pas de couronne européenne) : sennit, coquillages, nacre, quelques plumes plausibles localement (frégate, paille-en-queue). Ariki = chef (terme pan-polynésien, en usage aux Tuamotu).",
+        "lore": "Portée par le dernier chef de l'atoll avant qu'il ne soit abandonné.",
+        "notes": [
+          "Dimensions non données par le brief : bandeau Ø intérieur ~0,20 m, ornements jusqu'à 0,16 m de haut."
+        ]
+      },
+      {
+        "num": "26",
+        "id": "ObsidianMirror",
+        "name_fr": "Miroir d'Obsidienne",
+        "tier": "SACRED",
+        "nature": "rituel",
+        "mass_kg": 1.8,
+        "value": 1600,
+        "dims_m": [
+          0.24,
+          0.21,
+          0.035
+        ],
+        "materials": [
+          "MAT_ObsidianMirror",
+          "MAT_Obsidian_Polished"
+        ],
+        "states": [],
+        "grab": "À deux mains par le bord ; GRAB_POINT sur la tranche inférieure.",
+        "rest_pose": "À plat, face polie vers le haut.",
+        "texture_res": "2K",
+        "tris_lod0": 15000,
+        "situations": [
+          "marae abandonné",
+          "plancher de cabane"
+        ],
+        "breakable": true,
+        "culture": "Fictionnel. Il n'y a pas de verre volcanique aux Tuamotu : objet IMPORTÉ (verre volcanique de Pitcairn échangé via Mangareva, ou Rapa Nui), à signaler comme tel. Face très polie (roughness basse + micro-défauts), dos brut. Reflet réel côté Unreal (Lumen/SSR ou planar), sans dépendance Blender.",
+        "lore": "On y voit l'atoll tel qu'il était."
+      },
+      {
+        "num": "27",
+        "id": "ThunderShell",
+        "name_fr": "Coquillage du Tonnerre",
+        "tier": "RARE",
+        "nature": "naturel",
+        "mass_kg": 1.1,
+        "value": 650,
+        "dims_m": [
+          0.25,
+          0.13,
+          0.12
+        ],
+        "materials": [
+          "MAT_ThunderShell",
+          "MAT_Shell_Tropical"
+        ],
+        "states": [],
+        "grab": "À une main, doigts dans l'ouverture ; GRAB_POINT sur le corps.",
+        "rest_pose": "Couché, ouverture violette visible.",
+        "texture_res": "2K",
+        "tris_lod0": 30000,
+        "situations": [
+          "sable",
+          "fond marin"
+        ],
+        "breakable": false,
+        "culture": "Coquillage spiralé rare fictionnel (espèce non nommée), extérieur gris/beige, intérieur violet profond naturel ; spirale profonde réellement modélisée.",
+        "lore": "Collé à l'oreille, on n'entend pas la mer mais l'orage."
+      },
+      {
+        "num": "28",
+        "id": "CarvedWhaleTooth",
+        "name_fr": "Dent de Baleine Gravée",
+        "tier": "SACRED",
+        "nature": "cérémoniel",
+        "mass_kg": 1.4,
+        "value": 1900,
+        "dims_m": [
+          0.22,
+          0.08,
+          0.07
+        ],
+        "materials": [
+          "MAT_CarvedWhaleTooth",
+          "MAT_Bone_Aged"
+        ],
+        "states": [],
+        "grab": "Dans la paume ; GRAB_POINT au centre.",
+        "rest_pose": "Couchée sur le flanc.",
+        "texture_res": "2K",
+        "tris_lod0": 20000,
+        "situations": [
+          "plancher de cabane",
+          "sable"
+        ],
+        "breakable": false,
+        "culture": "Dent de cachalot : objet de prestige rare, à présenter comme importé ou issu d'une épave (époque des baleiniers). Gravures abstraites originales (houle, courant, navigation, étoiles) ; aucune iconographie sacrée identifiable, éviter le scrimshaw figuratif.",
+        "lore": "Elle a voyagé sur plus de navires qu'aucun homme vivant."
+      }
+    ],
+    "pipeline": {
+      "per_artifact": [
+        "High-detail : GEO-<Id>_High (sculpt/procédural, sert à la cuisson, non exporté).",
+        "Game mesh : SM_<Id>_LOD0 (tris_lod0 cible), SM_<Id>_LOD1 (~50 %), SM_<Id>_LOD2 (15-25 %, si nécessaire).",
+        "UV : UVMap (sans chevauchement, texel density cohérente, priorité aux zones manipulées) + LightmapUV.",
+        "Textures PBR cuites depuis le high : T_<Id>_BaseColor, T_<Id>_Roughness, T_<Id>_Normal, T_<Id>_AO (+ T_<Id>_Height si utile ; + T_<Id>_Emissive pour les states lumineux), résolution texture_res, dans maquettes/artefacts-polynesiens/textures/.",
+        "Matériaux : MAT_<Id> (+ MAT_<Id>_<State>) bâtis sur les shaders partagés MAT_* de la bibliothèque.",
+        "Collisions : UCX_<Id>_01, UCX_<Id>_02...",
+        "Points : SOCKET_GRAB_POINT et SOCKET_INSPECT_POINT (empties enfants du LOD0 ; suffixés _<Id> dans le .blend pour l'unicité, renommés à l'export).",
+        "Exports : exports/SM_<Id>_LOD0..2 en FBX (Unreal : LODs + UCX + sockets) et GLB ; SK_<Id> en plus pour les objets riggés.",
+        "Rendus de contrôle : renders/<Id>/FRONT, BACK, LEFT, RIGHT, TOP, BOTTOM, 3-4, CLOSEUP + SITU_<situation>_DAY et SITU_<situation>_TORCH ; mannequin 1,80 m sur la vue d'échelle.",
+        "Rapport : build-report par objet (tris, dims mesurées, masse, matériaux, textures, checks)."
+      ],
+      "shared_materials": [
+        "MAT_Wood_Tropical_Aged",
+        "MAT_Basalt_Oceanic",
+        "MAT_Nacre_Black",
+        "MAT_Nacre_White",
+        "MAT_Coral_Dead",
+        "MAT_Coral_Red",
+        "MAT_Bone_Aged",
+        "MAT_Shark_Tooth",
+        "MAT_Coconut_Fiber",
+        "MAT_Shell_Tropical",
+        "MAT_Salt_Deposit",
+        "MAT_Rope_Coconut",
+        "MAT_Obsidian_Polished"
+      ],
+      "texture_rule": "4K LEGENDARY (sauf < 3 cm : 2K) ; 2K standard ; 1K petits objets (plus grande dimension <= 0,22 m environ) non LEGENDARY.",
+      "tris_rule": "Assets principaux LOD0 20k-80k selon taille ; petits objets 5k-25k ; LOD1 ~50 % ; LOD2 15-25 %.",
+      "collections": {
+        "tree": "COL-POLYNESIAN_ARTIFACTS > COL-<TIER> > COL-<Id> > COL-<Id>-GEO / COL-<Id>-COLLISION / COL-<Id>-MATERIALS / COL-<Id>-GRAB_POINT / COL-<Id>-LODS",
+        "naming_coexistence": "CLAUDE.md impose GEO-/EMP-/MAT-/COL-/CAM-/LGT- pour les objets de scène (high-poly, mannequin, décors de situation, caméras, lumières, collections) ; les assets exportés vers Unreal gardent la convention du brief : SM_, SK_, UCX_, SOCKET_, MAT_, T_. Les collections sont préfixées COL- et suffixées -<Id> car Blender exige des noms uniques (le GEO/COLLISION/... du brief devient COL-<Id>-GEO, etc.)."
+      },
+      "situations": [
+        "sable",
+        "pierre",
+        "plancher de cabane",
+        "marae abandonné",
+        "fond marin"
+      ],
+      "lighting_tests": [
+        "lumière naturelle neutre (HDRI plage + soleil)",
+        "lampe torche (spot étroit, scène sombre)"
+      ],
+      "qa_checks": [
+        "CHECK 1 : silhouette identifiable à 5 m.",
+        "CHECK 2 : silhouette identifiable dans une pièce sombre avec lampe torche.",
+        "CHECK 3 : échelle réaliste par comparaison avec le mannequin humain 1,80 m.",
+        "CHECK 4 : matériaux crédibles à 30 cm.",
+        "CHECK 5 : absence de clipping.",
+        "CHECK 6 : UV correctes.",
+        "CHECK 7 : normales correctes.",
+        "CHECK 8 : scale = 1.",
+        "CHECK 9 : collision fonctionnelle.",
+        "CHECK 10 : pivot correct.",
+        "CHECK 11 : nom correct.",
+        "CHECK 12 : pas de dépendance manquante."
+      ],
+      "export_checks": [
+        "normales correctes",
+        "pas de n-gon problématique",
+        "transforms appliquées",
+        "UV présentes",
+        "textures liées",
+        "aucun asset caché inutile",
+        "aucune caméra ni lumière dans les exports"
+      ]
+    },
+    "notes": [
+      "Ordre de gameplay.artifacts = ordre de construction (§15 puis le reste par numéro).",
+      "Ne passer à l'objet suivant que lorsque l'objet courant est exploitable en jeu (§14).",
+      "Respect culturel : formes originales, aucune copie de pièce de musée, références extérieures aux Tuamotu signalées comme importées."
+    ]
+  },
+  "units": {
+    "system": "METRIC",
+    "length": "METERS",
+    "scale_length": 1.0
+  },
+  "objects": [],
+  "scripts": [
+    "scripts/artifacts.py"
+  ],
+  "camera": {
+    "auto": true,
+    "lens": 50,
+    "location": [
+      1.2,
+      -1.6,
+      0.9
+    ],
+    "look_at": [
+      0.0,
+      0.0,
+      0.18
+    ],
+    "views": [
+      "three_quarter",
+      "front",
+      "back",
+      "left",
+      "right",
+      "top"
+    ]
+  },
+  "lights": [
+    {
+      "name": "soleil",
+      "type": "SUN",
+      "energy": 3.2,
+      "color": [
+        1.0,
+        0.96,
+        0.9
+      ],
+      "rotation_deg": [
+        50,
+        0,
+        -35
+      ]
+    },
+    {
+      "name": "remplissage",
+      "type": "SUN",
+      "energy": 0.8,
+      "color": [
+        0.85,
+        0.9,
+        1.0
+      ],
+      "rotation_deg": [
+        65,
+        0,
+        140
+      ]
+    }
+  ],
+  "world": {
+    "color": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "strength": 0.8,
+    "hdri": "art/hdri/secluded_beach_4k.hdr",
+    "hdri_rotation_deg": 40,
+    "background_color": [
+      0.93,
+      0.93,
+      0.92,
+      1.0
+    ]
+  },
+  "render": {
+    "engine": "EEVEE",
+    "resolution": [
+      1600,
+      900
+    ],
+    "samples": 64
+  },
+  "outputs": {
+    "blend": true,
+    "exports": [],
+    "preview": true
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "date": "2026-10-06",
+      "author": "factory",
+      "notes": "Création de la spec : 31 artefacts par ordre de priorité, règle de tier, pipeline game-ready ; build initial limité à HeartOfTheReef."
+    }
+  ]
+}
