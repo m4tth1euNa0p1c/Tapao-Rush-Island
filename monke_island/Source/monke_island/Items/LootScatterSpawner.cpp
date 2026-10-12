@@ -3,6 +3,7 @@
 #include "Items/LootScatterSpawner.h"
 #include "Items/LootMath.h"
 #include "Items/LootRules.h"
+#include "Items/ValuableComponent.h"
 #include "Water/IslandWaterSubsystem.h"
 #include "monke_island.h"
 #include "Components/BillboardComponent.h"
@@ -174,7 +175,7 @@ void ALootScatterSpawner::Scatter()
 		{
 			break;
 		}
-		const FVector& Spot = Rules->Spots[Index];
+		const FVector Spot = bSpotsInActorFrame ? GetActorTransform().TransformPosition(Rules->Spots[Index]) : Rules->Spots[Index];
 		if (!LootMath::IsNearAStart(Spot, Starts, Rules->MinDistanceFromStart, Rules->MaxDistanceFromStart) || !IsFree(Spot))
 		{
 			continue;
@@ -200,14 +201,36 @@ void ALootScatterSpawner::SpawnBatch()
 {
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+	const bool bScaleValue = !FMath::IsNearlyEqual(Rules->ValueScaleRange.X, 1.0) || !FMath::IsNearlyEqual(Rules->ValueScaleRange.Y, 1.0)
+		|| Rules->MaxValue > 0;
 	const int32 Batch = FMath::Min(FMath::Max(Rules->SpawnBatchSize, 1), Pending.Num());
 	for (int32 Index = 0; Index < Batch; ++Index)
 	{
 		const TPair<TSubclassOf<AActor>, FTransform> Item = Pending.Pop(EAllowShrinking::No);
-		if (AActor* Spawned = GetWorld()->SpawnActor<AActor>(Item.Key, Item.Value, Params))
+		if (!bScaleValue)
 		{
-			Scattered.Add(Spawned);
+			if (AActor* Spawned = GetWorld()->SpawnActor<AActor>(Item.Key, Item.Value, Params))
+			{
+				Scattered.Add(Spawned);
+			}
+			continue;
 		}
+		// its value drawn before it begins play (the valuable takes its value from BaseValue then)
+		AActor* Spawned = GetWorld()->SpawnActorDeferred<AActor>(Item.Key, Item.Value, nullptr, nullptr,
+			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn);
+		if (!Spawned)
+		{
+			continue;
+		}
+		if (UValuableComponent* Valuable = Spawned->FindComponentByClass<UValuableComponent>())
+		{
+			const double Scale = FMath::FRandRange(FMath::Min(Rules->ValueScaleRange.X, Rules->ValueScaleRange.Y),
+				FMath::Max(Rules->ValueScaleRange.X, Rules->ValueScaleRange.Y));
+			int32 Value = FMath::Max(0, FMath::RoundToInt32(Valuable->BaseValue * Scale));
+			Valuable->BaseValue = Rules->MaxValue > 0 ? FMath::Min(Value, Rules->MaxValue) : Value;
+		}
+		Spawned->FinishSpawning(Item.Value);
+		Scattered.Add(Spawned);
 	}
 	if (Pending.IsEmpty())
 	{
@@ -218,7 +241,7 @@ void ALootScatterSpawner::SpawnBatch()
 
 bool ALootScatterSpawner::ProjectToGround(const FVector& Spot, FVector& OutGround) const
 {
-	const FVector Start(Spot.X, Spot.Y, Spot.Z + 3000.0);
+	const FVector Start(Spot.X, Spot.Y, Spot.Z + Rules->GroundSearchHeight);
 	const FVector End(Spot.X, Spot.Y, Spot.Z - 3000.0);
 	FCollisionQueryParams Params(SCENE_QUERY_STAT(LootGround), false, this);
 	const FCollisionObjectQueryParams Objects(ECC_WorldStatic);

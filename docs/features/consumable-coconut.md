@@ -19,6 +19,9 @@
   
   Une noix ne soigne qu'une fois, même si deux joueurs appuient en même temps.
 - **Coût réseau.** Les noix posées dans la map sont en dormance réseau : aucun coût tant que personne ne les boit.
+  - Bue, la noix est réveillée (`FlushNetDormancy`), puis son son part pendant qu'elle est encore visible, enfin elle est cachée par son mesh, pas par l'acteur (T-316). Un acteur caché sans collision n'est pertinent pour aucun client : avant ce correctif, le son n'arrivait jamais aux clients, et la noix ne disparaissait chez eux qu'à sa destruction, 0,5 s plus tard.
+  - Une noix est un objet statique : elle n'a pas de `UNetRestComponent`, qui sert aux corps physiques libres.
+  - Spec `monke_island.Items.Consumable` (`Network`).
 - **Distinction visuelle.** Les noix **brunes et sèches** restent du décor, dispersé par PCG et non interactif. Seules les fraîches se boivent.
 
 ## Valeurs (DataAsset, jamais dans le code)

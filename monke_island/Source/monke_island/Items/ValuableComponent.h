@@ -64,6 +64,13 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Valuable")
 	int32 ApplyValueLoss(int32 Loss);
 
+	/**
+	 *  Server: the value the object already had elsewhere (a mob weapon picked up then dropped again, T-309, network
+	 *  review R-39): BaseValue and Value as given (Value at most BaseValue), the zone and greed multiplier never applied a
+	 *  second time. Called before BeginPlay (a deferred spawn); later it sets both at once
+	 */
+	void RestoreValue(int32 InBaseValue, int32 InValue);
+
 	/** Value lost by an impact at this speed */
 	static int32 ComputeImpactLoss(float ImpactSpeed, float SafeSpeed, float HeavySpeed, float MaxLossFraction, int32 InBaseValue);
 
@@ -89,4 +96,7 @@ private:
 
 	/** World time of the last counted hit */
 	double LastHitTime = -1.0e6;
+
+	/** Server: RestoreValue gave the value, BeginPlay keeps it as it is */
+	bool bValueRestored = false;
 };

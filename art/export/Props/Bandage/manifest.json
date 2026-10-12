@@ -1,0 +1,4443 @@
+{
+ "format": "bandage-kit/1",
+ "task": "T-340 (lot L5), art pour l'agent du code (ABandageItem, DA_BandageRules)",
+ "status": "built",
+ "note": "régénéré par scripts/props/bandage_kit/build.py (Blender -b) : noms d'assets, de sockets et d'événements du manifeste provisoire conservés ; durée, temps des événements et transformations d'attache exacts ; rien n'a été importé ni testé dans Unreal (runtime_tested false)",
+ "built_by": "scripts/props/bandage_kit/build.py",
+ "built_at": "2026-10-11T23:50:48",
+ "blender": "5.2.2 LTS",
+ "units": {
+  "blender": "mètres, Z haut, avant de l'objet = +X",
+  "unreal": "cm ; Unreal = (x*100, -y*100, z*100) depuis Blender",
+  "fbx": "FBX_SCALE_NONE, global_scale 1, apply_unit_scale, -Y avant / Z haut (comme scripts/props/barque.py et le kit de capture) : import échelle 1",
+  "sockets": "empties SOCKET_<nom> ; remettre relative_scale à 1 après l'import",
+  "collision": "UCX_SM_Bandage_Roll_Pickup_00 (boîte) dans le FBX de l'objet au sol : importer sans collision auto ; rouleau tenu et bande sans collision (attachés, NoCollision)"
+ },
+ "assets": {
+  "SM_Bandage_Roll": {
+   "files": [
+    "art/export/Props/Bandage/SM_Bandage_Roll.fbx"
+   ],
+   "triangles": 1064,
+   "vertices": 536,
+   "size_m": [
+    0.055,
+    0.06,
+    0.1216
+   ],
+   "bounds_min_m": [
+    -0.0275,
+    -0.03,
+    -0.0916
+   ],
+   "bounds_max_m": [
+    0.0275,
+    0.03,
+    0.03
+   ],
+   "size_cm_unreal": [
+    5.5,
+    6.0,
+    12.2
+   ],
+   "collision": [],
+   "sockets": {
+    "grip": {
+     "blender_m": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "unreal_cm": [
+      0.0,
+      -0.0,
+      0.0
+     ]
+    },
+    "tail": {
+     "blender_m": [
+      0.0,
+      -0.006,
+      -0.0913
+     ],
+     "unreal_cm": [
+      0.0,
+      0.6,
+      -9.13
+     ]
+    }
+   },
+   "materials": [
+    "M_Bandage_Linen"
+   ],
+   "info": {
+    "roll_diameter_m": 0.06,
+    "roll_width_m": 0.055,
+    "tail_length_m": 0.09,
+    "look": "lin écru, rouleau serré (lignes de couches sur les flancs, trou de mandrin), bout libre qui pend"
+   },
+   "role": "rouleau de bande de lin tenu en main, un bout qui pend",
+   "pivot": "centre du rouleau = socket grip",
+   "socket_roles": {
+    "grip": "centre du rouleau (dans la mitaine droite)",
+    "tail": "bout de la bande qui pend"
+   }
+  },
+  "SM_Bandage_Roll_Pickup": {
+   "files": [
+    "art/export/Props/Bandage/SM_Bandage_Roll_Pickup.fbx"
+   ],
+   "triangles": 1040,
+   "vertices": 524,
+   "size_m": [
+    0.2326,
+    0.0564,
+    0.0624
+   ],
+   "bounds_min_m": [
+    -0.03,
+    -0.0275,
+    0.0
+   ],
+   "bounds_max_m": [
+    0.2026,
+    0.0289,
+    0.0624
+   ],
+   "size_cm_unreal": [
+    23.3,
+    5.6,
+    6.2
+   ],
+   "collision": [
+    "UCX_SM_Bandage_Roll_Pickup_00"
+   ],
+   "sockets": {
+    "grip": {
+     "blender_m": [
+      0.0,
+      0.0,
+      0.0324
+     ],
+     "unreal_cm": [
+      0.0,
+      -0.0,
+      3.24
+     ]
+    }
+   },
+   "materials": [
+    "M_Bandage_Linen"
+   ],
+   "info": {
+    "look": "le rouleau couché sur le flanc, le bout déroulé à plat devant (+X)",
+    "rest_height_m": 0.0624
+   },
+   "role": "le même rouleau couché au sol (objet ramassable), bout à plat",
+   "pivot": "centre du dessous (Z = 0)"
+  },
+  "SM_Bandage_Wrapped": {
+   "files": [
+    "art/export/Props/Bandage/SM_Bandage_Wrapped.fbx"
+   ],
+   "triangles": 984,
+   "vertices": 496,
+   "size_m": [
+    0.0534,
+    0.1684,
+    0.1713
+   ],
+   "bounds_min_m": [
+    -0.027,
+    -0.0836,
+    -0.0842
+   ],
+   "bounds_max_m": [
+    0.0264,
+    0.0848,
+    0.0871
+   ],
+   "size_cm_unreal": [
+    5.3,
+    16.8,
+    17.1
+   ],
+   "collision": [],
+   "sockets": {},
+   "materials": [
+    "M_Bandage_Linen"
+   ],
+   "info": {
+    "turns": 3,
+    "band_width_m": 0.032,
+    "covered_length_m": 0.054,
+    "inner_radius_m": [
+     0.0752,
+     0.0832
+    ],
+    "fitted_on": "Cuff_l + Sleeve_l de bean_soldier.blend (pose de repos), écart 4 mm, 2,4 mm de plus par tour",
+    "centre_along_lowerarm_l": 0.55
+   },
+   "role": "bande enroulée (3 tours) autour de l'avant-bras gauche",
+   "pivot": "centre de la bande, axe de l'avant-bras = +X",
+   "attach": "sur l'os lowerarm_l (attachments.wrapped_on_lowerarm_l) ; version 1re personne sur le bras gauche SM_Bean_FPArm (attachments.first_person.wrapped_on_left_fp_arm)"
+  }
+ },
+ "materials": {
+  "M_Bandage_Linen": {
+   "textures": {
+    "D": "art/export/Props/Bandage/Textures/T_Bandage_Linen_D.png",
+    "N": "art/export/Props/Bandage/Textures/T_Bandage_Linen_N.png",
+    "ORM": "art/export/Props/Bandage/Textures/T_Bandage_Linen_ORM.png"
+   },
+   "source": "https://polyhaven.com/a/hessian_230",
+   "license": "CC0 1.0",
+   "look": "lin écru (toile tissée fine), mat"
+  },
+  "convention": "D sRGB ; N DirectX (TC_Normalmap sans flip) ; ORM linéaire (TC_Masks, sRGB off) R = AO, G = rugosité, B = métal (0) ; textures en répétition (UV en mètres / 0,12 m par tuile) : brancher sur M_Character_Baked ou un maître équivalent ; les FBX ne portent que le nom d'emplacement M_Bandage_Linen"
+ },
+ "clip": {
+  "A_Bean_Bandage_Apply": {
+   "file": "art/export/Characters/Bandage/A_Bean_Bandage_Apply.fbx",
+   "skeleton": "/Game/MonkeIsland/Characters/Bean/Meshes/SK_Bean_Body_Skeleton",
+   "target": "player (BP_IslanderBean)",
+   "summary": "left forearm up in front of the chest, the right mitten winds the band three times (over the top and down the outer side), pulls it tight, pats it; back to rest",
+   "fps": 30,
+   "frames": 90,
+   "keys": 91,
+   "seconds": 3.0,
+   "loop": false,
+   "root_motion": false,
+   "events": [
+    {
+     "name": "WrapStart",
+     "frame": 12,
+     "time_s": 0.4
+    },
+    {
+     "name": "BandageDone",
+     "frame": 82,
+     "time_s": 2.733
+    }
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "start_s": 0.4,
+     "end_s": 0.933
+    },
+    {
+     "turn": 2,
+     "start_s": 0.933,
+     "end_s": 1.467
+    },
+    {
+     "turn": 3,
+     "start_s": 1.467,
+     "end_s": 2.0
+    }
+   ],
+   "phases_s": {
+    "raise_s": [
+     0.0,
+     0.4
+    ],
+    "turns_s": [
+     0.4,
+     2.0
+    ],
+    "tighten_s": [
+     2.0,
+     2.267
+    ],
+    "pats_s": [
+     2.267,
+     2.733
+    ],
+    "lower_s": [
+     2.733,
+     3.0
+    ]
+   },
+   "end_pose": "image 90 = pose de repos (comme l'image 0)",
+   "qa": {
+    "max_stretch": 1.593,
+    "max_stretch_l": 1.03,
+    "max_stretch_r": 1.593,
+    "max_hand_error_m": 0.0,
+    "max_leg_error_m": 0.0,
+    "loop_arc_deg": [
+     0.7,
+     105.0
+    ],
+    "loop_arc_span_deg": 104.3,
+    "contacts": {
+     "overlap": {
+      "hand_r~hats": {
+       "frames_checked": 91,
+       "frames_with_contact": [],
+       "max_overlapping_face_pairs": 0,
+       "rest_frame_0": 0
+      },
+      "hand_r~left_arm": {
+       "frames_checked": 91,
+       "frames_with_contact": [],
+       "max_overlapping_face_pairs": 0,
+       "rest_frame_0": 0
+      },
+      "roll~hats": {
+       "frames_checked": 82,
+       "frames_with_contact": [],
+       "max_overlapping_face_pairs": 0,
+       "rest_frame_0": 0
+      },
+      "roll~left_arm": {
+       "frames_checked": 82,
+       "frames_with_contact": [],
+       "max_overlapping_face_pairs": 0,
+       "rest_frame_0": 0
+      },
+      "hand_r~band": {
+       "frames_checked": 79,
+       "frames_with_contact": [],
+       "max_overlapping_face_pairs": 0,
+       "rest_frame_0": null
+      },
+      "roll~band": {
+       "frames_checked": 70,
+       "frames_with_contact": [],
+       "max_overlapping_face_pairs": 0,
+       "rest_frame_0": null
+      },
+      "sleeve_r~left_arm": {
+       "frames_checked": 91,
+       "frames_with_contact": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86
+       ],
+       "max_overlapping_face_pairs": 130,
+       "rest_frame_0": 0
+      },
+      "band~cuff_l": {
+       "frames_checked": 79,
+       "frames_with_contact": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+       ],
+       "max_overlapping_face_pairs": 116,
+       "rest_frame_0": null
+      },
+      "left_arm~hats": {
+       "frames_checked": 91,
+       "frames_with_contact": [],
+       "max_overlapping_face_pairs": 0,
+       "rest_frame_0": 0
+      },
+      "sleeve_r~hats": {
+       "frames_checked": 91,
+       "frames_with_contact": [],
+       "max_overlapping_face_pairs": 0,
+       "rest_frame_0": 0
+      }
+     },
+     "clearance_cm": {
+      "hand_r": {
+       "min_all_frames": 2.52,
+       "min_wrap_frames": 2.52,
+       "rest_frame_0": 3.98,
+       "worst_frame": 12
+      },
+      "roll": {
+       "min_all_frames": 3.04,
+       "min_wrap_frames": 3.04,
+       "rest_frame_0": 6.64,
+       "worst_frame": 20
+      },
+      "band": {
+       "min_all_frames": -2.4,
+       "min_wrap_frames": -1.18,
+       "rest_frame_0": null,
+       "worst_frame": 85
+      },
+      "sleeve_r": {
+       "min_all_frames": -13.19,
+       "min_wrap_frames": -12.95,
+       "rest_frame_0": -5.74,
+       "worst_frame": 85
+      },
+      "left_sleeve": {
+       "min_all_frames": -7.09,
+       "min_wrap_frames": -5.87,
+       "rest_frame_0": -3.39,
+       "worst_frame": 8
+      }
+     },
+     "sleeves_gap": {
+      "min_cm": -6.2,
+      "min_wrap_frames_cm": -4.81,
+      "rest_frame_0_cm": 25.92,
+      "worst_frame": 9,
+      "how": "axes des os du bras droit (upperarm, lowerarm) contre ceux du bras gauche, moins 7 cm x étirement par manche (négatif = les manches se pénètrent de tant)"
+     }
+    },
+    "contacts_how": "maillages déformés du bean (bean_soldier.blend) jouant le clip, rouleau et bande placés comme les attachments, à chaque image : clearance_cm = plus petite distance signée des sommets à la coque fermée Bean_Body (négatif = dans le corps ; manteau, gilet et baudriers sont 2 à 3 cm au-dessus : sous ~2,5 cm la pièce touche le manteau), overlap = paires de faces qui se croisent (BVH) avec chapeaux, bras gauche, bande ; rest_frame_0 = valeur en pose de repos (contacts déjà présents dans le modèle)"
+   },
+   "geometry_limit": "un tour complet de 360 degrés de la mitaine autour de l'avant-bras est hors de portée de ce rig : bras de 24 cm jusqu'au poignet, manches de 7 cm de rayon, poitrine 23 à 29 cm devant la ligne des épaules ; la mitaine (6 cm de rayon) devrait passer entre avant-bras et poitrine, ce qui demande d'étirer les bras d'environ 2,2 (l'étirement uniforme grossit aussi la manche) et fait croiser les deux manches. La boucle reste sur les côtés libres : par-dessus puis le long du côté extérieur (qa.loop_arc_deg dans le repère de l'avant-bras, 0 = dessus, 90 = extérieur, 180 = dessous ; dessous, le ventre déborde et le rouleau toucherait le manteau), puis revient par l'extérieur ; l'avant-bras roule un peu contre elle. Les deux épaules avancent (10 cm), rentrent (6 cm) et descendent (1,7 cm) par des clés de translation sur upperarm_l / upperarm_r (manches et épaulettes pondérées à 95 % sur les os du bras : tout le bras glisse sur l'oeuf). En 1re personne l'arc va du dessus au dessous par le côté droit (first_person.qa).",
+   "unreal_import": "commandlet comme les clips de capture (options de scripts/character/import_bean_library.py task_for : skeleton = SK_Bean_Body_Skeleton, FBXALIT_EXPORTED_TIME, remove_redundant_keys False) ; cible conseillée /Game/MonkeIsland/Bandage/Animations/ ; notifies WrapStart et BandageDone à poser aux temps events[].time_s",
+   "export": "réglages des clips de la bibliothèque (rig.export_clip) : armature seule renommée Armature, FBX_SCALE_NONE + apply_unit_scale, -Y avant / Z haut, os déformants, toutes clés cuites, os root à x100 comme tous les A_Bean_* ; bras étirés uniformément (qa.max_stretch), mitaines gardées à leur taille"
+  }
+ },
+ "attachments": {
+  "note": "transformations relatives à un os : espace os Blender (exact) et conversion Unreal du projet (location cm (x, -y, z), FRotator(-ey, -ez, ex) comme TorchRules::GripInHand) À VÉRIFIER dans l'éditeur",
+  "roll_in_hand_r": {
+   "bone": "hand_r",
+   "blender_bone_space": {
+    "location_m": [
+     0.01508,
+     0.13383,
+     -0.00224
+    ],
+    "quaternion_wxyz": [
+     0.47551,
+     0.47551,
+     0.523345,
+     -0.523345
+    ],
+    "rotation_euler_deg_xyz": [
+     90.0,
+     95.484,
+     0.0
+    ]
+   },
+   "unreal_guess": {
+    "location_cm": [
+     1.508,
+     -13.383,
+     -0.224
+    ],
+    "rotator_pitch_yaw_roll_deg": [
+     -95.484,
+     -0.0,
+     90.0
+    ],
+    "convention": "like TorchRules::GripInHand (attach_torch.json): to check in the editor"
+   },
+   "mesh": "SM_Bandage_Roll",
+   "socket_at_mitten": "grip",
+   "what": "origine du maillage (= socket grip, centre du rouleau) relative à hand_r : au bout des doigts côté paume, axe du rouleau côté pouce, bout libre le long des doigts",
+   "use": "objet tenu (main droite) et pendant A_Bean_Bandage_Apply ; caché à BandageDone (rouleau consommé)"
+  },
+  "wrapped_on_lowerarm_l": {
+   "bone": "lowerarm_l",
+   "blender_bone_space": {
+    "location_m": [
+     0.0,
+     0.05683,
+     -0.0
+    ],
+    "quaternion_wxyz": [
+     0.083085,
+     0.702209,
+     0.702209,
+     0.083085
+    ],
+    "rotation_euler_deg_xyz": [
+     166.504,
+     -0.0,
+     90.0
+    ]
+   },
+   "unreal_guess": {
+    "location_cm": [
+     0.0,
+     -5.683,
+     -0.0
+    ],
+    "rotator_pitch_yaw_roll_deg": [
+     0.0,
+     -90.0,
+     166.504
+    ],
+    "convention": "like TorchRules::GripInHand (attach_torch.json): to check in the editor"
+   },
+   "mesh": "SM_Bandage_Wrapped",
+   "what": "origine du maillage (centre de la bande sur l'axe de l'avant-bras) relative à lowerarm_l ; ajustée sur la manchette en pose de repos",
+   "use": "attacher à lowerarm_l (KeepRelative avec cette transformation, échelle héritée de l'os : la bande suit le bras étiré pendant le clip) ; visible dès WrapStart (ou à la fin du 1er tour, clip.turns) et après le soin le temps voulu (DA_BandageRules)"
+  },
+  "first_person": {
+   "wrapped_on_left_fp_arm": {
+    "mesh": "SM_Bandage_Wrapped",
+    "parent": "bras gauche SM_Bean_FPArm (UBeanFirstPersonArmsComponent, composant gauche, échelle Y -1)",
+    "relative_location_cm": [
+     27.0,
+     0.0,
+     -1.5
+    ],
+    "relative_rotation_pyr_deg": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "relative_scale": [
+     1.0,
+     1.1123,
+     1.1123
+    ],
+    "note": "échelle radiale 1.1123 pour passer sur FPArm_Cuff (rayon 7,9 cm) ; le bras est étiré en X par Stretch : mettre l'échelle X relative à 1/Stretch chaque image pour garder la largeur de la bande, ou l'ignorer (écart max Stretch gauche, first_person.qa)"
+   },
+   "roll_in_right_fp_hand": {
+    "mesh": "SM_Bandage_Roll",
+    "parent": "bras droit SM_Bean_FPArm",
+    "relative_location_cm": [
+     43.0,
+     -0.0,
+     -3.5
+    ],
+    "relative_rotation_pyr_deg": [
+     0.0,
+     -90.0,
+     0.0
+    ],
+    "note": "sous le bout des doigts de la mitaine, axe du rouleau en travers du bras ; échelle X relative 1/Stretch du bras droit pour ne pas déformer le rouleau"
+   }
+  }
+ },
+ "first_person": {
+  "format": "FBeanArmPose (Location cm = épaule relative à la caméra, Rotation, Stretch), comme MusketMath::SolveArm ; clés temporelles des deux bras ; gauche donnée en pose miroir pour UBeanFirstPersonArmsComponent::SetPoseOverride",
+  "fps": 30,
+  "seconds": 3.0,
+  "events": [
+   {
+    "name": "WrapStart",
+    "frame": 12,
+    "time_s": 0.4
+   },
+   {
+    "name": "BandageDone",
+    "frame": 82,
+    "time_s": 2.733
+   }
+  ],
+  "interpolation": "une clé par image (30 i/s) : interpoler linéairement entre deux clés (pas de SmoothStep MusketMath::FindKeys, qui marquerait un arrêt à chaque image)",
+  "solve": {
+   "right_shoulder_cm": [
+    -5.0,
+    18.0,
+    -20.0
+   ],
+   "left_shoulder_cm": [
+    -5.0,
+    -18.0,
+    -22.0
+   ],
+   "hand_point_cm": [
+    36.0,
+    0.0,
+    -1.5
+   ],
+   "max_stretch": 1.6,
+   "note": "épaules et point de mitaine de MusketRules ; right / left = SolveArm(épaule, *_target_cm) (left passé par MirrorArm) ; au-delà de MaxStretch, SolveArm fait glisser l'épaule le long du bras (Location des clés gauches) ; montée (0..WrapStart) et descente (BandageDone..fin) : épaule et cible glissent vers la RestPose du composant (le bras vise toujours sa mitaine, sans balayer l'objectif) ; image 0 et image 90 = RestPose exacte des deux bras"
+  },
+  "rest_pose": {
+   "location_cm": [
+    -5.0,
+    24.0,
+    -62.0
+   ],
+   "rotation_pyr_deg": [
+    40.0,
+    -5.0,
+    0.0
+   ]
+  },
+  "qa": {
+   "min_right_mitten_to_left_cuff_cm": 1.1,
+   "min_right_mitten_to_left_mitten_cm": 10.39,
+   "min_roll_to_left_arm_cm": 0.06,
+   "min_arm_axes_distance_cm": -2.5,
+   "min_camera_distance_cm": 13.04,
+   "max_stretch_right": 1.491,
+   "max_stretch_left": 1.6,
+   "min_roll_to_camera_cm": 43.4
+  },
+  "qa_how": "formes analytiques (tubes et sphères aux rayons mesurés de SM_Bean_FPArm : manchette 7,9 cm, mitaine 5,2 cm, rouleau 3 cm) entre WrapStart et BandageDone ; min_arm_axes_distance_cm < 0 = les deux bras se touchent ; min_camera_distance_cm = surface la plus proche de la caméra",
+  "keys": [
+   {
+    "frame": 0,
+    "time_s": 0.0,
+    "right": {
+     "location_cm": [
+      -5.0,
+      24.0,
+      -62.0
+     ],
+     "rotation_pyr_deg": [
+      40.0,
+      -5.0,
+      0.0
+     ],
+     "stretch": 1.0
+    },
+    "left": {
+     "location_cm": [
+      -5.0,
+      24.0,
+      -62.0
+     ],
+     "rotation_pyr_deg": [
+      40.0,
+      -5.0,
+      0.0
+     ],
+     "stretch": 1.0
+    },
+    "right_target_cm": [
+     23.43,
+     21.51,
+     -40.01
+    ],
+    "left_target_cm": [
+     23.43,
+     -21.51,
+     -40.01
+    ]
+   },
+   {
+    "frame": 1,
+    "time_s": 0.0333,
+    "right": {
+     "location_cm": [
+      -5.907,
+      23.968,
+      -59.982
+     ],
+     "rotation_pyr_deg": [
+      37.393,
+      -5.398,
+      0.0
+     ],
+     "stretch": 1.0097
+    },
+    "left": {
+     "location_cm": [
+      -5.895,
+      23.975,
+      -60.013
+     ],
+     "rotation_pyr_deg": [
+      36.85,
+      -5.949,
+      -0.0
+     ],
+     "stretch": 1.0142
+    },
+    "right_target_cm": [
+     23.75,
+     21.17,
+     -39.1
+    ],
+    "left_target_cm": [
+     24.06,
+     -20.85,
+     -39.32
+    ]
+   },
+   {
+    "frame": 2,
+    "time_s": 0.0667,
+    "right": {
+     "location_cm": [
+      -5.893,
+      23.656,
+      -57.688
+     ],
+     "rotation_pyr_deg": [
+      36.794,
+      -6.451,
+      0.0
+     ],
+     "stretch": 1.0342
+    },
+    "left": {
+     "location_cm": [
+      -5.847,
+      23.68,
+      -57.805
+     ],
+     "rotation_pyr_deg": [
+      34.808,
+      -8.355,
+      -0.0
+     ],
+     "stretch": 1.0528
+    },
+    "right_target_cm": [
+     24.63,
+     20.21,
+     -36.59
+    ],
+    "left_target_cm": [
+     25.79,
+     -19.03,
+     -37.4
+    ]
+   },
+   {
+    "frame": 3,
+    "time_s": 0.1,
+    "right": {
+     "location_cm": [
+      -5.872,
+      23.184,
+      -54.223
+     ],
+     "rotation_pyr_deg": [
+      35.927,
+      -7.921,
+      0.0
+     ],
+     "stretch": 1.0719
+    },
+    "left": {
+     "location_cm": [
+      -5.777,
+      23.22,
+      -54.477
+     ],
+     "rotation_pyr_deg": [
+      31.93,
+      -11.471,
+      -0.0
+     ],
+     "stretch": 1.1156
+    },
+    "right_target_cm": [
+     25.95,
+     18.76,
+     -32.8
+    ],
+    "left_target_cm": [
+     28.4,
+     -16.28,
+     -34.51
+    ]
+   },
+   {
+    "frame": 4,
+    "time_s": 0.1333,
+    "right": {
+     "location_cm": [
+      -5.846,
+      22.587,
+      -49.881
+     ],
+     "rotation_pyr_deg": [
+      34.902,
+      -9.582,
+      0.0
+     ],
+     "stretch": 1.1201
+    },
+    "left": {
+     "location_cm": [
+      -5.696,
+      22.627,
+      -50.314
+     ],
+     "rotation_pyr_deg": [
+      28.684,
+      -14.677,
+      -0.0
+     ],
+     "stretch": 1.2007
+    },
+    "right_target_cm": [
+     27.61,
+     16.94,
+     -28.04
+    ],
+    "left_target_cm": [
+     31.68,
+     -12.84,
+     -30.88
+    ]
+   },
+   {
+    "frame": 5,
+    "time_s": 0.1667,
+    "right": {
+     "location_cm": [
+      -5.819,
+      21.906,
+      -44.955
+     ],
+     "rotation_pyr_deg": [
+      33.817,
+      -11.258,
+      -0.0
+     ],
+     "stretch": 1.1758
+    },
+    "left": {
+     "location_cm": [
+      -5.615,
+      21.938,
+      -45.599
+     ],
+     "rotation_pyr_deg": [
+      25.465,
+      -17.602,
+      0.0
+     ],
+     "stretch": 1.3041
+    },
+    "right_target_cm": [
+     29.49,
+     14.88,
+     -22.64
+    ],
+    "left_target_cm": [
+     35.4,
+     -8.93,
+     -26.77
+    ]
+   },
+   {
+    "frame": 6,
+    "time_s": 0.2,
+    "right": {
+     "location_cm": [
+      -5.791,
+      21.18,
+      -39.739
+     ],
+     "rotation_pyr_deg": [
+      32.756,
+      -12.826,
+      0.0
+     ],
+     "stretch": 1.236
+    },
+    "left": {
+     "location_cm": [
+      -5.54,
+      21.197,
+      -40.615
+     ],
+     "rotation_pyr_deg": [
+      22.535,
+      -20.091,
+      -0.0
+     ],
+     "stretch": 1.4199
+    },
+    "right_target_cm": [
+     31.49,
+     12.69,
+     -16.93
+    ],
+    "left_target_cm": [
+     39.34,
+     -4.78,
+     -22.41
+    ]
+   },
+   {
+    "frame": 7,
+    "time_s": 0.2333,
+    "right": {
+     "location_cm": [
+      -5.766,
+      20.451,
+      -34.523
+     ],
+     "rotation_pyr_deg": [
+      31.777,
+      -14.216,
+      0.0
+     ],
+     "stretch": 1.2971
+    },
+    "left": {
+     "location_cm": [
+      -5.476,
+      20.45,
+      -35.637
+     ],
+     "rotation_pyr_deg": [
+      20.027,
+      -22.115,
+      -0.0
+     ],
+     "stretch": 1.5408
+    },
+    "right_target_cm": [
+     33.48,
+     10.51,
+     -11.21
+    ],
+    "left_target_cm": [
+     43.28,
+     -0.64,
+     -18.05
+    ]
+   },
+   {
+    "frame": 8,
+    "time_s": 0.2667,
+    "right": {
+     "location_cm": [
+      -5.743,
+      19.76,
+      -29.602
+     ],
+     "rotation_pyr_deg": [
+      30.922,
+      -15.388,
+      0.0
+     ],
+     "stretch": 1.3555
+    },
+    "left": {
+     "location_cm": [
+      -3.587,
+      18.935,
+      -30.292
+     ],
+     "rotation_pyr_deg": [
+      17.983,
+      -23.703,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.36,
+     8.45,
+     -5.81
+    ],
+    "left_target_cm": [
+     47.0,
+     3.27,
+     -13.94
+    ]
+   },
+   {
+    "frame": 9,
+    "time_s": 0.3,
+    "right": {
+     "location_cm": [
+      -5.725,
+      19.15,
+      -25.266
+     ],
+     "rotation_pyr_deg": [
+      30.221,
+      -16.325,
+      0.0
+     ],
+     "stretch": 1.4076
+    },
+    "left": {
+     "location_cm": [
+      -0.225,
+      16.721,
+      -25.137
+     ],
+     "rotation_pyr_deg": [
+      16.403,
+      -24.9,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     37.02,
+     6.63,
+     -1.06
+    ],
+    "left_target_cm": [
+     50.28,
+     6.72,
+     -10.31
+    ]
+   },
+   {
+    "frame": 10,
+    "time_s": 0.3333,
+    "right": {
+     "location_cm": [
+      -5.711,
+      18.662,
+      -21.808
+     ],
+     "rotation_pyr_deg": [
+      29.693,
+      -17.015,
+      -0.0
+     ],
+     "stretch": 1.4495
+    },
+    "left": {
+     "location_cm": [
+      2.486,
+      14.835,
+      -21.139
+     ],
+     "rotation_pyr_deg": [
+      15.269,
+      -25.743,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     38.35,
+     5.18,
+     2.74
+    ],
+    "left_target_cm": [
+     52.89,
+     9.47,
+     -7.42
+    ]
+   },
+   {
+    "frame": 11,
+    "time_s": 0.3667,
+    "right": {
+     "location_cm": [
+      -5.702,
+      18.339,
+      -19.519
+     ],
+     "rotation_pyr_deg": [
+      29.359,
+      -17.446,
+      -0.0
+     ],
+     "stretch": 1.4773
+    },
+    "left": {
+     "location_cm": [
+      4.29,
+      13.536,
+      -18.544
+     ],
+     "rotation_pyr_deg": [
+      14.573,
+      -26.255,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.22,
+     4.22,
+     5.25
+    ],
+    "left_target_cm": [
+     54.62,
+     11.29,
+     -5.5
+    ]
+   },
+   {
+    "frame": 12,
+    "time_s": 0.4,
+    "right": {
+     "location_cm": [
+      -5.706,
+      18.225,
+      -18.696
+     ],
+     "rotation_pyr_deg": [
+      29.583,
+      -17.656,
+      0.0
+     ],
+     "stretch": 1.4909
+    },
+    "left": {
+     "location_cm": [
+      5.017,
+      13.021,
+      -17.516
+     ],
+     "rotation_pyr_deg": [
+      14.692,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.48,
+     3.84,
+     6.5
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.36
+    ]
+   },
+   {
+    "frame": 13,
+    "time_s": 0.4333,
+    "right": {
+     "location_cm": [
+      -5.73,
+      18.206,
+      -18.706
+     ],
+     "rotation_pyr_deg": [
+      30.373,
+      -15.742,
+      -0.0
+     ],
+     "stretch": 1.4604
+    },
+    "left": {
+     "location_cm": [
+      5.125,
+      12.928,
+      -17.447
+     ],
+     "rotation_pyr_deg": [
+      14.844,
+      -26.607,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     38.66,
+     5.69,
+     6.58
+    ],
+    "left_target_cm": [
+     55.25,
+     12.18,
+     -4.14
+    ]
+   },
+   {
+    "frame": 14,
+    "time_s": 0.4667,
+    "right": {
+     "location_cm": [
+      -5.755,
+      18.135,
+      -18.711
+     ],
+     "rotation_pyr_deg": [
+      30.767,
+      -10.116,
+      -0.0
+     ],
+     "stretch": 1.3699
+    },
+    "left": {
+     "location_cm": [
+      5.205,
+      12.855,
+      -17.403
+     ],
+     "rotation_pyr_deg": [
+      14.918,
+      -26.754,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.72,
+     10.56,
+     5.23
+    ],
+    "left_target_cm": [
+     55.25,
+     12.37,
+     -4.02
+    ]
+   },
+   {
+    "frame": 15,
+    "time_s": 0.5,
+    "right": {
+     "location_cm": [
+      -5.67,
+      18.025,
+      -18.658
+     ],
+     "rotation_pyr_deg": [
+      26.553,
+      -2.12,
+      0.0
+     ],
+     "stretch": 1.2516
+    },
+    "left": {
+     "location_cm": [
+      5.246,
+      12.813,
+      -17.391
+     ],
+     "rotation_pyr_deg": [
+      14.903,
+      -26.853,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.28,
+     16.51,
+     0.14
+    ],
+    "left_target_cm": [
+     55.25,
+     12.5,
+     -4.03
+    ]
+   },
+   {
+    "frame": 16,
+    "time_s": 0.5333,
+    "right": {
+     "location_cm": [
+      -5.399,
+      17.984,
+      -18.554
+     ],
+     "rotation_pyr_deg": [
+      15.432,
+      2.369,
+      -0.0
+     ],
+     "stretch": 1.1895
+    },
+    "left": {
+     "location_cm": [
+      5.24,
+      12.808,
+      -17.415
+     ],
+     "rotation_pyr_deg": [
+      14.802,
+      -26.887,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.24,
+     19.71,
+     -8.61
+    ],
+    "left_target_cm": [
+     55.25,
+     12.55,
+     -4.15
+    ]
+   },
+   {
+    "frame": 17,
+    "time_s": 0.5667,
+    "right": {
+     "location_cm": [
+      -5.095,
+      18.001,
+      -18.503
+     ],
+     "rotation_pyr_deg": [
+      3.649,
+      -0.406,
+      0.0
+     ],
+     "stretch": 1.2438
+    },
+    "left": {
+     "location_cm": [
+      5.189,
+      12.841,
+      -17.469
+     ],
+     "rotation_pyr_deg": [
+      14.629,
+      -26.853,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.68,
+     17.68,
+     -17.15
+    ],
+    "left_target_cm": [
+     55.25,
+     12.5,
+     -4.37
+    ]
+   },
+   {
+    "frame": 18,
+    "time_s": 0.6,
+    "right": {
+     "location_cm": [
+      -4.943,
+      17.993,
+      -18.501
+     ],
+     "rotation_pyr_deg": [
+      -2.175,
+      -6.63,
+      -0.0
+     ],
+     "stretch": 1.3589
+    },
+    "left": {
+     "location_cm": [
+      5.101,
+      12.908,
+      -17.545
+     ],
+     "rotation_pyr_deg": [
+      14.411,
+      -26.754,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     43.56,
+     12.36,
+     -21.86
+    ],
+    "left_target_cm": [
+     55.25,
+     12.37,
+     -4.66
+    ]
+   },
+   {
+    "frame": 19,
+    "time_s": 0.6333,
+    "right": {
+     "location_cm": [
+      -4.914,
+      17.983,
+      -18.503
+     ],
+     "rotation_pyr_deg": [
+      -3.346,
+      -11.52,
+      -0.0
+     ],
+     "stretch": 1.4494
+    },
+    "left": {
+     "location_cm": [
+      4.99,
+      12.996,
+      -17.63
+     ],
+     "rotation_pyr_deg": [
+      14.179,
+      -26.607,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     46.04,
+     7.6,
+     -23.05
+    ],
+    "left_target_cm": [
+     55.25,
+     12.18,
+     -4.97
+    ]
+   },
+   {
+    "frame": 20,
+    "time_s": 0.6667,
+    "right": {
+     "location_cm": [
+      -4.913,
+      17.979,
+      -18.503
+     ],
+     "rotation_pyr_deg": [
+      -3.424,
+      -13.384,
+      0.0
+     ],
+     "stretch": 1.481
+    },
+    "left": {
+     "location_cm": [
+      4.873,
+      13.092,
+      -17.712
+     ],
+     "rotation_pyr_deg": [
+      13.97,
+      -26.432,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     46.77,
+     5.68,
+     -23.18
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -5.26
+    ]
+   },
+   {
+    "frame": 21,
+    "time_s": 0.7,
+    "right": {
+     "location_cm": [
+      -4.896,
+      17.978,
+      -18.504
+     ],
+     "rotation_pyr_deg": [
+      -4.06,
+      -12.002,
+      0.0
+     ],
+     "stretch": 1.4507
+    },
+    "left": {
+     "location_cm": [
+      4.766,
+      13.183,
+      -17.778
+     ],
+     "rotation_pyr_deg": [
+      13.815,
+      -26.256,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     45.96,
+     7.17,
+     -23.7
+    ],
+    "left_target_cm": [
+     55.25,
+     11.72,
+     -5.48
+    ]
+   },
+   {
+    "frame": 22,
+    "time_s": 0.7333,
+    "right": {
+     "location_cm": [
+      -4.898,
+      17.987,
+      -18.504
+     ],
+     "rotation_pyr_deg": [
+      -3.926,
+      -7.229,
+      -0.0
+     ],
+     "stretch": 1.3587
+    },
+    "left": {
+     "location_cm": [
+      4.687,
+      13.253,
+      -17.819
+     ],
+     "rotation_pyr_deg": [
+      13.738,
+      -26.107,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     43.41,
+     11.86,
+     -23.35
+    ],
+    "left_target_cm": [
+     55.25,
+     11.53,
+     -5.6
+    ]
+   },
+   {
+    "frame": 23,
+    "time_s": 0.7667,
+    "right": {
+     "location_cm": [
+      -5.035,
+      18.0,
+      -18.5
+     ],
+     "rotation_pyr_deg": [
+      1.324,
+      -0.392,
+      0.0
+     ],
+     "stretch": 1.2316
+    },
+    "left": {
+     "location_cm": [
+      4.646,
+      13.294,
+      -17.829
+     ],
+     "rotation_pyr_deg": [
+      13.752,
+      -26.008,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.32,
+     17.7,
+     -18.98
+    ],
+    "left_target_cm": [
+     55.25,
+     11.4,
+     -5.59
+    ]
+   },
+   {
+    "frame": 24,
+    "time_s": 0.8,
+    "right": {
+     "location_cm": [
+      -5.365,
+      17.981,
+      -18.545
+     ],
+     "rotation_pyr_deg": [
+      14.097,
+      3.002,
+      0.0
+     ],
+     "stretch": 1.166
+    },
+    "left": {
+     "location_cm": [
+      4.651,
+      13.299,
+      -17.807
+     ],
+     "rotation_pyr_deg": [
+      13.855,
+      -25.972,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.66,
+     20.13,
+     -9.78
+    ],
+    "left_target_cm": [
+     55.25,
+     11.35,
+     -5.47
+    ]
+   },
+   {
+    "frame": 25,
+    "time_s": 0.8333,
+    "right": {
+     "location_cm": [
+      -5.669,
+      18.023,
+      -18.658
+     ],
+     "rotation_pyr_deg": [
+      26.497,
+      -1.993,
+      0.0
+     ],
+     "stretch": 1.2352
+    },
+    "left": {
+     "location_cm": [
+      4.7,
+      13.267,
+      -17.757
+     ],
+     "rotation_pyr_deg": [
+      14.031,
+      -26.008,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     34.77,
+     16.62,
+     -0.16
+    ],
+    "left_target_cm": [
+     55.25,
+     11.4,
+     -5.25
+    ]
+   },
+   {
+    "frame": 26,
+    "time_s": 0.8667,
+    "right": {
+     "location_cm": [
+      -5.754,
+      18.142,
+      -18.711
+     ],
+     "rotation_pyr_deg": [
+      30.773,
+      -10.652,
+      0.0
+     ],
+     "stretch": 1.3652
+    },
+    "left": {
+     "location_cm": [
+      4.787,
+      13.204,
+      -17.684
+     ],
+     "rotation_pyr_deg": [
+      14.252,
+      -26.107,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.5,
+     10.19,
+     5.15
+    ],
+    "left_target_cm": [
+     55.25,
+     11.53,
+     -4.96
+    ]
+   },
+   {
+    "frame": 27,
+    "time_s": 0.9,
+    "right": {
+     "location_cm": [
+      -5.724,
+      18.21,
+      -18.703
+     ],
+     "rotation_pyr_deg": [
+      30.172,
+      -16.157,
+      -0.0
+     ],
+     "stretch": 1.4592
+    },
+    "left": {
+     "location_cm": [
+      4.898,
+      13.117,
+      -17.6
+     ],
+     "rotation_pyr_deg": [
+      14.484,
+      -26.256,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     38.62,
+     5.36,
+     6.4
+    ],
+    "left_target_cm": [
+     55.25,
+     11.72,
+     -4.65
+    ]
+   },
+   {
+    "frame": 28,
+    "time_s": 0.9333,
+    "right": {
+     "location_cm": [
+      -5.706,
+      18.225,
+      -18.696
+     ],
+     "rotation_pyr_deg": [
+      29.583,
+      -17.656,
+      0.0
+     ],
+     "stretch": 1.4909
+    },
+    "left": {
+     "location_cm": [
+      5.017,
+      13.021,
+      -17.516
+     ],
+     "rotation_pyr_deg": [
+      14.692,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.48,
+     3.84,
+     6.5
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.36
+    ]
+   },
+   {
+    "frame": 29,
+    "time_s": 0.9667,
+    "right": {
+     "location_cm": [
+      -5.73,
+      18.206,
+      -18.706
+     ],
+     "rotation_pyr_deg": [
+      30.373,
+      -15.742,
+      -0.0
+     ],
+     "stretch": 1.4604
+    },
+    "left": {
+     "location_cm": [
+      5.125,
+      12.928,
+      -17.447
+     ],
+     "rotation_pyr_deg": [
+      14.844,
+      -26.607,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     38.66,
+     5.69,
+     6.58
+    ],
+    "left_target_cm": [
+     55.25,
+     12.18,
+     -4.14
+    ]
+   },
+   {
+    "frame": 30,
+    "time_s": 1.0,
+    "right": {
+     "location_cm": [
+      -5.755,
+      18.135,
+      -18.711
+     ],
+     "rotation_pyr_deg": [
+      30.767,
+      -10.116,
+      -0.0
+     ],
+     "stretch": 1.3699
+    },
+    "left": {
+     "location_cm": [
+      5.205,
+      12.855,
+      -17.403
+     ],
+     "rotation_pyr_deg": [
+      14.918,
+      -26.754,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.72,
+     10.56,
+     5.23
+    ],
+    "left_target_cm": [
+     55.25,
+     12.37,
+     -4.02
+    ]
+   },
+   {
+    "frame": 31,
+    "time_s": 1.0333,
+    "right": {
+     "location_cm": [
+      -5.67,
+      18.025,
+      -18.658
+     ],
+     "rotation_pyr_deg": [
+      26.553,
+      -2.12,
+      0.0
+     ],
+     "stretch": 1.2516
+    },
+    "left": {
+     "location_cm": [
+      5.246,
+      12.813,
+      -17.391
+     ],
+     "rotation_pyr_deg": [
+      14.903,
+      -26.853,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.28,
+     16.51,
+     0.14
+    ],
+    "left_target_cm": [
+     55.25,
+     12.5,
+     -4.03
+    ]
+   },
+   {
+    "frame": 32,
+    "time_s": 1.0667,
+    "right": {
+     "location_cm": [
+      -5.399,
+      17.984,
+      -18.554
+     ],
+     "rotation_pyr_deg": [
+      15.432,
+      2.369,
+      -0.0
+     ],
+     "stretch": 1.1895
+    },
+    "left": {
+     "location_cm": [
+      5.24,
+      12.808,
+      -17.415
+     ],
+     "rotation_pyr_deg": [
+      14.802,
+      -26.887,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.24,
+     19.71,
+     -8.61
+    ],
+    "left_target_cm": [
+     55.25,
+     12.55,
+     -4.15
+    ]
+   },
+   {
+    "frame": 33,
+    "time_s": 1.1,
+    "right": {
+     "location_cm": [
+      -5.095,
+      18.001,
+      -18.503
+     ],
+     "rotation_pyr_deg": [
+      3.649,
+      -0.406,
+      0.0
+     ],
+     "stretch": 1.2438
+    },
+    "left": {
+     "location_cm": [
+      5.189,
+      12.841,
+      -17.469
+     ],
+     "rotation_pyr_deg": [
+      14.629,
+      -26.853,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.68,
+     17.68,
+     -17.15
+    ],
+    "left_target_cm": [
+     55.25,
+     12.5,
+     -4.37
+    ]
+   },
+   {
+    "frame": 34,
+    "time_s": 1.1333,
+    "right": {
+     "location_cm": [
+      -4.943,
+      17.993,
+      -18.501
+     ],
+     "rotation_pyr_deg": [
+      -2.175,
+      -6.63,
+      -0.0
+     ],
+     "stretch": 1.3589
+    },
+    "left": {
+     "location_cm": [
+      5.101,
+      12.908,
+      -17.545
+     ],
+     "rotation_pyr_deg": [
+      14.411,
+      -26.754,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     43.56,
+     12.36,
+     -21.86
+    ],
+    "left_target_cm": [
+     55.25,
+     12.37,
+     -4.66
+    ]
+   },
+   {
+    "frame": 35,
+    "time_s": 1.1667,
+    "right": {
+     "location_cm": [
+      -4.914,
+      17.983,
+      -18.503
+     ],
+     "rotation_pyr_deg": [
+      -3.346,
+      -11.52,
+      -0.0
+     ],
+     "stretch": 1.4494
+    },
+    "left": {
+     "location_cm": [
+      4.99,
+      12.996,
+      -17.63
+     ],
+     "rotation_pyr_deg": [
+      14.179,
+      -26.607,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     46.04,
+     7.6,
+     -23.05
+    ],
+    "left_target_cm": [
+     55.25,
+     12.18,
+     -4.97
+    ]
+   },
+   {
+    "frame": 36,
+    "time_s": 1.2,
+    "right": {
+     "location_cm": [
+      -4.913,
+      17.979,
+      -18.503
+     ],
+     "rotation_pyr_deg": [
+      -3.424,
+      -13.384,
+      0.0
+     ],
+     "stretch": 1.481
+    },
+    "left": {
+     "location_cm": [
+      4.873,
+      13.092,
+      -17.712
+     ],
+     "rotation_pyr_deg": [
+      13.97,
+      -26.432,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     46.77,
+     5.68,
+     -23.18
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -5.26
+    ]
+   },
+   {
+    "frame": 37,
+    "time_s": 1.2333,
+    "right": {
+     "location_cm": [
+      -4.896,
+      17.978,
+      -18.504
+     ],
+     "rotation_pyr_deg": [
+      -4.06,
+      -12.002,
+      0.0
+     ],
+     "stretch": 1.4507
+    },
+    "left": {
+     "location_cm": [
+      4.766,
+      13.183,
+      -17.778
+     ],
+     "rotation_pyr_deg": [
+      13.815,
+      -26.256,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     45.96,
+     7.17,
+     -23.7
+    ],
+    "left_target_cm": [
+     55.25,
+     11.72,
+     -5.48
+    ]
+   },
+   {
+    "frame": 38,
+    "time_s": 1.2667,
+    "right": {
+     "location_cm": [
+      -4.898,
+      17.987,
+      -18.504
+     ],
+     "rotation_pyr_deg": [
+      -3.926,
+      -7.229,
+      -0.0
+     ],
+     "stretch": 1.3587
+    },
+    "left": {
+     "location_cm": [
+      4.687,
+      13.253,
+      -17.819
+     ],
+     "rotation_pyr_deg": [
+      13.738,
+      -26.107,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     43.41,
+     11.86,
+     -23.35
+    ],
+    "left_target_cm": [
+     55.25,
+     11.53,
+     -5.6
+    ]
+   },
+   {
+    "frame": 39,
+    "time_s": 1.3,
+    "right": {
+     "location_cm": [
+      -5.035,
+      18.0,
+      -18.5
+     ],
+     "rotation_pyr_deg": [
+      1.324,
+      -0.392,
+      0.0
+     ],
+     "stretch": 1.2316
+    },
+    "left": {
+     "location_cm": [
+      4.646,
+      13.294,
+      -17.829
+     ],
+     "rotation_pyr_deg": [
+      13.752,
+      -26.008,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.32,
+     17.7,
+     -18.98
+    ],
+    "left_target_cm": [
+     55.25,
+     11.4,
+     -5.59
+    ]
+   },
+   {
+    "frame": 40,
+    "time_s": 1.3333,
+    "right": {
+     "location_cm": [
+      -5.365,
+      17.981,
+      -18.545
+     ],
+     "rotation_pyr_deg": [
+      14.097,
+      3.002,
+      0.0
+     ],
+     "stretch": 1.166
+    },
+    "left": {
+     "location_cm": [
+      4.651,
+      13.299,
+      -17.807
+     ],
+     "rotation_pyr_deg": [
+      13.855,
+      -25.972,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.66,
+     20.13,
+     -9.78
+    ],
+    "left_target_cm": [
+     55.25,
+     11.35,
+     -5.47
+    ]
+   },
+   {
+    "frame": 41,
+    "time_s": 1.3667,
+    "right": {
+     "location_cm": [
+      -5.669,
+      18.023,
+      -18.658
+     ],
+     "rotation_pyr_deg": [
+      26.497,
+      -1.993,
+      0.0
+     ],
+     "stretch": 1.2352
+    },
+    "left": {
+     "location_cm": [
+      4.7,
+      13.267,
+      -17.757
+     ],
+     "rotation_pyr_deg": [
+      14.031,
+      -26.008,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     34.77,
+     16.62,
+     -0.16
+    ],
+    "left_target_cm": [
+     55.25,
+     11.4,
+     -5.25
+    ]
+   },
+   {
+    "frame": 42,
+    "time_s": 1.4,
+    "right": {
+     "location_cm": [
+      -5.754,
+      18.142,
+      -18.711
+     ],
+     "rotation_pyr_deg": [
+      30.773,
+      -10.652,
+      0.0
+     ],
+     "stretch": 1.3652
+    },
+    "left": {
+     "location_cm": [
+      4.787,
+      13.204,
+      -17.684
+     ],
+     "rotation_pyr_deg": [
+      14.252,
+      -26.107,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.5,
+     10.19,
+     5.15
+    ],
+    "left_target_cm": [
+     55.25,
+     11.53,
+     -4.96
+    ]
+   },
+   {
+    "frame": 43,
+    "time_s": 1.4333,
+    "right": {
+     "location_cm": [
+      -5.724,
+      18.21,
+      -18.703
+     ],
+     "rotation_pyr_deg": [
+      30.172,
+      -16.157,
+      -0.0
+     ],
+     "stretch": 1.4592
+    },
+    "left": {
+     "location_cm": [
+      4.898,
+      13.117,
+      -17.6
+     ],
+     "rotation_pyr_deg": [
+      14.484,
+      -26.256,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     38.62,
+     5.36,
+     6.4
+    ],
+    "left_target_cm": [
+     55.25,
+     11.72,
+     -4.65
+    ]
+   },
+   {
+    "frame": 44,
+    "time_s": 1.4667,
+    "right": {
+     "location_cm": [
+      -5.706,
+      18.225,
+      -18.696
+     ],
+     "rotation_pyr_deg": [
+      29.583,
+      -17.656,
+      0.0
+     ],
+     "stretch": 1.4909
+    },
+    "left": {
+     "location_cm": [
+      5.017,
+      13.021,
+      -17.516
+     ],
+     "rotation_pyr_deg": [
+      14.692,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.48,
+     3.84,
+     6.5
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.36
+    ]
+   },
+   {
+    "frame": 45,
+    "time_s": 1.5,
+    "right": {
+     "location_cm": [
+      -5.73,
+      18.206,
+      -18.706
+     ],
+     "rotation_pyr_deg": [
+      30.373,
+      -15.742,
+      -0.0
+     ],
+     "stretch": 1.4604
+    },
+    "left": {
+     "location_cm": [
+      5.125,
+      12.928,
+      -17.447
+     ],
+     "rotation_pyr_deg": [
+      14.844,
+      -26.607,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     38.66,
+     5.69,
+     6.58
+    ],
+    "left_target_cm": [
+     55.25,
+     12.18,
+     -4.14
+    ]
+   },
+   {
+    "frame": 46,
+    "time_s": 1.5333,
+    "right": {
+     "location_cm": [
+      -5.755,
+      18.135,
+      -18.711
+     ],
+     "rotation_pyr_deg": [
+      30.767,
+      -10.116,
+      -0.0
+     ],
+     "stretch": 1.3699
+    },
+    "left": {
+     "location_cm": [
+      5.205,
+      12.855,
+      -17.403
+     ],
+     "rotation_pyr_deg": [
+      14.918,
+      -26.754,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.72,
+     10.56,
+     5.23
+    ],
+    "left_target_cm": [
+     55.25,
+     12.37,
+     -4.02
+    ]
+   },
+   {
+    "frame": 47,
+    "time_s": 1.5667,
+    "right": {
+     "location_cm": [
+      -5.67,
+      18.025,
+      -18.658
+     ],
+     "rotation_pyr_deg": [
+      26.553,
+      -2.12,
+      0.0
+     ],
+     "stretch": 1.2516
+    },
+    "left": {
+     "location_cm": [
+      5.246,
+      12.813,
+      -17.391
+     ],
+     "rotation_pyr_deg": [
+      14.903,
+      -26.853,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.28,
+     16.51,
+     0.14
+    ],
+    "left_target_cm": [
+     55.25,
+     12.5,
+     -4.03
+    ]
+   },
+   {
+    "frame": 48,
+    "time_s": 1.6,
+    "right": {
+     "location_cm": [
+      -5.399,
+      17.984,
+      -18.554
+     ],
+     "rotation_pyr_deg": [
+      15.432,
+      2.369,
+      -0.0
+     ],
+     "stretch": 1.1895
+    },
+    "left": {
+     "location_cm": [
+      5.24,
+      12.808,
+      -17.415
+     ],
+     "rotation_pyr_deg": [
+      14.802,
+      -26.887,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.24,
+     19.71,
+     -8.61
+    ],
+    "left_target_cm": [
+     55.25,
+     12.55,
+     -4.15
+    ]
+   },
+   {
+    "frame": 49,
+    "time_s": 1.6333,
+    "right": {
+     "location_cm": [
+      -5.095,
+      18.001,
+      -18.503
+     ],
+     "rotation_pyr_deg": [
+      3.649,
+      -0.406,
+      0.0
+     ],
+     "stretch": 1.2438
+    },
+    "left": {
+     "location_cm": [
+      5.189,
+      12.841,
+      -17.469
+     ],
+     "rotation_pyr_deg": [
+      14.629,
+      -26.853,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.68,
+     17.68,
+     -17.15
+    ],
+    "left_target_cm": [
+     55.25,
+     12.5,
+     -4.37
+    ]
+   },
+   {
+    "frame": 50,
+    "time_s": 1.6667,
+    "right": {
+     "location_cm": [
+      -4.943,
+      17.993,
+      -18.501
+     ],
+     "rotation_pyr_deg": [
+      -2.175,
+      -6.63,
+      -0.0
+     ],
+     "stretch": 1.3589
+    },
+    "left": {
+     "location_cm": [
+      5.101,
+      12.908,
+      -17.545
+     ],
+     "rotation_pyr_deg": [
+      14.411,
+      -26.754,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     43.56,
+     12.36,
+     -21.86
+    ],
+    "left_target_cm": [
+     55.25,
+     12.37,
+     -4.66
+    ]
+   },
+   {
+    "frame": 51,
+    "time_s": 1.7,
+    "right": {
+     "location_cm": [
+      -4.914,
+      17.983,
+      -18.503
+     ],
+     "rotation_pyr_deg": [
+      -3.346,
+      -11.52,
+      -0.0
+     ],
+     "stretch": 1.4494
+    },
+    "left": {
+     "location_cm": [
+      4.99,
+      12.996,
+      -17.63
+     ],
+     "rotation_pyr_deg": [
+      14.179,
+      -26.607,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     46.04,
+     7.6,
+     -23.05
+    ],
+    "left_target_cm": [
+     55.25,
+     12.18,
+     -4.97
+    ]
+   },
+   {
+    "frame": 52,
+    "time_s": 1.7333,
+    "right": {
+     "location_cm": [
+      -4.913,
+      17.979,
+      -18.503
+     ],
+     "rotation_pyr_deg": [
+      -3.424,
+      -13.384,
+      0.0
+     ],
+     "stretch": 1.481
+    },
+    "left": {
+     "location_cm": [
+      4.873,
+      13.092,
+      -17.712
+     ],
+     "rotation_pyr_deg": [
+      13.97,
+      -26.432,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     46.77,
+     5.68,
+     -23.18
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -5.26
+    ]
+   },
+   {
+    "frame": 53,
+    "time_s": 1.7667,
+    "right": {
+     "location_cm": [
+      -4.896,
+      17.978,
+      -18.504
+     ],
+     "rotation_pyr_deg": [
+      -4.06,
+      -12.002,
+      0.0
+     ],
+     "stretch": 1.4507
+    },
+    "left": {
+     "location_cm": [
+      4.766,
+      13.183,
+      -17.778
+     ],
+     "rotation_pyr_deg": [
+      13.815,
+      -26.256,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     45.96,
+     7.17,
+     -23.7
+    ],
+    "left_target_cm": [
+     55.25,
+     11.72,
+     -5.48
+    ]
+   },
+   {
+    "frame": 54,
+    "time_s": 1.8,
+    "right": {
+     "location_cm": [
+      -4.898,
+      17.987,
+      -18.504
+     ],
+     "rotation_pyr_deg": [
+      -3.926,
+      -7.229,
+      -0.0
+     ],
+     "stretch": 1.3587
+    },
+    "left": {
+     "location_cm": [
+      4.687,
+      13.253,
+      -17.819
+     ],
+     "rotation_pyr_deg": [
+      13.738,
+      -26.107,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     43.41,
+     11.86,
+     -23.35
+    ],
+    "left_target_cm": [
+     55.25,
+     11.53,
+     -5.6
+    ]
+   },
+   {
+    "frame": 55,
+    "time_s": 1.8333,
+    "right": {
+     "location_cm": [
+      -5.035,
+      18.0,
+      -18.5
+     ],
+     "rotation_pyr_deg": [
+      1.324,
+      -0.392,
+      0.0
+     ],
+     "stretch": 1.2316
+    },
+    "left": {
+     "location_cm": [
+      4.646,
+      13.294,
+      -17.829
+     ],
+     "rotation_pyr_deg": [
+      13.752,
+      -26.008,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.32,
+     17.7,
+     -18.98
+    ],
+    "left_target_cm": [
+     55.25,
+     11.4,
+     -5.59
+    ]
+   },
+   {
+    "frame": 56,
+    "time_s": 1.8667,
+    "right": {
+     "location_cm": [
+      -5.365,
+      17.981,
+      -18.545
+     ],
+     "rotation_pyr_deg": [
+      14.097,
+      3.002,
+      0.0
+     ],
+     "stretch": 1.166
+    },
+    "left": {
+     "location_cm": [
+      4.651,
+      13.299,
+      -17.807
+     ],
+     "rotation_pyr_deg": [
+      13.855,
+      -25.972,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.66,
+     20.13,
+     -9.78
+    ],
+    "left_target_cm": [
+     55.25,
+     11.35,
+     -5.47
+    ]
+   },
+   {
+    "frame": 57,
+    "time_s": 1.9,
+    "right": {
+     "location_cm": [
+      -5.669,
+      18.023,
+      -18.658
+     ],
+     "rotation_pyr_deg": [
+      26.497,
+      -1.993,
+      0.0
+     ],
+     "stretch": 1.2352
+    },
+    "left": {
+     "location_cm": [
+      4.7,
+      13.267,
+      -17.757
+     ],
+     "rotation_pyr_deg": [
+      14.031,
+      -26.008,
+      0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     34.77,
+     16.62,
+     -0.16
+    ],
+    "left_target_cm": [
+     55.25,
+     11.4,
+     -5.25
+    ]
+   },
+   {
+    "frame": 58,
+    "time_s": 1.9333,
+    "right": {
+     "location_cm": [
+      -5.754,
+      18.142,
+      -18.711
+     ],
+     "rotation_pyr_deg": [
+      30.773,
+      -10.652,
+      0.0
+     ],
+     "stretch": 1.3652
+    },
+    "left": {
+     "location_cm": [
+      4.787,
+      13.204,
+      -17.684
+     ],
+     "rotation_pyr_deg": [
+      14.252,
+      -26.107,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.5,
+     10.19,
+     5.15
+    ],
+    "left_target_cm": [
+     55.25,
+     11.53,
+     -4.96
+    ]
+   },
+   {
+    "frame": 59,
+    "time_s": 1.9667,
+    "right": {
+     "location_cm": [
+      -5.724,
+      18.21,
+      -18.703
+     ],
+     "rotation_pyr_deg": [
+      30.172,
+      -16.157,
+      -0.0
+     ],
+     "stretch": 1.4592
+    },
+    "left": {
+     "location_cm": [
+      4.898,
+      13.117,
+      -17.6
+     ],
+     "rotation_pyr_deg": [
+      14.484,
+      -26.256,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     38.62,
+     5.36,
+     6.4
+    ],
+    "left_target_cm": [
+     55.25,
+     11.72,
+     -4.65
+    ]
+   },
+   {
+    "frame": 60,
+    "time_s": 2.0,
+    "right": {
+     "location_cm": [
+      -5.698,
+      18.222,
+      -18.691
+     ],
+     "rotation_pyr_deg": [
+      29.24,
+      -17.598,
+      0.0
+     ],
+     "stretch": 1.4874
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     39.54,
+     3.87,
+     6.16
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 61,
+    "time_s": 2.0333,
+    "right": {
+     "location_cm": [
+      -5.759,
+      18.182,
+      -18.719
+     ],
+     "rotation_pyr_deg": [
+      31.368,
+      -13.472,
+      0.0
+     ],
+     "stretch": 1.4365
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     37.94,
+     7.71,
+     6.92
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 62,
+    "time_s": 2.0667,
+    "right": {
+     "location_cm": [
+      -5.746,
+      18.037,
+      -18.699
+     ],
+     "rotation_pyr_deg": [
+      29.855,
+      -2.839,
+      0.0
+     ],
+     "stretch": 1.2935
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.34,
+     16.0,
+     3.18
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 63,
+    "time_s": 2.1,
+    "right": {
+     "location_cm": [
+      -5.52,
+      17.954,
+      -18.594
+     ],
+     "rotation_pyr_deg": [
+      20.359,
+      5.005,
+      0.0
+     ],
+     "stretch": 1.1965
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.23,
+     21.52,
+     -5.01
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 64,
+    "time_s": 2.1333,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.96,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.271,
+      6.22,
+      0.0
+     ],
+     "stretch": 1.1859
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.13,
+     22.48,
+     -9.48
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 65,
+    "time_s": 2.1667,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.962,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.267,
+      5.879,
+      0.0
+     ],
+     "stretch": 1.1856
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.15,
+     22.24,
+     -9.48
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 66,
+    "time_s": 2.2,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.968,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.254,
+      4.909,
+      0.0
+     ],
+     "stretch": 1.1852
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.2,
+     21.54,
+     -9.49
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 67,
+    "time_s": 2.2333,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.978,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.227,
+      3.457,
+      0.0
+     ],
+     "stretch": 1.185
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.28,
+     20.49,
+     -9.52
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 68,
+    "time_s": 2.2667,
+    "right": {
+     "location_cm": [
+      -5.367,
+      17.989,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.184,
+      1.746,
+      -0.0
+     ],
+     "stretch": 1.1858
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.37,
+     19.26,
+     -9.54
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 69,
+    "time_s": 2.3,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.98,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.212,
+      3.132,
+      -0.0
+     ],
+     "stretch": 1.1739
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.91,
+     20.24,
+     -9.62
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 70,
+    "time_s": 2.3333,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.973,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.23,
+      4.265,
+      0.0
+     ],
+     "stretch": 1.1648
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.54,
+     21.02,
+     -9.69
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 71,
+    "time_s": 2.3667,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.968,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.237,
+      4.901,
+      0.0
+     ],
+     "stretch": 1.16
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.33,
+     21.46,
+     -9.73
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 72,
+    "time_s": 2.4,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.968,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.237,
+      4.901,
+      0.0
+     ],
+     "stretch": 1.16
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.33,
+     21.46,
+     -9.73
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 73,
+    "time_s": 2.4333,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.973,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.23,
+      4.265,
+      0.0
+     ],
+     "stretch": 1.1648
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.54,
+     21.02,
+     -9.69
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 74,
+    "time_s": 2.4667,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.98,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.212,
+      3.132,
+      -0.0
+     ],
+     "stretch": 1.1739
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.91,
+     20.24,
+     -9.62
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 75,
+    "time_s": 2.5,
+    "right": {
+     "location_cm": [
+      -5.367,
+      17.989,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.184,
+      1.746,
+      -0.0
+     ],
+     "stretch": 1.1858
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.37,
+     19.26,
+     -9.54
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 76,
+    "time_s": 2.5333,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.98,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.212,
+      3.132,
+      -0.0
+     ],
+     "stretch": 1.1739
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.91,
+     20.24,
+     -9.62
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 77,
+    "time_s": 2.5667,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.973,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.23,
+      4.265,
+      0.0
+     ],
+     "stretch": 1.1648
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.54,
+     21.02,
+     -9.69
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 78,
+    "time_s": 2.6,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.968,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.237,
+      4.901,
+      0.0
+     ],
+     "stretch": 1.16
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.33,
+     21.46,
+     -9.73
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 79,
+    "time_s": 2.6333,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.968,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.237,
+      4.901,
+      0.0
+     ],
+     "stretch": 1.16
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.33,
+     21.46,
+     -9.73
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 80,
+    "time_s": 2.6667,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.973,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.23,
+      4.265,
+      0.0
+     ],
+     "stretch": 1.1648
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.54,
+     21.02,
+     -9.69
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 81,
+    "time_s": 2.7,
+    "right": {
+     "location_cm": [
+      -5.368,
+      17.98,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.212,
+      3.132,
+      -0.0
+     ],
+     "stretch": 1.1739
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.91,
+     20.24,
+     -9.62
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 82,
+    "time_s": 2.7333,
+    "right": {
+     "location_cm": [
+      -5.367,
+      17.989,
+      -18.546
+     ],
+     "rotation_pyr_deg": [
+      14.184,
+      1.746,
+      -0.0
+     ],
+     "stretch": 1.1858
+    },
+    "left": {
+     "location_cm": [
+      4.944,
+      13.057,
+      -17.615
+     ],
+     "rotation_pyr_deg": [
+      14.332,
+      -26.432,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     36.37,
+     19.26,
+     -9.54
+    ],
+    "left_target_cm": [
+     55.25,
+     11.95,
+     -4.81
+    ]
+   },
+   {
+    "frame": 83,
+    "time_s": 2.7667,
+    "right": {
+     "location_cm": [
+      -5.389,
+      18.247,
+      -20.356
+     ],
+     "rotation_pyr_deg": [
+      15.021,
+      1.544,
+      -0.0
+     ],
+     "stretch": 1.1742
+    },
+    "left": {
+     "location_cm": [
+      3.516,
+      14.097,
+      -19.651
+     ],
+     "rotation_pyr_deg": [
+      14.866,
+      -26.04,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     35.81,
+     19.36,
+     -10.85
+    ],
+    "left_target_cm": [
+     53.88,
+     10.51,
+     -6.32
+    ]
+   },
+   {
+    "frame": 84,
+    "time_s": 2.8,
+    "right": {
+     "location_cm": [
+      -5.446,
+      18.93,
+      -25.13
+     ],
+     "rotation_pyr_deg": [
+      17.306,
+      0.983,
+      0.0
+     ],
+     "stretch": 1.145
+    },
+    "left": {
+     "location_cm": [
+      -0.225,
+      16.721,
+      -25.137
+     ],
+     "rotation_pyr_deg": [
+      16.403,
+      -24.9,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     34.35,
+     19.61,
+     -14.3
+    ],
+    "left_target_cm": [
+     50.28,
+     6.72,
+     -10.31
+    ]
+   },
+   {
+    "frame": 85,
+    "time_s": 2.8333,
+    "right": {
+     "location_cm": [
+      -5.531,
+      19.897,
+      -31.886
+     ],
+     "rotation_pyr_deg": [
+      20.731,
+      0.115,
+      0.0
+     ],
+     "stretch": 1.1071
+    },
+    "left": {
+     "location_cm": [
+      -5.429,
+      20.08,
+      -33.23
+     ],
+     "rotation_pyr_deg": [
+      18.946,
+      -22.961,
+      -0.0
+     ],
+     "stretch": 1.6
+    },
+    "right_target_cm": [
+     32.28,
+     19.97,
+     -19.18
+    ],
+    "left_target_cm": [
+     45.18,
+     1.36,
+     -15.95
+    ]
+   },
+   {
+    "frame": 86,
+    "time_s": 2.8667,
+    "right": {
+     "location_cm": [
+      -5.632,
+      21.011,
+      -39.64
+     ],
+     "rotation_pyr_deg": [
+      24.931,
+      -1.007,
+      -0.0
+     ],
+     "stretch": 1.0692
+    },
+    "left": {
+     "location_cm": [
+      -5.54,
+      21.197,
+      -40.615
+     ],
+     "rotation_pyr_deg": [
+      22.535,
+      -20.091,
+      -0.0
+     ],
+     "stretch": 1.4199
+    },
+    "right_target_cm": [
+     29.9,
+     20.39,
+     -24.77
+    ],
+    "left_target_cm": [
+     39.34,
+     -4.78,
+     -22.41
+    ]
+   },
+   {
+    "frame": 87,
+    "time_s": 2.9,
+    "right": {
+     "location_cm": [
+      -5.736,
+      22.131,
+      -47.404
+     ],
+     "rotation_pyr_deg": [
+      29.401,
+      -2.292,
+      0.0
+     ],
+     "stretch": 1.0379
+    },
+    "left": {
+     "location_cm": [
+      -5.655,
+      22.292,
+      -48.008
+     ],
+     "rotation_pyr_deg": [
+      27.051,
+      -16.188,
+      -0.0
+     ],
+     "stretch": 1.2504
+    },
+    "right_target_cm": [
+     27.53,
+     20.8,
+     -30.37
+    ],
+    "left_target_cm": [
+     33.5,
+     -10.92,
+     -28.87
+    ]
+   },
+   {
+    "frame": 88,
+    "time_s": 2.9333,
+    "right": {
+     "location_cm": [
+      -5.826,
+      23.114,
+      -54.187
+     ],
+     "rotation_pyr_deg": [
+      33.491,
+      -3.574,
+      0.0
+     ],
+     "stretch": 1.0163
+    },
+    "left": {
+     "location_cm": [
+      -5.777,
+      23.22,
+      -54.477
+     ],
+     "rotation_pyr_deg": [
+      31.93,
+      -11.471,
+      -0.0
+     ],
+     "stretch": 1.1156
+    },
+    "right_target_cm": [
+     25.45,
+     21.16,
+     -35.25
+    ],
+    "left_target_cm": [
+     28.4,
+     -16.28,
+     -34.51
+    ]
+   },
+   {
+    "frame": 89,
+    "time_s": 2.9667,
+    "right": {
+     "location_cm": [
+      -5.889,
+      23.814,
+      -58.989
+     ],
+     "rotation_pyr_deg": [
+      36.47,
+      -4.588,
+      -0.0
+     ],
+     "stretch": 1.0046
+    },
+    "left": {
+     "location_cm": [
+      -5.874,
+      23.85,
+      -59.067
+     ],
+     "rotation_pyr_deg": [
+      35.963,
+      -7.016,
+      -0.0
+     ],
+     "stretch": 1.0304
+    },
+    "right_target_cm": [
+     23.99,
+     21.42,
+     -38.7
+    ],
+    "left_target_cm": [
+     24.8,
+     -20.07,
+     -38.5
+    ]
+   },
+   {
+    "frame": 90,
+    "time_s": 3.0,
+    "right": {
+     "location_cm": [
+      -5.0,
+      24.0,
+      -62.0
+     ],
+     "rotation_pyr_deg": [
+      40.0,
+      -5.0,
+      0.0
+     ],
+     "stretch": 1.0
+    },
+    "left": {
+     "location_cm": [
+      -5.0,
+      24.0,
+      -62.0
+     ],
+     "rotation_pyr_deg": [
+      40.0,
+      -5.0,
+      0.0
+     ],
+     "stretch": 1.0
+    },
+    "right_target_cm": [
+     23.43,
+     21.51,
+     -40.01
+    ],
+    "left_target_cm": [
+     23.43,
+     -21.51,
+     -40.01
+    ]
+   }
+  ]
+ },
+ "icons": {
+  "T_Icon_Bandage": "art/ui/icons/bandage/T_Icon_Bandage.png",
+  "format": "512 x 512 RGBA, fond transparent, ombre douce (comme art/ui/icons/capture)",
+  "made_by": "scripts/props/bandage_kit/build.py --icons (Blender, ombre en numpy)"
+ },
+ "previews": [
+  "art/_previews/bandage/items_roll_pickup_wrapped.png",
+  "art/_previews/bandage/tp_apply_frames.png",
+  "art/_previews/bandage/tp_one_turn_closeup.png",
+  "art/_previews/bandage/tp_game_camera.png",
+  "art/_previews/bandage/tp_apply_side_top_back.png",
+  "art/_previews/bandage/tp_band_on_forearm_rest.png",
+  "art/_previews/bandage/fp_apply_frames.png"
+ ],
+ "reimport_check": {
+  "SM_Bandage_Roll": {
+   "objects": [
+    "SM_Bandage_Roll.001",
+    "SOCKET_grip",
+    "SOCKET_tail"
+   ],
+   "size_m_after_import": [
+    0.055,
+    0.06,
+    0.1216
+   ],
+   "min_z_m": -0.0916,
+   "sockets": [
+    "SOCKET_grip",
+    "SOCKET_tail"
+   ],
+   "ucx": [],
+   "materials": [
+    "M_Bandage_Linen"
+   ]
+  },
+  "SM_Bandage_Roll_Pickup": {
+   "objects": [
+    "SM_Bandage_Roll_Pickup.001",
+    "SOCKET_grip",
+    "UCX_SM_Bandage_Roll_Pickup_00.001"
+   ],
+   "size_m_after_import": [
+    0.2326,
+    0.0564,
+    0.0624
+   ],
+   "min_z_m": 0.0,
+   "sockets": [
+    "SOCKET_grip"
+   ],
+   "ucx": [
+    "UCX_SM_Bandage_Roll_Pickup_00.001"
+   ],
+   "materials": [
+    "M_Bandage_Linen"
+   ]
+  },
+  "SM_Bandage_Wrapped": {
+   "objects": [
+    "SM_Bandage_Wrapped.001"
+   ],
+   "size_m_after_import": [
+    0.0534,
+    0.1684,
+    0.1713
+   ],
+   "min_z_m": -0.0842,
+   "sockets": [],
+   "ucx": [],
+   "materials": [
+    "M_Bandage_Linen"
+   ]
+  },
+  "A_Bean_Bandage_Apply": {
+   "objects": [
+    "Armature"
+   ],
+   "bones": 20,
+   "bone_names_ok": true,
+   "frame_range": [
+    1.0,
+    91.0
+   ]
+  }
+ },
+ "runtime_tested": false,
+ "proof_level": "Blender en arrière-plan seulement : rien importé ni testé dans Unreal"
+}
