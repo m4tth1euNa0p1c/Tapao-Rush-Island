@@ -1,0 +1,4848 @@
+{
+  "format": "maquette-report/1",
+  "id": "artefacts-polynesiens",
+  "version": "0.1.0",
+  "spec_sha256": "47a366f4c7b50ab508d7d81520f57eef7b89d8b4537432d4346bef7397e072e0",
+  "built_at": "2026-10-06T18:21:52+02:00",
+  "blender_version": "5.2.2 LTS",
+  "builder_version": "1.0.0",
+  "mode": "headless",
+  "files": {
+    "blend": "artefacts-polynesiens.blend",
+    "preview": "renders/preview.png",
+    "view_three_quarter": "renders/view_three_quarter.png",
+    "view_front": "renders/view_front.png",
+    "view_back": "renders/view_back.png",
+    "view_left": "renders/view_left.png",
+    "view_right": "renders/view_right.png",
+    "view_top": "renders/view_top.png"
+  },
+  "objects": [
+    {
+      "name": "LGT-soleil",
+      "type": "LIGHT",
+      "location": [
+        4.0,
+        -4.0,
+        6.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-remplissage",
+      "type": "LIGHT",
+      "location": [
+        4.0,
+        -4.0,
+        6.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-main",
+      "type": "CAMERA",
+      "location": [
+        4.4002,
+        -5.7203,
+        3.8002
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-view_three_quarter",
+      "type": "CAMERA",
+      "location": [
+        4.4002,
+        -5.7203,
+        3.8002
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-view_front",
+      "type": "CAMERA",
+      "location": [
+        7.8694,
+        -0.3935,
+        1.4443
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-view_back",
+      "type": "CAMERA",
+      "location": [
+        -7.8694,
+        0.3935,
+        1.4443
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-view_left",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -7.9104,
+        1.1328
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-view_right",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        7.9104,
+        1.1328
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-view_top",
+      "type": "CAMERA",
+      "location": [
+        0.1586,
+        -0.1586,
+        8.4325
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "REF-floor",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        120.0,
+        120.0,
+        0.0
+      ],
+      "materials": [
+        "MAT-ref-neutral"
+      ],
+      "parent": null,
+      "tris": 2
+    },
+    {
+      "name": "GEO-Mannequin_180",
+      "type": "MESH",
+      "location": [
+        -0.85,
+        0.15,
+        0.0
+      ],
+      "dimensions": [
+        0.626,
+        0.34,
+        1.7781
+      ],
+      "materials": [
+        "MAT-mannequin"
+      ],
+      "parent": null,
+      "tris": 2240
+    },
+    {
+      "name": "REF-rubble0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1328,
+        0.1121,
+        0.1018
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0688,
+        0.0928,
+        0.045
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble2",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1637,
+        0.1596,
+        0.0744
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble3",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1117,
+        0.1145,
+        0.0701
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble4",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0463,
+        0.0455,
+        0.0241
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble5",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0775,
+        0.0985,
+        0.0562
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble6",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1122,
+        0.1274,
+        0.0623
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble7",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0606,
+        0.0854,
+        0.0515
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble8",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1162,
+        0.1293,
+        0.0606
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble9",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1279,
+        0.1181,
+        0.0848
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble10",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.173,
+        0.1188,
+        0.0743
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble11",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1344,
+        0.1213,
+        0.0683
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble12",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.113,
+        0.0865,
+        0.0684
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble13",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1991,
+        0.1496,
+        0.0942
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble14",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1413,
+        0.1165,
+        0.085
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble15",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1583,
+        0.1269,
+        0.0748
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble16",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1502,
+        0.137,
+        0.0714
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble17",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1755,
+        0.1264,
+        0.0813
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble18",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1186,
+        0.1209,
+        0.0723
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble19",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1391,
+        0.1309,
+        0.0965
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble20",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.127,
+        0.1428,
+        0.0975
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble21",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.077,
+        0.0888,
+        0.0348
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "CAM-HeartOfTheReef_FRONT",
+      "type": "CAMERA",
+      "location": [
+        1.1835,
+        0.0,
+        0.2528
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_BACK",
+      "type": "CAMERA",
+      "location": [
+        -1.1835,
+        0.0,
+        0.2528
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_LEFT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        1.1835,
+        0.2528
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_RIGHT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -1.1835,
+        0.2528
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_TOP",
+      "type": "CAMERA",
+      "location": [
+        0.0012,
+        -0.0012,
+        1.3238
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_3-4",
+      "type": "CAMERA",
+      "location": [
+        0.7547,
+        -0.7934,
+        0.5988
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_BOTTOM",
+      "type": "CAMERA",
+      "location": [
+        0.0012,
+        0.0012,
+        -1.055
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_CLOSEUP",
+      "type": "CAMERA",
+      "location": [
+        -0.0718,
+        -0.5156,
+        0.2064
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_CLOSEUP_TREASURE",
+      "type": "CAMERA",
+      "location": [
+        -0.0845,
+        -0.0097,
+        0.4303
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_SCALE",
+      "type": "CAMERA",
+      "location": [
+        -0.2,
+        -3.3,
+        0.95
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_FAR_5M",
+      "type": "CAMERA",
+      "location": [
+        3.6,
+        -3.4,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_SITU",
+      "type": "CAMERA",
+      "location": [
+        0.75,
+        -0.85,
+        0.42
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_TORCH",
+      "type": "CAMERA",
+      "location": [
+        0.85,
+        -0.95,
+        0.55
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-HeartOfTheReef_ACTIVE",
+      "type": "CAMERA",
+      "location": [
+        0.62,
+        -0.72,
+        0.38
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-key",
+      "type": "LIGHT",
+      "location": [
+        0.0,
+        0.0,
+        3.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-fill",
+      "type": "LIGHT",
+      "location": [
+        0.0,
+        0.0,
+        3.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-rim",
+      "type": "LIGHT",
+      "location": [
+        -1.2,
+        1.2,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "SM_HeartOfTheReef_LOD0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.5002,
+        0.4004,
+        0.3258
+      ],
+      "materials": [
+        "MAT_HeartOfTheReef",
+        "MAT_Gold_Aged",
+        "MAT_Pearl_White",
+        "MAT_Gem_Ruby"
+      ],
+      "parent": null,
+      "tris": 119352
+    },
+    {
+      "name": "UCX_HeartOfTheReef_01",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.3013,
+        0.2433,
+        0.3195
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_HeartOfTheReef_02",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2453,
+        0.2573,
+        0.2674
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_HeartOfTheReef_03",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.3213,
+        0.1875,
+        0.2956
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "EMP-HeartOfTheReef_GRAB_POINT",
+      "type": "EMPTY",
+      "location": [
+        -0.0192,
+        0.0022,
+        0.1456
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_HeartOfTheReef_LOD0"
+    },
+    {
+      "name": "EMP-HeartOfTheReef_INSPECT_POINT",
+      "type": "EMPTY",
+      "location": [
+        -0.0492,
+        -0.4,
+        0.1956
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_HeartOfTheReef_LOD0"
+    },
+    {
+      "name": "SM_HeartOfTheReef_LOD1",
+      "type": "MESH",
+      "location": [
+        0.8,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.4998,
+        0.4005,
+        0.3269
+      ],
+      "materials": [
+        "MAT_HeartOfTheReef",
+        "MAT_Gold_Aged",
+        "MAT_Pearl_White",
+        "MAT_Gem_Ruby"
+      ],
+      "parent": null,
+      "tris": 51792
+    },
+    {
+      "name": "SM_HeartOfTheReef_LOD2",
+      "type": "MESH",
+      "location": [
+        1.5,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.4977,
+        0.3994,
+        0.326
+      ],
+      "materials": [
+        "MAT_HeartOfTheReef",
+        "MAT_Gold_Aged",
+        "MAT_Pearl_White",
+        "MAT_Gem_Ruby"
+      ],
+      "parent": null,
+      "tris": 22964
+    },
+    {
+      "name": "GEO-HeartOfTheReef_High",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.5,
+        0.4,
+        0.32
+      ],
+      "materials": [
+        "MAT_HeartOfTheReef_HighBake"
+      ],
+      "parent": null,
+      "tris": 447936
+    },
+    {
+      "name": "REF-floor.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        120.0,
+        120.0,
+        0.0
+      ],
+      "materials": [
+        "MAT-ref-neutral.001"
+      ],
+      "parent": null,
+      "tris": 2
+    },
+    {
+      "name": "GEO-Mannequin_180.001",
+      "type": "MESH",
+      "location": [
+        -0.85,
+        0.15,
+        0.0
+      ],
+      "dimensions": [
+        0.626,
+        0.34,
+        1.7781
+      ],
+      "materials": [
+        "MAT-mannequin.001"
+      ],
+      "parent": null,
+      "tris": 2240
+    },
+    {
+      "name": "REF-rubble0.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1328,
+        0.1121,
+        0.1018
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble1.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0688,
+        0.0928,
+        0.045
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble2.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1637,
+        0.1596,
+        0.0744
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble3.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1117,
+        0.1145,
+        0.0701
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble4.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0463,
+        0.0455,
+        0.0241
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble5.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0775,
+        0.0985,
+        0.0562
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble6.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1122,
+        0.1274,
+        0.0623
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble7.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0606,
+        0.0854,
+        0.0515
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble8.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1162,
+        0.1293,
+        0.0606
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble9.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1279,
+        0.1181,
+        0.0848
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble10.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.173,
+        0.1188,
+        0.0743
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble11.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1344,
+        0.1213,
+        0.0683
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble12.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.113,
+        0.0865,
+        0.0684
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble13.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1991,
+        0.1496,
+        0.0942
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble14.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1413,
+        0.1165,
+        0.085
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble15.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1583,
+        0.1269,
+        0.0748
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble16.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1502,
+        0.137,
+        0.0714
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble17.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1755,
+        0.1264,
+        0.0813
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble18.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1186,
+        0.1209,
+        0.0723
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble19.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1391,
+        0.1309,
+        0.0965
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble20.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.127,
+        0.1428,
+        0.0975
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble21.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.077,
+        0.0888,
+        0.0348
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "CAM-EclipseStone_FRONT",
+      "type": "CAMERA",
+      "location": [
+        1.0652,
+        0.0,
+        0.1569
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_BACK",
+      "type": "CAMERA",
+      "location": [
+        -1.0652,
+        0.0,
+        0.1569
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_LEFT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        1.0652,
+        0.1569
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_RIGHT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -1.0652,
+        0.1569
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_TOP",
+      "type": "CAMERA",
+      "location": [
+        0.0011,
+        -0.0011,
+        1.1209
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_3-4",
+      "type": "CAMERA",
+      "location": [
+        0.6792,
+        -0.714,
+        0.4684
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_BOTTOM",
+      "type": "CAMERA",
+      "location": [
+        0.0011,
+        0.0011,
+        -1.0201
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_CLOSEUP",
+      "type": "CAMERA",
+      "location": [
+        0.2774,
+        -0.2138,
+        0.3607
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_CLOSEUP_TREASURE",
+      "type": "CAMERA",
+      "location": [
+        0.1152,
+        -0.1484,
+        0.218
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_SCALE",
+      "type": "CAMERA",
+      "location": [
+        -0.2,
+        -3.3,
+        0.95
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_FAR_5M",
+      "type": "CAMERA",
+      "location": [
+        3.6,
+        -3.4,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_SITU",
+      "type": "CAMERA",
+      "location": [
+        0.75,
+        -0.85,
+        0.42
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_TORCH",
+      "type": "CAMERA",
+      "location": [
+        0.85,
+        -0.95,
+        0.55
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-EclipseStone_ACTIVE",
+      "type": "CAMERA",
+      "location": [
+        0.62,
+        -0.72,
+        0.38
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-key.001",
+      "type": "LIGHT",
+      "location": [
+        0.0,
+        0.0,
+        3.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-fill.001",
+      "type": "LIGHT",
+      "location": [
+        0.0,
+        0.0,
+        3.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-rim.001",
+      "type": "LIGHT",
+      "location": [
+        -1.2,
+        1.2,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "SM_EclipseStone_LOD0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.4499,
+        0.4499,
+        0.1265
+      ],
+      "materials": [
+        "MAT_EclipseStone",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Sapphire",
+        "MAT_Pearl_Black"
+      ],
+      "parent": null,
+      "tris": 68756
+    },
+    {
+      "name": "UCX_EclipseStone_01",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1731,
+        0.161,
+        0.1105
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_EclipseStone_02",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1584,
+        0.1353,
+        0.1094
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_EclipseStone_03",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1331,
+        0.158,
+        0.1127
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_EclipseStone_04",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1246,
+        0.1622,
+        0.1117
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_EclipseStone_05",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1563,
+        0.1232,
+        0.1126
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_EclipseStone_06",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1423,
+        0.1522,
+        0.106
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_EclipseStone_07",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1588,
+        0.16,
+        0.1129
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_EclipseStone_08",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1582,
+        0.1346,
+        0.1056
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_EclipseStone_09",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1932,
+        0.1706,
+        0.1106
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_EclipseStone_10",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1577,
+        0.1587,
+        0.1147
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "EMP-EclipseStone_GRAB_POINT",
+      "type": "EMPTY",
+      "location": [
+        0.0097,
+        0.0031,
+        0.06
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_EclipseStone_LOD0"
+    },
+    {
+      "name": "EMP-EclipseStone_INSPECT_POINT",
+      "type": "EMPTY",
+      "location": [
+        0.0199,
+        -0.38,
+        0.3
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_EclipseStone_LOD0"
+    },
+    {
+      "name": "SM_EclipseStone_LOD1",
+      "type": "MESH",
+      "location": [
+        0.8,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.4501,
+        0.4502,
+        0.1265
+      ],
+      "materials": [
+        "MAT_EclipseStone",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Sapphire",
+        "MAT_Pearl_Black"
+      ],
+      "parent": null,
+      "tris": 25356
+    },
+    {
+      "name": "SM_EclipseStone_LOD2",
+      "type": "MESH",
+      "location": [
+        1.5,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.4495,
+        0.4494,
+        0.1265
+      ],
+      "materials": [
+        "MAT_EclipseStone",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Sapphire",
+        "MAT_Pearl_Black"
+      ],
+      "parent": null,
+      "tris": 12436
+    },
+    {
+      "name": "GEO-EclipseStone_High",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.45,
+        0.45,
+        0.12
+      ],
+      "materials": [
+        "MAT_EclipseStone_HighBake"
+      ],
+      "parent": null,
+      "tris": 522144
+    },
+    {
+      "name": "REF-floor.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        120.0,
+        120.0,
+        0.0
+      ],
+      "materials": [
+        "MAT-ref-neutral.002"
+      ],
+      "parent": null,
+      "tris": 2
+    },
+    {
+      "name": "GEO-Mannequin_180.002",
+      "type": "MESH",
+      "location": [
+        -0.85,
+        0.15,
+        0.0
+      ],
+      "dimensions": [
+        0.626,
+        0.34,
+        1.7781
+      ],
+      "materials": [
+        "MAT-mannequin.002"
+      ],
+      "parent": null,
+      "tris": 2240
+    },
+    {
+      "name": "REF-rubble0.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1328,
+        0.1121,
+        0.1018
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble1.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0688,
+        0.0928,
+        0.045
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble2.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1637,
+        0.1596,
+        0.0744
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble3.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1117,
+        0.1145,
+        0.0701
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble4.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0463,
+        0.0455,
+        0.0241
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble5.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0775,
+        0.0985,
+        0.0562
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble6.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1122,
+        0.1274,
+        0.0623
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble7.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0606,
+        0.0854,
+        0.0515
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble8.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1162,
+        0.1293,
+        0.0606
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble9.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1279,
+        0.1181,
+        0.0848
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble10.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.173,
+        0.1188,
+        0.0743
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble11.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1344,
+        0.1213,
+        0.0683
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble12.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.113,
+        0.0865,
+        0.0684
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble13.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1991,
+        0.1496,
+        0.0942
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble14.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1413,
+        0.1165,
+        0.085
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble15.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1583,
+        0.1269,
+        0.0748
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble16.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1502,
+        0.137,
+        0.0714
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble17.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1755,
+        0.1264,
+        0.0813
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble18.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1186,
+        0.1209,
+        0.0723
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble19.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1391,
+        0.1309,
+        0.0965
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble20.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.127,
+        0.1428,
+        0.0975
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble21.002",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.077,
+        0.0888,
+        0.0348
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "CAM-FishGodFragment_FRONT",
+      "type": "CAMERA",
+      "location": [
+        1.3019,
+        0.0,
+        0.3612
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_BACK",
+      "type": "CAMERA",
+      "location": [
+        -1.3019,
+        0.0,
+        0.3612
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_LEFT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        1.3019,
+        0.3612
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_RIGHT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -1.3019,
+        0.3612
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_TOP",
+      "type": "CAMERA",
+      "location": [
+        0.0013,
+        -0.0013,
+        1.5393
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_3-4",
+      "type": "CAMERA",
+      "location": [
+        0.8302,
+        -0.8727,
+        0.7419
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_BOTTOM",
+      "type": "CAMERA",
+      "location": [
+        0.0013,
+        0.0013,
+        -1.0773
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_CLOSEUP",
+      "type": "CAMERA",
+      "location": [
+        0.0985,
+        -0.3764,
+        0.5038
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_CLOSEUP_TREASURE",
+      "type": "CAMERA",
+      "location": [
+        0.1327,
+        -0.2907,
+        0.4691
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_SCALE",
+      "type": "CAMERA",
+      "location": [
+        -0.2,
+        -3.3,
+        0.95
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_FAR_5M",
+      "type": "CAMERA",
+      "location": [
+        3.6,
+        -3.4,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_SITU",
+      "type": "CAMERA",
+      "location": [
+        0.75,
+        -0.85,
+        0.42
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_TORCH",
+      "type": "CAMERA",
+      "location": [
+        0.85,
+        -0.95,
+        0.55
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-FishGodFragment_ACTIVE",
+      "type": "CAMERA",
+      "location": [
+        0.62,
+        -0.72,
+        0.38
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-key.002",
+      "type": "LIGHT",
+      "location": [
+        0.0,
+        0.0,
+        3.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-fill.002",
+      "type": "LIGHT",
+      "location": [
+        0.0,
+        0.0,
+        3.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-rim.002",
+      "type": "LIGHT",
+      "location": [
+        -1.2,
+        1.2,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "SM_FishGodFragment_LOD0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.24,
+        0.2995,
+        0.55
+      ],
+      "materials": [
+        "MAT_FishGodFragment",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Emerald",
+        "MAT_Gem_Sapphire",
+        "MAT_Pearl_White",
+        "MAT_Gem_Ruby"
+      ],
+      "parent": null,
+      "tris": 84168
+    },
+    {
+      "name": "UCX_FishGodFragment_01",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1365,
+        0.2965,
+        0.2028
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_FishGodFragment_02",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1996,
+        0.2296,
+        0.1956
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_FishGodFragment_03",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2361,
+        0.1618,
+        0.2677
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_FishGodFragment_04",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2329,
+        0.1844,
+        0.2051
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "EMP-FishGodFragment_GRAB_POINT",
+      "type": "EMPTY",
+      "location": [
+        0.0065,
+        -0.0039,
+        0.24
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_FishGodFragment_LOD0"
+    },
+    {
+      "name": "EMP-FishGodFragment_INSPECT_POINT",
+      "type": "EMPTY",
+      "location": [
+        0.16,
+        -0.38,
+        0.43
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_FishGodFragment_LOD0"
+    },
+    {
+      "name": "SM_FishGodFragment_LOD1",
+      "type": "MESH",
+      "location": [
+        0.8,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2398,
+        0.2994,
+        0.55
+      ],
+      "materials": [
+        "MAT_FishGodFragment",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Emerald",
+        "MAT_Gem_Sapphire",
+        "MAT_Pearl_White",
+        "MAT_Gem_Ruby"
+      ],
+      "parent": null,
+      "tris": 39292
+    },
+    {
+      "name": "SM_FishGodFragment_LOD2",
+      "type": "MESH",
+      "location": [
+        1.5,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2403,
+        0.2984,
+        0.5504
+      ],
+      "materials": [
+        "MAT_FishGodFragment",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Emerald",
+        "MAT_Gem_Sapphire",
+        "MAT_Pearl_White",
+        "MAT_Gem_Ruby"
+      ],
+      "parent": null,
+      "tris": 18524
+    },
+    {
+      "name": "GEO-FishGodFragment_High",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.24,
+        0.3,
+        0.55
+      ],
+      "materials": [
+        "MAT_FishGodFragment_HighBake"
+      ],
+      "parent": null,
+      "tris": 479076
+    },
+    {
+      "name": "CAM-MoonPearl_FRONT",
+      "type": "CAMERA",
+      "location": [
+        0.1676,
+        0.0,
+        0.0323
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_BACK",
+      "type": "CAMERA",
+      "location": [
+        -0.1676,
+        0.0,
+        0.0323
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_LEFT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        0.1676,
+        0.0323
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_RIGHT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -0.1676,
+        0.0323
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_TOP",
+      "type": "CAMERA",
+      "location": [
+        0.0002,
+        -0.0002,
+        0.184
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_3-4",
+      "type": "CAMERA",
+      "location": [
+        0.1069,
+        -0.1124,
+        0.0813
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_BOTTOM",
+      "type": "CAMERA",
+      "location": [
+        0.0002,
+        0.0002,
+        -0.1529
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_CLOSEUP",
+      "type": "CAMERA",
+      "location": [
+        0.0661,
+        -0.0768,
+        0.0603
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_CLOSEUP_TREASURE",
+      "type": "CAMERA",
+      "location": [
+        0.0234,
+        -0.0297,
+        0.0459
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_SCALE",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -0.2024,
+        0.3591
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_FAR_5M",
+      "type": "CAMERA",
+      "location": [
+        3.4,
+        -3.6,
+        1.2
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_SITU_sable",
+      "type": "CAMERA",
+      "location": [
+        0.1657,
+        -0.1924,
+        0.1106
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_TORCH_sable",
+      "type": "CAMERA",
+      "location": [
+        0.2,
+        -0.22,
+        0.1143
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_SITU_coquille",
+      "type": "CAMERA",
+      "location": [
+        0.139,
+        -0.2471,
+        0.19
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_TORCH_coquille",
+      "type": "CAMERA",
+      "location": [
+        0.16,
+        -0.26,
+        0.2201
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_SITU_plancher",
+      "type": "CAMERA",
+      "location": [
+        0.1692,
+        -0.1973,
+        0.1283
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_TORCH_plancher",
+      "type": "CAMERA",
+      "location": [
+        0.2,
+        -0.22,
+        0.1355
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_ACTIVE",
+      "type": "CAMERA",
+      "location": [
+        0.1091,
+        -0.1587,
+        0.0949
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-MoonPearl_STATES",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -0.1966,
+        0.0844
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "SM_MoonPearl_LOD0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.023,
+        0.022,
+        0.0286
+      ],
+      "materials": [
+        "MAT_MoonPearl",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Sapphire"
+      ],
+      "parent": null,
+      "tris": 14302
+    },
+    {
+      "name": "UCX_MoonPearl_01",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0227,
+        0.0218,
+        0.0209
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "EMP-MoonPearl_GRAB_POINT",
+      "type": "EMPTY",
+      "location": [
+        -0.0001,
+        -0.0,
+        0.0102
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_MoonPearl_LOD0"
+    },
+    {
+      "name": "EMP-MoonPearl_INSPECT_POINT",
+      "type": "EMPTY",
+      "location": [
+        -0.0201,
+        -0.17,
+        0.0702
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_MoonPearl_LOD0"
+    },
+    {
+      "name": "SM_MoonPearl_LOD1",
+      "type": "MESH",
+      "location": [
+        0.8,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.023,
+        0.022,
+        0.0285
+      ],
+      "materials": [
+        "MAT_MoonPearl",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Sapphire"
+      ],
+      "parent": null,
+      "tris": 6522
+    },
+    {
+      "name": "SM_MoonPearl_LOD2",
+      "type": "MESH",
+      "location": [
+        1.5,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.023,
+        0.022,
+        0.0285
+      ],
+      "materials": [
+        "MAT_MoonPearl",
+        "MAT_Gold_Aged"
+      ],
+      "parent": null,
+      "tris": 3072
+    },
+    {
+      "name": "GEO-MoonPearl_High",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.023,
+        0.022,
+        0.021
+      ],
+      "materials": [
+        "MAT_MoonPearl_HighBake"
+      ],
+      "parent": null,
+      "tris": 327680
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_FRONT",
+      "type": "CAMERA",
+      "location": [
+        0.1498,
+        0.0,
+        0.0289
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_BACK",
+      "type": "CAMERA",
+      "location": [
+        -0.1498,
+        0.0,
+        0.0289
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_LEFT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        0.1498,
+        0.0289
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_RIGHT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -0.1498,
+        0.0289
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_TOP",
+      "type": "CAMERA",
+      "location": [
+        0.0002,
+        -0.0002,
+        0.1645
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_3-4",
+      "type": "CAMERA",
+      "location": [
+        0.0955,
+        -0.1004,
+        0.0727
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_BOTTOM",
+      "type": "CAMERA",
+      "location": [
+        0.0002,
+        0.0002,
+        -0.1367
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_CLOSEUP",
+      "type": "CAMERA",
+      "location": [
+        0.0591,
+        -0.0686,
+        0.0539
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_CLOSEUP_TREASURE",
+      "type": "CAMERA",
+      "location": [
+        0.0257,
+        -0.0323,
+        0.0343
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_SCALE",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -0.2024,
+        0.3591
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_FAR_5M",
+      "type": "CAMERA",
+      "location": [
+        3.4,
+        -3.6,
+        1.2
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_SITU_sable",
+      "type": "CAMERA",
+      "location": [
+        0.1657,
+        -0.1924,
+        0.1089
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_TORCH_sable",
+      "type": "CAMERA",
+      "location": [
+        0.2,
+        -0.22,
+        0.1127
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_SITU_coquille",
+      "type": "CAMERA",
+      "location": [
+        0.139,
+        -0.2471,
+        0.1883
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_TORCH_coquille",
+      "type": "CAMERA",
+      "location": [
+        0.16,
+        -0.26,
+        0.2184
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_SITU_plancher",
+      "type": "CAMERA",
+      "location": [
+        0.1692,
+        -0.1973,
+        0.1267
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_TORCH_plancher",
+      "type": "CAMERA",
+      "location": [
+        0.2,
+        -0.22,
+        0.1339
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-RedPearlOfRaraka_ACTIVE",
+      "type": "CAMERA",
+      "location": [
+        0.1091,
+        -0.1587,
+        0.0933
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "SM_RedPearlOfRaraka_LOD0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0227,
+        0.0218,
+        0.0278
+      ],
+      "materials": [
+        "MAT_RedPearlOfRaraka",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Ruby"
+      ],
+      "parent": null,
+      "tris": 30394
+    },
+    {
+      "name": "UCX_RedPearlOfRaraka_01",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0208,
+        0.0189,
+        0.0228
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "EMP-RedPearlOfRaraka_GRAB_POINT",
+      "type": "EMPTY",
+      "location": [
+        0.0006,
+        0.0,
+        0.0102
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_RedPearlOfRaraka_LOD0"
+    },
+    {
+      "name": "EMP-RedPearlOfRaraka_INSPECT_POINT",
+      "type": "EMPTY",
+      "location": [
+        -0.0194,
+        -0.17,
+        0.0702
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_RedPearlOfRaraka_LOD0"
+    },
+    {
+      "name": "SM_RedPearlOfRaraka_LOD1",
+      "type": "MESH",
+      "location": [
+        0.8,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0227,
+        0.0218,
+        0.0277
+      ],
+      "materials": [
+        "MAT_RedPearlOfRaraka",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Ruby"
+      ],
+      "parent": null,
+      "tris": 5414
+    },
+    {
+      "name": "SM_RedPearlOfRaraka_LOD2",
+      "type": "MESH",
+      "location": [
+        1.5,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.022,
+        0.0201,
+        0.0277
+      ],
+      "materials": [
+        "MAT_RedPearlOfRaraka",
+        "MAT_Gold_Aged"
+      ],
+      "parent": null,
+      "tris": 1740
+    },
+    {
+      "name": "GEO-RedPearlOfRaraka_High",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0211,
+        0.02,
+        0.023
+      ],
+      "materials": [
+        "MAT_RedPearlOfRaraka_HighBake"
+      ],
+      "parent": null,
+      "tris": 327680
+    },
+    {
+      "name": "REF-floor.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        120.0,
+        120.0,
+        0.0
+      ],
+      "materials": [
+        "MAT-ref-neutral.003"
+      ],
+      "parent": null,
+      "tris": 2
+    },
+    {
+      "name": "GEO-Mannequin_180.003",
+      "type": "MESH",
+      "location": [
+        -0.85,
+        0.15,
+        0.0
+      ],
+      "dimensions": [
+        0.626,
+        0.34,
+        1.7781
+      ],
+      "materials": [
+        "MAT-mannequin.005"
+      ],
+      "parent": null,
+      "tris": 2240
+    },
+    {
+      "name": "REF-rubble0.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1328,
+        0.1121,
+        0.1018
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble1.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0688,
+        0.0928,
+        0.045
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble2.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1637,
+        0.1596,
+        0.0744
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble3.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1117,
+        0.1145,
+        0.0701
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble4.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0463,
+        0.0455,
+        0.0241
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble5.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0775,
+        0.0985,
+        0.0562
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble6.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1122,
+        0.1274,
+        0.0623
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble7.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0606,
+        0.0854,
+        0.0515
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble8.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1162,
+        0.1293,
+        0.0606
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble9.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1279,
+        0.1181,
+        0.0848
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble10.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.173,
+        0.1188,
+        0.0743
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble11.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1344,
+        0.1213,
+        0.0683
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble12.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.113,
+        0.0865,
+        0.0684
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble13.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1991,
+        0.1496,
+        0.0942
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble14.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1413,
+        0.1165,
+        0.085
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble15.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1583,
+        0.1269,
+        0.0748
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble16.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1502,
+        0.137,
+        0.0714
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble17.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1755,
+        0.1264,
+        0.0813
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble18.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1186,
+        0.1209,
+        0.0723
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble19.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1391,
+        0.1309,
+        0.0965
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble20.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.127,
+        0.1428,
+        0.0975
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "REF-rubble21.003",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.077,
+        0.0888,
+        0.0348
+      ],
+      "materials": [
+        "MAT_Coral_Dead"
+      ],
+      "parent": null,
+      "tris": 320
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_FRONT",
+      "type": "CAMERA",
+      "location": [
+        0.5681,
+        0.0,
+        0.124
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_BACK",
+      "type": "CAMERA",
+      "location": [
+        -0.5681,
+        0.0,
+        0.124
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_LEFT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        0.5681,
+        0.124
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_RIGHT",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -0.5681,
+        0.124
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_TOP",
+      "type": "CAMERA",
+      "location": [
+        0.0006,
+        -0.0006,
+        0.6381
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_3-4",
+      "type": "CAMERA",
+      "location": [
+        0.3622,
+        -0.3808,
+        0.2901
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_BOTTOM",
+      "type": "CAMERA",
+      "location": [
+        0.0006,
+        0.0006,
+        -0.5037
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_CLOSEUP",
+      "type": "CAMERA",
+      "location": [
+        0.3376,
+        -0.146,
+        0.1506
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_CLOSEUP_TREASURE",
+      "type": "CAMERA",
+      "location": [
+        0.2004,
+        -0.1139,
+        0.0748
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_SCALE",
+      "type": "CAMERA",
+      "location": [
+        -0.2,
+        -3.3,
+        0.95
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_FAR_5M",
+      "type": "CAMERA",
+      "location": [
+        3.6,
+        -3.4,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_SITU",
+      "type": "CAMERA",
+      "location": [
+        0.75,
+        -0.85,
+        0.42
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_TORCH",
+      "type": "CAMERA",
+      "location": [
+        0.85,
+        -0.95,
+        0.55
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-CrownOfTheLastAriki_ACTIVE",
+      "type": "CAMERA",
+      "location": [
+        0.62,
+        -0.72,
+        0.38
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-key.003",
+      "type": "LIGHT",
+      "location": [
+        0.0,
+        0.0,
+        3.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-fill.003",
+      "type": "LIGHT",
+      "location": [
+        0.0,
+        0.0,
+        3.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-rim.003",
+      "type": "LIGHT",
+      "location": [
+        -1.2,
+        1.2,
+        1.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "SM_CrownOfTheLastAriki_LOD0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2401,
+        0.2201,
+        0.1651
+      ],
+      "materials": [
+        "MAT_CrownOfTheLastAriki",
+        "MAT_Nacre_Pinctada",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Sapphire",
+        "MAT_Gem_Ruby",
+        "MAT_Pearl_White",
+        "MAT_Gem_Emerald",
+        "MAT_Feather_Aged"
+      ],
+      "parent": null,
+      "tris": 106301
+    },
+    {
+      "name": "UCX_CrownOfTheLastAriki_01",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0369,
+        0.0732,
+        0.0511
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_CrownOfTheLastAriki_02",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0362,
+        0.0626,
+        0.049
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_CrownOfTheLastAriki_03",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.067,
+        0.0382,
+        0.05
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_CrownOfTheLastAriki_04",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0786,
+        0.0325,
+        0.048
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_CrownOfTheLastAriki_05",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0636,
+        0.0583,
+        0.0545
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_CrownOfTheLastAriki_06",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.055,
+        0.0536,
+        0.05
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_CrownOfTheLastAriki_07",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0622,
+        0.0491,
+        0.0465
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_CrownOfTheLastAriki_08",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0653,
+        0.0518,
+        0.05
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "UCX_CrownOfTheLastAriki_09",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0482,
+        0.0546,
+        0.0483
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "EMP-CrownOfTheLastAriki_GRAB_POINT",
+      "type": "EMPTY",
+      "location": [
+        -0.1113,
+        -0.0004,
+        0.0325
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_CrownOfTheLastAriki_LOD0"
+    },
+    {
+      "name": "EMP-CrownOfTheLastAriki_INSPECT_POINT",
+      "type": "EMPTY",
+      "location": [
+        0.35,
+        -0.02,
+        0.045
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": "SM_CrownOfTheLastAriki_LOD0"
+    },
+    {
+      "name": "SM_CrownOfTheLastAriki_LOD1",
+      "type": "MESH",
+      "location": [
+        0.8,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2402,
+        0.22,
+        0.1651
+      ],
+      "materials": [
+        "MAT_CrownOfTheLastAriki",
+        "MAT_Nacre_Pinctada",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Sapphire",
+        "MAT_Gem_Ruby",
+        "MAT_Pearl_White",
+        "MAT_Gem_Emerald",
+        "MAT_Feather_Aged"
+      ],
+      "parent": null,
+      "tris": 47134
+    },
+    {
+      "name": "SM_CrownOfTheLastAriki_LOD2",
+      "type": "MESH",
+      "location": [
+        1.5,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2403,
+        0.2196,
+        0.1651
+      ],
+      "materials": [
+        "MAT_CrownOfTheLastAriki",
+        "MAT_Nacre_Pinctada",
+        "MAT_Gold_Aged",
+        "MAT_Gem_Sapphire",
+        "MAT_Gem_Ruby",
+        "MAT_Gem_Emerald",
+        "MAT_Feather_Aged"
+      ],
+      "parent": null,
+      "tris": 13773
+    },
+    {
+      "name": "GEO-CrownOfTheLastAriki_High",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2283,
+        0.2111,
+        0.061
+      ],
+      "materials": [
+        "MAT_CrownOfTheLastAriki_HighBake"
+      ],
+      "parent": null,
+      "tris": 541730
+    }
+  ],
+  "object_count": 274,
+  "total_tris": 3354666,
+  "bbox": {
+    "min": [
+      -0.2501,
+      -0.2251,
+      -0.0
+    ],
+    "max": [
+      1.7497,
+      0.2251,
+      0.5504
+    ],
+    "size": [
+      1.9997,
+      0.4502,
+      0.5504
+    ]
+  }
+}

@@ -1,0 +1,3915 @@
+{
+  "format": "artifacts-report/1",
+  "objects": {
+    "HeartOfTheReef": {
+      "id": "HeartOfTheReef",
+      "tier": "LEGENDARY",
+      "mass_kg": 18.0,
+      "value": 6000,
+      "scale": 1.0,
+      "texture_res": 4096,
+      "timings_s": {
+        "high": 12.3,
+        "lod0_uv": 39.7,
+        "bake": 255.3,
+        "lods": 256.9,
+        "ornaments": 268.3,
+        "physics_points_anim": 268.3,
+        "exports": 279.7,
+        "done": 279.8
+      },
+      "errors": [],
+      "high": {
+        "tris": 447936,
+        "scale_fit": [
+          0.8333,
+          0.8455,
+          0.9608
+        ],
+        "verts": 223974,
+        "carb_cover": 0.19081759241932392,
+        "vein_cover": 0.03651833534240723,
+        "fissure_cover": 0.015067411586642265,
+        "voxel_m": 0.002
+      },
+      "uv": {
+        "min": [
+          0.0036,
+          0.0035
+        ],
+        "max": [
+          0.9965,
+          0.9864
+        ],
+        "in_0_1": true,
+        "coverage": 0.537,
+        "overlap_ratio": 0.00026,
+        "texel_density_spread": [
+          0.55,
+          1.32
+        ],
+        "charts": 66,
+        "lightmap": {
+          "min": [
+            0.0072,
+            0.0072
+          ],
+          "max": [
+            0.9926,
+            0.9928
+          ],
+          "in_0_1": true,
+          "coverage": 0.358,
+          "overlap_ratio": 0.00029,
+          "texel_density_spread": [
+            0.55,
+            1.32
+          ]
+        }
+      },
+      "bake": {
+        "device": "OPTIX",
+        "per_map_s": {
+          "BaseColor": 27.2,
+          "Roughness": 27.9,
+          "Normal": 30.2,
+          "AO": 89.7,
+          "Emissive": 34.7
+        },
+        "total_s": 209.7,
+        "samples": {
+          "color": 16,
+          "rough": 16,
+          "normal": 16,
+          "ao": 96,
+          "emit": 24,
+          "metal": 8
+        }
+      },
+      "lods": [
+        {
+          "name": "SM_HeartOfTheReef_LOD0",
+          "tris": 119352,
+          "ratio": 1.0,
+          "base_tris": 70000,
+          "ornament_tris": 49352
+        },
+        {
+          "name": "SM_HeartOfTheReef_LOD1",
+          "tris": 51792,
+          "ratio": 0.434,
+          "base_tris": 35000,
+          "ornament_tris": 16792
+        },
+        {
+          "name": "SM_HeartOfTheReef_LOD2",
+          "tris": 22964,
+          "ratio": 0.192,
+          "base_tris": 14000,
+          "ornament_tris": 8964
+        }
+      ],
+      "physics": {
+        "volume_m3": 0.019493,
+        "implied_density_kg_m3": 923.4,
+        "mass_kg": 18.0,
+        "center_of_gravity_m": [
+          -0.0192,
+          0.0022,
+          0.1156
+        ],
+        "rest": {
+          "cog_inside_support": true,
+          "support_points": 114,
+          "margin_m": 0.0812,
+          "support_extent_m": [
+            0.315,
+            0.21
+          ]
+        }
+      },
+      "collision": [
+        {
+          "name": "UCX_HeartOfTheReef_01",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_HeartOfTheReef_02",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_HeartOfTheReef_03",
+          "verts": 48,
+          "convex": true
+        }
+      ],
+      "dims_base_m": [
+        0.5002,
+        0.4004,
+        0.3193
+      ],
+      "ornaments": {
+        "items": [
+          {
+            "name": "cerclage",
+            "size_mm": 14.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "band": "14 x 1.6 mm",
+            "wires": "2 fils torsades 1.5 mm"
+          },
+          {
+            "name": "arceau_0",
+            "size_mm": 11.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "band": "11 x 1.4 mm",
+            "rivets": "tous les ~36 mm"
+          },
+          {
+            "name": "arceau_1",
+            "size_mm": 11.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "band": "11 x 1.4 mm",
+            "rivets": "tous les ~36 mm"
+          },
+          {
+            "name": "rosace_croisement",
+            "size_mm": 24.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "pearl": "perle fine 8.4 mm"
+          },
+          {
+            "name": "rubis_brut_0",
+            "size_mm": 13.4,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "held": true
+          },
+          {
+            "name": "rubis_brut_1",
+            "size_mm": 15.9,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "held": true
+          },
+          {
+            "name": "rubis_brut_2",
+            "size_mm": 12.1,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "held": false
+          },
+          {
+            "name": "rubis_brut_3",
+            "size_mm": 11.1,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "held": false
+          },
+          {
+            "name": "rubis_brut_4",
+            "size_mm": 14.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "held": false
+          },
+          {
+            "name": "perle_sertie_0",
+            "size_mm": 7.2,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "perle_sertie_1",
+            "size_mm": 7.2,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "chaton_vide_2",
+            "size_mm": 9.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "perle_sertie_3",
+            "size_mm": 7.2,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "chaton_vide_cerclage",
+            "size_mm": 10.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "rang_perles",
+            "size_mm": 5.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "pearls": "perles fines ~5 mm sur fil d'or"
+          }
+        ],
+        "stones": [
+          {
+            "cut": "perle",
+            "material": "MAT_Pearl_White",
+            "size_mm": 8.4,
+            "state": "serti"
+          },
+          {
+            "cut": "cristal brut (corindon)",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 21.0,
+            "state": "2 brides d'or"
+          },
+          {
+            "cut": "cristal brut (corindon)",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 22.6,
+            "state": "2 brides d'or"
+          },
+          {
+            "cut": "cristal brut (corindon)",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 17.7,
+            "state": "loge dans la veine"
+          },
+          {
+            "cut": "cristal brut (corindon)",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 18.2,
+            "state": "loge dans la veine"
+          },
+          {
+            "cut": "cristal brut (corindon)",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 21.9,
+            "state": "loge dans la veine"
+          },
+          {
+            "cut": "perle",
+            "material": "MAT_Pearl_White",
+            "size_mm": 7.2,
+            "state": "serti"
+          },
+          {
+            "cut": "perle",
+            "material": "MAT_Pearl_White",
+            "size_mm": 7.2,
+            "state": "serti"
+          },
+          {
+            "cut": "chaton vide (coussin 8 mm perdu)",
+            "material": "-",
+            "size_mm": 8.0,
+            "state": "vide, griffe tordue"
+          },
+          {
+            "cut": "perle",
+            "material": "MAT_Pearl_White",
+            "size_mm": 7.2,
+            "state": "serti"
+          },
+          {
+            "cut": "chaton vide (table 9 mm perdue)",
+            "material": "-",
+            "size_mm": 9.0,
+            "state": "vide"
+          },
+          {
+            "cut": "rang de perles fines",
+            "material": "MAT_Pearl_White",
+            "size_mm": 5.0,
+            "state": "enfilees"
+          }
+        ],
+        "notes": [
+          "arceaux : angles 36 / 96 deg (trace le plus regulier)",
+          {
+            "crossing": [
+              0.0025,
+              0.0025,
+              0.22
+            ],
+            "normal": [
+              0.135,
+              0.08,
+              0.988
+            ]
+          }
+        ],
+        "lods": [
+          {
+            "lod": 0,
+            "pieces": 85,
+            "tris": 49352,
+            "base_tris": 70000,
+            "total_tris": 119352,
+            "by_material": {
+              "MAT_Gold_Aged": 47124,
+              "MAT_Pearl_White": 1708,
+              "MAT_Gem_Ruby": 520
+            }
+          },
+          {
+            "lod": 1,
+            "pieces": 70,
+            "tris": 16792,
+            "base_tris": 35000,
+            "total_tris": 51792,
+            "by_material": {
+              "MAT_Gold_Aged": 16100,
+              "MAT_Pearl_White": 472,
+              "MAT_Gem_Ruby": 220
+            }
+          },
+          {
+            "lod": 2,
+            "pieces": 35,
+            "tris": 8964,
+            "base_tris": 14000,
+            "total_tris": 22964,
+            "by_material": {
+              "MAT_Gold_Aged": 8476,
+              "MAT_Pearl_White": 328,
+              "MAT_Gem_Ruby": 160
+            }
+          }
+        ]
+      },
+      "points": {
+        "GRAB_POINT": {
+          "location_m": [
+            -0.0192,
+            0.0022,
+            0.1456
+          ]
+        },
+        "INSPECT_POINT": {
+          "location_m": [
+            -0.0492,
+            -0.4,
+            0.1956
+          ]
+        }
+      },
+      "animation": {
+        "action": "HeartOfTheReef_Pulse",
+        "keys": [
+          1.0,
+          1.015,
+          1.0
+        ],
+        "cycle_s": 4.0,
+        "fps": 24,
+        "frames": [
+          1,
+          97
+        ],
+        "pivot": "centre de masse (location compensee)",
+        "ue": "Timeline/Curve sur le scale du composant autour du CoG, ou WPO : Position += (Position - CoG) * 0.015 * sin01(Time * 2pi / 4)"
+      },
+      "exports": {
+        "SM_HeartOfTheReef_LOD0": {
+          "fbx": "exports/SM_HeartOfTheReef_LOD0.fbx",
+          "glb": "exports/SM_HeartOfTheReef_LOD0.glb",
+          "tris": 119352
+        },
+        "SM_HeartOfTheReef_LOD1": {
+          "fbx": "exports/SM_HeartOfTheReef_LOD1.fbx",
+          "glb": "exports/SM_HeartOfTheReef_LOD1.glb",
+          "tris": 51792
+        },
+        "SM_HeartOfTheReef_LOD2": {
+          "fbx": "exports/SM_HeartOfTheReef_LOD2.fbx",
+          "glb": "exports/SM_HeartOfTheReef_LOD2.glb",
+          "tris": 22964
+        }
+      },
+      "dims_m": [
+        0.5002,
+        0.4004,
+        0.3258
+      ],
+      "checks": {
+        "dims_match_target": true,
+        "dims_target_m": [
+          0.5,
+          0.4,
+          0.32
+        ],
+        "pivot": {
+          "bbox_min_z": 0.0,
+          "footprint_center_xy": [
+            0.0001,
+            -0.0002
+          ],
+          "ok": true
+        },
+        "transforms": {
+          "SM_HeartOfTheReef_LOD0": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_HeartOfTheReef_LOD1": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_HeartOfTheReef_LOD2": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          }
+        },
+        "mesh": {
+          "SM_HeartOfTheReef_LOD0": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.019493,
+            "normals_outward": true
+          },
+          "SM_HeartOfTheReef_LOD1": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.019487,
+            "normals_outward": true
+          },
+          "SM_HeartOfTheReef_LOD2": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.019459,
+            "normals_outward": true
+          }
+        },
+        "mesh_scope": "relique seule (avant jonction des ornements)",
+        "uv_channels": {
+          "SM_HeartOfTheReef_LOD0": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_HeartOfTheReef_LOD1": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_HeartOfTheReef_LOD2": [
+            "UVMap",
+            "LightmapUV"
+          ]
+        },
+        "material_slots": {
+          "SM_HeartOfTheReef_LOD0": [
+            "MAT_HeartOfTheReef",
+            "MAT_Gold_Aged",
+            "MAT_Pearl_White",
+            "MAT_Gem_Ruby"
+          ],
+          "SM_HeartOfTheReef_LOD1": [
+            "MAT_HeartOfTheReef",
+            "MAT_Gold_Aged",
+            "MAT_Pearl_White",
+            "MAT_Gem_Ruby"
+          ],
+          "SM_HeartOfTheReef_LOD2": [
+            "MAT_HeartOfTheReef",
+            "MAT_Gold_Aged",
+            "MAT_Pearl_White",
+            "MAT_Gem_Ruby"
+          ]
+        },
+        "naming_bad": [],
+        "textures_exist": {
+          "BaseColor": true,
+          "Roughness": true,
+          "Normal": true,
+          "AO": true,
+          "Emissive": true,
+          "Normal_DX": true,
+          "ORM": true
+        },
+        "collision_ok": true,
+        "rest_stable": true,
+        "no_hidden_in_export": true
+      },
+      "textures": {
+        "BaseColor": "textures/HeartOfTheReef/T_HeartOfTheReef_BaseColor.png",
+        "Roughness": "textures/HeartOfTheReef/T_HeartOfTheReef_Roughness.png",
+        "Normal": "textures/HeartOfTheReef/T_HeartOfTheReef_Normal.png",
+        "AO": "textures/HeartOfTheReef/T_HeartOfTheReef_AO.png",
+        "Emissive": "textures/HeartOfTheReef/T_HeartOfTheReef_Emissive.png",
+        "Normal_DX": "textures/HeartOfTheReef/T_HeartOfTheReef_Normal_DX.png",
+        "ORM": "textures/HeartOfTheReef/T_HeartOfTheReef_ORM.png"
+      },
+      "normal_map": "T_<Id>_Normal = OpenGL (Y+, tangent space) ; T_<Id>_Normal_DX = DirectX (G inverse) pour UE ; ORM = R:AO G:Rough B:Metal",
+      "renders": {
+        "FRONT": "renders/HeartOfTheReef/FRONT.png",
+        "BACK": "renders/HeartOfTheReef/BACK.png",
+        "LEFT": "renders/HeartOfTheReef/LEFT.png",
+        "RIGHT": "renders/HeartOfTheReef/RIGHT.png",
+        "TOP": "renders/HeartOfTheReef/TOP.png",
+        "3-4": "renders/HeartOfTheReef/3-4.png",
+        "BOTTOM": "renders/HeartOfTheReef/BOTTOM.png",
+        "CLOSEUP_MATERIAL": "renders/HeartOfTheReef/CLOSEUP_MATERIAL.png",
+        "CLOSEUP_TREASURE": "renders/HeartOfTheReef/CLOSEUP_TREASURE.png",
+        "SCALE": "renders/HeartOfTheReef/SCALE.png",
+        "FAR_5M": "renders/HeartOfTheReef/FAR_5M.png",
+        "SITU_fond_marin_DAY": "renders/HeartOfTheReef/SITU_fond_marin_DAY.png",
+        "SITUATION": "renders/HeartOfTheReef/SITUATION.png",
+        "SITU_fond_marin_TORCH": "renders/HeartOfTheReef/SITU_fond_marin_TORCH.png",
+        "FLASHLIGHT": "renders/HeartOfTheReef/FLASHLIGHT.png",
+        "ACTIVE": "renders/HeartOfTheReef/ACTIVE.png",
+        "PREVIEW_3-4": "renders/HeartOfTheReef/PREVIEW_3-4.png"
+      },
+      "total_s": 508.2
+    },
+    "EclipseStone": {
+      "id": "EclipseStone",
+      "tier": "LEGENDARY",
+      "mass_kg": 14.0,
+      "value": 3500,
+      "scale": 1.0,
+      "texture_res": 4096,
+      "timings_s": {
+        "high": 26.3,
+        "lod0_uv": 41.8,
+        "bake": 214.2,
+        "lods": 214.8,
+        "ornaments": 223.0,
+        "physics_points_anim": 223.0,
+        "exports": 232.5,
+        "done": 232.5
+      },
+      "errors": [],
+      "high": {
+        "tris": 522144,
+        "scale_fit": [
+          0.9825,
+          0.9765,
+          0.941
+        ],
+        "verts": 261072,
+        "vesicle_cover": 0.003661825090396519,
+        "dust_cover": 0.0009039651896794754,
+        "cells": [
+          784,
+          333
+        ],
+        "hole_center_m": [
+          0.01,
+          0.0065
+        ],
+        "voxel_m": 0.0018
+      },
+      "uv": {
+        "min": [
+          0.0017,
+          0.0017
+        ],
+        "max": [
+          0.9983,
+          0.9844
+        ],
+        "in_0_1": true,
+        "coverage": 0.672,
+        "overlap_ratio": 2e-05,
+        "texel_density_spread": [
+          0.83,
+          1.12
+        ],
+        "charts": 22,
+        "lightmap": {
+          "min": [
+            0.0035,
+            0.0035
+          ],
+          "max": [
+            0.9965,
+            0.9963
+          ],
+          "in_0_1": true,
+          "coverage": 0.466,
+          "overlap_ratio": 1e-05,
+          "texel_density_spread": [
+            0.83,
+            1.12
+          ]
+        }
+      },
+      "bake": {
+        "device": "OPTIX",
+        "per_map_s": {
+          "BaseColor": 25.4,
+          "Roughness": 24.9,
+          "Normal": 28.0,
+          "AO": 68.0,
+          "Emissive": 20.5
+        },
+        "total_s": 166.8,
+        "samples": {
+          "color": 16,
+          "rough": 16,
+          "normal": 16,
+          "ao": 96,
+          "emit": 8,
+          "metal": 8
+        }
+      },
+      "lods": [
+        {
+          "name": "SM_EclipseStone_LOD0",
+          "tris": 68756,
+          "ratio": 1.0,
+          "base_tris": 30000,
+          "ornament_tris": 38756
+        },
+        {
+          "name": "SM_EclipseStone_LOD1",
+          "tris": 25356,
+          "ratio": 0.369,
+          "base_tris": 15000,
+          "ornament_tris": 10356
+        },
+        {
+          "name": "SM_EclipseStone_LOD2",
+          "tris": 12436,
+          "ratio": 0.181,
+          "base_tris": 6000,
+          "ornament_tris": 6436
+        }
+      ],
+      "physics": {
+        "volume_m3": 0.014545,
+        "implied_density_kg_m3": 962.5,
+        "mass_kg": 14.0,
+        "center_of_gravity_m": [
+          -0.0001,
+          -0.0003,
+          0.0635
+        ],
+        "rest": {
+          "cog_inside_support": true,
+          "support_points": 37,
+          "margin_m": 0.0178,
+          "support_extent_m": [
+            0.273,
+            0.273
+          ]
+        }
+      },
+      "collision": [
+        {
+          "name": "UCX_EclipseStone_01",
+          "verts": 37,
+          "convex": true
+        },
+        {
+          "name": "UCX_EclipseStone_02",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_EclipseStone_03",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_EclipseStone_04",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_EclipseStone_05",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_EclipseStone_06",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_EclipseStone_07",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_EclipseStone_08",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_EclipseStone_09",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_EclipseStone_10",
+          "verts": 48,
+          "convex": true
+        }
+      ],
+      "dims_base_m": [
+        0.4499,
+        0.4499,
+        0.1202
+      ],
+      "ornaments": {
+        "items": [
+          {
+            "name": "fourreau_collerette",
+            "size_mm": 80.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "gold": "feuille d'or 1.5 mm martelee, paroi du trou + collerette 21 mm",
+            "wires": "2 fils torsades"
+          },
+          {
+            "name": "jonc_incruste",
+            "size_mm": 3.5,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "gold": "jonc 3.5 mm incruste"
+          },
+          {
+            "name": "saphir_0",
+            "size_mm": 8.6,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_1",
+            "size_mm": 9.5,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "perle_noire_2",
+            "size_mm": 7.4,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_3",
+            "size_mm": 9.5,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_4",
+            "size_mm": 9.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_5",
+            "size_mm": 8.8,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "perle_noire_6",
+            "size_mm": 7.4,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_7",
+            "size_mm": 8.5,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_8",
+            "size_mm": 9.3,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_9",
+            "size_mm": 9.3,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "perle_noire_10",
+            "size_mm": 7.4,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "chaton_vide_11",
+            "size_mm": 8.5,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_12",
+            "size_mm": 9.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_13",
+            "size_mm": 10.1,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_14",
+            "size_mm": 9.7,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "perle_noire_15",
+            "size_mm": 7.4,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "saphir_16",
+            "size_mm": 10.5,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "stones": [
+          {
+            "cut": "coussin (old mine)",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 8.6,
+            "state": "griffes + bate"
+          },
+          {
+            "cut": "cabochon",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 9.5,
+            "state": "bate"
+          },
+          {
+            "cut": "perle noire de Tahiti",
+            "material": "MAT_Pearl_Black",
+            "size_mm": 7.4,
+            "state": "serti"
+          },
+          {
+            "cut": "cabochon",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 9.5,
+            "state": "bate"
+          },
+          {
+            "cut": "coussin (old mine)",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 9.0,
+            "state": "griffes + bate"
+          },
+          {
+            "cut": "cabochon",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 8.8,
+            "state": "bate"
+          },
+          {
+            "cut": "perle noire de Tahiti",
+            "material": "MAT_Pearl_Black",
+            "size_mm": 7.4,
+            "state": "serti"
+          },
+          {
+            "cut": "cabochon",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 8.5,
+            "state": "bate"
+          },
+          {
+            "cut": "coussin (old mine)",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 9.3,
+            "state": "griffes + bate"
+          },
+          {
+            "cut": "cabochon",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 9.3,
+            "state": "bate"
+          },
+          {
+            "cut": "perle noire de Tahiti",
+            "material": "MAT_Pearl_Black",
+            "size_mm": 7.4,
+            "state": "serti"
+          },
+          {
+            "cut": "chaton vide (coussin perdu)",
+            "material": "-",
+            "size_mm": 8.5,
+            "state": "vide, griffes tordues"
+          },
+          {
+            "cut": "coussin (old mine)",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 9.0,
+            "state": "griffes + bate"
+          },
+          {
+            "cut": "cabochon",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 10.1,
+            "state": "bate"
+          },
+          {
+            "cut": "coussin (old mine)",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 9.7,
+            "state": "griffes + bate"
+          },
+          {
+            "cut": "perle noire de Tahiti",
+            "material": "MAT_Pearl_Black",
+            "size_mm": 7.4,
+            "state": "serti"
+          },
+          {
+            "cut": "coussin (old mine)",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 10.5,
+            "state": "griffes + bate"
+          }
+        ],
+        "notes": [
+          {
+            "hole_center": [
+              0.0052,
+              -0.0001
+            ],
+            "hole_radius_median_m": 0.0317
+          }
+        ],
+        "lods": [
+          {
+            "lod": 0,
+            "pieces": 80,
+            "tris": 38756,
+            "base_tris": 30000,
+            "total_tris": 68756,
+            "by_material": {
+              "MAT_Gold_Aged": 34192,
+              "MAT_Gem_Sapphire": 3540,
+              "MAT_Pearl_Black": 1024
+            }
+          },
+          {
+            "lod": 1,
+            "pieces": 78,
+            "tris": 10356,
+            "base_tris": 15000,
+            "total_tris": 25356,
+            "by_material": {
+              "MAT_Gold_Aged": 8864,
+              "MAT_Gem_Sapphire": 1236,
+              "MAT_Pearl_Black": 256
+            }
+          },
+          {
+            "lod": 2,
+            "pieces": 75,
+            "tris": 6436,
+            "base_tris": 6000,
+            "total_tris": 12436,
+            "by_material": {
+              "MAT_Gold_Aged": 5232,
+              "MAT_Gem_Sapphire": 948,
+              "MAT_Pearl_Black": 256
+            }
+          }
+        ]
+      },
+      "points": {
+        "GRAB_POINT": {
+          "location_m": [
+            0.0097,
+            0.0031,
+            0.06
+          ]
+        },
+        "INSPECT_POINT": {
+          "location_m": [
+            0.0199,
+            -0.38,
+            0.3
+          ]
+        }
+      },
+      "exports": {
+        "SM_EclipseStone_LOD0": {
+          "fbx": "exports/SM_EclipseStone_LOD0.fbx",
+          "glb": "exports/SM_EclipseStone_LOD0.glb",
+          "tris": 68756
+        },
+        "SM_EclipseStone_LOD1": {
+          "fbx": "exports/SM_EclipseStone_LOD1.fbx",
+          "glb": "exports/SM_EclipseStone_LOD1.glb",
+          "tris": 25356
+        },
+        "SM_EclipseStone_LOD2": {
+          "fbx": "exports/SM_EclipseStone_LOD2.fbx",
+          "glb": "exports/SM_EclipseStone_LOD2.glb",
+          "tris": 12436
+        }
+      },
+      "dims_m": [
+        0.4499,
+        0.4499,
+        0.1265
+      ],
+      "checks": {
+        "dims_match_target": true,
+        "dims_target_m": [
+          0.45,
+          0.45,
+          0.12
+        ],
+        "pivot": {
+          "bbox_min_z": 0.0,
+          "footprint_center_xy": [
+            -0.0,
+            -0.0002
+          ],
+          "ok": true
+        },
+        "transforms": {
+          "SM_EclipseStone_LOD0": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_EclipseStone_LOD1": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_EclipseStone_LOD2": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          }
+        },
+        "mesh": {
+          "SM_EclipseStone_LOD0": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.014545,
+            "normals_outward": true
+          },
+          "SM_EclipseStone_LOD1": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.014538,
+            "normals_outward": true
+          },
+          "SM_EclipseStone_LOD2": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.014512,
+            "normals_outward": true
+          }
+        },
+        "mesh_scope": "relique seule (avant jonction des ornements)",
+        "uv_channels": {
+          "SM_EclipseStone_LOD0": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_EclipseStone_LOD1": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_EclipseStone_LOD2": [
+            "UVMap",
+            "LightmapUV"
+          ]
+        },
+        "material_slots": {
+          "SM_EclipseStone_LOD0": [
+            "MAT_EclipseStone",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Sapphire",
+            "MAT_Pearl_Black"
+          ],
+          "SM_EclipseStone_LOD1": [
+            "MAT_EclipseStone",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Sapphire",
+            "MAT_Pearl_Black"
+          ],
+          "SM_EclipseStone_LOD2": [
+            "MAT_EclipseStone",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Sapphire",
+            "MAT_Pearl_Black"
+          ]
+        },
+        "naming_bad": [],
+        "textures_exist": {
+          "BaseColor": true,
+          "Roughness": true,
+          "Normal": true,
+          "AO": true,
+          "Emissive": true,
+          "Normal_DX": true,
+          "ORM": true
+        },
+        "collision_ok": true,
+        "rest_stable": true,
+        "no_hidden_in_export": true
+      },
+      "textures": {
+        "BaseColor": "textures/EclipseStone/T_EclipseStone_BaseColor.png",
+        "Roughness": "textures/EclipseStone/T_EclipseStone_Roughness.png",
+        "Normal": "textures/EclipseStone/T_EclipseStone_Normal.png",
+        "AO": "textures/EclipseStone/T_EclipseStone_AO.png",
+        "Emissive": "textures/EclipseStone/T_EclipseStone_Emissive.png",
+        "Normal_DX": "textures/EclipseStone/T_EclipseStone_Normal_DX.png",
+        "ORM": "textures/EclipseStone/T_EclipseStone_ORM.png"
+      },
+      "normal_map": "T_<Id>_Normal = OpenGL (Y+, tangent space) ; T_<Id>_Normal_DX = DirectX (G inverse) pour UE ; ORM = R:AO G:Rough B:Metal",
+      "renders": {
+        "FRONT": "renders/EclipseStone/FRONT.png",
+        "BACK": "renders/EclipseStone/BACK.png",
+        "LEFT": "renders/EclipseStone/LEFT.png",
+        "RIGHT": "renders/EclipseStone/RIGHT.png",
+        "TOP": "renders/EclipseStone/TOP.png",
+        "3-4": "renders/EclipseStone/3-4.png",
+        "BOTTOM": "renders/EclipseStone/BOTTOM.png",
+        "CLOSEUP_MATERIAL": "renders/EclipseStone/CLOSEUP_MATERIAL.png",
+        "CLOSEUP_TREASURE": "renders/EclipseStone/CLOSEUP_TREASURE.png",
+        "SCALE": "renders/EclipseStone/SCALE.png",
+        "FAR_5M": "renders/EclipseStone/FAR_5M.png",
+        "SITU_fond_marin_DAY": "renders/EclipseStone/SITU_fond_marin_DAY.png",
+        "SITUATION": "renders/EclipseStone/SITUATION.png",
+        "SITU_fond_marin_TORCH": "renders/EclipseStone/SITU_fond_marin_TORCH.png",
+        "FLASHLIGHT": "renders/EclipseStone/FLASHLIGHT.png",
+        "ACTIVE": "renders/EclipseStone/ACTIVE.png",
+        "PREVIEW_3-4": "renders/EclipseStone/PREVIEW_3-4.png"
+      },
+      "total_s": 471.6
+    },
+    "FishGodFragment": {
+      "id": "FishGodFragment",
+      "tier": "LEGENDARY",
+      "mass_kg": 9.0,
+      "value": 4500,
+      "scale": 1.0,
+      "texture_res": 4096,
+      "timings_s": {
+        "high": 26.0,
+        "lod0_uv": 53.5,
+        "bake": 278.8,
+        "lods": 280.3,
+        "ornaments": 287.2,
+        "physics_points_anim": 287.2,
+        "exports": 298.3,
+        "done": 298.3
+      },
+      "errors": [],
+      "high": {
+        "tris": 479076,
+        "fractures": [
+          {
+            "name": "shoulder",
+            "p0": [
+              0.1120000034570694,
+              0.0,
+              0.35199999809265137
+            ],
+            "n": [
+              0.9434563517570496,
+              0.10482848435640335,
+              -0.31448546051979065
+            ]
+          },
+          {
+            "name": "foot_back",
+            "p0": [
+              0.04800000041723251,
+              0.11800000071525574,
+              0.026000000536441803
+            ],
+            "n": [
+              0.5529384016990662,
+              0.5529384016990662,
+              -0.6233123540878296
+            ]
+          },
+          {
+            "name": "foot_front",
+            "p0": [
+              -0.04600000008940697,
+              -0.11999999731779099,
+              0.019999999552965164
+            ],
+            "n": [
+              -0.5014058947563171,
+              -0.6217433214187622,
+              -0.6016871333122253
+            ]
+          }
+        ],
+        "grid": [
+          189,
+          220,
+          367
+        ],
+        "scale_fit": [
+          1.0176,
+          1.0298,
+          0.9781
+        ],
+        "verts": 239533,
+        "salt_cover": 0.08528883913446843,
+        "pit_cover": 0.5311585460040996,
+        "voxel_m": 0.0016
+      },
+      "uv": {
+        "min": [
+          0.0028,
+          0.0028
+        ],
+        "max": [
+          0.9973,
+          0.9937
+        ],
+        "in_0_1": true,
+        "coverage": 0.529,
+        "overlap_ratio": 4e-05,
+        "texel_density_spread": [
+          0.79,
+          1.17
+        ],
+        "charts": 47,
+        "lightmap": {
+          "min": [
+            0.0056,
+            0.0056
+          ],
+          "max": [
+            0.9877,
+            0.9944
+          ],
+          "in_0_1": true,
+          "coverage": 0.36,
+          "overlap_ratio": 4e-05,
+          "texel_density_spread": [
+            0.79,
+            1.17
+          ]
+        }
+      },
+      "bake": {
+        "device": "OPTIX",
+        "per_map_s": {
+          "BaseColor": 29.6,
+          "Roughness": 30.3,
+          "Normal": 32.6,
+          "AO": 86.6,
+          "Emissive": 15.5,
+          "Metallic": 24.8
+        },
+        "total_s": 219.5,
+        "samples": {
+          "color": 16,
+          "rough": 16,
+          "normal": 16,
+          "ao": 96,
+          "emit": 1,
+          "metal": 8
+        }
+      },
+      "lods": [
+        {
+          "name": "SM_FishGodFragment_LOD0",
+          "tris": 84168,
+          "ratio": 1.0,
+          "base_tris": 60000,
+          "ornament_tris": 24168
+        },
+        {
+          "name": "SM_FishGodFragment_LOD1",
+          "tris": 39292,
+          "ratio": 0.467,
+          "base_tris": 30000,
+          "ornament_tris": 9292
+        },
+        {
+          "name": "SM_FishGodFragment_LOD2",
+          "tris": 18524,
+          "ratio": 0.22,
+          "base_tris": 12000,
+          "ornament_tris": 6524
+        }
+      ],
+      "physics": {
+        "volume_m3": 0.012898,
+        "implied_density_kg_m3": 697.8,
+        "mass_kg": 9.0,
+        "center_of_gravity_m": [
+          0.0065,
+          -0.0039,
+          0.2869
+        ],
+        "rest": {
+          "cog_inside_support": true,
+          "support_points": 138,
+          "margin_m": 0.0497,
+          "support_extent_m": [
+            0.114,
+            0.287
+          ]
+        }
+      },
+      "collision": [
+        {
+          "name": "UCX_FishGodFragment_01",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_FishGodFragment_02",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_FishGodFragment_03",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_FishGodFragment_04",
+          "verts": 48,
+          "convex": true
+        }
+      ],
+      "dims_base_m": [
+        0.24,
+        0.2995,
+        0.55
+      ],
+      "ornaments": {
+        "items": [
+          {
+            "name": "oeil_face_0",
+            "size_mm": 22.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "oeil_face_1",
+            "size_mm": 20.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "oeil_poisson_0",
+            "size_mm": 11.5,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "chaton_vide_oeil_1",
+            "size_mm": 11.5,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "collier_gorgerin",
+            "size_mm": 9.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "band": "12 x 1.3 mm + 2 fils torsades"
+          },
+          {
+            "name": "pampille_0",
+            "size_mm": 6.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "pampille_1",
+            "size_mm": 6.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "rubis_collier_2",
+            "size_mm": 6.2,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "pampille_3",
+            "size_mm": 6.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "pampille_4",
+            "size_mm": 6.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "rubis_collier_5",
+            "size_mm": 6.2,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "pampille_6",
+            "size_mm": 6.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "pampille_7",
+            "size_mm": 6.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "rubis_collier_8",
+            "size_mm": 6.2,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "pampille_9",
+            "size_mm": 6.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "stones": [
+          {
+            "cut": "cabochon",
+            "material": "MAT_Gem_Emerald",
+            "size_mm": 22.0,
+            "state": "bate festonnee"
+          },
+          {
+            "cut": "cabochon",
+            "material": "MAT_Gem_Emerald",
+            "size_mm": 20.0,
+            "state": "bate festonnee"
+          },
+          {
+            "cut": "cabochon",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 11.5,
+            "state": "griffes"
+          },
+          {
+            "cut": "chaton vide (cabochon perdu)",
+            "material": "-",
+            "size_mm": 11.5,
+            "state": "vide, griffe tordue"
+          },
+          {
+            "cut": "perle en goutte (pampille)",
+            "material": "MAT_Pearl_White",
+            "size_mm": 6.0,
+            "state": "suspendue"
+          },
+          {
+            "cut": "perle en goutte (pampille)",
+            "material": "MAT_Pearl_White",
+            "size_mm": 6.0,
+            "state": "suspendue"
+          },
+          {
+            "cut": "coussin",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 6.2,
+            "state": "griffes"
+          },
+          {
+            "cut": "perle en goutte (pampille)",
+            "material": "MAT_Pearl_White",
+            "size_mm": 6.0,
+            "state": "suspendue"
+          },
+          {
+            "cut": "perle en goutte (pampille)",
+            "material": "MAT_Pearl_White",
+            "size_mm": 6.0,
+            "state": "suspendue"
+          },
+          {
+            "cut": "coussin",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 6.2,
+            "state": "griffes"
+          },
+          {
+            "cut": "perle en goutte (pampille)",
+            "material": "MAT_Pearl_White",
+            "size_mm": 6.0,
+            "state": "suspendue"
+          },
+          {
+            "cut": "perle en goutte (pampille)",
+            "material": "MAT_Pearl_White",
+            "size_mm": 6.0,
+            "state": "suspendue"
+          },
+          {
+            "cut": "coussin",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 6.2,
+            "state": "griffes"
+          },
+          {
+            "cut": "perle en goutte (pampille)",
+            "material": "MAT_Pearl_White",
+            "size_mm": 6.0,
+            "state": "suspendue"
+          }
+        ],
+        "notes": [
+          {
+            "face_eyes": [
+              [
+                0.05530000105500221,
+                -0.10379999876022339,
+                0.47110000252723694
+              ],
+              [
+                -0.011800000444054604,
+                -0.11140000075101852,
+                0.4722999930381775
+              ]
+            ]
+          },
+          {
+            "fish_eye_0": [
+              0.1071000024676323,
+              -0.03550000116229057,
+              0.4643999934196472
+            ]
+          },
+          {
+            "fish_eye_1": [
+              -0.07069999724626541,
+              -0.04170000180602074,
+              0.47029998898506165
+            ]
+          },
+          "feuille d'or residuelle : cuite dans T_FishGodFragment_BaseColor / Metallic (creux du visage, orbites, branchies)"
+        ],
+        "lods": [
+          {
+            "lod": 0,
+            "pieces": 75,
+            "tris": 24168,
+            "base_tris": 60000,
+            "total_tris": 84168,
+            "by_material": {
+              "MAT_Gold_Aged": 21026,
+              "MAT_Gem_Emerald": 1024,
+              "MAT_Gem_Sapphire": 512,
+              "MAT_Pearl_White": 1372,
+              "MAT_Gem_Ruby": 234
+            }
+          },
+          {
+            "lod": 1,
+            "pieces": 75,
+            "tris": 9292,
+            "base_tris": 30000,
+            "total_tris": 39292,
+            "by_material": {
+              "MAT_Gold_Aged": 8226,
+              "MAT_Gem_Emerald": 256,
+              "MAT_Gem_Sapphire": 128,
+              "MAT_Pearl_White": 448,
+              "MAT_Gem_Ruby": 234
+            }
+          },
+          {
+            "lod": 2,
+            "pieces": 73,
+            "tris": 6524,
+            "base_tris": 12000,
+            "total_tris": 18524,
+            "by_material": {
+              "MAT_Gold_Aged": 5602,
+              "MAT_Gem_Emerald": 160,
+              "MAT_Gem_Sapphire": 80,
+              "MAT_Pearl_White": 448,
+              "MAT_Gem_Ruby": 234
+            }
+          }
+        ]
+      },
+      "points": {
+        "GRAB_POINT": {
+          "location_m": [
+            0.0065,
+            -0.0039,
+            0.24
+          ]
+        },
+        "INSPECT_POINT": {
+          "location_m": [
+            0.16,
+            -0.38,
+            0.43
+          ]
+        }
+      },
+      "exports": {
+        "SM_FishGodFragment_LOD0": {
+          "fbx": "exports/SM_FishGodFragment_LOD0.fbx",
+          "glb": "exports/SM_FishGodFragment_LOD0.glb",
+          "tris": 84168
+        },
+        "SM_FishGodFragment_LOD1": {
+          "fbx": "exports/SM_FishGodFragment_LOD1.fbx",
+          "glb": "exports/SM_FishGodFragment_LOD1.glb",
+          "tris": 39292
+        },
+        "SM_FishGodFragment_LOD2": {
+          "fbx": "exports/SM_FishGodFragment_LOD2.fbx",
+          "glb": "exports/SM_FishGodFragment_LOD2.glb",
+          "tris": 18524
+        }
+      },
+      "dims_m": [
+        0.24,
+        0.2995,
+        0.55
+      ],
+      "checks": {
+        "dims_match_target": true,
+        "dims_target_m": [
+          0.24,
+          0.3,
+          0.55
+        ],
+        "pivot": {
+          "bbox_min_z": 0.0,
+          "footprint_center_xy": [
+            -0.0,
+            -0.0002
+          ],
+          "ok": true
+        },
+        "transforms": {
+          "SM_FishGodFragment_LOD0": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_FishGodFragment_LOD1": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_FishGodFragment_LOD2": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          }
+        },
+        "mesh": {
+          "SM_FishGodFragment_LOD0": {
+            "non_manifold_edges": 9,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.012898,
+            "normals_outward": true
+          },
+          "SM_FishGodFragment_LOD1": {
+            "non_manifold_edges": 9,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.012893,
+            "normals_outward": true
+          },
+          "SM_FishGodFragment_LOD2": {
+            "non_manifold_edges": 9,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.012875,
+            "normals_outward": true
+          }
+        },
+        "mesh_scope": "relique seule (avant jonction des ornements)",
+        "uv_channels": {
+          "SM_FishGodFragment_LOD0": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_FishGodFragment_LOD1": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_FishGodFragment_LOD2": [
+            "UVMap",
+            "LightmapUV"
+          ]
+        },
+        "material_slots": {
+          "SM_FishGodFragment_LOD0": [
+            "MAT_FishGodFragment",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Emerald",
+            "MAT_Gem_Sapphire",
+            "MAT_Pearl_White",
+            "MAT_Gem_Ruby"
+          ],
+          "SM_FishGodFragment_LOD1": [
+            "MAT_FishGodFragment",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Emerald",
+            "MAT_Gem_Sapphire",
+            "MAT_Pearl_White",
+            "MAT_Gem_Ruby"
+          ],
+          "SM_FishGodFragment_LOD2": [
+            "MAT_FishGodFragment",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Emerald",
+            "MAT_Gem_Sapphire",
+            "MAT_Pearl_White",
+            "MAT_Gem_Ruby"
+          ]
+        },
+        "naming_bad": [],
+        "textures_exist": {
+          "BaseColor": true,
+          "Roughness": true,
+          "Normal": true,
+          "AO": true,
+          "Emissive": true,
+          "Metallic": true,
+          "Normal_DX": true,
+          "ORM": true
+        },
+        "collision_ok": true,
+        "rest_stable": true,
+        "no_hidden_in_export": true
+      },
+      "textures": {
+        "BaseColor": "textures/FishGodFragment/T_FishGodFragment_BaseColor.png",
+        "Roughness": "textures/FishGodFragment/T_FishGodFragment_Roughness.png",
+        "Normal": "textures/FishGodFragment/T_FishGodFragment_Normal.png",
+        "AO": "textures/FishGodFragment/T_FishGodFragment_AO.png",
+        "Emissive": "textures/FishGodFragment/T_FishGodFragment_Emissive.png",
+        "Metallic": "textures/FishGodFragment/T_FishGodFragment_Metallic.png",
+        "Normal_DX": "textures/FishGodFragment/T_FishGodFragment_Normal_DX.png",
+        "ORM": "textures/FishGodFragment/T_FishGodFragment_ORM.png"
+      },
+      "normal_map": "T_<Id>_Normal = OpenGL (Y+, tangent space) ; T_<Id>_Normal_DX = DirectX (G inverse) pour UE ; ORM = R:AO G:Rough B:Metal",
+      "renders": {
+        "FRONT": "renders/FishGodFragment/FRONT.png",
+        "BACK": "renders/FishGodFragment/BACK.png",
+        "LEFT": "renders/FishGodFragment/LEFT.png",
+        "RIGHT": "renders/FishGodFragment/RIGHT.png",
+        "TOP": "renders/FishGodFragment/TOP.png",
+        "3-4": "renders/FishGodFragment/3-4.png",
+        "BOTTOM": "renders/FishGodFragment/BOTTOM.png",
+        "CLOSEUP_MATERIAL": "renders/FishGodFragment/CLOSEUP_MATERIAL.png",
+        "CLOSEUP_TREASURE": "renders/FishGodFragment/CLOSEUP_TREASURE.png",
+        "SCALE": "renders/FishGodFragment/SCALE.png",
+        "FAR_5M": "renders/FishGodFragment/FAR_5M.png",
+        "SITU_fond_marin_DAY": "renders/FishGodFragment/SITU_fond_marin_DAY.png",
+        "SITUATION": "renders/FishGodFragment/SITUATION.png",
+        "SITU_fond_marin_TORCH": "renders/FishGodFragment/SITU_fond_marin_TORCH.png",
+        "FLASHLIGHT": "renders/FishGodFragment/FLASHLIGHT.png",
+        "ACTIVE": "renders/FishGodFragment/ACTIVE.png",
+        "PREVIEW_3-4": "renders/FishGodFragment/PREVIEW_3-4.png"
+      },
+      "total_s": 552.3
+    },
+    "MoonPearl": {
+      "id": "MoonPearl",
+      "tier": "LEGENDARY",
+      "mass_kg": 0.05,
+      "value": 1200,
+      "scale": 1.0,
+      "texture_res": 2048,
+      "timings_s": {
+        "high": 2.6,
+        "lod0_uv": 9.4,
+        "bake": 70.6,
+        "lods": 70.7,
+        "ornaments": 72.7,
+        "physics_points_anim": 72.7,
+        "exports": 76.0,
+        "done": 76.0
+      },
+      "errors": [],
+      "high": {
+        "tris": 327680,
+        "subdiv": 8,
+        "bands": 5,
+        "pits": 7,
+        "flat_depth_mm": 0.75
+      },
+      "uv": {
+        "min": [
+          0.0014,
+          0.0015
+        ],
+        "max": [
+          0.9986,
+          0.9855
+        ],
+        "in_0_1": true,
+        "coverage": 0.599,
+        "overlap_ratio": 0.0,
+        "texel_density_spread": [
+          0.97,
+          1.03
+        ],
+        "charts": 14,
+        "lightmap": {
+          "min": [
+            0.0033,
+            0.0033
+          ],
+          "max": [
+            0.9663,
+            0.9967
+          ],
+          "in_0_1": true,
+          "coverage": 0.561,
+          "overlap_ratio": 0.0,
+          "texel_density_spread": [
+            0.97,
+            1.03
+          ]
+        }
+      },
+      "bake": {
+        "device": "OPTIX",
+        "per_map_s": {
+          "BaseColor": 12.1,
+          "Roughness": 11.8,
+          "Normal": 11.0,
+          "AO": 14.6,
+          "Emissive": 10.7
+        },
+        "total_s": 60.3,
+        "samples": {
+          "color": 32,
+          "rough": 32,
+          "normal": 24,
+          "ao": 48,
+          "emit": 24,
+          "metal": 8
+        }
+      },
+      "lods": [
+        {
+          "name": "SM_MoonPearl_LOD0",
+          "tris": 14302,
+          "ratio": 1.0,
+          "base_tris": 6000,
+          "ornament_tris": 8302
+        },
+        {
+          "name": "SM_MoonPearl_LOD1",
+          "tris": 6522,
+          "ratio": 0.456,
+          "base_tris": 3000,
+          "ornament_tris": 3522
+        },
+        {
+          "name": "SM_MoonPearl_LOD2",
+          "tris": 3072,
+          "ratio": 0.215,
+          "base_tris": 1200,
+          "ornament_tris": 1872
+        }
+      ],
+      "physics": {
+        "volume_m3": 6e-06,
+        "implied_density_kg_m3": 8674.7,
+        "mass_kg": 0.05,
+        "center_of_gravity_m": [
+          -0.0001,
+          -0.0,
+          0.0102
+        ],
+        "rest": {
+          "cog_inside_support": true,
+          "support_points": 572,
+          "margin_m": 0.0084,
+          "support_extent_m": [
+            0.018,
+            0.017
+          ]
+        }
+      },
+      "collision": [
+        {
+          "name": "UCX_MoonPearl_01",
+          "verts": 48,
+          "convex": true
+        }
+      ],
+      "dims_base_m": [
+        0.023,
+        0.022,
+        0.021
+      ],
+      "ornaments": {
+        "items": [
+          {
+            "name": "calotte",
+            "size_mm": 12.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "gold": "calotte 0.6 mm epousant la perle"
+          },
+          {
+            "name": "griffes",
+            "size_mm": 12.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "claws": "6 griffes (une tordue)"
+          },
+          {
+            "name": "saphir_0",
+            "size_mm": 2.4,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "saphir_1",
+            "size_mm": 2.4,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "saphir_2",
+            "size_mm": 2.4,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "chaton_vide",
+            "size_mm": 2.4,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "beliere",
+            "size_mm": 5.5,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "bail": "beliere 5.5 mm"
+          },
+          {
+            "name": "chaine_cassee",
+            "size_mm": 20.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "chain": "maillons forcat 2.6 mm, cassee"
+          }
+        ],
+        "stones": [
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 2.4,
+            "state": "bate"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 2.4,
+            "state": "bate"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 2.4,
+            "state": "bate"
+          },
+          {
+            "cut": "chaton vide (rose perdue)",
+            "material": "-",
+            "size_mm": 2.4,
+            "state": "vide"
+          }
+        ],
+        "notes": [],
+        "lods": [
+          {
+            "lod": 0,
+            "pieces": 41,
+            "tris": 8302,
+            "base_tris": 6000,
+            "total_tris": 14302,
+            "by_material": {
+              "MAT_Gold_Aged": 8128,
+              "MAT_Gem_Sapphire": 174
+            }
+          },
+          {
+            "lod": 1,
+            "pieces": 41,
+            "tris": 3522,
+            "base_tris": 3000,
+            "total_tris": 6522,
+            "by_material": {
+              "MAT_Gold_Aged": 3348,
+              "MAT_Gem_Sapphire": 174
+            }
+          },
+          {
+            "lod": 2,
+            "pieces": 16,
+            "tris": 1872,
+            "base_tris": 1200,
+            "total_tris": 3072,
+            "by_material": {
+              "MAT_Gold_Aged": 1872
+            }
+          }
+        ]
+      },
+      "points": {
+        "GRAB_POINT": {
+          "location_m": [
+            -0.0001,
+            -0.0,
+            0.0102
+          ]
+        },
+        "INSPECT_POINT": {
+          "location_m": [
+            -0.0201,
+            -0.17,
+            0.0702
+          ]
+        }
+      },
+      "exports": {
+        "SM_MoonPearl_LOD0": {
+          "fbx": "exports/SM_MoonPearl_LOD0.fbx",
+          "glb": "exports/SM_MoonPearl_LOD0.glb",
+          "tris": 14302
+        },
+        "SM_MoonPearl_LOD1": {
+          "fbx": "exports/SM_MoonPearl_LOD1.fbx",
+          "glb": "exports/SM_MoonPearl_LOD1.glb",
+          "tris": 6522
+        },
+        "SM_MoonPearl_LOD2": {
+          "fbx": "exports/SM_MoonPearl_LOD2.fbx",
+          "glb": "exports/SM_MoonPearl_LOD2.glb",
+          "tris": 3072
+        }
+      },
+      "dims_m": [
+        0.023,
+        0.022,
+        0.0286
+      ],
+      "checks": {
+        "dims_match_target": true,
+        "dims_target_m": [
+          0.0235,
+          0.0235,
+          0.0311
+        ],
+        "pivot": {
+          "bbox_min_z": 0.0,
+          "footprint_center_xy": [
+            -0.0,
+            -0.0
+          ],
+          "ok": true
+        },
+        "transforms": {
+          "SM_MoonPearl_LOD0": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_MoonPearl_LOD1": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_MoonPearl_LOD2": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          }
+        },
+        "mesh": {
+          "SM_MoonPearl_LOD0": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 6e-06,
+            "normals_outward": true
+          },
+          "SM_MoonPearl_LOD1": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 6e-06,
+            "normals_outward": true
+          },
+          "SM_MoonPearl_LOD2": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 6e-06,
+            "normals_outward": true
+          }
+        },
+        "mesh_scope": "relique seule (avant jonction des ornements)",
+        "uv_channels": {
+          "SM_MoonPearl_LOD0": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_MoonPearl_LOD1": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_MoonPearl_LOD2": [
+            "UVMap",
+            "LightmapUV"
+          ]
+        },
+        "material_slots": {
+          "SM_MoonPearl_LOD0": [
+            "MAT_MoonPearl",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Sapphire"
+          ],
+          "SM_MoonPearl_LOD1": [
+            "MAT_MoonPearl",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Sapphire"
+          ],
+          "SM_MoonPearl_LOD2": [
+            "MAT_MoonPearl",
+            "MAT_Gold_Aged"
+          ]
+        },
+        "naming_bad": [],
+        "textures_exist": {
+          "BaseColor": true,
+          "Roughness": true,
+          "Normal": true,
+          "AO": true,
+          "Emissive": true,
+          "Normal_DX": true,
+          "ORM": true
+        },
+        "collision_ok": true,
+        "rest_stable": true,
+        "no_hidden_in_export": true
+      },
+      "textures": {
+        "BaseColor": "textures/MoonPearl/T_MoonPearl_BaseColor.png",
+        "Roughness": "textures/MoonPearl/T_MoonPearl_Roughness.png",
+        "Normal": "textures/MoonPearl/T_MoonPearl_Normal.png",
+        "AO": "textures/MoonPearl/T_MoonPearl_AO.png",
+        "Emissive": "textures/MoonPearl/T_MoonPearl_Emissive.png",
+        "Normal_DX": "textures/MoonPearl/T_MoonPearl_Normal_DX.png",
+        "ORM": "textures/MoonPearl/T_MoonPearl_ORM.png"
+      },
+      "normal_map": "T_<Id>_Normal = OpenGL (Y+, tangent space) ; T_<Id>_Normal_DX = DirectX (G inverse) pour UE ; ORM = R:AO G:Rough B:Metal",
+      "renders": {
+        "FRONT": "renders/MoonPearl/FRONT.png",
+        "BACK": "renders/MoonPearl/BACK.png",
+        "LEFT": "renders/MoonPearl/LEFT.png",
+        "RIGHT": "renders/MoonPearl/RIGHT.png",
+        "TOP": "renders/MoonPearl/TOP.png",
+        "3-4": "renders/MoonPearl/3-4.png",
+        "BOTTOM": "renders/MoonPearl/BOTTOM.png",
+        "CLOSEUP_MATERIAL": "renders/MoonPearl/CLOSEUP_MATERIAL.png",
+        "CLOSEUP_TREASURE": "renders/MoonPearl/CLOSEUP_TREASURE.png",
+        "SCALE": "renders/MoonPearl/SCALE.png",
+        "FAR_5M": "renders/MoonPearl/FAR_5M.png",
+        "SITU_sable_DAY": "renders/MoonPearl/SITU_sable_DAY.png",
+        "SITUATION": "renders/MoonPearl/SITUATION.png",
+        "SITU_sable_TORCH": "renders/MoonPearl/SITU_sable_TORCH.png",
+        "FLASHLIGHT": "renders/MoonPearl/FLASHLIGHT.png",
+        "SITU_coquille_DAY": "renders/MoonPearl/SITU_coquille_DAY.png",
+        "SITU_coquille_TORCH": "renders/MoonPearl/SITU_coquille_TORCH.png",
+        "SITU_plancher_DAY": "renders/MoonPearl/SITU_plancher_DAY.png",
+        "SITU_plancher_TORCH": "renders/MoonPearl/SITU_plancher_TORCH.png",
+        "ACTIVE": "renders/MoonPearl/ACTIVE.png",
+        "STATES": "renders/MoonPearl/STATES.png",
+        "PREVIEW_3-4": "renders/MoonPearl/PREVIEW_3-4.png"
+      },
+      "total_s": 407.6
+    },
+    "RedPearlOfRaraka": {
+      "id": "RedPearlOfRaraka",
+      "tier": "LEGENDARY",
+      "mass_kg": 0.05,
+      "value": 2800,
+      "scale": 1.0,
+      "texture_res": 2048,
+      "timings_s": {
+        "high": 3.0,
+        "lod0_uv": 9.3,
+        "bake": 64.3,
+        "lods": 64.5,
+        "ornaments": 68.1,
+        "physics_points_anim": 68.1,
+        "exports": 71.5,
+        "done": 71.5
+      },
+      "errors": [],
+      "high": {
+        "tris": 327680,
+        "subdiv": 8,
+        "bands": 4,
+        "pits": 5,
+        "flat_depth_mm": 0.85
+      },
+      "uv": {
+        "min": [
+          0.0013,
+          0.0013
+        ],
+        "max": [
+          0.9363,
+          0.9987
+        ],
+        "in_0_1": true,
+        "coverage": 0.556,
+        "overlap_ratio": 0.0,
+        "texel_density_spread": [
+          0.97,
+          1.03
+        ],
+        "charts": 13,
+        "lightmap": {
+          "min": [
+            0.0029,
+            0.0029
+          ],
+          "max": [
+            0.9971,
+            0.946
+          ],
+          "in_0_1": true,
+          "coverage": 0.458,
+          "overlap_ratio": 0.0,
+          "texel_density_spread": [
+            0.97,
+            1.03
+          ]
+        }
+      },
+      "bake": {
+        "device": "OPTIX",
+        "per_map_s": {
+          "BaseColor": 10.9,
+          "Roughness": 10.8,
+          "Normal": 10.2,
+          "AO": 12.6,
+          "Emissive": 9.6
+        },
+        "total_s": 54.1,
+        "samples": {
+          "color": 32,
+          "rough": 32,
+          "normal": 24,
+          "ao": 48,
+          "emit": 24,
+          "metal": 8
+        }
+      },
+      "lods": [
+        {
+          "name": "SM_RedPearlOfRaraka_LOD0",
+          "tris": 30394,
+          "ratio": 1.0,
+          "base_tris": 6000,
+          "ornament_tris": 24394
+        },
+        {
+          "name": "SM_RedPearlOfRaraka_LOD1",
+          "tris": 5414,
+          "ratio": 0.178,
+          "base_tris": 3000,
+          "ornament_tris": 2414
+        },
+        {
+          "name": "SM_RedPearlOfRaraka_LOD2",
+          "tris": 1740,
+          "ratio": 0.057,
+          "base_tris": 1200,
+          "ornament_tris": 540
+        }
+      ],
+      "physics": {
+        "volume_m3": 5e-06,
+        "implied_density_kg_m3": 10259.4,
+        "mass_kg": 0.05,
+        "center_of_gravity_m": [
+          0.0006,
+          0.0,
+          0.0102
+        ],
+        "rest": {
+          "cog_inside_support": true,
+          "support_points": 585,
+          "margin_m": 0.0079,
+          "support_extent_m": [
+            0.017,
+            0.016
+          ]
+        }
+      },
+      "collision": [
+        {
+          "name": "UCX_RedPearlOfRaraka_01",
+          "verts": 48,
+          "convex": true
+        }
+      ],
+      "dims_base_m": [
+        0.0211,
+        0.02,
+        0.023
+      ],
+      "ornaments": {
+        "items": [
+          {
+            "name": "cage",
+            "size_mm": 20.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "wires": "6 meridiens + ceinture, fil torsade 0.7 mm"
+          },
+          {
+            "name": "filigrane",
+            "size_mm": 5.0,
+            "lods": [
+              0,
+              1
+            ],
+            "scrolls": 10
+          },
+          {
+            "name": "rubis_0",
+            "size_mm": 2.1,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rubis_1",
+            "size_mm": 2.1,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rubis_2",
+            "size_mm": 2.1,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rubis_3",
+            "size_mm": 2.1,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "chaton_vide",
+            "size_mm": 2.1,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rubis_5",
+            "size_mm": 2.1,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "bouton_beliere",
+            "size_mm": 4.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "stones": [
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 2.1,
+            "state": "bate"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 2.1,
+            "state": "bate"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 2.1,
+            "state": "bate"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 2.1,
+            "state": "bate"
+          },
+          {
+            "cut": "chaton vide (rose perdue)",
+            "material": "-",
+            "size_mm": 2.1,
+            "state": "vide"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 2.1,
+            "state": "bate"
+          }
+        ],
+        "notes": [],
+        "lods": [
+          {
+            "lod": 0,
+            "pieces": 59,
+            "tris": 24394,
+            "base_tris": 6000,
+            "total_tris": 30394,
+            "by_material": {
+              "MAT_Gold_Aged": 24104,
+              "MAT_Gem_Ruby": 290
+            }
+          },
+          {
+            "lod": 1,
+            "pieces": 42,
+            "tris": 2414,
+            "base_tris": 3000,
+            "total_tris": 5414,
+            "by_material": {
+              "MAT_Gold_Aged": 2124,
+              "MAT_Gem_Ruby": 290
+            }
+          },
+          {
+            "lod": 2,
+            "pieces": 15,
+            "tris": 540,
+            "base_tris": 1200,
+            "total_tris": 1740,
+            "by_material": {
+              "MAT_Gold_Aged": 540
+            }
+          }
+        ]
+      },
+      "points": {
+        "GRAB_POINT": {
+          "location_m": [
+            0.0006,
+            0.0,
+            0.0102
+          ]
+        },
+        "INSPECT_POINT": {
+          "location_m": [
+            -0.0194,
+            -0.17,
+            0.0702
+          ]
+        }
+      },
+      "exports": {
+        "SM_RedPearlOfRaraka_LOD0": {
+          "fbx": "exports/SM_RedPearlOfRaraka_LOD0.fbx",
+          "glb": "exports/SM_RedPearlOfRaraka_LOD0.glb",
+          "tris": 30394
+        },
+        "SM_RedPearlOfRaraka_LOD1": {
+          "fbx": "exports/SM_RedPearlOfRaraka_LOD1.fbx",
+          "glb": "exports/SM_RedPearlOfRaraka_LOD1.glb",
+          "tris": 5414
+        },
+        "SM_RedPearlOfRaraka_LOD2": {
+          "fbx": "exports/SM_RedPearlOfRaraka_LOD2.fbx",
+          "glb": "exports/SM_RedPearlOfRaraka_LOD2.glb",
+          "tris": 1740
+        }
+      },
+      "dims_m": [
+        0.0227,
+        0.0218,
+        0.0278
+      ],
+      "checks": {
+        "dims_match_target": true,
+        "dims_target_m": [
+          0.0227,
+          0.0218,
+          0.0278
+        ],
+        "pivot": {
+          "bbox_min_z": 0.0,
+          "footprint_center_xy": [
+            0.0002,
+            -0.0004
+          ],
+          "ok": true
+        },
+        "transforms": {
+          "SM_RedPearlOfRaraka_LOD0": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_RedPearlOfRaraka_LOD1": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_RedPearlOfRaraka_LOD2": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          }
+        },
+        "mesh": {
+          "SM_RedPearlOfRaraka_LOD0": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 5e-06,
+            "normals_outward": true
+          },
+          "SM_RedPearlOfRaraka_LOD1": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 5e-06,
+            "normals_outward": true
+          },
+          "SM_RedPearlOfRaraka_LOD2": {
+            "non_manifold_edges": 0,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 5e-06,
+            "normals_outward": true
+          }
+        },
+        "mesh_scope": "relique seule (avant jonction des ornements)",
+        "uv_channels": {
+          "SM_RedPearlOfRaraka_LOD0": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_RedPearlOfRaraka_LOD1": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_RedPearlOfRaraka_LOD2": [
+            "UVMap",
+            "LightmapUV"
+          ]
+        },
+        "material_slots": {
+          "SM_RedPearlOfRaraka_LOD0": [
+            "MAT_RedPearlOfRaraka",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Ruby"
+          ],
+          "SM_RedPearlOfRaraka_LOD1": [
+            "MAT_RedPearlOfRaraka",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Ruby"
+          ],
+          "SM_RedPearlOfRaraka_LOD2": [
+            "MAT_RedPearlOfRaraka",
+            "MAT_Gold_Aged"
+          ]
+        },
+        "naming_bad": [],
+        "textures_exist": {
+          "BaseColor": true,
+          "Roughness": true,
+          "Normal": true,
+          "AO": true,
+          "Emissive": true,
+          "Normal_DX": true,
+          "ORM": true
+        },
+        "collision_ok": true,
+        "rest_stable": true,
+        "no_hidden_in_export": true
+      },
+      "textures": {
+        "BaseColor": "textures/RedPearlOfRaraka/T_RedPearlOfRaraka_BaseColor.png",
+        "Roughness": "textures/RedPearlOfRaraka/T_RedPearlOfRaraka_Roughness.png",
+        "Normal": "textures/RedPearlOfRaraka/T_RedPearlOfRaraka_Normal.png",
+        "AO": "textures/RedPearlOfRaraka/T_RedPearlOfRaraka_AO.png",
+        "Emissive": "textures/RedPearlOfRaraka/T_RedPearlOfRaraka_Emissive.png",
+        "Normal_DX": "textures/RedPearlOfRaraka/T_RedPearlOfRaraka_Normal_DX.png",
+        "ORM": "textures/RedPearlOfRaraka/T_RedPearlOfRaraka_ORM.png"
+      },
+      "normal_map": "T_<Id>_Normal = OpenGL (Y+, tangent space) ; T_<Id>_Normal_DX = DirectX (G inverse) pour UE ; ORM = R:AO G:Rough B:Metal",
+      "renders": {
+        "FRONT": "renders/RedPearlOfRaraka/FRONT.png",
+        "BACK": "renders/RedPearlOfRaraka/BACK.png",
+        "LEFT": "renders/RedPearlOfRaraka/LEFT.png",
+        "RIGHT": "renders/RedPearlOfRaraka/RIGHT.png",
+        "TOP": "renders/RedPearlOfRaraka/TOP.png",
+        "3-4": "renders/RedPearlOfRaraka/3-4.png",
+        "BOTTOM": "renders/RedPearlOfRaraka/BOTTOM.png",
+        "CLOSEUP_MATERIAL": "renders/RedPearlOfRaraka/CLOSEUP_MATERIAL.png",
+        "CLOSEUP_TREASURE": "renders/RedPearlOfRaraka/CLOSEUP_TREASURE.png",
+        "SCALE": "renders/RedPearlOfRaraka/SCALE.png",
+        "FAR_5M": "renders/RedPearlOfRaraka/FAR_5M.png",
+        "SITU_sable_DAY": "renders/RedPearlOfRaraka/SITU_sable_DAY.png",
+        "SITUATION": "renders/RedPearlOfRaraka/SITUATION.png",
+        "SITU_sable_TORCH": "renders/RedPearlOfRaraka/SITU_sable_TORCH.png",
+        "FLASHLIGHT": "renders/RedPearlOfRaraka/FLASHLIGHT.png",
+        "SITU_coquille_DAY": "renders/RedPearlOfRaraka/SITU_coquille_DAY.png",
+        "SITU_coquille_TORCH": "renders/RedPearlOfRaraka/SITU_coquille_TORCH.png",
+        "SITU_plancher_DAY": "renders/RedPearlOfRaraka/SITU_plancher_DAY.png",
+        "SITU_plancher_TORCH": "renders/RedPearlOfRaraka/SITU_plancher_TORCH.png",
+        "ACTIVE": "renders/RedPearlOfRaraka/ACTIVE.png",
+        "PREVIEW_3-4": "renders/RedPearlOfRaraka/PREVIEW_3-4.png"
+      },
+      "total_s": 394.8
+    },
+    "CrownOfTheLastAriki": {
+      "id": "CrownOfTheLastAriki",
+      "tier": "LEGENDARY",
+      "mass_kg": 0.9,
+      "value": 2200,
+      "scale": 1.0,
+      "texture_res": 4096,
+      "timings_s": {
+        "high": 6.1,
+        "lod0_uv": 27.3,
+        "bake": 200.1,
+        "lods": 201.2,
+        "ornaments": 215.4,
+        "physics_points_anim": 215.4,
+        "exports": 228.0,
+        "done": 228.0
+      },
+      "errors": [],
+      "high": {
+        "tris": 541730,
+        "plates": [
+          {
+            "index": 0,
+            "L": -0.119636983089568,
+            "w_cm": 3.0,
+            "h_cm": 6.3,
+            "zb": 0.014509889783012054,
+            "kind": "nacre",
+            "state": "intact",
+            "parts": [
+              1
+            ]
+          },
+          {
+            "index": 1,
+            "L": -0.09055481938987196,
+            "w_cm": 3.4,
+            "h_cm": 7.4,
+            "zb": 0.015161195033663324,
+            "kind": "or",
+            "state": "intact",
+            "parts": [
+              3
+            ]
+          },
+          {
+            "index": 2,
+            "L": -0.06145388328435895,
+            "w_cm": 3.1,
+            "h_cm": 8.2,
+            "zb": 0.010459946870025823,
+            "kind": "nacre",
+            "state": "split",
+            "parts": [
+              5,
+              6
+            ]
+          },
+          {
+            "index": 3,
+            "L": -0.030704087890970497,
+            "w_cm": 3.6,
+            "h_cm": 8.8,
+            "zb": 0.011376099396337686,
+            "kind": "or",
+            "state": "intact",
+            "parts": [
+              7
+            ]
+          },
+          {
+            "index": 4,
+            "L": 0.004,
+            "w_cm": 3.8,
+            "h_cm": 9.0,
+            "zb": 0.014531388874217215,
+            "kind": "nacre",
+            "state": "intact",
+            "parts": [
+              9
+            ]
+          },
+          {
+            "index": 6,
+            "L": 0.06378532726514571,
+            "w_cm": 3.0,
+            "h_cm": 7.0,
+            "zb": 0.015394447132780015,
+            "kind": "nacre",
+            "state": "intact",
+            "parts": [
+              13
+            ]
+          },
+          {
+            "index": 7,
+            "L": 0.09485791380187333,
+            "w_cm": 3.3,
+            "h_cm": 6.6,
+            "zb": 0.013391215516401548,
+            "kind": "or",
+            "state": "cabossee",
+            "parts": [
+              15
+            ]
+          },
+          {
+            "index": 8,
+            "L": 0.12781871664735256,
+            "w_cm": 3.5,
+            "h_cm": 6.0,
+            "zb": 0.01463596290397157,
+            "kind": "nacre",
+            "state": "intact",
+            "parts": [
+              17
+            ]
+          }
+        ],
+        "raw_dims_m": [
+          0.2493,
+          0.2294,
+          0.112
+        ],
+        "fit_ratio": [
+          0.9628,
+          0.959,
+          0.9609
+        ],
+        "band_verts": 236040,
+        "voxel_m": 0.002,
+        "grid_m": 0.0005200000000000001,
+        "break_logic": "attribut de sommet part_id (relique) ; plaquettes / plaques = composantes disjointes (ornements)"
+      },
+      "uv": {
+        "min": [
+          0.0036,
+          0.0036
+        ],
+        "max": [
+          0.9964,
+          0.9677
+        ],
+        "in_0_1": true,
+        "coverage": 0.414,
+        "overlap_ratio": 0.00388,
+        "texel_density_spread": [
+          0.62,
+          1.29
+        ],
+        "charts": 60,
+        "lightmap": {
+          "min": [
+            0.0066,
+            0.0066
+          ],
+          "max": [
+            0.9933,
+            0.9934
+          ],
+          "in_0_1": true,
+          "coverage": 0.226,
+          "overlap_ratio": 0.00394,
+          "texel_density_spread": [
+            0.62,
+            1.29
+          ]
+        }
+      },
+      "bake": {
+        "device": "OPTIX",
+        "per_map_s": {
+          "BaseColor": 32.2,
+          "Roughness": 30.9,
+          "Normal": 32.5,
+          "AO": 72.5
+        },
+        "total_s": 168.0,
+        "samples": {
+          "color": 16,
+          "rough": 16,
+          "normal": 16,
+          "ao": 96,
+          "emit": 1,
+          "metal": 8
+        }
+      },
+      "lods": [
+        {
+          "name": "SM_CrownOfTheLastAriki_LOD0",
+          "tris": 106301,
+          "ratio": 1.0,
+          "base_tris": 39999,
+          "ornament_tris": 66302
+        },
+        {
+          "name": "SM_CrownOfTheLastAriki_LOD1",
+          "tris": 47134,
+          "ratio": 0.443,
+          "base_tris": 20000,
+          "ornament_tris": 27134
+        },
+        {
+          "name": "SM_CrownOfTheLastAriki_LOD2",
+          "tris": 13773,
+          "ratio": 0.13,
+          "base_tris": 7999,
+          "ornament_tris": 5774
+        }
+      ],
+      "physics": {
+        "volume_m3": 0.000333,
+        "implied_density_kg_m3": 2700.9,
+        "mass_kg": 0.9,
+        "center_of_gravity_m": [
+          -0.0083,
+          -0.0013,
+          0.0305
+        ],
+        "rest": {
+          "cog_inside_support": true,
+          "support_points": 1879,
+          "margin_m": 0.0924,
+          "support_extent_m": [
+            0.216,
+            0.203
+          ]
+        }
+      },
+      "collision": [
+        {
+          "name": "UCX_CrownOfTheLastAriki_01",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_CrownOfTheLastAriki_02",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_CrownOfTheLastAriki_03",
+          "verts": 40,
+          "convex": true
+        },
+        {
+          "name": "UCX_CrownOfTheLastAriki_04",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_CrownOfTheLastAriki_05",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_CrownOfTheLastAriki_06",
+          "verts": 47,
+          "convex": true
+        },
+        {
+          "name": "UCX_CrownOfTheLastAriki_07",
+          "verts": 47,
+          "convex": true
+        },
+        {
+          "name": "UCX_CrownOfTheLastAriki_08",
+          "verts": 48,
+          "convex": true
+        },
+        {
+          "name": "UCX_CrownOfTheLastAriki_09",
+          "verts": 48,
+          "convex": true
+        }
+      ],
+      "dims_base_m": [
+        0.2282,
+        0.2109,
+        0.0609
+      ],
+      "ornaments": {
+        "items": [
+          {
+            "name": "nacre_0",
+            "size_mm": 30.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "kind": "nacre de Pinctada (veritable)",
+            "state": "intacte"
+          },
+          {
+            "name": "nacre_2",
+            "size_mm": 31.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "kind": "nacre de Pinctada (veritable)",
+            "state": "fendue"
+          },
+          {
+            "name": "nacre_4",
+            "size_mm": 38.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "kind": "nacre de Pinctada (veritable)",
+            "state": "intacte"
+          },
+          {
+            "name": "nacre_6",
+            "size_mm": 30.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "kind": "nacre de Pinctada (veritable)",
+            "state": "intacte"
+          },
+          {
+            "name": "nacre_8",
+            "size_mm": 35.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "kind": "nacre de Pinctada (veritable)",
+            "state": "intacte"
+          },
+          {
+            "name": "plaque_or_1",
+            "size_mm": 30.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "kind": "or repousse",
+            "state": "intacte"
+          },
+          {
+            "name": "pierre_plaque_1",
+            "size_mm": 10.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "rosace_1",
+            "size_mm": 3.0,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rose_coin_1_0",
+            "size_mm": 2.6,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rose_coin_1_1",
+            "size_mm": 2.6,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "plaque_or_3",
+            "size_mm": 30.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "kind": "or repousse",
+            "state": "intacte"
+          },
+          {
+            "name": "pierre_plaque_3",
+            "size_mm": 9.5,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "rosace_3",
+            "size_mm": 3.4,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "perle_coin_3_0",
+            "size_mm": 3.8,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "perle_coin_3_1",
+            "size_mm": 3.8,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "plaque_or_7",
+            "size_mm": 30.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "kind": "or repousse",
+            "state": "cabossee"
+          },
+          {
+            "name": "pierre_plaque_7",
+            "size_mm": 11.0,
+            "lods": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "name": "chaton_vide_7",
+            "size_mm": 4.2,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "perle_coin_7_0",
+            "size_mm": 3.8,
+            "lods": [
+              0,
+              1
+            ]
+          },
+          {
+            "name": "rangs_perles",
+            "size_mm": 3.2,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "pearls": "146 + 66 perles fines ~3.2 mm"
+          },
+          {
+            "name": "plumes",
+            "size_mm": 80.0,
+            "lods": [
+              0,
+              1,
+              2
+            ],
+            "cards": "5 cartes alpha (3 paille-en-queue, 2 fregate)"
+          }
+        ],
+        "stones": [
+          {
+            "cut": "table",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 10.0,
+            "state": "bate festonnee"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 3.0,
+            "state": "bate"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 2.6,
+            "state": "serti"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 2.6,
+            "state": "serti"
+          },
+          {
+            "cut": "coussin",
+            "material": "MAT_Gem_Ruby",
+            "size_mm": 9.5,
+            "state": "griffes + bate"
+          },
+          {
+            "cut": "rose",
+            "material": "MAT_Gem_Sapphire",
+            "size_mm": 3.4,
+            "state": "bate"
+          },
+          {
+            "cut": "perle",
+            "material": "MAT_Pearl_White",
+            "size_mm": 3.8,
+            "state": "serti"
+          },
+          {
+            "cut": "perle",
+            "material": "MAT_Pearl_White",
+            "size_mm": 3.8,
+            "state": "serti"
+          },
+          {
+            "cut": "table",
+            "material": "MAT_Gem_Emerald",
+            "size_mm": 11.0,
+            "state": "bate festonnee"
+          },
+          {
+            "cut": "chaton vide (cabochon perdu)",
+            "material": "-",
+            "size_mm": 4.2,
+            "state": "vide"
+          },
+          {
+            "cut": "perle",
+            "material": "MAT_Pearl_White",
+            "size_mm": 3.8,
+            "state": "serti"
+          },
+          {
+            "cut": "rangs de perles fines",
+            "material": "MAT_Pearl_White",
+            "size_mm": 3.2,
+            "state": "212 perles"
+          }
+        ],
+        "notes": [],
+        "lods": [
+          {
+            "lod": 0,
+            "pieces": 265,
+            "tris": 66302,
+            "base_tris": 39999,
+            "total_tris": 106301,
+            "by_material": {
+              "MAT_Nacre_Pinctada": 19568,
+              "MAT_Gold_Aged": 32052,
+              "MAT_Gem_Sapphire": 104,
+              "MAT_Gem_Ruby": 252,
+              "MAT_Pearl_White": 14000,
+              "MAT_Gem_Emerald": 46,
+              "MAT_Feather_Aged": 280
+            }
+          },
+          {
+            "lod": 1,
+            "pieces": 265,
+            "tris": 27134,
+            "base_tris": 20000,
+            "total_tris": 47134,
+            "by_material": {
+              "MAT_Nacre_Pinctada": 7080,
+              "MAT_Gold_Aged": 11688,
+              "MAT_Gem_Sapphire": 104,
+              "MAT_Gem_Ruby": 252,
+              "MAT_Pearl_White": 7824,
+              "MAT_Gem_Emerald": 46,
+              "MAT_Feather_Aged": 140
+            }
+          },
+          {
+            "lod": 2,
+            "pieces": 27,
+            "tris": 5774,
+            "base_tris": 7999,
+            "total_tris": 13773,
+            "by_material": {
+              "MAT_Nacre_Pinctada": 2792,
+              "MAT_Gold_Aged": 2732,
+              "MAT_Gem_Sapphire": 46,
+              "MAT_Gem_Ruby": 78,
+              "MAT_Gem_Emerald": 46,
+              "MAT_Feather_Aged": 80
+            }
+          }
+        ]
+      },
+      "points": {
+        "GRAB_POINT": {
+          "location_m": [
+            -0.1113,
+            -0.0004,
+            0.0325
+          ]
+        },
+        "INSPECT_POINT": {
+          "location_m": [
+            0.35,
+            -0.02,
+            0.045
+          ]
+        }
+      },
+      "exports": {
+        "SM_CrownOfTheLastAriki_LOD0": {
+          "fbx": "exports/SM_CrownOfTheLastAriki_LOD0.fbx",
+          "glb": "exports/SM_CrownOfTheLastAriki_LOD0.glb",
+          "tris": 106301
+        },
+        "SM_CrownOfTheLastAriki_LOD1": {
+          "fbx": "exports/SM_CrownOfTheLastAriki_LOD1.fbx",
+          "glb": "exports/SM_CrownOfTheLastAriki_LOD1.glb",
+          "tris": 47134
+        },
+        "SM_CrownOfTheLastAriki_LOD2": {
+          "fbx": "exports/SM_CrownOfTheLastAriki_LOD2.fbx",
+          "glb": "exports/SM_CrownOfTheLastAriki_LOD2.glb",
+          "tris": 13773
+        }
+      },
+      "dims_m": [
+        0.2401,
+        0.2201,
+        0.1651
+      ],
+      "checks": {
+        "dims_match_target": true,
+        "dims_target_m": [
+          0.24,
+          0.22,
+          0.16
+        ],
+        "pivot": {
+          "bbox_min_z": 0.0,
+          "footprint_center_xy": [
+            -0.0001,
+            0.0001
+          ],
+          "ok": true
+        },
+        "transforms": {
+          "SM_CrownOfTheLastAriki_LOD0": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_CrownOfTheLastAriki_LOD1": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          },
+          "SM_CrownOfTheLastAriki_LOD2": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "rotation_deg": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "applied": true
+          }
+        },
+        "mesh": {
+          "SM_CrownOfTheLastAriki_LOD0": {
+            "non_manifold_edges": 15,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.000333,
+            "normals_outward": true
+          },
+          "SM_CrownOfTheLastAriki_LOD1": {
+            "non_manifold_edges": 14,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.000333,
+            "normals_outward": true
+          },
+          "SM_CrownOfTheLastAriki_LOD2": {
+            "non_manifold_edges": 9,
+            "ngons": 0,
+            "quads": 0,
+            "degenerate_faces": 0,
+            "volume_m3": 0.00033,
+            "normals_outward": true
+          }
+        },
+        "mesh_scope": "relique seule (avant jonction des ornements)",
+        "uv_channels": {
+          "SM_CrownOfTheLastAriki_LOD0": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_CrownOfTheLastAriki_LOD1": [
+            "UVMap",
+            "LightmapUV"
+          ],
+          "SM_CrownOfTheLastAriki_LOD2": [
+            "UVMap",
+            "LightmapUV"
+          ]
+        },
+        "material_slots": {
+          "SM_CrownOfTheLastAriki_LOD0": [
+            "MAT_CrownOfTheLastAriki",
+            "MAT_Nacre_Pinctada",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Sapphire",
+            "MAT_Gem_Ruby",
+            "MAT_Pearl_White",
+            "MAT_Gem_Emerald",
+            "MAT_Feather_Aged"
+          ],
+          "SM_CrownOfTheLastAriki_LOD1": [
+            "MAT_CrownOfTheLastAriki",
+            "MAT_Nacre_Pinctada",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Sapphire",
+            "MAT_Gem_Ruby",
+            "MAT_Pearl_White",
+            "MAT_Gem_Emerald",
+            "MAT_Feather_Aged"
+          ],
+          "SM_CrownOfTheLastAriki_LOD2": [
+            "MAT_CrownOfTheLastAriki",
+            "MAT_Nacre_Pinctada",
+            "MAT_Gold_Aged",
+            "MAT_Gem_Sapphire",
+            "MAT_Gem_Ruby",
+            "MAT_Gem_Emerald",
+            "MAT_Feather_Aged"
+          ]
+        },
+        "naming_bad": [],
+        "textures_exist": {
+          "BaseColor": true,
+          "Roughness": true,
+          "Normal": true,
+          "AO": true,
+          "Normal_DX": true,
+          "ORM": true
+        },
+        "collision_ok": true,
+        "rest_stable": true,
+        "no_hidden_in_export": true
+      },
+      "textures": {
+        "BaseColor": "textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_BaseColor.png",
+        "Roughness": "textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_Roughness.png",
+        "Normal": "textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_Normal.png",
+        "AO": "textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_AO.png",
+        "Normal_DX": "textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_Normal_DX.png",
+        "ORM": "textures/CrownOfTheLastAriki/T_CrownOfTheLastAriki_ORM.png"
+      },
+      "normal_map": "T_<Id>_Normal = OpenGL (Y+, tangent space) ; T_<Id>_Normal_DX = DirectX (G inverse) pour UE ; ORM = R:AO G:Rough B:Metal",
+      "renders": {
+        "FRONT": "renders/CrownOfTheLastAriki/FRONT.png",
+        "BACK": "renders/CrownOfTheLastAriki/BACK.png",
+        "LEFT": "renders/CrownOfTheLastAriki/LEFT.png",
+        "RIGHT": "renders/CrownOfTheLastAriki/RIGHT.png",
+        "TOP": "renders/CrownOfTheLastAriki/TOP.png",
+        "3-4": "renders/CrownOfTheLastAriki/3-4.png",
+        "BOTTOM": "renders/CrownOfTheLastAriki/BOTTOM.png",
+        "CLOSEUP_MATERIAL": "renders/CrownOfTheLastAriki/CLOSEUP_MATERIAL.png",
+        "CLOSEUP_TREASURE": "renders/CrownOfTheLastAriki/CLOSEUP_TREASURE.png",
+        "SCALE": "renders/CrownOfTheLastAriki/SCALE.png",
+        "FAR_5M": "renders/CrownOfTheLastAriki/FAR_5M.png",
+        "SITU_fond_marin_DAY": "renders/CrownOfTheLastAriki/SITU_fond_marin_DAY.png",
+        "SITUATION": "renders/CrownOfTheLastAriki/SITUATION.png",
+        "SITU_fond_marin_TORCH": "renders/CrownOfTheLastAriki/SITU_fond_marin_TORCH.png",
+        "FLASHLIGHT": "renders/CrownOfTheLastAriki/FLASHLIGHT.png",
+        "ACTIVE": "renders/CrownOfTheLastAriki/ACTIVE.png",
+        "PREVIEW_3-4": "renders/CrownOfTheLastAriki/PREVIEW_3-4.png"
+      },
+      "total_s": 535.1
+    }
+  },
+  "world_scale": 1.0,
+  "log": [
+    "[artifacts 18:04:06] render PREVIEW_3-4",
+    "[artifacts 18:04:09] RedPearlOfRaraka: high (t+3.0s)",
+    "[artifacts 18:04:16] RedPearlOfRaraka: lod0_uv (t+9.3s)",
+    "[artifacts 18:04:26] bake BaseColor 2048px 32spp 10.9s (OPTIX)",
+    "[artifacts 18:04:37] bake Roughness 2048px 32spp 10.8s (OPTIX)",
+    "[artifacts 18:04:47] bake Normal 2048px 24spp 10.2s (OPTIX)",
+    "[artifacts 18:05:00] bake AO 2048px 48spp 12.6s (OPTIX)",
+    "[artifacts 18:05:10] bake Emissive 2048px 24spp 9.6s (OPTIX)",
+    "[artifacts 18:05:11] RedPearlOfRaraka: bake (t+64.3s)",
+    "[artifacts 18:05:11] RedPearlOfRaraka: lods (t+64.5s)",
+    "[artifacts 18:05:14] RedPearlOfRaraka: ornaments (t+68.1s)",
+    "[artifacts 18:05:14] RedPearlOfRaraka: physics_points_anim (t+68.1s)",
+    "[artifacts 18:05:18] RedPearlOfRaraka: exports (t+71.5s)",
+    "[artifacts 18:05:18] RedPearlOfRaraka: done (t+71.5s)",
+    "[artifacts 18:05:36] render FRONT",
+    "[artifacts 18:05:53] render BACK",
+    "[artifacts 18:06:09] render LEFT",
+    "[artifacts 18:06:26] render RIGHT",
+    "[artifacts 18:06:44] render TOP",
+    "[artifacts 18:07:02] render 3-4",
+    "[artifacts 18:07:17] render BOTTOM",
+    "[artifacts 18:07:43] render CLOSEUP_MATERIAL",
+    "[artifacts 18:08:09] render CLOSEUP_TREASURE",
+    "[artifacts 18:08:25] render SCALE",
+    "[artifacts 18:08:38] render FAR_5M",
+    "[artifacts 18:08:53] render SITU_sable_DAY",
+    "[artifacts 18:09:07] render SITU_sable_TORCH",
+    "[artifacts 18:09:23] render SITU_coquille_DAY",
+    "[artifacts 18:09:39] render SITU_coquille_TORCH",
+    "[artifacts 18:09:54] render SITU_plancher_DAY",
+    "[artifacts 18:10:09] render SITU_plancher_TORCH",
+    "[artifacts 18:10:23] render ACTIVE",
+    "[artifacts 18:10:41] render PREVIEW_3-4",
+    "[artifacts 18:10:47] CrownOfTheLastAriki: high (t+6.1s)",
+    "[artifacts 18:11:08] CrownOfTheLastAriki: lod0_uv (t+27.3s)",
+    "[artifacts 18:11:41] bake BaseColor 4096px 16spp 32.2s (OPTIX)",
+    "[artifacts 18:12:12] bake Roughness 4096px 16spp 30.9s (OPTIX)",
+    "[artifacts 18:12:44] bake Normal 4096px 16spp 32.5s (OPTIX)",
+    "[artifacts 18:13:56] bake AO 4096px 96spp 72.5s (OPTIX)",
+    "[artifacts 18:14:01] CrownOfTheLastAriki: bake (t+200.1s)",
+    "[artifacts 18:14:02] CrownOfTheLastAriki: lods (t+201.2s)",
+    "[artifacts 18:14:17] CrownOfTheLastAriki: ornaments (t+215.4s)",
+    "[artifacts 18:14:17] CrownOfTheLastAriki: physics_points_anim (t+215.4s)",
+    "[artifacts 18:14:29] CrownOfTheLastAriki: exports (t+228.0s)",
+    "[artifacts 18:14:29] CrownOfTheLastAriki: done (t+228.0s)",
+    "[artifacts 18:14:51] render FRONT",
+    "[artifacts 18:15:11] render BACK",
+    "[artifacts 18:15:30] render LEFT",
+    "[artifacts 18:15:50] render RIGHT",
+    "[artifacts 18:16:09] render TOP",
+    "[artifacts 18:16:29] render 3-4",
+    "[artifacts 18:16:49] render BOTTOM",
+    "[artifacts 18:17:19] render CLOSEUP_MATERIAL",
+    "[artifacts 18:17:49] render CLOSEUP_TREASURE",
+    "[artifacts 18:18:06] render SCALE",
+    "[artifacts 18:18:24] render FAR_5M",
+    "[artifacts 18:18:42] render SITU_fond_marin_DAY",
+    "[artifacts 18:18:59] render SITU_fond_marin_TORCH",
+    "[artifacts 18:19:16] render ACTIVE",
+    "[artifacts 18:19:36] render PREVIEW_3-4"
+  ]
+}

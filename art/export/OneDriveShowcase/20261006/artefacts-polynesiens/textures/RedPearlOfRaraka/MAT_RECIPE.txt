@@ -1,0 +1,16 @@
+RECETTE NACRE (perle noire de Tahiti) - Blender 5.x Principled -> Unreal 5.x (Substrate)
+Textures (2K, MAT_<Id>) : T_<Id>_BaseColor (sRGB), T_<Id>_Roughness (lineaire), T_<Id>_Normal_DX (UE) ou _Normal (OpenGL),
+  T_<Id>_ORM (R=AO G=Rough B=Metal 0), T_<Id>_Emissive (masque, utilise seulement par l'etat Supernatural).
+Parametres constants (Principled -> Substrate Slab) :
+  Metallic 0 ; IOR 1.56 ; Specular IOR Level 0.45 ; Roughness = texture (0.18-0.40)
+  Coat (vernis de conchioline) : Weight 0.75, Roughness 0.035, IOR 1.5            -> Substrate : 2e Slab "Coat" (ou Clear Coat)
+  Sheen (platelets de nacre, halo doux) : Weight 0.5, Roughness 0.35, Tint = rampe Fresnel -> Substrate : Fuzz (Amount 0.5, Color tint)
+  Thin film (aragonite en couches) : Thickness ~420 nm, IOR 1.7                    -> Substrate : Thin Film Thickness (nm) + IOR
+  Anisotropie legere 0.12 (suivre les cercles de croissance, tangente = U)          -> Substrate : Anisotropy 0.12
+  Specular Tint = rampe sur Fresnel (centre vert-paon -> bleu petrole -> violet -> blanc au rasant)
+     -> UE sans film mince : F0 / Specular Color = Lerp(vert, bleu, violet) par (1 - dot(N, V))^2.5, Roughness de la texture.
+  Moon : Emission 0 (Dormant) ; Supernatural = Emission(T_Emissive x teinte froide) x 0.12 + film plus epais (520 nm) + Specular Tint x1.4.
+  Red : SSS 0.30 (Subsurface Weight, Radius (1.0, 0.25, 0.20) x Scale 0.0012 m) -> UE : Subsurface Profile ou Substrate SSS MFP
+     (0.0012 m, rouge dominant) ; le rouge de BaseColor est SOUS le vernis : Coat a 0.75 le laisse lisible au centre,
+     l'attenue au rasant (Fresnel du vernis) ; parallaxe interne : BumpOffset(HeightRatio 0.004, Height = canal gris de BaseColor).
+Eclairage de lecture : la perle ne vit que par ses reflets : softboxes + ciel, jamais un eclairage plat (sinon bille de plastique).

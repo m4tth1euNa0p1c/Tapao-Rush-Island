@@ -1,0 +1,644 @@
+"""
+Marae des Perles : petite pyramide de pierre à gradins (type marae / ahu polynésien), lieu sacré fictif.
+
+Échelle de référence : Bean (1,05 m). Marches de 16,5 cm (il les gravit), gradins de 0,55 m.
+Matériaux réalistes PBR (textures CC0 de art/textures), pierres sèches générées une à une (basalte moussu,
+basalte sombre, blocs de corail poreux), végétation et blocs de corail de la bibliothèque de l'atoll,
+conque / bol / bananes Poly Haven (art/models).
+
+Items (maquettes marae-*) : pyramide, autel, artefact en or (perle noire), torche, offrandes, conque, pierres.
+Scène complète : maquette marae-des-perles.
+"""
+
+import math
+import os
+import random
+
+import bmesh
+import bpy
+from mathutils import Matrix, Vector
+
+import bean_kit as K
+
+ROOT = K.ROOT
+TEX = os.path.join(ROOT, "art", "textures")
+MODELS = os.path.join(ROOT, "art", "models")
+ATOLL = os.path.join(ROOT, "art", "archives", "environnements", "atoll_tuamotu", "scene", "atoll_tuamotu.blend")
+HDRI = os.path.join(ROOT, "art", "hdri", "secluded_beach_4k.hdr")
+TAU = 2 * math.pi
+V = K.V
+
+DEFAULT = {
+    "tiers": [(5.2, 4.2), (3.8, 3.0), (2.5, 1.9)],   # largeur X, profondeur Y
+    "tier_h": 0.60, "rise": 0.165, "tread": 0.26, "stair_w": 1.0,
+    "altar": (1.05, 0.62, 0.37), "seed": 7,
+}
+
+
+# ----------------------------------------------------------------------------
+# Matériaux PBR
+
+def _find(folder, keys):
+    if not os.path.isdir(folder):
+        return None
+    for f in sorted(os.listdir(folder)):
+        low = f.lower()
+        if any(k in low for k in keys) and low.endswith((".jpg", ".png")):
+            return os.path.join(folder, f)
+    return None
+
+
+def pbr(name, folder, tile=1.0, tint=(1, 1, 1), rough_add=0.0, normal_strength=1.0, sat=1.0):
+    mat = bpy.data.materials.get(name)
+    if mat:
+        return mat
+    folder = os.path.join(TEX, folder)
+    mat = bpy.data.materials.new(name)
+    mat.use_nodes = True
+    nt = mat.node_tree
+    bsdf = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    mp = nt.nodes.new("ShaderNodeMapping")
+    mp.inputs["Scale"].default_value = (1 / tile, 1 / tile, 1 / tile)
+    nt.links.new(tc.outputs["UV"], mp.inputs["Vector"])
+
+    def img(path, color):
+        n = nt.nodes.new("ShaderNodeTexImage")
+        n.image = bpy.data.images.load(path, check_existing=True)
+        n.image.colorspace_settings.name = "sRGB" if color else "Non-Color"
+        nt.links.new(mp.outputs["Vector"], n.inputs["Vector"])
+        return n
+
+    diff = _find(folder, ("_diff", "_color"))
+    if diff:
+        d = img(diff, True)
+        mix = nt.nodes.new("ShaderNodeMixRGB")
+        mix.blend_type = "MULTIPLY"
+        mix.inputs["Fac"].default_value = 1.0
+        mix.inputs["Color2"].default_value = (*tint, 1)
+        hs = nt.nodes.new("ShaderNodeHueSaturation")
+        hs.inputs["Saturation"].default_value = sat
+        nt.links.new(d.outputs["Color"], hs.inputs["Color"])
+        nt.links.new(hs.outputs["Color"], mix.inputs["Color1"])
+        nt.links.new(mix.outputs["Color"], bsdf.inputs["Base Color"])
+        mat.diffuse_color = (*tint, 1)
+    rough = _find(folder, ("_rough", "roughness"))
+    if rough:
+        r = img(rough, False)
+        add = nt.nodes.new("ShaderNodeMath")
+        add.operation = "ADD"
+        add.use_clamp = True
+        add.inputs[1].default_value = rough_add
+        nt.links.new(r.outputs["Color"], add.inputs[0])
+        nt.links.new(add.outputs[0], bsdf.inputs["Roughness"])
+    nor = _find(folder, ("nor_gl", "normalgl"))
+    if nor:
+        nn = img(nor, False)
+        nm = nt.nodes.new("ShaderNodeNormalMap")
+        nm.inputs["Strength"].default_value = normal_strength
+        nt.links.new(nn.outputs["Color"], nm.inputs["Color"])
+        nt.links.new(nm.outputs["Normal"], bsdf.inputs["Normal"])
+    return mat
+
+
+def mats():
+    return {
+        "basalt_moss": pbr("M_Marae_BasaltMoss", "props/minka/mossy_rock", tile=0.9),
+        "basalt": pbr("M_Marae_Basalt", "characters/Rock035", tile=0.8, tint=(0.85, 0.85, 0.85)),
+        "basalt_light": pbr("M_Marae_BasaltLight", "characters/Rock030", tile=0.8),
+        "coral": pbr("M_Marae_CoralBlock", "ground/coral_ground_02", tile=0.7, tint=(1.08, 1.06, 1.0), sat=0.25),
+        "gravel": pbr("M_Marae_CoralGravel", "ground/coral_gravel", tile=1.2, sat=0.45),
+        "sand": pbr("M_Marae_Sand", "ground/coast_sand_01", tile=2.5),
+        "sand_white": pbr("M_Marae_SandWhite", "ground/Ground092A", tile=2.0),
+        "wood": pbr("M_Marae_Wood", "characters/rough_wood", tile=0.6, tint=(0.85, 0.62, 0.42)),
+        "rope": pbr("M_Marae_Rope", "characters/Rope001", tile=0.15, tint=(0.95, 0.85, 0.6)),
+        "sticks": pbr("M_Marae_Sticks", "characters/bark_willow", tile=0.3),
+    }
+
+
+def gold_mat():
+    m = bpy.data.materials.get("M_Marae_Gold")
+    if m:
+        return m
+    m = bpy.data.materials.new("M_Marae_Gold")
+    m.use_nodes = True
+    nt = m.node_tree
+    b = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
+    b.inputs["Base Color"].default_value = (1.0, 0.78, 0.36, 1)
+    b.inputs["Metallic"].default_value = 1.0
+    noise = nt.nodes.new("ShaderNodeTexNoise")
+    noise.inputs["Scale"].default_value = 60.0
+    ramp = nt.nodes.new("ShaderNodeMapRange")
+    ramp.inputs["To Min"].default_value = 0.10
+    ramp.inputs["To Max"].default_value = 0.26
+    nt.links.new(noise.outputs["Fac"], ramp.inputs["Value"])
+    nt.links.new(ramp.outputs["Result"], b.inputs["Roughness"])
+    m.diffuse_color = (1.0, 0.7, 0.28, 1)
+    return m
+
+
+def pearl_mat():
+    """Perle noire de Tahiti : diélectrique sombre, vernis, film mince irisé (vert-paon / violet)."""
+    m = bpy.data.materials.get("M_Marae_BlackPearl")
+    if m:
+        return m
+    m = bpy.data.materials.new("M_Marae_BlackPearl")
+    m.use_nodes = True
+    nt = m.node_tree
+    b = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
+    b.inputs["Base Color"].default_value = (0.035, 0.045, 0.05, 1)
+    # orient de perle : couleur selon l'angle de vue (vert-paon au centre, violet / bleu sur les bords)
+    lw = nt.nodes.new("ShaderNodeLayerWeight")
+    lw.inputs["Blend"].default_value = 0.45
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    els = ramp.color_ramp.elements
+    els[0].position, els[0].color = 0.0, (0.020, 0.060, 0.050, 1)
+    els[1].position, els[1].color = 1.0, (0.060, 0.090, 0.180, 1)
+    e = els.new(0.45)
+    e.color = (0.120, 0.040, 0.130, 1)
+    e2 = els.new(0.75)
+    e2.color = (0.030, 0.140, 0.110, 1)
+    noise = nt.nodes.new("ShaderNodeTexNoise")
+    noise.inputs["Scale"].default_value = 6.0
+    add = nt.nodes.new("ShaderNodeMath")
+    add.operation = "MULTIPLY_ADD"
+    add.inputs[1].default_value = 0.25
+    nt.links.new(noise.outputs["Fac"], add.inputs[0])
+    nt.links.new(lw.outputs["Facing"], add.inputs[2])
+    nt.links.new(add.outputs[0], ramp.inputs["Fac"])
+    nt.links.new(ramp.outputs["Color"], b.inputs["Base Color"])
+    b.inputs["Roughness"].default_value = 0.18
+    for key, val in (("Coat Weight", 1.0), ("Coat Roughness", 0.04), ("Thin Film Thickness", 520.0),
+                     ("Thin Film IOR", 1.45), ("Specular IOR Level", 0.7)):
+        if key in b.inputs:
+            b.inputs[key].default_value = val
+    m.diffuse_color = (0.05, 0.06, 0.07, 1)
+    return m
+
+
+def flame_mat():
+    m = bpy.data.materials.get("M_Marae_Flame") or bpy.data.materials.new("M_Marae_Flame")
+    m.use_nodes = True
+    b = next(n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+    b.inputs["Base Color"].default_value = (1.0, 0.30, 0.03, 1)
+    b.inputs["Emission Color"].default_value = (1.0, 0.33, 0.04, 1)
+    b.inputs["Emission Strength"].default_value = 2.6
+    b.inputs["Alpha"].default_value = 0.85
+    return m
+
+
+def shell_mat():
+    m = bpy.data.materials.get("M_Marae_Cowrie")
+    if m:
+        return m
+    m = bpy.data.materials.new("M_Marae_Cowrie")
+    m.use_nodes = True
+    nt = m.node_tree
+    b = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
+    noise = nt.nodes.new("ShaderNodeTexVoronoi")
+    noise.inputs["Scale"].default_value = 70.0
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.color_ramp.elements[0].color = (0.42, 0.24, 0.12, 1)
+    ramp.color_ramp.elements[1].color = (0.97, 0.93, 0.85, 1)
+    ramp.color_ramp.elements[0].position = 0.16
+    ramp.color_ramp.elements[1].position = 0.22
+    nt.links.new(noise.outputs["Distance"], ramp.inputs["Fac"])
+    nt.links.new(ramp.outputs["Color"], b.inputs["Base Color"])
+    b.inputs["Roughness"].default_value = 0.18
+    return m
+
+
+# ----------------------------------------------------------------------------
+# Géométrie
+
+def box_uv_mesh(me, mw, size=1.0):
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    uv = bm.loops.layers.uv.verify()
+    R = mw.to_3x3()
+    for f in bm.faces:
+        n = R @ f.normal
+        ax = max(range(3), key=lambda i: abs(n[i]))
+        for lp in f.loops:
+            p = mw @ lp.vert.co
+            u, v = ((p.y, p.z), (p.x, p.z), (p.x, p.y))[ax]
+            lp[uv].uv = (u / size, v / size)
+    bm.to_mesh(me)
+    bm.free()
+
+
+class StoneBatch:
+    """Accumule des pierres (boîtes biseautées et bosselées) dans un seul maillage multi-matériaux."""
+
+    def __init__(self, name, materials, seed):
+        self.name = name
+        self.materials = materials        # liste de matériaux
+        self.bm = bmesh.new()
+        self.rng = random.Random(seed)
+        self.tmp_me = bpy.data.meshes.new("_stone_tmp")
+
+    def stone(self, center, size, rot_z=0.0, mat=0, round_=0.10, bump=0.22, tilt=0.05):
+        r = self.rng
+        tmp = bmesh.new()
+        bmesh.ops.create_cube(tmp, size=1.0)
+        bmesh.ops.subdivide_edges(tmp, edges=tmp.edges[:], cuts=2, use_grid_fill=True)
+        sx, sy, sz = size
+        for v in tmp.verts:
+            co = v.co
+            # arrondi : rapproche les coins de la sphère
+            n = co.normalized()
+            co = co.lerp(n * 0.62, round_)
+            co = Vector((co.x * sx, co.y * sy, co.z * sz))
+            k = bump * min(sx, sy, sz)
+            co += Vector((r.uniform(-k, k), r.uniform(-k, k), r.uniform(-k, k) * 0.5))
+            # faces plates de parement : on écrase un peu la face extérieure (pierres de mur posées à plat)
+            v.co = co
+        R = Matrix.Rotation(rot_z, 4, "Z") @ Matrix.Rotation(r.uniform(-tilt, tilt), 4, "X") @ \
+            Matrix.Rotation(r.uniform(-tilt, tilt), 4, "Y")
+        tmp.transform(Matrix.Translation(center) @ R)
+        tmp.to_mesh(self.tmp_me)
+        tmp.free()
+        n0 = len(self.bm.faces)
+        self.bm.from_mesh(self.tmp_me)
+        self.bm.faces.ensure_lookup_table()
+        for i in range(n0, len(self.bm.faces)):
+            self.bm.faces[i].material_index = mat
+            self.bm.faces[i].smooth = True
+
+    def finish(self, coll, subsurf=0):
+        me = bpy.data.meshes.new(self.name)
+        self.bm.to_mesh(me)
+        self.bm.free()
+        bpy.data.meshes.remove(self.tmp_me)
+        for m in self.materials:
+            me.materials.append(m)
+        ob = bpy.data.objects.new(self.name, me)
+        coll.objects.link(ob)
+        box_uv_mesh(me, ob.matrix_world, 1.0)
+        if subsurf:
+            mod = ob.modifiers.new("Subsurf", "SUBSURF")
+            mod.levels = mod.render_levels = subsurf
+        return ob
+
+
+def solid_box(name, center, size, mat, coll, bevel=0.0):
+    bm = bmesh.new()
+    bmesh.ops.create_cube(bm, size=1.0)
+    bm.transform(Matrix.Translation(center) @ Matrix.Diagonal((*size, 1)))
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    bm.free()
+    me.materials.append(mat)
+    ob = bpy.data.objects.new(name, me)
+    coll.objects.link(ob)
+    box_uv_mesh(me, ob.matrix_world, 1.0)
+    if bevel:
+        mod = ob.modifiers.new("Bevel", "BEVEL")
+        mod.width = bevel
+        mod.segments = 2
+    return ob
+
+
+def pick_mat(rng):
+    x = rng.random()
+    return 0 if x < 0.40 else (1 if x < 0.66 else (2 if x < 0.78 else 3))   # moss, basalt, light, coral
+
+
+def wall(batch, a, b, z0, h, inward, rng, skip=None, batter=0.05):
+    """Mur de pierres sèches de a vers b (points XY au sol), face vers l'extérieur ; inward = normale intérieure."""
+    d = (b - a)
+    L = d.length
+    d.normalize()
+    z = z0
+    row = 0
+    while z < z0 + h - 0.05:
+        rh = min(rng.uniform(0.13, 0.30), z0 + h - z)
+        t = rng.uniform(-0.15, 0.05) if row % 2 else rng.uniform(-0.05, 0.1)
+        lean = batter * (z - z0) / max(h, 1e-3)
+        while t < L:
+            sl = rng.uniform(0.20, 0.62) * (1.0 if rng.random() > 0.15 else 1.5)
+            mid = t + sl / 2
+            if skip and skip(a + d * mid):
+                t += sl + 0.012
+                continue
+            dep = rng.uniform(0.22, 0.36)
+            c = a + d * mid + inward * (dep / 2 - rng.uniform(0.0, 0.03) + lean)
+            c += inward * rng.uniform(-0.03, 0.03)
+            batch.stone(Vector((c.x, c.y, z + rh / 2 + rng.uniform(-0.02, 0.02))),
+                        (sl, dep, rh * rng.uniform(0.92, 1.12)),
+                        rot_z=math.atan2(d.y, d.x) + rng.uniform(-0.09, 0.09), mat=pick_mat(rng))
+            t += sl + rng.uniform(0.0, 0.03)
+        z += rh
+        row += 1
+
+
+def build_pyramid(coll, p=None):
+    p = {**DEFAULT, **(p or {})}
+    M = mats()
+    rng = random.Random(p["seed"])
+    stone_mats = [M["basalt_moss"], M["basalt"], M["basalt_light"], M["coral"]]
+    batch = StoneBatch("Marae_Stones", stone_mats, p["seed"])
+    th = p["tier_h"]
+    sw = p["stair_w"]
+    n_steps = round(len(p["tiers"]) * th / p["rise"])
+    rise = len(p["tiers"]) * th / n_steps
+    front3 = -p["tiers"][-1][1] / 2
+    stair_y0 = front3 - n_steps * p["tread"]
+    parts = []
+
+    def in_stairs(pt):
+        return abs(pt.x) < sw / 2 + 0.08 and pt.y < front3 + 0.05
+    for i, (w, d) in enumerate(p["tiers"]):
+        z0 = i * th
+        hw, hd = w / 2, d / 2
+        corners = [V(-hw, -hd, 0), V(hw, -hd, 0), V(hw, hd, 0), V(-hw, hd, 0)]
+        for k in range(4):
+            a, b = corners[k], corners[(k + 1) % 4]
+            inward = (V(0, 0, 0) - (a + b) / 2)
+            inward = V(inward.x, inward.y, 0).normalized()
+            if abs(inward.x) > abs(inward.y):
+                inward = V(math.copysign(1, inward.x), 0, 0)
+            else:
+                inward = V(0, math.copysign(1, inward.y), 0)
+            wall(batch, a, b, z0, th, inward, rng, skip=in_stairs if k == 0 else None)
+        # remplissage + dessus de gravier corallien
+        parts.append(solid_box(f"Marae_Core{i}", V(0, 0, z0 + th / 2 - 0.01), V(w - 0.5, d - 0.5, th - 0.02),
+                               M["basalt"], coll))
+        top = solid_box(f"Marae_Top{i}", V(0, 0, z0 + th - 0.035), V(w - 0.18, d - 0.18, 0.06), M["gravel"], coll,
+                        bevel=0.02)
+        parts.append(top)
+        # quelques pierres plates de chaperon sur le bord
+        for _ in range(int((w + d) * 3)):
+            side = rng.random()
+            if side < 0.5:
+                x = rng.uniform(-hw + 0.2, hw - 0.2)
+                y = (hd - 0.2) * (1 if rng.random() < 0.5 else -1)
+            else:
+                y = rng.uniform(-hd + 0.2, hd - 0.2)
+                x = (hw - 0.2) * (1 if rng.random() < 0.5 else -1)
+            if in_stairs(V(x, y, 0)):
+                continue
+            batch.stone(V(x, y, z0 + th + 0.01), (rng.uniform(0.25, 0.45), rng.uniform(0.2, 0.32), 0.07),
+                        rot_z=rng.uniform(0, math.pi), mat=pick_mat(rng), round_=0.25, bump=0.18)
+    # escalier : dalles de corail/basalte sur un noyau, murets latéraux
+    for s in range(n_steps):
+        ztop = (s + 1) * rise
+        yf = stair_y0 + s * p["tread"]
+        n_sl = 2 if s % 2 else 3
+        xs = [-sw / 2 + sw * (j + 0.5) / n_sl for j in range(n_sl)]
+        for x in xs:
+            batch.stone(V(x + rng.uniform(-0.02, 0.02), yf + p["tread"] / 2 + 0.02, ztop - rise / 2),
+                        (sw / n_sl - 0.02, p["tread"] + 0.06, rise * 1.02), rot_z=rng.uniform(-0.03, 0.03),
+                        mat=3 if rng.random() < 0.45 else 2, round_=0.04, bump=0.05, tilt=0.01)
+        parts.append(solid_box(f"Marae_StairCore{s}", V(0, yf + p["tread"] / 2 + 0.03, (ztop - rise) / 2),
+                               V(sw - 0.06, p["tread"] + 0.04, max(ztop - rise, 0.01)), M["basalt"], coll))
+        for sx in (-1, 1):
+            x = sx * (sw / 2 + 0.16)
+            z = 0.0
+            while z < ztop - 0.02:
+                hh = min(rng.uniform(0.15, 0.22), ztop - z)
+                batch.stone(V(x, yf + p["tread"] / 2, z + hh / 2), (0.30, p["tread"] + 0.02, hh * 1.04),
+                            rot_z=rng.uniform(-0.05, 0.05), mat=pick_mat(rng))
+                z += hh
+    stones = batch.finish(coll)
+    parts.insert(0, stones)
+    top_z = len(p["tiers"]) * th
+    sockets = {
+        "summit": ("root", V(0, 0.15, top_z)),
+        "stairs_base": ("root", V(0, stair_y0 - 0.3, 0)),
+        "stairs_top": ("root", V(0, front3, top_z)),
+        "torch_l": ("root", V(-sw / 2 - 0.55, stair_y0 + 0.15, 0)),
+        "torch_r": ("root", V(sw / 2 + 0.55, stair_y0 + 0.15, 0)),
+    }
+    for i, (w, d) in enumerate(p["tiers"]):
+        sockets[f"tier{i}_top"] = ("root", V(0, 0, (i + 1) * th))
+    info = {"steps": n_steps, "rise": round(rise, 4), "tread": p["tread"], "stair_y0": round(stair_y0, 3),
+            "height": top_z, "footprint": p["tiers"][0]}
+    return {"parts": {"root": parts}, "sockets": sockets, "ucx": [], "params": p, "info": info,
+            "keep_uv": True}
+
+
+def build_altar(coll, p=None):
+    p = {"size": DEFAULT["altar"], "seed": 21, **(p or {})}
+    M = mats()
+    w, d, h = p["size"]
+    rng = random.Random(p["seed"])
+    batch = StoneBatch("Altar_Stones", [M["basalt_moss"], M["basalt"], M["basalt_light"], M["coral"]], p["seed"])
+    base_h = h - 0.12
+    for k in range(4):
+        a, b = [(V(-w / 2 + 0.05, -d / 2 + 0.05, 0), V(w / 2 - 0.05, -d / 2 + 0.05, 0)),
+                (V(w / 2 - 0.05, -d / 2 + 0.05, 0), V(w / 2 - 0.05, d / 2 - 0.05, 0)),
+                (V(w / 2 - 0.05, d / 2 - 0.05, 0), V(-w / 2 + 0.05, d / 2 - 0.05, 0)),
+                (V(-w / 2 + 0.05, d / 2 - 0.05, 0), V(-w / 2 + 0.05, -d / 2 + 0.05, 0))][k]
+        inward = (-(a + b) / 2)
+        inward = V(math.copysign(1, inward.x), 0, 0) if abs(inward.x) > abs(inward.y) else \
+            V(0, math.copysign(1, inward.y), 0)
+        wall(batch, a, b, 0.0, base_h, inward, rng, batter=0.02)
+    # dalle de corail (table d'offrande) posée dessus
+    batch.stone(V(0, 0, base_h + 0.06), (w, d, 0.12), mat=3, round_=0.15, bump=0.04, tilt=0.008)
+    stones = batch.finish(coll)
+    core = solid_box("Altar_Core", V(0, 0, base_h / 2), V(w - 0.3, d - 0.3, base_h), M["basalt"], coll)
+    return {"parts": {"root": [stones, core]}, "sockets": {"top": ("root", V(0, 0, h))},
+            "ucx": [("altar", None, [V(x, y, z) for x in (-w / 2, w / 2) for y in (-d / 2, d / 2) for z in (0, h)])],
+            "params": p, "keep_uv": True}
+
+
+def build_artifact(coll, p=None):
+    """Perle noire géante dans un berceau d'or en vagues, sur un socle gravé (zigzags et vagues)."""
+    B = K.bean()
+    p = {"pearl_r": 0.10, "base_r": 0.165, **(p or {})}
+    gold = gold_mat()
+    pr, br = p["pearl_r"], p["base_r"]
+    parts = []
+    prof = [(br * 0.98, 0.0), (br, 0.012), (br, 0.05), (br * 0.92, 0.062), (br * 0.80, 0.07), (br * 0.80, 0.09)]
+    ped = K.revolve("Artifact_Pedestal", prof, "M_Bean_Brass", coll, segs=64, subsurf=1)
+    ped.data.materials[0] = gold
+    parts.append(ped)
+    # frise en zigzag gravée (en relief) + filets
+    zz = []
+    n = 36
+    for i in range(n * 2 + 1):
+        a = TAU * i / (n * 2)
+        z = 0.022 if i % 2 == 0 else 0.042
+        zz.append(V(br * 1.005 * math.cos(a), br * 1.005 * math.sin(a), z))
+    t = B.tube("Artifact_Zigzag", zz, [0.0032] * len(zz), "M_Bean_Brass", coll, segs=6, caps=False)
+    t.data.materials[0] = gold
+    parts.append(t)
+    for z in (0.012, 0.052):
+        r = K.ring(f"Artifact_Fillet{int(z * 1000)}", (0, 0, z), br * 1.0, 0.003, "M_Bean_Brass", coll, segs=64,
+                   minor_segs=6)
+        r.data.materials[0] = gold
+        parts.append(r)
+    zc = 0.09 + pr * 0.95
+    # berceau : coupe en croissant sous la perle
+    bowl = []
+    for i in range(25):
+        a = math.pi * (0.08 + 0.84 * i / 24)
+        bowl.append(V(-math.cos(a) * pr * 1.15, 0, zc - math.sin(a) * pr * 1.08))
+    cr = B.tube("Artifact_Cradle", bowl, [0.022 + 0.012 * math.sin(math.pi * i / 24) for i in range(25)],
+                "M_Bean_Brass", coll, segs=24, squash=1.6)
+    cr.data.materials[0] = gold
+    parts.append(cr)
+    # bras en vagues qui s'enroulent (spirales) de chaque côté
+    for side in (-1, 1):
+        pts, rad = [], []
+        for i in range(40):
+            u = i / 39
+            if u < 0.45:
+                k = u / 0.45
+                x = side * (pr * 1.12 + 0.01 * k)
+                z = zc - pr * 0.6 + pr * 1.25 * k
+            else:
+                # crête de vague qui déferle vers l'extérieur (spirale)
+                k = (u - 0.45) / 0.55
+                ang = math.pi - math.pi * 1.75 * k
+                rr = pr * 0.46 * (1 - 0.62 * k)
+                cx, cz = side * (pr * 1.12 + pr * 0.46), zc + pr * 0.65
+                x = cx + side * rr * math.cos(ang)
+                z = cz + rr * math.sin(ang)
+            pts.append(V(x, 0, z))
+            rad.append(0.026 * (1 - 0.72 * u) + 0.004)
+        arm = B.tube(f"Artifact_Wave{'L' if side < 0 else 'R'}", pts, rad, "M_Bean_Brass", coll, segs=18, squash=1.5)
+        arm.data.materials[0] = gold
+        parts.append(arm)
+        # petites vagues gravées sur le flanc du berceau
+        for j in range(3):
+            c = V(side * pr * (0.35 + 0.25 * j), -0.026, zc - pr * (0.86 - 0.08 * j))
+            wv = [c + V(side * 0.022 * math.cos(math.pi * q / 10), 0, 0.016 * math.sin(math.pi * q / 10))
+                  for q in range(11)]
+            w = B.tube(f"Artifact_Engrave{side}{j}", wv, [0.0028] * 11, "M_Bean_Brass", coll, segs=6)
+            w.data.materials[0] = gold
+            parts.append(w)
+    pearl = B.blob("Artifact_Pearl", (0, 0, zc), (pr, pr, pr * 0.99), "M_Bean_Eye", coll, seg=64, ring=32)
+    pearl.data.materials[0] = pearl_mat()
+    parts.append(pearl)
+    sockets = {"base": ("root", V(0, 0, 0)), "pearl": ("root", V(0, 0, zc)), "grab": ("root", V(0, 0, zc))}
+    return {"parts": {"root": parts}, "sockets": sockets,
+            "ucx": [("artifact", None, [V(x, y, z) for x in (-br, br) for y in (-br, br) for z in (0, zc + pr * 1.4)])],
+            "params": p, "keep_uv": True}
+
+
+def build_torch(coll, p=None):
+    B = K.bean()
+    p = {"height": 1.35, "light": True, **(p or {})}
+    M = mats()
+    h = p["height"]
+    parts = []
+    pole = B.tube("Torch_Pole", [V(0, 0, -0.25), V(0.005, 0, h * 0.5), V(-0.004, 0, h - 0.12)],
+                  [0.036, 0.032, 0.028], "M_Bean_Wood", coll, segs=12)
+    pole.data.materials[0] = M["wood"]
+    parts.append(pole)
+    rng = random.Random(5)
+    for i in range(14):
+        a = TAU * i / 14
+        r = 0.040
+        st = B.tube(f"Torch_Stick{i}", [V(r * math.cos(a), r * math.sin(a), h - 0.24),
+                                        V(r * 1.55 * math.cos(a), r * 1.55 * math.sin(a), h + rng.uniform(0.0, 0.05))],
+                    [0.010, 0.009], "M_Bean_Wood", coll, segs=6)
+        st.data.materials[0] = M["sticks"]
+        parts.append(st)
+    for z, rr in ((h - 0.20, 0.050), (h - 0.08, 0.060), (0.65, 0.040)):
+        rg = K.ring(f"Torch_Rope{int(z * 100)}", (0, 0, z), rr, 0.010, "M_Bean_Leather", coll, segs=24, minor_segs=8)
+        rg.data.materials[0] = M["rope"]
+        parts.append(rg)
+    fl_pts = [V(0, 0, h + 0.02), V(0.008, 0, h + 0.09), V(-0.006, 0.004, h + 0.17), V(0.012, -0.004, h + 0.26)]
+    flame = B.tube("Torch_Flame", fl_pts, [0.062, 0.055, 0.030, 0.004], "M_Bean_Eye", coll, segs=16)
+    flame.data.materials[0] = flame_mat()
+    parts.append(flame)
+    core_m = bpy.data.materials.get("M_Marae_FlameCore") or flame_mat().copy()
+    core_m.name = "M_Marae_FlameCore"
+    cb = next(n for n in core_m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+    cb.inputs["Emission Color"].default_value = (1.0, 0.78, 0.35, 1)
+    cb.inputs["Emission Strength"].default_value = 4.0
+    core = B.tube("Torch_FlameCore", [V(0, 0, h + 0.02), V(0.004, 0, h + 0.08), V(0, 0, h + 0.14)],
+                  [0.032, 0.026, 0.004], "M_Bean_Eye", coll, segs=12)
+    core.data.materials[0] = core_m
+    parts.append(core)
+    sockets = {"flame": ("root", V(0, 0, h + 0.15)), "ground": ("root", V(0, 0, 0))}
+    res = {"parts": {"root": parts}, "sockets": sockets,
+           "ucx": [("pole", None, [V(x, y, z) for x in (-0.05, 0.05) for y in (-0.05, 0.05) for z in (0, h + 0.1)])],
+           "params": p, "keep_uv": True}
+    return res
+
+
+def import_gltf(path, coll, scale=1.0):
+    lc = _layer_coll(coll)
+    bpy.context.view_layer.active_layer_collection = lc
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=path)
+    new = [o for o in bpy.data.objects if o not in before]
+    roots = [o for o in new if o.parent is None]
+    for o in roots:
+        o.scale = (o.scale.x * scale, o.scale.y * scale, o.scale.z * scale)
+    bpy.context.view_layer.update()
+    return [o for o in new if o.type == "MESH"], roots
+
+
+def _layer_coll(coll, lc=None):
+    lc = lc or bpy.context.view_layer.layer_collection
+    if lc.collection == coll:
+        return lc
+    for c in lc.children:
+        r = _layer_coll(coll, c)
+        if r:
+            return r
+    return None
+
+
+def build_offerings(coll, p=None):
+    """Bol de bois (Poly Haven) rempli de cauris."""
+    B = K.bean()
+    p = {"bowl_scale": 1.0, "shells": 9, **(p or {})}
+    meshes, roots = import_gltf(os.path.join(MODELS, "props", "wooden_bowl_01", "wooden_bowl_01_1k.gltf"), coll,
+                                p["bowl_scale"])
+    bpy.context.view_layer.update()
+    pts = [o.matrix_world @ Vector(c) for o in meshes for c in o.bound_box]
+    top = max(q.z for q in pts)
+    rad = (max(q.x for q in pts) - min(q.x for q in pts)) / 2
+    rng = random.Random(3)
+    parts = list(meshes)
+    sm = shell_mat()
+    for i in range(p["shells"]):
+        a, r = rng.uniform(0, TAU), rng.uniform(0, rad * 0.55)
+        c = V(r * math.cos(a), r * math.sin(a), top - 0.012 + rng.uniform(0, 0.012))
+        sh = B.blob(f"Offering_Cowrie{i}", c, (0.022, 0.014, 0.010), "M_Bean_Eye", coll, seg=16, ring=8)
+        sh.rotation_euler = (0, 0, rng.uniform(0, math.pi))
+        sh.data.materials[0] = sm
+        parts.append(sh)
+    for r in roots:
+        if r.type != "MESH":
+            pass
+    return {"parts": {"root": parts}, "sockets": {"top": ("root", V(0, 0, top))},
+            "ucx": [("bowl", None, [V(x, y, z) for x in (-rad, rad) for y in (-rad, rad) for z in (0, top)])],
+            "params": p, "keep_uv": True, "extra_roots": roots}
+
+
+def build_conch(coll, p=None):
+    p = {"scale": 1.7, **(p or {})}
+    meshes, roots = import_gltf(os.path.join(MODELS, "props", "lambis_shell", "lambis_shell_1k.gltf"), coll,
+                                p["scale"])
+    return {"parts": {"root": meshes}, "sockets": {"grab": ("root", V(0, 0, 0.04))},
+            "ucx": [("conch", meshes, None)], "params": p, "keep_uv": True, "extra_roots": roots}
+
+
+def build_stones(coll, p=None):
+    """Échantillon de mur (1,6 x 0,6 m) : référence matériaux / appareillage."""
+    p = {"seed": 11, **(p or {})}
+    M = mats()
+    rng = random.Random(p["seed"])
+    batch = StoneBatch("Stones_Sample", [M["basalt_moss"], M["basalt"], M["basalt_light"], M["coral"]], p["seed"])
+    wall(batch, V(-0.8, 0, 0), V(0.8, 0, 0), 0.0, 0.6, V(0, 1, 0), rng, batter=0.03)
+    stones = batch.finish(coll)
+    return {"parts": {"root": [stones]}, "sockets": {"center": ("root", V(0, 0, 0.3))},
+            "ucx": [("wall", [stones], None)], "params": p, "keep_uv": True}
+
+
+K.ITEMS.update({
+    "marae_pyramid": ("SM_Marae_Pyramid", build_pyramid),
+    "marae_altar": ("SM_Marae_Altar", build_altar),
+    "marae_artifact": ("SM_Marae_PearlArtifact", build_artifact),
+    "marae_torch": ("SM_Marae_Torch", build_torch),
+    "marae_offerings": ("SM_Marae_Offerings", build_offerings),
+    "marae_conch": ("SM_Marae_Conch", build_conch),
+    "marae_stones": ("SM_Marae_StoneWall", build_stones),
+})

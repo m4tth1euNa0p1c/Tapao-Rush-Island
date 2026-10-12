@@ -1,0 +1,1683 @@
+"""Tresor : ornements europeens POSTERIEURS (orfevrerie XVIIe-XVIIIe ajoutee par des pirates / marchands) sur les reliques.
+
+L'or et les pierres taillees n'existaient pas en Polynesie : sertissures, cerclages, griffes, cages, filigranes, perles
+enfilees sont des ajouts qui ont "remonte" la relique en tresor. L'objet d'origine reste dominant ; l'or est sobre, use,
+noirci dans les creux, avec un peu de vert-de-gris au contact du corail / sel.
+
+Pipeline (voir DESIGN.md, section Tresor) :
+  - un module d'objet declare `ornaments(O)` ; O = Ornaments(high) expose la surface du high-poly (BVH : projection,
+    rayons, normales lissees) et `O.add(nom, fn(q) -> [OMesh], size, lods)` ;
+  - les ornements NE SONT PAS cuits : sous-maillage separe (materiaux partages MAT_Gold_Aged, MAT_Gem_*, MAT_Pearl_*,
+    MAT_Nacre_Pinctada, MAT_Feather_Aged), regenere par LOD (q = 1 / 0.5 / 0.25 : segments ; les petites pieces
+    disparaissent en LOD2), joint aux SM_<Id>_LODn (slots de materiaux supplementaires, meme FBX / GLB) ;
+  - attribut de couleur de sommet `OrnMask` (exporte FBX / glTF COLOR_0) : R = cavite (or noirci), G = usure / poli
+    (or) ou givre (gemmes), B = contact avec la relique (vert-de-gris, sel), A = aleatoire par piece (teinte) ;
+  - UVMap des ornements : metres / TILE (texture de rayures / rugosite repetee), recouvrement libre (slots separes).
+
+Geometrie : tout est numpy (OMesh : sommets, quads, triangles, UV par coin de face, lissage par face, materiau).
+Generateurs : pierres (cabochon, rose, table, coussin, cristal brut hexagonal), perles (rondes, baroques), chatons
+(bate pleine, griffes, griffes tordues, chaton vide), bandes d'or epousant la surface, fils torsades, filigrane,
+chaines, perles enfilees, rivets, rosaces.
+"""
+import math
+import os
+import shutil
+
+import bpy
+import numpy as np
+from mathutils import Vector
+from mathutils.bvhtree import BVHTree
+
+from . import geo, materials
+from .geo import fbm, smoothstep, worley
+from .materials import NodeBuilder, lin, new_material
+
+TAU = 2 * math.pi
+TILE = 0.03                    # 1 unite UV = 3 cm (rayures / rugosite de l'or)
+LOD_Q = (1.0, 0.5, 0.25)       # qualite (segments) par LOD
+LOD_MIN_SIZE = (0.0, 0.0018, 0.0045)   # taille (m) minimale d'une piece conservee par LOD
+TEX_DIR = None                 # textures partagees : <maquette>/textures/Shared (fixe par common.build_asset)
+GOLD_SCAN = os.path.join(materials.ASSETS, "Metal048C")        # ambientCG Metal 048 C (or impur rugueux), CC0
+GOLD_SCAN_B = os.path.join(materials.ASSETS, "Metal048B")      # ambientCG Metal 048 B (or sale, traces), CC0
+SCRATCH_SCAN = os.path.join(materials.ASSETS, "Scratches002")   # ambientCG Scratches 002, CC0
+HDRI_DIR = os.path.join(os.path.dirname(materials.ASSETS), "..", "hdri")
+
+
+# ============================================================================= maillage numpy
+
+class OMesh:
+    """Piece d'ornement : V (n,3), Q (m,4), T (k,3), UV par coin (QUV (m,4,2), TUV (k,3,2)), lissage par face,
+    materiau, couleur OrnMask optionnelle (n,4) imposee, graine (canal A)."""
+
+    def __init__(self, V, Q=None, T=None, QUV=None, TUV=None, mat="MAT_Gold_Aged", smooth=True, col=None, seed=0,
+                 kind="gold"):
+        self.V = np.asarray(V, np.float64).reshape(-1, 3)
+        self.Q = np.zeros((0, 4), np.int64) if Q is None else np.asarray(Q, np.int64).reshape(-1, 4)
+        self.T = np.zeros((0, 3), np.int64) if T is None else np.asarray(T, np.int64).reshape(-1, 3)
+        self.QUV = np.zeros((len(self.Q), 4, 2)) if QUV is None else np.asarray(QUV, np.float64).reshape(-1, 4, 2)
+        self.TUV = np.zeros((len(self.T), 3, 2)) if TUV is None else np.asarray(TUV, np.float64).reshape(-1, 3, 2)
+        self.mat = mat
+        self.smooth = smooth
+        self.col = col
+        self.seed = seed
+        self.kind = kind
+
+    @property
+    def tris(self):
+        return 2 * len(self.Q) + len(self.T)
+
+    def transform(self, M):
+        M = np.asarray(M, np.float64)
+        self.V = self.V @ M[:3, :3].T + M[:3, 3]
+        if np.linalg.det(M[:3, :3]) < 0:
+            self.Q = self.Q[:, ::-1].copy()
+            self.QUV = self.QUV[:, ::-1].copy()
+            self.T = self.T[:, ::-1].copy()
+            self.TUV = self.TUV[:, ::-1].copy()
+        return self
+
+    def planar_uv(self, axis=2, tile=TILE):
+        """UV par projection plane (pierres, rosaces)."""
+        a, b = [i for i in range(3) if i != axis]
+        uvv = self.V[:, [a, b]] / tile
+        self.QUV = uvv[self.Q]
+        self.TUV = uvv[self.T]
+        return self
+
+    def volume(self):
+        v = self.V
+        s = 0.0
+        for a, b, c in ((0, 1, 2), (0, 2, 3)):
+            if len(self.Q):
+                s += np.einsum("ij,ij->i", v[self.Q[:, a]], np.cross(v[self.Q[:, b]], v[self.Q[:, c]])).sum()
+        if len(self.T):
+            s += np.einsum("ij,ij->i", v[self.T[:, 0]], np.cross(v[self.T[:, 1]], v[self.T[:, 2]])).sum()
+        return s / 6.0
+
+    def orient(self):
+        """Normales sortantes (maillage ferme)."""
+        if self.volume() < 0:
+            self.Q, self.QUV = self.Q[:, ::-1].copy(), self.QUV[:, ::-1].copy()
+            self.T, self.TUV = self.T[:, ::-1].copy(), self.TUV[:, ::-1].copy()
+        return self
+
+    def vertex_normals(self):
+        n = np.zeros_like(self.V)
+        v = self.V
+        if len(self.T):
+            fn = np.cross(v[self.T[:, 1]] - v[self.T[:, 0]], v[self.T[:, 2]] - v[self.T[:, 0]])
+            for k in range(3):
+                np.add.at(n, self.T[:, k], fn)
+        if len(self.Q):
+            fn = np.cross(v[self.Q[:, 2]] - v[self.Q[:, 0]], v[self.Q[:, 3]] - v[self.Q[:, 1]])
+            for k in range(4):
+                np.add.at(n, self.Q[:, k], fn)
+        return n / np.maximum(np.linalg.norm(n, axis=1, keepdims=True), 1e-12)
+
+    def displace(self, d):
+        self.V = self.V + self.vertex_normals() * np.asarray(d)[:, None]
+        return self
+
+
+def merge(meshes, **kw):
+    """Fusionne des OMesh de meme materiau."""
+    meshes = [m for m in meshes if m is not None and len(m.V)]
+    V, Q, T, QUV, TUV, off = [], [], [], [], [], 0
+    for m in meshes:
+        V.append(m.V)
+        Q.append(m.Q + off)
+        T.append(m.T + off)
+        QUV.append(m.QUV)
+        TUV.append(m.TUV)
+        off += len(m.V)
+    first = meshes[0]
+    out = OMesh(np.concatenate(V), np.concatenate(Q), np.concatenate(T), np.concatenate(QUV), np.concatenate(TUV),
+                kw.get("mat", first.mat), kw.get("smooth", first.smooth), None, kw.get("seed", first.seed),
+                kw.get("kind", first.kind))
+    cols = [m.col for m in meshes]
+    if any(c is not None for c in cols):
+        out.col = np.concatenate([c if c is not None else np.tile([[-1, -1, -1, -1]], (len(m.V), 1))
+                                  for c, m in zip(cols, meshes)])
+    return out
+
+
+def grid(nu, nv, wrap_u=False, wrap_v=False, up=None, vp=None):
+    """Quads d'une grille (nu, nv) (indice i*nv+j) + UV par coin depuis les parametres up (nu[+1]) / vp (nv[+1])."""
+    iu = np.arange(nu if wrap_u else nu - 1)
+    jv = np.arange(nv if wrap_v else nv - 1)
+    I, J = np.meshgrid(iu, jv, indexing="ij")
+    I1, J1 = I + 1, J + 1
+    Q = np.stack([I * nv + J, (I1 % nu) * nv + J, (I1 % nu) * nv + (J1 % nv), I * nv + (J1 % nv)], -1).reshape(-1, 4)
+    up = np.arange(nu + 1, dtype=float) if up is None else np.asarray(up, float)
+    vp = np.arange(nv + 1, dtype=float) if vp is None else np.asarray(vp, float)
+    if len(up) == nu:
+        up = np.append(up, up[-1] + (up[-1] - up[-2] if nu > 1 else 1))
+    if len(vp) == nv:
+        vp = np.append(vp, vp[-1] + (vp[-1] - vp[-2] if nv > 1 else 1))
+    cu = np.stack([up[I], up[I1], up[I1], up[I]], -1).reshape(-1, 4)
+    cv = np.stack([vp[J], vp[J], vp[J1], vp[J1]], -1).reshape(-1, 4)
+    return Q, np.stack([cu, cv], -1)
+
+
+# ============================================================================= reperes et balayages
+
+def _nrm(v):
+    v = np.asarray(v, float)
+    return v / np.maximum(np.linalg.norm(v, axis=-1, keepdims=True), 1e-12)
+
+
+def resample(pts, step, closed=False):
+    p = np.asarray(pts, float)
+    if closed:
+        p = np.concatenate([p, p[:1]])
+    seg = np.linalg.norm(np.diff(p, axis=0), axis=1)
+    s = np.concatenate([[0], np.cumsum(seg)])
+    n = max(3, int(round(s[-1] / step)) + 1)
+    u = np.linspace(0, s[-1], n)
+    out = np.stack([np.interp(u, s, p[:, k]) for k in range(3)], -1)
+    return out[:-1] if closed else out
+
+
+def catmull(pts, n_per=10, closed=False):
+    p = np.asarray(pts, float)
+    if closed:
+        q = np.concatenate([p[-1:], p, p[:2]])
+    else:
+        q = np.concatenate([[2 * p[0] - p[1]], p, [2 * p[-1] - p[-2]]])
+    out = []
+    t = np.linspace(0, 1, n_per, endpoint=False)[:, None]
+    for i in range(1, len(q) - 2):
+        p0, p1, p2, p3 = q[i - 1], q[i], q[i + 1], q[i + 2]
+        out.append(0.5 * ((2 * p1) + (-p0 + p2) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t ** 2 + (-p0 + 3 * p1 - 3 * p2 + p3) * t ** 3))
+    if not closed:
+        out.append(p[-1][None])
+    return np.concatenate(out)
+
+
+def tangents(path, closed=False):
+    if closed:
+        t = np.roll(path, -1, 0) - np.roll(path, 1, 0)
+    else:
+        t = np.gradient(path, axis=0)
+    return _nrm(t)
+
+
+def rmf(path, closed=False, ref=None):
+    """Reperes a rotation minimale : (T, N, B)."""
+    T = tangents(path, closed)
+    ref = np.array([0, 0, 1.0]) if ref is None else np.asarray(ref, float)
+    if abs(np.dot(T[0], _nrm(ref))) > 0.95:
+        ref = np.array([1.0, 0, 0]) if abs(T[0][0]) < 0.9 else np.array([0, 1.0, 0])
+    n = _nrm(np.cross(np.cross(T[0], ref), T[0]))
+    N = np.empty_like(T)
+    for i in range(len(T)):
+        n = _nrm(n - np.dot(n, T[i]) * T[i])
+        N[i] = n
+    return T, N, np.cross(T, N)
+
+
+def sweep(path, prof, up=None, closed=False, scale=None, caps=True, mat="MAT_Gold_Aged", smooth=True, ref=None,
+          kind="gold", seed=0, disp=None):
+    """Balayage d'un profil 2D ferme `prof` (m,2) (x = cote, y = haut) le long de `path` (k,3).
+    up : normales (k,3) imposees (ruban pose sur une surface) sinon reperes RMF. scale : (k,) ou (k,2).
+    disp(i_along, j_prof, P) -> deplacement radial (k,m) optionnel."""
+    path = np.asarray(path, float)
+    k, m = len(path), len(prof)
+    if up is None:
+        T, N, B = rmf(path, closed, ref)
+    else:
+        T = tangents(path, closed)
+        N = _nrm(np.asarray(up, float) - np.einsum("ij,ij->i", up, T)[:, None] * T)
+        B = np.cross(T, N)
+    side = -B                                   # x du profil
+    if scale is None:
+        sx = sy = np.ones(k)
+    else:
+        s = np.asarray(scale, float)
+        sx, sy = (s[:, 0], s[:, 1]) if s.ndim == 2 else (s, s)
+    px, py = prof[:, 0], prof[:, 1]
+    P = path[:, None, :] + side[:, None, :] * (px[None, :, None] * sx[:, None, None]) + N[:, None, :] * (py[None, :, None] * sy[:, None, None])
+    if disp is not None:
+        c = np.array(prof).mean(0)
+        rad = side[:, None, :] * (px - c[0])[None, :, None] + N[:, None, :] * (py - c[1])[None, :, None]
+        rad = _nrm(rad)
+        P = P + rad * disp(P)[..., None]
+    arc = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(path, axis=0), axis=1))])
+    if closed:
+        arc = np.append(arc, arc[-1] + np.linalg.norm(path[0] - path[-1]))
+    per = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(np.concatenate([prof, prof[:1]]), axis=0), axis=1))])
+    Q, QUV = grid(k, m, closed, True, arc / TILE, per * np.mean(sx) / TILE)
+    V = [P.reshape(-1, 3)]
+    T_, TUV = [], []
+    if caps and not closed:
+        n0 = k * m
+        for idx, sg in ((0, -1), (k - 1, 1)):
+            cen = P[idx].mean(0)
+            V.append(cen[None])
+            ring = idx * m + np.arange(m)
+            nxt = idx * m + (np.arange(m) + 1) % m
+            cid = n0 + (0 if idx == 0 else 1)
+            T_.append(np.stack([ring, nxt, np.full(m, cid)], -1))
+            uvr = prof / TILE
+            TUV.append(np.stack([uvr, np.roll(uvr, -1, 0), np.tile(uvr.mean(0), (m, 1))], 1))
+    om = OMesh(np.concatenate(V), Q, np.concatenate(T_) if T_ else None, QUV, np.concatenate(TUV) if TUV else None,
+               mat, smooth, None, seed, kind)
+    return om.orient()
+
+
+def prof_circle(r, n):
+    a = np.arange(n) * TAU / n
+    return np.stack([r * np.cos(a), r * np.sin(a)], -1)
+
+
+def prof_band(w, t, n=16, e=5.0, crown=0.0):
+    """Section de ruban : superellipse w x t, bas a y=0 ; crown = bombe du dessus (fraction de t)."""
+    a = np.arange(n) * TAU / n + TAU / (2 * n)
+    c, s = np.cos(a), np.sin(a)
+    x = w / 2 * np.sign(c) * np.abs(c) ** (2 / e)
+    y = t / 2 * np.sign(s) * np.abs(s) ** (2 / e)
+    y = y + t / 2 + crown * t * (1 - (2 * x / w) ** 2) * (s > 0)
+    return np.stack([x, y], -1)
+
+
+# ============================================================================= primitives
+
+def sphere(c, r, nu=12, nv=7, mat="MAT_Pearl_White", seed=0, kind="pearl", baroque=0.0):
+    """Sphere UV (perle). baroque : irregularite (fraction du rayon)."""
+    nu, nv = max(5, int(nu)), max(3, int(nv))
+    th = np.linspace(0, math.pi, nv + 1)[1:-1]
+    ph = np.arange(nu) * TAU / nu
+    TH, PH = np.meshgrid(th, ph, indexing="ij")
+    d = np.stack([np.sin(TH) * np.cos(PH), np.sin(TH) * np.sin(PH), np.cos(TH)], -1).reshape(-1, 3)
+    d = np.concatenate([d, [[0, 0, 1.0]], [[0, 0, -1.0]]])
+    rr = np.full(len(d), r)
+    if baroque:
+        rr = rr * (1 + baroque * (fbm(d * 1.7 + seed * 3.1, 3, seed=seed) - 0.5) * 2)
+    V = np.asarray(c, float) + d * rr[:, None]
+    nr = nv - 1
+    Q, QUV = grid(nr, nu, False, True, th / TAU, ph / TAU)
+    top, bot = nr * nu, nr * nu + 1
+    j = np.arange(nu)
+    T = np.concatenate([np.stack([np.full(nu, top), j, (j + 1) % nu], -1),
+                        np.stack([np.full(nu, bot), (nr - 1) * nu + (j + 1) % nu, (nr - 1) * nu + j], -1)])
+    om = OMesh(V, Q, T, QUV, np.zeros((len(T), 3, 2)), mat, True, None, seed, kind)
+    om.TUV[:] = 0.5
+    return om.orient()
+
+
+def dome(c, r, h, n=10, rings=3, mat="MAT_Gold_Aged", seed=0):
+    """Calotte (rivet, grain d'or) posee sur le plan z=0 local, fond ferme."""
+    n, rings = max(5, int(n)), max(1, int(rings))
+    t = np.linspace(0, 1, rings + 1)[:-1]
+    rr = np.cos(t * math.pi / 2)
+    zz = np.sin(t * math.pi / 2)
+    a = np.arange(n) * TAU / n
+    ring = np.stack([np.cos(a), np.sin(a)], -1)
+    V = [np.concatenate([ring * r * rk, np.full((n, 1), h * zk - h * 0.25)], 1) for rk, zk in zip(rr, zz)]
+    V = np.concatenate(V + [[[0, 0, h * 0.75]], [[0, 0, -h * 0.25]]])
+    Q, QUV = grid(rings, n, False, True)
+    top, bot = rings * n, rings * n + 1
+    j = np.arange(n)
+    T = np.concatenate([np.stack([np.full(n, top), (rings - 1) * n + j, (rings - 1) * n + (j + 1) % n], -1),
+                        np.stack([np.full(n, bot), (j + 1) % n, j], -1)])
+    om = OMesh(V + np.asarray(c, float), Q, T, QUV * 0.02, None, mat, True, None, seed)
+    return om.orient().planar_uv()
+
+
+def torus(c, R, r, nu=16, nv=6, sx=1.0, mat="MAT_Gold_Aged", seed=0):
+    """Tore (maillon, anneau de beliere) dans le plan XY local, etire en X de sx."""
+    nu, nv = max(6, int(nu)), max(4, int(nv))
+    u = np.arange(nu) * TAU / nu
+    v = np.arange(nv) * TAU / nv
+    U, W = np.meshgrid(u, v, indexing="ij")
+    x = (R + r * np.cos(W)) * np.cos(U) * sx
+    y = (R + r * np.cos(W)) * np.sin(U)
+    z = r * np.sin(W)
+    V = np.stack([x, y, z], -1).reshape(-1, 3) + np.asarray(c, float)
+    Q, QUV = grid(nu, nv, True, True, u * R / TILE, v * r / TILE)
+    return OMesh(V, Q, None, QUV, None, mat, True, None, seed).orient()
+
+
+# ============================================================================= pierres taillees
+
+def _orient_out(V, faces, center):
+    out = []
+    for f in faces:
+        p = V[list(f)]
+        n = np.cross(p[1] - p[0], p[2] - p[0])
+        if np.dot(n, p.mean(0) - center) < 0:
+            f = f[::-1]
+        out.append(list(f))
+    return out
+
+
+def _gem_from_faces(V, faces, mat, seed, kind="gem", smooth=False, center=None):
+    V = np.asarray(V, float)
+    center = V.mean(0) if center is None else center
+    faces = _orient_out(V, faces, center)
+    tris = []
+    for f in faces:
+        for k in range(1, len(f) - 1):
+            tris.append((f[0], f[k], f[k + 1]))
+    om = OMesh(V, None, np.array(tris), None, None, mat, smooth, None, seed, kind)
+    return om.planar_uv()
+
+
+def _bridge(lower, upper):
+    """Triangles entre un anneau `lower` (2n indices) et `upper` (n indices), upper[k] a l'angle de lower[2k]."""
+    n = len(upper)
+    f = []
+    for k in range(n):
+        a, b, c = lower[2 * k], lower[(2 * k + 1) % (2 * n)], lower[(2 * k + 2) % (2 * n)]
+        m0, m1 = upper[k], upper[(k + 1) % n]
+        f += [(m0, a, b), (m0, b, m1), (m1, b, c)]
+    return f
+
+
+def _outline(shape, w, l, n, seed, e=2.6):
+    a = np.arange(n) * TAU / n
+    if shape == "round":
+        x, y = np.cos(a), np.sin(a)
+    else:
+        c, s = np.cos(a), np.sin(a)
+        x = np.sign(c) * np.abs(c) ** (2 / e)
+        y = np.sign(s) * np.abs(s) ** (2 / e)
+    rng = np.random.default_rng(seed)
+    j = 1 + 0.035 * rng.standard_normal(n)         # taille ancienne : irreguliere
+    return np.stack([x * w / 2 * j, y * l / 2 * j], -1)
+
+
+class Gem:
+    """Pierre en repere local : rondiste (girdle) dans le plan z=0, couronne vers +Z. outline (k,2) = rondiste."""
+
+    def __init__(self, mesh, outline, crown, pav, size):
+        self.mesh, self.outline, self.crown, self.pav, self.size = mesh, outline, crown, pav, size
+
+
+def gem_cabochon(w, l, h, q=1.0, mat="MAT_Gem_Ruby", seed=0, pav=None):
+    n = max(10, int(32 * q))
+    rings = max(3, int(7 * q))
+    o = _outline("round", w, l, n, seed)
+    pav = h * 0.18 if pav is None else pav
+    rng = np.random.default_rng(seed + 1)
+    tilt = rng.normal(0, 0.04, 2)
+    V = [np.concatenate([o, np.full((n, 1), -pav)], 1), np.concatenate([o, np.zeros((n, 1))], 1)]
+    for k in range(1, rings):
+        t = k / rings
+        r = math.cos(t * math.pi / 2) ** 0.85
+        z = h * math.sin(t * math.pi / 2) ** 1.1
+        V.append(np.concatenate([o * r, np.full((n, 1), z) + (o @ tilt)[:, None] * t * 0.2], 1))
+    V = np.concatenate(V + [[[0, 0, h + 0.0]], [[0, 0, -pav]]])
+    nr = rings + 1
+    Q, QUV = grid(nr, n, False, True)
+    top, bot = nr * n, nr * n + 1
+    j = np.arange(n)
+    T = np.concatenate([np.stack([np.full(n, top), (nr - 1) * n + j, (nr - 1) * n + (j + 1) % n], -1),
+                        np.stack([np.full(n, bot), (j + 1) % n, j], -1)])
+    om = OMesh(V, Q, T, None, None, mat, True, None, seed, "gem").orient().planar_uv()
+    om.flat_quads_first = 1                         # rangee rondiste plate
+    return Gem(om, o, h, pav, max(w, l))
+
+
+def gem_rose(d, h, q=1.0, mat="MAT_Gem_Ruby", seed=0):
+    """Taille en rose hollandaise : 24 facettes triangulaires en dome, dos plat."""
+    n = 6
+    g = _outline("round", d, d, 2 * n, seed)
+    V = [np.concatenate([g, np.zeros((2 * n, 1))], 1)]
+    a = (np.arange(n) * 2) * TAU / (2 * n)
+    mid = np.stack([0.60 * d / 2 * np.cos(a), 0.60 * d / 2 * np.sin(a), np.full(n, 0.58 * h)], -1)
+    V.append(mid)
+    V.append([[0, 0, h]])
+    V.append(np.concatenate([g * 0.97, np.full((2 * n, 1), -0.10 * h)], 1))
+    V = np.concatenate(V)
+    G = list(range(2 * n))
+    M = list(range(2 * n, 3 * n))
+    apex = 3 * n
+    B = list(range(3 * n + 1, 5 * n + 1))
+    faces = _bridge(G, M)
+    faces += [(apex, M[k], M[(k + 1) % n]) for k in range(n)]
+    faces += [(G[k], G[(k + 1) % (2 * n)], B[(k + 1) % (2 * n)], B[k]) for k in range(2 * n)]
+    faces.append(tuple(B[::-1]))
+    om = _gem_from_faces(V, faces, mat, seed, center=np.array([0, 0, h * 0.3]))
+    return Gem(om, g, h, 0.10 * h, d)
+
+
+def gem_table(w, l, h, q=1.0, mat="MAT_Gem_Sapphire", seed=0, pav_ratio=1.1):
+    """Taille en table ancienne : rondiste octogonal (rectangle a pans coupes), table large, pavillon en pointe."""
+    c = 0.22
+    hw, hl = w / 2, l / 2
+    g = np.array([(hw, -hl * (1 - c)), (hw, hl * (1 - c)), (hw * (1 - c), hl), (-hw * (1 - c), hl),
+                  (-hw, hl * (1 - c)), (-hw, -hl * (1 - c)), (-hw * (1 - c), -hl), (hw * (1 - c), -hl)])
+    rng = np.random.default_rng(seed)
+    g = g * (1 + 0.03 * rng.standard_normal((8, 1)))
+    pav = h * pav_ratio
+    V = np.concatenate([np.concatenate([g, np.zeros((8, 1))], 1),
+                        np.concatenate([g * 0.62, np.full((8, 1), h)], 1),
+                        np.concatenate([g * 0.45, np.full((8, 1), -pav * 0.62)], 1),
+                        [[0, 0, -pav]]])
+    G, Tb, P = list(range(8)), list(range(8, 16)), list(range(16, 24))
+    faces = [(G[k], G[(k + 1) % 8], Tb[(k + 1) % 8], Tb[k]) for k in range(8)]
+    faces.append(tuple(Tb))
+    faces += [(G[k], G[(k + 1) % 8], P[(k + 1) % 8], P[k]) for k in range(8)]
+    faces += [(P[k], P[(k + 1) % 8], 24) for k in range(8)]
+    om = _gem_from_faces(V, faces, mat, seed, center=np.array([0, 0, 0.0]))
+    return Gem(om, g, h, pav, max(w, l))
+
+
+def gem_cushion(w, l, h, q=1.0, mat="MAT_Gem_Sapphire", seed=0):
+    """Taille coussin ancienne (old mine) : rondiste carre arrondi a 16 pans, etoile de 8, table octogonale."""
+    n = 8
+    g = _outline("square", w, l, 2 * n, seed, e=3.0)
+    a = (np.arange(n) * 2) * TAU / (2 * n)
+    gm = g[::2]
+    mid = np.concatenate([gm * 0.80, np.full((n, 1), 0.50 * h)], 1)
+    ta = (np.arange(n) * 2 + 1) * TAU / (2 * n)
+    tb = np.concatenate([g[1::2] * 0.52, np.full((n, 1), h)], 1)
+    pav = h * 1.25
+    pm = np.concatenate([gm * 0.55, np.full((n, 1), -pav * 0.55)], 1)
+    V = np.concatenate([np.concatenate([g, np.zeros((2 * n, 1))], 1), mid, tb, pm, [[0, 0, -pav]]])
+    G = list(range(2 * n))
+    M = list(range(2 * n, 3 * n))
+    Tt = list(range(3 * n, 4 * n))
+    P = list(range(4 * n, 5 * n))
+    cul = 5 * n
+    faces = _bridge(G, M)
+    for k in range(n):
+        faces += [(M[k], M[(k + 1) % n], Tt[k])]
+        faces += [(Tt[(k - 1) % n], M[k], Tt[k])]
+    faces.append(tuple(Tt))
+    faces += _bridge(G, P)
+    faces += [(P[k], P[(k + 1) % n], cul) for k in range(n)]
+    om = _gem_from_faces(V, faces, mat, seed, center=np.array([0, 0, 0.0]))
+    return Gem(om, g, h, pav, max(w, l))
+
+
+def gem_crystal(r, length, q=1.0, mat="MAT_Gem_Ruby", seed=0, barrel=0.30, taper=0.35, emerald=False):
+    """Cristal brut : prisme hexagonal (corindon : tonneau, stries de croissance horizontales ; emeraude : prisme droit),
+    pinacoide (sommet plat) incline / ebreche. Base (z<0) noyee dans le support."""
+    rng = np.random.default_rng(seed)
+    nz = max(3, int(9 * q))
+    z = np.linspace(-0.35 * length, length, nz)
+    t = (z - z[0]) / (z[-1] - z[0])
+    prof = 1 - barrel * ((t - 0.45) * 2) ** 2 if not emerald else np.ones(nz)
+    prof = prof * (1 - taper * t)
+    steps = 1 + 0.035 * np.sign(np.sin(t * 23 + seed)) * (rng.random(nz) > 0.4)       # stries
+    rad = r * prof * steps
+    a = np.arange(6) * TAU / 6 + rng.uniform(0, 1)
+    face_j = 1 + 0.10 * rng.standard_normal(6)                                          # faces inegales
+    rings = []
+    for k in range(nz):
+        rr = rad[k] * face_j
+        rings.append(np.stack([rr * np.cos(a), rr * np.sin(a), np.full(6, z[k])], -1))
+    V = np.concatenate(rings)
+    tip_tilt = rng.normal(0, 0.18, 2)
+    top = V[-6:].copy()
+    top[:, 2] += top[:, :2] @ tip_tilt                                                   # sommet incline
+    chip = rng.integers(6)
+    top[chip, 2] -= 0.18 * length                                                        # eclat
+    V[-6:] = top
+    faces = []
+    for k in range(nz - 1):
+        for j in range(6):
+            faces.append((k * 6 + j, k * 6 + (j + 1) % 6, (k + 1) * 6 + (j + 1) % 6, (k + 1) * 6 + j))
+    faces.append(tuple(range((nz - 1) * 6, nz * 6)))
+    faces.append(tuple(range(6)))
+    om = _gem_from_faces(V, faces, mat, seed, kind="crystal", center=np.array([0, 0, length * 0.3]))
+    return Gem(om, V[:6, :2], length, 0.35 * length, max(2 * r, length))
+
+
+# ============================================================================= sertissures
+
+def bezel(gem, wall=None, depth=None, lip=None, claws=0, claw_r=None, bent=(), empty=False, skirt=0.0, seed=0,
+          q=1.0, mat="MAT_Gold_Aged", scallop=0.0):
+    """Chaton : bate (collet) autour du rondiste + fond, griffes optionnelles (indices `bent` tordus vers l'exterieur).
+    Retourne une liste d'OMesh (or) en repere de la pierre (rondiste z=0). empty : chaton vide (fond visible)."""
+    rng = np.random.default_rng(seed)
+    s = gem.size
+    wall = wall or float(np.clip(0.07 * s, 0.00035, 0.0012))
+    depth = (gem.pav * 0.9 + 0.0005) if depth is None else depth
+    lip = (gem.crown * 0.16) if lip is None else lip
+    o = gem.outline
+    n = max(12, int(len(o) * 2 * q)) if len(o) < 24 else max(12, int(len(o) * q))
+    # contour lisse ferme (catmull) re-echantillonne
+    oc = catmull(np.concatenate([o, np.zeros((len(o), 1))], 1), 6, closed=True)
+    oc = resample(oc, max(1e-4, np.linalg.norm(oc[1] - oc[0]) * 0.1), closed=True)
+    idx = np.linspace(0, len(oc), n, endpoint=False).astype(int)
+    path = oc[idx]
+    c = path.mean(0)
+    outw = _nrm((path - c) * np.array([1, 1, 0]))
+    path = path + outw * (wall * 0.5 + 0.00005)
+    hgt = depth + lip + skirt
+    prof = np.array([[-wall * 0.5, 0], [wall * 0.5, 0], [wall * 0.5, hgt * 0.92], [wall * 0.15, hgt],
+                     [-wall * 0.55, hgt * 0.97], [-wall * 0.5, hgt * 0.5]])
+    base = path.copy()
+    base[:, 2] = -depth - skirt
+    up = np.tile([0, 0, 1.0], (n, 1))
+    if scallop:
+        ph = np.arange(n) / n * TAU * max(4, int(scallop))
+        sc = np.stack([np.ones(n), 1 - 0.18 * (0.5 + 0.5 * np.cos(ph))], -1)
+    else:
+        sc = None
+    # le profil est en (x=cote=-B, y=haut=N) : le sweep le long d'un contour horizontal avec up = Z
+    out = [sweep(base, prof, up=up, closed=True, mat=mat, scale=sc, seed=seed)]
+    # fond (plaque)
+    fl = np.concatenate([path[:, :2] * 1.0, np.full((n, 1), -depth - skirt)], 1)
+    fv = np.concatenate([fl, fl + np.array([0, 0, wall * 0.8]), [[c[0], c[1], -depth - skirt]], [[c[0], c[1], -depth - skirt + wall * 0.8]]])
+    j = np.arange(n)
+    T = np.concatenate([np.stack([np.full(n, 2 * n), (j + 1) % n, j], -1), np.stack([np.full(n, 2 * n + 1), n + j, n + (j + 1) % n], -1)])
+    out.append(OMesh(fv, None, T, None, None, mat, True, None, seed).planar_uv())
+    if empty:
+        # fond du chaton vide : alveole sombre (reste de mastic noirci) - cavite forte dans OrnMask
+        out[-1].col = np.tile([[1.0, 0.0, 0.3, 0.5]], (len(fv), 1))
+    if claws:
+        cr = claw_r or float(np.clip(0.09 * s, 0.00028, 0.0011))
+        ang = np.arange(claws) * TAU / claws + rng.uniform(0, 0.4)
+        for k, a in enumerate(ang):
+            d = np.array([math.cos(a), math.sin(a), 0])
+            # point du contour le plus proche de la direction
+            i = int(np.argmax(path[:, :2] @ d[:2]))
+            p0 = path[i] * np.array([1, 1, 0]) + outw[i] * wall * 0.4
+            pts = [p0 + np.array([0, 0, -depth * 0.6]), p0 + np.array([0, 0, lip + gem.crown * 0.05]),
+                   p0 - outw[i] * (0.10 * s) + np.array([0, 0, gem.crown * 0.32])]
+            if k in bent:
+                pts[-1] = p0 + outw[i] * (0.18 * s) + np.array([0, 0, gem.crown * 0.55 + 0.1 * s])
+            pts = catmull(np.array(pts), max(3, int(8 * q)))
+            rad = np.linspace(1.0, 0.55, len(pts))
+            out.append(sweep(pts, prof_circle(cr, max(5, int(8 * q))), scale=rad, mat=mat, ref=d, seed=seed + k))
+    return out
+
+
+# ============================================================================= surface du high-poly
+
+class Surface:
+    """Requetes sur le high-poly (repere local = monde : le high est a l'origine)."""
+
+    def __init__(self, ob):
+        dg = bpy.context.evaluated_depsgraph_get()
+        self.ob = ob
+        self.tree = BVHTree.FromObject(ob, dg)
+        co = geo.get_co(ob.data).astype(np.float64)
+        self.co = co
+        self.center = (co.min(0) + co.max(0)) / 2
+        self.bmin, self.bmax = co.min(0), co.max(0)
+
+    def ray(self, o, d, dist=10.0):
+        loc, n, i, dd = self.tree.ray_cast(Vector(tuple(o)), Vector(tuple(_nrm(d))), dist)
+        if loc is None:
+            return None, None
+        return np.array(loc), np.array(n)
+
+    def nearest(self, p):
+        loc, n, i, d = self.tree.find_nearest(Vector(tuple(p)))
+        return np.array(loc), np.array(n), d
+
+    def smooth_normal(self, p, n, radius):
+        """Normale moyenne sur un disque (rayons) : stable sur une surface rugueuse."""
+        n = _nrm(n)
+        a = _nrm(np.cross(n, [0, 0, 1] if abs(n[2]) < 0.9 else [1, 0, 0]))
+        b = np.cross(n, a)
+        acc = n * 0.5
+        pts = []
+        for ang in np.arange(8) * TAU / 8:
+            for rr in (0.5 * radius, radius):
+                o = p + n * radius * 2 + (a * math.cos(ang) + b * math.sin(ang)) * rr
+                hit, hn = self.ray(o, -n, radius * 5)
+                if hit is not None:
+                    pts.append(hit)
+                    acc = acc + hn
+        if len(pts) >= 5:
+            P = np.array(pts)
+            c = P.mean(0)
+            _, _, vt = np.linalg.svd(P - c)
+            pn = vt[2] if np.dot(vt[2], n) > 0 else -vt[2]
+            return _nrm(pn * 0.7 + _nrm(acc) * 0.3)
+        return _nrm(acc)
+
+    def height_along(self, p, n, offsets, lift=0.03):
+        """Hauteur de la surface (le long de n, relative a p) sous p + offsets (k,3)."""
+        out = []
+        for off in offsets:
+            o = p + off + n * lift
+            hit, _ = self.ray(o, -n, lift * 3)
+            out.append(np.nan if hit is None else lift - np.linalg.norm(hit - o))
+        return np.array(out)
+
+    def project_toward(self, pts, target=None, axis=None):
+        """Projette des points vers un centre (ou un axe vertical passant par target) : premier impact depuis l'exterieur.
+        Retourne (positions, normales, masque ok)."""
+        target = self.center if target is None else np.asarray(target, float)
+        P, N, ok = [], [], []
+        for p in pts:
+            p = np.asarray(p, float)
+            tgt = target.copy()
+            if axis is not None:
+                tgt = target + axis * np.dot(p - target, axis)
+            d = _nrm(tgt - p)
+            hit, hn = self.ray(p - d * 0.3, d, 2.0)
+            if hit is None:
+                P.append(p)
+                N.append(-d)
+                ok.append(False)
+            else:
+                P.append(hit)
+                N.append(hn)
+                ok.append(True)
+        return np.array(P), np.array(N), np.array(ok)
+
+    def place(self, p, n, spin=0.0):
+        """Matrice 4x4 : +Z local -> normale n, origine p."""
+        return frame_matrix(p, n, spin)
+
+
+def frame_matrix(p, n, spin=0.0, ref=None):
+    z = _nrm(n)
+    ref = np.array([0, 0, 1.0]) if ref is None else _nrm(ref)
+    if abs(np.dot(ref, z)) > 0.95:
+        ref = np.array([1.0, 0, 0]) if abs(z[0]) < 0.9 else np.array([0, 1.0, 0])
+    x = _nrm(np.cross(ref, z))
+    y = np.cross(z, x)
+    c, s = math.cos(spin), math.sin(spin)
+    x, y = x * c + y * s, -x * s + y * c
+    M = np.eye(4)
+    M[:3, 0], M[:3, 1], M[:3, 2], M[:3, 3] = x, y, z, p
+    return M
+
+
+def _smooth_rows(a, w, closed=False):
+    if w <= 1:
+        return a
+    k = np.ones(w) / w
+    if closed:
+        pad = np.concatenate([a[-w:], a, a[:w]])
+    else:
+        pad = np.concatenate([np.repeat(a[:1], w, 0), a, np.repeat(a[-1:], w, 0)])
+    if a.ndim == 1:
+        out = np.convolve(pad, k, mode="same")
+    else:
+        out = np.stack([np.convolve(pad[:, i], k, mode="same") for i in range(a.shape[1])], -1)
+    return out[w:-w]
+
+
+def clear_view(S, target, dirs, dist, prefer=(0.55, -0.65, 0.55)):
+    """Direction (depuis la cible) sans obstacle jusqu'a `dist` et camera hors de la matiere (gros plan). Essaie `dirs`
+    puis une sphere de directions triee par proximite de `prefer`."""
+    target = np.asarray(target, float)
+    n = 120
+    i = np.arange(n) + 0.5
+    phi = np.arccos(1 - 2 * i / n)
+    th = np.pi * (1 + 5 ** 0.5) * i
+    sph = np.stack([np.cos(th) * np.sin(phi), np.sin(th) * np.sin(phi), np.cos(phi)], -1)
+    pr = _nrm(prefer)
+    sph = sph[np.argsort(-(sph @ pr))]
+    for d in list(dirs) + list(sph):
+        d = _nrm(d)
+        if d[2] < -0.2:
+            continue
+        hit, _ = S.ray(target + d * 0.006, d, dist)
+        if hit is not None:
+            continue
+        cam = target + d * dist
+        loc, nn, _dd = S.nearest(cam)
+        if np.dot(cam - loc, nn) > 0:
+            return d
+    return pr
+
+
+def surface_path(S, pts, step, closed=False, iters=3, smooth_w=5, lift=0.0, ref_center=None, axis=None):
+    """Polyligne approchee -> trace pose sur la surface (projection vers le centre puis plus proche point, lissage).
+    Retourne (P, N) : points sur la surface et normales lissees."""
+    P = resample(catmull(np.asarray(pts, float), 8, closed), step, closed)
+    P, N, ok = S.project_toward(P, ref_center, axis)
+    for _ in range(iters):
+        N = _nrm(_smooth_rows(N, smooth_w, closed))
+        P = _smooth_rows(P, max(1, smooth_w // 2), closed)
+        P2, N2 = [], []
+        for p, n in zip(P, N):
+            hit, hn = S.ray(p + n * 0.02, -n, 0.06)
+            if hit is None:
+                loc, hn, _d = S.nearest(p)
+                hit = loc
+            P2.append(hit)
+            N2.append(hn)
+        P, N = np.array(P2), np.array(N2)
+    N = _nrm(_smooth_rows(N, smooth_w * 2, closed))
+    return P + N * lift, N
+
+
+def strap(S, P, N, width, thick, closed=False, sink=0.0010, q=1.0, mat="MAT_Gold_Aged", seed=0, crown=0.15,
+          hammer=0.0, smooth_w=15, step=None, radial=None, axis=None, radial_mix=0.75, env_w=4,
+          clip_peak=0.004):
+    """Bande d'or epousant la surface (forgee a la forme generale, pas aux pores) : trace et normales fortement lisses,
+    hauteur de surface sous la bande (5 rayons en travers) ; la bande s'enfonce d'au plus `sink` dans les saillies
+    (concretion qui la recouvre) et ponte les creux. Retourne (OMesh, centre (k,3), normales (k,3), cotes (k,3))."""
+    if step:
+        P = resample(P, step, closed)
+        N = np.array([S.nearest(p)[1] for p in P])
+    C0 = np.asarray(P, float)
+    N0 = _nrm(N)
+    for _ in range(3):                              # 3 passes de moyenne glissante ~ gaussienne
+        C0 = _smooth_rows(C0, smooth_w, closed)
+        N0 = _nrm(_smooth_rows(N0, smooth_w * 2, closed))
+    if radial is not None:
+        # normales radiales (centre ou axe) : bande rigide, sans vrille, posee sur les saillies
+        R = C0 - np.asarray(radial, float)
+        if axis is not None:
+            ax = _nrm(axis)
+            R = R - np.outer(R @ ax, ax)
+        N0 = _nrm(_nrm(R) * radial_mix + N0 * (1 - radial_mix))
+    T = tangents(C0, closed)
+    N0 = _nrm(N0 - np.einsum("ij,ij->i", N0, T)[:, None] * T)
+    B = np.cross(T, N0)
+    hs = []
+    for p, n, b in zip(C0, N0, B):
+        h = S.height_along(p, n, [b * width * f for f in (0.48, 0.24, 0.0, -0.24, -0.48)], lift=0.04)
+        h = h[~np.isnan(h)]
+        hs.append(max(float(np.mean(h)), float(np.max(h)) - sink) if len(h) else 0.0)
+    hs = np.array(hs)
+    # 1. les pics etroits (moignons, epines) sont ignores : la bande passe dedans (noyee dans la concretion)
+    med = hs.copy()
+    for _ in range(3):
+        med = _smooth_rows(med, max(3, smooth_w), closed)
+    hs = np.minimum(hs, med + clip_peak)
+    # 2. enveloppe superieure (maximum glissant) : la bande rigide pose sur les saillies et ponte les creux
+    k = len(hs)
+    w = env_w
+    pad = np.concatenate([hs[-w:], hs, hs[:w]]) if closed else np.concatenate([np.repeat(hs[:1], w), hs, np.repeat(hs[-1:], w)])
+    env = np.max(np.stack([pad[i:i + k] for i in range(2 * w + 1)]), 0)
+    # 3. enfoncement dans les saillies (concretion) + regularisation forte (rayon de courbure d'une bande forgee)
+    hs = env - sink
+    for _ in range(4):
+        hs = _smooth_rows(hs, max(3, smooth_w), closed)
+    C = C0 + N0 * (hs[:, None] - thick * 0.3)
+    ns = max(8, int(12 * q))
+    om = sweep(C, prof_band(width, thick, ns, 5.0, crown), up=N0, closed=closed, mat=mat, seed=seed, caps=not closed)
+    if hammer > 0:
+        hammer_mesh(om, hammer, seed)
+    return om, C, N0, np.cross(tangents(C, closed), N0)
+
+
+def hammer_mesh(om, depth, seed=0, cell=0.0065):
+    """Martelage : facettes de marteau (cellules de Worley) en creux."""
+    f1, f2 = worley(om.V / cell, seed=seed, f12=True)
+    d = -depth * (1 - smoothstep(0.0, 0.8, f1)) ** 1.5
+    om.displace(d)
+    return om
+
+
+def twisted_wire(path, r, q=1.0, pitch=None, closed=False, mat="MAT_Gold_Aged", seed=0, strands=2, max_samples=300):
+    """Fil torsade (cordele) : 2 brins helicoidaux autour du chemin. Fil long (budget) ou q faible : fil rond lisse."""
+    path = np.asarray(path, float)
+    L = float(np.linalg.norm(np.diff(path, axis=0), axis=1).sum())
+    pitch = pitch or r * 5.0
+    step = min(pitch / 4, r * 1.2)
+    if q < 0.9 or strands < 2 or L / step > max_samples * q:
+        P = resample(path, max(r * 4.0, 0.0025) / max(q, 0.25), closed)
+        return [sweep(P, prof_circle(r, max(4, int(6 * q))), closed=closed, mat=mat, seed=seed)]
+    P = resample(path, step, closed)
+    T, N, B = rmf(P, closed)
+    arc = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(P, axis=0), axis=1))])
+    out = []
+    nseg = max(4, int(6 * q)) if r > 0.0005 else 4
+    for s in range(strands):
+        ph = TAU * arc / pitch + s * TAU / strands
+        off = (N * np.cos(ph)[:, None] + B * np.sin(ph)[:, None]) * r * 0.5
+        out.append(sweep(P + off, prof_circle(r * 0.55, nseg), closed=closed, mat=mat, seed=seed + s))
+    return out
+
+
+def scroll2d(size, turns=1.4, n=40, kind="C", seed=0):
+    """Volute de filigrane 2D (spirale logarithmique) ; kind 'C' (une volute) ou 'S' (deux volutes opposees)."""
+    t = np.linspace(0, 1, n)
+    th = t * turns * TAU
+    r = size * 0.5 * np.exp(-1.15 * t * turns)
+    a = np.stack([r * np.cos(th), r * np.sin(th)], -1)
+    a = a - a[0] + np.array([0, 0.0])
+    if kind == "S":
+        b = -a[::-1]
+        a = np.concatenate([b[:-1], a])
+    return a
+
+
+def on_surface_2d(S, p, n, curve2d, spin=0.0, lift=0.0):
+    """Pose une courbe 2D (repere tangent au point p, normale n) sur la surface : projection le long de n."""
+    M = frame_matrix(p, n, spin)
+    x, y, z = M[:3, 0], M[:3, 1], M[:3, 2]
+    out, nn = [], []
+    for u, v in curve2d:
+        o = p + x * u + y * v + z * 0.02
+        hit, hn = S.ray(o, -z, 0.08)
+        if hit is None:
+            hit, hn = o - z * 0.02, z
+        out.append(hit)
+        nn.append(hn)
+    nn = _nrm(_smooth_rows(np.array(nn), 3))
+    return np.array(out) + nn * lift, nn
+
+
+def chain(path, link_len, wire_r, q=1.0, mat="MAT_Gold_Aged", seed=0, sag=None):
+    """Chaine a maillons ovales alternes (90 deg) le long d'un chemin."""
+    P = resample(path, link_len * 0.78)
+    T, N, B = rmf(P)
+    out = []
+    for i in range(len(P) - 1):
+        c = (P[i] + P[i + 1]) / 2
+        t = _nrm(P[i + 1] - P[i])
+        side = N[i] if i % 2 == 0 else B[i]
+        M = np.eye(4)
+        M[:3, 0], M[:3, 1], M[:3, 2], M[:3, 3] = t, np.cross(side, t), side, c
+        M[:3, 1] = _nrm(np.cross(M[:3, 2], M[:3, 0]))
+        tr = torus((0, 0, 0), link_len * 0.32, wire_r, max(8, int(14 * q)), max(4, int(6 * q)), sx=1.45, mat=mat, seed=seed + i)
+        out.append(tr.transform(M))
+    return out
+
+
+def strand(path, d, q=1.0, mat="MAT_Pearl_White", seed=0, gap=0.04, jitter=0.06, closed=False, lod_tube=False):
+    """Perles enfilees le long d'un chemin (diametre d, ecart relatif `gap`, tailles irregulieres : perles fines
+    anciennes). lod_tube : en LOD faible, un tube lisse remplace le rang (lecture a distance)."""
+    path = np.asarray(path, float)
+    if lod_tube:
+        return [sweep(resample(path, d, closed), prof_circle(d * 0.45, 6), closed=closed, mat=mat, seed=seed)]
+    P = resample(path, d * (1 + gap), closed)
+    rng = np.random.default_rng(seed)
+    out = []
+    nu = max(6, int(12 * q))
+    nv = max(4, int(7 * q))
+    for i, p in enumerate(P):
+        r = d / 2 * (1 + jitter * rng.standard_normal())
+        out.append(sphere(p, r, nu, nv, mat, seed + i, "pearl", baroque=0.05 if rng.random() < 0.3 else 0.0))
+    return out
+
+
+# ============================================================================= collection d'ornements (LOD)
+
+class Item:
+    def __init__(self, name, fn, size, lods=(0, 1, 2), info=None):
+        self.name, self.fn, self.size, self.lods, self.info = name, fn, size, tuple(lods), info or {}
+
+
+class Ornaments:
+    """Registre des ornements d'un objet. fn(q, lod) -> [OMesh] ; size : taille caracteristique (m)."""
+
+    def __init__(self, high, asset_id):
+        self.high = high
+        self.id = asset_id
+        self.surface = Surface(high)
+        self.items = []
+        self.stones = []            # (type, materiau, taille mm, etat)
+        self.notes = []
+
+    def add(self, name, fn, size, lods=(0, 1, 2), **info):
+        self.items.append(Item(name, fn, size, lods, info))
+
+    def stone(self, kind, mat, size, state="serti"):
+        self.stones.append({"cut": kind, "material": mat, "size_mm": round(size * 1000, 1), "state": state})
+
+    def build(self, lod):
+        q = LOD_Q[lod]
+        out = []
+        obj = float(np.max(self.surface.bmax - self.surface.bmin))
+        thresh = min(LOD_MIN_SIZE[lod], 0.15 * obj)          # petits objets (perles) : seuil relatif
+        for it in self.items:
+            if lod not in it.lods or it.size < thresh:
+                continue
+            res = it.fn(q, lod)
+            out += [m for m in (res if isinstance(res, (list, tuple)) else [res]) if m is not None]
+        return out
+
+
+# ============================================================================= objet Blender
+
+def short_ao(co, nrm, mesh_data, surface=None, dist=0.0035, n_dirs=6):
+    """Occlusion ambiante a courte portee par sommet (rayons dans l'hemisphere de la normale) contre les ornements et la
+    relique. 0 = degage, 1 = au fond d'un creux."""
+    tree = BVHTree.FromPolygons(mesh_data[0], mesh_data[1], epsilon=0.0)
+    trees = [tree] + ([surface.tree] if surface is not None else [])
+    rng = np.random.default_rng(5)
+    D = _nrm(rng.normal(size=(n_dirs, 3)))
+    occ = np.zeros(len(co))
+    for i in range(len(co)):
+        n = nrm[i]
+        o = Vector(tuple(co[i] + n * 0.00012))
+        hits = 0
+        for d in D:
+            d = d if np.dot(d, n) > 0 else -d
+            d = _nrm(d + n * 0.6)
+            dv = Vector(tuple(d))
+            for t in trees:
+                if t.ray_cast(o, dv, dist)[0] is not None:
+                    hits += 1
+                    break
+        occ[i] = hits / n_dirs
+    return occ
+
+
+def to_object(pieces, name, coll, surface=None):
+    """Assemble les pieces en un objet (slots par materiau, UVMap + LightmapUV, OrnMask)."""
+    pieces = [p for p in pieces if p is not None and len(p.V)]
+    mats = []
+    for p in pieces:
+        if p.mat not in mats:
+            mats.append(p.mat)
+    V, faces, fuv, fmat, fsm, cols, offs = [], [], [], [], [], [], 0
+    seeds = []
+    for p in pieces:
+        V.append(p.V)
+        mi = mats.index(p.mat)
+        for F, UV in ((p.T, p.TUV), (p.Q, p.QUV)):
+            if not len(F):
+                continue
+            faces += (F + offs).tolist()
+            fuv.append(UV.reshape(-1, 2))
+            fmat.append(np.full(len(F), mi))
+            sm = p.smooth
+            fsm.append(np.full(len(F), bool(sm)))
+        cols.append(p.col if p.col is not None else np.full((len(p.V), 4), -1.0))
+        seeds.append(np.full(len(p.V), (p.seed * 0.6180339) % 1.0))
+        offs += len(p.V)
+    V = np.concatenate(V)
+    me = bpy.data.meshes.new(name)
+    me.from_pydata(V.tolist(), [], faces)
+    me.update()
+    for m in mats:
+        me.materials.append(material(m))
+    me.polygons.foreach_set("material_index", np.concatenate(fmat).astype(np.int32))
+    me.polygons.foreach_set("use_smooth", np.concatenate(fsm))
+    uvl = me.uv_layers.new(name="UVMap")
+    uvl.uv.foreach_set("vector", np.concatenate(fuv).astype(np.float32).ravel())
+    lm = me.uv_layers.new(name="LightmapUV")
+    lm.uv.foreach_set("vector", (np.concatenate(fuv) * 0.0 + 0.001).astype(np.float32).ravel())
+    # OrnMask : cavite / usure (geometrie), contact (distance au high), aleatoire par piece
+    co = geo.get_co(me).astype(np.float64)
+    nrm = geo.vertex_normals(me).astype(np.float64)
+    ed = geo.edge_array(me)
+    cav = geo.cavity(co, nrm, ed, 2)
+    cav5 = geo.cavity(co, nrm, ed, 6)
+    R = np.maximum(smoothstep(0.00004, 0.00040, cav), smoothstep(0.00008, 0.00070, cav5))
+    G = smoothstep(0.00004, 0.00030, -cav)
+    # occlusion courte portee (creux entre pieces : fil / feuille, chaton / bande, contact relique)
+    occ = short_ao(co, nrm, [V.tolist(), faces], surface)
+    R = np.maximum(R, smoothstep(0.08, 0.55, occ))
+    Bc = np.zeros(len(co))
+    if surface is not None:
+        d = np.array([surface.nearest(p)[2] for p in co])
+        Bc = 1 - smoothstep(0.0002, 0.0018, d)
+    A = np.concatenate(seeds)
+    col = np.stack([R, G, Bc, A], -1)
+    pc = np.concatenate(cols)
+    keep = pc[:, 0] >= 0
+    col[keep] = pc[keep]
+    ca = me.color_attributes.new("OrnMask", "FLOAT_COLOR", "POINT")
+    ca.data.foreach_set("color", col.astype(np.float32).ravel())
+    me.color_attributes.active_color = ca
+    try:
+        me.color_attributes.render_color_index = me.color_attributes.active_color_index
+    except AttributeError:
+        pass
+    ob = bpy.data.objects.new(name, me)
+    coll.objects.link(ob)
+    return ob
+
+
+# ============================================================================= materiaux partages
+
+def _tex_dir():
+    d = TEX_DIR or os.path.join(materials.ROOT, "maquettes", "artefacts-polynesiens", "textures", "Shared")
+    os.makedirs(d, exist_ok=True)
+    return d
+
+
+def _find(folder, key):
+    for f in sorted(os.listdir(folder)):
+        if key.lower() in f.lower() and f.lower().endswith((".jpg", ".png")):
+            return os.path.join(folder, f)
+    return None
+
+
+def shared_texture(src_folder, key, tname):
+    """Copie un scan CC0 dans textures/Shared sous un nom T_ (export autonome) et retourne le chemin."""
+    src = _find(src_folder, key)
+    if src is None:
+        return None
+    dst = os.path.join(_tex_dir(), tname + os.path.splitext(src)[1])
+    if not os.path.exists(dst) or os.path.getsize(dst) != os.path.getsize(src):
+        shutil.copyfile(src, dst)
+    return dst
+
+
+class _NB(NodeBuilder):
+    def uv(self, scale=1.0):
+        n = self.node("ShaderNodeUVMap", uv_map="UVMap")
+        return self.scale_vec(n.outputs["UV"], scale) if scale != 1.0 else n.outputs["UV"]
+
+    def tex(self, path, vec, color=True):
+        n = self.node("ShaderNodeTexImage", interpolation="Linear", extension="REPEAT")
+        n.image = bpy.data.images.load(path, check_existing=True)
+        n.image.colorspace_settings.name = "sRGB" if color else "Non-Color"
+        self._set(n.inputs["Vector"], vec)
+        return n
+
+    def mask(self):
+        vc = self.node("ShaderNodeAttribute", attribute_type="GEOMETRY", attribute_name="OrnMask")
+        vc.label = "OrnMask (couleur de sommet : R cavite, G usure, B contact, A aleatoire)"
+        sp = self.node("ShaderNodeSeparateColor")
+        self.nt.links.new(vc.outputs["Color"], sp.inputs["Color"])
+        return sp.outputs["Red"], sp.outputs["Green"], sp.outputs["Blue"], vc.outputs["Alpha"]
+
+    def normal_map(self, color, strength=1.0):
+        nm = self.node("ShaderNodeNormalMap", space="TANGENT", uv_map="UVMap")
+        nm.inputs["Strength"].default_value = strength
+        self._set(nm.inputs["Color"], color)
+        return nm.outputs["Normal"]
+
+
+def _principled(nt, nb):
+    b = nb.node("ShaderNodeBsdfPrincipled")
+    out = nb.node("ShaderNodeOutputMaterial")
+    nt.links.new(b.outputs["BSDF"], out.inputs["Surface"])
+    return b, out
+
+
+def _set_inputs(b, vals):
+    for k, v in vals.items():
+        if k in b.inputs:
+            NodeBuilder._set(b.inputs[k], v)
+
+
+UE_RECIPES = {  # noqa: E501
+    "MAT_Gold_Aged": (
+        "Or patine 18-22 ct (Unreal, Default Lit opaque) : Metallic 1 ; BaseColor = Lerp(or #E7C07A x (0.85 + 0.3 x T_Gold_Aged_Color.lum), "
+        "brun-noir #3A2A18, OrnMask.R x 0.85) ; Lerp vers or poli #F3D58E par OrnMask.G ; vert-de-gris #4E6B55 "
+        "(Metallic 0, Roughness 0.9) = OrnMask.B x (bruit tuile > 0.5). Roughness = 0.24 + 0.30 x (T_Gold_Aged_Roughness - 0.3) "
+        "+ 0.18 x T_Gold_Scratches + 0.35 x OrnMask.R - 0.10 x OrnMask.G. Normal = BlendAngleCorrected(T_Gold_Aged_Normal x0.5, "
+        "T_Gold_Scratches_Normal x0.35). Metallic = 1 - 0.55 x OrnMask.R(tarnish) - verdigris. UV : UVMap (1 = 3 cm)."),
+    "MAT_Gem": (
+        "Gemmes (rubis, saphir, emeraude, amethyste) - option A opaque (budget faible) : Default Lit opaque, BaseColor = couleur de corps "
+        "sombre (Rubis #5A0710, Saphir #0A1A55, Saphir nuit #050A24, Emeraude #08401E, Amethyste #3A1450) x (0.6 + 0.4 x "
+        "Fresnel(Exponent 3)), Specular 0.9 (IOR 1.76 corindon / 1.57 emeraude), Roughness 0.04 + 0.4 x OrnMask.G (givre / brut), "
+        "Emissive = couleur de feu x 0.6 x CubemapReflection masquee par une texture d'eclats (voronoi) decalee par BumpOffset "
+        "(HeightRatio 0.03, ReferencePlane 0.5) -> fausse refraction / feux internes ; facettes en lissage plat (normales par face). "
+        "Option B (si budget) : Translucent + Surface Forward Shading, Refraction Method 'Index of Refraction' (1.76), Opacity 0.85, "
+        "Absorption (Thin Translucent ou Substrate Slab MFP = couleur de corps, 3 mm). OrnMask.A = ton (0 clair -> 1 tres sombre)."),
+    "MAT_Pearl": (
+        "Perles fines (Unreal) : Default Lit opaque (ou Substrate Slab) ; BaseColor blanc nacre #CFC8BA / noir de Tahiti #0E1113 ; "
+        "Roughness 0.22 (0.55 si OrnMask.G : perle morte) ; ClearCoat 0.6, ClearCoatRoughness 0.08 ; orient : Specular Color ="
+        " Lerp(rose, vert, OrnMask.A) x Fresnel ; Substrate : Thin Film 420 nm IOR 1.6, Fuzz 0.3 (blanches)."),
+    "MAT_Nacre_Pinctada": (
+        "Nacre de Pinctada margaritifera (Unreal, Substrate ou Default Lit) : BaseColor = T_Nacre_Pinctada_Color (argent, voiles "
+        "rose / vert tres pales) ; bord noir-vert (OrnMask.R = levre) #121A17 ; face arriere (OrnMask.B) couche prismatique brune "
+        "#4A3D2A rugosite 0.8 ; Roughness 0.16 + 0.45 x OrnMask.G (depoli) ; Normal = T_Nacre_Pinctada_Normal ; iridescence : "
+        "Substrate Thin Film (Thickness 330 + 260 x T_Nacre_Pinctada_Color.A nm, IOR 1.53) OU Specular Color = rampe Fresnel "
+        "(vert-d'eau -> lavande -> rose -> blanc rasant) ; ClearCoat 0.35."),
+    "MAT_Feather_Aged": (
+        "Plumes (cartes alpha) : Blend Mode Masked, Two Sided, Opacity Mask = T_Feather_Aged_Color.A (clip 0.45) ; BaseColor "
+        "= T_Feather_Aged_Color.rgb ; Roughness 0.72 ; Shading Model Two Sided Foliage (SubsurfaceColor = BaseColor x 0.35) "
+        "pour la transluscidite des barbes ; Normal = T_Feather_Aged_Normal."),
+}
+
+
+def material(name):
+    m = bpy.data.materials.get(name)
+    if m is not None:
+        return m
+    if name == "MAT_Gold_Aged":
+        m = _mat_gold(name)
+    elif name.startswith("MAT_Gem_"):
+        m = _mat_gem(name)
+    elif name.startswith("MAT_Pearl_"):
+        m = _mat_pearl(name)
+    elif name == "MAT_Nacre_Pinctada":
+        m = _mat_nacre(name)
+    elif name == "MAT_Feather_Aged":
+        m = _mat_feather(name)
+    else:
+        raise KeyError(f"materiau d'ornement inconnu : {name}")
+    key = "MAT_Gem" if name.startswith("MAT_Gem_") else ("MAT_Pearl" if name.startswith("MAT_Pearl_") else name)
+    m["ue_recipe"] = UE_RECIPES.get(key, "")
+    m["shared"] = "ornement (non cuit)"
+    m.use_fake_user = True
+    return m
+
+
+def _mat_gold(name):
+    m = new_material(name)
+    nt = m.node_tree
+    nb = _NB(nt)
+    pc = shared_texture(GOLD_SCAN, "_Color", "T_Gold_Aged_Color")
+    pr = shared_texture(GOLD_SCAN, "_Roughness", "T_Gold_Aged_Roughness")
+    pn = shared_texture(GOLD_SCAN, "_NormalGL", "T_Gold_Aged_Normal")
+    ps = shared_texture(SCRATCH_SCAN, "_Opacity", "T_Gold_Scratches")
+    psn = shared_texture(SCRATCH_SCAN, "_NormalGL", "T_Gold_Scratches_Normal")
+    uv = nb.uv(1.0)
+    uv2 = nb.uv(0.63)
+    R, G, B, A = nb.mask()
+    lum = nb.sep_value(nb.tex(pc, uv).outputs["Color"])
+    rtex = nb.sep_value(nb.tex(pr, uv).outputs["Color"])
+    scr = nb.sep_value(nb.tex(ps, uv2).outputs["Color"])
+    obj = nb.texcoord("Object")
+    var = nb.maprange(nb.math("ADD", nb.math("MULTIPLY", lum, 0.6), nb.math("MULTIPLY", A, 0.4)), 0.0, 1.0, 0.82, 1.08)
+    gold = nb.mix(nb.maprange(A, 0.0, 1.0, 0.0, 0.6), "#DCA94F", "#E3B867")       # 22 ct (rouge) -> 18 ct (pale)
+    gm = nb.node("ShaderNodeMix", data_type="RGBA", blend_type="MULTIPLY")
+    gm.inputs[0].default_value = 1.0
+    nt.links.new(gold, gm.inputs[6])
+    nt.links.new(nb.node("ShaderNodeCombineColor").outputs[0], gm.inputs[7])
+    cc = gm.inputs[7].links[0].from_node
+    for i in range(3):
+        nt.links.new(var, cc.inputs[i])
+    col = gm.outputs[2]
+    # creux : patine brun-noir (sulfures + crasse), un peu de crasse generale en bruit
+    grime_n = nb.noise(obj, 220.0, 3, 0.6)
+    tar = nb.math("MINIMUM", nb.math("ADD", nb.math("MULTIPLY", R, 0.95), nb.math("MULTIPLY", nb.maprange(grime_n, 0.55, 0.8), 0.25)), 1.0)
+    col = nb.mix(nb.math("MULTIPLY", tar, 0.85), col, "#3A2A18")
+    # voile de patine irregulier (sulfuration, crasse de mer seche) : plages brunes ternes
+    film = nb.math("MULTIPLY", nb.maprange(nb.noise(obj, 26.0, 4, 0.62, 0.5), 0.26, 0.58), 0.95)
+    film = nb.math("MAXIMUM", film, nb.math("MULTIPLY", B, 0.55))
+    film = nb.math("MULTIPLY", film, nb.math("SUBTRACT", 1.0, nb.math("MULTIPLY", G, 0.7)))      # les aretes frottees restent vives
+    col = nb.mix(nb.math("MULTIPLY", film, 0.70), col, "#5E4320")
+    # usure : aretes polies plus claires
+    col = nb.mix(nb.math("MULTIPLY", G, 0.6), col, "#F3D58E")
+    # contact corail / sel : vert-de-gris (cuivre de l'alliage) + voile de sel, en taches
+    vg_n = nb.noise(obj, 160.0, 4, 0.6, 0.5)
+    # vert-de-gris : seulement a l'interface (contact ET creux / bord), en taches
+    vg = nb.math("MULTIPLY", nb.math("MULTIPLY", B, nb.math("MAXIMUM", R, 0.25)), nb.maprange(vg_n, 0.52, 0.66))
+    salt = nb.math("MULTIPLY", nb.math("MULTIPLY", B, 0.6), nb.maprange(nb.noise(obj, 90.0, 3, 0.55), 0.68, 0.80))
+    col = nb.mix(vg, col, "#55705C")
+    col = nb.mix(nb.math("MULTIPLY", salt, 0.7), col, "#B9B2A0")
+    rough = nb.math("ADD", 0.13, nb.math("MULTIPLY", nb.math("SUBTRACT", rtex, 0.3), 0.18))
+    rough = nb.math("ADD", rough, nb.math("MULTIPLY", scr, 0.20))
+    rough = nb.math("ADD", rough, nb.math("MULTIPLY", tar, 0.40))
+    rough = nb.math("ADD", rough, nb.math("MULTIPLY", film, 0.20))
+    rough = nb.math("SUBTRACT", rough, nb.math("MULTIPLY", G, 0.08))
+    rough = nb.mixf(nb.math("MAXIMUM", vg, salt), rough, 0.9)
+    rough = nb.math("MAXIMUM", nb.math("MINIMUM", rough, 1.0), 0.07)
+    metal = nb.math("SUBTRACT", 1.0, nb.math("MAXIMUM", nb.math("MULTIPLY", nb.math("MAXIMUM", tar, nb.math("MULTIPLY", film, 0.5)), 0.55),
+                                                  nb.math("MAXIMUM", vg, salt)))
+    b, _ = _principled(nt, nb)
+    nt.links.new(col, b.inputs["Base Color"])
+    nt.links.new(rough, b.inputs["Roughness"])
+    nt.links.new(metal, b.inputs["Metallic"])
+    n1 = nb.normal_map(nb.tex(pn, uv, False).outputs["Color"], 0.5)
+    bump = nb.node("ShaderNodeBump")
+    bump.inputs["Strength"].default_value = 0.25
+    bump.inputs["Distance"].default_value = 0.00005
+    nt.links.new(scr, bump.inputs["Height"])
+    nt.links.new(n1, bump.inputs["Normal"])
+    nt.links.new(bump.outputs["Normal"], b.inputs["Normal"])
+    return m
+
+
+GEMS = {
+    # couleur de corps (transmission), couleur d'absorption, densite (1/m), IOR, rugosite de base
+    "MAT_Gem_Ruby": ("#B0122A", (0.95, 0.10, 0.16), 260.0, 1.76, 0.02),
+    "MAT_Gem_Sapphire": ("#1B2F96", (0.08, 0.16, 0.85), 380.0, 1.76, 0.02),
+    "MAT_Gem_Emerald": ("#1C8A4A", (0.14, 0.80, 0.36), 220.0, 1.57, 0.03),
+    "MAT_Gem_Amethyst": ("#7A3AA8", (0.62, 0.30, 0.85), 160.0, 1.54, 0.02),
+    "MAT_Gem_Topaz": ("#C8862A", (0.95, 0.62, 0.22), 120.0, 1.62, 0.02),
+}
+
+
+def _mat_gem(name):
+    body, absc, dens, ior, r0 = GEMS[name]
+    m = new_material(name)
+    nt = m.node_tree
+    nb = _NB(nt)
+    R, G, B, A = nb.mask()
+    obj = nb.texcoord("Object")
+    # inclusions / soie : bruit a l'echelle du mm (rugosite et voile)
+    inc = nb.noise(obj, 900.0, 3, 0.6, 0.8)
+    silk = nb.maprange(nb.noise(obj, 2400.0, 2, 0.5), 0.55, 0.8)
+    rough = nb.math("ADD", r0, nb.math("MULTIPLY", G, 0.42))
+    rough = nb.math("ADD", rough, nb.math("MULTIPLY", nb.maprange(inc, 0.5, 0.75), 0.05))
+    scr = shared_texture(SCRATCH_SCAN, "_Opacity", "T_Gold_Scratches")
+    rough = nb.math("ADD", rough, nb.math("MULTIPLY", nb.sep_value(nb.tex(scr, nb.uv(0.5)).outputs["Color"]), 0.10))
+    tone = nb.maprange(A, 0.0, 1.0, 1.0, 0.25)
+    bc = nb.node("ShaderNodeMix", data_type="RGBA", blend_type="MULTIPLY")
+    bc.inputs[0].default_value = 1.0
+    bc.inputs[6].default_value = lin(body)
+    cc = nb.node("ShaderNodeCombineColor")
+    for i in range(3):
+        nt.links.new(tone, cc.inputs[i])
+    nt.links.new(cc.outputs[0], bc.inputs[7])
+    col = nb.mix(nb.math("MULTIPLY", silk, 0.25), bc.outputs[2], "#808080")      # soie (rutile) : voile laiteux
+    b, out = _principled(nt, nb)
+    nt.links.new(col, b.inputs["Base Color"])
+    nt.links.new(rough, b.inputs["Roughness"])
+    trans = nb.math("SUBTRACT", 1.0, nb.math("MULTIPLY", G, 0.45))
+    nt.links.new(trans, b.inputs["Transmission Weight"])
+    _set_inputs(b, {"IOR": ior, "Specular IOR Level": 0.6})
+    va = nb.node("ShaderNodeVolumeAbsorption")
+    va.inputs["Color"].default_value = (*absc, 1.0)
+    dn = nb.math("MULTIPLY", dens, nb.maprange(A, 0.0, 1.0, 1.0, 5.0))
+    nt.links.new(dn, va.inputs["Density"])
+    nt.links.new(va.outputs[0], out.inputs["Volume"])
+    m["ior"] = ior
+    return m
+
+
+def _mat_pearl(name):
+    black = name == "MAT_Pearl_Black"
+    m = new_material(name)
+    nt = m.node_tree
+    nb = _NB(nt)
+    R, G, B, A = nb.mask()
+    obj = nb.texcoord("Object")
+    n = nb.noise(obj, 600.0, 3, 0.5, 0.4)
+    if black:
+        col = nb.ramp(nb.math("ADD", nb.math("MULTIPLY", A, 0.7), nb.math("MULTIPLY", n, 0.3)),
+                      [(0.0, "#0A0F10"), (0.4, "#121A1C"), (0.7, "#1A1424"), (1.0, "#0D1714")])
+    else:
+        col = nb.ramp(nb.math("ADD", nb.math("MULTIPLY", A, 0.7), nb.math("MULTIPLY", n, 0.3)),
+                      [(0.0, "#CBC4B4"), (0.5, "#D2C9BC"), (1.0, "#C9C9BB")])
+    col = nb.mix(nb.math("MULTIPLY", G, 0.7), col, "#9A8E72" if not black else "#35302A")      # perle morte / jaunie
+    col = nb.mix(nb.math("MULTIPLY", R, 0.6), col, "#3E352A")                               # crasse au contact
+    b, _ = _principled(nt, nb)
+    nt.links.new(col, b.inputs["Base Color"])
+    rough = nb.math("ADD", 0.20 if not black else 0.13, nb.math("MULTIPLY", G, 0.40))
+    nt.links.new(nb.math("ADD", rough, nb.math("MULTIPLY", nb.math("SUBTRACT", n, 0.5), 0.08)), b.inputs["Roughness"])
+    _set_inputs(b, {"IOR": 1.56, "Specular IOR Level": 0.5 if not black else 0.75, "Coat Weight": 0.55 if not black else 0.7,
+                    "Coat Roughness": 0.08 if not black else 0.04,
+                    "Thin Film Thickness": 420.0 if not black else 380.0, "Thin Film IOR": 1.6,
+                    "Sheen Weight": 0.25 if not black else 0.0, "Sheen Roughness": 0.35,
+                    "Subsurface Weight": 0.12 if not black else 0.0})
+    if not black:
+        b.inputs["Subsurface Radius"].default_value = (1.0, 0.8, 0.6)
+        b.inputs["Subsurface Scale"].default_value = 0.0006
+    lw = nb.node("ShaderNodeLayerWeight")
+    lw.inputs["Blend"].default_value = 0.5
+    st = nb.ramp(lw.outputs["Fresnel"], [(0.0, "#E6D8DC"), (0.4, "#C8E2D8"), (0.75, "#D8C8EA"), (1.0, "#FFFFFF")]) if not black else \
+        nb.ramp(lw.outputs["Fresnel"], [(0.0, "#9EC9B4"), (0.35, "#8EA4DC"), (0.7, "#B494DC"), (1.0, "#E8E0FF")])
+    nt.links.new(st, b.inputs["Specular Tint"])
+    return m
+
+
+# ----------------------------------------------------------------------------- textures generees (numpy)
+
+def _save_np(name, arr, color=True):
+    h, w = arr.shape[:2]
+    if arr.shape[2] == 3:
+        arr = np.concatenate([arr, np.ones((h, w, 1))], 2)
+    img = bpy.data.images.get(name) or bpy.data.images.new(name, w, h, alpha=True)
+    if tuple(img.size) != (w, h):
+        img.scale(w, h)
+    img.colorspace_settings.name = "sRGB" if color else "Non-Color"
+    img.pixels.foreach_set(np.clip(arr, 0, 1).astype(np.float32).ravel())
+    p = os.path.join(_tex_dir(), name + ".png")
+    img.filepath_raw = p
+    img.file_format = "PNG"
+    img.save()
+    return p
+
+
+def _normal_from_height(h, strength):
+    gy, gx = np.gradient(h)
+    n = np.stack([-gx * strength, -gy * strength, np.ones_like(h)], -1)
+    n /= np.linalg.norm(n, axis=-1, keepdims=True)
+    return n * 0.5 + 0.5
+
+
+def nacre_textures(res=1024, force=False):
+    """Nacre de Pinctada margaritifera (procedural : aucun scan CC0 de nacre). Fond gris argent assez sombre (la nacre
+    vit par ses reflets), voiles de couleur pastel (rose, vert d'eau, bleu, champagne) a grande echelle, lignes de
+    croissance tres fines et peu contrastees, quelques marches plus marquees. Tuile = 5 cm. A = epaisseur du film."""
+    p_col = os.path.join(_tex_dir(), "T_Nacre_Pinctada_Color.png")
+    p_nrm = os.path.join(_tex_dir(), "T_Nacre_Pinctada_Normal.png")
+    if os.path.exists(p_col) and os.path.exists(p_nrm) and not force:
+        return p_col, p_nrm
+    y, x = np.mgrid[0:res, 0:res].astype(np.float32) / res
+    P = np.stack([x.ravel(), y.ravel(), np.zeros(res * res, np.float32)], -1)
+
+    def tile_fbm(scale, oct_, seed):
+        a = fbm(P * scale, oct_, seed=seed).reshape(res, res)
+        b = fbm((P + np.array([1, 0, 0], np.float32)) * scale, oct_, seed=seed).reshape(res, res)
+        c = fbm((P + np.array([0, 1, 0], np.float32)) * scale, oct_, seed=seed).reshape(res, res)
+        d = fbm((P + np.array([1, 1, 0], np.float32)) * scale, oct_, seed=seed).reshape(res, res)
+        return a * (1 - x) * (1 - y) + b * x * (1 - y) + c * (1 - x) * y + d * x * y
+    warp = tile_fbm(3.0, 4, 3)
+    warp2 = tile_fbm(11.0, 3, 5)
+    phase = (y + 0.18 * warp + 0.03 * warp2) * 320.0
+    lam = 0.5 + 0.5 * np.sin(phase * TAU)
+    stepn = tile_fbm(40, 2, 9)
+    steps = ((np.floor(phase) % 11) == 0) * smoothstep(0.45, 0.7, stepn)
+    base = np.full((res, res, 3), 0.30, np.float32) * (0.97 + 0.05 * lam[..., None])
+    tints = [(np.array([0.50, 0.30, 0.40]), tile_fbm(2.2, 3, 11)), (np.array([0.22, 0.42, 0.36]), tile_fbm(2.6, 3, 13)),
+             (np.array([0.26, 0.30, 0.50]), tile_fbm(3.1, 3, 17)), (np.array([0.46, 0.40, 0.26]), tile_fbm(1.8, 3, 19))]
+    col = base
+    for tc, n in tints:
+        wgt = (smoothstep(0.46, 0.70, n) * 0.70)[..., None]
+        col = col * (1 - wgt) + tc[None, None] * wgt
+    col = col * (1 - 0.18 * steps[..., None])
+    film = np.clip(0.5 + 0.9 * (tile_fbm(4.0, 3, 23) - 0.5) + 0.10 * (lam - 0.5), 0, 1)
+    _save_np("T_Nacre_Pinctada_Color", np.concatenate([col, film[..., None]], 2))
+    hgt = lam * 0.25 - steps * 1.2 + 0.4 * warp2
+    _save_np("T_Nacre_Pinctada_Normal", _normal_from_height(hgt, 3.0), color=False)
+    return p_col, p_nrm
+
+
+def _mat_nacre(name):
+    p_col, p_nrm = nacre_textures()
+    m = new_material(name)
+    nt = m.node_tree
+    nb = _NB(nt)
+    R, G, B, A = nb.mask()
+    uv = nb.uv(TILE / 0.05)
+    tc = nb.tex(p_col, uv)
+    col = tc.outputs["Color"]
+    film = tc.outputs["Alpha"]
+    lip_n = nb.noise(nb.texcoord("Object"), 140.0, 4, 0.6, 0.5)
+    lip = nb.maprange(nb.math("ADD", R, nb.math("MULTIPLY", nb.math("SUBTRACT", lip_n, 0.5), 0.5)), 0.30, 0.60)
+    col = nb.mix(nb.math("MULTIPLY", G, 0.45), col, "#9E998C")                         # nacre depolie (voile calcaire)
+    col = nb.mix(lip, col, nb.mix(nb.maprange(lip_n, 0.3, 0.7), "#0A100E", "#1C2622"))   # levre noire-verte (Pinctada margaritifera)
+    col = nb.mix(nb.maprange(B, 0.4, 0.6), col, nb.mix(nb.maprange(lip_n, 0.3, 0.7), "#3E3426", "#5E5442"))
+    b, _ = _principled(nt, nb)
+    nt.links.new(col, b.inputs["Base Color"])
+    rough = nb.math("ADD", 0.20, nb.math("MULTIPLY", G, 0.45))
+    rough = nb.mixf(nb.maprange(B, 0.4, 0.6), rough, 0.8)
+    nt.links.new(rough, b.inputs["Roughness"])
+    thick = nb.maprange(film, 0.0, 1.0, 330.0, 590.0)
+    thick = nb.math("MULTIPLY", thick, nb.math("SUBTRACT", 1.0, nb.math("MAXIMUM", nb.math("MULTIPLY", lip, 0.6), nb.maprange(B, 0.4, 0.6))))
+    nt.links.new(thick, b.inputs["Thin Film Thickness"])
+    _set_inputs(b, {"IOR": 1.53, "Specular IOR Level": 0.45, "Thin Film IOR": 1.53, "Coat Weight": 0.25, "Coat Roughness": 0.10})
+    nt.links.new(nb.normal_map(nb.tex(p_nrm, uv, False).outputs["Color"], 0.15), b.inputs["Normal"])
+    nt.links.new(nb.mixf(lip, 0.45, 0.30), b.inputs["Specular IOR Level"])
+    return m
+
+
+def feather_atlas(w=1024, h=2048, cols=4, seed=7, force=False):
+    """Atlas de plumes (procedural, aucune plume scannee CC0) : barbes individuelles inclinees vers la pointe, frange
+    irreguliere (longueur par barbe), barbes desunies en meches (encoches), duvet a la base, pointe cassee, rachis.
+    Colonnes : 0-1 rectrices de paille-en-queue (ivoire terni), 2 plume de fregate (brun-noir), 3 plume blanche courte."""
+    p_col = os.path.join(_tex_dir(), "T_Feather_Aged_Color.png")
+    p_nrm = os.path.join(_tex_dir(), "T_Feather_Aged_Normal.png")
+    if os.path.exists(p_col) and os.path.exists(p_nrm) and not force:
+        return p_col, p_nrm
+    cw = w // cols
+    out = np.zeros((h, w, 4), np.float32)
+    hgt = np.zeros((h, w), np.float32)
+    yy, xx = np.mgrid[0:h, 0:cw].astype(np.float32)
+    v = 1 - yy / h                                    # 0 = base, 1 = pointe
+    x = (xx - cw / 2) / (cw / 2)                      # -1..1
+    specs = [("white", 0.93, 0.70, 0.62), ("white", 0.84, 0.66, 0.58), ("dark", 0.90, 0.86, 0.80), ("white", 0.76, 0.80, 0.74)]
+
+    def h1(i, s):
+        return geo._hash(np.asarray(i, np.int64), np.asarray(i, np.int64) * 3 + 1, np.full(np.shape(i), 7, np.int64), s)
+    for c, (kind, cut, wl, wr) in enumerate(specs):
+        cx = 0.05 * np.sin(v * 2.4 + c) * v
+        d = x - cx
+        ad = np.abs(d)
+        side_w = np.where(d < 0, wl, wr)
+        prof = smoothstep(0.0, 0.12, v) ** 0.6 * (1 - 0.75 * smoothstep(0.62, 1.0, v) ** 1.5)
+        width = side_w * prof * (1 + 0.06 * np.sin(v * 7 + c))
+        # barbes : coordonnee le long de la barbe inclinee (angle ~35 deg vers la pointe)
+        nb_ = 210
+        s = v * nb_ - ad * cw / 2 / h * nb_ * 1.6
+        bi = np.floor(s).astype(np.int64)
+        fr = s - bi
+        side = (d > 0).astype(np.int64)
+        rb = h1(bi * 2 + side, seed + c)
+        blen = width * (0.80 + 0.22 * rb)                                   # frange : longueur par barbe
+        strand = np.abs(fr - 0.5) < (0.42 - 0.18 * ad / np.maximum(width, 1e-3))
+        # meches : barbes desunies (encoches) par groupes
+        grp = np.floor(s / 6).astype(np.int64)
+        gr = h1(grp * 2 + side, seed + 40 + c)
+        notch = (gr < 0.22) & (np.abs((s / 6) % 1 - 0.5) < 0.18) & (ad > 0.15 * width)
+        vane = (ad < blen) & strand & ~notch
+        # duvet a la base (afterfeather) : filaments clairsemes
+        dl = 0.10 * h1(bi * 2 + side, seed + 91 + c)
+        down = (v < 0.14) & (v > 0.015) & (ad < 0.15 + 0.55 * (v / 0.14) * (0.6 + 0.4 * rb)) & strand & (fr < 0.5 + dl)
+        down = down & (h1(bi * 5 + side, seed + 90 + c) < 0.55)
+        rach_w = 0.045 * (1 - 0.7 * v)
+        rach = (ad < rach_w) & (v < cut + 0.01)
+        tip_cut = v > cut - 0.035 * (d + 1) - 0.035 * rb * smoothstep(0.0, 0.3, ad)
+        alpha = ((vane | down) & ~tip_cut) | rach
+        dirt = 0.6 * smoothstep(0.30, 0.0, v) + 0.35 * (fbm(np.stack([v.ravel() * 5, d.ravel() * 1.5, np.full(v.size, c)], -1), 3,
+                                                               seed=seed + 50 + c).reshape(v.shape) - 0.3)
+        dirt = np.clip(dirt, 0, 1)
+        shade = 0.82 + 0.25 * rb - 0.18 * (ad / np.maximum(width, 1e-3))
+        if kind == "dark":
+            colr = np.array([0.050, 0.044, 0.038])[None, None] * shade[..., None] * 1.3
+            colr = colr + np.array([0.10, 0.07, 0.04])[None, None] * smoothstep(0.55, 1.0, v)[..., None] * 0.6
+            rcol = np.array([0.09, 0.08, 0.07])
+        else:
+            colr = np.array([0.78, 0.75, 0.66])[None, None] * shade[..., None]
+            colr = colr * (1 - 0.5 * dirt[..., None]) + np.array([0.33, 0.29, 0.22])[None, None] * 0.5 * dirt[..., None]
+            rcol = np.array([0.72, 0.66, 0.50])
+        colr = np.where(rach[..., None], rcol[None, None] * (1 - 0.3 * dirt[..., None]), colr)
+        sl = slice(c * cw, (c + 1) * cw)
+        out[:, sl, :3] = np.clip(colr, 0, 1)
+        out[:, sl, 3] = alpha.astype(np.float32)
+        hgt[:, sl] = strand * 0.6 + rach * 1.5
+    out = out[::-1]
+    hgt = hgt[::-1]
+    _save_np("T_Feather_Aged_Color", out)
+    _save_np("T_Feather_Aged_Normal", _normal_from_height(hgt, 1.2), color=False)
+    return p_col, p_nrm
+
+
+FEATHER_COLS = 4
+
+
+def _mat_feather(name):
+    p_col, p_nrm = feather_atlas()
+    m = new_material(name)
+    nt = m.node_tree
+    nb = _NB(nt)
+    uvn = nb.node("ShaderNodeUVMap", uv_map="UVMap")
+    tc = nb.tex(p_col, uvn.outputs["UV"])
+    tc.interpolation = "Closest" if False else "Linear"
+    b, out = _principled(nt, nb)
+    nt.links.new(tc.outputs["Color"], b.inputs["Base Color"])
+    _set_inputs(b, {"Roughness": 0.72, "Specular IOR Level": 0.3, "Subsurface Weight": 0.0})
+    nt.links.new(nb.normal_map(nb.tex(p_nrm, uvn.outputs["UV"], False).outputs["Color"], 0.4), b.inputs["Normal"])
+    # alpha clip (Masked) + translucidite des barbes (two sided)
+    clip = nb.math("GREATER_THAN", tc.outputs["Alpha"], 0.45)
+    tr = nb.node("ShaderNodeBsdfTranslucent")
+    tr.inputs["Color"].default_value = (0.25, 0.23, 0.19, 1)
+    mixs = nb.node("ShaderNodeMixShader")
+    mixs.inputs[0].default_value = 0.18
+    nt.links.new(b.outputs["BSDF"], mixs.inputs[1])
+    nt.links.new(tr.outputs["BSDF"], mixs.inputs[2])
+    tp = nb.node("ShaderNodeBsdfTransparent")
+    mx2 = nb.node("ShaderNodeMixShader")
+    nt.links.new(clip, mx2.inputs[0])
+    nt.links.new(tp.outputs["BSDF"], mx2.inputs[1])
+    nt.links.new(mixs.outputs["Shader"], mx2.inputs[2])
+    for l in list(out.inputs["Surface"].links):
+        nt.links.remove(l)
+    nt.links.new(mx2.outputs["Shader"], out.inputs["Surface"])
+    try:
+        m.blend_method = "CLIP"
+    except (AttributeError, TypeError):
+        pass
+    try:
+        m.surface_render_method = "DITHERED"
+    except (AttributeError, TypeError):
+        pass
+    m.use_backface_culling = False
+    return m
+
+
+def feather_card(base, direction, side, length, width, col_idx, q=1.0, curl=0.15, seed=0, droop=None):
+    """Carte alpha de plume : bande le long d'une courbe (leger V en travers), UV = colonne `col_idx` de l'atlas."""
+    nseg = max(4, int(14 * q))
+    t = np.linspace(0, 1, nseg + 1)
+    d = _nrm(direction)
+    sd = _nrm(side - np.dot(side, d) * d)
+    nn = np.cross(d, sd)
+    droop = nn * curl if droop is None else np.asarray(droop, float)
+    path = base + d[None] * (t * length)[:, None] + droop[None] * (length * t ** 2)[:, None]
+    rng = np.random.default_rng(seed)
+    twist = rng.normal(0, 0.15)
+    xs = np.array([-1.0, 0.0, 1.0])
+    V = []
+    for i, ti in enumerate(t):
+        tg = _nrm(path[min(i + 1, nseg)] - path[max(i - 1, 0)])
+        s2 = _nrm(sd * math.cos(twist * ti) + nn * math.sin(twist * ti))
+        n2 = np.cross(tg, s2)
+        for xv in xs:
+            V.append(path[i] + s2 * xv * width / 2 + n2 * (abs(xv) * width * 0.08))
+    V = np.array(V)
+    u0 = col_idx / FEATHER_COLS
+    up = u0 + (xs + 1) / 2 / FEATHER_COLS
+    Q, QUV = grid(nseg + 1, 3, False, False, t, up)
+    QUV = QUV[..., ::-1]
+    return OMesh(V, Q, None, QUV, None, "MAT_Feather_Aged", True, np.tile([[0.0, 0.0, 0.0, 0.5]], (len(V), 1)), seed, "feather")
+
+
+# ============================================================================= rendu : monde HDRI
+
+def hdri_path(name="studio_small_09_2k.hdr"):
+    p = os.path.abspath(os.path.join(HDRI_DIR, name))
+    return p if os.path.exists(p) else None
+
+
+# ============================================================================= aides de placement
+
+def attr(ob, name):
+    a = ob.data.attributes.get(name)
+    if a is None:
+        return None
+    out = np.empty(len(a.data), np.float32)
+    a.data.foreach_get("value", out)
+    return out
+
+
+def farthest_pick(P, score, k, min_dist, seed=0):
+    """Choisit jusqu'a k points de score eleve, espaces d'au moins min_dist."""
+    order = np.argsort(-score)
+    sel = []
+    for i in order:
+        if score[i] <= 0:
+            break
+        if all(np.linalg.norm(P[i] - P[j]) >= min_dist for j in sel):
+            sel.append(i)
+            if len(sel) >= k:
+                break
+    return sel
+
+
+def const_col(om, rgba):
+    om.col = np.tile(np.asarray(rgba, float)[None], (len(om.V), 1))
+    return om
+
+
+def mounted(gem_fn, M, mount=None, gem_col=None, empty=False):
+    """Pierre (gem_fn(q) -> Gem) + chaton (kwargs de bezel) transformes par M (4x4). Retourne fn(q, lod)."""
+    def fn(q, lod):
+        g = gem_fn(q)
+        out = []
+        if mount is not None:
+            out += bezel(g, empty=empty, q=q, **mount)
+        if not empty:
+            gm = g.mesh
+            if gem_col is not None:
+                const_col(gm, gem_col)
+            out.append(gm)
+        for o in out:
+            o.transform(M)
+        return out
+    return fn
+
+
+def bridle(r, z, wire_w=0.0016, wire_t=0.0005, span=2.1, q=1.0, seed=0, sink=0.004):
+    """Bride d'or passant par-dessus un cristal couche (repere du cristal : Z = axe, X = normale de la surface) ;
+    les extremites plongent dans le support."""
+    th = np.linspace(-span, span, max(7, int(15 * q)))
+    pts = np.stack([r * 1.08 * np.cos(th), r * 1.08 * np.sin(th), np.full_like(th, z)], -1)
+    for e, sg in ((0, -1), (-1, 1)):
+        pts[e] = pts[e] - np.array([sink, 0, 0])
+    pts = catmull(pts, 3)
+    return sweep(pts, prof_band(wire_w, wire_t, max(6, int(10 * q)), 4.0), ref=np.array([0, 0, 1.0]), seed=seed)
+
+
+def crystal_claws(r, length, k=3, wire=0.0007, seed=0, q=1.0, bent=None, z_ground=-0.12):
+    """Griffes d'or epousant un cristal brut (repere du cristal : axe Z)."""
+    rng = np.random.default_rng(seed)
+    out = []
+    a0 = rng.uniform(0, TAU)
+    for j in range(k):
+        a = a0 + j * TAU / k + rng.normal(0, 0.2)
+        d = np.array([math.cos(a), math.sin(a), 0.0])
+        pts = np.array([d * r * 1.35 + [0, 0, z_ground * length - 0.002],
+                        d * r * 1.18 + [0, 0, z_ground * length + 0.15 * length],
+                        d * r * 1.02 + [0, 0, 0.35 * length],
+                        d * r * 0.80 + [0, 0, 0.50 * length]])
+        if bent == j:
+            pts[-1] = d * r * 1.7 + [0, 0, 0.62 * length]
+        P = catmull(pts, max(3, int(8 * q)))
+        out.append(sweep(P, prof_band(wire * 2.0, wire, max(6, int(10 * q)), 3.0), scale=np.linspace(1.0, 0.6, len(P)),
+                         ref=d, seed=seed + j))
+    return out
+
+
+def rosette(r, h, petals=8, q=1.0, seed=0):
+    """Rosace d'or repoussee (boss de croisement) : dome central + petales bombes, posee sur z=0."""
+    out = [dome((0, 0, 0), r * 0.42, h, max(8, int(16 * q)), max(2, int(4 * q)), seed=seed)]
+    for k in range(petals):
+        a = k * TAU / petals
+        c = np.array([math.cos(a), math.sin(a), 0]) * r * 0.70
+        p = dome(c, r * 0.30, h * 0.55, max(6, int(10 * q)), max(1, int(3 * q)), seed=seed + k)
+        M = frame_matrix(np.zeros(3), [0, 0, 1], a)
+        p.V = (p.V - c) @ np.diag([1.35, 0.8, 1.0]) @ M[:3, :3].T + c
+        out.append(p)
+    return out
+
+
+def depth_map(S, origin, du, dv, d, nu, nv, du_len, dv_len, far=0.6):
+    """Carte de profondeur : rayons de direction d depuis un plan (origin + u*du + v*dv). Retourne (points (nu,nv,3),
+    profondeur (nu,nv) le long de d, NaN si pas d'impact)."""
+    du, dv, d = _nrm(du), _nrm(dv), _nrm(d)
+    us = np.linspace(-du_len / 2, du_len / 2, nu)
+    vs = np.linspace(-dv_len / 2, dv_len / 2, nv)
+    P = np.full((nu, nv, 3), np.nan)
+    D = np.full((nu, nv), np.nan)
+    for i, u in enumerate(us):
+        for j, v in enumerate(vs):
+            o = np.asarray(origin, float) + du * u + dv * v - d * far
+            hit, _ = S.ray(o, d, 2 * far)
+            if hit is not None:
+                P[i, j] = hit
+                D[i, j] = np.dot(hit - o, d)
+    return P, D
+
+
+def relief_extrema(D, P, win=6, k=2, sign=1, min_sep=6, valid=None):
+    """Extrema locaux d'une carte de profondeur relative (D - moyenne locale) : sign=+1 -> creux (orbites), -1 -> bosses.
+    Retourne les points (k,3)."""
+    Dn = np.where(np.isfinite(D), D, np.nanmax(D))
+    sm = Dn.copy()
+    for _ in range(3):
+        sm = _smooth_rows(sm, win)
+        sm = _smooth_rows(sm.T, win).T
+    rel = (Dn - sm) * sign
+    rel = _smooth_rows(_smooth_rows(rel, 2).T, 2).T
+    order = np.argsort(-rel.ravel())
+    sel = []
+    for idx in order:
+        i, j = np.unravel_index(idx, rel.shape)
+        if not np.isfinite(D[i, j]) or (valid is not None and not valid[i, j]):
+            continue
+        if all(abs(i - a) + abs(j - b) >= min_sep for a, b in sel):
+            sel.append((i, j))
+            if len(sel) >= k:
+                break
+    return np.array([P[i, j] for i, j in sel]), [float(rel[i, j]) for i, j in sel]
+
+
+def cavity_center(S, center, du, dv, d, size, n=21, frac=0.5):
+    """Centre d'une cavite (orbite, alveole) : carte de profondeur sur size x size, plan ajuste sur le pourtour, barycentre
+    des cellules plus profondes que frac x la profondeur max. Retourne (point au fond, profondeur max)."""
+    P, D = depth_map(S, center, du, dv, d, n, n, size, size)
+    ok = np.isfinite(D)
+    I, J = np.meshgrid(np.arange(n), np.arange(n), indexing="ij")
+    border = ok & ((I < 2) | (I > n - 3) | (J < 2) | (J > n - 3))
+    A = np.stack([I[border], J[border], np.ones(border.sum())], -1)
+    coef = np.linalg.lstsq(A, D[border], rcond=None)[0]
+    rel = D - (coef[0] * I + coef[1] * J + coef[2])
+    rel[~ok] = -1
+    m = rel.max()
+    w = np.clip(rel - frac * m, 0, None)
+    if w.sum() <= 0:
+        return P[n // 2, n // 2], 0.0
+    ci = float((w * I).sum() / w.sum())
+    cj = float((w * J).sum() / w.sum())
+    i0, j0 = int(round(ci)), int(round(cj))
+    return P[i0, j0], float(m)

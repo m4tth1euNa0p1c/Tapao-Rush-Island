@@ -1,0 +1,1760 @@
+{
+  "modules": {
+    "SM_Temple_CourtPaving": {
+      "key": "court_paving",
+      "dims_m": [
+        14.4,
+        14.4,
+        0.107
+      ],
+      "height_vs_bean": 0.1,
+      "tris": 7839,
+      "ucx": [
+        "UCX_SM_Temple_CourtPaving_00"
+      ],
+      "sockets": {},
+      "info": {
+        "slabs": 516,
+        "sites": 681,
+        "coverage": 0.551,
+        "tris_raw": 7839,
+        "tris": 7839,
+        "materials": [
+          "MAT-Temple_Coral",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_BasaltMoss"
+        ],
+        "budget": 20000
+      }
+    },
+    "SM_Temple_RelicAltar": {
+      "key": "relic_altar",
+      "dims_m": [
+        3.796,
+        4.366,
+        1.609
+      ],
+      "height_vs_bean": 1.53,
+      "tris": 3200,
+      "ucx": [
+        "UCX_SM_Temple_RelicAltar_00",
+        "UCX_SM_Temple_RelicAltar_01",
+        "UCX_SM_Temple_RelicAltar_02",
+        "UCX_SM_Temple_RelicAltar_03",
+        "UCX_SM_Temple_RelicAltar_04",
+        "UCX_SM_Temple_RelicAltar_05",
+        "UCX_SM_Temple_RelicAltar_06",
+        "UCX_SM_Temple_RelicAltar_07"
+      ],
+      "sockets": {
+        "SOCKET_Relic_FishGodFragment": [
+          -0.571,
+          1.224,
+          0.665
+        ],
+        "SOCKET_Relic_HeartOfTheReef": [
+          0.571,
+          1.224,
+          0.615
+        ],
+        "SOCKET_Relic_EclipseStone": [
+          -1.304,
+          0.349,
+          0.815
+        ],
+        "SOCKET_Relic_CrownOfTheLastAriki": [
+          1.304,
+          0.349,
+          0.865
+        ],
+        "SOCKET_Relic_MoonPearl": [
+          -1.106,
+          -0.774,
+          0.933
+        ],
+        "SOCKET_Relic_RedPearlOfRaraka": [
+          1.106,
+          -0.774,
+          0.933
+        ],
+        "SOCKET_Bean_Stand": [
+          0.0,
+          0.0,
+          0.165
+        ],
+        "SOCKET_Approach": [
+          0.0,
+          -2.3,
+          0.0
+        ]
+      },
+      "info": {
+        "plinths": {
+          "FishGodFragment": {
+            "shape": "box",
+            "top_m": [
+              0.36,
+              0.42
+            ],
+            "h_m": 0.5,
+            "socket_z": 0.665
+          },
+          "HeartOfTheReef": {
+            "shape": "box",
+            "top_m": [
+              0.62,
+              0.52
+            ],
+            "h_m": 0.45,
+            "socket_z": 0.615
+          },
+          "EclipseStone": {
+            "shape": "drum",
+            "radius_m": 0.3,
+            "h_m": 0.65,
+            "socket_z": 0.815
+          },
+          "CrownOfTheLastAriki": {
+            "shape": "box",
+            "top_m": [
+              0.36,
+              0.34
+            ],
+            "h_m": 0.7,
+            "socket_z": 0.865
+          },
+          "MoonPearl": {
+            "shape": "pillar_cup",
+            "top_m": [
+              0.22,
+              0.22
+            ],
+            "h_m": 0.78,
+            "cup": [
+              0.06,
+              0.012
+            ],
+            "socket_z": 0.933
+          },
+          "RedPearlOfRaraka": {
+            "shape": "pillar_cup",
+            "top_m": [
+              0.22,
+              0.22
+            ],
+            "h_m": 0.78,
+            "cup": [
+              0.06,
+              0.012
+            ],
+            "socket_z": 0.933
+          }
+        },
+        "tris_raw": 3200,
+        "tris": 3200,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral",
+          "MAT-Temple_CoralGravel"
+        ],
+        "budget": 25000
+      }
+    },
+    "SM_Temple_Ahu": {
+      "key": "ahu",
+      "dims_m": [
+        9.723,
+        4.978,
+        3.804
+      ],
+      "height_vs_bean": 3.62,
+      "tris": 53268,
+      "ucx": [
+        "UCX_SM_Temple_Ahu_00",
+        "UCX_SM_Temple_Ahu_01",
+        "UCX_SM_Temple_Ahu_02",
+        "UCX_SM_Temple_Ahu_03",
+        "UCX_SM_Temple_Ahu_04",
+        "UCX_SM_Temple_Ahu_05",
+        "UCX_SM_Temple_Ahu_06",
+        "UCX_SM_Temple_Ahu_07",
+        "UCX_SM_Temple_Ahu_08"
+      ],
+      "sockets": {
+        "SOCKET_Summit": [
+          0.0,
+          0.0,
+          1.485
+        ],
+        "SOCKET_StairFoot": [
+          0.0,
+          -3.6,
+          0.0
+        ],
+        "SOCKET_StairTop": [
+          0.0,
+          -0.6,
+          1.485
+        ],
+        "SOCKET_Torch_L": [
+          -1.0,
+          -3.4,
+          0.0
+        ],
+        "SOCKET_Torch_R": [
+          1.0,
+          -3.4,
+          0.0
+        ],
+        "SOCKET_Offering": [
+          0.0,
+          -0.2,
+          1.485
+        ]
+      },
+      "info": {
+        "steps": 9,
+        "rise": 0.165,
+        "tread": 0.3,
+        "stair_y0": -3.3,
+        "height": 1.4849999999999999,
+        "footprint": [
+          8.0,
+          2.4
+        ],
+        "stones_removed": 73,
+        "unu": 5,
+        "tris_raw": 53268,
+        "tris": 53268,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral",
+          "MAT-Temple_WoodWeathered"
+        ],
+        "budget": 60000
+      }
+    },
+    "SM_Temple_Gate": {
+      "key": "gate",
+      "dims_m": [
+        3.055,
+        0.712,
+        2.657
+      ],
+      "height_vs_bean": 2.53,
+      "tris": 4948,
+      "ucx": [
+        "UCX_SM_Temple_Gate_00",
+        "UCX_SM_Temple_Gate_01",
+        "UCX_SM_Temple_Gate_02",
+        "UCX_SM_Temple_Gate_03",
+        "UCX_SM_Temple_Gate_04"
+      ],
+      "sockets": {
+        "SOCKET_Threshold": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Torch_L": [
+          -1.1,
+          -0.7,
+          0.0
+        ],
+        "SOCKET_Torch_R": [
+          1.1,
+          -0.7,
+          0.0
+        ],
+        "SOCKET_Guardian_L": [
+          -2.0,
+          -0.9,
+          0.0
+        ],
+        "SOCKET_Guardian_R": [
+          2.0,
+          -0.9,
+          0.0
+        ]
+      },
+      "info": {
+        "opening_m": [
+          1.6,
+          2.0
+        ],
+        "tris_raw": 4948,
+        "tris": 4948,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_WoodWeathered",
+          "MAT-Temple_Rope"
+        ],
+        "budget": 8000
+      }
+    },
+    "SM_Temple_Wall_3m": {
+      "key": "wall_straight",
+      "dims_m": [
+        3.063,
+        0.739,
+        0.89
+      ],
+      "height_vs_bean": 0.85,
+      "tris": 4704,
+      "ucx": [
+        "UCX_SM_Temple_Wall_3m_00"
+      ],
+      "sockets": {
+        "SOCKET_Snap_L": [
+          -1.5,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Snap_R": [
+          1.5,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "tris_raw": 4704,
+        "tris": 4704,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 6000
+      }
+    },
+    "SM_Temple_Wall_3m_Ruined": {
+      "key": "wall_ruined",
+      "dims_m": [
+        3.099,
+        2.098,
+        0.946
+      ],
+      "height_vs_bean": 0.9,
+      "tris": 4128,
+      "ucx": [
+        "UCX_SM_Temple_Wall_3m_Ruined_00",
+        "UCX_SM_Temple_Wall_3m_Ruined_01",
+        "UCX_SM_Temple_Wall_3m_Ruined_02"
+      ],
+      "sockets": {
+        "SOCKET_Snap_L": [
+          -1.5,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Snap_R": [
+          1.5,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "tris_raw": 4128,
+        "tris": 4128,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 6000
+      }
+    },
+    "SM_Temple_Wall_3m_Breach": {
+      "key": "wall_breach",
+      "dims_m": [
+        3.05,
+        1.932,
+        0.957
+      ],
+      "height_vs_bean": 0.91,
+      "tris": 3000,
+      "ucx": [
+        "UCX_SM_Temple_Wall_3m_Breach_00",
+        "UCX_SM_Temple_Wall_3m_Breach_01"
+      ],
+      "sockets": {
+        "SOCKET_Snap_L": [
+          -1.5,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Snap_R": [
+          1.5,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Passage": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "passage_m": 1.4,
+        "tris_raw": 3000,
+        "tris": 3000,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 6000
+      }
+    },
+    "SM_Temple_Wall_Corner": {
+      "key": "wall_corner",
+      "dims_m": [
+        0.878,
+        0.88,
+        1.046
+      ],
+      "height_vs_bean": 1.0,
+      "tris": 2124,
+      "ucx": [
+        "UCX_SM_Temple_Wall_Corner_00"
+      ],
+      "sockets": {
+        "SOCKET_Top": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "info": {
+        "tris_raw": 2124,
+        "tris": 2124,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 6000
+      }
+    },
+    "SM_Temple_Palisade_2m": {
+      "key": "palisade",
+      "dims_m": [
+        1.996,
+        0.228,
+        2.163
+      ],
+      "height_vs_bean": 2.06,
+      "tris": 1776,
+      "ucx": [
+        "UCX_SM_Temple_Palisade_2m_00"
+      ],
+      "sockets": {
+        "SOCKET_Snap_L": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Snap_R": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "poles": 14,
+        "fallen": false,
+        "tris_raw": 1776,
+        "tris": 1776,
+        "materials": [
+          "MAT-Temple_Bark",
+          "MAT-Temple_Post",
+          "MAT-Temple_Rope"
+        ],
+        "budget": 3000
+      }
+    },
+    "SM_Temple_Palisade_2m_Fallen": {
+      "key": "palisade_fallen",
+      "dims_m": [
+        2.049,
+        1.854,
+        2.203
+      ],
+      "height_vs_bean": 2.1,
+      "tris": 1800,
+      "ucx": [
+        "UCX_SM_Temple_Palisade_2m_Fallen_00"
+      ],
+      "sockets": {
+        "SOCKET_Snap_L": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Snap_R": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "poles": 14,
+        "fallen": true,
+        "tris_raw": 1800,
+        "tris": 1800,
+        "materials": [
+          "MAT-Temple_Bark",
+          "MAT-Temple_Post",
+          "MAT-Temple_Rope"
+        ],
+        "budget": 3000
+      }
+    },
+    "SM_Temple_FareIaManaha": {
+      "key": "fare_ia_manaha",
+      "dims_m": [
+        5.5,
+        6.066,
+        4.585
+      ],
+      "height_vs_bean": 4.37,
+      "tris": 32342,
+      "ucx": [
+        "UCX_SM_Temple_FareIaManaha_00",
+        "UCX_SM_Temple_FareIaManaha_01",
+        "UCX_SM_Temple_FareIaManaha_02",
+        "UCX_SM_Temple_FareIaManaha_03",
+        "UCX_SM_Temple_FareIaManaha_04",
+        "UCX_SM_Temple_FareIaManaha_05",
+        "UCX_SM_Temple_FareIaManaha_06",
+        "UCX_SM_Temple_FareIaManaha_07",
+        "UCX_SM_Temple_FareIaManaha_08",
+        "UCX_SM_Temple_FareIaManaha_09",
+        "UCX_SM_Temple_FareIaManaha_10",
+        "UCX_SM_Temple_FareIaManaha_11",
+        "UCX_SM_Temple_FareIaManaha_12",
+        "UCX_SM_Temple_FareIaManaha_13",
+        "UCX_SM_Temple_FareIaManaha_14",
+        "UCX_SM_Temple_FareIaManaha_15",
+        "UCX_SM_Temple_FareIaManaha_16",
+        "UCX_SM_Temple_FareIaManaha_17",
+        "UCX_SM_Temple_FareIaManaha_18",
+        "UCX_SM_Temple_FareIaManaha_19"
+      ],
+      "sockets": {
+        "SOCKET_Relic_DeadReefConch": [
+          -1.35,
+          1.525,
+          1.79
+        ],
+        "SOCKET_Relic_CallingConch": [
+          -0.45,
+          1.525,
+          1.79
+        ],
+        "SOCKET_Relic_ThunderShell": [
+          0.45,
+          1.525,
+          1.79
+        ],
+        "SOCKET_Relic_WhiteTurtleSkull": [
+          1.35,
+          1.525,
+          1.79
+        ],
+        "SOCKET_Relic_NavigatorRope": [
+          -1.35,
+          1.525,
+          1.49
+        ],
+        "SOCKET_Relic_BlackSharkHook": [
+          -0.45,
+          1.525,
+          1.49
+        ],
+        "SOCKET_Relic_MotherTurtleScute": [
+          0.45,
+          1.525,
+          1.49
+        ],
+        "SOCKET_Relic_SharkEye": [
+          1.35,
+          1.525,
+          1.55
+        ],
+        "SOCKET_Relic_SacredPaddleFragment": [
+          -2.03,
+          0.3,
+          2.09
+        ],
+        "SOCKET_Relic_NavigationShellMap": [
+          1.8,
+          0.2,
+          1.69
+        ],
+        "SOCKET_Door": [
+          0.0,
+          -1.0,
+          0.99
+        ],
+        "SOCKET_StairFoot": [
+          0.0,
+          -3.75,
+          0.0
+        ],
+        "SOCKET_Torch_Stairs": [
+          0.9,
+          -3.8,
+          0.0
+        ]
+      },
+      "info": {
+        "deck_z": 0.99,
+        "ridge_z": 4.27,
+        "door_m": [
+          1.1,
+          1.7
+        ],
+        "interior_m": [
+          4.2,
+          2.6
+        ],
+        "clear_height_min_m": 1.9,
+        "steps": 6,
+        "rise_m": 0.165,
+        "roof_hole_m": [
+          1.0,
+          0.75
+        ],
+        "tris_raw": 32342,
+        "tris": 32342,
+        "materials": [
+          "MAT-Temple_Post",
+          "MAT-Temple_Planks",
+          "MAT-Temple_Rope",
+          "MAT-Temple_Pandanus"
+        ],
+        "budget": 40000
+      }
+    },
+    "SM_Temple_TikiGuardian_A": {
+      "key": "tiki_A",
+      "dims_m": [
+        0.52,
+        0.517,
+        1.941
+      ],
+      "height_vs_bean": 1.85,
+      "tris": 3106,
+      "ucx": [
+        "UCX_SM_Temple_TikiGuardian_A_00",
+        "UCX_SM_Temple_TikiGuardian_A_01"
+      ],
+      "sockets": {
+        "SOCKET_Ground": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "variant": "A",
+        "height_m": 1.9,
+        "material": "MAT-Temple_TikiWood",
+        "carving_amplified": true,
+        "tris_raw": 3106,
+        "tris": 3106,
+        "materials": [
+          "MAT-Temple_TikiWood"
+        ],
+        "budget": 6000
+      }
+    },
+    "SM_Temple_TikiGuardian_B": {
+      "key": "tiki_B",
+      "dims_m": [
+        0.52,
+        0.528,
+        1.9
+      ],
+      "height_vs_bean": 1.81,
+      "tris": 3106,
+      "ucx": [
+        "UCX_SM_Temple_TikiGuardian_B_00",
+        "UCX_SM_Temple_TikiGuardian_B_01"
+      ],
+      "sockets": {
+        "SOCKET_Ground": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "variant": "B",
+        "height_m": 1.9,
+        "material": "MAT-Temple_TikiWood",
+        "carving_amplified": true,
+        "tris_raw": 3106,
+        "tris": 3106,
+        "materials": [
+          "MAT-Temple_TikiWood"
+        ],
+        "budget": 6000
+      }
+    },
+    "SM_Temple_TikiGuardian_C": {
+      "key": "tiki_C",
+      "dims_m": [
+        0.47,
+        0.478,
+        1.45
+      ],
+      "height_vs_bean": 1.38,
+      "tris": 3106,
+      "ucx": [
+        "UCX_SM_Temple_TikiGuardian_C_00",
+        "UCX_SM_Temple_TikiGuardian_C_01"
+      ],
+      "sockets": {
+        "SOCKET_Ground": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "variant": "C",
+        "height_m": 1.45,
+        "material": "MAT-Temple_BasaltMoss",
+        "carving_amplified": true,
+        "tris_raw": 3106,
+        "tris": 3106,
+        "materials": [
+          "MAT-Temple_BasaltMoss"
+        ],
+        "budget": 6000
+      }
+    },
+    "SM_Temple_StandingStone_A": {
+      "key": "standing_stone_A",
+      "dims_m": [
+        0.554,
+        0.233,
+        1.384
+      ],
+      "height_vs_bean": 1.32,
+      "tris": 300,
+      "ucx": [
+        "UCX_SM_Temple_StandingStone_A_00"
+      ],
+      "sockets": {
+        "SOCKET_Ground": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Top": [
+          0.0,
+          0.0,
+          1.2
+        ]
+      },
+      "info": {
+        "variant": "A",
+        "size_m": [
+          0.55,
+          0.22,
+          1.2
+        ],
+        "tris_raw": 300,
+        "tris": 300,
+        "materials": [
+          "MAT-Temple_Coral"
+        ],
+        "budget": 1500
+      }
+    },
+    "SM_Temple_StandingStone_B": {
+      "key": "standing_stone_B",
+      "dims_m": [
+        0.708,
+        0.264,
+        1.785
+      ],
+      "height_vs_bean": 1.7,
+      "tris": 300,
+      "ucx": [
+        "UCX_SM_Temple_StandingStone_B_00"
+      ],
+      "sockets": {
+        "SOCKET_Ground": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Top": [
+          0.0,
+          0.0,
+          1.6
+        ]
+      },
+      "info": {
+        "variant": "B",
+        "size_m": [
+          0.7,
+          0.25,
+          1.6
+        ],
+        "tris_raw": 300,
+        "tris": 300,
+        "materials": [
+          "MAT-Temple_BasaltMoss"
+        ],
+        "budget": 1500
+      }
+    },
+    "SM_Temple_StandingStone_C": {
+      "key": "standing_stone_C",
+      "dims_m": [
+        0.446,
+        0.195,
+        1.065
+      ],
+      "height_vs_bean": 1.01,
+      "tris": 300,
+      "ucx": [
+        "UCX_SM_Temple_StandingStone_C_00"
+      ],
+      "sockets": {
+        "SOCKET_Ground": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "SOCKET_Top": [
+          0.0,
+          0.0,
+          0.9
+        ]
+      },
+      "info": {
+        "variant": "C",
+        "size_m": [
+          0.45,
+          0.2,
+          0.9
+        ],
+        "tris_raw": 300,
+        "tris": 300,
+        "materials": [
+          "MAT-Temple_Basalt"
+        ],
+        "budget": 1500
+      }
+    },
+    "SM_Temple_Torch": {
+      "key": "torch",
+      "dims_m": [
+        0.14,
+        0.14,
+        1.86
+      ],
+      "height_vs_bean": 1.77,
+      "tris": 2400,
+      "ucx": [
+        "UCX_SM_Temple_Torch_00"
+      ],
+      "sockets": {
+        "SOCKET_Flame": [
+          0.0,
+          0.0,
+          1.5
+        ],
+        "SOCKET_Ground": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "flame_z_m": 1.5,
+        "tris_raw": 4080,
+        "tris": 2400,
+        "materials": [
+          "MAT-Temple_Post",
+          "MAT-Temple_Rope",
+          "M_Marae_Flame",
+          "M_Marae_FlameCore"
+        ],
+        "budget": 2500
+      }
+    },
+    "SM_Temple_Fata": {
+      "key": "fata",
+      "dims_m": [
+        1.14,
+        0.84,
+        1.403
+      ],
+      "height_vs_bean": 1.34,
+      "tris": 1392,
+      "ucx": [
+        "UCX_SM_Temple_Fata_00",
+        "UCX_SM_Temple_Fata_01",
+        "UCX_SM_Temple_Fata_02",
+        "UCX_SM_Temple_Fata_03",
+        "UCX_SM_Temple_Fata_04"
+      ],
+      "sockets": {
+        "SOCKET_Offering": [
+          0.0,
+          0.0,
+          0.98
+        ]
+      },
+      "info": {
+        "deck_z_m": 0.95,
+        "tris_raw": 1392,
+        "tris": 1392,
+        "materials": [
+          "MAT-Temple_Post",
+          "MAT-Temple_Planks",
+          "MAT-Temple_Rope",
+          "MAT-Temple_Bark"
+        ],
+        "budget": 3000
+      }
+    },
+    "SM_Temple_Debris_StonePile": {
+      "key": "debris_StonePile",
+      "dims_m": [
+        1.468,
+        1.253,
+        0.6
+      ],
+      "height_vs_bean": 0.57,
+      "tris": 1440,
+      "ucx": [
+        "UCX_SM_Temple_Debris_StonePile_00"
+      ],
+      "sockets": {
+        "SOCKET_Center": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "kind": "StonePile",
+        "tris_raw": 1440,
+        "tris": 1440,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 5000
+      }
+    },
+    "SM_Temple_Debris_FallenStone": {
+      "key": "debris_FallenStone",
+      "dims_m": [
+        1.646,
+        0.716,
+        0.265
+      ],
+      "height_vs_bean": 0.25,
+      "tris": 384,
+      "ucx": [
+        "UCX_SM_Temple_Debris_FallenStone_00",
+        "UCX_SM_Temple_Debris_FallenStone_01"
+      ],
+      "sockets": {
+        "SOCKET_Center": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "kind": "FallenStone",
+        "tris_raw": 384,
+        "tris": 384,
+        "materials": [
+          "MAT-Temple_BasaltMoss"
+        ],
+        "budget": 5000
+      }
+    },
+    "SM_Temple_Debris_BrokenUnu": {
+      "key": "debris_BrokenUnu",
+      "dims_m": [
+        1.52,
+        0.447,
+        0.083
+      ],
+      "height_vs_bean": 0.08,
+      "tris": 932,
+      "ucx": [
+        "UCX_SM_Temple_Debris_BrokenUnu_00",
+        "UCX_SM_Temple_Debris_BrokenUnu_01"
+      ],
+      "sockets": {
+        "SOCKET_Center": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "info": {
+        "kind": "BrokenUnu",
+        "tris_raw": 932,
+        "tris": 932,
+        "materials": [
+          "MAT-Temple_WoodWeathered"
+        ],
+        "budget": 5000
+      }
+    }
+  },
+  "scene": {
+    "modules": {
+      "SM_Temple_CourtPaving": {
+        "slabs": 516,
+        "sites": 681,
+        "coverage": 0.551,
+        "tris_raw": 7839,
+        "tris": 7839,
+        "materials": [
+          "MAT-Temple_Coral",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_BasaltMoss"
+        ],
+        "budget": 20000,
+        "instances": 1
+      },
+      "SM_Temple_RelicAltar": {
+        "plinths": {
+          "FishGodFragment": {
+            "shape": "box",
+            "top_m": [
+              0.36,
+              0.42
+            ],
+            "h_m": 0.5,
+            "socket_z": 0.665
+          },
+          "HeartOfTheReef": {
+            "shape": "box",
+            "top_m": [
+              0.62,
+              0.52
+            ],
+            "h_m": 0.45,
+            "socket_z": 0.615
+          },
+          "EclipseStone": {
+            "shape": "drum",
+            "radius_m": 0.3,
+            "h_m": 0.65,
+            "socket_z": 0.815
+          },
+          "CrownOfTheLastAriki": {
+            "shape": "box",
+            "top_m": [
+              0.36,
+              0.34
+            ],
+            "h_m": 0.7,
+            "socket_z": 0.865
+          },
+          "MoonPearl": {
+            "shape": "pillar_cup",
+            "top_m": [
+              0.22,
+              0.22
+            ],
+            "h_m": 0.78,
+            "cup": [
+              0.06,
+              0.012
+            ],
+            "socket_z": 0.933
+          },
+          "RedPearlOfRaraka": {
+            "shape": "pillar_cup",
+            "top_m": [
+              0.22,
+              0.22
+            ],
+            "h_m": 0.78,
+            "cup": [
+              0.06,
+              0.012
+            ],
+            "socket_z": 0.933
+          }
+        },
+        "tris_raw": 3200,
+        "tris": 3200,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral",
+          "MAT-Temple_CoralGravel"
+        ],
+        "budget": 25000,
+        "instances": 1
+      },
+      "SM_Temple_Ahu": {
+        "steps": 9,
+        "rise": 0.165,
+        "tread": 0.3,
+        "stair_y0": -3.3,
+        "height": 1.4849999999999999,
+        "footprint": [
+          8.0,
+          2.4
+        ],
+        "stones_removed": 73,
+        "unu": 5,
+        "tris_raw": 53268,
+        "tris": 53268,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral",
+          "MAT-Temple_WoodWeathered"
+        ],
+        "budget": 60000,
+        "instances": 1
+      },
+      "SM_Temple_Gate": {
+        "opening_m": [
+          1.6,
+          2.0
+        ],
+        "tris_raw": 4948,
+        "tris": 4948,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_WoodWeathered",
+          "MAT-Temple_Rope"
+        ],
+        "budget": 8000,
+        "instances": 1
+      },
+      "SM_Temple_Wall_3m": {
+        "tris_raw": 4704,
+        "tris": 4704,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 6000,
+        "instances": 15
+      },
+      "SM_Temple_Wall_3m_Ruined": {
+        "tris_raw": 4128,
+        "tris": 4128,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 6000,
+        "instances": 3
+      },
+      "SM_Temple_Wall_3m_Breach": {
+        "passage_m": 1.4,
+        "tris_raw": 3000,
+        "tris": 3000,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 6000,
+        "instances": 1
+      },
+      "SM_Temple_Wall_Corner": {
+        "tris_raw": 2124,
+        "tris": 2124,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 6000,
+        "instances": 4
+      },
+      "SM_Temple_Palisade_2m": {
+        "poles": 14,
+        "fallen": false,
+        "tris_raw": 1776,
+        "tris": 1776,
+        "materials": [
+          "MAT-Temple_Bark",
+          "MAT-Temple_Post",
+          "MAT-Temple_Rope"
+        ],
+        "budget": 3000,
+        "instances": 11
+      },
+      "SM_Temple_Palisade_2m_Fallen": {
+        "poles": 14,
+        "fallen": true,
+        "tris_raw": 1800,
+        "tris": 1800,
+        "materials": [
+          "MAT-Temple_Bark",
+          "MAT-Temple_Post",
+          "MAT-Temple_Rope"
+        ],
+        "budget": 3000,
+        "instances": 1
+      },
+      "SM_Temple_FareIaManaha": {
+        "deck_z": 0.99,
+        "ridge_z": 4.27,
+        "door_m": [
+          1.1,
+          1.7
+        ],
+        "interior_m": [
+          4.2,
+          2.6
+        ],
+        "clear_height_min_m": 1.9,
+        "steps": 6,
+        "rise_m": 0.165,
+        "roof_hole_m": [
+          1.0,
+          0.75
+        ],
+        "tris_raw": 32342,
+        "tris": 32342,
+        "materials": [
+          "MAT-Temple_Post",
+          "MAT-Temple_Planks",
+          "MAT-Temple_Rope",
+          "MAT-Temple_Pandanus"
+        ],
+        "budget": 40000,
+        "instances": 1
+      },
+      "SM_Temple_TikiGuardian_A": {
+        "variant": "A",
+        "height_m": 1.9,
+        "material": "MAT-Temple_TikiWood",
+        "carving_amplified": true,
+        "tris_raw": 3106,
+        "tris": 3106,
+        "materials": [
+          "MAT-Temple_TikiWood"
+        ],
+        "budget": 6000,
+        "instances": 1
+      },
+      "SM_Temple_TikiGuardian_B": {
+        "variant": "B",
+        "height_m": 1.9,
+        "material": "MAT-Temple_TikiWood",
+        "carving_amplified": true,
+        "tris_raw": 3106,
+        "tris": 3106,
+        "materials": [
+          "MAT-Temple_TikiWood"
+        ],
+        "budget": 6000,
+        "instances": 1
+      },
+      "SM_Temple_TikiGuardian_C": {
+        "variant": "C",
+        "height_m": 1.45,
+        "material": "MAT-Temple_BasaltMoss",
+        "carving_amplified": true,
+        "tris_raw": 3106,
+        "tris": 3106,
+        "materials": [
+          "MAT-Temple_BasaltMoss"
+        ],
+        "budget": 6000,
+        "instances": 1
+      },
+      "SM_Temple_StandingStone_A": {
+        "variant": "A",
+        "size_m": [
+          0.55,
+          0.22,
+          1.2
+        ],
+        "tris_raw": 300,
+        "tris": 300,
+        "materials": [
+          "MAT-Temple_Coral"
+        ],
+        "budget": 1500,
+        "instances": 2
+      },
+      "SM_Temple_StandingStone_B": {
+        "variant": "B",
+        "size_m": [
+          0.7,
+          0.25,
+          1.6
+        ],
+        "tris_raw": 300,
+        "tris": 300,
+        "materials": [
+          "MAT-Temple_BasaltMoss"
+        ],
+        "budget": 1500,
+        "instances": 2
+      },
+      "SM_Temple_StandingStone_C": {
+        "variant": "C",
+        "size_m": [
+          0.45,
+          0.2,
+          0.9
+        ],
+        "tris_raw": 300,
+        "tris": 300,
+        "materials": [
+          "MAT-Temple_Basalt"
+        ],
+        "budget": 1500,
+        "instances": 2
+      },
+      "SM_Temple_Torch": {
+        "flame_z_m": 1.5,
+        "tris_raw": 4080,
+        "tris": 2400,
+        "materials": [
+          "MAT-Temple_Post",
+          "MAT-Temple_Rope",
+          "M_Marae_Flame",
+          "M_Marae_FlameCore"
+        ],
+        "budget": 2500,
+        "instances": 7
+      },
+      "SM_Temple_Fata": {
+        "deck_z_m": 0.95,
+        "tris_raw": 1392,
+        "tris": 1392,
+        "materials": [
+          "MAT-Temple_Post",
+          "MAT-Temple_Planks",
+          "MAT-Temple_Rope",
+          "MAT-Temple_Bark"
+        ],
+        "budget": 3000,
+        "instances": 1
+      },
+      "SM_Temple_Debris_StonePile": {
+        "kind": "StonePile",
+        "tris_raw": 1440,
+        "tris": 1440,
+        "materials": [
+          "MAT-Temple_BasaltMoss",
+          "MAT-Temple_Basalt",
+          "MAT-Temple_Coral"
+        ],
+        "budget": 5000,
+        "instances": 3
+      },
+      "SM_Temple_Debris_FallenStone": {
+        "kind": "FallenStone",
+        "tris_raw": 384,
+        "tris": 384,
+        "materials": [
+          "MAT-Temple_BasaltMoss"
+        ],
+        "budget": 5000,
+        "instances": 1
+      },
+      "SM_Temple_Debris_BrokenUnu": {
+        "kind": "BrokenUnu",
+        "tris_raw": 932,
+        "tris": 932,
+        "materials": [
+          "MAT-Temple_WoodWeathered"
+        ],
+        "budget": 5000,
+        "instances": 1
+      }
+    },
+    "relics": {
+      "FishGodFragment": {
+        "file": "SM_FishGodFragment_LOD1.glb",
+        "object": "REF-Relic_FishGodFragment",
+        "tris": 39292,
+        "images": [
+          [
+            "T_FishGodFragment_BaseColor",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_FishGodFragment_Metallic-T_FishGodFragment_Roughness",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_FishGodFragment_Normal",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_Gold_Aged_Color",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_Gold_Aged_Roughness",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_Gold_Scratches",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_Gold_Scratches.001",
+            [
+              2048,
+              2048
+            ]
+          ]
+        ],
+        "hidden_helpers": [],
+        "world_bbox": {
+          "min": [
+            -0.743,
+            -0.563,
+            0.695
+          ],
+          "max": [
+            -0.399,
+            -0.19,
+            1.245
+          ]
+        }
+      },
+      "HeartOfTheReef": {
+        "file": "SM_HeartOfTheReef_LOD1.glb",
+        "object": "REF-Relic_HeartOfTheReef",
+        "tris": 51792,
+        "images": [
+          [
+            "T_HeartOfTheReef_BaseColor",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_HeartOfTheReef_Normal",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_HeartOfTheReef_Roughness",
+            [
+              2048,
+              2048
+            ]
+          ]
+        ],
+        "hidden_helpers": [],
+        "world_bbox": {
+          "min": [
+            0.26,
+            -0.663,
+            0.645
+          ],
+          "max": [
+            0.882,
+            -0.089,
+            0.972
+          ]
+        }
+      },
+      "EclipseStone": {
+        "file": "SM_EclipseStone_LOD1.glb",
+        "object": "REF-Relic_EclipseStone",
+        "tris": 25356,
+        "images": [
+          [
+            "T_EclipseStone_BaseColor",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_EclipseStone_Normal",
+            [
+              2048,
+              2048
+            ]
+          ],
+          [
+            "T_EclipseStone_Roughness",
+            [
+              2048,
+              2048
+            ]
+          ]
+        ],
+        "hidden_helpers": [],
+        "world_bbox": {
+          "min": [
+            -1.58,
+            -1.527,
+            0.845
+          ],
+          "max": [
+            -1.028,
+            -0.975,
+            0.971
+          ]
+        }
+      },
+      "CrownOfTheLastAriki": {
+        "file": "SM_CrownOfTheLastAriki_LOD1.glb",
+        "object": "REF-Relic_CrownOfTheLastAriki",
+        "tris": 47080,
+        "images": [
+          [
+            "T_CrownOfTheLastAriki_BaseColor",
+            [
+              1024,
+              1024
+            ]
+          ],
+          [
+            "T_CrownOfTheLastAriki_Normal",
+            [
+              1024,
+              1024
+            ]
+          ],
+          [
+            "T_CrownOfTheLastAriki_Roughness",
+            [
+              1024,
+              1024
+            ]
+          ],
+          [
+            "T_Feather_Aged_Color",
+            [
+              512,
+              1024
+            ]
+          ],
+          [
+            "T_Feather_Aged_Normal",
+            [
+              512,
+              1024
+            ]
+          ],
+          [
+            "T_Nacre_Pinctada_Color",
+            [
+              1024,
+              1024
+            ]
+          ],
+          [
+            "T_Nacre_Pinctada_Normal",
+            [
+              1024,
+              1024
+            ]
+          ]
+        ],
+        "hidden_helpers": [],
+        "world_bbox": {
+          "min": [
+            1.167,
+            -1.395,
+            0.895
+          ],
+          "max": [
+            1.441,
+            -1.106,
+            1.06
+          ]
+        }
+      },
+      "MoonPearl": {
+        "file": "SM_MoonPearl_LOD1.glb",
+        "object": "REF-Relic_MoonPearl",
+        "tris": 6522,
+        "images": [
+          [
+            "T_MoonPearl_BaseColor",
+            [
+              1024,
+              1024
+            ]
+          ],
+          [
+            "T_MoonPearl_Normal",
+            [
+              1024,
+              1024
+            ]
+          ],
+          [
+            "T_MoonPearl_Roughness",
+            [
+              1024,
+              1024
+            ]
+          ]
+        ],
+        "hidden_helpers": [],
+        "world_bbox": {
+          "min": [
+            -1.122,
+            -2.39,
+            0.963
+          ],
+          "max": [
+            -1.09,
+            -2.358,
+            0.991
+          ]
+        }
+      },
+      "RedPearlOfRaraka": {
+        "file": "SM_RedPearlOfRaraka_LOD1.glb",
+        "object": "REF-Relic_RedPearlOfRaraka",
+        "tris": 5414,
+        "images": [
+          [
+            "T_RedPearlOfRaraka_BaseColor",
+            [
+              1024,
+              1024
+            ]
+          ],
+          [
+            "T_RedPearlOfRaraka_Normal",
+            [
+              1024,
+              1024
+            ]
+          ],
+          [
+            "T_RedPearlOfRaraka_Roughness",
+            [
+              1024,
+              1024
+            ]
+          ]
+        ],
+        "hidden_helpers": [],
+        "world_bbox": {
+          "min": [
+            1.09,
+            -2.389,
+            0.963
+          ],
+          "max": [
+            1.121,
+            -2.358,
+            0.991
+          ]
+        }
+      }
+    },
+    "rare_placeholders": [
+      "DeadReefConch",
+      "CallingConch",
+      "ThunderShell",
+      "WhiteTurtleSkull",
+      "NavigatorRope",
+      "BlackSharkHook",
+      "MotherTurtleScute",
+      "SharkEye",
+      "SacredPaddleFragment",
+      "NavigationShellMap"
+    ],
+    "warnings": [],
+    "vegetation": {
+      "instances": 743,
+      "library": [
+        "SM_CoconutFrond_Dry_A",
+        "SM_CoconutFrond_Dry_B",
+        "SM_CoconutPalm_Juvenile_A",
+        "SM_CoconutPalm_Leaning_A",
+        "SM_CoconutPalm_Leaning_B",
+        "SM_CoconutPalm_Sabre_A",
+        "SM_CoconutPalm_Straight_A",
+        "SM_CoconutPalm_Young_A",
+        "SM_Coconut_Brown",
+        "SM_Coconut_Green",
+        "SM_CoralBlock_A",
+        "SM_CoralBlock_B",
+        "SM_CoralRubble_A",
+        "SM_CoralRubble_B",
+        "SM_CoralRubble_D",
+        "SM_CoralRubble_F",
+        "SM_Driftwood_A",
+        "SM_Fern_A",
+        "SM_Fern_B",
+        "SM_Grass_Dry",
+        "SM_Grass_Short",
+        "SM_Grass_Tuft",
+        "SM_Ipomoea_A",
+        "SM_Ipomoea_B",
+        "SM_MikiMiki_A",
+        "SM_MikiMiki_B",
+        "SM_Naupaka_A",
+        "SM_Naupaka_B",
+        "SM_Naupaka_C",
+        "SM_Pandanus_A",
+        "SM_Pandanus_Young",
+        "SM_Tahinu_A"
+      ]
+    },
+    "lights": [
+      "LGT-torch_00",
+      "LGT-torch_01",
+      "LGT-torch_02",
+      "LGT-torch_03",
+      "LGT-torch_04",
+      "LGT-torch_05",
+      "LGT-torch_06"
+    ],
+    "instances_total": 62
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "bean-machinegun",
+  "version": "0.1.0-local",
+  "title": "Bean - mitrailleuse lourde à manivelle Mle 1918 (TP/FP), construite dans le dépôt (T-272)",
+  "based_on": "cadre des packs d'armes du dépôt : solveurs et caméra FP de scripts/props/musket_pack, cuisson PBR et matériaux de scripts/props/longarm_common, format du fusil à pompe (scripts/props/shotgun_pack)",
+  "fps": 30,
+  "clips": ["Idle", "Walk", "Sprint", "Equip", "Holster", "Inspect", "FireStart", "FireLoop", "FireEnd", "Reload", "Overheat", "DryFire", "Discard"],
+  "textures": {"body": 2048, "jacket": 2048, "belt": 1024, "box": 1024, "casing": 512, "heat_mask": 1024},
+  "notes": [
+    "Mitrailleuse fictive d'après les Vickers / Maxim de 1918 avec la manivelle latérale d'une Gatling : manchon à eau cannelé en laiton bruni (bouchons de remplissage, soupape de vapeur, tuyau de condensation), canon et cache-flamme conique, boîte de culasse en acier bleui rivetée, capot d'alimentation à charnière, manivelle à poignée de noyer, poignées de tir en noyer (bêches arrière, poignée avant), hausse relevable, bande de toile à barrettes de laiton entrant par la gauche depuis une caisse en bois cerclée de fer, sortie de la bande vide dans une poche de toile à droite, éjection des douilles par dessous, poignée de transport, bretelle, trépied replié sous le manchon (os tripod, masquable).",
+    "Échelle réelle : 1,16 m de la bêche à la bouche du cache-flamme ; axe du canon sur Z = 0 du repère de l'arme (+X bouche, +Z haut, -Y droite, côté manivelle).",
+    "Manivelle : un coup par quart de tour depuis l'angle de repos ; FireLoop = un tour en 16 images (450 coups/min à vitesse 1) ; FireStart lance la manivelle (3 coups), FireEnd l'arrête sur son cran (sans coup) depuis la fin d'un tour.",
+    "Bande : chaîne d'os (belt_01..17 garnis, belt_out_01..10 vides) posée chaque image sur le trajet de la bande ; avance d'un pas par coup, quatre pas par tour de FireLoop, repli au bouclage du clip (le moteur n'interpole pas entre la dernière et la première image d'une boucle).",
+    "Rechargement 5 s : capot ouvert (CoverOpen), bande arrachée (BeltOut), caisse décrochée et lâchée (BoxOut, l'os ammo_box est réduit à zéro), nouvelle caisse (BoxIn), amorce de la bande enfilée (BeltIn), capot rabattu (CoverClose), poignée d'armement tirée par la main gauche (Charge).",
+    "Textures PBR cuites (Cycles) : M_MG_Body (2048), M_MG_Jacket (2048, + T_MG_Jacket_Heat : masque de rougeoiement du canon), M_MG_Belt (1024), M_MG_Box (1024), M_MG_Casing (512) ; BaseColor sRGB, Normal DirectX, ORM linéaire."
+  ]
+}

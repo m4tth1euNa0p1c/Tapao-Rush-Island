@@ -1,0 +1,1823 @@
+{
+  "$schema": "../../factory/schema/maquette.schema.json",
+  "format": "maquette/1",
+  "id": "temple-reliquaire",
+  "title": "Temple-reliquaire : marae en ruine et fare-ia-manaha (complexe modulaire)",
+  "description": "Complexe-temple ancien fictif de Polynesie orientale (Tuamotu), ruine et envahi par la vegetation, ou sont entreposes les artefacts RARE et LEGENDARY. Toutes les cotes sont posees par rapport a Bean (1,05 m, ~0,55 m de large, oeil suppose ~0,78 m) : marches 16,5 cm, passages >= 1,0 m, linteaux >= 1,6 m, plateaux de presentation 0,6-0,8 m au-dessus des pieds de Bean. Enclos de murets de pierres seches 15 x 15 m (h 0,85, cour pavee de dalles de corail), ahu a 3 gradins au fond (8,0 x 2,4 m, h 1,485 m, escalier 9 x 16,5 cm, large 1,2 m) couronne de planches unu et de dossiers de pierre, autel central circulaire (dais r 1,9 m, 1 marche) portant 6 plinthes dimensionnees pour les 6 LEGENDARY (SOCKET_Relic_<Id>), portique d'entree (passage 1,6 x 2,0 m), breche laterale (1,4 m) vers la fare-ia-manaha : maison des reliques sur 9 pilotis a coupelles anti-rats (plancher 0,99 m = 6 marches), toit de pandanus/niau, interieur praticable 4,2 x 2,6 m sous 1,9 m, etagere a 2 niveaux + ratelier + lutrin pour les 10 RARE. Annexes : palissade, pierres dressees, 3 tiki gardiens fictifs, torches, fata (autel d'offrande sur pilotis), debris. Chaque structure = un module SM_Temple_* (UCX_ + SOCKET_) exporte a part (FBX + GLB), avant = -Y Blender. Scene de presentation : Bean dans le portique, GLB des 6 legendaires poses sur leurs sockets. Style : kit marae (pierres seches generees, textures CC0 2K de art/textures, vegetation de l'atoll). Mythologie et noms en reo FICTIFS (voir BRIEF.md). Hypotheses : params.assumptions.",
+  "brief": "crée des structures type temple où seront entreposés les artefacts, un temple ancien, mythologie polynésienne ; utilise la taille du Bean comme réf pour bâtir ces structures",
+  "version": "0.2.0",
+  "status": "built",
+  "tags": [
+    "temple",
+    "marae",
+    "fare-ia-manaha",
+    "polynesie",
+    "tuamotu",
+    "ruine",
+    "reliques",
+    "artefacts",
+    "modulaire",
+    "unreal"
+  ],
+  "params": {
+    "kit": "factory/kits/temple_kit.py (modules, enregistres dans bean_kit.ITEMS sous 'temple_*') + factory/kits/temple_scene.py (scene, exports, rapport) ; reutilise marae_kit (pbr, mats, StoneBatch, wall, solid_box, build_pyramid, build_torch, import_gltf), camp_kit (mats chaume/bois/corde, thatch_slope), totem_kit (methode des visages), marae_scene (append_atoll, instance), bean_fit.append_bean, bean_kit (make_ucx, make_sockets, join_parts, part_physics).",
+    "bean_ref": {
+      "height_m": 1.05,
+      "width_m": 0.55,
+      "eye_height_m_assumed": 0.78,
+      "rules": {
+        "step_rise_m": 0.165,
+        "step_tread_min_m": 0.26,
+        "passage_min_width_m": 1.0,
+        "lintel_min_height_m": 1.6,
+        "display_height_m": [
+          0.6,
+          0.8
+        ],
+        "interior_clear_height_min_m": 1.6,
+        "wall_block_height_m": 0.85,
+        "notes": "rise 16,5 cm = regle du marae_kit ; 1,0 m de passage = Bean 0,55 + 2 x 0,22 de marge capsule/camera ; linteau 1,6 = Bean + 0,55 de marge camera 3e personne ; muret 0,85 : Bean ne l'enjambe pas (a confirmer selon sa hauteur de saut)."
+      }
+    },
+    "conventions": {
+      "units": "metres, Z haut, sol Z=0",
+      "front": "-Y Blender (comme marae_kit / camp_kit) ; export FBX axis_forward=-Y, axis_up=Z -> +X Unreal",
+      "pivot": "centre de l'emprise au sol du corps principal du module (hors escaliers en saillie), Z=0",
+      "naming_scene": "GEO-/EMP-/COL-/MAT-/LGT-/CAM- ; REF- pour sol, Bean et reliques importees (non exportes)",
+      "naming_export": "SM_Temple_<Module> + UCX_SM_Temple_<Module>_NN + SOCKET_<nom> (empties enfants du SM)",
+      "materials": "MAT-Temple_<x> en scene (pbr de marae_kit, textures 2K de art/textures) ; 4 materiaux max par module",
+      "exports": "un FBX + un GLB par module dans exports/ (pattern campement-pecheurs scene._export) ; module construit a l'origine, exporte, puis instancie dans la scene"
+    },
+    "budget": {
+      "texture_max_px": 2048,
+      "tris_max": {
+        "SM_Temple_Ahu": 60000,
+        "SM_Temple_RelicAltar": 25000,
+        "SM_Temple_CourtPaving": 20000,
+        "SM_Temple_FareIaManaha": 40000,
+        "SM_Temple_Gate": 8000,
+        "SM_Temple_Wall_*": 6000,
+        "SM_Temple_Palisade_2m*": 3000,
+        "SM_Temple_TikiGuardian_*": 6000,
+        "SM_Temple_StandingStone_*": 1500,
+        "SM_Temple_Torch": 2500,
+        "SM_Temple_Fata": 3000,
+        "SM_Temple_Debris_*": 5000
+      },
+      "over_budget": "si un StoneBatch depasse : subdivide cuts 2 -> 1 pour les pierres cachees/remplissage, puis DECIMATE (COLLAPSE) avant export ; consigner les tris reels dans temple-report.json",
+      "lods": {
+        "enabled": false,
+        "ratios": [
+          1.0,
+          0.5,
+          0.25
+        ],
+        "note": "optionnel : LOD1/LOD2 par DECIMATE pour Ahu, FareIaManaha, CourtPaving (suffixe _LOD1/_LOD2)."
+      },
+      "machine": "~7 Go RAM libres, dossier OneDrive : un seul build headless, pas de bake Cycles, EEVEE samples 32, textures 2K max (les GLB legendaires 4K sont reduits a 2K a l'import), .blend compresse."
+    },
+    "modules": {
+      "ahu": {
+        "export": "SM_Temple_Ahu",
+        "role": "sanctuaire : plateforme a gradins (ahu) au fond de la cour, couronnee d'unu et de dossiers de pierre",
+        "builder": "marae_kit.build_pyramid(pyramid_params) + ajouts temple_kit (unu, dossiers)",
+        "pyramid_params": {
+          "tiers": [
+            [
+              8.0,
+              2.4
+            ],
+            [
+              6.6,
+              1.8
+            ],
+            [
+              5.2,
+              1.2
+            ]
+          ],
+          "tier_h": 0.495,
+          "rise": 0.165,
+          "tread": 0.3,
+          "stair_w": 1.2,
+          "seed": 31
+        },
+        "derived": {
+          "steps": 9,
+          "height_m": 1.485,
+          "stair_foot_y": -3.3,
+          "top_platform_m": [
+            5.2,
+            1.2
+          ]
+        },
+        "unu_boards": {
+          "count": 5,
+          "heights_m": [
+            1.6,
+            2.0,
+            2.2,
+            2.0,
+            1.6
+          ],
+          "width_m": 0.28,
+          "thickness_m": 0.06,
+          "spacing_m": 0.95,
+          "y_local": 0.35,
+          "broken": [
+            false,
+            false,
+            false,
+            true,
+            false
+          ],
+          "motifs": "vagues, zigzags, poissons generiques (fictifs), creneaux en tete",
+          "material": "bois patine (rough_wood teinte gris)"
+        },
+        "backrests": {
+          "count": 2,
+          "size_m": [
+            0.45,
+            0.2,
+            0.95
+          ],
+          "x_local": [
+            -2.0,
+            2.0
+          ],
+          "y_local": -0.2,
+          "note": "dossiers de pierre sur le dernier gradin"
+        },
+        "sockets": {
+          "Summit": [
+            0,
+            0.0,
+            1.485
+          ],
+          "StairFoot": [
+            0,
+            -3.6,
+            0
+          ],
+          "StairTop": [
+            0,
+            -0.6,
+            1.485
+          ],
+          "Torch_L": [
+            -1.0,
+            -3.4,
+            0
+          ],
+          "Torch_R": [
+            1.0,
+            -3.4,
+            0
+          ],
+          "Offering": [
+            0,
+            -0.2,
+            1.485
+          ]
+        },
+        "ucx": "1 boite par gradin (3) + 1 coin de rampe pour l'escalier + 1 boite par unu",
+        "bean_check": "escalier 1,2 m de large (> 1,0) ; 9 contremarches de 16,5 cm ; 1,2 m de plateforme sommitale devant les unu (Bean s'y tient)"
+      },
+      "relic_altar": {
+        "export": "SM_Temple_RelicAltar",
+        "role": "autel central des 6 LEGENDARY : dais circulaire a 1 marche + 6 plinthes en arc ouvert vers -Y",
+        "dais": {
+          "radius_m": 1.9,
+          "height_m": 0.165,
+          "edge": "bordure de dalles de corail dressees + remplissage gravier",
+          "materials": [
+            "coral",
+            "basalt",
+            "gravel"
+          ]
+        },
+        "ring": {
+          "radius_m": 1.35,
+          "opening": "-Y (entre MoonPearl et RedPearl, corde 2,2 m)",
+          "inner_free_diameter_m": 2.1,
+          "note": "Bean entre dans le cercle et tourne sur place ; 0,5 m entre plinthes voisines : pas de passage (voulu)"
+        },
+        "plinth_material": "basalte sombre + dalle de couronnement corail ; cupules des perles en pierre claire polie",
+        "plateau_rule": "plateau = emprise de l'objet (artefacts-polynesiens gameplay.artifacts[].dims_m) + 2 x 6 cm, lu au build",
+        "relics": {
+          "FishGodFragment": {
+            "socket": "SOCKET_Relic_FishGodFragment",
+            "angle_deg_from_+Y": 25,
+            "plinth_xy": [
+              -0.571,
+              1.224
+            ],
+            "plinth": {
+              "shape": "box",
+              "top": [
+                0.36,
+                0.42
+              ],
+              "h": 0.5,
+              "backstone": [
+                0.7,
+                0.18,
+                1.3
+              ]
+            },
+            "socket_local": [
+              -0.571,
+              1.224,
+              0.665
+            ],
+            "face": "vers le centre du cercle",
+            "glb": "../artefacts-polynesiens/exports/SM_FishGodFragment_LOD1.glb",
+            "why": "figure de 0,55 m : plinthe 0,50 -> visage du fragment a 0,85-1,0 m au-dessus des pieds de Bean (face a face)"
+          },
+          "HeartOfTheReef": {
+            "socket": "SOCKET_Relic_HeartOfTheReef",
+            "angle_deg_from_+Y": -25,
+            "plinth_xy": [
+              0.571,
+              1.224
+            ],
+            "plinth": {
+              "shape": "box",
+              "top": [
+                0.62,
+                0.52
+              ],
+              "h": 0.45
+            },
+            "socket_local": [
+              0.571,
+              1.224,
+              0.615
+            ],
+            "face": "vers le centre du cercle",
+            "glb": "../artefacts-polynesiens/exports/SM_HeartOfTheReef_LOD1.glb",
+            "why": "bloc lourd 50x40x32 cm, 18 kg : plinthe basse 0,45 -> sommet de l'objet a 0,77 = regard de Bean"
+          },
+          "EclipseStone": {
+            "socket": "SOCKET_Relic_EclipseStone",
+            "angle_deg_from_+Y": 75,
+            "plinth_xy": [
+              -1.304,
+              0.349
+            ],
+            "plinth": {
+              "shape": "drum",
+              "radius": 0.3,
+              "h": 0.65
+            },
+            "socket_local": [
+              -1.304,
+              0.349,
+              0.815
+            ],
+            "face": "vers le centre du cercle",
+            "glb": "../artefacts-polynesiens/exports/SM_EclipseStone_LOD1.glb",
+            "why": "disque plat 45x45x12 : tambour 0,65 -> vu legerement du dessus par Bean (oeil ~0,78)"
+          },
+          "CrownOfTheLastAriki": {
+            "socket": "SOCKET_Relic_CrownOfTheLastAriki",
+            "angle_deg_from_+Y": -75,
+            "plinth_xy": [
+              1.304,
+              0.349
+            ],
+            "plinth": {
+              "shape": "box",
+              "top": [
+                0.34,
+                0.32
+              ],
+              "h": 0.7
+            },
+            "socket_local": [
+              1.304,
+              0.349,
+              0.865
+            ],
+            "face": "vers le centre du cercle",
+            "glb": "../artefacts-polynesiens/exports/SM_CrownOfTheLastAriki_LOD1.glb",
+            "why": "couronne 24x22x16 : plateau 0,70 -> objet entre 0,70 et 0,86 = hauteur des yeux"
+          },
+          "MoonPearl": {
+            "socket": "SOCKET_Relic_MoonPearl",
+            "angle_deg_from_+Y": 125,
+            "plinth_xy": [
+              -1.106,
+              -0.774
+            ],
+            "plinth": {
+              "shape": "pillar_cup",
+              "top": [
+                0.22,
+                0.22
+              ],
+              "h": 0.78,
+              "cup_radius": 0.06,
+              "cup_depth": 0.012
+            },
+            "socket_local": [
+              -1.106,
+              -0.774,
+              0.933
+            ],
+            "face": "vers le centre du cercle",
+            "glb": "../artefacts-polynesiens/exports/SM_MoonPearl_LOD1.glb",
+            "why": "perle 2 cm : colonnette 0,78 + cupule (benitier de pierre) -> perle pile a hauteur d'oeil"
+          },
+          "RedPearlOfRaraka": {
+            "socket": "SOCKET_Relic_RedPearlOfRaraka",
+            "angle_deg_from_+Y": -125,
+            "plinth_xy": [
+              1.106,
+              -0.774
+            ],
+            "plinth": {
+              "shape": "pillar_cup",
+              "top": [
+                0.22,
+                0.22
+              ],
+              "h": 0.78,
+              "cup_radius": 0.06,
+              "cup_depth": 0.012
+            },
+            "socket_local": [
+              1.106,
+              -0.774,
+              0.933
+            ],
+            "face": "vers le centre du cercle",
+            "glb": "../artefacts-polynesiens/exports/SM_RedPearlOfRaraka_LOD1.glb",
+            "why": "idem MoonPearl, symetrique : les deux perles encadrent l'entree du cercle"
+          }
+        },
+        "sockets_extra": {
+          "Bean_Stand": [
+            0,
+            0,
+            0.165
+          ],
+          "Approach": [
+            0,
+            -2.3,
+            0
+          ]
+        },
+        "ucx": "dais : enveloppe 16 pans ; 1 boite par plinthe (+ dossier du FishGodFragment)"
+      },
+      "court_paving": {
+        "export": "SM_Temple_CourtPaving",
+        "role": "pavage de la cour : dalles corail/basalte irregulieres, ~70 % de couverture, joints de sable et d'herbe",
+        "size_m": [
+          14.4,
+          14.4
+        ],
+        "slab_m": [
+          0.35,
+          0.8
+        ],
+        "thickness_m": 0.05,
+        "top_z_m": 0.03,
+        "coverage": 0.7,
+        "seed": 5,
+        "holes_for": [
+          "dais (r 1,95)",
+          "emprise de l'ahu et de son escalier"
+        ],
+        "ucx": "1 boite plate 14,4 x 14,4 x 0,03"
+      },
+      "wall_straight": {
+        "export": "SM_Temple_Wall_3m",
+        "role": "muret d'enceinte, module 3,0 m",
+        "size_m": [
+          3.0,
+          0.6,
+          0.85
+        ],
+        "builder": "marae_kit.wall() sur les deux faces + chaperon de dalles",
+        "sockets": {
+          "Snap_L": [
+            -1.5,
+            0,
+            0
+          ],
+          "Snap_R": [
+            1.5,
+            0,
+            0
+          ]
+        },
+        "ucx": "1 boite 3,0 x 0,6 x 0,85"
+      },
+      "wall_ruined": {
+        "export": "SM_Temple_Wall_3m_Ruined",
+        "role": "muret effondre au milieu (hauteur residuelle 0,15-0,45, eboulis)",
+        "size_m": [
+          3.0,
+          0.6,
+          0.85
+        ],
+        "ucx": "2 boites (moignons) + 1 boite basse 0,30 (Bean l'enjambe)"
+      },
+      "wall_breach": {
+        "export": "SM_Temple_Wall_3m_Breach",
+        "role": "muret avec breche praticable vers la fare",
+        "size_m": [
+          3.0,
+          0.6,
+          0.85
+        ],
+        "passage_width_m": 1.4,
+        "ucx": "2 boites de part et d'autre du passage"
+      },
+      "wall_corner": {
+        "export": "SM_Temple_Wall_Corner",
+        "role": "pilier d'angle",
+        "size_m": [
+          0.75,
+          0.75,
+          1.0
+        ],
+        "ucx": "1 boite"
+      },
+      "gate": {
+        "export": "SM_Temple_Gate",
+        "role": "portique d'entree : 2 poteaux sculptes + linteau, encastre dans un module de muret 3,0 m",
+        "size_m": [
+          3.0,
+          0.6,
+          2.45
+        ],
+        "opening_m": {
+          "width": 1.6,
+          "clear_height": 2.0
+        },
+        "posts_m": [
+          0.3,
+          0.3,
+          2.3
+        ],
+        "lintel_m": [
+          2.4,
+          0.32,
+          0.3
+        ],
+        "lintel_z_center": 2.15,
+        "lintel_decor": "zigzags + vagues sculptes (fictifs), ligatures de cordage",
+        "sockets": {
+          "Threshold": [
+            0,
+            0,
+            0
+          ],
+          "Torch_L": [
+            -1.1,
+            -0.7,
+            0
+          ],
+          "Torch_R": [
+            1.1,
+            -0.7,
+            0
+          ],
+          "Guardian_L": [
+            -2.0,
+            -0.9,
+            0
+          ],
+          "Guardian_R": [
+            2.0,
+            -0.9,
+            0
+          ]
+        },
+        "ucx": "2 boites poteaux+murets + 1 boite linteau",
+        "bean_check": "1,6 m de large = 2,9 x Bean ; 2,0 m sous linteau = Bean + 0,95 (camera 3e personne)"
+      },
+      "palisade": {
+        "export": "SM_Temple_Palisade_2m",
+        "role": "palissade de pieux appointes ligatures, module 2,0 m",
+        "size_m": [
+          2.0,
+          0.2,
+          1.8
+        ],
+        "pole_d_m": [
+          0.09,
+          0.13
+        ],
+        "pole_spacing_m": 0.14,
+        "lashing_z": [
+          0.5,
+          1.4
+        ],
+        "variant_fallen": "SM_Temple_Palisade_2m_Fallen (pieux penches/tombes, toujours infranchissable)",
+        "sockets": {
+          "Snap_L": [
+            -1.0,
+            0,
+            0
+          ],
+          "Snap_R": [
+            1.0,
+            0,
+            0
+          ]
+        },
+        "ucx": "1 boite"
+      },
+      "fare_ia_manaha": {
+        "export": "SM_Temple_FareIaManaha",
+        "role": "maison des reliques sur pilotis (10 RARE), interieur praticable",
+        "local_frame": "pivot au sol au centre du plancher ; porte et escalier vers -Y",
+        "deck": {
+          "size_m": [
+            4.4,
+            3.6
+          ],
+          "y_range": [
+            -1.8,
+            1.8
+          ],
+          "top_z_m": 0.99,
+          "thickness_m": 0.1,
+          "planks": "weathered_brown_planks"
+        },
+        "stilts": {
+          "grid_x": [
+            -2.0,
+            0.0,
+            2.0
+          ],
+          "grid_y": [
+            -1.6,
+            0.0,
+            1.6
+          ],
+          "diameter_m": 0.18,
+          "rat_guard": {
+            "type": "coupelle conique inversee",
+            "z_m": 0.55,
+            "radius_m": 0.22,
+            "note": "inspire des plateformes d'offrandes a pieux anti-rats"
+          }
+        },
+        "stairs": {
+          "steps": 6,
+          "rise_m": 0.165,
+          "tread_m": 0.3,
+          "width_m": 1.2,
+          "y_from": -1.8,
+          "y_to": -3.6,
+          "rails": "rampes en perche ligaturee a 0,55 m",
+          "stair_mode": "steps",
+          "alt": "stair_mode = ramp : rampe de planches 1:3 (3,0 m) si Bean doit y pousser un objet"
+        },
+        "porch": {
+          "y_range": [
+            -1.8,
+            -1.0
+          ],
+          "depth_m": 0.8
+        },
+        "walls": {
+          "y_range": [
+            -1.0,
+            1.8
+          ],
+          "eave_height_above_deck_m": 1.9,
+          "thickness_m": 0.1,
+          "type": "claire-voie de perches verticales espacees 5 cm + lisses ligaturees ; 2 pans partiellement effondres"
+        },
+        "door": {
+          "width_m": 1.1,
+          "height_m": 1.7,
+          "x": 0.0,
+          "threshold_y": -1.0,
+          "lintel": "planche sculptee (unu miniature)"
+        },
+        "roof": {
+          "type": "deux pans, croupes arrondies aux pignons (simplifie)",
+          "ridge_above_deck_m": 3.0,
+          "overhang_m": 0.5,
+          "material": "pandanus/niau : camp_kit.thatch_slope avec reed_roof_04 teinte + coconut_frond en egout",
+          "damage": "1 trou de 1,0 x 0,7 m dans le pan est (lumiere zenithale sur l'etagere)"
+        },
+        "interior": {
+          "clear_m": [
+            4.2,
+            2.6
+          ],
+          "free_floor_m": [
+            4.2,
+            2.15
+          ],
+          "clear_height_m": 1.9
+        },
+        "furniture": {
+          "shelf": {
+            "x_range": [
+              -1.8,
+              1.8
+            ],
+            "y_range": [
+              1.3,
+              1.75
+            ],
+            "levels_above_deck_m": [
+              0.5,
+              0.8
+            ],
+            "cells": 4,
+            "cell_w_m": 0.9,
+            "plank_thickness_m": 0.04,
+            "posts": "5 montants 0,06",
+            "note": "haut 0,80 = oeil de Bean ; bas 0,50 vu en plongee ; 0,26 m libres entre niveaux > conque la plus haute (0,19)"
+          },
+          "paddle_rack": {
+            "wall": "ouest (x -2.1)",
+            "pegs_z_above_deck_m": 1.06,
+            "pegs_y": [
+              -0.05,
+              0.65
+            ]
+          },
+          "lectern": {
+            "pos_local": [
+              1.8,
+              0.2
+            ],
+            "board_m": [
+              0.62,
+              0.48,
+              0.03
+            ],
+            "top_z_above_deck_m": 0.7,
+            "tilt_deg": 25,
+            "facing": "-X (vers le centre de la piece)"
+          },
+          "small_stand_SharkEye_m": [
+            0.12,
+            0.12,
+            0.06
+          ]
+        },
+        "relics": {
+          "DeadReefConch": {
+            "slot": "etagere haut 1",
+            "socket_local": [
+              -1.35,
+              1.525,
+              1.79
+            ],
+            "rot_deg": [
+              0,
+              0,
+              0
+            ],
+            "dims_m": [
+              0.44,
+              0.21,
+              0.19
+            ],
+            "socket": "SOCKET_Relic_DeadReefConch"
+          },
+          "CallingConch": {
+            "slot": "etagere haut 2",
+            "socket_local": [
+              -0.45,
+              1.525,
+              1.79
+            ],
+            "rot_deg": [
+              0,
+              0,
+              0
+            ],
+            "dims_m": [
+              0.4,
+              0.18,
+              0.16
+            ],
+            "socket": "SOCKET_Relic_CallingConch"
+          },
+          "ThunderShell": {
+            "slot": "etagere haut 3",
+            "socket_local": [
+              0.45,
+              1.525,
+              1.79
+            ],
+            "rot_deg": [
+              0,
+              0,
+              0
+            ],
+            "dims_m": [
+              0.25,
+              0.13,
+              0.12
+            ],
+            "socket": "SOCKET_Relic_ThunderShell"
+          },
+          "WhiteTurtleSkull": {
+            "slot": "etagere haut 4",
+            "socket_local": [
+              1.35,
+              1.525,
+              1.79
+            ],
+            "rot_deg": [
+              0,
+              0,
+              0
+            ],
+            "dims_m": [
+              0.22,
+              0.15,
+              0.13
+            ],
+            "socket": "SOCKET_Relic_WhiteTurtleSkull"
+          },
+          "NavigatorRope": {
+            "slot": "etagere bas 1",
+            "socket_local": [
+              -1.35,
+              1.525,
+              1.49
+            ],
+            "rot_deg": [
+              0,
+              0,
+              0
+            ],
+            "dims_m": [
+              0.3,
+              0.3,
+              0.08
+            ],
+            "socket": "SOCKET_Relic_NavigatorRope"
+          },
+          "BlackSharkHook": {
+            "slot": "etagere bas 2",
+            "socket_local": [
+              -0.45,
+              1.525,
+              1.49
+            ],
+            "rot_deg": [
+              0,
+              0,
+              0
+            ],
+            "dims_m": [
+              0.3,
+              0.14,
+              0.045
+            ],
+            "socket": "SOCKET_Relic_BlackSharkHook"
+          },
+          "MotherTurtleScute": {
+            "slot": "etagere bas 3",
+            "socket_local": [
+              0.45,
+              1.525,
+              1.49
+            ],
+            "rot_deg": [
+              0,
+              0,
+              0
+            ],
+            "dims_m": [
+              0.18,
+              0.14,
+              0.012
+            ],
+            "socket": "SOCKET_Relic_MotherTurtleScute"
+          },
+          "SharkEye": {
+            "slot": "etagere bas 4 (petit socle bois 0,06)",
+            "socket_local": [
+              1.35,
+              1.525,
+              1.55
+            ],
+            "rot_deg": [
+              0,
+              0,
+              0
+            ],
+            "dims_m": [
+              0.07,
+              0.065,
+              0.05
+            ],
+            "socket": "SOCKET_Relic_SharkEye"
+          },
+          "SacredPaddleFragment": {
+            "slot": "ratelier mur ouest (2 chevilles)",
+            "socket_local": [
+              -2.03,
+              0.3,
+              2.09
+            ],
+            "rot_deg": [
+              0,
+              0,
+              90
+            ],
+            "dims_m": [
+              0.9,
+              0.17,
+              0.04
+            ],
+            "socket": "SOCKET_Relic_SacredPaddleFragment"
+          },
+          "NavigationShellMap": {
+            "slot": "lutrin cote est, plateau incline 25 deg vers l'interieur",
+            "socket_local": [
+              1.8,
+              0.2,
+              1.69
+            ],
+            "rot_deg": [
+              0,
+              -25,
+              0
+            ],
+            "dims_m": [
+              0.55,
+              0.4,
+              0.03
+            ],
+            "socket": "SOCKET_Relic_NavigationShellMap"
+          }
+        },
+        "sockets_extra": {
+          "Door": [
+            0,
+            -1.0,
+            0.99
+          ],
+          "StairFoot": [
+            0,
+            -3.75,
+            0
+          ],
+          "Torch_Stairs": [
+            0.9,
+            -3.8,
+            0
+          ]
+        },
+        "ucx": "plancher (1), pilotis (9 prismes 8 pans), escalier = coin de rampe, 3 murs + 2 jouees de porte, 2 pans de toit, etagere (1), lutrin (1)",
+        "bean_check": "porte 1,1 x 1,7 ; hauteur libre 1,9 (Bean 1,05 + 0,85) ; plancher a 6 marches de 16,5 ; 2,15 m de sol libre devant l'etagere : Bean entre, se retourne et ressort"
+      },
+      "tiki_guardian": {
+        "export": "SM_Temple_TikiGuardian_<A|B|C>",
+        "role": "tiki gardiens fictifs (Ti'i Tia'i), bois patine (A, B) et basalte moussu (C)",
+        "variants": {
+          "A": {
+            "height_m": 1.9,
+            "material": "bois",
+            "place": "porte gauche"
+          },
+          "B": {
+            "height_m": 1.9,
+            "material": "bois",
+            "place": "porte droite"
+          },
+          "C": {
+            "height_m": 1.45,
+            "material": "basalte moussu",
+            "place": "pied de l'escalier de la fare"
+          }
+        },
+        "builder": "methode de totem_kit (sections super-ellipse + visages par deplacement analytique) a l'echelle, SANS bake Cycles : materiaux pbr directs (rough_wood / mossy_rock)",
+        "base_m": [
+          0.45,
+          0.45
+        ],
+        "sockets": {
+          "Ground": [
+            0,
+            0,
+            0
+          ]
+        },
+        "ucx": "2 boites (corps + tete)",
+        "rule": "visages stylises generiques (yeux en amande, bouche ouverte, mains sur le ventre) ; aucun ti'i reel identifiable",
+        "bean_check": "1,9 m = 1,8 x Bean : domine le joueur au passage du portique"
+      },
+      "standing_stone": {
+        "export": "SM_Temple_StandingStone_<A|B|C>",
+        "role": "pierres dressees (dalles de corail/basalte fichees)",
+        "variants": {
+          "A": [
+            0.55,
+            0.22,
+            1.2
+          ],
+          "B": [
+            0.7,
+            0.25,
+            1.6
+          ],
+          "C": [
+            0.45,
+            0.2,
+            0.9
+          ]
+        },
+        "embed_m": 0.15,
+        "ucx": "enveloppe convexe"
+      },
+      "torch": {
+        "export": "SM_Temple_Torch",
+        "role": "torche sur perche",
+        "builder": "marae_kit.build_torch({'height': 1.35})",
+        "note": "flamme a ~1,5 m : au-dessus de la tete de Bean",
+        "light": {
+          "type": "POINT",
+          "energy_W": 60,
+          "color": [
+            1.0,
+            0.62,
+            0.3
+          ],
+          "scene_only": true
+        }
+      },
+      "fata": {
+        "export": "SM_Temple_Fata",
+        "role": "autel d'offrande sur 4 pieux (fruits, cauris) pres de l'ahu",
+        "size_m": [
+          1.0,
+          0.7,
+          1.1
+        ],
+        "deck_z_m": 0.95,
+        "sockets": {
+          "Offering": [
+            0,
+            0,
+            0.98
+          ]
+        },
+        "ucx": "1 boite plateau + 4 pieux",
+        "bean_check": "plateau 0,95 : au-dessus des yeux de Bean, il voit les offrandes par en dessous (sacre, hors d'atteinte)"
+      },
+      "debris": {
+        "export": "SM_Temple_Debris_<StonePile|FallenStone|BrokenUnu>",
+        "StonePile": {
+          "size_m": [
+            1.6,
+            1.2,
+            0.5
+          ],
+          "builder": "StoneBatch, pierres eboulees du muret"
+        },
+        "FallenStone": {
+          "size_m": [
+            1.6,
+            0.6,
+            0.35
+          ],
+          "note": "pierre dressee B couchee, cassee en 2"
+        },
+        "BrokenUnu": {
+          "size_m": [
+            1.4,
+            0.4,
+            0.15
+          ],
+          "note": "planche unu tombee, fendue"
+        },
+        "ucx": "enveloppe convexe par morceau"
+      }
+    },
+    "scene_layout": {
+      "note": "positions monde du pivot de chaque module, rotation Z en degres ; le kit construit chaque module a l'origine, l'exporte, puis le duplique a ces positions.",
+      "enclosure_m": {
+        "x": [
+          -7.5,
+          7.5
+        ],
+        "y": [
+          -8.0,
+          7.0
+        ],
+        "wall_axis": "axe des murets sur ces lignes"
+      },
+      "ahu": {
+        "pos": [
+          0,
+          5.2,
+          0
+        ],
+        "rot_z": 0,
+        "note": "pied d'escalier a y 1,9"
+      },
+      "relic_altar": {
+        "pos": [
+          0,
+          -1.6,
+          0.03
+        ],
+        "rot_z": 0,
+        "note": "dais y -3,5..0,3 : 1,6 m libres jusqu'au pied de l'escalier de l'ahu"
+      },
+      "court_paving": {
+        "pos": [
+          0,
+          -0.5,
+          0
+        ],
+        "rot_z": 0
+      },
+      "gate": {
+        "pos": [
+          0,
+          -8.0,
+          0
+        ],
+        "rot_z": 0
+      },
+      "walls": [
+        {
+          "m": "wall_straight",
+          "pos": [
+            -6.0,
+            -8.0,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            -3.0,
+            -8.0,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            3.0,
+            -8.0,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "wall_ruined",
+          "pos": [
+            6.0,
+            -8.0,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            -6.0,
+            7.0,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            -3.0,
+            7.0,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            0.0,
+            7.0,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "wall_ruined",
+          "pos": [
+            3.0,
+            7.0,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            6.0,
+            7.0,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            -7.5,
+            -6.5,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "wall_ruined",
+          "pos": [
+            -7.5,
+            -3.5,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            -7.5,
+            -0.5,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            -7.5,
+            2.5,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            -7.5,
+            5.5,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            7.5,
+            -6.5,
+            0
+          ],
+          "rot_z": -90
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            7.5,
+            -3.5,
+            0
+          ],
+          "rot_z": -90
+        },
+        {
+          "m": "wall_breach",
+          "pos": [
+            7.5,
+            -0.5,
+            0
+          ],
+          "rot_z": -90
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            7.5,
+            2.5,
+            0
+          ],
+          "rot_z": -90
+        },
+        {
+          "m": "wall_straight",
+          "pos": [
+            7.5,
+            5.5,
+            0
+          ],
+          "rot_z": -90
+        },
+        {
+          "m": "wall_corner",
+          "pos": [
+            -7.5,
+            -8.0,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "wall_corner",
+          "pos": [
+            7.5,
+            -8.0,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "wall_corner",
+          "pos": [
+            -7.5,
+            7.0,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "wall_corner",
+          "pos": [
+            7.5,
+            7.0,
+            0
+          ],
+          "rot_z": 0
+        }
+      ],
+      "fare_ia_manaha": {
+        "pos": [
+          12.5,
+          -0.5,
+          0
+        ],
+        "rot_z": -90,
+        "note": "porte et escalier tournes vers -X ; pied de l'escalier a x 8,9, ~1,1 m de la breche (x 7,8 face ext.)"
+      },
+      "palisade": [
+        {
+          "m": "palisade",
+          "pos": [
+            9.0,
+            3.5,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            11.0,
+            3.5,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            13.0,
+            3.5,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            15.0,
+            3.5,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            9.0,
+            -4.5,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "palisade_fallen",
+          "pos": [
+            11.0,
+            -4.5,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            13.0,
+            -4.5,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            15.0,
+            -4.5,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            16.0,
+            -3.5,
+            0
+          ],
+          "rot_z": -90
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            16.0,
+            -1.5,
+            0
+          ],
+          "rot_z": -90
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            16.0,
+            0.5,
+            0
+          ],
+          "rot_z": -90
+        },
+        {
+          "m": "palisade",
+          "pos": [
+            16.0,
+            2.5,
+            0
+          ],
+          "rot_z": -90
+        }
+      ],
+      "tiki": [
+        {
+          "variant": "A",
+          "pos": [
+            -2.0,
+            -8.9,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "variant": "B",
+          "pos": [
+            2.0,
+            -8.9,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "variant": "C",
+          "pos": [
+            8.6,
+            0.9,
+            0
+          ],
+          "rot_z": 90
+        }
+      ],
+      "standing_stones": [
+        {
+          "variant": "B",
+          "pos": [
+            -2.4,
+            -5.6,
+            0.03
+          ],
+          "rot_z": 4
+        },
+        {
+          "variant": "B",
+          "pos": [
+            2.4,
+            -5.6,
+            0.03
+          ],
+          "rot_z": -6
+        },
+        {
+          "variant": "A",
+          "pos": [
+            -4.8,
+            1.8,
+            0.03
+          ],
+          "rot_z": 12
+        },
+        {
+          "variant": "A",
+          "pos": [
+            4.8,
+            1.8,
+            0.03
+          ],
+          "rot_z": -10
+        },
+        {
+          "variant": "C",
+          "pos": [
+            -5.6,
+            -3.0,
+            0.03
+          ],
+          "rot_z": 30
+        },
+        {
+          "variant": "C",
+          "pos": [
+            5.4,
+            4.2,
+            0.03
+          ],
+          "rot_z": -25
+        }
+      ],
+      "torches": [
+        [
+          -1.1,
+          -8.7,
+          0
+        ],
+        [
+          1.1,
+          -8.7,
+          0
+        ],
+        [
+          -1.0,
+          1.9,
+          0.03
+        ],
+        [
+          1.0,
+          1.9,
+          0.03
+        ],
+        [
+          -2.4,
+          -2.9,
+          0.03
+        ],
+        [
+          2.4,
+          -2.9,
+          0.03
+        ],
+        [
+          8.7,
+          -1.4,
+          0
+        ]
+      ],
+      "fata": {
+        "pos": [
+          -4.2,
+          3.0,
+          0.03
+        ],
+        "rot_z": 15
+      },
+      "debris": [
+        {
+          "m": "StonePile",
+          "pos": [
+            6.0,
+            -8.9,
+            0
+          ],
+          "rot_z": 10
+        },
+        {
+          "m": "StonePile",
+          "pos": [
+            3.0,
+            7.9,
+            0
+          ],
+          "rot_z": 200
+        },
+        {
+          "m": "StonePile",
+          "pos": [
+            -8.4,
+            -3.5,
+            0
+          ],
+          "rot_z": 80
+        },
+        {
+          "m": "FallenStone",
+          "pos": [
+            5.6,
+            -5.2,
+            0.03
+          ],
+          "rot_z": 35
+        },
+        {
+          "m": "BrokenUnu",
+          "pos": [
+            2.6,
+            3.4,
+            0.03
+          ],
+          "rot_z": -20
+        }
+      ],
+      "relics_import": {
+        "enabled": true,
+        "files": "../artefacts-polynesiens/exports/SM_<Id>_LOD1.glb (LOD1 : RAM limitee ; si absent : sauter et consigner)",
+        "attach": "parent sur le SOCKET_Relic_<Id> de l'instance de scene, transform nulle",
+        "names": "REF-Relic_<Id> (exclus des exports)",
+        "max_texture_px": 2048,
+        "note": "LOD1 (choix RAM) : textures 4K reduites a l'import (2048 si l'objet >= 0,3 m, sinon 1024), ecrites en JPEG dans textures/relics/, doublons (or) fusionnes ; UCX_/SOCKET_ eventuels masques"
+      },
+      "rare_placeholders": {
+        "enabled": true,
+        "note": "les 10 RARE n'ont pas de mesh exporte : boites fil de fer REF-Relic_<Id> aux dims_m sur leurs sockets"
+      },
+      "bean": {
+        "pos": [
+          0.0,
+          -8.15,
+          0
+        ],
+        "rot_z_deg": 180,
+        "name": "Bean via bean_fit.append_bean (non exporte)",
+        "note": "dans le passage du portique, tourne vers la cour : lecture directe passage 1,6 / linteau 2,0 / Bean 1,05"
+      },
+      "ground": {
+        "size_m": [
+          44,
+          32
+        ],
+        "center": [
+          4,
+          -1
+        ],
+        "material": "sand_white (Ground092A)",
+        "apron": "gravier corallien 1,2 m autour des murets",
+        "name": "REF-Ground"
+      },
+      "vegetation": {
+        "source": "art/archives/environnements/atoll_tuamotu/scene/atoll_tuamotu.blend via marae_scene.append_atoll",
+        "rules": "herbes/fougeres dans les joints du pavage et au pied des murets, jamais dans les couloirs (1,2 m libres portique -> autel -> ahu et breche -> fare) ; naupaka et pandanus contre l'enceinte ; 4-5 cocotiers hors enceinte (1 penche au-dessus du muret ouest) ; palmes seches sur le toit de la fare et au sol",
+        "seed": 42
+      }
+    },
+    "views": {
+      "note": "rendus supplementaires dans post_build (comme marae-des-perles/scripts/scene.py), EEVEE 1600x900",
+      "facade": {
+        "loc": [
+          0.0,
+          -17.0,
+          2.2
+        ],
+        "target": [
+          0.0,
+          -2.0,
+          1.2
+        ],
+        "lens": 32
+      },
+      "dessus": {
+        "loc": [
+          4.0,
+          -0.8,
+          34.0
+        ],
+        "target": [
+          4.0,
+          -0.8,
+          0.0
+        ],
+        "lens": 50,
+        "ortho_scale": 27.0
+      },
+      "autel_legendaires": {
+        "loc": [
+          2.6,
+          -5.0,
+          1.9
+        ],
+        "target": [
+          0.0,
+          -1.3,
+          0.85
+        ],
+        "lens": 35
+      },
+      "fare_exterieur": {
+        "loc": [
+          6.2,
+          -6.5,
+          2.6
+        ],
+        "target": [
+          12.0,
+          -0.5,
+          1.6
+        ],
+        "lens": 30
+      },
+      "fare_interieur": {
+        "loc": [
+          11.6,
+          -0.5,
+          1.75
+        ],
+        "target": [
+          14.2,
+          -0.5,
+          1.55
+        ],
+        "lens": 18
+      },
+      "echelle_bean": {
+        "loc": [
+          -2.6,
+          -11.6,
+          1.3
+        ],
+        "target": [
+          0.0,
+          -8.0,
+          1.1
+        ],
+        "lens": 35
+      }
+    },
+    "assumptions": [
+      "Oeil de Bean suppose a ~0,78 m (non mesure dans bean_fit) : sert a caler plateaux et etageres.",
+      "Hauteur de saut de Bean inconnue : muret de 0,85 m suppose infranchissable, muret ruine (0,30) franchissable.",
+      "Avant des modules = -Y Blender (coherent avec marae_kit/camp_kit), exporte vers +X Unreal par axis_forward=-Y.",
+      "Les 10 RARE n'ont pas encore de mesh exporte : seuls leurs sockets et des gabarits fil de fer sont places.",
+      "Dims des plateaux derivees des dims_m de artefacts-polynesiens ; si elles changent, un rebuild suffit.",
+      "Cour pavee a +0,03 m au-dessus du sable (Z=0) : dais, fata, pierres dressees poses a Z=0,03.",
+      "Collisions simplifiees : UCX en boites/rampes, escaliers en rampe pour la capsule de Bean."
+    ],
+    "mythology": {
+      "status": "FICTIF - noms construits en reo tahiti approximatif, a faire relire ; aucune divinite, genealogie, motif ni site reel repris",
+      "temple": "Marae Ana-Pu'a (fictif, ~ 'marae de la grotte de corail')",
+      "deity": "Te Mata-Pu'a (fictif, ~ 'l'oeil du corail'), esprit du recif gardien des perles et des coeurs de corail",
+      "house": "fare-ia-manaha = typologie generique (maison des objets sacres), pas un lieu reel",
+      "guardians": "Ti'i Tia'i (fictif, ~ 'figures gardiennes')",
+      "story": "Le dernier ariki aurait scelle ici les six reliques du recif avant que la mer ne recouvre le village ; les RARE sont les dons des pecheurs conserves dans la fare."
+    }
+  },
+  "gameplay": {
+    "role": "Point d'interet / reliquaire : stockage et presentation des artefacts RARE et LEGENDARY.",
+    "usage": "Entrer par le portique (ou la breche), traverser la cour, entrer dans le cercle de l'autel pour prendre/deposer les 6 LEGENDARY ; monter les 6 marches de la fare-ia-manaha pour les 10 RARE ; gravir l'ahu (9 marches) pour la vue et l'offrande.",
+    "physics": {
+      "collision": "UCX par module (boites, rampes pour escaliers)",
+      "walkable": [
+        "cour",
+        "dais",
+        "escalier + sommet de l'ahu",
+        "escalier + plancher de la fare"
+      ]
+    },
+    "relic_slots": {
+      "LEGENDARY": {
+        "module": "SM_Temple_RelicAltar",
+        "ids": [
+          "FishGodFragment",
+          "HeartOfTheReef",
+          "EclipseStone",
+          "CrownOfTheLastAriki",
+          "MoonPearl",
+          "RedPearlOfRaraka"
+        ]
+      },
+      "RARE": {
+        "module": "SM_Temple_FareIaManaha",
+        "ids": [
+          "DeadReefConch",
+          "CallingConch",
+          "ThunderShell",
+          "WhiteTurtleSkull",
+          "NavigatorRope",
+          "BlackSharkHook",
+          "MotherTurtleScute",
+          "SharkEye",
+          "SacredPaddleFragment",
+          "NavigationShellMap"
+        ]
+      }
+    },
+    "notes": [
+      "Un socket par relique : SOCKET_Relic_<Id>, Z = surface de pose, X/Y = centre de l'emprise, orientation = rest_pose de l'artefact tournee vers Bean.",
+      "Perimetre : RARE et LEGENDARY uniquement."
+    ]
+  },
+  "units": {
+    "system": "METRIC",
+    "length": "METERS",
+    "scale_length": 1.0
+  },
+  "materials": {},
+  "collections": [],
+  "objects": [],
+  "scripts": [
+    "scripts/scene.py"
+  ],
+  "camera": {
+    "location": [
+      -13.0,
+      -21.0,
+      11.5
+    ],
+    "look_at": [
+      3.5,
+      -0.6,
+      0.6
+    ],
+    "lens": 30
+  },
+  "lights": [
+    {
+      "name": "soleil",
+      "type": "SUN",
+      "energy": 3.6,
+      "rotation_deg": [
+        48,
+        0,
+        -38
+      ]
+    }
+  ],
+  "world": {
+    "color": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "strength": 0.8,
+    "hdri": "art/hdri/secluded_beach_4k.hdr",
+    "hdri_rotation_deg": 40,
+    "background_color": [
+      0.93,
+      0.93,
+      0.92,
+      1.0
+    ]
+  },
+  "render": {
+    "engine": "EEVEE",
+    "resolution": [
+      1600,
+      900
+    ],
+    "samples": 32
+  },
+  "outputs": {
+    "blend": true,
+    "exports": [],
+    "preview": true
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "date": "2026-10-06",
+      "author": "factory",
+      "notes": "Creation de la spec : modules SM_Temple_*, 16 sockets de reliques (6 LEGENDARY sur l'autel, 10 RARE dans la fare-ia-manaha), scene de presentation."
+    },
+    {
+      "version": "0.2.0",
+      "date": "2026-10-06",
+      "author": "factory",
+      "notes": "Premier build : sanctuaire, autel des reliques, fare-ia-manaha, annexes"
+    }
+  ]
+}
