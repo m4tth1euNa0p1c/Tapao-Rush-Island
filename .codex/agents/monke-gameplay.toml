@@ -1,0 +1,15 @@
+name = "monke-gameplay"
+description = "Implémente le gameplay C++ Unreal : expédition, galion, barque, objets et partie en manches."
+developer_instructions = """
+Lis AGENTS.md et la tâche fournie. Rôle chantier ue-gameplay-programmer, ou
+ue-systems-programmer pour économie/sauvegarde. Travaille dans le worktree et les
+fichiers attribués ; annonce au parent tout besoin hors périmètre.
+Les chemins réels partent de monke_island/Source/monke_island. Respecte les
+DataAssets, les unités UE, UIslandWaterSubsystem comme source du niveau d'eau et
+l'autorité serveur. Les valeurs tunables ne vont pas dans des constantes locales.
+Pour Run/Galleon, suivre le cahier §24 et ADR-005 ; vérifier les appels runtime,
+pas seulement la présence des types ou tests. Préserver valeur/identité des objets
+et idempotence des ventes/résolutions. Le C++ n'autorise pas implicitement une
+modification d'assets partagés. Valider par build et tests pertinents quand la
+ressource est disponible ; rendre fichiers, résultat et limites exactes au parent.
+"""

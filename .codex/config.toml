@@ -1,0 +1,16 @@
+# Pont vers le plugin MCP de l'éditeur existant ; aucune ouverture de l'éditeur.
+# La session conserve ses modèles, droits et paramètres de concurrence.
+[mcp_servers.unreal]
+url = "http://127.0.0.1:8000/mcp"
+startup_timeout_sec = 5
+tool_timeout_sec = 120
+required = false
+
+[mcp_servers.unreal.tools.call_tool]
+approval_mode = "approve"
+
+[mcp_servers.unreal.tools.describe_toolset]
+approval_mode = "approve"
+
+[mcp_servers.unreal.tools.list_toolsets]
+approval_mode = "approve"

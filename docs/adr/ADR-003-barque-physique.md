@@ -19,8 +19,10 @@
 | B-04 | §4 : nage qui coûte de l'endurance ; « nage lente, pas de mort instantanée » | à court d'endurance dans l'eau, on se noie | **Adopter.** La mort n'est pas instantanée : on s'enfonce, puis délai de 3 s, puis 12 PV/s, soit environ 11 s au total. On est sauvé si on regagne un appui. |
 | B-05 | §6.5 : embarquer dans un siège libre, sans objet tenu | monter dans la barque, s'asseoir, prendre les rames ; on peut aussi rester debout | **Adopter.** Rester debout est possible mais **ne compte pas comme embarqué** pour l'extraction (§6.5 tient). F assoit le joueur ; le premier assis rame. |
 | B-06 | aucune règle | traces de sable à l'échouage et à la remise à l'eau | **Adopter**, en effet cosmétique local, sans réplication. |
+| B-07 | §5, §9 : serveur autoritaire, physique des objets libres répliquée | revue réseau T-268 (R-05) : barque sans mode de réplication choisi, houle locale, cargaison arrimée téléportée par le serveur seul | **Adopter (2026-10-11, T-295, `ue-network-engineer`), à confirmer en PIE.** Le serveur simule. Les clients suivent en `PredictiveInterpolation`, à 30 envois par seconde (`DA_BoatRules`). Chaque machine applique les mêmes forces entre deux envois, et la houle suit l'horloge du serveur. La cargaison arrimée est collée à la coque sur chaque machine (`UNetRestComponent`) et n'est plus envoyée. Repli : `PhysicsReplicationMode = Default`. Si la barque ne tient pas à 150 ms, le client la rend cinématique. |
 
 **Conséquences.**
 - La recette L2 ajoute des critères physiques (spec).
 - La revue réseau (`ue-network-engineer`) porte sur la physique répliquée de la barque, sur les joueurs debout sur une base mobile et sur les RPC de rame.
+- B-07 (T-295) : le mode et la cargaison collée sont `compilé` (2026-10-11). Ils ne sont pas testés en réseau. La signature attend l'essai n°4 de `docs/audit/revue-reseau-T268.md` : client rameur et hôte debout, puis l'inverse, à 100 puis 200 ms et 3 % de perte. On compte les corrections avec `p.NetShowCorrections 1` et le débit avec `stat net`.
 - La nouvelle compétence de l'usine : rôle `ue-boat-programmer` et skill `/ue-boat-physics`.

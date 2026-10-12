@@ -1,8 +1,10 @@
 # Crownfall Expeditions — Cahier des charges et mandat pour agents Claude
 
-Version 1.3 — 4 octobre 2026. Nom provisoire. Document de référence à déposer dans `Docs/CAHIER_DES_CHARGES.md` du futur dépôt.
+Version 1.4 — 4 octobre 2026. Nom provisoire. Document de référence à déposer dans `Docs/CAHIER_DES_CHARGES.md` du futur dépôt.
 
-Historique : 1.3 (2026-10-04) — une partie devient une suite de manches autour du galion. On y trouve le lobby à bord, la barque qui fait la navette entre le galion et l'île, le départ à la barre, la vente en zone sûre et un quota éliminatoire. Demande du propriétaire ; voir §3 et §24, architecture dans `docs/adr/ADR-005-partie-en-manches.md`.
+Historique : 1.4 (2026-10-04) — une expédition dure 10 minutes : le déluge (début de la submersion et tempête finale) arrive à 9 min, puis la montée finale dure 60 s. Demande du propriétaire ; réglage `DA_ExpeditionRules.InitialFloodDelay` = 540 s (§1, §6.1, §12). Le bonus de zone (+120 s) est conservé mais reste à arbitrer à l'arrivée de la pacification (T-054) : avec lui, une partie pacifiée dépasse 10 min.
+
+1.3 (2026-10-04) — une partie devient une suite de manches autour du galion. On y trouve le lobby à bord, la barque qui fait la navette entre le galion et l'île, le départ à la barre, la vente en zone sûre et un quota éliminatoire. Demande du propriétaire ; voir §3 et §24, architecture dans `docs/adr/ADR-005-partie-en-manches.md`.
 
 ## 1. Objectif et décisions initiales
 
@@ -19,7 +21,7 @@ Décisions proposées, exécutables par défaut et modifiables par le propriéta
 | Version | Utiliser la version stable installée et compatible ; enregistrer la version exacte avant tout développement, aucune mise à niveau automatique |
 | Caméra | Première personne ; corps visible par les autres joueurs, bras visibles localement |
 | Joueurs | Solo et coop 2–4 ; listen server, un joueur héberge |
-| Expédition | 120 s avant début de submersion ; +120 s par zone pacifiée, horloge commune à l’équipe |
+| Expédition | 10 min : déluge (submersion et tempête finale) à 9 min (540 s), montée finale 60 s ; +120 s par zone pacifiée (à arbitrer, v1.4), horloge commune à l’équipe |
 | Direction artistique | Stylisée, personnages aux silhouettes lisibles, ambiance maritime inquiétante |
 | Monde | Archipel fictif ; îles faites à la main et variantes de placement avant génération procédurale |
 | Contrôle réseau | Serveur autoritaire pour objets, dégâts, temps, récompenses et extraction |
@@ -85,16 +87,16 @@ Minerais, perles, reliques, objets nécessitant deux porteurs et destruction ava
 
 ## 6. Pacification, temps gagné, mobilité et fuite stratégique
 
-Cette section remplace le timer fixe de 5 minutes. Les 2 minutes initiales sont le délai avant le début de la montée des eaux, pas une mort automatique à 2 minutes.
+Cette section remplace le timer fixe de 5 minutes. Les 9 minutes initiales (v1.4 ; 2 minutes en v1.3) sont le délai avant le début de la montée des eaux, pas une mort automatique à 9 minutes.
 
 ### 6.1 Horloge commune et montée des eaux
 
-- Tous les joueurs partagent une échéance serveur de début de submersion : `FloodStartTime = ExpeditionStartTime + 120 s`.
-- Chaque zone pacifiée une première fois ajoute exactement 120 s à cette échéance, pour toute l’équipe. Aucun bonus individuel, aucune remise à zéro du timer.
-- Exemple : une zone validée à t=75 s déplace le début de submersion de t=120 à t=240 ; il reste alors 165 s. Deux zones validées donnent une échéance à t=360.
-- Première île : trois zones pacifiables, donc 8 minutes maximum avant montée des eaux. Ce nombre est un réglage de prototype, pas une limite universelle.
+- Tous les joueurs partagent une échéance serveur de début de submersion : `FloodStartTime = ExpeditionStartTime + 540 s` (9 min, v1.4 ; 120 s en v1.3).
+- Chaque zone pacifiée une première fois ajoute exactement 120 s à cette échéance, pour toute l’équipe. Aucun bonus individuel, aucune remise à zéro du timer. À arbitrer (v1.4) : garder ce bonus, qui allonge une partie pacifiée au-delà de 10 min, ou le passer à 0 pour une durée fixe.
+- Exemple : une zone validée à t=75 s déplace le début de submersion de t=540 à t=660 ; il reste alors 585 s. Deux zones validées donnent une échéance à t=780.
+- Première île : trois zones pacifiables, donc 15 minutes maximum avant montée des eaux avec le bonus de 120 s. Ce nombre est un réglage de prototype, pas une limite universelle.
 - À l’échéance, la submersion commence et devient irréversible. Les validations de zone postérieures n’ajoutent plus de temps. Alerte explicite sur l’interface.
-- La montée finale dure 60 s par défaut, couvre progressivement les terres accessibles puis déclenche l’extraction automatique. Avec zéro zone pacifiée, la résolution finale arrive donc à t=180 s.
+- La montée finale dure 60 s par défaut, couvre progressivement les terres accessibles puis déclenche l’extraction automatique. Avec zéro zone pacifiée, la résolution finale arrive donc à t=600 s : une expédition dure 10 min.
 - Une réussite n’est créditée que si sa validation serveur précède strictement le début de submersion. À égalité, la montée des eaux prime. Les zones réussies dans le même tick sont traitées une fois chacune.
 
 Le niveau d’eau de gameplay suit `WaterHeight(max(0, ServerTime - FloodStartTime))`. Avant submersion, eau basse ; ensuite interpolation monotone sur 60 s. Rendu et immersion utilisent cette même référence. Ne pas supposer que déplacer un WaterBody met à jour nage, navigation et flottabilité : prototyper ; surface dédiée et tests d’immersion autorisés en repli.
@@ -230,7 +232,7 @@ Recette personnage : import sans erreur, bonne échelle, pieds au sol, aucune d�
 | L0 | Projet, version moteur, architecture, map grise, commandes build | Projet ouvre et compile ; dépendances et limites documentées |
 | L1 | Déplacement, interaction, prise/dépôt | Deux joueurs peuvent prendre des objets distincts ; même objet jamais dupliqué |
 | L2 | Barque, sièges, arrimage, capacité et repositionnement entre mouillages | Stock partagé sans duplication ; déplacement annoncé, cargaison conservée, nouveau point de retour visible |
-| L3 | PvE simple, zones pacifiables, 120 s initiales, bonus +120 s, submersion finale 60 s, extraction | Bonus unique partagé, aucune baisse de l’eau, collecte environnement/ennemis, boucle solo puis hôte + client |
+| L3 | PvE simple, zones pacifiables, 540 s initiales (v1.4 ; 120 s en v1.3), bonus +120 s, submersion finale 60 s, extraction | Bonus unique partagé, aucune baisse de l’eau, collecte environnement/ennemis, boucle solo puis hôte + client |
 | L4 | Hub, quotas, taxe, achats, sauvegarde | Exemple économique exact, relancement conserve la progression, bilan non rejoué |
 | L5 | 4 joueurs, endurance, nuit, lanterne, requin | Partie à 4 terminable, danger lisible, états cohérents sur les clients |
 | L6 | Build V1 et intégration personnages | Build Windows joué hors éditeur, procédure d’installation et rapport de recette |
@@ -255,8 +257,8 @@ Tests économiques automatisés : arrondis de taxe, quota insuffisant, stock con
 10. Réseau dégradé : profils 100 puis 200 ms et 1–3 % de pertes ; pas de duplication ni désaccord final, anomalies visuelles consignées.
 11. Quatre joueurs : run complet puis achats et relancement.
 12. Départ de l’hôte : session terminée avec message ; migration d’hôte hors scope.
-13. Sans pacification : montée à 120 s et résolution à 180 s ; aucune mort instantanée à 120 s.
-14. Zone validée à 75 s : échéance de montée à 240 s ; seconde zone = 360 s. Tous affichent les mêmes valeurs.
+13. Sans pacification : montée à 540 s (9 min) et résolution à 600 s (10 min) ; aucune mort instantanée à 540 s.
+14. Zone validée à 75 s : échéance de montée à 660 s ; seconde zone = 780 s. Tous affichent les mêmes valeurs.
 15. Double validation/sortie et retour : un seul bonus par zone ; deux zones simultanées donnent chacune +120 s.
 16. Validation tardive ou à égalité avec l’échéance : aucun bonus ; eau ne redescend jamais.
 17. Ennemis morts une fois : un seul drop, loot transportable et aucune ressource créditée avant arrimage.
@@ -290,7 +292,7 @@ Lis également les sections 16–23 : elles définissent menus, paramètres, sau
 
 Avant chaque lot : tâches, contrats, critères et responsable d’intégration. Après chaque lot : compiler si possible, exécuter la recette appropriée, fournir preuves, problèmes connus et commandes reproductibles. Ne prétends jamais avoir ouvert Unreal, créé un uasset, testé un réseau ou livré un build si cela n’a pas été fait. Liste précisément les opérations d’éditeur restant à exécuter et automatise-les seulement avec des API effectivement disponibles.
 
-Prends les décisions réversibles courantes sans interrompre le travail ; consigne-les dans les ADR. Demande un arbitrage seulement pour changement majeur de vision, coût externe ou blocage sans repli. La première réussite attendue est une expédition à deux joueurs : commencer avec 120 s avant submersion, pacifier une zone en plantant le drapeau britannique puis en récitant un sermon immobile pendant 20 s pour gagner 120 s une seule fois, récupérer du loot environnemental et ennemi, arrimer jusqu’au quota, repositionner la barque puis extraire avant résolution finale, recevoir un bilan exact et recommencer. Implémente la section 6 dès le noyau ; ne conserve aucun ancien timer fixe de 300 s.
+Prends les décisions réversibles courantes sans interrompre le travail ; consigne-les dans les ADR. Demande un arbitrage seulement pour changement majeur de vision, coût externe ou blocage sans repli. La première réussite attendue est une expédition à deux joueurs : commencer avec 540 s avant submersion (v1.4), pacifier une zone en plantant le drapeau britannique puis en récitant un sermon immobile pendant 20 s pour gagner 120 s une seule fois, récupérer du loot environnemental et ennemi, arrimer jusqu’au quota, repositionner la barque puis extraire avant résolution finale, recevoir un bilan exact et recommencer. Implémente la section 6 dès le noyau ; ne conserve aucun ancien timer fixe de 300 s.
 ```
 
 ## 15. Définition de fini
@@ -314,7 +316,7 @@ Le menu est un port au crépuscule avec galion en arrière-plan, animé légère
 
 Une entrée différée est désactivée avec une explication courte, jamais un bouton sans effet. Continuer n’apparaît que si une campagne compatible existe ; une ancienne campagne corrompue ne doit pas empêcher de charger une autre.
 
-Nouvelle partie → Jouer : nom de campagne (1–32 caractères), emplacement libre, personnage cosmétique, préréglage Standard ou Personnalisé, seed optionnel, mode Solo ou Héberger en privé (lorsque disponible), puis Créer. Afficher le résumé avant création ; ne jamais écraser automatiquement une campagne. Après création réussie, charger le galion et son tutoriel contextuel. Les réglages Personnalisés sont enregistrés dans la campagne et signalés au lobby : 120 s initiales, 120 s par zone, 20 s de sermon et 60 s de submersion sont les valeurs Standard ; un profil personnalisé peut les modifier dans des bornes validées.
+Nouvelle partie → Jouer : nom de campagne (1–32 caractères), emplacement libre, personnage cosmétique, préréglage Standard ou Personnalisé, seed optionnel, mode Solo ou Héberger en privé (lorsque disponible), puis Créer. Afficher le résumé avant création ; ne jamais écraser automatiquement une campagne. Après création réussie, charger le galion et son tutoriel contextuel. Les réglages Personnalisés sont enregistrés dans la campagne et signalés au lobby : 540 s initiales (v1.4), 120 s par zone, 20 s de sermon et 60 s de submersion sont les valeurs Standard ; un profil personnalisé peut les modifier dans des bornes validées.
 
 Charger : nom, date locale de dernière sauvegarde, temps joué, or, expéditions effectuées, préréglage, version et vignette. Actions Charger, Renommer, Dupliquer, Supprimer. Suppression = confirmation nominative ; échec lecture = message et proposition de sauvegarde de secours. Sauvegarde d’une version future : refus avec raison, aucune conversion destructive. Conversion ancienne : copie de secours et migration testée.
 

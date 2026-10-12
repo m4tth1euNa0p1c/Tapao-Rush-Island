@@ -1,6 +1,6 @@
 # ADR-006 : Une partie = des jours sur des îles différentes, un quota tous les 5 jours, 10 périodes
 
-- **Statut** : acceptée. Demande du propriétaire du 2026-10-04 (session monk-island-63), avec deux arbitrages tranchés par lui : « 10 quotas de 5 jours » et « vente seulement au jour 5 ».
+- **Statut** : **remplacée par l'ADR-007** (2026-10-06). Était : acceptée. Demande du propriétaire du 2026-10-04 (session monk-island-63), avec deux arbitrages tranchés par lui : « 10 quotas de 5 jours » et « vente seulement au jour 5 ».
 - **Complète et modifie** l'ADR-005 (partie en manches autour du galion) : une **manche = un jour**, et le quota ne se contrôle plus à chaque manche mais **tous les 5 jours**.
 
 ## Demande (mots du propriétaire)
