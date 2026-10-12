@@ -1,0 +1,338 @@
+{
+ "format": "tiki-horror/1",
+ "version": "1.0",
+ "task": "T-274",
+ "mob": "CrabGuardian",
+ "label": "Gardien Crabe",
+ "built_at": "2026-10-10T20:27:57.496036+00:00",
+ "skeleton": {
+  "blender": "SKEL_CrabGuardian",
+  "unreal": "/Game/MonkeIsland/Characters/CrabGuardian/Meshes/SK_CrabGuardian_Skeleton",
+  "bones": [
+   "root",
+   "pelvis",
+   "spine_01",
+   "spine_02",
+   "head",
+   "crest",
+   "upperarm_l",
+   "lowerarm_l",
+   "hand_l",
+   "upperarm_r",
+   "lowerarm_r",
+   "hand_r",
+   "weapon_r",
+   "thigh_l",
+   "calf_l",
+   "foot_l",
+   "thigh_r",
+   "calf_r",
+   "foot_r"
+  ],
+  "heads_m": {
+   "root": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "pelvis": [
+    0.0,
+    0.0,
+    0.2645
+   ],
+   "spine_01": [
+    0.0,
+    0.0,
+    0.3795
+   ],
+   "spine_02": [
+    0.0,
+    0.0,
+    0.4945
+   ],
+   "head": [
+    0.0,
+    0.0,
+    0.759
+   ],
+   "crest": [
+    0.0,
+    0.0,
+    1.0925
+   ],
+   "upperarm_l": [
+    0.3795,
+    0.0,
+    0.598
+   ],
+   "lowerarm_l": [
+    0.4485,
+    -0.0115,
+    0.4945
+   ],
+   "hand_l": [
+    0.4715,
+    -0.023,
+    0.40825
+   ],
+   "upperarm_r": [
+    -0.3795,
+    0.0,
+    0.598
+   ],
+   "lowerarm_r": [
+    -0.4485,
+    -0.0115,
+    0.4945
+   ],
+   "hand_r": [
+    -0.4715,
+    -0.023,
+    0.40825
+   ],
+   "weapon_r": [
+    -0.47459,
+    -0.0447,
+    0.34032
+   ],
+   "thigh_l": [
+    0.1955,
+    0.0,
+    0.2645
+   ],
+   "calf_l": [
+    0.1955,
+    -0.00575,
+    0.15525
+   ],
+   "foot_l": [
+    0.1955,
+    0.0,
+    0.0805
+   ],
+   "thigh_r": [
+    -0.1955,
+    0.0,
+    0.2645
+   ],
+   "calf_r": [
+    -0.1955,
+    -0.00575,
+    0.15525
+   ],
+   "foot_r": [
+    -0.1955,
+    0.0,
+    0.0805
+   ]
+  }
+ },
+ "height_m": 1.15,
+ "bbox_m": [
+  [
+   -0.5492,
+   -0.4052,
+   -0.0388
+  ],
+  [
+   0.5837,
+   0.3802,
+   1.2185
+  ]
+ ],
+ "meshes": {
+  "lod0": "art/export/Characters/CrabGuardian/Horror/SK_CrabGuardian.fbx",
+  "lod0_tris": 53897,
+  "lods": [
+   {
+    "lod": 1,
+    "file": "art/export/Characters/CrabGuardian/Horror/LOD/SK_CrabGuardian_LOD1.fbx",
+    "tris": 26946
+   },
+   {
+    "lod": 2,
+    "file": "art/export/Characters/CrabGuardian/Horror/LOD/SK_CrabGuardian_LOD2.fbx",
+    "tris": 10778
+   }
+  ],
+  "weapon_sk": "art/export/Characters/CrabGuardian/Horror/SK_CrabGuardian_ShellHammer.fbx",
+  "weapon_sm": "art/export/Characters/CrabGuardian/Horror/SM_CrabGuardian_ShellHammer.fbx",
+  "weapon_tris": 5996,
+  "weapon_sm_bbox_m": [
+   [
+    -0.1698,
+    -0.0908,
+    -0.2238
+   ],
+   [
+    0.169,
+    0.0906,
+    0.6459
+   ]
+  ]
+ },
+ "modules": [
+  {
+   "module": "Head",
+   "file": "art/export/Characters/CrabGuardian/Horror/Dismember/SK_CrabGuardian_Head.fbx",
+   "tris": 28242,
+   "boundary_edges": 962,
+   "mass_kg": 181.51
+  },
+  {
+   "module": "Torso",
+   "file": "art/export/Characters/CrabGuardian/Horror/Dismember/SK_CrabGuardian_Torso.fbx",
+   "tris": 22220,
+   "boundary_edges": 710,
+   "mass_kg": 175.55
+  },
+  {
+   "module": "Pelvis",
+   "file": "art/export/Characters/CrabGuardian/Horror/Dismember/SK_CrabGuardian_Pelvis.fbx",
+   "tris": 5656,
+   "boundary_edges": 0,
+   "mass_kg": 25.76
+  },
+  {
+   "module": "Arm_L",
+   "file": "art/export/Characters/CrabGuardian/Horror/Dismember/SK_CrabGuardian_Arm_L.fbx",
+   "tris": 2904,
+   "boundary_edges": 0,
+   "mass_kg": 9.2
+  },
+  {
+   "module": "Arm_R",
+   "file": "art/export/Characters/CrabGuardian/Horror/Dismember/SK_CrabGuardian_Arm_R.fbx",
+   "tris": 2662,
+   "boundary_edges": 0,
+   "mass_kg": 4.79
+  },
+  {
+   "module": "Leg_L",
+   "file": "art/export/Characters/CrabGuardian/Horror/Dismember/SK_CrabGuardian_Leg_L.fbx",
+   "tris": 2218,
+   "boundary_edges": 0,
+   "mass_kg": 6.6
+  },
+  {
+   "module": "Leg_R",
+   "file": "art/export/Characters/CrabGuardian/Horror/Dismember/SK_CrabGuardian_Leg_R.fbx",
+   "tris": 2278,
+   "boundary_edges": 0,
+   "mass_kg": 6.6
+  }
+ ],
+ "textures": [
+  {
+   "asset": "T_CrabGuardian_Body_BC",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Body_BC.png",
+   "kind": "color"
+  },
+  {
+   "asset": "T_CrabGuardian_Body_N",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Body_N.png",
+   "kind": "normal_gl"
+  },
+  {
+   "asset": "T_CrabGuardian_Body_ORM",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Body_ORM.png",
+   "kind": "masks"
+  },
+  {
+   "asset": "T_CrabGuardian_Body_E",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Body_E.png",
+   "kind": "emissive"
+  },
+  {
+   "asset": "T_CrabGuardian_Weapon_BC",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Weapon_BC.png",
+   "kind": "color"
+  },
+  {
+   "asset": "T_CrabGuardian_Weapon_N",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Weapon_N.png",
+   "kind": "normal_gl"
+  },
+  {
+   "asset": "T_CrabGuardian_Weapon_ORM",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Weapon_ORM.png",
+   "kind": "masks"
+  },
+  {
+   "asset": "T_CrabGuardian_Gore_BC",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Gore_BC.png",
+   "kind": "color"
+  },
+  {
+   "asset": "T_CrabGuardian_Gore_N",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Gore_N.png",
+   "kind": "normal_gl"
+  },
+  {
+   "asset": "T_CrabGuardian_Gore_ORM",
+   "file": "art/export/Characters/CrabGuardian/Horror/Textures/T_CrabGuardian_Gore_ORM.png",
+   "kind": "masks"
+  }
+ ],
+ "materials": {
+  "M_CrabGuardian_Body": {
+   "mi": "MI_CrabGuardian_Body",
+   "textures": {
+    "BaseColor": "T_CrabGuardian_Body_BC",
+    "Normal": "T_CrabGuardian_Body_N",
+    "ORM": "T_CrabGuardian_Body_ORM",
+    "Emissive": "T_CrabGuardian_Body_E"
+   },
+   "scalars": {
+    "EmissiveStrength": 1.0,
+    "EmissivePulse": 0.0,
+    "EmissivePulseSpeed": 0.3
+   }
+  },
+  "M_CrabGuardian_Weapon": {
+   "mi": "MI_CrabGuardian_Weapon",
+   "textures": {
+    "BaseColor": "T_CrabGuardian_Weapon_BC",
+    "Normal": "T_CrabGuardian_Weapon_N",
+    "ORM": "T_CrabGuardian_Weapon_ORM"
+   },
+   "scalars": {
+    "EmissiveStrength": 0.0
+   }
+  },
+  "M_CrabGuardian_Gore": {
+   "mi": "MI_CrabGuardian_Gore",
+   "textures": {
+    "BaseColor": "T_CrabGuardian_Gore_BC",
+    "Normal": "T_CrabGuardian_Gore_N",
+    "ORM": "T_CrabGuardian_Gore_ORM"
+   },
+   "scalars": {
+    "EmissiveStrength": 0.0
+   }
+  }
+ },
+ "material_slots": {
+  "body": [
+   "M_CrabGuardian_Body"
+  ],
+  "weapon": [
+   "M_CrabGuardian_Weapon"
+  ],
+  "modules": [
+   "M_CrabGuardian_Body",
+   "M_CrabGuardian_Gore"
+  ]
+ },
+ "texture_settings": {
+  "_BC": "sRGB, TC_Default",
+  "_N": "TC_Normalmap, Flip Green Channel (normale OpenGL)",
+  "_ORM": "sRGB off, TC_Masks (R = AO, G = rugosité, B = métal)",
+  "_E": "sRGB, émissif"
+ },
+ "gore_atlas": [
+  "chitin_cut",
+  "crab_meat",
+  "hemolymph"
+ ]
+}

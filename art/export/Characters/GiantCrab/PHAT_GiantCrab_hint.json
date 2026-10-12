@@ -1,0 +1,529 @@
+{
+  "format": "phat-hint/1",
+  "skeleton": "SKEL_GiantCrab",
+  "units": "cm, espace composant Unreal (Y inversé)",
+  "capsule": {
+    "radius_m": 0.95,
+    "half_height_m": 1.0,
+    "collision": "WorldStatic et WorldDynamic bloqués, Pawn ignoré (Bean doit pouvoir passer sous le corps)"
+  },
+  "phys_materials": {
+    "PM_GiantCrab_Shell": "carapace : dégâts x0,1, ricochet des balles de mousquet, étincelles",
+    "PM_GiantCrab_WeakPoint": "membranes, yeux, ventre : dégâts x2 à x4 selon le socket WeakPoint_*"
+  },
+  "ragdoll": "contraintes de cône limitées (pattes ±35°, pinces ±45°) pour une option de ragdoll après Death ; non requis pour la démo",
+  "bodies": [
+    {
+      "bone": "body",
+      "shape": "box",
+      "center_cm_component": [
+        0.0,
+        25.0,
+        160.0
+      ],
+      "size_cm": [
+        240.0,
+        190.0,
+        62.0
+      ],
+      "pawn": "block"
+    },
+    {
+      "bone": "eye_stalk_l",
+      "shape": "sphere",
+      "center_cm_component": [
+        46.5,
+        118.3,
+        184.9
+      ],
+      "radius_cm": 9.0,
+      "phys_material": "PM_GiantCrab_WeakPoint"
+    },
+    {
+      "bone": "eye_l",
+      "shape": "sphere",
+      "center_cm_component": [
+        53.1,
+        127.5,
+        203.7
+      ],
+      "radius_cm": 9.0,
+      "phys_material": "PM_GiantCrab_WeakPoint"
+    },
+    {
+      "bone": "eye_stalk_r",
+      "shape": "sphere",
+      "center_cm_component": [
+        -46.5,
+        118.3,
+        184.9
+      ],
+      "radius_cm": 9.0,
+      "phys_material": "PM_GiantCrab_WeakPoint"
+    },
+    {
+      "bone": "eye_r",
+      "shape": "sphere",
+      "center_cm_component": [
+        -53.1,
+        127.5,
+        203.7
+      ],
+      "radius_cm": 9.0,
+      "phys_material": "PM_GiantCrab_WeakPoint"
+    },
+    {
+      "bone": "abdomen",
+      "shape": "box",
+      "center_cm_component": [
+        0.0,
+        -25.0,
+        125.0
+      ],
+      "size_cm": [
+        90.0,
+        110.0,
+        12.0
+      ],
+      "phys_material": "PM_GiantCrab_WeakPoint"
+    },
+    {
+      "bone": "claw_l_arm",
+      "shape": "sphyl",
+      "center_cm_component": [
+        110.1,
+        128.0,
+        144.1
+      ],
+      "radius_cm": 19.0,
+      "length_cm": 47.0,
+      "axis": "bone Y"
+    },
+    {
+      "bone": "claw_l_forearm",
+      "shape": "sphyl",
+      "center_cm_component": [
+        125.1,
+        173.0,
+        133.1
+      ],
+      "radius_cm": 21.0,
+      "length_cm": 8.0,
+      "axis": "bone Y",
+      "phys_material": "PM_GiantCrab_WeakPoint"
+    },
+    {
+      "bone": "claw_l_hand",
+      "shape": "box",
+      "center_cm_component": [
+        84.0,
+        211.8,
+        112.8
+      ],
+      "size_cm": [
+        30.0,
+        120.0,
+        46.0
+      ]
+    },
+    {
+      "bone": "claw_l_finger",
+      "shape": "sphyl",
+      "center_cm_component": [
+        38.5,
+        252.6,
+        122.3
+      ],
+      "radius_cm": 9.0,
+      "length_cm": 42.0,
+      "axis": "bone Y"
+    },
+    {
+      "bone": "claw_r_arm",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -112.2,
+        125.8,
+        142.9
+      ],
+      "radius_cm": 19.0,
+      "length_cm": 47.0,
+      "axis": "bone Y"
+    },
+    {
+      "bone": "claw_r_forearm",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -130.2,
+        168.8,
+        129.9
+      ],
+      "radius_cm": 21.0,
+      "length_cm": 8.0,
+      "axis": "bone Y",
+      "phys_material": "PM_GiantCrab_WeakPoint"
+    },
+    {
+      "bone": "claw_r_hand",
+      "shape": "box",
+      "center_cm_component": [
+        -89.7,
+        215.8,
+        105.8
+      ],
+      "size_cm": [
+        40.0,
+        130.0,
+        62.0
+      ]
+    },
+    {
+      "bone": "claw_r_finger",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -44.2,
+        268.9,
+        116.0
+      ],
+      "radius_cm": 9.0,
+      "length_cm": 44.0,
+      "axis": "bone Y"
+    },
+    {
+      "bone": "leg_l1_merus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        158.9,
+        111.5,
+        148.9
+      ],
+      "radius_cm": 14.0,
+      "length_cm": 73.2,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l1_propodus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        208.5,
+        164.0,
+        120.3
+      ],
+      "radius_cm": 11.0,
+      "length_cm": 65.4,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l1_dactyl",
+      "shape": "sphyl",
+      "center_cm_component": [
+        230.0,
+        186.6,
+        41.4
+      ],
+      "radius_cm": 8.0,
+      "length_cm": 68.6,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l2_merus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        188.2,
+        42.5,
+        156.5
+      ],
+      "radius_cm": 14.0,
+      "length_cm": 82.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l2_propodus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        257.6,
+        65.4,
+        132.5
+      ],
+      "radius_cm": 11.0,
+      "length_cm": 73.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l2_dactyl",
+      "shape": "sphyl",
+      "center_cm_component": [
+        286.9,
+        75.0,
+        45.0
+      ],
+      "radius_cm": 8.0,
+      "length_cm": 76.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l3_merus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        181.5,
+        -50.6,
+        154.8
+      ],
+      "radius_cm": 14.0,
+      "length_cm": 82.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l3_propodus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        252.0,
+        -80.8,
+        130.8
+      ],
+      "radius_cm": 11.0,
+      "length_cm": 73.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l3_dactyl",
+      "shape": "sphyl",
+      "center_cm_component": [
+        283.2,
+        -94.2,
+        45.0
+      ],
+      "radius_cm": 8.0,
+      "length_cm": 76.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l4_merus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        137.6,
+        -111.7,
+        144.4
+      ],
+      "radius_cm": 14.0,
+      "length_cm": 65.5,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l4_propodus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        177.7,
+        -162.2,
+        112.7
+      ],
+      "radius_cm": 11.0,
+      "length_cm": 58.8,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_l4_dactyl",
+      "shape": "sphyl",
+      "center_cm_component": [
+        193.9,
+        -182.6,
+        38.2
+      ],
+      "radius_cm": 8.0,
+      "length_cm": 62.2,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r1_merus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -158.9,
+        111.5,
+        148.9
+      ],
+      "radius_cm": 14.0,
+      "length_cm": 73.2,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r1_propodus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -208.5,
+        164.0,
+        120.3
+      ],
+      "radius_cm": 11.0,
+      "length_cm": 65.4,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r1_dactyl",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -230.0,
+        186.6,
+        41.4
+      ],
+      "radius_cm": 8.0,
+      "length_cm": 68.6,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r2_merus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -188.2,
+        42.5,
+        156.5
+      ],
+      "radius_cm": 14.0,
+      "length_cm": 82.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r2_propodus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -257.6,
+        65.4,
+        132.5
+      ],
+      "radius_cm": 11.0,
+      "length_cm": 73.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r2_dactyl",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -286.9,
+        75.0,
+        45.0
+      ],
+      "radius_cm": 8.0,
+      "length_cm": 76.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r3_merus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -181.5,
+        -50.6,
+        154.8
+      ],
+      "radius_cm": 14.0,
+      "length_cm": 82.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r3_propodus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -252.0,
+        -80.8,
+        130.8
+      ],
+      "radius_cm": 11.0,
+      "length_cm": 73.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r3_dactyl",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -283.2,
+        -94.2,
+        45.0
+      ],
+      "radius_cm": 8.0,
+      "length_cm": 76.0,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r4_merus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -137.6,
+        -111.7,
+        144.4
+      ],
+      "radius_cm": 14.0,
+      "length_cm": 65.5,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r4_propodus",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -177.7,
+        -162.2,
+        112.7
+      ],
+      "radius_cm": 11.0,
+      "length_cm": 58.8,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    },
+    {
+      "bone": "leg_r4_dactyl",
+      "shape": "sphyl",
+      "center_cm_component": [
+        -193.9,
+        -182.6,
+        38.2
+      ],
+      "radius_cm": 8.0,
+      "length_cm": 62.2,
+      "axis": "bone Y",
+      "pawn": "ignore",
+      "weapon_trace": "block"
+    }
+  ]
+}

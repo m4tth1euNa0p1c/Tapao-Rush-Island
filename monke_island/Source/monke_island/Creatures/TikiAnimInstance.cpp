@@ -1,12 +1,13 @@
 // monke_island
 
 #include "Creatures/TikiAnimInstance.h"
+#include "Creatures/PoseRoot.h"
 #include "Creatures/TikiMath.h"
 #include "Animation/AnimNodeBase.h"
 #include "Animation/AnimSequenceBase.h"
 #include "AnimationRuntime.h"
 
-void UTikiAnimInstance::PlayClip(UAnimSequenceBase* Clip, bool bLoop, float BlendTime, float PlayRate, bool bRestart)
+void UTikiAnimInstance::PlayClip(UAnimSequenceBase* Clip, bool bLoop, float BlendTime, float PlayRate, bool bRestart, float StartTime)
 {
 	if (!Clip || (Clip == In.Clip && !bRestart))
 	{
@@ -30,7 +31,7 @@ void UTikiAnimInstance::PlayClip(UAnimSequenceBase* Clip, bool bLoop, float Blen
 		BlendRate = 0.0f;
 	}
 	In.Clip = Clip;
-	In.Time = 0.0f;
+	In.Time = FMath::Clamp(StartTime, 0.0f, Clip->GetPlayLength());
 	In.PlayRate = PlayRate;
 	In.bLoop = bLoop;
 	InClip = Clip;
@@ -90,5 +91,7 @@ bool FTikiAnimInstanceProxy::Evaluate(FPoseContext& Output)
 		Out.Clip->GetAnimationPose(OutData, FAnimExtractContext(static_cast<double>(Out.Time), false, {}, Out.bLoop));
 		FAnimationRuntime::BlendTwoPosesTogetherInPlace(InData, OutData, Alpha);
 	}
+	// the root keeps the scale of the mesh: the GoreBox clips carry a root at 1 (owner 2026-10-08)
+	PoseRoot::KeepReferenceScale(Output.Pose);
 	return true;
 }

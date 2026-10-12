@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Creatures/TikiMath.h"
 #include "TikiDirector.generated.h"
 
+class AFlagCeremonySite;
 class APawn;
 enum class ETikiWarriorRole : uint8;
 class ATikiVillager;
@@ -94,6 +96,12 @@ struct FTikiVillage
 
 	/** Villagers living there, 0 for UTikiRules::VillagerCount */
 	int32 VillagerCount = 0;
+
+	/** Houses (AVillageSpawner) whose villager has not appeared yet, one entry per villager */
+	TArray<int32> ResidentHouses;
+
+	/** Villagers of its houses alive (never replaced) */
+	TArray<TWeakObjectPtr<ATikiVillager>> Residents;
 };
 
 /** A bush where a monster lies in wait (server): it leaps out when a player comes near; every bush zone with enough
@@ -126,6 +134,11 @@ struct FTikiAmbushSlot
  *  - Every bush zone (AmbushZoneSize) with enough bushes hides monsters, out of the villages: one leaps out of its
  *    bush when a player comes near, and the bush hides another one some time after it went back or died.
  *  - At the start of the game, scatters a few rare items (the totems) on spots of dry sand far from the bushes.
+ *  - The houses of the fragment villages built from a kit with residents (UVillageHouseKit::Residents) get their
+ *    villager once a player comes near the village; it lives inside and watches its house. An object of the house
+ *    carried out of it while its villager is home is a theft: the villager panics (owner request 2026-10-07).
+ *  - The flag ceremony of a village (AFlagCeremonySite) gathers its villagers in a ring around the officiant; those
+ *    of the houses bring their relic and lay it around him once the flag is up.
  *  Debug (non shipping): monke.TikiDefender spawns a defender against the local player; monke.TikiKillVillager
  *  [cut], monke.TikiCutArm and monke.TikiCutCorpse act on the villager or corpse nearest to the local player.
  */
@@ -225,6 +238,18 @@ public:
 	/** Spawns a warrior out of the bush nearest to Near (or out of the ground there) facing Target (server) */
 	ATikiWarrior* SpawnWarriorFromBush(const FVector& Near, float BushRadius, APawn* Target, ETikiWarriorRole WarriorRole);
 
+	/** Server: the howl of a watcher (T-275): up to MaxCount monsters hidden in the bushes within Radius of Where leap out,
+	 *  nearest first, and run to look there (they attack only if they then see the foe), within the cap of monsters
+	 *  around Suspect (AmbushMaxAlivePerPlayer); how many came out */
+	int32 WakeAmbushers(const FVector& Where, APawn* Suspect, float Radius, int32 MaxCount);
+
+	/** Server: the flag ceremony of a site starts: the villagers of its village (and of the villages near it, by its
+	 *  rules) leave their routine and take their places in a ring around the officiant, in the order they come from */
+	void StartGathering(AFlagCeremonySite* Site);
+
+	/** Server: it ended: the flag up, they lay their relics and cheer; interrupted, they go home with them */
+	void FinishGathering(AFlagCeremonySite* Site, bool bRaised);
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -286,6 +311,21 @@ private:
 	/** Spawns one villager of the village on a free spawn point; false when none could appear */
 	bool SpawnVillager(int32 VillageIndex);
 
+	/** Spawns the villager of the next house of the village waiting for one, inside; false when none could appear */
+	bool SpawnResident(int32 VillageIndex);
+
+	/** An object of a house out of it while its villager is home: the villager panics at the thief */
+	void CheckTheft();
+
+	/** Player who took this object: the one holding it, else the nearest within ThiefSearchRadius; nullptr when none */
+	APawn* FindThief(const AActor* Content) const;
+
+	/** Spawner of the fragment villages, once they stand */
+	TWeakObjectPtr<AVillageSpawner> FragmentSpawner;
+
+	/** Villagers gathered by each flag site during its ceremony */
+	TMap<TWeakObjectPtr<AFlagCeremonySite>, TArray<TWeakObjectPtr<ATikiVillager>>> Gatherings;
+
 	/** Starts or stops the routine of each village from the distance of the players */
 	void UpdateActivity();
 
@@ -331,8 +371,42 @@ private:
 	/** Items scattered on the sand this game (server) */
 	TArray<TWeakObjectPtr<AActor>> ScatteredItems;
 
-	/** Scatters the rare items on their spots, once (server) */
+	/** Initializes a finite, server-only Poisson/house placement job after the fragment villages stand */
 	void ScatterItems();
+
+	/** Processes a bounded number of candidates; only reschedules while initial placement is pending */
+	void PlaceTotemBatch();
+
+	/** Floor trace: below the roof indoors, vegetation skipped outdoors; reports a specific rejection */
+	TikiMath::ETotemReject TraceTotemFloor(const TikiMath::FTotemRequest& Request, FVector& OutFloor) const;
+
+	/** Spawns a replicated item, seats its bounds on the floor and immediately sleeps its physical bodies */
+	bool SpawnRestingTotem(const TikiMath::FTotemRequest& Request, const FVector& Floor);
+
+	/** Finishes or cancels initial placement and releases temporary buffers */
+	void FinishTotemPlacement(bool bCancelled);
+
+	/** Class references held for the finite placement job */
+	UPROPERTY(Transient)
+	TArray<TSubclassOf<AActor>> TotemClasses;
+
+	TArray<TikiMath::FTotemRequest> TotemRequests;
+	TArray<FVector> GroundTotemTaken;
+	TArray<FVillageClearArea> TotemClearAreas;
+	TArray<FSphere> TotemQuietZones;
+	TMap<TikiMath::ETotemReject, int32> TotemRejects;
+	FRandomStream TotemStream;
+	FTimerHandle TotemTimer;
+	int32 NextTotemRequest = 0;
+	int32 HouseTotemsPlaced = 0;
+	int32 HouseTotemsRequested = 0;
+	int32 GroundTotemLimit = 0;
+	float GroundTotemMinSpacing = 0.0f;
+	/** Mean sea level frozen for this initial sample: waves and frame rate must not change the seeded draw */
+	float TotemSeaLevel = 0.0f;
+	double TotemWaitStarted = -1.0;
+	double TotemPlacementStarted = 0.0;
+	bool bTotemPlacementStarted = false;
 
 	/** True when it is night on the island */
 	bool IsNight() const;

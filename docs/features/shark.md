@@ -17,6 +17,10 @@
 - **Fin de poursuite** propre (retour) quand le nageur sort de l'eau, meurt, s'éloigne au-delà de `LoseRadius`, quand la poursuite dure plus de `ChaseGiveUpTime` sans morsure, ou quand il se réfugie en eau trop peu profonde.
 - **Navigation** sans navmesh : chaque pas est accepté seulement si la colonne d'eau (surface du `UIslandWaterSubsystem`, fond par trace) dépasse `MinWaterDepth`. L'inondation rend donc navigables les terres submergées.
 - **Réseau** : serveur autoritaire, déplacement cinématique répliqué, état répliqué ; les clients animent seulement la queue (battement selon la vitesse) et la morsure (multicast).
+  - T-312 (revue réseau R-28, R-34, 2026-10-11) : 20 envois par seconde (`NetUpdateFrequency`, au lieu de 100). Le serveur réplique la vitesse avec la position.
+  - Entre deux envois, un client prolonge le requin par sa dernière vitesse pendant `ClientExtrapolateTime` (0,25 s) au plus. Il fait glisser le corps sur chaque correction en `ClientSmoothTime` (0,12 s) ; au-delà de `ClientMaxSmoothDistance` (4 m), le corps saute.
+  - La queue bat enfin à la vitesse réelle chez le client.
+  - Statut : `compilé` ; PIE non fait. Essai : client nageur et requin en poursuite, PktLag 100 ; attendu, aucun à-coup à chaque mise à jour.
 
 Toutes les valeurs sont dans `DA_SharkRules` (cahier : détection 12 m, 25 dégâts, délai 2 s).
 

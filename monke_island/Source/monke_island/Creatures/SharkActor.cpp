@@ -2,6 +2,7 @@
 
 #include "Creatures/SharkActor.h"
 #include "Creatures/SharkRules.h"
+#include "Creatures/MobHealthBarComponent.h"
 #include "Player/IslanderHealthComponent.h"
 #include "Water/IslandWaterSubsystem.h"
 #include "monke_island.h"
@@ -45,6 +46,9 @@ ASharkActor::ASharkActor()
 
 	Health = CreateDefaultSubobject<UIslanderHealthComponent>(TEXT("Health"));
 	Health->SetIsReplicated(true);
+
+	HealthBar = CreateDefaultSubobject<UMobHealthBarComponent>(TEXT("HealthBar"));
+	HealthBar->SetupAttachment(Collision);
 }
 
 void ASharkActor::BeginPlay()
@@ -53,6 +57,7 @@ void ASharkActor::BeginPlay()
 
 	Water = UIslandWaterSubsystem::Get(this);
 	Home = GetActorLocation();
+	BodyBaseRotation = Body->GetRelativeRotation().Quaternion();
 	PatrolGoal = Home;
 	Health->OnDeath.AddDynamic(this, &ASharkActor::HandleDeath);
 
@@ -67,7 +72,37 @@ void ASharkActor::BeginPlay()
 		Health->ResetHealth();
 		StateStartTime = GetWorld()->GetTimeSeconds();
 		PickPatrolGoal();
+		// not the engine's 100 updates per second: the clients carry it on and glide between two (T-312)
+		SetNetUpdateFrequency(Rules->NetUpdateFrequency);
 	}
+}
+
+void ASharkActor::PostNetReceiveVelocity(const FVector& NewVelocity)
+{
+	Super::PostNetReceiveVelocity(NewVelocity);
+	// kinematic, without a movement component: its speed lives on the root, for the tail and the carrying on
+	Collision->ComponentVelocity = NewVelocity;
+}
+
+void ASharkActor::PostNetReceiveLocationAndRotation()
+{
+	// the body stays where it is drawn and glides to the new place: no jump at each update (T-312, review R-34)
+	const FTransform Drawn = Body->GetComponentTransform();
+	Super::PostNetReceiveLocationAndRotation();
+	LastRepTime = GetWorld()->GetTimeSeconds();
+	const FTransform& Root = Collision->GetComponentTransform();
+	const FVector Offset = Root.InverseTransformPositionNoScale(Drawn.GetLocation()) - FVector(Lunge, 0.0f, 0.0f);
+	if (!HasActorBegunPlay() || State == ESharkState::Dead || !Rules || Rules->ClientSmoothTime <= 0.0f
+		|| Offset.SizeSquared() > FMath::Square(Rules->ClientMaxSmoothDistance))
+	{
+		SmoothOffset = FVector::ZeroVector;
+		SmoothYaw = 0.0f;
+		return;
+	}
+	SmoothOffset = Offset;
+	// the turn of the drawn body against the new root, about the vertical, its own set up rotation left out
+	const FQuat Turn = Root.GetRotation().Inverse() * Drawn.GetRotation() * BodyBaseRotation.Inverse();
+	SmoothYaw = FRotator::NormalizeAxis(static_cast<float>(Turn.Rotator().Yaw));
 }
 
 void ASharkActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -83,6 +118,15 @@ void ASharkActor::Tick(float DeltaSeconds)
 	if (HasAuthority() && Rules && State != ESharkState::Dead)
 	{
 		ServerTick(DeltaSeconds);
+	}
+	// a client carries the shark on by its last replicated speed between two updates, not for long without news (T-312)
+	else if (!HasAuthority() && Rules && State != ESharkState::Dead && GetWorld()->GetTimeSeconds() - LastRepTime <= Rules->ClientExtrapolateTime)
+	{
+		const FVector Velocity = GetVelocity();
+		if (!Velocity.IsNearlyZero())
+		{
+			SetActorLocation(GetActorLocation() + Velocity * DeltaSeconds, false);
+		}
 	}
 	UpdateVisuals(DeltaSeconds);
 }
@@ -238,6 +282,7 @@ bool ASharkActor::SwimToward(const FVector& Goal, float TargetSpeed, float Delta
 	if (!SampleWater(Probe, SurfaceZ, BottomZ) || !SharkMath::IsNavigable(SurfaceZ, BottomZ, Rules->MinWaterDepth))
 	{
 		Speed = 0.0f;
+		Collision->ComponentVelocity = FVector::ZeroVector;
 		SetActorRotation(Rotation);
 		return false;
 	}
@@ -246,6 +291,8 @@ bool ASharkActor::SwimToward(const FVector& Goal, float TargetSpeed, float Delta
 	const float TargetZ = SurfaceZ - FMath::Clamp(DesiredDepthUnderSurface, Rules->CruiseDepth, MaxDepth);
 	Next.Z = FMath::FInterpTo(static_cast<float>(Here.Z), TargetZ, DeltaSeconds, 2.0f);
 	SetActorLocationAndRotation(Next, Rotation, false);
+	// its speed goes with its replicated movement: the clients carry it on between two updates (T-312)
+	Collision->ComponentVelocity = DeltaSeconds > 0.0f ? (Next - Here) / DeltaSeconds : FVector::ZeroVector;
 	return true;
 }
 
@@ -320,6 +367,7 @@ void ASharkActor::HandleDeath(AActor* Killer)
 {
 	State = ESharkState::Dead;
 	Collision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Collision->ComponentVelocity = FVector::ZeroVector;
 	if (HasAuthority())
 	{
 		UE_LOG(Logmonke_island, Log, TEXT("%s killed by %s"), *GetName(), *GetNameSafe(Killer));
@@ -358,8 +406,21 @@ void ASharkActor::UpdateVisuals(float DeltaSeconds)
 
 	// bite: the body lunges forward and comes back
 	LungeTime = FMath::Max(0.0f, LungeTime - DeltaSeconds);
-	const float Lunge = LungeTime > 0.0f ? FMath::Sin((1.0f - LungeTime / 0.35f) * PI) * 60.0f : 0.0f;
-	Body->SetRelativeLocation(FVector(Lunge, 0.0f, 0.0f));
+	Lunge = LungeTime > 0.0f ? FMath::Sin((1.0f - LungeTime / 0.35f) * PI) * 60.0f : 0.0f;
+	// a client glides the body onto the replicated place (T-312, review R-34); the server draws it where it is
+	if (!HasAuthority() && Rules && Rules->ClientSmoothTime > 0.0f)
+	{
+		const float Keep = FMath::Exp(-DeltaSeconds / Rules->ClientSmoothTime);
+		SmoothOffset *= Keep;
+		SmoothYaw *= Keep;
+	}
+	else
+	{
+		SmoothOffset = FVector::ZeroVector;
+		SmoothYaw = 0.0f;
+	}
+	Body->SetRelativeLocationAndRotation(SmoothOffset + FVector(Lunge, 0.0f, 0.0f),
+		FQuat(FVector::UpVector, FMath::DegreesToRadians(SmoothYaw)) * BodyBaseRotation);
 }
 
 ASharkActor* ASharkActor::SpawnInWaterNear(UWorld* World, const FVector& Near, TSubclassOf<ASharkActor> SharkClass)

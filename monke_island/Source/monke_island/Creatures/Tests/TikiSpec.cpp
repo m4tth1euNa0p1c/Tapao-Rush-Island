@@ -167,6 +167,151 @@ void FTikiSpec::Define()
 		});
 	});
 
+	Describe("Totems", [this]()
+	{
+		It("keeps a Poisson disk spacing of 100 m and caps accepted ground totems", [this]()
+		{
+			const TArray<FVector> Candidates = TikiMath::GroundTotemCandidates(
+				FBox2D(FVector2D(-200000, -200000), FVector2D(200000, 200000)), 10000.0f, 143, 1.0f, 6000);
+			TArray<FVector> Taken;
+			for (const FVector& Candidate : Candidates)
+			{
+				const FVector Ground(Candidate.X, Candidate.Y, 20.0);
+				if (TikiMath::EvaluateTotemCandidate(Ground, true, 0, 0, 1, 0.5f, Taken, 10000, 120, {}, {}, 0)
+					== TikiMath::ETotemReject::None)
+				{
+					TestTrue(TEXT("at least 100 m from all accepted points"), TikiMath::IsFarFromAll(Ground, Taken, 10000));
+					Taken.Add(Ground);
+				}
+			}
+			TestEqual(TEXT("cap reached on a broad dry island"), Taken.Num(), 120);
+		});
+
+		It("replays the seed and changes the jittered sample with another seed", [this]()
+		{
+			const FBox2D Bounds(FVector2D(-13000, 15000), FVector2D(57000, 35000));
+			const auto A = TikiMath::GroundTotemCandidates(Bounds, 10000, 0, 1, 300);
+			const auto B = TikiMath::GroundTotemCandidates(Bounds, 10000, 0, 1, 300);
+			const auto C = TikiMath::GroundTotemCandidates(Bounds, 10000, 1, 1, 300);
+			TestTrue(TEXT("seed zero is deterministic"), A == B);
+			TestFalse(TEXT("different seed"), A == C);
+			TestEqual(TEXT("bounded work"), A.Num(), 300);
+			for (const FVector& Point : A)
+			{
+				TestTrue(TEXT("inside played bounds"), Bounds.IsInside(FVector2D(Point)));
+			}
+		});
+
+		It("rejects water and missing ground without reserving a Poisson slot", [this]()
+		{
+			using TikiMath::ETotemReject;
+			TestTrue(TEXT("submerged"), TikiMath::EvaluateTotemCandidate(FVector(0, 0, -1), true, 0, 0, 1, 0.5f,
+				{}, 10000, 120, {}, {}, 0) == ETotemReject::Water);
+			TestTrue(TEXT("no trace hit"), TikiMath::EvaluateTotemCandidate(FVector(0, 0, 20), false, 0, 0, 1, 0.5f,
+				{}, 10000, 120, {}, {}, 0) == ETotemReject::NoGround);
+			TestTrue(TEXT("dry point next to rejected water accepted"), TikiMath::EvaluateTotemCandidate(FVector(1, 0, 20), true, 0, 0, 1, 0.5f,
+				{}, 10000, 120, {}, {}, 0) == ETotemReject::None);
+			TestTrue(TEXT("sea level boundary allowed"), TikiMath::EvaluateTotemCandidate(FVector::ZeroVector, true, 0, 0, 1, 0.5f,
+				{}, 10000, 120, {}, {}, 0) == ETotemReject::None);
+			TestTrue(TEXT("configured shoreline clearance"), TikiMath::EvaluateTotemCandidate(FVector::ZeroVector, true, 0, 10, 1, 0.5f,
+				{}, 10000, 120, {}, {}, 0) == ETotemReject::Water);
+		});
+
+		It("rejects quiet zones including their boundary and indoor candidates", [this]()
+		{
+			const TArray<FSphere> Quiet = { FSphere(FVector(0, 0, 5000), 1500) };
+			for (const bool bHouse : { false, true })
+			{
+				TestTrue(TEXT("quiet boundary ignores height"), TikiMath::EvaluateTotemCandidate(FVector(1500, 0, 20), true, 0, 0, 1, 0.5f,
+					{}, 10000, 120, Quiet, {}, 0, bHouse) == TikiMath::ETotemReject::Quiet);
+				TestTrue(TEXT("outside"), TikiMath::EvaluateTotemCandidate(FVector(1501, 0, 20), true, 0, 0, 1, 0.5f,
+					{}, 10000, 120, Quiet, {}, 0, bHouse) == TikiMath::ETotemReject::None);
+			}
+		});
+
+		It("excludes rotated houses and plazas but lets a house contain its own totem", [this]()
+		{
+			FVillageClearArea House;
+			House.HalfSize = FVector2D(100, 400);
+			House.Yaw = 90;
+			FVillageClearArea Plaza;
+			Plaza.Kind = EVillageClearKind::Plaza;
+			Plaza.Shape = EVillageClearShape::Circle;
+			Plaza.Center = FVector2D(2000, 0);
+			Plaza.HalfSize = FVector2D(500, 500);
+			const TArray<FVillageClearArea> Areas = { House, Plaza };
+			TestTrue(TEXT("rotated house with margin"), TikiMath::TotemExclusion(FVector(449, 0, 0), {}, Areas, 50, false) == TikiMath::ETotemReject::Building);
+			TestTrue(TEXT("plaza"), TikiMath::TotemExclusion(FVector(2499, 0, 0), {}, Areas, 0, false) == TikiMath::ETotemReject::Building);
+			TestTrue(TEXT("outside rotated house"), TikiMath::TotemExclusion(FVector(0, 200, 0), {}, Areas, 50, false) == TikiMath::ETotemReject::None);
+			TestTrue(TEXT("indoor exception"), TikiMath::TotemExclusion(FVector::ZeroVector, {}, Areas, 50, true) == TikiMath::ETotemReject::None);
+		});
+
+		It("does not apply the ground cap or spacing to houses but still rejects an underwater floor", [this]()
+		{
+			using TikiMath::ETotemReject;
+			const TArray<FVector> Taken = { FVector::ZeroVector };
+			TestTrue(TEXT("house beside another house"), TikiMath::EvaluateTotemCandidate(FVector(0, 0, 45), true, 0, 0, 1, 0.5f,
+				Taken, 10000, 0, {}, {}, 0, true) == ETotemReject::None);
+			TestTrue(TEXT("flooded house"), TikiMath::EvaluateTotemCandidate(FVector(0, 0, 45), true, 50, 0, 1, 0.5f,
+				Taken, 10000, 0, {}, {}, 0, true) == ETotemReject::Water);
+			TestTrue(TEXT("ground disabled"), TikiMath::EvaluateTotemCandidate(FVector(0, 0, 45), true, 0, 0, 1, 0.5f,
+				{}, 10000, 0, {}, {}, 0) == ETotemReject::Cap);
+		});
+
+		It("places from mesh centre with an offset in the rotated house frame below the roof", [this]()
+		{
+			const FTransform House(FRotator(0, 90, 0), FVector(1000, 2000, 30));
+			const FBox Mesh(FVector(0, -720, -80), FVector(900, 0, 700));
+			const FVector Point = TikiMath::HouseTotemPoint(House, Mesh, FVector(-200, 100, 25), 100);
+			TestTrue(TEXT("local 250,-260 becomes world 1260,2250"), Point.Equals(FVector(1260, 2250, 30), 0.01));
+			const FVector Clamped = TikiMath::HouseTotemPoint(FTransform::Identity, Mesh, FVector(10000, -10000, 0), 100);
+			TestTrue(TEXT("offset cannot leave the inset bounds"), Clamped.Equals(FVector(800, -620, 0), 0.01));
+			TestTrue(TEXT("relative yaw"), FMath::IsNearlyEqual(TikiMath::HouseTotemYaw(90, FVector2D(-20, 20), 0.25f), 80.0f));
+			TestTrue(TEXT("reversed range"), FMath::IsNearlyEqual(TikiMath::HouseTotemYaw(90, FVector2D(20, -20), 0.25f), 80.0f));
+		});
+
+		It("seats a centred or bottom-pivot mesh on the measured floor before sleeping", [this]()
+		{
+			TestTrue(TEXT("centred pivot lifted"), TikiMath::RestTotemOnFloor(FVector(10, 20, 45), 15, 45, 0.5f).Equals(FVector(10, 20, 75.5)));
+			TestTrue(TEXT("bottom pivot"), TikiMath::RestTotemOnFloor(FVector(10, 20, 45), 45, 45, 0.5f).Equals(FVector(10, 20, 45.5)));
+		});
+
+		It("bounds invalid sampling inputs and rejects steep ground", [this]()
+		{
+			const FBox2D Bounds(FVector2D(0, 0), FVector2D(10000, 10000));
+			TestTrue(TEXT("zero radius disabled"), TikiMath::GroundTotemCandidates(Bounds, 0, 0, 1, 20).IsEmpty());
+			TestTrue(TEXT("no bounds"), TikiMath::GroundTotemCandidates(FBox2D(ForceInit), 100, 0, 1, 20).IsEmpty());
+			TestTrue(TEXT("no budget"), TikiMath::GroundTotemCandidates(Bounds, 100, 0, 1, -1).IsEmpty());
+			TestTrue(TEXT("cliff"), TikiMath::EvaluateTotemCandidate(FVector(0, 0, 20), true, 0, 0, 0.1f, 0.5f,
+				{}, 10000, 120, {}, {}, 0) == TikiMath::ETotemReject::Slope);
+		});
+
+		It("provides usable class defaults without changing any data asset", [this]()
+		{
+			const UTikiRules* Rules = GetDefault<UTikiRules>();
+			TestEqual(TEXT("100 m"), Rules->GroundTotemSpacing, 10000.0f);
+			TestEqual(TEXT("cap"), Rules->GroundTotemMax, 120);
+			TestTrue(TEXT("houses enabled"), Rules->bTotemInEveryHouse);
+			TestFalse(TEXT("legacy sample replaced by default"), Rules->bUseLegacyScatterSpots);
+			TestTrue(TEXT("minka recognised"), TikiMath::HasKeyword(TEXT("SM_Minka"), Rules->TotemHouseMeshKeywords));
+			TestFalse(TEXT("storehouse ignored"), TikiMath::HasKeyword(TEXT("SM_Village_Kura"), Rules->TotemHouseMeshKeywords));
+			TestTrue(TEXT("at most 50 per initial batch"), Rules->TotemPlacementsPerFrame > 0 && Rules->TotemPlacementsPerFrame <= 50);
+		});
+	});
+
+	Describe("Day and night", [this]()
+	{
+		It("brings four times fewer hostile tiki by day and a few more at night, never zero", [this]()
+		{
+			TestEqual(TEXT("3 guardians by day: one stays"), TikiMath::ScaleSpawnCount(3, 0.25f), 1);
+			TestEqual(TEXT("8 by day"), TikiMath::ScaleSpawnCount(8, 0.25f), 2);
+			TestEqual(TEXT("3 at night"), TikiMath::ScaleSpawnCount(3, 1.25f), 4);
+			TestEqual(TEXT("4 night warriors at night"), TikiMath::ScaleSpawnCount(4, 1.25f), 5);
+			TestEqual(TEXT("none stays none"), TikiMath::ScaleSpawnCount(0, 1.25f), 0);
+			TestEqual(TEXT("a zero scale keeps one"), TikiMath::ScaleSpawnCount(2, 0.0f), 1);
+		});
+	});
+
 	Describe("Dropped weapons", [this]()
 	{
 		It("leave the hand at the grip, pointing where the weapon was held", [this]()
