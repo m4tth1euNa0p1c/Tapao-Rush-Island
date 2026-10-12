@@ -2,6 +2,7 @@
 
 #include "Misc/AutomationTest.h"
 #include "Expedition/Core/ExpeditionClock.h"
+#include "Expedition/Core/ExpeditionDayEnd.h"
 #include "Expedition/Core/ExpeditionGameState.h"
 #include "Expedition/Core/ExpeditionRules.h"
 
@@ -203,7 +204,8 @@ void FExpeditionClockSpec::Define()
 		});
 	});
 
-	Describe("Game over (T-104)", [this]()
+	// T-104 then T-173 (ADR-007 §14): the whole crew dead loses the day, not the game; the next island follows
+	Describe("Lost day (T-104, T-173)", [this]()
 	{
 		It("is a wipe only when somebody plays and nobody is alive", [this]()
 		{
@@ -214,6 +216,74 @@ void FExpeditionClockSpec::Define()
 			TestTrue(TEXT("four dead"), AExpeditionGameState::IsWipe(4, 0, 0));
 			TestFalse(TEXT("host dead while a client still loads"), AExpeditionGameState::IsWipe(1, 0, 1));
 			TestFalse(TEXT("everybody left, nobody died"), AExpeditionGameState::IsWipe(0, 0, 0));
+		});
+
+		It("sails on to the next island after a lost day, whatever the contract says, never a game over", [this]()
+		{
+			FDayEndDelays Delays;
+			Delays.SurvivedTravelDelay = 10.0f;
+			Delays.LostTravelDelay = 30.0f;
+			Delays.GreedChoiceSeconds = 15.0f;
+			const ERunDayVerdict Verdicts[] = { ERunDayVerdict::NextDay, ERunDayVerdict::ContractComplete, ERunDayVerdict::ContractFailed,
+				ERunDayVerdict::Victory, ERunDayVerdict::Invalid };
+			for (const ERunDayVerdict Verdict : Verdicts)
+			{
+				const FDayEndPlan Plan = ExpeditionDayEnd::Plan(true, Verdict, Delays);
+				const FString What = UEnum::GetValueAsString(Verdict);
+				TestEqual(*(What + TEXT(": next island")), Plan.FollowUp, EDayEndFollowUp::NextIsland);
+				TestFalse(*(What + TEXT(": the campaign goes on")), Plan.IsCampaignLost());
+				TestEqual(*(What + TEXT(": the lost day's wait")), Plan.TravelWait, 30.0f);
+			}
+		});
+
+		It("waits the day survived delay after a day survived", [this]()
+		{
+			FDayEndDelays Delays;
+			Delays.SurvivedTravelDelay = 10.0f;
+			Delays.LostTravelDelay = 30.0f;
+			const FDayEndPlan Plan = ExpeditionDayEnd::Plan(false, ERunDayVerdict::NextDay, Delays);
+			TestEqual(TEXT("next island"), Plan.FollowUp, EDayEndFollowUp::NextIsland);
+			TestEqual(TEXT("survived wait"), Plan.TravelWait, 10.0f);
+		});
+
+		It("leaves the crew the time of the greed question, lost day or not (ADR-007 §16)", [this]()
+		{
+			FDayEndDelays Delays;
+			Delays.SurvivedTravelDelay = 10.0f;
+			Delays.LostTravelDelay = 30.0f;
+			Delays.GreedChoiceSeconds = 15.0f;
+			TestEqual(TEXT("survived"), ExpeditionDayEnd::Plan(false, ERunDayVerdict::QuotaMetChoose, Delays).TravelWait, 25.0f);
+			TestEqual(TEXT("lost"), ExpeditionDayEnd::Plan(true, ERunDayVerdict::QuotaMetChoose, Delays).TravelWait, 45.0f);
+		});
+
+		It("ends the campaign only on a contract failed on its milestone day: the survivors are executed, a wiped crew has no scene", [this]()
+		{
+			const FDayEndDelays Delays;
+			const FDayEndPlan Survived = ExpeditionDayEnd::Plan(false, ERunDayVerdict::Executed, Delays);
+			TestEqual(TEXT("execution"), Survived.FollowUp, EDayEndFollowUp::Execution);
+			TestTrue(TEXT("campaign lost"), Survived.IsCampaignLost());
+			TestTrue(TEXT("no travel"), Survived.TravelWait < 0.0f);
+			const FDayEndPlan Wiped = ExpeditionDayEnd::Plan(true, ERunDayVerdict::Executed, Delays);
+			TestEqual(TEXT("nobody to execute"), Wiped.FollowUp, EDayEndFollowUp::CampaignLost);
+			TestTrue(TEXT("campaign lost too"), Wiped.IsCampaignLost());
+			TestTrue(TEXT("no travel either"), Wiped.TravelWait < 0.0f);
+		});
+
+		It("never waits a negative time", [this]()
+		{
+			FDayEndDelays Delays;
+			Delays.SurvivedTravelDelay = -5.0f;
+			Delays.LostTravelDelay = -5.0f;
+			Delays.GreedChoiceSeconds = -5.0f;
+			TestEqual(TEXT("survived"), ExpeditionDayEnd::Plan(false, ERunDayVerdict::QuotaMetChoose, Delays).TravelWait, 0.0f);
+			TestEqual(TEXT("lost"), ExpeditionDayEnd::Plan(true, ERunDayVerdict::NextDay, Delays).TravelWait, 0.0f);
+		});
+
+		It("reads its waits from DA_ExpeditionRules (class defaults: 10 s survived, 8 s lost)", [this]()
+		{
+			TestEqual(TEXT("day survived"), Rules->DayEndTravelDelay, 10.0f);
+			TestEqual(TEXT("day lost"), Rules->GameOverRestartDelay, 8.0f);
+			TestTrue(TEXT("permadeath: a lost day, no respawn"), Rules->bPermadeath);
 		});
 	});
 

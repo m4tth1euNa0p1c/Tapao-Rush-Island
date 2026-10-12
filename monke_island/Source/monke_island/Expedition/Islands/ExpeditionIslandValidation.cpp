@@ -214,6 +214,59 @@ TValueOrError<FName, EFragmentError> ExpeditionIslands::PickFragmentId(TConstArr
 	return MakeValue(FragmentIds[Index]);
 }
 
+int32 ExpeditionIslands::PickWeightedIndex(TConstArrayView<float> Weights, int32 Seed, int32 ExcludedIndex)
+{
+	int32 Drawable = 0;
+	for (int32 Index = 0; Index < Weights.Num(); ++Index)
+	{
+		Drawable += Weights[Index] > 0.0f ? 1 : 0;
+	}
+	if (Drawable == 0)
+	{
+		return INDEX_NONE;
+	}
+	// the excluded one stays out unless it is the only drawable one
+	const bool bExclude = Weights.IsValidIndex(ExcludedIndex) && Weights[ExcludedIndex] > 0.0f && Drawable > 1;
+	double Total = 0.0;
+	for (int32 Index = 0; Index < Weights.Num(); ++Index)
+	{
+		Total += Weights[Index] > 0.0f && !(bExclude && Index == ExcludedIndex) ? Weights[Index] : 0.0;
+	}
+	FRandomStream Stream(Seed);
+	double Roll = Stream.FRand() * Total;
+	int32 Last = INDEX_NONE;
+	for (int32 Index = 0; Index < Weights.Num(); ++Index)
+	{
+		if (Weights[Index] <= 0.0f || (bExclude && Index == ExcludedIndex))
+		{
+			continue;
+		}
+		Last = Index;
+		Roll -= Weights[Index];
+		if (Roll < 0.0)
+		{
+			return Index;
+		}
+	}
+	return Last;
+}
+
+TValueOrError<FName, EFragmentError> ExpeditionIslands::PickWeightedFragmentId(TConstArrayView<FName> FragmentIds, TConstArrayView<float> Weights,
+	int32 Seed, FName PreviousFragmentId)
+{
+	if (FragmentIds.IsEmpty() || Weights.Num() != FragmentIds.Num())
+	{
+		return MakeError(EFragmentError::CatalogEmpty);
+	}
+	const int32 Excluded = PreviousFragmentId.IsNone() ? INDEX_NONE : FragmentIds.IndexOfByKey(PreviousFragmentId);
+	const int32 Index = PickWeightedIndex(Weights, Seed, Excluded);
+	if (!FragmentIds.IsValidIndex(Index))
+	{
+		return MakeError(EFragmentError::CatalogEmpty);
+	}
+	return MakeValue(FragmentIds[Index]);
+}
+
 FName ExpeditionIslands::ParseFragmentOption(const TCHAR* OptionValue)
 {
 	if (!OptionValue)

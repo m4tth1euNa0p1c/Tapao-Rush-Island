@@ -3,17 +3,43 @@
 #include "Expedition/Islands/ExpeditionBootGameMode.h"
 #include "Expedition/Islands/ExpeditionIslandDefinition.h"
 #include "Expedition/Islands/ExpeditionIslandSubsystem.h"
+#include "Session/CrewSessionSubsystem.h"
 #include "Engine/Engine.h"
+#include "Engine/NetConnection.h"
+#include "Engine/NetDriver.h"
 #include "Engine/World.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/PlayerController.h"
 #include "Misc/DateTime.h"
 #include "TimerManager.h"
 
+namespace
+{
+	/** Clients connected to this server that have not joined yet: still loading the boot map, no player controller */
+	int32 CountClientsStillLoading(const UWorld* World)
+	{
+		const UNetDriver* Driver = World ? World->GetNetDriver() : nullptr;
+		int32 Loading = 0;
+		if (Driver)
+		{
+			for (const UNetConnection* Connection : Driver->ClientConnections)
+			{
+				if (Connection && Connection->GetConnectionState() == USOCK_Open && !Connection->PlayerController)
+				{
+					++Loading;
+				}
+			}
+		}
+		return Loading;
+	}
+}
+
 AExpeditionBootGameMode::AExpeditionBootGameMode()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	DefaultPawnClass = nullptr;
+	// the lobby (T-315): anyone may join here within MaxPlayers, at the start and between two islands
+	bOpenToNewPlayers = true;
 }
 
 void AExpeditionBootGameMode::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
@@ -118,10 +144,26 @@ void AExpeditionBootGameMode::GenericPlayerInitialization(AController* NewPlayer
 
 void AExpeditionBootGameMode::TravelToIsland()
 {
+	// T-088: a client already connected but still loading the boot map (a slower machine coming back from the island)
+	// would be dropped by the travel, its connection closing with this world: it gets one more join wait, then the host goes
+	const int32 Loading = GetNetMode() == NM_ListenServer ? CountClientsStillLoading(GetWorld()) : 0;
+	const float Elapsed = static_cast<float>(GetWorld()->GetTimeSeconds() - DrawTime);
+	if (Loading > 0 && Elapsed < 2.0f * MaxJoinWaitSeconds)
+	{
+		UE_LOG(LogMonkeIslands, Log, TEXT("Boot: %d client(s) still loading the boot map after %.0f s, the travel waits for them"), Loading, Elapsed);
+		// checked again every second (its join restarts the grace through GenericPlayerInitialization)
+		GetWorldTimerManager().SetTimer(TravelTimer, FTimerDelegate::CreateUObject(this, &AExpeditionBootGameMode::TravelToIsland), 1.0f, false);
+		return;
+	}
 	if (GetNumPlayers() < ExpectedPlayers)
 	{
 		UE_LOG(LogMonkeIslands, Warning, TEXT("Boot: %d of %d expected player(s) after %.0f s, travelling without the others"),
 			GetNumPlayers(), ExpectedPlayers, MaxJoinWaitSeconds);
+	}
+	// T-315: the crew here leaves for the expedition; its island takes only them (and those known from earlier islands)
+	if (UCrewSessionSubsystem* Crew = UCrewSessionSubsystem::Get(this); Crew && GameState)
+	{
+		Crew->LaunchExpedition(*GameState);
 	}
 	UExpeditionIslandSubsystem* Islands = UExpeditionIslandSubsystem::Get(this);
 	const EFragmentError Error = Islands ? Islands->TravelToSelectedIsland() : EFragmentError::CatalogNotFound;

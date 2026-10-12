@@ -5,15 +5,18 @@
 #include "Expedition/Islands/ExpeditionIslandValidation.h"
 #include "Expedition/Islands/FragmentRules.h"
 #include "Expedition/Islands/IslandCatalog.h"
+#include "Run/RunSubsystem.h"
 #include "AssetRegistry/AssetData.h"
 #include "Engine/AssetManager.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 #include "Engine/StreamableManager.h"
 #include "Engine/World.h"
+#include "HAL/IConsoleManager.h"
 #include "TimerManager.h"
 #include "Boats/BoatStartSubsystem.h"
 #include "GameFramework/GameModeBase.h"
+#include "GameFramework/GameSession.h"
 #include "UObject/UObjectGlobals.h"
 
 UExpeditionIslandSubsystem* UExpeditionIslandSubsystem::Get(const UObject* WorldContextObject)
@@ -552,6 +555,23 @@ EFragmentError UExpeditionIslandSubsystem::GetTravelURL(FString& OutURL) const
 	return EFragmentError::None;
 }
 
+#if !UE_BUILD_SHIPPING
+namespace
+{
+	/** Island the next random pick takes (tests: monke.Island.Next FRG_Raraka_21), None for a real draw */
+	FName GForcedNextFragmentId;
+}
+
+static FAutoConsoleCommand GIslandNextCommand(
+	TEXT("monke.Island.Next"),
+	TEXT("Makes the next daily draw take this island (tests, not in Shipping). Usage: monke.Island.Next FRG_Raraka_21"),
+	FConsoleCommandWithArgsDelegate::CreateLambda([](const TArray<FString>& Args)
+	{
+		GForcedNextFragmentId = Args.Num() > 0 ? FName(*Args[0]) : NAME_None;
+		UE_LOG(LogMonkeIslands, Log, TEXT("Islands: the next draw takes %s"), *GForcedNextFragmentId.ToString());
+	}));
+#endif
+
 EFragmentError UExpeditionIslandSubsystem::PickRandomIsland(int32 Seed)
 {
 	if (!HasSelectionAuthority())
@@ -565,15 +585,35 @@ EFragmentError UExpeditionIslandSubsystem::PickRandomIsland(int32 Seed)
 		return EFragmentError::CatalogNotLoaded;
 	}
 
-	TArray<FName, TInlineAllocator<16>> Ids;
+	// the islands the campaign opened (the fort island from day 6, T-205), each with its weight in the draw
+	const UGameInstance* GameInstance = GetGameInstance();
+	const URunSubsystem* Run = GameInstance ? GameInstance->GetSubsystem<URunSubsystem>() : nullptr;
+	TArray<FName, TInlineAllocator<24>> Ids;
+	TArray<float, TInlineAllocator<24>> Weights;
 	for (const TObjectPtr<UExpeditionIslandDefinition>& Definition : OfferedDefinitions)
 	{
-		if (Definition)
+		if (Definition && (!Definition->bNeedsUnlock || !Run || Run->IsUnlocked(Definition->Unlock)))
 		{
 			Ids.Add(Definition->FragmentId);
+			Weights.Add(FMath::Max(Definition->DrawWeight, 0.0f));
 		}
 	}
-	const TValueOrError<FName, EFragmentError> Picked = ExpeditionIslands::PickFragmentId(Ids, Seed, LastPickedFragmentId);
+	TValueOrError<FName, EFragmentError> Picked = ExpeditionIslands::PickWeightedFragmentId(Ids, Weights, Seed, LastPickedFragmentId);
+#if !UE_BUILD_SHIPPING
+	if (!GForcedNextFragmentId.IsNone())
+	{
+		const bool bOffered = OfferedDefinitions.ContainsByPredicate([](const TObjectPtr<UExpeditionIslandDefinition>& Definition)
+		{
+			return Definition && Definition->FragmentId == GForcedNextFragmentId;
+		});
+		UE_LOG(LogMonkeIslands, Log, TEXT("Islands: forced draw of %s (%s)"), *GForcedNextFragmentId.ToString(), bOffered ? TEXT("offered") : TEXT("not in the catalog"));
+		if (bOffered)
+		{
+			Picked = MakeValue(GForcedNextFragmentId);
+		}
+		GForcedNextFragmentId = NAME_None;
+	}
+#endif
 	if (Picked.HasError())
 	{
 		UE_LOG(LogMonkeIslands, Warning, TEXT("Islands: random pick failed (%s)"), ExpeditionIslands::LexErrorName(Picked.GetError()));
@@ -622,8 +662,16 @@ EFragmentError UExpeditionIslandSubsystem::TravelToMapURL(const FString& URL)
 	default:
 	{
 		// Absolute travel drops the previous options: keep the host listening, and never carry an older Island option
-		const FString HostURL = World->GetNetMode() == NM_ListenServer ? URL + TEXT("?listen") : URL;
-		UE_LOG(LogMonkeIslands, Log, TEXT("Islands: server travel to %s"), *HostURL);
+		FString HostURL = World->GetNetMode() == NM_ListenServer ? URL + TEXT("?listen") : URL;
+		// T-088: keep the player limit of the session too (the menu hosts with "listen?MaxPlayers=4"); without it the game
+		// session of the next map falls back to the engine default (16 players)
+		AGameModeBase* GameMode = World->GetAuthGameMode();
+		const AGameSession* Session = GameMode ? GameMode->GameSession.Get() : nullptr;
+		if (Session && Session->MaxPlayers > 0 && !URL.Contains(TEXT("MaxPlayers="), ESearchCase::IgnoreCase))
+		{
+			HostURL += FString::Printf(TEXT("?MaxPlayers=%d"), Session->MaxPlayers);
+		}
+		UE_LOG(LogMonkeIslands, Log, TEXT("Islands: server travel to %s (%d player(s) follow)"), *HostURL, GameMode ? GameMode->GetNumPlayers() : 0);
 		return World->ServerTravel(HostURL, true) ? EFragmentError::None : EFragmentError::TravelFailed;
 	}
 	}
