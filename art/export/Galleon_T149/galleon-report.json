@@ -1,0 +1,1478 @@
+{
+  "info": {
+    "scale": "Bean 1,05 m : galion reel ~38 m pour 1,80 m -> 22 m de coque ici (x 0,58)",
+    "length_hull_m": 22.0,
+    "length_overall_m": 30.5,
+    "beam_m": 6.0,
+    "draft_m": 1.7,
+    "air_draft_m": 17.6,
+    "main_deck_z_m": 1.6,
+    "bulwark_m": 0.7,
+    "forecastle_z_m": 3.0,
+    "quarterdeck_z_m": 3.0,
+    "poop_deck_z_m": 4.2,
+    "cabin_headroom_m": 1.32,
+    "forward_axis": "-Y (proue), babord = +X, origine = centre de la flottaison (z = 0)",
+    "groups": "SM_Galleon (hull+decks+roof+cabin+details+masts), SM_Galleon_Sails, SM_Galleon_Rigging, SM_Galleon_Flag, SM_Galleon_Wheel (pivot = axe, Roll Y), SM_Galleon_Rudder (pivot = etambot, Yaw Z local)",
+    "pivots": "SM_Galleon_Flag / _Wheel / _Rudder sont exportés dans le repère LOCAL de leur objet (matrix_world inversée : translation + rotation) ; les sockets flag / helm / rudder_hinge portent la rotation de cet objet (identité pour flag et helm, Euler X -10,49 deg pour rudder_hinge = inclinaison de l'étambot) : attacher SM_Galleon_X au SOCKET_X sans offset reproduit la pose du navire ; Z local du gouvernail = axe de l'étambot (Yaw local = angle de barre), Y local de la roue = axe (Roll).",
+    "materials": "A l'export, les variantes de ton M_Galleon_<Nom>_t0..t4 sont fusionnées sur le matériau de base M_Galleon_<Nom> ; le ton (0,8 / 0,9 / 1,0 / 1,1 / 1,2) est stocké divisé par 1,2 dans l'attribut couleur 'Tone' (vertex color lineaire, RGB = ton / 1,2) : dans UE, BaseColor x VertexColor x 1,2.",
+    "ucx": "coque 7 tranches (-> main_deck - 0,1), dalles de pont (4 + entrepont avant + cabine), pavois, flancs des chateaux (wall_*), tableau 3 bandes, etrave, cloisons (+ poulaine), balustrades des rebords (rail_*), garde-corps des hunes, escaliers (rampes), mats, cabestans, hiloires, mobilier de cabine (cabin_*), sacres de pont (gun_upper_*), beaupre, tonneaux, caisses, pompes, poteaux de lanternes, jas."
+  },
+  "build_errors": [],
+  "exports": {
+    "SM_Galleon": {
+      "fbx": "exports/SM_Galleon.fbx",
+      "glb": "exports/SM_Galleon.glb",
+      "tris": 328694,
+      "materials": 31,
+      "material_names": [
+        "M_Galleon_Tar",
+        "M_Galleon_Pitch",
+        "M_Galleon_Wale",
+        "M_Galleon_Hull",
+        "M_Galleon_Blue",
+        "M_Galleon_OakDark",
+        "M_Galleon_CabinWall",
+        "M_Galleon_Gold",
+        "M_Galleon_OakLight",
+        "M_Galleon_IronRust",
+        "M_Galleon_Rope",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Ochre",
+        "M_Galleon_Cedar",
+        "M_Galleon_Leather",
+        "M_Galleon_Deck2",
+        "M_Galleon_Deck",
+        "M_Galleon_RopeTar",
+        "M_Galleon_Oak",
+        "M_Galleon_Glass",
+        "M_Galleon_Lamp",
+        "M_Galleon_Brass",
+        "M_Galleon_Navy",
+        "M_Galleon_CabinFloor",
+        "M_Galleon_Velvet",
+        "M_Galleon_Paper",
+        "M_Galleon_Iron",
+        "M_Galleon_Linen",
+        "M_Galleon_Spar",
+        "M_Galleon_Barrel",
+        "M_Galleon_Flag"
+      ],
+      "ucx": 173,
+      "sockets": [
+        "bean_spawn",
+        "helm_stand",
+        "boarding_ladder",
+        "ladder_top",
+        "barque_dock",
+        "barque_davit_fore",
+        "barque_davit",
+        "capstan_main",
+        "cargo_hatch",
+        "hatch_main",
+        "hatch_fore",
+        "companion",
+        "captain_cabin",
+        "cabin_door",
+        "fc_door",
+        "flag",
+        "rudder_hinge",
+        "mast_fore_cap",
+        "pennant_fore",
+        "mast_main_cap",
+        "pennant_main",
+        "mast_mizzen_cap",
+        "pennant_mizzen",
+        "crow_nest_fore",
+        "crow_nest_main",
+        "bowsprit_tip",
+        "bowsprit_cap",
+        "ladder_top_fore_P",
+        "ladder_bottom_fore_P",
+        "ladder_top_fore_S",
+        "ladder_bottom_fore_S",
+        "ladder_top_quarter_P",
+        "ladder_bottom_quarter_P",
+        "ladder_top_quarter_S",
+        "ladder_bottom_quarter_S",
+        "ladder_top_poop_P",
+        "ladder_bottom_poop_P",
+        "ladder_top_poop_S",
+        "ladder_bottom_poop_S",
+        "ratlines_fore_P",
+        "ratlines_fore_S",
+        "ratlines_main_P",
+        "ratlines_main_S",
+        "hawse_port",
+        "hawse_starboard",
+        "figurehead",
+        "lantern_0",
+        "lantern_1",
+        "lantern_2",
+        "lantern_3",
+        "lantern_4",
+        "lantern_cabin_0",
+        "lantern_cabin_1",
+        "lantern_gangway_P",
+        "lantern_gangway_S",
+        "bell",
+        "taffrail_center",
+        "gallery_port",
+        "gallery_starboard",
+        "knight_main",
+        "compass",
+        "gun_P0",
+        "gun_P1",
+        "gun_P2",
+        "gun_P3",
+        "gun_P4",
+        "gun_P5",
+        "gun_P6",
+        "gun_upper_P0",
+        "gun_upper_P1",
+        "gun_upper_P2",
+        "gun_S0",
+        "gun_S1",
+        "gun_S2",
+        "gun_S3",
+        "gun_S4",
+        "gun_S5",
+        "gun_S6",
+        "gun_upper_S0",
+        "gun_upper_S1",
+        "gun_upper_S2",
+        "swivel_0",
+        "swivel_1",
+        "swivel_2",
+        "swivel_3",
+        "helm",
+        "anchor_port",
+        "cathead_port",
+        "anchor_starboard",
+        "cathead_starboard",
+        "sail_clew_main_P",
+        "sail_clew_main_S",
+        "sail_clew_fore_P",
+        "sail_clew_fore_S",
+        "sail_clew_lateen",
+        "sail_center_main",
+        "lantern_cabin_2",
+        "lantern_cabin_3",
+        "cabin_table",
+        "cabin_bed"
+      ],
+      "tone_attribute": "Tone (vertex color lineaire, RGB = ton / 1,2 ; UE : BaseColor x VertexColor x 1,2)"
+    },
+    "SM_Galleon_Sails": {
+      "fbx": "exports/SM_Galleon_Sails.fbx",
+      "glb": "exports/SM_Galleon_Sails.glb",
+      "tris": 8620,
+      "materials": 4,
+      "material_names": [
+        "M_Galleon_Canvas",
+        "M_Galleon_RopeTar",
+        "M_Galleon_Rope",
+        "M_Galleon_CanvasPatch"
+      ],
+      "ucx": 0,
+      "sockets": [],
+      "tone_attribute": "Tone (vertex color lineaire, RGB = ton / 1,2 ; UE : BaseColor x VertexColor x 1,2)"
+    },
+    "SM_Galleon_Rigging": {
+      "fbx": "exports/SM_Galleon_Rigging.fbx",
+      "glb": "exports/SM_Galleon_Rigging.glb",
+      "tris": 37816,
+      "materials": 7,
+      "material_names": [
+        "M_Galleon_OakDark",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_RopeTar",
+        "M_Galleon_Rigging",
+        "M_Galleon_Rope",
+        "M_Galleon_Spar",
+        "M_Galleon_IronRust"
+      ],
+      "ucx": 0,
+      "sockets": [],
+      "tone_attribute": "Tone (vertex color lineaire, RGB = ton / 1,2 ; UE : BaseColor x VertexColor x 1,2)"
+    },
+    "SM_Galleon_Flag": {
+      "fbx": "exports/SM_Galleon_Flag.fbx",
+      "glb": "exports/SM_Galleon_Flag.glb",
+      "tris": 856,
+      "materials": 2,
+      "material_names": [
+        "M_Galleon_Flag",
+        "M_Galleon_Rope"
+      ],
+      "ucx": 0,
+      "sockets": [],
+      "tone_attribute": "Tone (vertex color lineaire, RGB = ton / 1,2 ; UE : BaseColor x VertexColor x 1,2)",
+      "pivot_in_SM_Galleon_m": [
+        0.0,
+        11.18,
+        4.2
+      ],
+      "rotation_euler_deg": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "socket": "flag"
+    },
+    "SM_Galleon_Wheel": {
+      "fbx": "exports/SM_Galleon_Wheel.fbx",
+      "glb": "exports/SM_Galleon_Wheel.glb",
+      "tris": 1866,
+      "materials": 5,
+      "material_names": [
+        "M_Galleon_Oak",
+        "M_Galleon_Brass",
+        "M_Galleon_Gold",
+        "M_Galleon_OakDark",
+        "M_Galleon_Rope"
+      ],
+      "ucx": 0,
+      "sockets": [],
+      "tone_attribute": "Tone (vertex color lineaire, RGB = ton / 1,2 ; UE : BaseColor x VertexColor x 1,2)",
+      "pivot_in_SM_Galleon_m": [
+        0.0,
+        6.4,
+        3.9
+      ],
+      "rotation_euler_deg": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "socket": "helm"
+    },
+    "SM_Galleon_Rudder": {
+      "fbx": "exports/SM_Galleon_Rudder.fbx",
+      "glb": "exports/SM_Galleon_Rudder.glb",
+      "tris": 1396,
+      "materials": 5,
+      "material_names": [
+        "M_Galleon_Wale",
+        "M_Galleon_Hull",
+        "M_Galleon_Pitch",
+        "M_Galleon_IronRust",
+        "M_Galleon_Iron"
+      ],
+      "ucx": 0,
+      "sockets": [],
+      "tone_attribute": "Tone (vertex color lineaire, RGB = ton / 1,2 ; UE : BaseColor x VertexColor x 1,2)",
+      "pivot_in_SM_Galleon_m": [
+        0.0,
+        10.715,
+        0.0
+      ],
+      "rotation_euler_deg": [
+        -10.49,
+        -0.0,
+        0.0
+      ],
+      "socket": "rudder_hinge"
+    }
+  },
+  "objects": {
+    "hull": [
+      "Galleon_Hull_Planks",
+      "Galleon_Hull_Bulwark",
+      "Galleon_Hull_Keel",
+      "Galleon_Hull_Wales",
+      "Galleon_Hull_Ports",
+      "Galleon_Hull_Channels"
+    ],
+    "decks": [
+      "Galleon_Decks_Planks",
+      "Galleon_Decks_Beams",
+      "Galleon_Decks_Hatches",
+      "Galleon_Decks_Bulkheads",
+      "Galleon_Decks_Rails"
+    ],
+    "roof": [
+      "Galleon_Roof_Planks",
+      "Galleon_Roof_Beams",
+      "Galleon_Roof_Hatches",
+      "Galleon_Roof_Bulkheads",
+      "Galleon_Roof_Rails"
+    ],
+    "cabin": [
+      "Galleon_Cabin_Room",
+      "Galleon_Cabin_Furniture",
+      "Galleon_Cabin_Lights"
+    ],
+    "details": [
+      "Galleon_Bow_Head",
+      "Galleon_Bow_Lion",
+      "Galleon_Bow_Bowsprit",
+      "Galleon_Bow_Catheads",
+      "Galleon_Bow_Anchors",
+      "Galleon_Stern_Transom",
+      "Galleon_Stern_Ornaments",
+      "Galleon_Stern_Galleries",
+      "Galleon_Stern_Taffrail",
+      "Galleon_Stern_Lanterns",
+      "Galleon_Fittings_Capstans",
+      "Galleon_Fittings_Bell",
+      "Galleon_Fittings_Lanterns",
+      "Galleon_Fittings_Pumps",
+      "Galleon_Fittings_Cargo",
+      "Galleon_Fittings_Ladder",
+      "Galleon_Fittings_Davits",
+      "Galleon_Cannons_Battery",
+      "Galleon_Cannons_Deck",
+      "Galleon_Cannons_Swivels",
+      "Galleon_Misc_Pedestal",
+      "Galleon_Misc_Gudgeons"
+    ],
+    "masts": [
+      "Galleon_Masts_Lower",
+      "Galleon_Masts_Tops",
+      "Galleon_Masts_Yards",
+      "Galleon_Masts_Pennants"
+    ],
+    "sails": [
+      "Galleon_Sails"
+    ],
+    "rigging": [
+      "Galleon_Rigging_Standing",
+      "Galleon_Rigging_Running"
+    ],
+    "flag": [
+      "SM_Galleon_Flag"
+    ],
+    "wheel": [
+      "SM_Galleon_Wheel"
+    ],
+    "rudder": [
+      "SM_Galleon_Rudder"
+    ]
+  },
+  "buoyancy": {
+    "pontoons": [
+      {
+        "name": "P_P0",
+        "location_m": [
+          1.29,
+          -7.5,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_S0",
+        "location_m": [
+          -1.29,
+          -7.5,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_P1",
+        "location_m": [
+          1.79,
+          -3.0,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_S1",
+        "location_m": [
+          -1.79,
+          -3.0,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_P2",
+        "location_m": [
+          1.81,
+          1.5,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_S2",
+        "location_m": [
+          -1.81,
+          1.5,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_P3",
+        "location_m": [
+          1.71,
+          6.0,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_S3",
+        "location_m": [
+          -1.71,
+          6.0,
+          -0.5
+        ],
+        "radius_m": 1.0
+      },
+      {
+        "name": "P_Bow",
+        "location_m": [
+          0.0,
+          -9.95,
+          -0.3
+        ],
+        "radius_m": 0.8
+      },
+      {
+        "name": "P_Stern",
+        "location_m": [
+          0.0,
+          9.6,
+          -0.4
+        ],
+        "radius_m": 0.9
+      }
+    ],
+    "mass_kg": 42000,
+    "center_of_mass_m": [
+      0.0,
+      0.6,
+      -0.4
+    ],
+    "linear_damping": 0.4,
+    "angular_damping": 1.2,
+    "waterline_z_m": 0.0,
+    "note": "Water plugin : BuoyancyComponent sur BP_Galleon (pontons ci-dessus, en cm dans Unreal : x100)."
+  },
+  "sockets": {
+    "bean_spawn": [
+      1.1,
+      -1.6,
+      1.625
+    ],
+    "helm_stand": [
+      0.0,
+      7.0,
+      3.03
+    ],
+    "boarding_ladder": [
+      -2.721,
+      2.598,
+      2.398
+    ],
+    "ladder_top": [
+      -2.471,
+      2.598,
+      2.398
+    ],
+    "barque_dock": [
+      -4.078,
+      2.6,
+      0.0
+    ],
+    "barque_davit_fore": [
+      3.483,
+      5.2,
+      5.95
+    ],
+    "barque_davit": [
+      3.018,
+      9.0,
+      5.95
+    ],
+    "capstan_main": [
+      0.0,
+      1.0,
+      2.1
+    ],
+    "cargo_hatch": [
+      0.0,
+      -3.0,
+      1.85
+    ],
+    "hatch_main": [
+      0.0,
+      -3.0,
+      1.85
+    ],
+    "hatch_fore": [
+      0.0,
+      -4.4,
+      1.85
+    ],
+    "companion": [
+      -1.9,
+      -2.65,
+      1.6
+    ],
+    "captain_cabin": [
+      0.0,
+      7.107,
+      1.6
+    ],
+    "cabin_door": [
+      0.0,
+      3.92,
+      1.6
+    ],
+    "fc_door": [
+      0.0,
+      -5.94,
+      1.6
+    ],
+    "flag": [
+      0.0,
+      11.18,
+      4.2
+    ],
+    "rudder_hinge": [
+      0.0,
+      10.715,
+      0.0
+    ],
+    "mast_fore_cap": [
+      0.0,
+      -8.1,
+      9.8
+    ],
+    "pennant_fore": [
+      0.0,
+      -8.1,
+      14.25
+    ],
+    "mast_main_cap": [
+      0.0,
+      -1.451,
+      11.6
+    ],
+    "pennant_main": [
+      0.0,
+      -1.264,
+      16.95
+    ],
+    "mast_mizzen_cap": [
+      0.0,
+      5.927,
+      9.1
+    ],
+    "pennant_mizzen": [
+      0.0,
+      6.056,
+      10.95
+    ],
+    "crow_nest_fore": [
+      0.0,
+      -7.696,
+      9.1
+    ],
+    "crow_nest_main": [
+      0.0,
+      -1.048,
+      10.9
+    ],
+    "bowsprit_tip": [
+      0.0,
+      -18.862,
+      7.731
+    ],
+    "bowsprit_cap": [
+      0.0,
+      -18.59,
+      7.615
+    ],
+    "ladder_top_fore_P": [
+      1.25,
+      -6.0,
+      3.03
+    ],
+    "ladder_bottom_fore_P": [
+      1.25,
+      -4.32,
+      1.63
+    ],
+    "ladder_top_fore_S": [
+      -1.25,
+      -6.0,
+      3.03
+    ],
+    "ladder_bottom_fore_S": [
+      -1.25,
+      -4.32,
+      1.63
+    ],
+    "ladder_top_quarter_P": [
+      1.25,
+      3.8,
+      3.03
+    ],
+    "ladder_bottom_quarter_P": [
+      1.25,
+      2.12,
+      1.63
+    ],
+    "ladder_top_quarter_S": [
+      -1.25,
+      3.8,
+      3.03
+    ],
+    "ladder_bottom_quarter_S": [
+      -1.25,
+      2.12,
+      1.63
+    ],
+    "ladder_top_poop_P": [
+      1.7,
+      7.4,
+      4.23
+    ],
+    "ladder_bottom_poop_P": [
+      1.7,
+      5.9,
+      3.03
+    ],
+    "ladder_top_poop_S": [
+      -1.7,
+      7.4,
+      4.23
+    ],
+    "ladder_bottom_poop_S": [
+      -1.7,
+      5.9,
+      3.03
+    ],
+    "ratlines_fore_P": [
+      2.46,
+      -7.6,
+      3.25
+    ],
+    "ratlines_fore_S": [
+      -2.46,
+      -7.6,
+      3.25
+    ],
+    "ratlines_main_P": [
+      3.229,
+      -1.8,
+      2.95
+    ],
+    "ratlines_main_S": [
+      -3.229,
+      -1.8,
+      2.95
+    ],
+    "hawse_port": [
+      1.219,
+      -10.267,
+      0.897
+    ],
+    "hawse_starboard": [
+      -1.219,
+      -10.267,
+      0.897
+    ],
+    "figurehead": [
+      0.0,
+      -13.2,
+      4.3
+    ],
+    "lantern_0": [
+      2.0,
+      11.45,
+      5.55
+    ],
+    "lantern_1": [
+      -2.0,
+      11.45,
+      5.55
+    ],
+    "lantern_2": [
+      0.0,
+      11.37,
+      6.1
+    ],
+    "lantern_3": [
+      2.014,
+      7.6,
+      5.225
+    ],
+    "lantern_4": [
+      -2.014,
+      7.6,
+      5.225
+    ],
+    "lantern_cabin_0": [
+      1.0,
+      4.17,
+      2.62
+    ],
+    "lantern_cabin_1": [
+      -1.0,
+      4.17,
+      2.62
+    ],
+    "lantern_gangway_P": [
+      2.02,
+      3.5,
+      2.704
+    ],
+    "lantern_gangway_S": [
+      -2.02,
+      3.5,
+      2.704
+    ],
+    "bell": [
+      2.385,
+      3.6,
+      2.75
+    ],
+    "taffrail_center": [
+      0.0,
+      11.601,
+      5.58
+    ],
+    "gallery_port": [
+      2.616,
+      9.533,
+      3.352
+    ],
+    "gallery_starboard": [
+      -2.616,
+      9.533,
+      3.352
+    ],
+    "knight_main": [
+      0.0,
+      -0.68,
+      2.46
+    ],
+    "compass": [
+      -0.62,
+      5.93,
+      3.8
+    ],
+    "gun_P0": [
+      2.836,
+      -6.46,
+      0.95
+    ],
+    "gun_P1": [
+      3.15,
+      -4.43,
+      0.95
+    ],
+    "gun_P2": [
+      3.272,
+      -2.407,
+      0.95
+    ],
+    "gun_P3": [
+      3.284,
+      -0.4,
+      0.95
+    ],
+    "gun_P4": [
+      3.273,
+      1.603,
+      0.95
+    ],
+    "gun_P5": [
+      3.232,
+      3.609,
+      0.95
+    ],
+    "gun_P6": [
+      3.145,
+      5.617,
+      0.95
+    ],
+    "gun_upper_P0": [
+      3.152,
+      -2.508,
+      2.025
+    ],
+    "gun_upper_P1": [
+      3.165,
+      0.301,
+      2.022
+    ],
+    "gun_upper_P2": [
+      2.895,
+      4.812,
+      3.27
+    ],
+    "gun_S0": [
+      -2.836,
+      -6.46,
+      0.95
+    ],
+    "gun_S1": [
+      -3.15,
+      -4.43,
+      0.95
+    ],
+    "gun_S2": [
+      -3.272,
+      -2.407,
+      0.95
+    ],
+    "gun_S3": [
+      -3.284,
+      -0.4,
+      0.95
+    ],
+    "gun_S4": [
+      -3.273,
+      1.603,
+      0.95
+    ],
+    "gun_S5": [
+      -3.232,
+      3.609,
+      0.95
+    ],
+    "gun_S6": [
+      -3.145,
+      5.617,
+      0.95
+    ],
+    "gun_upper_S0": [
+      -3.152,
+      -2.508,
+      2.025
+    ],
+    "gun_upper_S1": [
+      -3.165,
+      0.301,
+      2.022
+    ],
+    "gun_upper_S2": [
+      -2.895,
+      4.812,
+      3.27
+    ],
+    "swivel_0": [
+      2.124,
+      -6.538,
+      4.337
+    ],
+    "swivel_1": [
+      -2.124,
+      -6.538,
+      4.337
+    ],
+    "swivel_2": [
+      2.064,
+      7.992,
+      5.536
+    ],
+    "swivel_3": [
+      -2.064,
+      7.992,
+      5.536
+    ],
+    "helm": [
+      0.0,
+      6.4,
+      3.9
+    ],
+    "anchor_port": [
+      2.052,
+      -10.0,
+      4.224
+    ],
+    "cathead_port": [
+      2.172,
+      -10.05,
+      4.489
+    ],
+    "anchor_starboard": [
+      -2.052,
+      -10.0,
+      4.224
+    ],
+    "cathead_starboard": [
+      -2.172,
+      -10.05,
+      4.489
+    ],
+    "sail_clew_main_P": [
+      6.7,
+      -2.075,
+      2.337
+    ],
+    "sail_clew_main_S": [
+      -6.7,
+      -2.075,
+      2.337
+    ],
+    "sail_clew_fore_P": [
+      5.7,
+      -8.528,
+      3.328
+    ],
+    "sail_clew_fore_S": [
+      -5.7,
+      -8.528,
+      3.328
+    ],
+    "sail_clew_lateen": [
+      0.443,
+      10.149,
+      5.645
+    ],
+    "sail_center_main": [
+      0.0,
+      -4.616,
+      4.937
+    ],
+    "lantern_cabin_2": [
+      -2.126,
+      8.1,
+      2.5
+    ],
+    "lantern_cabin_3": [
+      2.215,
+      6.981,
+      2.6
+    ],
+    "cabin_table": [
+      0.0,
+      7.107,
+      2.15
+    ],
+    "cabin_bed": [
+      -1.741,
+      9.45,
+      1.98
+    ]
+  },
+  "socket_dirs": {
+    "helm_stand": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "boarding_ladder": [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    "ladder_top": [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    "barque_dock": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "barque_davit_fore": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "barque_davit": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "capstan_main": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cargo_hatch": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "hatch_main": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "hatch_fore": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "companion": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "captain_cabin": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "cabin_door": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "fc_door": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "rudder_hinge": [
+      0.0,
+      0.182,
+      0.983
+    ],
+    "mast_fore_cap": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "pennant_fore": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "mast_main_cap": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "pennant_main": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "mast_mizzen_cap": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "pennant_mizzen": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "crow_nest_fore": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "crow_nest_main": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "bowsprit_tip": [
+      0.0,
+      -0.921,
+      0.391
+    ],
+    "ratlines_fore_P": [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    "ratlines_fore_S": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "ratlines_main_P": [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    "ratlines_main_S": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "hawse_port": [
+      0.835,
+      -0.546,
+      -0.064
+    ],
+    "hawse_starboard": [
+      -0.835,
+      -0.546,
+      -0.064
+    ],
+    "figurehead": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "taffrail_center": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "gallery_port": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "gallery_starboard": [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    "gun_P0": [
+      0.98,
+      -0.2,
+      0.0
+    ],
+    "gun_P1": [
+      0.995,
+      -0.102,
+      0.0
+    ],
+    "gun_P2": [
+      1.0,
+      -0.025,
+      0.0
+    ],
+    "gun_P3": [
+      1.0,
+      0.001,
+      0.0
+    ],
+    "gun_P4": [
+      1.0,
+      0.012,
+      0.0
+    ],
+    "gun_P5": [
+      1.0,
+      0.031,
+      0.0
+    ],
+    "gun_P6": [
+      0.998,
+      0.057,
+      0.0
+    ],
+    "gun_upper_P0": [
+      1.0,
+      -0.027,
+      0.0
+    ],
+    "gun_upper_P1": [
+      1.0,
+      0.004,
+      0.0
+    ],
+    "gun_upper_P2": [
+      0.999,
+      0.041,
+      0.0
+    ],
+    "gun_S0": [
+      -0.98,
+      -0.2,
+      0.0
+    ],
+    "gun_S1": [
+      -0.995,
+      -0.102,
+      0.0
+    ],
+    "gun_S2": [
+      -1.0,
+      -0.025,
+      0.0
+    ],
+    "gun_S3": [
+      -1.0,
+      0.001,
+      0.0
+    ],
+    "gun_S4": [
+      -1.0,
+      0.012,
+      0.0
+    ],
+    "gun_S5": [
+      -1.0,
+      0.031,
+      0.0
+    ],
+    "gun_S6": [
+      -0.998,
+      0.057,
+      0.0
+    ],
+    "gun_upper_S0": [
+      -1.0,
+      -0.027,
+      0.0
+    ],
+    "gun_upper_S1": [
+      -1.0,
+      0.004,
+      0.0
+    ],
+    "gun_upper_S2": [
+      -0.999,
+      0.041,
+      0.0
+    ],
+    "swivel_0": [
+      0.906,
+      0.423,
+      0.0
+    ],
+    "swivel_1": [
+      -0.906,
+      0.423,
+      0.0
+    ],
+    "swivel_2": [
+      0.862,
+      -0.506,
+      0.0
+    ],
+    "swivel_3": [
+      -0.862,
+      -0.506,
+      0.0
+    ],
+    "helm": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "flag": [
+      0.0,
+      0.254,
+      0.967
+    ],
+    "anchor_port": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "cathead_port": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "anchor_starboard": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "cathead_starboard": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "sail_center_main": [
+      0.0,
+      -1.0,
+      0.0
+    ]
+  },
+  "socket_rots_deg": {
+    "helm": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "flag": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rudder_hinge": [
+      -10.49,
+      -0.0,
+      0.0
+    ]
+  },
+  "ucx": [
+    "hull_0",
+    "hull_1",
+    "hull_2",
+    "hull_3",
+    "hull_4",
+    "hull_5",
+    "hull_6",
+    "deck_fore",
+    "deck_main",
+    "deck_quarter",
+    "deck_poop",
+    "bulwark_fore_P0",
+    "bulwark_fore_S0",
+    "bulwark_fore_P1",
+    "bulwark_fore_S1",
+    "bulwark_fore_P2",
+    "bulwark_fore_S2",
+    "bulwark_fore_P3",
+    "bulwark_fore_S3",
+    "bulwark_fore_P4",
+    "bulwark_fore_S4",
+    "bulwark_fore_P5",
+    "bulwark_fore_S5",
+    "bulwark_main_P0",
+    "bulwark_main_S0",
+    "bulwark_main_P1",
+    "bulwark_main_S1",
+    "bulwark_main_P2",
+    "bulwark_main_S2",
+    "bulwark_main_P3",
+    "bulwark_main_S3",
+    "bulwark_main_P4",
+    "bulwark_main_S4",
+    "bulwark_main_P5",
+    "bulwark_main_S5",
+    "bulwark_main_P6",
+    "bulwark_main_S6",
+    "bulwark_main_P7",
+    "bulwark_main_S7",
+    "bulwark_quarter_P0",
+    "bulwark_quarter_S0",
+    "bulwark_quarter_P1",
+    "bulwark_quarter_S1",
+    "bulwark_quarter_P2",
+    "bulwark_quarter_S2",
+    "bulwark_quarter_P3",
+    "bulwark_quarter_S3",
+    "bulwark_quarter_P4",
+    "bulwark_quarter_S4",
+    "bulwark_quarter_P5",
+    "bulwark_quarter_S5",
+    "bulwark_poop_P0",
+    "bulwark_poop_S0",
+    "bulwark_poop_P1",
+    "bulwark_poop_S1",
+    "bulwark_poop_P2",
+    "bulwark_poop_S2",
+    "bulwark_poop_P3",
+    "bulwark_poop_S3",
+    "bulwark_poop_P4",
+    "bulwark_poop_S4",
+    "bulwark_poop_P5",
+    "bulwark_poop_S5",
+    "bulkhead_fc_P",
+    "bulkhead_fc_S",
+    "bulkhead_fc_lintel",
+    "bulkhead_qd_P",
+    "bulkhead_qd_S",
+    "bulkhead_qd_lintel",
+    "bulkhead_poop_P",
+    "bulkhead_poop_S",
+    "bulkhead_poop_lintel",
+    "stairs_fore_P",
+    "stairs_fore_S",
+    "stairs_quarter_P",
+    "stairs_quarter_S",
+    "stairs_poop_P",
+    "stairs_poop_S",
+    "mast_fore",
+    "top_fore",
+    "mast_main",
+    "top_main",
+    "mast_mizzen",
+    "top_mizzen",
+    "capstan_main",
+    "capstan_main_bar0",
+    "capstan_main_bar1",
+    "capstan_fore",
+    "hatch_fore",
+    "hatch_main",
+    "companion",
+    "pedestal",
+    "binnacle",
+    "knight_main",
+    "fiferail_fore",
+    "fiferail_main",
+    "gallery_P",
+    "gallery_S",
+    "deck_main_fore",
+    "deck_main_aft",
+    "wall_fore_P0",
+    "wall_fore_S0",
+    "wall_fore_P1",
+    "wall_fore_S1",
+    "wall_fore_P2",
+    "wall_fore_S2",
+    "wall_fore_P3",
+    "wall_fore_S3",
+    "wall_quarter_P0",
+    "wall_quarter_S0",
+    "wall_quarter_P1",
+    "wall_quarter_S1",
+    "wall_quarter_P2",
+    "wall_quarter_S2",
+    "wall_quarter_P3",
+    "wall_quarter_S3",
+    "wall_quarter_P4",
+    "wall_quarter_S4",
+    "wall_quarter_P5",
+    "wall_quarter_S5",
+    "wall_fore_stem",
+    "transom_0",
+    "transom_1",
+    "transom_2",
+    "bulkhead_beak",
+    "cabin_table",
+    "cabin_chair",
+    "cabin_bed",
+    "cabin_chest_small",
+    "cabin_buffet",
+    "cabin_chest_mid",
+    "cabin_chest_big",
+    "cabin_barrel",
+    "rail_fc_0",
+    "rail_fc_1",
+    "rail_fc_2",
+    "rail_qd_0",
+    "rail_qd_1",
+    "rail_qd_2",
+    "rail_poop_1",
+    "toprail_fore_0",
+    "toprail_fore_1",
+    "toprail_fore_2",
+    "toprail_fore_3",
+    "toprail_fore_4",
+    "toprail_fore_5",
+    "toprail_fore_6",
+    "toprail_fore_7",
+    "toprail_main_0",
+    "toprail_main_1",
+    "toprail_main_2",
+    "toprail_main_3",
+    "toprail_main_4",
+    "toprail_main_5",
+    "toprail_main_6",
+    "toprail_main_7",
+    "gun_upper_P0",
+    "gun_upper_P1",
+    "gun_upper_P2",
+    "gun_upper_S0",
+    "gun_upper_S1",
+    "gun_upper_S2",
+    "bowsprit_heel",
+    "barrel_0",
+    "barrel_1",
+    "barrel_2",
+    "crate_0",
+    "crate_1",
+    "pump_0",
+    "pump_1",
+    "lantern_post_0",
+    "lantern_post_1",
+    "anchor_stock"
+  ]
+}

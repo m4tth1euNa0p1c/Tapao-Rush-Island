@@ -2,9 +2,11 @@
 
 #include "Boats/BoatActor.h"
 #include "Interaction/IslanderGrabComponent.h"
+#include "Items/NetRestComponent.h"
 #include "Boats/BoatPhysics.h"
 #include "Boats/BoatRiderComponent.h"
 #include "Boats/BoatRules.h"
+#include "Components/AudioComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -15,15 +17,21 @@
 #include "Engine/World.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/GameStateBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
+#include "Player/IslanderCharacter.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Props/LootCrate/LootContainer.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Water/IslandWaterSubsystem.h"
 #include "monke_island.h"
 
 namespace
 {
+	/** Boats keep their buoyancy and rowing physics, but never receive storm wind forces. */
+	const FName BoatWindShelteredTag(TEXT("WindSheltered"));
+
 	/** Flattened forward axis of a transform */
 	FVector FlatForward(const FTransform& Transform)
 	{
@@ -40,6 +48,10 @@ ABoatActor::ABoatActor()
 
 	bReplicates = true;
 	SetReplicateMovement(true);
+	// ADR-003 B-07 (T-295, review R-05): the clients' hulls are driven toward the server's by velocity, the same
+	// forces applied in between; DA_BoatRules can fall back on the engine default. Not 100 updates per second
+	SetPhysicsReplicationMode(EPhysicsReplicationMode::PredictiveInterpolation);
+	SetNetUpdateFrequency(30.0f);
 
 	Hull = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hull"));
 	SetRootComponent(Hull);
@@ -50,6 +62,7 @@ ABoatActor::ABoatActor()
 	Hull->SetCanEverAffectNavigation(false);
 	// owner request 2026-10-04: a player never lifts the boat with the grab (E); it is pushed on the sand and rowed
 	Tags.AddUnique(UIslanderGrabComponent::NoGrabTag);
+	Tags.AddUnique(BoatWindShelteredTag);
 
 	OarLeft = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OarLeft"));
 	OarLeft->SetupAttachment(Hull, TEXT("Oarlock_L"));
@@ -88,12 +101,20 @@ ABoatActor::ABoatActor()
 void ABoatActor::BeginPlay()
 {
 	Super::BeginPlay();
+	// Existing Blueprints and placed boats may override the native tag array: enforce the wind exclusion at runtime.
+	Tags.AddUnique(BoatWindShelteredTag);
 
 	WaterSubsystem = UIslandWaterSubsystem::Get(this);
 	if (!Rules)
 	{
 		UE_LOG(Logmonke_island, Warning, TEXT("%s has no DA_BoatRules: using the default rules"), *GetName());
 		Rules = NewObject<UBoatRules>(this);
+	}
+	// how the clients follow the hull, how often it is sent (T-295, ADR-003 B-07)
+	SetPhysicsReplicationMode(Rules->PhysicsReplicationMode);
+	if (HasAuthority())
+	{
+		SetNetUpdateFrequency(Rules->NetUpdateFrequency);
 	}
 	// the crate under the rower (cosmetic, no collision: the seated rower does not collide either)
 	RowingCrate->SetStaticMesh(Rules->bOnlyRowerSits ? Rules->RowingCrateMesh.Get() : nullptr);
@@ -241,6 +262,15 @@ bool ABoatActor::SitCharacter(ACharacter* Character, int32 SeatIndex)
 	{
 		return false;
 	}
+	// a knocked out or dead body does not sit: the seat guard would throw it off again (T-182)
+	if (const AIslanderCharacter* Islander = Cast<AIslanderCharacter>(Character); Islander && Islander->IsRagdoll())
+	{
+		return false;
+	}
+	if (const UIslanderHealthComponent* Health = Character->FindComponentByClass<UIslanderHealthComponent>(); Health && Health->IsDead())
+	{
+		return false;
+	}
 	// server-side reach check: a client cannot sit in a boat across the map
 	const float Reach = Rules->SeatReach + 100.0f;
 	if (FVector::DistSquared(Hull->GetSocketLocation(SeatSockets[SeatIndex]), Character->GetActorLocation()) > FMath::Square(Reach))
@@ -287,6 +317,11 @@ void ABoatActor::StandCharacter(ACharacter* Character)
 		if (Rider->GetSeatedBoat() == this)
 		{
 			Rider->SetSeat(nullptr, INDEX_NONE);
+		}
+		else if (Character->GetAttachParentActor() == this)
+		{
+			// hanging on this hull without sitting in it (T-182): taken off as well
+			Rider->LeaveBoat();
 		}
 	}
 }
@@ -386,7 +421,6 @@ void ABoatActor::Tick(float DeltaSeconds)
 	}
 
 	const float SeaLevel = WaterSubsystem ? WaterSubsystem->GetSeaLevel() : 0.0f;
-	SwellTime += DeltaSeconds;
 
 	if (HasAuthority())
 	{
@@ -420,6 +454,7 @@ void ABoatActor::Tick(float DeltaSeconds)
 
 	UpdateGroundContact(DeltaSeconds);
 	UpdateVisuals(DeltaSeconds);
+	UpdateSounds(DeltaSeconds);
 
 	// tuning trace (enable with Logmonke_island Verbose)
 	LoadUpdateTimer += DeltaSeconds;
@@ -433,10 +468,82 @@ void ABoatActor::Tick(float DeltaSeconds)
 	}
 }
 
+void ABoatActor::UpdateSounds(float DeltaSeconds)
+{
+	if (GetNetMode() == NM_DedicatedServer)
+	{
+		return;
+	}
+	// the oars: a splash as a blade bites the water, a drip as it leaves it (the drive part of each stroke)
+	const bool bRowing = RowerSeat != INDEX_NONE && !bSunk;
+	const FVector2D Drives = BoatPhysics::OarDrives(RowInput);
+	for (int32 Side = 0; Side < 2; ++Side)
+	{
+		const float Drive = Side == 0 ? Drives.X : Drives.Y;
+		const float Phase = Side == 0 ? StrokePhase.X : StrokePhase.Y;
+		const bool bIn = bRowing && !FMath::IsNearlyZero(Drive) && Phase < Rules->StrokeDriveFraction;
+		if (bIn == bBladeWasIn[Side])
+		{
+			continue;
+		}
+		bBladeWasIn[Side] = bIn;
+		USoundBase* Sound = bIn ? Rules->OarSplashSound.Get() : Rules->OarDripSound.Get();
+		const UStaticMeshComponent* Oar = Side == 0 ? OarLeft.Get() : OarRight.Get();
+		if (Sound && Oar)
+		{
+			const FVector Blade = Oar->GetComponentTransform().TransformPosition(FVector(Rules->OarBladeCenterCm, 0.0, 0.0));
+			UGameplayStatics::PlaySoundAtLocation(this, Sound, Blade, FMath::FRandRange(0.8f, 1.0f), FMath::FRandRange(0.9f, 1.1f), 0.0f,
+				Rules->OarSoundAttenuation);
+		}
+	}
+
+	// the water along the hull, with the speed on the water; none on the sand or sunk
+	if (!Rules->WakeSound)
+	{
+		return;
+	}
+	if (!WakeAudio)
+	{
+		WakeAudio = UGameplayStatics::SpawnSoundAttached(Rules->WakeSound, Hull, NAME_None, FVector::ZeroVector, EAttachLocation::KeepRelativeOffset,
+			true, 0.001f, 1.0f, 0.0f, Rules->OarSoundAttenuation, nullptr, false);
+		if (!WakeAudio)
+		{
+			return;
+		}
+	}
+	const FVector Velocity = Hull->GetComponentVelocity();
+	const float Afloat = KeelPoints.Num() > 0 ? 1.0f - static_cast<float>(GroundedPoints) / KeelPoints.Num() : 1.0f;
+	const float Target = bSunk ? 0.0f : FMath::Clamp(static_cast<float>(Velocity.Size2D()) / Rules->WakeFullSpeed, 0.0f, 1.0f) * Afloat;
+	WakeLevel = FMath::FInterpConstantTo(WakeLevel, Target, DeltaSeconds, 1.0f / Rules->WakeFadeSeconds);
+	WakeAudio->SetVolumeMultiplier(FMath::Max(WakeLevel * Rules->WakeVolume, 0.001f));
+	WakeAudio->SetPitchMultiplier(FMath::Lerp(static_cast<float>(Rules->WakePitch.X), static_cast<float>(Rules->WakePitch.Y), WakeLevel));
+}
+
+double ABoatActor::GetSwellTime() const
+{
+	const UWorld* World = GetWorld();
+	const AGameStateBase* GameState = World ? World->GetGameState() : nullptr;
+	return GameState ? GameState->GetServerWorldTimeSeconds() : (World ? World->GetTimeSeconds() : 0.0);
+}
+
+void ABoatActor::ReleaseGluedCargo()
+{
+	for (const TPair<TWeakObjectPtr<UPrimitiveComponent>, FLooseCargo>& Entry : LooseCargo)
+	{
+		const UPrimitiveComponent* Component = Entry.Key.Get();
+		UNetRestComponent* Rest = Entry.Value.bGlued && Component && Component->GetOwner() ? Component->GetOwner()->FindComponentByClass<UNetRestComponent>() : nullptr;
+		if (Rest && Rest->GetGlueBase() == Hull)
+		{
+			Rest->Release();
+		}
+	}
+}
+
 void ABoatActor::KeepCargoAboard(float DeltaSeconds)
 {
 	if (!Rules->bContainLooseCargo || bSunk)
 	{
+		ReleaseGluedCargo();
 		LooseCargo.Reset();
 		return;
 	}
@@ -466,6 +573,17 @@ void ABoatActor::KeepCargoAboard(float DeltaSeconds)
 	{
 		UPrimitiveComponent* Component = It->Key.Get();
 		FLooseCargo& Cargo = It->Value;
+		AActor* Item = Component ? Component->GetOwner() : nullptr;
+		UNetRestComponent* Rest = Item ? Item->FindComponentByClass<UNetRestComponent>() : nullptr;
+		// glued by its network rest, every machine carries it (T-295); once a player takes it the rest frees it
+		if (Cargo.bGlued)
+		{
+			if (!Rest || Rest->GetGlueBase() != Hull)
+			{
+				It.RemoveCurrent();
+			}
+			continue;
+		}
 		// taken by a player, gone, or thrown out before it came to rest: free again
 		if (!Component || !Component->IsSimulatingPhysics() || IsHeld(Component) || (!Cargo.bStowed && !Inside.Contains(Component)))
 		{
@@ -487,9 +605,43 @@ void ABoatActor::KeepCargoAboard(float DeltaSeconds)
 		Cargo.RestTime = Relative <= Rules->CargoStowMaxSpeed ? Cargo.RestTime + DeltaSeconds : 0.0f;
 		if (Cargo.RestTime >= Rules->CargoStowDelay)
 		{
+			// with a network rest (props, corpses): glued to the hull on every machine, its movement no longer sent, the
+			// clients carry it with their own hull instead of sliding it back by corrections (T-295, review R-05)
+			if (Rest && Item->GetRootComponent() == Component)
+			{
+				Rest->GlueTo(Hull);
+				if (Rest->GetGlueBase() == Hull)
+				{
+					Cargo.bGlued = true;
+					continue;
+				}
+			}
 			Cargo.bStowed = true;
 			Cargo.Local = Component->GetComponentTransform().GetRelativeTransform(HullTransform);
 			Cargo.Local.SetScale3D(Component->GetComponentScale());
+		}
+	}
+}
+
+void ABoatActor::GetCargoAboard(TArray<AActor*>& OutCargo) const
+{
+	FCollisionObjectQueryParams ObjectTypes;
+	ObjectTypes.AddObjectTypesToQuery(ECC_PhysicsBody);
+	ObjectTypes.AddObjectTypesToQuery(ECC_WorldDynamic);
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(BoatCargoAboard), false, this);
+	TArray<FOverlapResult> Overlaps;
+	GetWorld()->OverlapMultiByObjectType(Overlaps, CargoVolume->GetComponentLocation(), CargoVolume->GetComponentQuat(),
+		ObjectTypes, CargoVolume->GetCollisionShape(), Params);
+	for (const FOverlapResult& Overlap : Overlaps)
+	{
+		AActor* Actor = Overlap.GetActor();
+		const UPrimitiveComponent* Component = Overlap.GetComponent();
+		// a free object lying aboard; one held by a player ignores PhysicsBody: it is carried, not stowed
+		if (Actor && Actor != this && Component && Component->IsSimulatingPhysics() && !Cast<APawn>(Actor)
+			&& Component->GetCollisionResponseToChannel(ECC_PhysicsBody) != ECR_Ignore)
+		{
+			// a loot crate aboard brings what it holds (hidden inside, out of reach of the overlap)
+			LootContainers::AppendWithContents(Actor, OutCargo);
 		}
 	}
 }
@@ -530,6 +682,7 @@ void ABoatActor::GatherPeople(TArray<ACharacter*>& OutPeople, float& OutObjectsK
 		if (Primitive && Primitive->IsSimulatingPhysics())
 		{
 			Seen.Add(Actor);
+			// a loot crate's body weighs what it holds too (T-258: the objects inside have no body of their own)
 			OutObjectsKg += Primitive->GetMass();
 		}
 	}
@@ -587,11 +740,12 @@ void ABoatActor::ApplyWaterForces(float DeltaSeconds, float SeaLevel)
 		- Right * (Rules->LateralDrag * Across);
 	Hull->AddForce(Drag * Wetness);
 
-	// gentle swell so the boat is never perfectly still
+	// gentle swell so the boat is never perfectly still, on the server clock: in phase on every machine (T-295)
 	if (!bSunk)
 	{
-		const float Roll = Rules->SwellTorqueNm.X * FMath::Sin(UE_TWO_PI * SwellTime / Rules->SwellPeriod.X);
-		const float Pitch = Rules->SwellTorqueNm.Y * FMath::Sin(UE_TWO_PI * SwellTime / Rules->SwellPeriod.Y + 1.3f);
+		const double Time = GetSwellTime();
+		const float Roll = static_cast<float>(Rules->SwellTorqueNm.X * FMath::Sin(UE_DOUBLE_TWO_PI * Time / FMath::Max(Rules->SwellPeriod.X, 0.1)));
+		const float Pitch = static_cast<float>(Rules->SwellTorqueNm.Y * FMath::Sin(UE_DOUBLE_TWO_PI * Time / FMath::Max(Rules->SwellPeriod.Y, 0.1) + 1.3));
 		const FVector LocalTorque(Roll, Pitch, 0.0f);
 		Hull->AddTorqueInRadians(Transform.TransformVectorNoScale(LocalTorque) * BoatPhysics::NewtonMetreToUnreal * Wetness);
 	}
@@ -920,12 +1074,19 @@ void ABoatActor::Sink()
 	}
 
 	bSunk = true;
+	const FVector Eject(0.0f, 0.0f, Rules->SinkEjectUpSpeed);
 	for (ACharacter* Occupant : TArray<ACharacter*>(SeatOccupants))
 	{
 		if (IsValid(Occupant))
 		{
 			StandCharacter(Occupant);
-			Occupant->LaunchCharacter(FVector(0.0f, 0.0f, 300.0f), false, true);
+			Occupant->LaunchCharacter(Eject, false, true);
+			// the client of a remote player launches its own pawn too: predicted, not corrected (review R-12)
+			UBoatRiderComponent* Rider = Occupant->FindComponentByClass<UBoatRiderComponent>();
+			if (Rider && !Occupant->IsLocallyControlled() && Occupant->IsPlayerControlled())
+			{
+				Rider->ClientLaunch(Eject, false, true);
+			}
 		}
 	}
 	RowerSeat = INDEX_NONE;
@@ -938,10 +1099,17 @@ void ABoatActor::Sink()
 
 void ABoatActor::OnRep_Sunk()
 {
-	if (bSunk)
+	if (!bSunk)
 	{
-		PlaySinking();
+		return;
 	}
+	// a client receiving a boat sunk long ago (joining late, back in relevancy) is not told it sinks now (review R-19)
+	if (!HasActorBegunPlay())
+	{
+		OnSunk.Broadcast(this);
+		return;
+	}
+	PlaySinking();
 }
 
 void ABoatActor::PlaySinking()

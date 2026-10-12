@@ -8,12 +8,14 @@
 #include "Expedition/Islands/ExpeditionIslandSubsystem.h"
 #include "Expedition/Islands/ExpeditionIslandTypes.h"
 #include "Water/IslandWaterSubsystem.h"
+#include "Player/IslanderHealthComponent.h"
 #include "monke_island.h"
 #include "Components/BillboardComponent.h"
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/GameModeBase.h"
 #include "GameFramework/PlayerController.h"
 #include "TimerManager.h"
 
@@ -86,7 +88,86 @@ void AGalleonSpawner::BeginPlay()
 void AGalleonSpawner::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	GetWorldTimerManager().ClearTimer(Timer);
+	GetWorldTimerManager().ClearAllTimersForObject(this);
+	FGameModeEvents::GameModePostLoginEvent.Remove(PostLoginHandle);
+	PostLoginHandle.Reset();
+	TArray<TWeakObjectPtr<AController>> Watched;
+	PawnWatches.GetKeys(Watched);
+	for (const TWeakObjectPtr<AController>& Controller : Watched)
+	{
+		StopWatching(Controller.Get());
+	}
+	PawnWatches.Reset();
 	Super::EndPlay(EndPlayReason);
+}
+
+// ---------------------------------------------------------------- late joiners (T-292)
+
+void AGalleonSpawner::HandlePostLogin(AGameModeBase* GameMode, APlayerController* NewPlayer)
+{
+	if (GameMode && GameMode->GetWorld() == GetWorld())
+	{
+		WatchLateJoiner(NewPlayer);
+	}
+}
+
+void AGalleonSpawner::WatchLateJoiner(AController* Controller)
+{
+	if (!Controller || PlacedControllers.Contains(Controller) || PawnWatches.Contains(Controller))
+	{
+		return;
+	}
+	TWeakObjectPtr<AController> WeakController(Controller);
+	const FDelegateHandle Handle = Controller->GetOnNewPawnNotifier().AddWeakLambda(this, [this, WeakController](APawn* NewPawn)
+	{
+		// the notification comes in the middle of Possess: the deck a little later
+		if (NewPawn)
+		{
+			ScheduleLateJoiner(WeakController);
+		}
+	});
+	PawnWatches.Add(WeakController, Handle);
+	if (Controller->GetPawn())
+	{
+		ScheduleLateJoiner(WeakController);
+	}
+}
+
+void AGalleonSpawner::ScheduleLateJoiner(TWeakObjectPtr<AController> Controller)
+{
+	// UBoatStartSubsystem boards a late joiner in the barque on the next frame of his pawn: the deck the frame after
+	GetWorldTimerManager().SetTimerForNextTick(FTimerDelegate::CreateWeakLambda(this, [this, Controller]()
+	{
+		GetWorldTimerManager().SetTimerForNextTick(FTimerDelegate::CreateUObject(this, &AGalleonSpawner::PlaceLateJoiner, Controller));
+	}));
+}
+
+void AGalleonSpawner::PlaceLateJoiner(TWeakObjectPtr<AController> Controller)
+{
+	AController* Joiner = Controller.Get();
+	AGalleonActor* Ship = Galleon.Get();
+	ACharacter* Character = Joiner ? Cast<ACharacter>(Joiner->GetPawn()) : nullptr;
+	if (!Joiner || !Ship || !Character || PlacedControllers.Contains(Controller))
+	{
+		return;
+	}
+	if (const UIslanderHealthComponent* Health = Character->FindComponentByClass<UIslanderHealthComponent>(); Health && Health->IsDead())
+	{
+		return;
+	}
+	PlacedControllers.Add(Controller);
+	StopWatching(Joiner);
+	Ship->PlaceOnDeck(Character, DeckPlaces++);
+	UE_LOG(Logmonke_island, Log, TEXT("%s: %s came after the anchoring, put on the deck of %s"), *GetName(), *Character->GetName(), *Ship->GetName());
+}
+
+void AGalleonSpawner::StopWatching(AController* Controller)
+{
+	FDelegateHandle Handle;
+	if (Controller && PawnWatches.RemoveAndCopyValue(Controller, Handle))
+	{
+		Controller->GetOnNewPawnNotifier().Remove(Handle);
+	}
 }
 
 float AGalleonSpawner::DepthAt(const FVector2D& Point, float SeaLevel, const AActor* Ignored) const
@@ -99,6 +180,74 @@ float AGalleonSpawner::DepthAt(const FVector2D& Point, float SeaLevel, const AAc
 	const FVector End(Point.X, Point.Y, SeaLevel - Rules->MinDepthCm - 200.0);
 	FHitResult Hit;
 	return GetWorld()->LineTraceSingleByObjectType(Hit, Start, End, Objects, Params) ? SeaLevel - static_cast<float>(Hit.ImpactPoint.Z) : TNumericLimits<float>::Max();
+}
+
+bool AGalleonSpawner::IsFootprintDeep(const FVector2D& Centre, float Yaw, float Margin, float MinDepth, float SeaLevel, const AActor* Ignored) const
+{
+	const FVector2D Away(FMath::Cos(FMath::DegreesToRadians(Yaw)), FMath::Sin(FMath::DegreesToRadians(Yaw)));
+	const FVector2D Along(-Away.Y, Away.X);
+	const FVector2D Half(Rules->FootprintHalfSize.X + Margin, Rules->FootprintHalfSize.Y + Margin);
+	for (const FVector2D& Offset : { FVector2D(0, 0), FVector2D(1, 0), FVector2D(-1, 0), FVector2D(1, 1), FVector2D(-1, 1), FVector2D(1, -1), FVector2D(-1, -1),
+		FVector2D(0, 1), FVector2D(0, -1), FVector2D(0.5, 1), FVector2D(-0.5, 1), FVector2D(0.5, -1), FVector2D(-0.5, -1) })
+	{
+		if (DepthAt(Centre + Along * (Offset.X * Half.X) + Away * (Offset.Y * Half.Y), SeaLevel, Ignored) < MinDepth)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+float AGalleonSpawner::ApproachShore(FVector& InOutLocation, float& InOutYaw, float SeaLevel, const AActor* Ignored) const
+{
+	if (!Rules->bApproachShore)
+	{
+		return 0.0f;
+	}
+	const FVector2D From(InOutLocation);
+	const int32 Directions = FMath::Max(Rules->SearchDirections, 8);
+	const float Step = FMath::Max(Rules->SearchStep * 0.5f, 100.0f);
+	const float LandStep = FMath::Max(Rules->SearchStep * 2.0f, 500.0f);
+	// the nearest land around the mooring
+	FVector2D ToLand = FVector2D::ZeroVector;
+	float LandDistance = TNumericLimits<float>::Max();
+	for (int32 Index = 0; Index < Directions; ++Index)
+	{
+		const float Angle = UE_TWO_PI * Index / Directions;
+		const FVector2D Ray(FMath::Cos(Angle), FMath::Sin(Angle));
+		for (float Distance = LandStep; Distance <= Rules->ShoreSearchCm && Distance < LandDistance; Distance += LandStep)
+		{
+			if (DepthAt(From + Ray * Distance, SeaLevel, Ignored) <= 0.0f)
+			{
+				LandDistance = Distance;
+				ToLand = Ray;
+				break;
+			}
+		}
+	}
+	if (ToLand.IsNearlyZero())
+	{
+		UE_LOG(Logmonke_island, Log, TEXT("%s: no land within %.0f m of the mooring, the galleon stays"), *GetName(), Rules->ShoreSearchCm / 100.0f);
+		return 0.0f;
+	}
+	// the bow away from the island (+X seaward, the ladder side toward the land), then toward it as long as the whole
+	// ship and its margin keep their water
+	const float Yaw = FMath::RadiansToDegrees(FMath::Atan2(-ToLand.Y, -ToLand.X));
+	InOutYaw = Yaw;
+	FVector2D Best = From;
+	for (float Moved = Step; Moved < LandDistance; Moved += Step)
+	{
+		const FVector2D Candidate = From + ToLand * Moved;
+		if (!IsFootprintDeep(Candidate, Yaw, Rules->ShoreMarginCm, Rules->ApproachMinDepthCm, SeaLevel, Ignored))
+		{
+			break;
+		}
+		Best = Candidate;
+	}
+	InOutLocation = FVector(Best.X, Best.Y, InOutLocation.Z);
+	UE_LOG(Logmonke_island, Log, TEXT("%s: the galleon comes %.0f m nearer the island (land was %.0f m away, now %.0f m)"), *GetName(),
+		FVector2D::Distance(From, Best) / 100.0f, LandDistance / 100.0f, (LandDistance - FVector2D::Distance(From, Best)) / 100.0f);
+	return static_cast<float>(FVector2D::Distance(From, Best));
 }
 
 bool AGalleonSpawner::FindAnchorage(const ABoatActor* Boat, FVector& OutLocation, float& OutYaw) const
@@ -204,31 +353,41 @@ void AGalleonSpawner::TryAnchor()
 			Rules->MinDepthCm, Rules->MaxDistanceFromArrival / 100.0f, *Boat->GetName());
 		return;
 	}
+	ApproachShore(Location, Yaw, Sea, Boat);
 	const FTransform Transform(FRotator(0.0f, Yaw, 0.0f), Location);
-	AGalleonActor* Galleon = GetWorld()->SpawnActorDeferred<AGalleonActor>(GalleonClass, Transform, this, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
-	if (!Galleon)
+	AGalleonActor* Ship = GetWorld()->SpawnActorDeferred<AGalleonActor>(GalleonClass, Transform, this, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+	if (!Ship)
 	{
 		return;
 	}
-	Galleon->Rules = Rules;
-	Galleon->FinishSpawning(Transform);
-	UE_LOG(Logmonke_island, Log, TEXT("%s: %s anchored %.0f m off %s (yaw %.0f)"), *GetName(), *Galleon->GetName(),
+	Ship->Rules = Rules;
+	Ship->FinishSpawning(Transform);
+	Galleon = Ship;
+	UE_LOG(Logmonke_island, Log, TEXT("%s: %s anchored %.0f m off %s (yaw %.0f)"), *GetName(), *Ship->GetName(),
 		FVector::Dist2D(Location, Boat->GetActorLocation()) / 100.0f, *Boat->GetName(), Yaw);
 
 	// the crew on the deck first (they leave their seats), then the barque to the dock
 	if (Rules->bPlayersStartOnDeck)
 	{
-		int32 Index = 0;
 		for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
 		{
-			if (ACharacter* Character = It->Get() ? Cast<ACharacter>(It->Get()->GetPawn()) : nullptr)
+			APlayerController* Controller = It->Get();
+			if (ACharacter* Character = Controller ? Cast<ACharacter>(Controller->GetPawn()) : nullptr)
 			{
-				Galleon->PlaceOnDeck(Character, Index++);
+				Ship->PlaceOnDeck(Character, DeckPlaces++);
+				PlacedControllers.Add(Controller);
+			}
+			else
+			{
+				// logged in, the pawn still to come
+				WatchLateJoiner(Controller);
 			}
 		}
+		// the players still loading the island come later (T-292): the deck for them too, not the barque at the dock
+		PostLoginHandle = FGameModeEvents::GameModePostLoginEvent.AddUObject(this, &AGalleonSpawner::HandlePostLogin);
 	}
 	if (Rules->bMoorBoatAtStart)
 	{
-		Galleon->MoorBoat(Boat);
+		Ship->MoorBoat(Boat);
 	}
 }

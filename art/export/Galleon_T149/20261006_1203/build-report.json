@@ -1,0 +1,3426 @@
+{
+  "format": "maquette-report/1",
+  "id": "galion-anglais",
+  "version": "0.1.0",
+  "spec_sha256": "a0283e0a0f706ecf5fe9c70970c72922d58e0655f61270d190502d97be9c1af3",
+  "built_at": "2026-10-06T12:04:06+02:00",
+  "blender_version": "5.2.2 LTS",
+  "builder_version": "1.0.0",
+  "mode": "headless",
+  "files": {
+    "blend": "galion-anglais.blend",
+    "preview": "renders/preview.png"
+  },
+  "objects": [
+    {
+      "name": "LGT-soleil",
+      "type": "LIGHT",
+      "location": [
+        4.0,
+        -4.0,
+        6.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-remplissage",
+      "type": "LIGHT",
+      "location": [
+        4.0,
+        -4.0,
+        6.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-contre",
+      "type": "LIGHT",
+      "location": [
+        4.0,
+        -4.0,
+        6.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-main",
+      "type": "CAMERA",
+      "location": [
+        24.0,
+        -26.0,
+        12.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-profil_babord",
+      "type": "CAMERA",
+      "location": [
+        36.0,
+        1.0,
+        6.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-avant",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        -44.0,
+        6.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-arriere",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        42.0,
+        5.5
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-comparatif",
+      "type": "CAMERA",
+      "location": [
+        23.5,
+        -21.0,
+        8.8
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-pont_dessus",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        0.0,
+        40.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-cabine",
+      "type": "CAMERA",
+      "location": [
+        0.0,
+        1.2,
+        6.8
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-pont_3q",
+      "type": "CAMERA",
+      "location": [
+        10.0,
+        -16.0,
+        9.0
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-detail_barre",
+      "type": "CAMERA",
+      "location": [
+        1.3,
+        3.9,
+        5.1
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-detail_cabestan",
+      "type": "CAMERA",
+      "location": [
+        1.7,
+        -0.3,
+        3.2
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-detail_ancre",
+      "type": "CAMERA",
+      "location": [
+        6.8,
+        -10.8,
+        2.6
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-detail_cloche",
+      "type": "CAMERA",
+      "location": [
+        0.6,
+        1.6,
+        3.3
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-detail_canon",
+      "type": "CAMERA",
+      "location": [
+        -0.3,
+        -2.3,
+        3.3
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "CAM-detail_gouvernail",
+      "type": "CAMERA",
+      "location": [
+        -5.6,
+        15.5,
+        1.6
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "Galleon_Hull_Planks",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        6.0604,
+        23.5196,
+        6.6971
+      ],
+      "materials": [
+        "M_Galleon_Tar_t1",
+        "M_Galleon_Tar_t3",
+        "M_Galleon_Tar_t2",
+        "M_Galleon_Tar_t4",
+        "M_Galleon_Tar_t0",
+        "M_Galleon_Pitch",
+        "M_Galleon_Hull_t1",
+        "M_Galleon_Hull_t2",
+        "M_Galleon_Hull_t4",
+        "M_Galleon_Hull_t3",
+        "M_Galleon_Hull_t0",
+        "M_Galleon_Blue_t1",
+        "M_Galleon_Blue_t2",
+        "M_Galleon_Blue_t0",
+        "M_Galleon_Blue_t4",
+        "M_Galleon_Blue_t3"
+      ],
+      "parent": null,
+      "tris": 45851
+    },
+    {
+      "name": "Galleon_Hull_Bulwark",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.7405,
+        23.0725,
+        3.4945
+      ],
+      "materials": [
+        "M_Galleon_Blue_t1",
+        "M_Galleon_Blue_t0",
+        "M_Galleon_Blue_t2",
+        "M_Galleon_Blue_t4",
+        "M_Galleon_Blue_t3",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_OakDark_t4",
+        "M_Galleon_OakDark_t0",
+        "M_Galleon_CabinWall_t0",
+        "M_Galleon_CabinWall_t3",
+        "M_Galleon_CabinWall_t1",
+        "M_Galleon_CabinWall_t4",
+        "M_Galleon_CabinWall_t2"
+      ],
+      "parent": null,
+      "tris": 12092
+    },
+    {
+      "name": "Galleon_Hull_Keel",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        4.8801,
+        23.2335,
+        6.0237
+      ],
+      "materials": [
+        "M_Galleon_Wale"
+      ],
+      "parent": null,
+      "tris": 1692
+    },
+    {
+      "name": "Galleon_Hull_Wales",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        6.1155,
+        23.5765,
+        4.8365
+      ],
+      "materials": [
+        "M_Galleon_Wale",
+        "M_Galleon_Gold",
+        "M_Galleon_OakLight"
+      ],
+      "parent": null,
+      "tris": 13856
+    },
+    {
+      "name": "Galleon_Hull_Ports",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        7.1954,
+        20.0849,
+        2.8862
+      ],
+      "materials": [
+        "M_Galleon_IronRust",
+        "M_Galleon_Rope",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Ochre_t0",
+        "M_Galleon_Ochre_t2",
+        "M_Galleon_Ochre_t3",
+        "M_Galleon_Cedar_t3",
+        "M_Galleon_Cedar_t2",
+        "M_Galleon_Ochre_t1",
+        "M_Galleon_Cedar_t4",
+        "M_Galleon_Ochre_t4",
+        "M_Galleon_Cedar_t0",
+        "M_Galleon_Leather",
+        "M_Galleon_Cedar_t1"
+      ],
+      "parent": null,
+      "tris": 4704
+    },
+    {
+      "name": "Galleon_Hull_Channels",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        6.7915,
+        16.3594,
+        2.121
+      ],
+      "materials": [
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_IronRust",
+        "M_Galleon_OakDark_t0",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_OakDark_t4",
+        "M_Galleon_OakDark_t3"
+      ],
+      "parent": null,
+      "tris": 10848
+    },
+    {
+      "name": "Galleon_Decks_Planks",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.638,
+        15.4073,
+        1.475
+      ],
+      "materials": [
+        "M_Galleon_Pitch",
+        "M_Galleon_Deck2_t3",
+        "M_Galleon_Deck2_t2",
+        "M_Galleon_Deck2_t0",
+        "M_Galleon_Deck2_t4",
+        "M_Galleon_Deck2_t1",
+        "M_Galleon_Deck_t1",
+        "M_Galleon_Deck_t2",
+        "M_Galleon_Deck_t3",
+        "M_Galleon_Deck_t0",
+        "M_Galleon_Deck_t4"
+      ],
+      "parent": null,
+      "tris": 9064
+    },
+    {
+      "name": "Galleon_Decks_Beams",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.7987,
+        15.4073,
+        1.585
+      ],
+      "materials": [
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_OakDark_t0",
+        "M_Galleon_OakDark_t4"
+      ],
+      "parent": null,
+      "tris": 1492
+    },
+    {
+      "name": "Galleon_Decks_Hatches",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        3.04,
+        7.9735,
+        2.03
+      ],
+      "materials": [
+        "M_Galleon_RopeTar",
+        "M_Galleon_Oak_t3",
+        "M_Galleon_Oak_t2",
+        "M_Galleon_Oak_t1",
+        "M_Galleon_Oak_t0",
+        "M_Galleon_IronRust",
+        "M_Galleon_OakLight_t3",
+        "M_Galleon_OakLight_t1",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Oak_t4",
+        "M_Galleon_Cedar_t2",
+        "M_Galleon_Cedar_t3"
+      ],
+      "parent": null,
+      "tris": 2492
+    },
+    {
+      "name": "Galleon_Decks_Bulkheads",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.0052,
+        0.205,
+        1.42
+      ],
+      "materials": [
+        "M_Galleon_Blue_t1",
+        "M_Galleon_Blue_t3",
+        "M_Galleon_Blue_t0",
+        "M_Galleon_Blue_t2",
+        "M_Galleon_Blue_t4",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_Gold",
+        "M_Galleon_OakLight_t2",
+        "M_Galleon_OakLight_t0",
+        "M_Galleon_OakLight_t3",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Glass",
+        "M_Galleon_Cedar_t3",
+        "M_Galleon_Cedar_t1",
+        "M_Galleon_IronRust",
+        "M_Galleon_Lamp",
+        "M_Galleon_Brass"
+      ],
+      "parent": null,
+      "tris": 3412
+    },
+    {
+      "name": "Galleon_Decks_Rails",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.5994,
+        14.3816,
+        3.1883
+      ],
+      "materials": [
+        "M_Galleon_OakLight_t3",
+        "M_Galleon_Oak_t0",
+        "M_Galleon_Oak_t4",
+        "M_Galleon_OakLight_t4",
+        "M_Galleon_Gold",
+        "M_Galleon_OakLight_t1",
+        "M_Galleon_Oak_t3",
+        "M_Galleon_Oak_t2",
+        "M_Galleon_OakLight_t2",
+        "M_Galleon_OakLight_t0",
+        "M_Galleon_Oak_t1",
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_IronRust",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_OakDark",
+        "M_Galleon_OakDark_t0",
+        "M_Galleon_OakDark_t4"
+      ],
+      "parent": null,
+      "tris": 16912
+    },
+    {
+      "name": "Galleon_Roof_Planks",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.1438,
+        7.628,
+        1.275
+      ],
+      "materials": [
+        "M_Galleon_Pitch",
+        "M_Galleon_Deck2_t2",
+        "M_Galleon_Deck2_t4",
+        "M_Galleon_Deck2_t0",
+        "M_Galleon_Deck2_t3",
+        "M_Galleon_Deck2_t1"
+      ],
+      "parent": null,
+      "tris": 7112
+    },
+    {
+      "name": "Galleon_Roof_Beams",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.2952,
+        7.628,
+        1.385
+      ],
+      "materials": [
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_OakDark_t0",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_OakDark_t4",
+        "M_Galleon_OakDark_t2"
+      ],
+      "parent": null,
+      "tris": 1184
+    },
+    {
+      "name": "Galleon_Roof_Hatches",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.6866,
+        0.6866,
+        0.125
+      ],
+      "materials": [
+        "M_Galleon_RopeTar",
+        "M_Galleon_Oak_t3",
+        "M_Galleon_Oak_t4",
+        "M_Galleon_Oak_t1",
+        "M_Galleon_Oak_t2",
+        "M_Galleon_Oak_t0"
+      ],
+      "parent": null,
+      "tris": 288
+    },
+    {
+      "name": "Galleon_Roof_Bulkheads",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.6027,
+        3.805,
+        2.62
+      ],
+      "materials": [
+        "M_Galleon_Blue_t1",
+        "M_Galleon_Blue_t2",
+        "M_Galleon_Blue_t4",
+        "M_Galleon_Blue_t0",
+        "M_Galleon_Blue_t3",
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_Gold",
+        "M_Galleon_OakLight_t1",
+        "M_Galleon_OakLight_t3",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Glass",
+        "M_Galleon_Cedar_t2",
+        "M_Galleon_Cedar_t0",
+        "M_Galleon_IronRust",
+        "M_Galleon_Cedar_t1",
+        "M_Galleon_Lamp",
+        "M_Galleon_Brass",
+        "M_Galleon_OakLight_t4",
+        "M_Galleon_Cedar_t3"
+      ],
+      "parent": null,
+      "tris": 7092
+    },
+    {
+      "name": "Galleon_Roof_Rails",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        4.21,
+        3.74,
+        2.468
+      ],
+      "materials": [
+        "M_Galleon_OakLight_t0",
+        "M_Galleon_Gold",
+        "M_Galleon_OakLight_t3",
+        "M_Galleon_OakLight_t1",
+        "M_Galleon_OakLight_t4",
+        "M_Galleon_OakLight_t2",
+        "M_Galleon_Oak_t0",
+        "M_Galleon_Oak_t2",
+        "M_Galleon_Oak_t3",
+        "M_Galleon_Oak_t1"
+      ],
+      "parent": null,
+      "tris": 6000
+    },
+    {
+      "name": "Galleon_Cabin_Room",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.5216,
+        7.3416,
+        1.41
+      ],
+      "materials": [
+        "M_Galleon_CabinWall_t0",
+        "M_Galleon_OakDark",
+        "M_Galleon_Oak",
+        "M_Galleon_Oak_t3",
+        "M_Galleon_Oak_t2",
+        "M_Galleon_Navy",
+        "M_Galleon_Gold",
+        "M_Galleon_Oak_t0",
+        "M_Galleon_CabinWall_t2",
+        "M_Galleon_CabinWall_t1",
+        "M_Galleon_Oak_t4",
+        "M_Galleon_Oak_t1",
+        "M_Galleon_CabinWall_t3",
+        "M_Galleon_CabinWall_t4",
+        "M_Galleon_Cedar_t1",
+        "M_Galleon_Cedar_t2",
+        "M_Galleon_Cedar_t4",
+        "M_Galleon_IronRust",
+        "M_Galleon_Cedar_t3",
+        "M_Galleon_Brass",
+        "M_Galleon_Pitch",
+        "M_Galleon_CabinFloor_t2",
+        "M_Galleon_CabinFloor_t3",
+        "M_Galleon_CabinFloor_t1",
+        "M_Galleon_CabinFloor_t4",
+        "M_Galleon_CabinFloor_t0",
+        "M_Galleon_Velvet"
+      ],
+      "parent": null,
+      "tris": 12084
+    },
+    {
+      "name": "Galleon_Cabin_Furniture",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.1185,
+        6.5142,
+        1.1433
+      ],
+      "materials": [
+        "M_Galleon_Oak_t1",
+        "M_Galleon_Oak_t2",
+        "M_Galleon_Oak_t4",
+        "M_Galleon_Oak_t0",
+        "M_Galleon_Oak",
+        "M_Galleon_Paper",
+        "M_Galleon_Ochre",
+        "M_Galleon_Brass",
+        "M_Galleon_Glass",
+        "M_Galleon_OakDark_t0",
+        "M_Galleon_Velvet",
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_Iron",
+        "M_Galleon_Leather",
+        "M_Galleon_Gold",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_Navy",
+        "M_Galleon_Linen",
+        "M_Galleon_Cedar_t2",
+        "M_Galleon_IronRust",
+        "M_Galleon_Oak_t3",
+        "M_Galleon_CabinWall_t4",
+        "M_Galleon_CabinWall_t1",
+        "M_Galleon_Cedar_t4"
+      ],
+      "parent": null,
+      "tris": 9436
+    },
+    {
+      "name": "Galleon_Cabin_Lights",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.0852,
+        5.3332,
+        0.5657
+      ],
+      "materials": [
+        "M_Galleon_Brass",
+        "M_Galleon_Lamp",
+        "M_Galleon_Gold",
+        "M_Galleon_OakDark",
+        "M_Galleon_Linen"
+      ],
+      "parent": null,
+      "tris": 4448
+    },
+    {
+      "name": "Galleon_Bow_Head",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        2.6617,
+        2.8147,
+        4.2628
+      ],
+      "materials": [
+        "M_Galleon_OakDark_t0",
+        "M_Galleon_Gold",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Wale_t2",
+        "M_Galleon_IronRust",
+        "M_Galleon_Wale_t1",
+        "M_Galleon_Blue_t2",
+        "M_Galleon_OakLight_t4",
+        "M_Galleon_OakLight_t2",
+        "M_Galleon_OakLight_t0",
+        "M_Galleon_OakLight_t1",
+        "M_Galleon_Blue_t0",
+        "M_Galleon_OakLight_t3",
+        "M_Galleon_Blue_t3",
+        "M_Galleon_Blue_t1"
+      ],
+      "parent": null,
+      "tris": 5276
+    },
+    {
+      "name": "Galleon_Bow_Lion",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.8134,
+        1.6243,
+        1.5923
+      ],
+      "materials": [
+        "M_Galleon_GoldLion",
+        "M_Galleon_GoldLionDark",
+        "M_Galleon_DarkRecess"
+      ],
+      "parent": null,
+      "tris": 7592
+    },
+    {
+      "name": "Galleon_Bow_Bowsprit",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        1.08,
+        10.6565,
+        4.8689
+      ],
+      "materials": [
+        "M_Galleon_Spar",
+        "M_Galleon_Oak_t0",
+        "M_Galleon_Gold",
+        "M_Galleon_Oak_t3",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_IronRust",
+        "M_Galleon_RopeTar",
+        "M_Galleon_OakDark_t4",
+        "M_Galleon_DarkRecess"
+      ],
+      "parent": null,
+      "tris": 3508
+    },
+    {
+      "name": "Galleon_Bow_Catheads",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        4.457,
+        1.0147,
+        1.5837
+      ],
+      "materials": [
+        "M_Galleon_Oak_t2",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_IronRust",
+        "M_Galleon_Oak_t1",
+        "M_Galleon_Oak_t0",
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_OakDark_t2"
+      ],
+      "parent": null,
+      "tris": 1680
+    },
+    {
+      "name": "Galleon_Bow_Anchors",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        6.0031,
+        2.7294,
+        3.6288
+      ],
+      "materials": [
+        "M_Galleon_IronRust",
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_Rope",
+        "M_Galleon_RopeTar",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_OakDark_t4",
+        "M_Galleon_OakDark_t2"
+      ],
+      "parent": null,
+      "tris": 6688
+    },
+    {
+      "name": "Galleon_Stern_Transom",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        4.6195,
+        0.7373,
+        3.3687
+      ],
+      "materials": [
+        "M_Galleon_Wale",
+        "M_Galleon_Gold",
+        "M_Galleon_Blue",
+        "M_Galleon_Glass",
+        "M_Galleon_Oak",
+        "M_Galleon_OakDark"
+      ],
+      "parent": null,
+      "tris": 5671
+    },
+    {
+      "name": "Galleon_Stern_Ornaments",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        4.0213,
+        0.5818,
+        3.6484
+      ],
+      "materials": [
+        "M_Galleon_Gold",
+        "M_Galleon_Navy"
+      ],
+      "parent": null,
+      "tris": 10152
+    },
+    {
+      "name": "Galleon_Stern_Galleries",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.9948,
+        4.5171,
+        2.9401
+      ],
+      "materials": [
+        "M_Galleon_Hull",
+        "M_Galleon_Blue",
+        "M_Galleon_Gold",
+        "M_Galleon_Wale",
+        "M_Galleon_Glass"
+      ],
+      "parent": null,
+      "tris": 9582
+    },
+    {
+      "name": "Galleon_Stern_Taffrail",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        3.588,
+        0.2169,
+        0.7983
+      ],
+      "materials": [
+        "M_Galleon_OakLight",
+        "M_Galleon_Gold",
+        "M_Galleon_OakDark",
+        "M_Galleon_Navy"
+      ],
+      "parent": null,
+      "tris": 3496
+    },
+    {
+      "name": "Galleon_Stern_Lanterns",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        4.3385,
+        1.1532,
+        3.8192
+      ],
+      "materials": [
+        "M_Galleon_Gold",
+        "M_Galleon_Brass",
+        "M_Galleon_Lamp",
+        "M_Galleon_Spar",
+        "M_Galleon_OakDark",
+        "M_Galleon_IronRust"
+      ],
+      "parent": null,
+      "tris": 4450
+    },
+    {
+      "name": "Galleon_Fittings_Capstans",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        2.5251,
+        10.3569,
+        2.47
+      ],
+      "materials": [
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_IronRust",
+        "M_Galleon_Oak_t4",
+        "M_Galleon_OakLight_t2",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_Oak_t2",
+        "M_Galleon_OakLight_t1",
+        "M_Galleon_OakLight_t4"
+      ],
+      "parent": null,
+      "tris": 7344
+    },
+    {
+      "name": "Galleon_Fittings_Bell",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.26,
+        0.3643,
+        0.7806
+      ],
+      "materials": [
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_IronRust",
+        "M_Galleon_Brass",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Rope"
+      ],
+      "parent": null,
+      "tris": 1110
+    },
+    {
+      "name": "Galleon_Fittings_Lanterns",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        4.3004,
+        4.3184,
+        2.996
+      ],
+      "materials": [
+        "M_Galleon_OakDark_t4",
+        "M_Galleon_IronRust",
+        "M_Galleon_Brass",
+        "M_Galleon_Lamp",
+        "M_Galleon_Gold",
+        "M_Galleon_OakDark_t2"
+      ],
+      "parent": null,
+      "tris": 3888
+    },
+    {
+      "name": "Galleon_Fittings_Pumps",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.3571,
+        0.5512,
+        1.201
+      ],
+      "materials": [
+        "M_Galleon_Oak_t2",
+        "M_Galleon_IronRust",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_Brass",
+        "M_Galleon_OakLight_t4",
+        "M_Galleon_Rope",
+        "M_Galleon_Oak_t0",
+        "M_Galleon_OakLight_t2"
+      ],
+      "parent": null,
+      "tris": 2956
+    },
+    {
+      "name": "Galleon_Fittings_Cargo",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        5.4441,
+        10.5312,
+        1.908
+      ],
+      "materials": [
+        "M_Galleon_Barrel_t4",
+        "M_Galleon_OakDark_t4",
+        "M_Galleon_IronRust",
+        "M_Galleon_Barrel_t2",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_Barrel_t1",
+        "M_Galleon_Cedar_t4",
+        "M_Galleon_Cedar_t3",
+        "M_Galleon_Cedar_t1",
+        "M_Galleon_OakLight_t3",
+        "M_Galleon_OakLight_t4",
+        "M_Galleon_OakLight_t2",
+        "M_Galleon_Cedar_t2",
+        "M_Galleon_Cedar_t0",
+        "M_Galleon_OakLight_t0",
+        "M_Galleon_Rope",
+        "M_Galleon_Iron"
+      ],
+      "parent": null,
+      "tris": 15794
+    },
+    {
+      "name": "Galleon_Fittings_Ladder",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.7935,
+        0.79,
+        2.4067
+      ],
+      "materials": [
+        "M_Galleon_Rope",
+        "M_Galleon_IronRust",
+        "M_Galleon_OakLight_t0",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_Gold",
+        "M_Galleon_OakDark_t1"
+      ],
+      "parent": null,
+      "tris": 4636
+    },
+    {
+      "name": "Galleon_Fittings_Davits",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        2.8427,
+        4.4349,
+        4.1782
+      ],
+      "materials": [
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_IronRust",
+        "M_Galleon_Rope"
+      ],
+      "parent": null,
+      "tris": 4068
+    },
+    {
+      "name": "Galleon_Cannons_Battery",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        6.5701,
+        12.2226,
+        0.2227
+      ],
+      "materials": [
+        "M_Galleon_Iron",
+        "M_Galleon_DarkRecess"
+      ],
+      "parent": null,
+      "tris": 4704
+    },
+    {
+      "name": "Galleon_Cannons_Deck",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        6.3423,
+        9.0053,
+        1.9271
+      ],
+      "materials": [
+        "M_Galleon_OakLight_t2",
+        "M_Galleon_OakLight_t1",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_IronRust",
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_Iron",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Pitch",
+        "M_Galleon_Rope",
+        "M_Galleon_OakDark_t0",
+        "M_Galleon_OakDark_t4"
+      ],
+      "parent": null,
+      "tris": 25296
+    },
+    {
+      "name": "Galleon_Cannons_Swivels",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        4.9541,
+        15.2606,
+        1.9556
+      ],
+      "materials": [
+        "M_Galleon_OakDark_t4",
+        "M_Galleon_IronRust",
+        "M_Galleon_Iron",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Pitch",
+        "M_Galleon_OakDark_t3",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_OakDark_t2"
+      ],
+      "parent": null,
+      "tris": 5008
+    },
+    {
+      "name": "Galleon_Masts_Lower",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.95,
+        15.62,
+        18.785
+      ],
+      "materials": [
+        "M_Galleon_Spar",
+        "M_Galleon_OakDark",
+        "M_Galleon_Rope",
+        "M_Galleon_RopeTar",
+        "M_Galleon_IronRust",
+        "M_Galleon_Gold"
+      ],
+      "parent": null,
+      "tris": 9968
+    },
+    {
+      "name": "Galleon_Masts_Tops",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        2.1,
+        16.4546,
+        3.2818
+      ],
+      "materials": [
+        "M_Galleon_OakDark",
+        "M_Galleon_Deck2_t1",
+        "M_Galleon_Deck2_t0",
+        "M_Galleon_Deck2_t4",
+        "M_Galleon_Deck2_t2",
+        "M_Galleon_Deck2_t3",
+        "M_Galleon_RopeTar",
+        "M_Galleon_OakLight"
+      ],
+      "parent": null,
+      "tris": 5328
+    },
+    {
+      "name": "Galleon_Masts_Yards",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        13.6595,
+        25.5437,
+        12.0419
+      ],
+      "materials": [
+        "M_Galleon_Spar",
+        "M_Galleon_RopeTar",
+        "M_Galleon_OakDark",
+        "M_Galleon_Rope",
+        "M_Galleon_OakDark_t4",
+        "M_Galleon_OakDark_t1",
+        "M_Galleon_OakDark_t2",
+        "M_Galleon_OakDark_t0",
+        "M_Galleon_OakDark_t3"
+      ],
+      "parent": null,
+      "tris": 9232
+    },
+    {
+      "name": "Galleon_Masts_Pennants",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        2.2597,
+        20.6582,
+        6.6773
+      ],
+      "materials": [
+        "M_Galleon_Flag",
+        "M_Galleon_RopeTar"
+      ],
+      "parent": null,
+      "tris": 384
+    },
+    {
+      "name": "Galleon_Sails",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        13.514,
+        26.2012,
+        13.0247
+      ],
+      "materials": [
+        "M_Galleon_Canvas",
+        "M_Galleon_CanvasPatch",
+        "M_Galleon_RopeTar",
+        "M_Galleon_Rope",
+        "M_Galleon_CanvasSeam"
+      ],
+      "parent": null,
+      "tris": 8994
+    },
+    {
+      "name": "Galleon_Rigging_Standing",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        6.6914,
+        25.5337,
+        15.2917
+      ],
+      "materials": [
+        "M_Galleon_OakDark",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_RopeTar",
+        "M_Galleon_Rigging",
+        "M_Galleon_Rope",
+        "M_Galleon_Spar",
+        "M_Galleon_IronRust"
+      ],
+      "parent": null,
+      "tris": 29212
+    },
+    {
+      "name": "Galleon_Rigging_Running",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        13.5009,
+        28.7426,
+        14.747
+      ],
+      "materials": [
+        "M_Galleon_RopeTar",
+        "M_Galleon_OakDark",
+        "M_Galleon_DarkRecess",
+        "M_Galleon_Rigging",
+        "M_Galleon_IronRust",
+        "M_Galleon_Rope"
+      ],
+      "parent": null,
+      "tris": 8560
+    },
+    {
+      "name": "SM_Galleon_Flag",
+      "type": "MESH",
+      "location": [
+        0.0,
+        11.1795,
+        4.2
+      ],
+      "dimensions": [
+        0.7883,
+        2.2637,
+        1.9955
+      ],
+      "materials": [
+        "M_Galleon_Flag",
+        "M_Galleon_Rope"
+      ],
+      "parent": null,
+      "tris": 856
+    },
+    {
+      "name": "SM_Galleon_Wheel",
+      "type": "MESH",
+      "location": [
+        0.0,
+        5.0,
+        3.9
+      ],
+      "dimensions": [
+        1.0,
+        0.87,
+        1.0
+      ],
+      "materials": [
+        "M_Galleon_Oak",
+        "M_Galleon_Oak_t1",
+        "M_Galleon_Brass",
+        "M_Galleon_Oak_t4",
+        "M_Galleon_Oak_t0",
+        "M_Galleon_Oak_t3",
+        "M_Galleon_Gold",
+        "M_Galleon_OakDark",
+        "M_Galleon_Rope"
+      ],
+      "parent": null,
+      "tris": 1866
+    },
+    {
+      "name": "Galleon_Misc_Pedestal",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        1.21,
+        0.69,
+        0.965
+      ],
+      "materials": [
+        "M_Galleon_OakDark",
+        "M_Galleon_Oak",
+        "M_Galleon_IronRust",
+        "M_Galleon_Navy",
+        "M_Galleon_Gold",
+        "M_Galleon_Brass",
+        "M_Galleon_Rope",
+        "M_Galleon_Glass",
+        "M_Galleon_Paper"
+      ],
+      "parent": null,
+      "tris": 1372
+    },
+    {
+      "name": "SM_Galleon_Rudder",
+      "type": "MESH",
+      "location": [
+        0.0,
+        10.7148,
+        0.0
+      ],
+      "dimensions": [
+        0.304,
+        0.86,
+        3.2254
+      ],
+      "materials": [
+        "M_Galleon_Wale",
+        "M_Galleon_Hull_t3",
+        "M_Galleon_Hull_t2",
+        "M_Galleon_Hull_t4",
+        "M_Galleon_Pitch",
+        "M_Galleon_IronRust",
+        "M_Galleon_Iron"
+      ],
+      "parent": null,
+      "tris": 1396
+    },
+    {
+      "name": "Galleon_Misc_Gudgeons",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.324,
+        0.742,
+        2.3344
+      ],
+      "materials": [
+        "M_Galleon_IronRust",
+        "M_Galleon_Iron"
+      ],
+      "parent": null,
+      "tris": 576
+    },
+    {
+      "name": "LGT-lanterne0",
+      "type": "LIGHT",
+      "location": [
+        1.0,
+        4.17,
+        2.62
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-lanterne1",
+      "type": "LIGHT",
+      "location": [
+        -1.0,
+        4.17,
+        2.62
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-lanterne2",
+      "type": "LIGHT",
+      "location": [
+        -2.1262,
+        8.1,
+        2.5
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-lanterne3",
+      "type": "LIGHT",
+      "location": [
+        2.2153,
+        6.9811,
+        2.6
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-lanterne4",
+      "type": "LIGHT",
+      "location": [
+        0.985,
+        3.5,
+        2.704
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "LGT-lanterne5",
+      "type": "LIGHT",
+      "location": [
+        -0.985,
+        3.5,
+        2.704
+      ],
+      "dimensions": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "REF-Mer",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        400.0,
+        400.0,
+        0.04
+      ],
+      "materials": [
+        "M_Galleon_Sea"
+      ],
+      "parent": null,
+      "tris": 12
+    },
+    {
+      "name": "REF-Barque",
+      "type": "MESH",
+      "location": [
+        -4.4784,
+        2.6,
+        0.0
+      ],
+      "dimensions": [
+        6.4097,
+        2.25,
+        2.07
+      ],
+      "materials": [
+        "MI_Barque"
+      ],
+      "parent": null,
+      "tris": 17954
+    },
+    {
+      "name": "Bean_Body",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.447,
+        0.4461,
+        0.89
+      ],
+      "materials": [
+        "M_Bean_Skin"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 9088
+    },
+    {
+      "name": "Bean_Visor",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.2385,
+        0.0534,
+        0.2161
+      ],
+      "materials": [
+        "M_Bean_Visor"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 1920
+    },
+    {
+      "name": "Bean_Eye_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0435,
+        0.0171,
+        0.094
+      ],
+      "materials": [
+        "M_Bean_Eye"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 352
+    },
+    {
+      "name": "Bean_Hand_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1,
+        0.092,
+        0.128
+      ],
+      "materials": [
+        "M_Bean_Skin"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 960
+    },
+    {
+      "name": "Bean_Thumb_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.044,
+        0.044,
+        0.06
+      ],
+      "materials": [
+        "M_Bean_Skin"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 288
+    },
+    {
+      "name": "Bean_Eye_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0435,
+        0.0171,
+        0.094
+      ],
+      "materials": [
+        "M_Bean_Eye"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 352
+    },
+    {
+      "name": "Bean_Hand_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1,
+        0.092,
+        0.128
+      ],
+      "materials": [
+        "M_Bean_Skin"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 960
+    },
+    {
+      "name": "Bean_Thumb_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.044,
+        0.044,
+        0.06
+      ],
+      "materials": [
+        "M_Bean_Skin"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 288
+    },
+    {
+      "name": "Coat",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.4912,
+        0.4931,
+        0.5495
+      ],
+      "materials": [
+        "M_Bean_CoatRed"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 24692
+    },
+    {
+      "name": "Waistcoat",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.4712,
+        0.4704,
+        0.5233
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 4568
+    },
+    {
+      "name": "Turnback_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0487,
+        0.0952,
+        0.1522
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 132
+    },
+    {
+      "name": "Lapel_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0827,
+        0.1014,
+        0.2808
+      ],
+      "materials": [
+        "M_Bean_Navy"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 164
+    },
+    {
+      "name": "Btn_Lapel_r0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0212,
+        0.0106,
+        0.0216
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Lapel_r1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0212,
+        0.0106,
+        0.0216
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Lapel_r2",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0212,
+        0.0106,
+        0.0216
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Lapel_r3",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0212,
+        0.0106,
+        0.0216
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Tail_r0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0217,
+        0.01,
+        0.0219
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Tail_r1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0217,
+        0.01,
+        0.0219
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Turnback_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0487,
+        0.0952,
+        0.1522
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 132
+    },
+    {
+      "name": "Lapel_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0827,
+        0.1014,
+        0.2808
+      ],
+      "materials": [
+        "M_Bean_Navy"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 164
+    },
+    {
+      "name": "Btn_Lapel_l0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0212,
+        0.0106,
+        0.0216
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Lapel_l1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0212,
+        0.0106,
+        0.0216
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Lapel_l2",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0212,
+        0.0106,
+        0.0216
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Lapel_l3",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0212,
+        0.0106,
+        0.0216
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Tail_l0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0217,
+        0.01,
+        0.0219
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Tail_l1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0217,
+        0.01,
+        0.0219
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Collar",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.4706,
+        0.433,
+        0.0546
+      ],
+      "materials": [
+        "M_Bean_Navy"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 3072
+    },
+    {
+      "name": "CrossBelt_Fr",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.3811,
+        0.1875,
+        0.3512
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 388
+    },
+    {
+      "name": "CrossBelt_Fl",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.3811,
+        0.1875,
+        0.3512
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 388
+    },
+    {
+      "name": "CrossBelt_Br",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.38,
+        0.1115,
+        0.3509
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 388
+    },
+    {
+      "name": "CrossBelt_Bl",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.38,
+        0.1115,
+        0.3509
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 388
+    },
+    {
+      "name": "Belt",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.5377,
+        0.5344,
+        0.0488
+      ],
+      "materials": [
+        "M_Bean_Leather"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 2688
+    },
+    {
+      "name": "Buckle",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.056,
+        0.012,
+        0.05
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 108
+    },
+    {
+      "name": "Buckle_Inner",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.034,
+        0.01,
+        0.028
+      ],
+      "materials": [
+        "M_Bean_Leather"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 108
+    },
+    {
+      "name": "Pouch",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1049,
+        0.0885,
+        0.085
+      ],
+      "materials": [
+        "M_Bean_Leather"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 108
+    },
+    {
+      "name": "Pouch_Flap",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1121,
+        0.0956,
+        0.05
+      ],
+      "materials": [
+        "M_Bean_Leather"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 108
+    },
+    {
+      "name": "Btn_Pouch",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0177,
+        0.0124,
+        0.0199
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Sleeve_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1924,
+        0.1506,
+        0.2953
+      ],
+      "materials": [
+        "M_Bean_SleeveRed"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 720
+    },
+    {
+      "name": "Epaulette_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1534,
+        0.144,
+        0.097
+      ],
+      "materials": [
+        "M_Bean_Navy"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 704
+    },
+    {
+      "name": "EpauletteFringe_r0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_r1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_r2",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_r3",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_r4",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_r5",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_r6",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_r7",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_r8",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "Cuff_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1333,
+        0.1364,
+        0.0873
+      ],
+      "materials": [
+        "M_Bean_Navy"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 400
+    },
+    {
+      "name": "Btn_Cuff_r0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0081,
+        0.018,
+        0.018
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Cuff_r1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0081,
+        0.018,
+        0.018
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Breeches_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1611,
+        0.1611,
+        0.1615
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 560
+    },
+    {
+      "name": "BootShaft_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1487,
+        0.1487,
+        0.115
+      ],
+      "materials": [
+        "M_Bean_Boot"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 560
+    },
+    {
+      "name": "BootToe_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.136,
+        0.21,
+        0.087
+      ],
+      "materials": [
+        "M_Bean_Boot"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 960
+    },
+    {
+      "name": "BootBuckle_r",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.035,
+        0.012,
+        0.022
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 108
+    },
+    {
+      "name": "Sleeve_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1924,
+        0.1506,
+        0.2953
+      ],
+      "materials": [
+        "M_Bean_SleeveRed"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 720
+    },
+    {
+      "name": "Epaulette_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1534,
+        0.144,
+        0.097
+      ],
+      "materials": [
+        "M_Bean_Navy"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 704
+    },
+    {
+      "name": "EpauletteFringe_l0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_l1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_l2",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_l3",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_l4",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_l5",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_l6",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_l7",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "EpauletteFringe_l8",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0333,
+        0.017,
+        0.0646
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 32
+    },
+    {
+      "name": "Cuff_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1333,
+        0.1364,
+        0.0873
+      ],
+      "materials": [
+        "M_Bean_Navy"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 400
+    },
+    {
+      "name": "Btn_Cuff_l0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0081,
+        0.018,
+        0.018
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Btn_Cuff_l1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0081,
+        0.018,
+        0.018
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "Breeches_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1611,
+        0.1611,
+        0.1615
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 560
+    },
+    {
+      "name": "BootShaft_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.1487,
+        0.1487,
+        0.115
+      ],
+      "materials": [
+        "M_Bean_Boot"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 560
+    },
+    {
+      "name": "BootToe_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.136,
+        0.21,
+        0.087
+      ],
+      "materials": [
+        "M_Bean_Boot"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 960
+    },
+    {
+      "name": "BootBuckle_l",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.035,
+        0.012,
+        0.022
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 108
+    },
+    {
+      "name": "Hat_Brim",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.6437,
+        0.606,
+        0.1511
+      ],
+      "materials": [
+        "M_Bean_Felt"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 7200
+    },
+    {
+      "name": "Hat_Crown",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.38,
+        0.361,
+        0.1615
+      ],
+      "materials": [
+        "M_Bean_Felt"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 2208
+    },
+    {
+      "name": "Hat_Trim",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.6605,
+        0.6222,
+        0.122
+      ],
+      "materials": [
+        "M_Bean_HatTrim"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 2400
+    },
+    {
+      "name": "Hat_Cockade",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.051,
+        0.0739,
+        0.0793
+      ],
+      "materials": [
+        "M_Bean_Navy"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 336
+    },
+    {
+      "name": "Hat_Cockade_Button",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.0187,
+        0.025,
+        0.0262
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": "SKEL_Bean",
+      "tris": 224
+    },
+    {
+      "name": "SKEL_Bean",
+      "type": "ARMATURE",
+      "location": [
+        1.1,
+        -1.6,
+        1.6254
+      ],
+      "dimensions": [
+        0.608,
+        0.36,
+        1.1
+      ],
+      "materials": [],
+      "parent": null
+    },
+    {
+      "name": "REF_Human_180cm",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.4,
+        0.26,
+        1.8
+      ],
+      "materials": [
+        "M_Bean_Cream"
+      ],
+      "parent": null,
+      "tris": 960
+    },
+    {
+      "name": "FPArm_Sleeve",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.7637,
+        0.148,
+        0.2051
+      ],
+      "materials": [
+        "M_Bean_SleeveRed"
+      ],
+      "parent": null,
+      "tris": 240
+    },
+    {
+      "name": "FPArm_Cuff",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.07,
+        0.144,
+        0.144
+      ],
+      "materials": [
+        "M_Bean_Navy"
+      ],
+      "parent": null,
+      "tris": 80
+    },
+    {
+      "name": "FPArm_Btn0",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.018,
+        0.018,
+        0.0081
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": null,
+      "tris": 224
+    },
+    {
+      "name": "FPArm_Btn1",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.018,
+        0.018,
+        0.0081
+      ],
+      "materials": [
+        "M_Bean_Brass"
+      ],
+      "parent": null,
+      "tris": 224
+    },
+    {
+      "name": "FPArm_Hand",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.128,
+        0.1,
+        0.092
+      ],
+      "materials": [
+        "M_Bean_Skin"
+      ],
+      "parent": null,
+      "tris": 2208
+    },
+    {
+      "name": "FPArm_Thumb",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dimensions": [
+        0.06,
+        0.044,
+        0.044
+      ],
+      "materials": [
+        "M_Bean_Skin"
+      ],
+      "parent": null,
+      "tris": 960
+    }
+  ],
+  "object_count": 162,
+  "total_tris": 480144,
+  "bbox": {
+    "min": [
+      -6.8298,
+      -19.0256,
+      -1.8643
+    ],
+    "max": [
+      6.8298,
+      13.9822,
+      17.17
+    ],
+    "size": [
+      13.6595,
+      33.0078,
+      19.0343
+    ]
+  }
+}
