@@ -2,6 +2,7 @@
 
 #include "Village/VillageRules.h"
 #include "Village/VillageAmbienceActor.h"
+#include "Village/VillageHouseKit.h"
 
 namespace
 {
@@ -94,4 +95,21 @@ bool UVillageRules::IsClearable(const FString& MeshPath) const
 		}
 	}
 	return false;
+}
+
+UVillageHouseKit* UVillageRules::FindHouseKit(const UStaticMesh* Mesh) const
+{
+	if (!Mesh)
+	{
+		return nullptr;
+	}
+	for (UVillageHouseKit* Kit : HouseKits)
+	{
+		// without its shell the kit would add its panels to a house that already has them
+		if (Kit && Kit->SourceMesh == Mesh && Kit->ShellMesh)
+		{
+			return Kit;
+		}
+	}
+	return nullptr;
 }

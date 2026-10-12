@@ -33,6 +33,8 @@ struct FWindShelterSample
  *  and darkens the sky through the day / night cycle.
  *  The wind is a pure function of the replicated clock, so every machine computes the same gusts; forces are
  *  applied by the server, plus the owning client for its own character (movement prediction).
+ *  Weather (T-203): once a temple artifact is seized, the mean wind stays over the floor of the turned weather
+ *  (UWeatherSubsystem, eased over its transition) and its sky weight is merged into the day / night storm factor.
  */
 UCLASS()
 class MONKE_ISLAND_API AWindStormActor : public AActor
@@ -43,13 +45,15 @@ public:
 
 	AWindStormActor();
 
-	/** Rules of the wind (DA_WindRules) */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Wind")
+	/** Rules of the wind (DA_WindRules); replicated once, for a wind spawned during play (maps without one) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Replicated, Category="Wind")
 	TObjectPtr<UWindRules> Rules;
 
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	/** Current wind: direction (unit, horizontal) scaled by the strength (0 calm, 1 full storm, gusts above) */
 	UFUNCTION(BlueprintPure, Category="Wind")
@@ -58,8 +62,9 @@ public:
 	/** Acceleration the wind gives a physics actor at rest right now (cm/s2), as applied by ApplyForces */
 	FVector GetWindAccelerationOn(const AActor* Actor) const;
 
-	/** Wind at an elapsed play time (pure: same result on every machine); DeadlineStartElapsed < 0 = no deadline */
-	static FVector WindAt(const UWindRules& InRules, double Elapsed, double DeadlineStartElapsed = -1.0);
+	/** Wind at an elapsed play time (pure: same result on every machine); DeadlineStartElapsed < 0 = no deadline;
+	 *  MeanFloor: mean strength the wind does not drop under (the turned weather, T-203), turbulence still applied */
+	static FVector WindAt(const UWindRules& InRules, double Elapsed, double DeadlineStartElapsed = -1.0, float MeanFloor = 0.0f);
 
 	/** Index of the last gust started (0-based), INDEX_NONE before the first */
 	UFUNCTION(BlueprintPure, Category="Wind")
@@ -76,6 +81,17 @@ public:
 	/** True once the ultra violent wind set in (submersion of the expedition, or deadline day without expedition) */
 	UFUNCTION(BlueprintPure, Category="Wind")
 	bool IsDeadlineWind() const { return bDeadline; }
+
+	/** True while the weather turned by a seized artifact holds the wind up (more than half way through its turn) */
+	UFUNCTION(BlueprintPure, Category="Wind")
+	bool IsWeatherStorm() const { return bWeatherStorm; }
+
+	/** True in a storm: the ultra violent wind or the turned weather (what a HUD or a soundscape calls "Tempête") */
+	UFUNCTION(BlueprintPure, Category="Wind")
+	bool IsStormy() const { return bDeadline || bWeatherStorm; }
+
+	/** Calm zones of this world (actors tagged WindCalmZone with a sphere component), looked up again once a second */
+	const TArray<FSphere>& GetCalmZones() const;
 
 	/** Clock that drives the wind (Undecided until the game state is known on this machine) */
 	EHazardClockSource GetClockSource() const { return ClockSource; }
@@ -105,6 +121,9 @@ private:
 	/** The ultra violent wind has set in */
 	bool bDeadline = false;
 
+	/** The turned weather holds the wind up (T-203) */
+	bool bWeatherStorm = false;
+
 	/** Clock that drives the wind, decided once */
 	EHazardClockSource ClockSource = EHazardClockSource::Undecided;
 
@@ -116,9 +135,6 @@ private:
 
 	/** Shelter per actor */
 	mutable TMap<TWeakObjectPtr<const AActor>, FWindShelterSample> ShelterCache;
-
-	/** Calm zones of this world (actors tagged WindCalmZone with a sphere component), looked up once a second */
-	const TArray<FSphere>& GetCalmZones() const;
 
 	/** Calm zones found by the last lookup; per wind actor, so two PIE worlds never share them */
 	mutable TArray<FSphere> CalmZones;

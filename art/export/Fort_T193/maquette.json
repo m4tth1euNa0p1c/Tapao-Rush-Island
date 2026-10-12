@@ -1,0 +1,3908 @@
+{
+  "$schema": "../../factory/schema/maquette.schema.json",
+  "format": "maquette/1",
+  "id": "fort-francais",
+  "title": "Fort francais bastionne sur un motu des Tuamotu, avec son port (complexe modulaire)",
+  "description": "Fort colonial francais bastionne FICTIF (fin XVIIe-XVIIIe, trace simplifie a la Vauban) construit sur l'extremite est d'un motu des Tuamotu, au bord d'une passe, avec son port cote lagon. Echelle Bean (1,05 m ; monde x0,58 comme le galion) : marches 16,5 cm, passages >= 1,0 m, portes 1,0 x 1,8, creneaux a 0,66 (l'oeil de Bean ~0,78 passe au-dessus), merlons 1,32 (Bean a couvert). Quadrilatere bastionne : cour 40 x 32 m, courtines de 4,2 m d'epaisseur (chemin de ronde 3,0 m a Z 2,97 = 18 marches), escarpe talutee 1/6 de 4,29 m depuis un fosse sec de 6 m creuse dans le platier, 4 bastions a flancs droits (flancs 5 m, faces 13.9 m, saillant 69 deg, 6 embrasures, echauguette au saillant), emprise aux cordons 63.4 x 55.4 m. Porte charretiere voutee 2,2 x 2,64 dans la courtine sud (frontispice, vantaux cloutes, herse, pont-levis a fleches + pont dormant), corps de garde ; tour de guet/fanal accessible (3 niveaux, escalier interieur, pavillon) sur le bastion NE ; logis du gouverneur a galerie (2 niveaux praticables), caserne, cuisine-boulangerie, citerne, magasin a poudre Vauban dans son enclos, chapelle (option) ; prison a 3 cachots grilles + cages au sol + cage suspendue a une potence ; salle des coffres en casemate voutee sous le bastion SO (porte blindee, sas grille, lingots en piles, coffres ouverts/fermes, coupelles de gemmes, sacs de perles, pieces, SOCKET_Loot_*). Port : quai de blocs de corail et pierres de lest, jetee maconnee + ponton sur pieux + musoir en T (accostage de la chaloupe), bittes-canons, grue a potence, magasin portuaire ; galion-anglais (30,5 m) au mouillage. Materiaux du recif (moellons et pierre de taille de corail, beachrock, chaux de corail) + importes (briques, pierres de lest, tuiles, chene) + bois locaux (cocotier, tamanu) ; textures photo-scannees CC0 2K, usure, sel, mousse, rouille. Chaque ouvrage = module SM_Fort_*/SM_Port_*/SM_Loot_* (UCX_ + SOCKET_) exporte a part (FBX + GLB) ; build par LOTS en sous-processus (RAM ~7 Go) puis scene assemblee par liens. Geologie : params.site ; hypotheses : params.assumptions ; sources : BRIEF.md.",
+  "brief": "crée maintenant un grand bâtiment, un fort français avec les remparts, le port, les tours de garde, les bâtiments intérieurs, des cages, une prison, un fort habitation, une prison, une salle des coffres avec des lingots d'or, des pierres précieuses, des sacs de perles, crée une ambiance ultra réaliste, utilise échelle Bean, utilise modèle Tuamotu île géologie pour modélisation",
+  "version": "0.2.0",
+  "status": "built",
+  "tags": [
+    "fort",
+    "vauban",
+    "bastion",
+    "france",
+    "colonial",
+    "port",
+    "prison",
+    "tresor",
+    "tuamotu",
+    "atoll",
+    "modulaire",
+    "unreal",
+    "ultra-realiste"
+  ],
+  "params": {
+    "kit": "factory/kits/fort_kit.py (modules rempart/porte/tour/batiments/prison : MODULES = {cle: (export, builder(coll, p) -> res)}) + factory/kits/fort_port.py (port) + factory/kits/fort_loot.py (salle des coffres et butin) + factory/kits/fort_site.py (terrain du motu, fosse, eau) + factory/kits/fort_lot.py (point d'entree d'un lot en sous-processus) + factory/kits/fort_scene.py (assemblage par liens, vegetation, Bean, galion, lumieres, rapport). Reutilise : marae_kit (pbr, StoneBatch, wall, solid_box, import_gltf), temple_kit (dry_wall, coping, rubble, rough_block_bm, LiteStones, fit_budget, budget_for, remap_materials, lash), temple_scene (Placer, ground_mat, _shrink_images, scatter de vegetation), camp_kit (Batch, thatch_slope, mats bois/corde), loot_kit (small_chest, sweep), artifacts/treasure (material, gem_*, sphere, strand, OMesh), galleon/cannons (cannon, carriage), galleon/stern_lanterns (lanternes), bean_fit.append_bean, bean_kit (make_ucx, make_sockets, join_parts, part_physics).",
+    "build": [
+      "site",
+      "rempart",
+      "porte",
+      "tour",
+      "batiments",
+      "poudriere_chapelle",
+      "prison",
+      "tresor",
+      "port",
+      "habillage",
+      "scene"
+    ],
+    "build_note": "liste ordonnee des lots (params.lots) a (re)construire ; chacun dans un sous-processus Blender ; un lot a jour (hash) est saute ; FORT_BUILD=<lots> en variable d'environnement prend le pas. Le lot 'scene' doit rester le dernier.",
+    "lots": {
+      "site": {
+        "modules": [
+          "ditch",
+          "site_terrain"
+        ],
+        "note": "terrain du motu, fosse/contrescarpe, glacis, plages, platier, lagon, passe (geologie atoll). Peu de RAM."
+      },
+      "rempart": {
+        "modules": [
+          "curtain_4m",
+          "curtain_4m_embrasure",
+          "curtain_4m_access",
+          "curtain_corner",
+          "bastion",
+          "bastion_vault",
+          "ramp",
+          "stair",
+          "echauguette"
+        ]
+      },
+      "porte": {
+        "modules": [
+          "gatehouse",
+          "gate_door_l",
+          "gate_door_r",
+          "portcullis",
+          "drawbridge",
+          "bridge_fixed",
+          "guardhouse"
+        ]
+      },
+      "tour": {
+        "modules": [
+          "signal_tower",
+          "flag",
+          "lantern",
+          "lantern_hanging"
+        ]
+      },
+      "batiments": {
+        "modules": [
+          "governor_house",
+          "barracks",
+          "kitchen",
+          "cistern"
+        ]
+      },
+      "poudriere_chapelle": {
+        "modules": [
+          "powder_magazine",
+          "chapel"
+        ]
+      },
+      "prison": {
+        "modules": [
+          "prison",
+          "cell_door",
+          "studded_door",
+          "cage_ground",
+          "cage_hanging",
+          "gibbet",
+          "wall_shackles"
+        ]
+      },
+      "tresor": {
+        "modules": [
+          "treasure_vault",
+          "vault_door",
+          "vault_grille",
+          "chest_closed",
+          "chest_open",
+          "pallet",
+          "gold_bar",
+          "gold_stack_s",
+          "gold_stack_m",
+          "gold_stack_l",
+          "gems",
+          "gem_bowl",
+          "pearl_sack_open",
+          "pearl_sack_closed",
+          "coin",
+          "coin_pile"
+        ]
+      },
+      "port": {
+        "modules": [
+          "quay_6m",
+          "quay_stairs",
+          "jetty_6m",
+          "pier_6m",
+          "pier_head",
+          "bollard",
+          "crane",
+          "warehouse"
+        ]
+      },
+      "habillage": {
+        "modules": [
+          "cannon",
+          "shot_pile",
+          "crate_a",
+          "crate_b",
+          "barrel",
+          "powder_barrel"
+        ]
+      },
+      "scene": {
+        "modules": [],
+        "note": "assemblage par liens + vegetation + Bean x2 + galion/chaloupe + lumieres + rendus des vues (post_build). Toujours en dernier."
+      }
+    },
+    "machine": {
+      "ram_free_gb": 7,
+      "onedrive": true,
+      "rules": [
+        "UN LOT = UN PROCESSUS BLENDER : scene.py lance chaque lot de params.build dans un sous-processus `blender --background --factory-startup --python factory/kits/fort_lot.py -- <lot>` (la memoire est rendue a la fin de chaque lot) ; le processus principal ne fait que lier les resultats.",
+        "Chaque lot sauve modules/<lot>.blend (compresse, textures en chemins relatifs, jamais packees) + exports/SM_*.fbx|glb + une entree dans fort-report.json ; un lot deja a jour (hash des params de ses modules == celui consigne dans modules/<lot>.hash) est saute.",
+        "Le lot scene LIE (bpy.data.libraries.load(link=True)) les collections des modules et les instancie : aucune geometrie dupliquee en memoire.",
+        "Pas de bake Cycles ; EEVEE 32 echantillons (16 pour les vues interieures si la RAM sature) ; rendus des vues un par un, image liberee apres ecriture.",
+        "Textures 2K max, 1K pour les petits objets ; les GLB importes (galion, chaloupe) ont leurs images reduites a 1K a l'import (temple_scene._shrink_images).",
+        "Le galion est optionnel en scene (params.scene_layout.galleon.enabled) : coque + voiles seulement, sans greement si la RAM depasse 5 Go (mesure par le lot scene).",
+        "Vegetation : append de LIB_Palms / LIB_Shrubs / LIB_GroundCover depuis l'atoll une seule fois, puis instances ; max ~400 instances.",
+        "Ecrire uniquement dans maquettes/fort-francais/ (modules/, exports/, renders/, textures/) et factory/kits/fort_*.py ; ne rien modifier dans art/."
+      ],
+      "override": "variable d'environnement FORT_BUILD=lot1,lot2 (prioritaire sur params.build) pour reconstruire un lot sans editer la spec ; FORT_FORCE=1 ignore le cache de hash"
+    },
+    "bean_ref": {
+      "height_m": 1.05,
+      "width_m": 0.55,
+      "eye_height_m_assumed": 0.78,
+      "world_scale": 0.58,
+      "world_scale_note": "facteur d'echelle du monde de jeu = Bean 1,05 / humain 1,80 ~ 0,58 (meme facteur que galion-anglais : 22 m de coque). Les ouvrages (fort, batiments, port) sont des cotes reelles x 0,58 arrondies a la marche de 16,5 cm ; le butin suit le facteur ~0,7 des autres loots (loot-butin-commun) pour rester lisible en main.",
+      "rules": {
+        "step_rise_m": 0.165,
+        "step_tread_m": 0.28,
+        "step_tread_tower_m": 0.25,
+        "passage_min_width_m": 1.0,
+        "door_min_m": [
+          1.0,
+          1.8
+        ],
+        "lintel_min_height_m": 1.6,
+        "storey_height_m": 2.64,
+        "interior_clear_min_m": 2.2,
+        "crenel_sill_m": 0.66,
+        "merlon_top_m": 1.32,
+        "embrasure_sill_m": 0.28,
+        "inner_guard_parapet_m": 0.495,
+        "window_sill_m": 0.66,
+        "display_height_m": [
+          0.6,
+          0.8
+        ],
+        "ramp_slope": "1:5 (11,3 deg, sous la pente marchable Unreal 44 deg ; canon roule)",
+        "notes": "16,5 cm = regle du marae_kit/temple ; porte 1,0 x 1,8 = Bean 0,55 + 2 x 0,22 de marge capsule/camera, 1,8 = Bean + 0,75 (camera 3e personne) ; creneau a 0,66 : l'oeil (0,78) passe au-dessus, le torse est couvert ; merlon 1,32 : Bean entierement a couvert ; embrasure a canon 0,28 (impose par l'axe du tube du galion, 0,39 au-dessus du sol), bouchee par un UCX invisible jusqu'a 1,32 ; garde-corps interieur 0,495 : on ne tombe pas par megarde dans la cour mais on la voit."
+      }
+    },
+    "conventions": {
+      "units": "metres, Z haut ; Z = 0 = sol de la cour du fort (terre-plein du motu) ; niveau moyen du lagon Z = -1.65",
+      "axes_monde": "+X = est (vers la passe), +Y = nord (vers l'ocean et la crete recifale), -Y = sud (lagon, port)",
+      "front": "-Y Blender pour chaque module (porte, face exterieure d'un rempart) ; exception : SM_Fort_Bastion (saillant vers +X+Y local, pivot = angle des cordons)",
+      "pivot": "centre de l'emprise au sol du corps principal, Z = 0 du module = son sol praticable (cour, chemin de ronde, plancher du caveau...) sauf mention ; pos de scene en coordonnees monde",
+      "naming_scene": "GEO-/EMP-/COL-/MAT-/LGT-/CAM- ; REF- pour terrain, eau, Bean, galion, chaloupe, vegetation de l'atoll (non exportes)",
+      "naming_export": "SM_Fort_<Module> / SM_Port_<Module> / SM_Loot_<Module> + UCX_<SM>_NN + SOCKET_<nom> (empties enfants du SM)",
+      "materials": "MAT-Fort_* (fort_mat.py, scans CC0) ; or/gemmes/perles = treasure.material('MAT_Gold_Aged' | 'MAT_Gem_*' | 'MAT_Pearl_*') ; 4 materiaux max par module (5 pour les batiments et SM_Fort_Chest_Open)",
+      "exports": "FBX (axis_forward=-Y, axis_up=Z -> +X Unreal) + GLB (JPEG 85) par module dans exports/ ; module construit a l'origine dans son lot, exporte, sauve dans modules/<lot>.blend, puis LIE (link) et instancie (collection instance) par le lot scene",
+      "instancing": "merlons, pierres, lingots, pieces, perles, boulets, tonneaux, bittes, cocotiers : linked duplicates / collection instances dans les lots ; jamais de copie de mesh en scene"
+    },
+    "budget": {
+      "texture_max_px": 2048,
+      "texture_small_px": 1024,
+      "texture_rule": "2K pour maconneries, sols, toitures, bois de structure ; 1K pour ferrures, cages, chaines, coffres, sacs, lanternes, canons ; or/gemmes/perles : textures partagees du kit artefacts (deja 2K) reduites a 1K pour le butin",
+      "tris_max": {
+        "SM_Fort_Curtain_4m": 5000,
+        "SM_Fort_Curtain_4m_Embrasure": 6500,
+        "SM_Fort_Curtain_4m_Access": 5000,
+        "SM_Fort_Curtain_Corner": 5000,
+        "SM_Fort_Bastion": 45000,
+        "SM_Fort_Bastion_Vault": 45000,
+        "SM_Fort_Ramp": 3000,
+        "SM_Fort_Stair": 4000,
+        "SM_Fort_Echauguette": 6000,
+        "SM_Fort_GateHouse": 30000,
+        "SM_Fort_GateDoor_L": 3000,
+        "SM_Fort_GateDoor_R": 3500,
+        "SM_Fort_Drawbridge": 4000,
+        "SM_Fort_BridgeFixed": 5000,
+        "SM_Fort_Portcullis": 2500,
+        "SM_Fort_Ditch": 25000,
+        "SM_Fort_SignalTower": 35000,
+        "SM_Fort_Flag": 2000,
+        "SM_Fort_Lantern": 1200,
+        "SM_Fort_Lantern_Hanging": 1200,
+        "SM_Fort_GovernorHouse": 60000,
+        "SM_Fort_Barracks": 40000,
+        "SM_Fort_PowderMagazine": 20000,
+        "SM_Fort_Chapel": 25000,
+        "SM_Fort_Cistern": 5000,
+        "SM_Fort_Kitchen": 20000,
+        "SM_Fort_GuardHouse": 20000,
+        "SM_Fort_Prison": 30000,
+        "SM_Fort_CellDoor": 1500,
+        "SM_Fort_StuddedDoor": 2000,
+        "SM_Fort_Cage_Ground": 3000,
+        "SM_Fort_Cage_Hanging": 3000,
+        "SM_Fort_Gibbet": 2500,
+        "SM_Fort_WallShackles": 1500,
+        "SM_Fort_TreasureVault": 35000,
+        "SM_Fort_VaultDoor": 3000,
+        "SM_Fort_VaultGrille": 2000,
+        "SM_Fort_Chest_Closed": 3000,
+        "SM_Fort_Chest_Open": 3500,
+        "SM_Fort_Pallet": 800,
+        "SM_Loot_GoldBar": 200,
+        "SM_Loot_GoldStack_S": 3000,
+        "SM_Loot_GoldStack_M": 7000,
+        "SM_Loot_GoldStack_L": 13000,
+        "SM_Loot_GemBowl": 8000,
+        "SM_Loot_Gem_*": 300,
+        "SM_Loot_PearlSack_Open": 7000,
+        "SM_Loot_PearlSack_Closed": 2500,
+        "SM_Loot_CoinPile": 6000,
+        "SM_Loot_Coin": 120,
+        "SM_Port_Quay_6m": 5000,
+        "SM_Port_QuayStairs": 4000,
+        "SM_Port_Jetty_6m": 6000,
+        "SM_Port_Pier_6m": 5000,
+        "SM_Port_PierHead": 8000,
+        "SM_Port_Bollard": 800,
+        "SM_Port_Crane": 12000,
+        "SM_Port_Warehouse": 30000,
+        "SM_Fort_Cannon": 6000,
+        "SM_Fort_ShotPile": 3000,
+        "SM_Fort_Crate_A": 500,
+        "SM_Fort_Crate_B": 500,
+        "SM_Fort_Barrel": 1500,
+        "SM_Fort_PowderBarrel": 1200
+      },
+      "over_budget": "comme temple_kit.fit_budget : subdivisions des pierres 2 -> 1, puis DECIMATE COLLAPSE avant export ; tris reels consignes dans fort-report.json",
+      "lods": {
+        "enabled": false,
+        "ratios": [
+          1.0,
+          0.5,
+          0.25
+        ],
+        "note": "optionnel (Bastion, GateHouse, GovernorHouse, Barracks, Warehouse, SignalTower) : suffixe _LOD1/_LOD2"
+      },
+      "scene_tris_estimate": "~1,6 M tris en scene (dont ~0,6 M de vegetation instanciee) : acceptable en EEVEE grace aux instances ; a mesurer dans fort-report.json"
+    },
+    "site": {
+      "concept": "Fort construit a l'extremite est d'un motu, au bord d'une passe (hoa profond) ; port cote lagon (abrite), ocean au nord-est (alizes). Pas de relief volcanique : point haut naturel = bourrelet de tempete en blocs de corail a +0,66 (cote ocean) ; tout l'ouvrage est construit avec les materiaux du recif + materiaux importes.",
+      "trace_cordon_m": [
+        [
+          24.2,
+          14.0
+        ],
+        [
+          29.2,
+          14.0
+        ],
+        [
+          31.7,
+          27.7
+        ],
+        [
+          18.0,
+          25.2
+        ],
+        [
+          18.0,
+          20.2
+        ],
+        [
+          -18.0,
+          20.2
+        ],
+        [
+          -18.0,
+          25.2
+        ],
+        [
+          -31.7,
+          27.7
+        ],
+        [
+          -29.2,
+          14.0
+        ],
+        [
+          -24.2,
+          14.0
+        ],
+        [
+          -24.2,
+          -14.0
+        ],
+        [
+          -29.2,
+          -14.0
+        ],
+        [
+          -31.7,
+          -27.7
+        ],
+        [
+          -18.0,
+          -25.2
+        ],
+        [
+          -18.0,
+          -20.2
+        ],
+        [
+          18.0,
+          -20.2
+        ],
+        [
+          18.0,
+          -25.2
+        ],
+        [
+          31.7,
+          -27.7
+        ],
+        [
+          29.2,
+          -14.0
+        ],
+        [
+          24.2,
+          -14.0
+        ]
+      ],
+      "trace_note": "polygone (anti-horaire) des lignes de cordon : bastions + courtines ; escarpe talutee 1/6 jusqu'au fond du fosse",
+      "extents_m": {
+        "fort_cordon": {
+          "x": [
+            -31.7,
+            31.7
+          ],
+          "y": [
+            -27.7,
+            27.7
+          ]
+        },
+        "with_ditch": {
+          "x": [
+            -39.915,
+            39.915
+          ],
+          "y": [
+            -35.915,
+            35.915
+          ]
+        },
+        "whole_site": {
+          "x": [
+            -120,
+            120
+          ],
+          "y": [
+            -110,
+            95
+          ]
+        }
+      },
+      "levels_z": {
+        "court": 0.0,
+        "walkway": 2.97,
+        "merlon_top": 4.29,
+        "ditch_bottom": -1.32,
+        "quay": -0.33,
+        "msl": -1.65,
+        "storm_ridge": 0.66,
+        "reef_flat": -1.8,
+        "reef_crest": -1.55,
+        "lagoon_floor_near": -2.97,
+        "lagoon_floor_far": -6.6,
+        "passe_floor": -9.0,
+        "ocean_floor": -18.0
+      },
+      "profile": [
+        {
+          "zone": "lagon (sud)",
+          "y": [
+            -110,
+            -42
+          ],
+          "z": "plancher de sable blanc -2,97 au quai -> -6,6 a y -100 ; pates de corail (patates) eparses x 12, a 0,5-1,0 sous la surface (eau turquoise claire)",
+          "material": "sable_wet + coral_gravel sous l'eau"
+        },
+        {
+          "zone": "quai / esplanade",
+          "y": [
+            -42,
+            -27
+          ],
+          "z": "0 jusqu'a y -38 puis -> -0.33 au quai, sable compacte + gravats + ornieres de charrois"
+        },
+        {
+          "zone": "fort + fosse",
+          "y": [
+            -35,
+            35
+          ],
+          "z": "0 ; fosse a -1.32"
+        },
+        {
+          "zone": "glacis + cocoteraie",
+          "y": [
+            35,
+            55
+          ],
+          "z": "0 -> +0,66 (bourrelet de tempete) ; litiere, terre de cocoteraie (T_Soil, T_Litter)"
+        },
+        {
+          "zone": "plage oceane",
+          "y": [
+            55,
+            63
+          ],
+          "z": "+0,66 -> -1.65 ; gros sable + debris de corail (T_Rubble), beachrock en dalles inclinees a l'estran"
+        },
+        {
+          "zone": "platier (reef flat)",
+          "y": [
+            63,
+            88
+          ],
+          "z": "-1.8, a fleur d'eau, conglomerat (feo T_Feo), flaques, blocs de tempete"
+        },
+        {
+          "zone": "crete recifale + front recifal",
+          "y": [
+            88,
+            95
+          ],
+          "z": "-1.55 puis tombant vers -18 ; ecume (plan alpha) sur la crete"
+        },
+        {
+          "zone": "passe (est)",
+          "x": [
+            62,
+            102
+          ],
+          "z": "chenal -9,0 bleu profond, bords de corail vivant, courant (normal d'eau etiree)"
+        },
+        {
+          "zone": "motu voisin (est)",
+          "x": [
+            102,
+            120
+          ],
+          "z": "bande de sable + 6 cocotiers (lointain)"
+        },
+        {
+          "zone": "motu (ouest)",
+          "x": [
+            -120,
+            -35
+          ],
+          "z": "cocoteraie dense, sentier de sable vers la plage du lagon"
+        }
+      ],
+      "ground_layers": "art/textures/terrain_layers (sand_dry, sand_wet, rubble, feo, soil, litter, wrack) melangees comme temple_scene.ground_mat ; 2K",
+      "water": {
+        "lagoon": "plan Z -1.65, couleur par profondeur (turquoise #38C9C1 -> #0E6F8A), normal T_Water_N (art/textures/water) en panoramique lent, transmission/absorption EEVEE",
+        "ocean": "bleu nuit #0B2E5A, houle (displace leger) et ecume sur la crete",
+        "foam": "liseres d'ecume le long des plages et du quai (masque par distance au rivage)"
+      },
+      "geology_materials": {
+        "coral_rubble": "blocs de corail mort (Porites) et conglomerat corallien (feo) extraits du platier : moellons de construction",
+        "coral_ashlar": "pierre de taille corallienne (calcaire recifal fin, type 'pierre de corail' des forts antillais/ocean Indien) : chaines d'angle, cordons, encadrements",
+        "beachrock": "gres de plage cimente (dalles naturelles inclinees de l'estran) : dallages, marches, couronnements",
+        "lime": "chaux de corail calcine (fours a chaux) : mortier et enduit blanc",
+        "imported": "briques francaises (lest des navires) : cheminees, four, doubleaux ; pierres de lest basaltiques/granitiques : soubassements et quais ; tuiles de terre cuite ; ferronnerie ; chene",
+        "local_wood": "cocotier (pieux, chevrons secondaires), tamanu / Calophyllum (poutres, poteaux de galerie, pieux de ponton), pandanus (chaume des appentis)"
+      }
+    },
+    "modules": {
+      "curtain_4m": {
+        "export": "SM_Fort_Curtain_4m",
+        "lot": "rempart",
+        "role": "courtine droite, module de 4,0 m : escarpe talutee en moellons de corail enduits, cordon en pierre de taille, parapet a merlons et creneaux, chemin de ronde dalle, mur de soutenement interieur + garde-corps",
+        "local_frame": "pivot = milieu du module sur la ligne du cordon (face exterieure), Z = 0 = sol de la cour ; -Y = exterieur (fosse), +Y = cour",
+        "section": {
+          "scarp": {
+            "z_from": -1.32,
+            "z_to": 2.97,
+            "batter": "1/6",
+            "foot_y": -0.715,
+            "material": "Fort_CoralRubble (moellons de corail + chaux), soubassement 0,66 m en pierres de lest basaltiques"
+          },
+          "cordon": {
+            "z": 2.97,
+            "profile": "tore 0,16 x 0,14 en saillie (magistrale)",
+            "material": "Fort_CoralAshlar"
+          },
+          "parapet": {
+            "y_range": [
+              0.0,
+              1.2
+            ],
+            "thickness_m": 1.2,
+            "merlon_top_above_walk_m": 1.32,
+            "crenel": {
+              "width_m": 0.6,
+              "sill_above_walk_m": 0.66,
+              "plunge_deg": 8,
+              "centers_x": [
+                -1.0,
+                1.0
+              ]
+            },
+            "merlons_x": [
+              [
+                -2.0,
+                -1.3
+              ],
+              [
+                -0.7,
+                0.7
+              ],
+              [
+                1.3,
+                2.0
+              ]
+            ],
+            "merlon_cap": "chaperon arrondi enduit, aretes epaufrees",
+            "note": "demi-merlons aux extremites : deux modules voisins forment un merlon de 1,4 m"
+          },
+          "walkway": {
+            "y_range": [
+              1.2,
+              4.2
+            ],
+            "width_m": 3.0,
+            "z": 2.97,
+            "surface": "dalles de beachrock 0,4-0,7 m, joints de sable, pente 1 % vers la cour",
+            "drain": "gargouille tous les 8 m (variante pair/impair)"
+          },
+          "inner_wall": {
+            "y": 4.2,
+            "batter": "1/10",
+            "guard_parapet_m": 0.495,
+            "guard_thickness_m": 0.45
+          }
+        },
+        "sockets": {
+          "Snap_L": [
+            -2.0,
+            0,
+            0
+          ],
+          "Snap_R": [
+            2.0,
+            0,
+            0
+          ],
+          "Walk": [
+            0,
+            2.7,
+            2.97
+          ],
+          "Crenel_1": [
+            -1.0,
+            1.0,
+            3.63
+          ],
+          "Crenel_2": [
+            1.0,
+            1.0,
+            3.63
+          ],
+          "Lantern": [
+            0,
+            4.25,
+            2.37
+          ]
+        },
+        "ucx": "escarpe+terre-plein (1 prisme trapeze), parapet (3 boites merlons + 2 boites basses de creneau), garde-corps (1 boite)",
+        "bean_check": "chemin 3,0 m (canon 1,7 m + passage 1,3) ; creneau 0,66 : Bean voit par-dessus ; merlon 1,32 : a couvert ; garde-corps 0,495"
+      },
+      "curtain_4m_embrasure": {
+        "export": "SM_Fort_Curtain_4m_Embrasure",
+        "lot": "rempart",
+        "role": "courtine 4 m avec une embrasure a canon a ciel ouvert + plate-forme de tir en madriers",
+        "base": "curtain_4m (meme section, memes sockets Snap_)",
+        "embrasure": {
+          "center_x": 0.0,
+          "inner_width_m": 0.7,
+          "outer_width_m": 1.3,
+          "sill_above_walk_m": 0.28,
+          "cheeks": "joues en pierre de taille corallienne, genouillere en dalle de beachrock usee par les affuts",
+          "replaces": "le creneau central"
+        },
+        "gun_platform": {
+          "size_m": [
+            2.4,
+            2.6
+          ],
+          "y_range": [
+            1.25,
+            3.85
+          ],
+          "thickness_m": 0.06,
+          "material": "Fort_WoodOak (madriers goudronnes)",
+          "breeching_rings": "2 anneaux de brague scelles dans le parapet a x +-0,55, z +0,35"
+        },
+        "sockets": {
+          "Gun": [
+            0,
+            2.35,
+            2.97
+          ],
+          "ShotPile": [
+            1.4,
+            3.6,
+            2.97
+          ]
+        },
+        "ucx": "base curtain_4m + 1 boite invisible dans l'embrasure jusqu'a 1,32 (Bean ne s'y glisse pas)",
+        "bean_check": "genouillere 0,28 sous la bouche du demi_culverin (axe 0,39) ; Bean voit au-dehors par l'embrasure"
+      },
+      "curtain_4m_access": {
+        "export": "SM_Fort_Curtain_4m_Access",
+        "lot": "rempart",
+        "role": "courtine 4 m dont le garde-corps interieur est ouvert sur 2,2 m (x -1,1..1,1) : debouche des rampes a canons et de l'escalier sur le chemin de ronde",
+        "base": "curtain_4m (meme section, memes sockets, pas de gargouille)",
+        "guard_opening_m": [
+          -1.1,
+          1.1
+        ],
+        "ucx": "base curtain_4m, garde-corps en 2 boites",
+        "bean_check": "ouverture 2,2 m : rampe 2,0 m et escalier 1,2 m debouchent de plain-pied (Z 2,97)"
+      },
+      "curtain_corner": {
+        "export": "SM_Fort_Curtain_Corner",
+        "lot": "rempart",
+        "role": "angle saillant 90 deg (piece de kit pour fermer un trace non bastionne : batterie, redoute) ; non utilise dans la scene du fort, exporte pour Unreal",
+        "size_m": [
+          4.2,
+          4.2
+        ],
+        "note": "meme section que curtain_4m, chaine d'angle en pierre de taille, echauguette optionnelle par socket",
+        "sockets": {
+          "Snap_X": [
+            4.2,
+            0,
+            0
+          ],
+          "Snap_Y": [
+            0,
+            4.2,
+            0
+          ],
+          "Echauguette": [
+            -0.35,
+            -0.35,
+            2.97
+          ]
+        },
+        "ucx": "2 prismes",
+        "local_frame": "pivot = angle saillant des lignes de cordon ; faces exterieures sur y = 0 (vers -Y) et x = 0 (vers -X), massif dans le carre [0 ; 4,2]^2 ; les courtines suivantes se raccordent a Snap_X / Snap_Y"
+      },
+      "bastion": {
+        "export": "SM_Fort_Bastion",
+        "lot": "rempart",
+        "role": "bastion a flancs droits (trace a la Vauban simplifie, sans orillon) : 2 flancs, 2 faces, terre-plein dalle au niveau du chemin de ronde, parapet a merlons, 6 embrasures, echauguette au saillant",
+        "local_frame": "pivot = angle des deux lignes de cordon des courtines adjacentes (bastion NE : monde (24.2, 20.2)) ; saillant vers +X+Y local ; NE rot 0, NO rot 90, SO rot 180, SE rot 270",
+        "trace_local_m": {
+          "flank_a": [
+            [
+              -6.2,
+              0.0
+            ],
+            [
+              -6.2,
+              5.0
+            ]
+          ],
+          "face_a": [
+            [
+              -6.2,
+              5.0
+            ],
+            [
+              7.5,
+              7.5
+            ]
+          ],
+          "face_b": [
+            [
+              7.5,
+              7.5
+            ],
+            [
+              5.0,
+              -6.2
+            ]
+          ],
+          "flank_b": [
+            [
+              5.0,
+              -6.2
+            ],
+            [
+              0.0,
+              -6.2
+            ]
+          ]
+        },
+        "derived": {
+          "flank_m": 5.0,
+          "face_m": 13.926,
+          "salient_angle_deg": 69.3,
+          "gorge_m": 6.2,
+          "terreplein_z": 2.97
+        },
+        "parapet": "meme profil que curtain_4m balaye le long des faces et flancs (merlons 1,4 / creneaux 0,6 au pas de 2,0, recale entre embrasures) ; angles d'epaule et saillant en pierre de taille (chaines d'angle harpees)",
+        "embrasures": {
+          "flank_a": [
+            0.5
+          ],
+          "flank_b": [
+            0.5
+          ],
+          "face_a": [
+            0.33,
+            0.67
+          ],
+          "face_b": [
+            0.33,
+            0.67
+          ],
+          "note": "fraction de la longueur du segment ; memes cotes que curtain_4m_embrasure ; plates-formes de tir en madriers"
+        },
+        "terreplein": "dalles de beachrock + sable compacte, pente 1 % vers la gorge, 2 gargouilles ; la gorge s'ouvre sur le chemin de ronde des courtines (pas de marche)",
+        "echauguette_socket": {
+          "pos": [
+            7.85,
+            7.85,
+            2.97
+          ],
+          "rot_z_deg": 135,
+          "note": "centre de l'echauguette 0,5 m en avant du saillant (encorbellement) ; porte de l'echauguette (+Y local) tournee vers le terre-plein ; parapet interrompu sur 1,15 m de part et d'autre du saillant"
+        },
+        "sockets": {
+          "Gun_FA": "plates-formes des embrasures (6 sockets Gun_FlankA, Gun_FaceA_1, Gun_FaceA_2, Gun_FaceB_1, Gun_FaceB_2, Gun_FlankB)",
+          "Echauguette": "au saillant",
+          "Tower": [
+            1.2,
+            1.2,
+            2.97
+          ],
+          "Flag": [
+            -2.5,
+            -2.5,
+            2.97
+          ],
+          "ShotPile_1": [
+            -1.0,
+            2.0,
+            2.97
+          ],
+          "ShotPile_2": [
+            2.0,
+            -1.0,
+            2.97
+          ]
+        },
+        "ucx": "terre-plein + escarpe : 3 prismes convexes (gorge, demi-bastion A, demi-bastion B) ; parapet : 1 boite par segment entre embrasures ; blocs invisibles d'embrasure",
+        "bean_check": "terre-plein 2.97 m au-dessus de la cour, accessible par le chemin de ronde ; escarpe 4.29 m depuis le fond du fosse (5,3 x Bean) : infranchissable"
+      },
+      "bastion_vault": {
+        "export": "SM_Fort_Bastion_Vault",
+        "lot": "rempart",
+        "role": "variante du bastion pour le bastion SO : massif en coque (escarpes, murs de gorge, terre-plein) laissant le vide de la casemate et de son couloir ; porte de 1,2 x 2,0 percee dans le mur de gorge nord (face a la cour)",
+        "base": "bastion (meme trace, memes sockets)",
+        "vault_door": {
+          "x_local": [
+            -5.8,
+            -4.6
+          ],
+          "height_m": 2.0,
+          "ucx_top_from_z": 2.65,
+          "note": "repere du bastion NE (rot 180 en scene : porte au monde x -19,6..-18,4 sur la face y -16) ; collisions : dalle du terre-plein au-dessus de 2,65, murs epais le long des faces, gorge percee"
+        },
+        "ucx": "terre-plein (3 prismes au-dessus de 2,65), escarpes (4 dalles de 2 m), gorge (3 boites + linteau)",
+        "bean_check": "porte 1,2 x 2,0 ; le couloir et la casemate (SM_Fort_TreasureVault) sont dans le vide de la coque"
+      },
+      "ramp": {
+        "export": "SM_Fort_Ramp",
+        "lot": "rempart",
+        "role": "rampe a canons adossee au mur interieur de la courtine (monter un canon sur le rempart)",
+        "size_m": [
+          2.0,
+          16.85
+        ],
+        "rise_m": 2.97,
+        "slope": "1:5",
+        "run_m": 14.85,
+        "top_landing_m": 2.0,
+        "width_m": 2.0,
+        "local_frame": "pivot = pied de la rampe, axe de la rampe = +Y (monte vers +Y), cote mur (adosse au rempart) = -X local, garde-corps cote +X",
+        "surface": "paves de corail sur chant + bandes de roulement en madriers ; mur lateral cote cour avec garde-corps 0,495",
+        "sockets": {
+          "Foot": [
+            0,
+            0,
+            0
+          ],
+          "Top": [
+            0,
+            15.85,
+            2.97
+          ]
+        },
+        "ucx": "1 coin de rampe + 1 boite palier + 1 boite garde-corps",
+        "bean_check": "2,0 m de large ; pente 11,3 deg (marchable, canon pousse)"
+      },
+      "stair": {
+        "export": "SM_Fort_Stair",
+        "lot": "rempart",
+        "role": "escalier de pierre adosse au mur interieur, 18 marches avec palier",
+        "risers": 18,
+        "rise_m": 0.165,
+        "tread_m": 0.28,
+        "width_m": 1.2,
+        "landing_after": 9,
+        "landing_m": 1.2,
+        "run_m": 5.68,
+        "local_frame": "pivot = pied de la 1re marche, monte vers +Y local, mur cote -X local (meme convention que ramp)",
+        "rail": "garde-corps de fer forge rouille a 0,66 cote vide (main courante)",
+        "sockets": {
+          "Foot": [
+            0,
+            0,
+            0
+          ],
+          "Top": [
+            0,
+            5.98,
+            2.97
+          ]
+        },
+        "ucx": "2 coins de rampe + palier",
+        "bean_check": "16,5 x 28 cm, 1,2 m de large",
+        "top_landing_m": 1.2,
+        "landing_note": "palier superieur de 1,2 m a Z 2,97 (y 5,68 -> 6,88) : debouche sur le chemin de ronde par l'ouverture de SM_Fort_Curtain_4m_Access"
+      },
+      "echauguette": {
+        "export": "SM_Fort_Echauguette",
+        "lot": "rempart",
+        "role": "guerite de pierre en encorbellement au saillant des bastions (cul-de-lampe mouluré, fut cylindrique, dome en pierre)",
+        "inner_diameter_m": 1.3,
+        "wall_m": 0.25,
+        "outer_diameter_m": 1.8,
+        "floor_z_local": 0.0,
+        "cornice_above_floor_m": 2.31,
+        "dome_rise_m": 0.6,
+        "finial": "pomme de pierre",
+        "corbel": "cul-de-lampe de 1,2 m sous le plancher (4 assises en retrait)",
+        "door_m": [
+          1.0,
+          1.65
+        ],
+        "door_note": "baie sans vantail ouverte vers le terre-plein",
+        "loopholes": {
+          "count": 3,
+          "size_m": [
+            0.12,
+            0.33
+          ],
+          "sill_above_floor_m": 0.66,
+          "note": "oeil de Bean 0,78 au milieu de la meurtriere"
+        },
+        "sockets": {
+          "Inside": [
+            0,
+            0,
+            0
+          ],
+          "Lantern": [
+            0,
+            0.45,
+            1.6
+          ]
+        },
+        "ucx": "fut (prisme 12 pans) + dome",
+        "bean_check": "Bean tient debout (2,31 sous corniche) et se retourne (1,3 m)",
+        "local_frame": "pivot = centre du plancher (Z 0 = terre-plein) ; porte vers +Y local (cote terre-plein), meurtrieres vers -Y, +X, -X"
+      },
+      "gatehouse": {
+        "export": "SM_Fort_GateHouse",
+        "lot": "porte",
+        "role": "porte principale (porte charretiere) dans la courtine sud : passage voute sous le chemin de ronde, frontispice en pierre de taille corallienne, rainures de herse, logement du pont-levis",
+        "local_frame": "pivot = milieu du module sur la ligne du cordon, Z = 0 = seuil ; -Y = exterieur ; remplace 3 modules de courtine (12 m)",
+        "size_m": [
+          12.0,
+          4.6000000000000005
+        ],
+        "passage": {
+          "width_m": 2.2,
+          "springing_z": 1.98,
+          "crown_z": 2.64,
+          "arch": "plein cintre surbaisse en pierre de taille",
+          "length_m": 4.2,
+          "floor": "paves de corail uses, caniveau central"
+        },
+        "frontispice": {
+          "width_m": 6.0,
+          "projection_m": 0.4,
+          "top_z": 5.49,
+          "pilasters": "2 pilastres toscans",
+          "pediment": "fronton triangulaire",
+          "cartouche": "armes de France sculptees en bas-relief (ecu a 3 fleurs de lys sous couronne fermee simplifiee), SANS polychromie ; aucune devise ni date",
+          "inscription": "aucune"
+        },
+        "drawbridge_recess": {
+          "size_m": [
+            2.6,
+            0.25,
+            2.9
+          ],
+          "note": "le tablier releve s'encastre dans la feuillure du frontispice"
+        },
+        "portcullis_groove": {
+          "y_local": 0.6,
+          "width_m": 0.12
+        },
+        "doors": {
+          "leaf_m": [
+            1.1,
+            2.64
+          ],
+          "y_local": 1.4,
+          "hinge_x": [
+            -1.1,
+            1.1
+          ],
+          "wicket": {
+            "leaf": "R",
+            "size_m": [
+              0.8,
+              1.65
+            ],
+            "note": "derogation a la regle 1,0 m : guichet de service (capsule 0,55 passe), les vantaux s'ouvrent en jeu"
+          }
+        },
+        "sockets": {
+          "Threshold": [
+            0,
+            -0.2,
+            0
+          ],
+          "Door_L": [
+            -1.1,
+            1.4,
+            0
+          ],
+          "Door_R": [
+            1.1,
+            1.4,
+            0
+          ],
+          "Portcullis": [
+            0,
+            0.6,
+            0
+          ],
+          "Drawbridge_Hinge": [
+            0,
+            -0.4,
+            0
+          ],
+          "Lantern_L": [
+            -1.6,
+            -0.45,
+            2.4
+          ],
+          "Lantern_R": [
+            1.6,
+            -0.45,
+            2.4
+          ],
+          "Sentry_L": [
+            -1.9,
+            -1.0,
+            0
+          ],
+          "Sentry_R": [
+            1.9,
+            -1.0,
+            0
+          ],
+          "Walk": [
+            0,
+            2.7,
+            2.97
+          ]
+        },
+        "ucx": "2 massifs de part et d'autre du passage + voute + parapet (comme curtain_4m) ; le passage reste libre",
+        "bean_check": "2,2 x 2,64 : 4 x la largeur de Bean, 2,5 x sa hauteur ; chemin de ronde continu au-dessus (Z 2.97)"
+      },
+      "gate_door_l": {
+        "export": "SM_Fort_GateDoor_L",
+        "lot": "porte",
+        "role": "vantail gauche en chene clouté (planches doublees, pentures, clous forges a tete diamant, barre de fermeture)",
+        "size_m": [
+          1.1,
+          0.1,
+          2.64
+        ],
+        "pivot": "axe des gonds, Z = 0",
+        "anim": "rotation Z 0 -> -100 deg",
+        "sockets": {
+          "Bar": [
+            0.9,
+            0.08,
+            1.1
+          ]
+        },
+        "ucx": "1 boite"
+      },
+      "gate_door_r": {
+        "export": "SM_Fort_GateDoor_R",
+        "lot": "porte",
+        "role": "vantail droit avec guichet (0,8 x 1,65) mobile",
+        "size_m": [
+          1.1,
+          0.1,
+          2.64
+        ],
+        "pivot": "axe des gonds",
+        "anim": "rotation Z 0 -> +100 deg ; guichet : objet enfant SM_Fort_GateDoor_R_Wicket pivote sur ses gonds",
+        "ucx": "1 boite (guichet : 1 boite)"
+      },
+      "portcullis": {
+        "export": "SM_Fort_Portcullis",
+        "lot": "porte",
+        "optional": true,
+        "role": "herse en chene ferre (grille 0,15 de maille, pointes de fer)",
+        "size_m": [
+          2.4,
+          0.1,
+          2.8
+        ],
+        "anim": "translation Z 0 -> +2,7 (remontee dans la rainure)",
+        "ucx": "1 boite"
+      },
+      "drawbridge": {
+        "export": "SM_Fort_Drawbridge",
+        "lot": "porte",
+        "role": "pont-levis a fleches : tablier de madriers ferres + 2 fleches + chaines vers la feuillure",
+        "deck_m": [
+          2.4,
+          2.8,
+          0.14
+        ],
+        "pivot": "charniere au seuil (Z = 0), tablier vers -Y",
+        "arms": "2 fleches de 4,0 m pivotant au-dessus de la porte (z 3,1), contrepoids cote cour (simplifie)",
+        "anim": "rotation X 0 -> +88 deg (releve)",
+        "sockets": {
+          "Hinge": [
+            0,
+            0,
+            0
+          ],
+          "DeckEnd": [
+            0,
+            -2.8,
+            0
+          ]
+        },
+        "ucx": "1 boite tablier",
+        "bean_check": "2,4 m de large, garde-corps absent (historique) : Bean peut tomber au fosse"
+      },
+      "bridge_fixed": {
+        "export": "SM_Fort_BridgeFixed",
+        "lot": "porte",
+        "role": "pont dormant en bois sur une pile en blocs de corail (la pile recoit l'about du pont-levis)",
+        "deck_m": [
+          2.4,
+          3.515,
+          0.16
+        ],
+        "deck_z": 0.0,
+        "pier": {
+          "size_m": [
+            3.0,
+            1.2
+          ],
+          "from_z": -1.32,
+          "y_local": 0.0
+        },
+        "rails": "garde-corps de bois 0,66",
+        "pivot": "milieu de l'about cote pont-levis (Z = 0), le pont va vers -Y jusqu'a la contrescarpe",
+        "ucx": "tablier + pile + 2 garde-corps"
+      },
+      "ditch": {
+        "export": "SM_Fort_Ditch",
+        "lot": "site",
+        "role": "fosse sec creuse dans le platier fossile (feo) + mur de contrescarpe en moellons de corail ; flaques d'eau saumatre au fond (nappe de Ghyben-Herzberg a ~0,3 m sous le fond)",
+        "width_bottom_m": 6.0,
+        "bottom_z": -1.32,
+        "counterscarp": {
+          "height_m": 1.32,
+          "batter": "1/10",
+          "coping": "dalles de beachrock"
+        },
+        "trace": "offset exterieur du trace bastionne (params.site.trace_cordon_m) de 6.715 m (pied d'escarpe 0.715 + fosse 6.0), jonctions en onglet ; arrondi de rayon 3 m devant chaque saillant (contrescarpe arrondie)",
+        "floor": "sable corallien + gravats + flaques (MAT-Fort_Puddle, profondeur visuelle 3 cm) ; quelques blocs ecroules",
+        "ucx": "fond (prismes plats par segment) + contrescarpe (boites par segment)"
+      },
+      "site_terrain": {
+        "export": null,
+        "lot": "site",
+        "role": "terrain non exporte (Unreal : Landscape + M_Terrain_Atoll) : motu, glacis, plages, platier, crete recifale, lagon, passe, motu voisin",
+        "name": "REF-Site_Terrain / REF-Lagoon / REF-Ocean",
+        "builder": "grille 220 x 200 m (pas 1,0 m pres du fort, 4 m au loin : deux maillages) deformee par params.site.profile ; couches de sol de art/textures/terrain_layers melangees par pente/altitude/distance (comme temple_scene.ground_mat) ; eau = plan a Z -1.65 avec shader de profondeur (turquoise -> bleu nuit) + T_Water_N"
+      },
+      "guardhouse": {
+        "export": "SM_Fort_GuardHouse",
+        "lot": "porte",
+        "role": "corps de garde contre la courtine, a droite de la porte (cote cour)",
+        "footprint_m": [
+          7.0,
+          5.0
+        ],
+        "floor_z": 0.165,
+        "wall_top_z": 2.805,
+        "walls": "moellons de corail enduits a la chaux 0,5 m, chaines d'angle en pierre de taille",
+        "roof": "croupe en tuiles de terre cuite importees (MAT-Fort_RoofTiles), pente 35 deg, coyau",
+        "door": {
+          "size_m": [
+            1.0,
+            1.8
+          ],
+          "x_local": 0.0,
+          "face": "-Y local"
+        },
+        "windows": {
+          "count": 3,
+          "size_m": [
+            0.8,
+            1.0
+          ],
+          "sill_m": 0.66,
+          "bars": "barreaux de fer"
+        },
+        "interior": "lit de camp (bat-flanc) 0,5 x 1,4 x 5,0 a 0,33, ratelier 8 mousquets, table + 2 bancs, ecritoire, lanterne ; interieur praticable 6,0 x 4,0 sous 2,64",
+        "sockets": {
+          "Door": [
+            0,
+            -2.6,
+            0
+          ],
+          "MusketRack": [
+            -2.8,
+            1.8,
+            1.0
+          ],
+          "Lantern": [
+            0,
+            0,
+            2.3
+          ]
+        },
+        "ucx": "4 murs + 2 jouees de porte + toit + bat-flanc + table"
+      },
+      "signal_tower": {
+        "export": "SM_Fort_SignalTower",
+        "lot": "tour",
+        "role": "tour de guet et fanal sur le bastion NE (surveille la passe) : 2 niveaux + terrasse crenelee, escalier interieur en bois, mat de pavillon",
+        "footprint_m": [
+          5.0,
+          5.0
+        ],
+        "wall_m": 0.8,
+        "inner_m": [
+          3.4,
+          3.4
+        ],
+        "base_z_scene": 2.97,
+        "levels_local_z": [
+          0.0,
+          2.64,
+          5.28
+        ],
+        "terrace_parapet": {
+          "merlon_m": 1.32,
+          "crenel_sill_m": 0.66
+        },
+        "stairs": {
+          "type": "2 volees de 8 marches en L par niveau + palier 1,0 x 1,0",
+          "rise_m": 0.165,
+          "tread_m": 0.25,
+          "width_m": 1.0,
+          "material": "Fort_WoodOak (limons, marches) ; tremies 1,0 x 2,2 ; trappe ferree sur la terrasse"
+        },
+        "door": {
+          "size_m": [
+            1.0,
+            1.8
+          ],
+          "face": "-Y local (vers le chemin de ronde)"
+        },
+        "openings": "meurtrieres 0,15 x 0,6 (allege 0,66) au niveau 1, fenetre 0,8 x 1,0 face a la passe au niveau 2",
+        "top": {
+          "flagstaff_m": 6.0,
+          "fanal": "rechaud de fer sur potence (feu de signal) + lanterne",
+          "terrace_z_local": 5.28
+        },
+        "sockets": {
+          "Door": [
+            0,
+            -2.6,
+            0
+          ],
+          "Level1": [
+            0,
+            0,
+            2.64
+          ],
+          "Terrace": [
+            0,
+            0,
+            5.28
+          ],
+          "Flag": [
+            1.6,
+            1.6,
+            5.28
+          ],
+          "Fanal": [
+            -1.6,
+            1.6,
+            5.28
+          ],
+          "Lookout": [
+            0,
+            1.5,
+            5.28
+          ]
+        },
+        "ucx": "4 murs (boites), planchers (2), escaliers (coins de rampe), parapet de terrasse",
+        "bean_check": "16 marches de 16,5 par niveau, volees de 1,0 m, 2,64 entre planchers ; terrasse a 8.25 m au-dessus de la cour"
+      },
+      "flag": {
+        "export": "SM_Fort_Flag",
+        "lot": "tour",
+        "role": "pavillon blanc seme de fleurs de lys d'or (pavillon royal simplifie, sans armoiries) sur drisse ; variante 'plain' = pavillon blanc uni des vaisseaux du roi",
+        "size_m": [
+          2.4,
+          1.6
+        ],
+        "variant": "fleurdelise",
+        "variants": [
+          "fleurdelise",
+          "plain"
+        ],
+        "fleur_de_lys": "forme heraldique classique (petale central en fer de lance, 2 petales recourbes, traverse, pied trifolie) ; semis en quinconce 5 x 4 ; or #C8A24A sur blanc casse #EEE9DC, toile Fabric019 (salissures, effiloche au battant)",
+        "wind": "UV1 = poids de vent (0 au guindant -> 1 au battant) pour un WPO Unreal, comme SM_Galleon_Flag",
+        "forbidden": "pas de drapeau tricolore (anachronique), pas de symbole moderne"
+      },
+      "lantern": {
+        "export": "SM_Fort_Lantern",
+        "lot": "tour",
+        "role": "lanterne de fer et corne sur potence murale (style stern_lanterns du galion)",
+        "size_m": [
+          0.22,
+          0.22,
+          0.4
+        ],
+        "bracket_m": 0.45,
+        "light": {
+          "type": "POINT",
+          "energy_W": 35,
+          "color": [
+            1.0,
+            0.62,
+            0.32
+          ],
+          "scene_only": true
+        },
+        "sockets": {
+          "Light": [
+            0,
+            0.45,
+            -0.18
+          ]
+        }
+      },
+      "lantern_hanging": {
+        "export": "SM_Fort_Lantern_Hanging",
+        "lot": "tour",
+        "role": "lanterne de fer et corne suspendue a une chaine (voutes, couloirs) ; pivot = point d'accroche",
+        "size_m": [
+          0.22,
+          0.22,
+          0.4
+        ],
+        "chain_m": 0.45,
+        "light": {
+          "type": "POINT",
+          "energy_W": 35,
+          "color": [
+            1.0,
+            0.62,
+            0.32
+          ],
+          "scene_only": true
+        },
+        "sockets": {
+          "Hang": [
+            0,
+            0,
+            0
+          ],
+          "Light": [
+            0,
+            0,
+            -0.65
+          ]
+        }
+      },
+      "governor_house": {
+        "export": "SM_Fort_GovernorHouse",
+        "lot": "batiments",
+        "role": "logis du gouverneur (habitation du fort) : 2 niveaux sur soubassement, galerie de bois sur la facade cour, toit a croupes en tuiles",
+        "footprint_m": [
+          14.0,
+          7.0
+        ],
+        "gallery_m": {
+          "depth": 2.0,
+          "y_local": [
+            -5.5,
+            -3.5
+          ],
+          "posts": "poteaux de tamanu 0,18 au pas de 2,0, balustrade 0,66, auvent de bardeaux"
+        },
+        "plinth": {
+          "height_m": 0.495,
+          "steps": 3,
+          "material": "Fort_CoralAshlar"
+        },
+        "levels_z_local": [
+          0.495,
+          3.135
+        ],
+        "eave_z": 5.775,
+        "roof": {
+          "type": "croupes",
+          "pitch_deg": 35,
+          "material": "Fort_RoofTiles",
+          "ridge_z_approx": 8.0
+        },
+        "walls": "moellons de corail 0,5 m enduits a la chaux (blanc casse, coulures, sel, enduit tombe par plaques aux angles), chaines et encadrements en pierre de taille",
+        "openings": {
+          "main_door_m": [
+            1.4,
+            2.0
+          ],
+          "doors_m": [
+            1.0,
+            1.8
+          ],
+          "windows_m": [
+            0.9,
+            1.32
+          ],
+          "window_sill_m": 0.66,
+          "shutters": "persiennes de bois peint vert-de-gris delave, ferrures rouillees",
+          "chimney": "1 souche en briques francaises"
+        },
+        "interior": {
+          "ground": "vestibule + salle (table, 6 chaises, buffet, carte murale) + cabinet du gouverneur (bureau, ecritoire, coffre-fort petit format, ratelier a epees) ; dalles de terre cuite",
+          "upper": "chambre (lit a colonnes, malle) + chambre d'hote ; plancher de chene ; escalier droit 16 marches x 1,0 m",
+          "praticable": true,
+          "clear_height_m": 2.39
+        },
+        "sockets": {
+          "Door": [
+            0,
+            -5.6,
+            0
+          ],
+          "Desk": [
+            4.5,
+            1.5,
+            0.495
+          ],
+          "Strongbox": [
+            5.8,
+            2.6,
+            0.495
+          ],
+          "Balcony": [
+            0,
+            -4.5,
+            3.135
+          ],
+          "Lantern_L": [
+            -3.0,
+            -3.6,
+            2.5
+          ],
+          "Lantern_R": [
+            3.0,
+            -3.6,
+            2.5
+          ]
+        },
+        "ucx": "murs par travee (boites), planchers, escalier (coin de rampe), galerie (plancher + poteaux), toit (2 prismes)",
+        "bean_check": "portes 1,0 x 1,8, plafonds 2,39 libres, escalier 1,0 m ; fenetre a 0,66 : Bean voit la cour"
+      },
+      "barracks": {
+        "export": "SM_Fort_Barracks",
+        "lot": "batiments",
+        "role": "caserne (chambrees de la garnison, ~24 hommes) : 1 niveau + comble, pignons",
+        "footprint_m": [
+          16.0,
+          6.0
+        ],
+        "floor_z": 0.165,
+        "eave_z": 2.805,
+        "roof": {
+          "type": "2 pans a pignons",
+          "pitch_deg": 38,
+          "material": "Fort_RoofTiles (tuiles) ; variante bardeaux"
+        },
+        "openings": {
+          "doors": 2,
+          "door_m": [
+            1.0,
+            1.8
+          ],
+          "windows": 6,
+          "window_m": [
+            0.8,
+            1.0
+          ],
+          "window_sill_m": 0.66
+        },
+        "interior": "2 chambrees de 7,3 x 5,0 : lits a 2 etages (couchette 1,3 x 0,6, niveaux 0,33 et 1,16), coffres de soldat, rateliers d'armes, table ; sol de dalles",
+        "sockets": {
+          "Door_1": [
+            -4.0,
+            -3.1,
+            0
+          ],
+          "Door_2": [
+            4.0,
+            -3.1,
+            0
+          ],
+          "WeaponRack": [
+            0,
+            2.7,
+            1.0
+          ]
+        },
+        "ucx": "murs, cloison, lits (boites), toit"
+      },
+      "kitchen": {
+        "export": "SM_Fort_Kitchen",
+        "lot": "batiments",
+        "role": "cuisine-boulangerie isolee (risque d'incendie) : foyer ouvert, four a pain en briques, cheminee",
+        "footprint_m": [
+          6.0,
+          4.5
+        ],
+        "floor_z": 0.165,
+        "eave_z": 2.805,
+        "roof": "2 pans tuiles",
+        "hearth": {
+          "width_m": 1.6,
+          "depth_m": 0.8,
+          "mantel_z": 1.2,
+          "pot": "chaudron sur cremaillere"
+        },
+        "oven": {
+          "dome_d_m": 1.4,
+          "mouth_m": [
+            0.45,
+            0.33
+          ],
+          "material": "Fort_Brick"
+        },
+        "chimney_top_z": 5.6,
+        "door_m": [
+          1.0,
+          1.8
+        ],
+        "sockets": {
+          "Door": [
+            0,
+            -2.35,
+            0
+          ],
+          "Fire": [
+            -1.6,
+            1.7,
+            0.2
+          ],
+          "Smoke": [
+            -1.6,
+            2.0,
+            5.6
+          ]
+        },
+        "ucx": "murs, four (prisme), table"
+      },
+      "cistern": {
+        "export": "SM_Fort_Cistern",
+        "lot": "batiments",
+        "role": "citerne de la place d'armes (eau de pluie des toits ; sur un atoll, la lentille d'eau douce est saumatre) : regard voute + margelle + potence a poulie",
+        "footprint_m": [
+          3.0,
+          3.0
+        ],
+        "curb_height_m": 0.66,
+        "well_d_m": 0.9,
+        "frame_height_m": 2.3,
+        "bucket": "seau de bois cercle de fer + corde",
+        "sockets": {
+          "Interact": [
+            0,
+            -1.0,
+            0
+          ],
+          "Bucket": [
+            0,
+            0,
+            1.6
+          ]
+        },
+        "ucx": "margelle (prisme 12 pans) + dalle",
+        "bean_check": "margelle 0,66 : Bean s'y accoude et voit dans le puits"
+      },
+      "powder_magazine": {
+        "export": "SM_Fort_PowderMagazine",
+        "lot": "poudriere_chapelle",
+        "role": "magasin a poudre type Vauban : vaisseau voute a murs epais et contreforts, toit de dalles, mur d'isolement",
+        "body_m": [
+          6.0,
+          4.5
+        ],
+        "walls_m": 1.0,
+        "buttresses": "3 contreforts par long cote",
+        "inner_m": [
+          4.0,
+          2.5
+        ],
+        "vault": {
+          "springing_z": 1.32,
+          "crown_z": 2.31
+        },
+        "roof": "batiere en dalles de pierre (pas de tuiles : pas d'etincelles), faitage z 4,0",
+        "door": {
+          "size_m": [
+            1.0,
+            1.8
+          ],
+          "lining": "portes doublees de cuivre, clous de bronze (pas de fer)"
+        },
+        "vents": "2 events en chicane par long cote",
+        "enclosure": {
+          "size_m": [
+            8.0,
+            7.0
+          ],
+          "height_m": 1.98,
+          "gate_m": 1.2
+        },
+        "interior": "barils de poudre (SM_Fort_PowderBarrel) sur chantiers de bois, 2 rangs ; lanterne a l'exterieur seulement",
+        "sockets": {
+          "Door": [
+            0,
+            -2.75,
+            0
+          ],
+          "Kegs": [
+            0,
+            0.3,
+            0.1
+          ],
+          "EnclosureGate": [
+            0,
+            -3.5,
+            0
+          ]
+        },
+        "ucx": "corps (1 boite), enclos (4 boites avec ouverture)"
+      },
+      "chapel": {
+        "export": "SM_Fort_Chapel",
+        "lot": "poudriere_chapelle",
+        "optional": true,
+        "role": "petite chapelle de garnison : nef unique, clocher-mur sur le pignon avec une cloche",
+        "footprint_m": [
+          5.0,
+          8.0
+        ],
+        "floor_z": 0.33,
+        "eave_z": 3.3,
+        "roof": "2 pans tuiles, pente 40 deg",
+        "bellcote": {
+          "top_z": 7.4,
+          "bell_d_m": 0.35,
+          "material_bell": "bronze patine"
+        },
+        "door_m": [
+          1.2,
+          2.0
+        ],
+        "windows": "4 baies en plein cintre 0,6 x 1,3, allege 1,0",
+        "interior": "autel de pierre, croix de bois, 4 bancs, benitier en coquille de benitier (Tridacna)",
+        "sockets": {
+          "Door": [
+            0,
+            -4.1,
+            0
+          ],
+          "Bell": [
+            0,
+            -4.0,
+            7.0
+          ]
+        },
+        "ucx": "murs, toit, autel, bancs"
+      },
+      "prison": {
+        "export": "SM_Fort_Prison",
+        "lot": "prison",
+        "role": "prison : 3 cachots a grilles le long d'un couloir, murs epais, porte cloutee, soupiraux",
+        "footprint_m": [
+          6.0,
+          7.0
+        ],
+        "walls_m": 0.6,
+        "inner_m": [
+          4.8,
+          5.8
+        ],
+        "floor_z": 0.0,
+        "ceiling_z": 2.31,
+        "roof": "terrasse de dalles sur voutains + parapet bas (pas de toit de tuiles : on ne s'evade pas par le toit)",
+        "local_frame": "porte sur la face -Y local ; scene rot -90 -> porte vers l'ouest (cour)",
+        "corridor": {
+          "x_local": [
+            -2.4,
+            -1.2
+          ],
+          "width_m": 1.2
+        },
+        "cells": {
+          "count": 3,
+          "x_local": [
+            -1.0,
+            2.4
+          ],
+          "width_m": 1.8,
+          "depth_m": 3.4,
+          "clear_height_m": 2.31,
+          "front": "grille de fer forge (barreaux 0,03 au pas de 0,12, traverses plates) + porte grille 1,0 x 1,8",
+          "furniture": "planche-lit 0,33, seau, paille",
+          "shackles": "SM_Fort_WallShackles scelles au mur du fond",
+          "window": "soupirail 0,4 x 0,25 a 1,8 (hors de portee de Bean)"
+        },
+        "entrance": {
+          "door": "SM_Fort_StuddedDoor 1,0 x 1,8",
+          "x_local": -1.8
+        },
+        "sockets": {
+          "Door": [
+            -1.8,
+            -3.5,
+            0
+          ],
+          "Cell_1": [
+            0.7,
+            -1.9,
+            0
+          ],
+          "Cell_2": [
+            0.7,
+            0.0,
+            0
+          ],
+          "Cell_3": [
+            0.7,
+            1.9,
+            0
+          ],
+          "CellDoor_1": [
+            -1.0,
+            -1.9,
+            0
+          ],
+          "CellDoor_2": [
+            -1.0,
+            0.0,
+            0
+          ],
+          "CellDoor_3": [
+            -1.0,
+            1.9,
+            0
+          ],
+          "Prisoner_1": [
+            1.6,
+            -1.9,
+            0
+          ],
+          "Prisoner_2": [
+            1.6,
+            0.0,
+            0
+          ],
+          "Prisoner_3": [
+            1.6,
+            1.9,
+            0
+          ],
+          "Lantern": [
+            -1.8,
+            0.0,
+            2.0
+          ],
+          "KeyHook": [
+            -2.35,
+            -2.6,
+            1.2
+          ]
+        },
+        "ucx": "murs exterieurs, refends, grilles (boites minces), portes grilles a part",
+        "bean_check": "couloir 1,2 ; cellules 1,8 x 3,4 sous 2,31 : Bean tient debout et se retourne ; grilles : Bean voit a travers, ne passe pas"
+      },
+      "cell_door": {
+        "export": "SM_Fort_CellDoor",
+        "lot": "prison",
+        "role": "porte-grille de cachot (fer forge, serrure a moraillon, cadenas)",
+        "size_m": [
+          1.0,
+          0.06,
+          1.8
+        ],
+        "pivot": "gonds",
+        "anim": "rotation Z 0 -> 95 deg",
+        "ucx": "1 boite"
+      },
+      "studded_door": {
+        "export": "SM_Fort_StuddedDoor",
+        "lot": "prison",
+        "role": "porte cloutee de la prison (chene, clous forges, judas grille, verrou)",
+        "size_m": [
+          1.0,
+          0.1,
+          1.8
+        ],
+        "pivot": "gonds",
+        "anim": "rotation Z 0 -> -100 deg",
+        "ucx": "1 boite"
+      },
+      "cage_ground": {
+        "export": "SM_Fort_Cage_Ground",
+        "lot": "prison",
+        "role": "cage a prisonniers au sol : cadre de bois equarri + barreaux de fer, sur patins",
+        "outer_m": [
+          1.75,
+          1.75,
+          1.6
+        ],
+        "clear_m": [
+          1.6,
+          1.6,
+          1.32
+        ],
+        "door_m": [
+          0.8,
+          1.2
+        ],
+        "door_note": "trappe de cage (interaction, pas un passage de circulation)",
+        "sockets": {
+          "Prisoner": [
+            0,
+            0,
+            0.12
+          ],
+          "Door": [
+            0,
+            -0.9,
+            0
+          ]
+        },
+        "ucx": "5 boites (fond, 4 cotes) + toit",
+        "bean_check": "1,32 libres : Bean tient debout"
+      },
+      "cage_hanging": {
+        "export": "SM_Fort_Cage_Hanging",
+        "lot": "prison",
+        "role": "cage suspendue (gibet) en feuillards de fer rivetes, forme cylindrique a dome",
+        "inner_d_m": 0.8,
+        "inner_h_m": 1.32,
+        "outer_h_m": 1.55,
+        "pivot": "anneau de suspension",
+        "sockets": {
+          "Hang": [
+            0,
+            0,
+            0
+          ],
+          "Prisoner": [
+            0,
+            0,
+            -1.45
+          ]
+        },
+        "ucx": "prisme 8 pans",
+        "physics_note": "contrainte physique (balancement) en jeu"
+      },
+      "gibbet": {
+        "export": "SM_Fort_Gibbet",
+        "lot": "prison",
+        "role": "potence en bois de tamanu (poteau 0,22, bras 1,6, contrefiche) avec chaine",
+        "post_h_m": 3.6,
+        "arm_m": 1.6,
+        "sockets": {
+          "Hang": [
+            1.4,
+            0,
+            3.45
+          ]
+        },
+        "cage_bottom_z": 1.0,
+        "note": "fond de cage a 1,0 : Bean atteint le cadenas",
+        "ucx": "poteau + bras"
+      },
+      "wall_shackles": {
+        "export": "SM_Fort_WallShackles",
+        "lot": "prison",
+        "role": "fers : anneau scelle + 2 chaines + bracelets ouverts",
+        "size_m": [
+          0.5,
+          0.1,
+          1.2
+        ],
+        "ucx": "aucun (decor)"
+      },
+      "treasure_vault": {
+        "export": "SM_Fort_TreasureVault",
+        "lot": "tresor",
+        "role": "salle des coffres : casemate voutee enterree dans la masse du bastion SO (sous le terre-plein), acces par un couloir coude depuis la cour, sas a grille, porte blindee",
+        "geology_note": "pas de vrai sous-sol sur un motu (nappe saumatre a ~1,6 m sous la cour) : plancher du caveau a -0,99 seulement (6 marches), voute noyee dans le remblai du bastion (1,32 m de couverture)",
+        "local_frame": "pivot = centre du plancher de la chambre, Z = 0 = plancher (scene Z -0,99) ; axe de la voute = X",
+        "chamber": {
+          "inner_m": [
+            5.0,
+            4.2
+          ],
+          "walls_m": 1.0,
+          "vault": "berceau surbaisse (montee 0,66) en pierre de taille corallienne + 3 doubleaux de briques ; naissance relevee a 1,98 pour la porte blindee de 1,8 (1,65 dans la premiere version de la spec)",
+          "springing_z": 1.98,
+          "crown_z": 2.64,
+          "floor": "dalles de beachrock ; caniveau et puisard (humidite)",
+          "salt": "efflorescences salines blanches au pied des murs, taches d'humidite"
+        },
+        "corridor": {
+          "door_world": [
+            -19.0,
+            -15.7,
+            0.0
+          ],
+          "leg_1": "sud, depuis la porte percee dans le mur de gorge nord du bastion SO (x -19,0, y -15,7 -> -17,2), Z 0",
+          "leg_2": "ouest, y -17,2 (largeur 1,2), x -18,4 -> -23,6 : sas a grille a x -19,7, 6 marches descendantes (Z 0 -> -0,99) de x -20,2 a -21,88, palier",
+          "leg_3": "porte blindee dans le mur nord de la chambre (x -23,0, y -18,9)",
+          "width_m": 1.2,
+          "clear_height_m": 2.31,
+          "outer_door": "SM_Fort_StuddedDoor sur SOCKET_CourtDoorHinge",
+          "grille": "SM_Fort_VaultGrille sur SOCKET_GrilleCenter (sas)",
+          "vault_door": "SM_Fort_VaultDoor sur SOCKET_VaultDoorHinge",
+          "route_note": "le couloir passe dans la coque de SM_Fort_Bastion_Vault (et non plus dans le massif plein des courtines ouest, qui l'auraient obture)"
+        },
+        "furniture": {
+          "pallets": "4 x SM_Fort_Pallet (1,0 x 0,6 x 0,12) : 3 le long du mur ouest sous les piles de lingots, 1 devant (lingots en vrac) ; l'or ne repose jamais sur la dalle humide",
+          "chests": "5 coffres le long du mur sud : 2 ouverts (SM_Fort_Chest_Open, remplis de pieces + gemmes), 3 fermes",
+          "table": "table de compte 1,4 x 0,7 a 0,66 (oeil de Bean 0,78 : il voit l'interieur des coupelles), balance de changeur, registre, 3 coupelles de gemmes",
+          "pearl_niche": "niche voutee 1,2 x 0,6 dans le mur nord : 3 sacs de perles (2 ouverts) sur une banquette 0,33",
+          "shelves": "etagere de chene 2 niveaux (0,33 / 0,82) mur est : coffrets, sacs de pieces, 2 lanternes"
+        },
+        "sockets": {
+          "Door": [
+            2.0,
+            2.1,
+            0
+          ],
+          "Loot_GoldStack_1": [
+            -2.0,
+            1.2,
+            0.12
+          ],
+          "Loot_GoldStack_2": [
+            -2.0,
+            0.1,
+            0.12
+          ],
+          "Loot_GoldStack_3": [
+            -2.0,
+            -1.0,
+            0.12
+          ],
+          "Loot_GoldBar_Loose": [
+            -1.2,
+            -1.0,
+            0.12
+          ],
+          "Loot_Chest_1": [
+            -1.4,
+            -1.75,
+            0
+          ],
+          "Loot_Chest_2": [
+            -0.4,
+            -1.75,
+            0
+          ],
+          "Loot_Chest_3": [
+            0.6,
+            -1.75,
+            0
+          ],
+          "Loot_Chest_4": [
+            1.6,
+            -1.75,
+            0
+          ],
+          "Loot_Chest_5": [
+            2.2,
+            -0.6,
+            0
+          ],
+          "Loot_Gems_1": [
+            0.2,
+            0.15,
+            0.66
+          ],
+          "Loot_Gems_2": [
+            0.6,
+            0.15,
+            0.66
+          ],
+          "Loot_Gems_3": [
+            -0.2,
+            0.15,
+            0.66
+          ],
+          "Loot_Scale": [
+            0.5,
+            -0.1,
+            0.66
+          ],
+          "Loot_PearlSack_1": [
+            -1.0,
+            1.85,
+            0.33
+          ],
+          "Loot_PearlSack_2": [
+            -0.6,
+            1.85,
+            0.33
+          ],
+          "Loot_PearlSack_3": [
+            -0.2,
+            1.85,
+            0.33
+          ],
+          "Loot_Coins_1": [
+            1.5,
+            0.6,
+            0
+          ],
+          "Loot_Coins_2": [
+            -0.4,
+            -1.75,
+            0.45
+          ],
+          "Lantern_1": [
+            0,
+            0,
+            1.9
+          ],
+          "Lantern_2": [
+            -2.3,
+            1.9,
+            1.5
+          ],
+          "Lantern_3": [
+            2.3,
+            -1.9,
+            1.5
+          ]
+        },
+        "lights_scene": [
+          {
+            "type": "POINT",
+            "pos_local": [
+              0,
+              0,
+              1.9
+            ],
+            "energy_W": 90,
+            "color": [
+              1.0,
+              0.62,
+              0.32
+            ],
+            "note": "lanterne suspendue"
+          },
+          {
+            "type": "POINT",
+            "pos_local": [
+              -2.0,
+              1.6,
+              1.3
+            ],
+            "energy_W": 30,
+            "color": [
+              1.0,
+              0.62,
+              0.32
+            ]
+          },
+          {
+            "type": "POINT",
+            "pos_local": [
+              2.0,
+              -1.6,
+              1.3
+            ],
+            "energy_W": 30,
+            "color": [
+              1.0,
+              0.62,
+              0.32
+            ]
+          },
+          {
+            "type": "POINT",
+            "pos_local": [
+              -1.2,
+              0.2,
+              1.45
+            ],
+            "energy_W": 30,
+            "color": [
+              1.0,
+              0.72,
+              0.45
+            ],
+            "note": "accent sur les piles de lingots (scene seulement)"
+          },
+          {
+            "type": "POINT",
+            "pos_local": [
+              0.4,
+              -1.0,
+              1.25
+            ],
+            "energy_W": 20,
+            "color": [
+              1.0,
+              0.7,
+              0.42
+            ],
+            "note": "accent sur les coffres ouverts"
+          },
+          {
+            "type": "AREA",
+            "pos_local": [
+              0.0,
+              2.0,
+              2.4
+            ],
+            "energy_W": 25,
+            "color": [
+              0.7,
+              0.8,
+              1.0
+            ],
+            "size": 0.4,
+            "note": "lumiere froide du soupirail"
+          }
+        ],
+        "ucx": "chambre (5 boites : sol + 4 murs ; voute en 3 prismes), couloir (boites + coin de rampe), mobilier (boites)",
+        "bean_check": "couloir 1,2 sous 2,31 ; chambre 5,0 x 4,2 sous 1,65-2,64 ; table a 0,66 ; 1,4 m libres au centre",
+        "layout_local": {
+          "court_door_x": 6.0,
+          "court_face_y": 5.3,
+          "leg2_y": 3.8,
+          "steps_x0": 4.8,
+          "vault_door_x": 2.0,
+          "niche_x": [
+            -1.6,
+            -0.4
+          ],
+          "gutter_y": -1.2,
+          "table_xy": [
+            0.2,
+            0.05
+          ],
+          "shelf_y": [
+            0.3,
+            1.9
+          ],
+          "pallets": [
+            [
+              -2.0,
+              1.2
+            ],
+            [
+              -2.0,
+              0.1
+            ],
+            [
+              -2.0,
+              -1.0
+            ],
+            [
+              -1.2,
+              -1.0
+            ]
+          ],
+          "door_sockets": {
+            "CourtDoorHinge": [
+              [
+                6.5,
+                5.15,
+                0.99
+              ],
+              180
+            ],
+            "GrilleCenter": [
+              [
+                5.3,
+                3.8,
+                0.99
+              ],
+              90
+            ],
+            "VaultDoorHinge": [
+              [
+                2.5,
+                2.62,
+                0.0
+              ],
+              180
+            ]
+          }
+        }
+      },
+      "vault_door": {
+        "export": "SM_Fort_VaultDoor",
+        "lot": "tresor",
+        "role": "porte blindee : chene double de plaques de fer rivetees, 3 pentures, serrure a 3 penes, judas a volet, anneau",
+        "size_m": [
+          1.0,
+          0.14,
+          1.8
+        ],
+        "pivot": "gonds",
+        "anim": "rotation Z 0 -> -95 deg",
+        "sockets": {
+          "Lock": [
+            0.85,
+            -0.08,
+            1.0
+          ]
+        },
+        "ucx": "1 boite"
+      },
+      "vault_grille": {
+        "export": "SM_Fort_VaultGrille",
+        "lot": "tresor",
+        "role": "grille de sas (fer forge, barreaux 0,03 / 0,1, porte grille avec cadenas)",
+        "size_m": [
+          1.2,
+          0.06,
+          2.31
+        ],
+        "door_m": [
+          1.0,
+          1.8
+        ],
+        "ucx": "2 boites (dormant + porte)"
+      },
+      "chest_closed": {
+        "export": "SM_Fort_Chest_Closed",
+        "lot": "tresor",
+        "role": "coffre a tresor : chene cercle de fer (feuillards rivetes, coins ferres), couvercle bombe, moraillon + cadenas, poignees forgees",
+        "size_m": [
+          0.72,
+          0.42,
+          0.45
+        ],
+        "reuse": "style des coffres de galleon/cabin_furniture + loot_kit.small_chest (agrandi, refait en PBR)",
+        "sockets": {
+          "Grab_L": [
+            -0.38,
+            0,
+            0.3
+          ],
+          "Grab_R": [
+            0.38,
+            0,
+            0.3
+          ],
+          "Lock": [
+            0,
+            -0.22,
+            0.32
+          ]
+        },
+        "ucx": "1 boite",
+        "physics": {
+          "mass_kg": 35
+        }
+      },
+      "chest_open": {
+        "export": "SM_Fort_Chest_Open",
+        "lot": "tresor",
+        "role": "meme coffre ouvert (couvercle a 105 deg) rempli : pieces en tas + 3 gemmes + collier de perles debordant",
+        "size_m": [
+          0.72,
+          0.42,
+          0.45
+        ],
+        "lid_angle_deg": 105,
+        "fill": "surface de pieces instanciees (SM_Loot_Coin en dispersion, ~250 pieces visibles) sur une calotte de remplissage",
+        "sockets": {
+          "Loot": [
+            0,
+            0,
+            0.42
+          ]
+        },
+        "ucx": "1 boite (corps) + 1 boite (couvercle)"
+      },
+      "pallet": {
+        "export": "SM_Fort_Pallet",
+        "lot": "tresor",
+        "role": "chantier de madriers (isole l'or de la dalle humide)",
+        "size_m": [
+          1.0,
+          0.6,
+          0.12
+        ]
+      },
+      "gold_bar": {
+        "export": "SM_Loot_GoldBar",
+        "lot": "tresor",
+        "role": "lingot d'or coule (tronc de pyramide, aretes adoucies, poincon en creux fictif sans armoiries reelles, surface a retassures)",
+        "real_ref_m": [
+          0.25,
+          0.085,
+          0.045
+        ],
+        "loot_scale": 0.7,
+        "size_m": {
+          "base": [
+            0.175,
+            0.06
+          ],
+          "top": [
+            0.155,
+            0.045
+          ],
+          "height": 0.032
+        },
+        "material": "treasure.material('MAT_Gold_Aged') (Metal048C + Scratches002, CC0), UV 1 = 3 cm",
+        "mass_kg_game": 5.5,
+        "mass_note": "volume ~2,9e-4 m3 x 19 300 kg/m3 ~ 5,6 kg : un lingot = une prise a deux mains pour Bean",
+        "sockets": {
+          "Grab": [
+            0,
+            0,
+            0.016
+          ]
+        },
+        "ucx": "1 boite"
+      },
+      "gold_stack_s": {
+        "export": "SM_Loot_GoldStack_S",
+        "lot": "tresor",
+        "role": "pile de 12 lingots en croisillons (3 lits, sens alterne), quelques lingots de travers",
+        "bars": 12,
+        "layers": 3,
+        "build": "lingots = linked duplicates de SM_Loot_GoldBar en scene ; fusionnes a l'export",
+        "sockets": {
+          "Grab": [
+            0,
+            0,
+            0.096
+          ]
+        },
+        "ucx": "1 boite"
+      },
+      "gold_stack_m": {
+        "export": "SM_Loot_GoldStack_M",
+        "lot": "tresor",
+        "role": "pile de 30 lingots en croisillons (5 lits, sens alterne), quelques lingots de travers",
+        "bars": 30,
+        "layers": 5,
+        "build": "lingots = linked duplicates de SM_Loot_GoldBar en scene ; fusionnes a l'export",
+        "sockets": {
+          "Grab": [
+            0,
+            0,
+            0.16
+          ]
+        },
+        "ucx": "1 boite"
+      },
+      "gold_stack_l": {
+        "export": "SM_Loot_GoldStack_L",
+        "lot": "tresor",
+        "role": "pile de 60 lingots en croisillons (6 lits, sens alterne), quelques lingots de travers",
+        "bars": 60,
+        "layers": 6,
+        "build": "lingots = linked duplicates de SM_Loot_GoldBar en scene ; fusionnes a l'export",
+        "sockets": {
+          "Grab": [
+            0,
+            0,
+            0.192
+          ]
+        },
+        "ucx": "1 boite"
+      },
+      "gems": {
+        "export": "SM_Loot_Gem_<Ruby|Sapphire|Emerald|Amethyst|Topaz>",
+        "lot": "tresor",
+        "role": "gemmes taillees individuelles",
+        "builder": "treasure.gem_cushion / gem_table / gem_rose / gem_cabochon + materiaux MAT_Gem_*",
+        "sizes_m": [
+          0.012,
+          0.025
+        ],
+        "note": "taille de jeu (reel ~0,8-1,5 cm, agrandi pour la lisibilite)"
+      },
+      "gem_bowl": {
+        "export": "SM_Loot_GemBowl",
+        "lot": "tresor",
+        "role": "coupelle de cuivre martele (O 0,22) remplie d'un tas de gemmes (rubis, saphirs, emeraudes ; ~60 pierres, tas bombe)",
+        "bowl_d_m": 0.22,
+        "bowl_h_m": 0.05,
+        "gems": {
+          "count": 60,
+          "mix": {
+            "MAT_Gem_Ruby": 0.35,
+            "MAT_Gem_Sapphire": 0.35,
+            "MAT_Gem_Emerald": 0.3
+          }
+        },
+        "sockets": {
+          "Grab": [
+            0,
+            0,
+            0.05
+          ]
+        },
+        "ucx": "1 prisme"
+      },
+      "pearl_sack_open": {
+        "export": "SM_Loot_PearlSack_Open",
+        "lot": "tresor",
+        "role": "sac de toile de jute (hessian_230) ouvert, col roule, cordelette denouee, perles blanches et noires (Tahiti) debordant et repandues au sol",
+        "size_m": [
+          0.24,
+          0.24,
+          0.32
+        ],
+        "pearls": {
+          "d_m": [
+            0.008,
+            0.012
+          ],
+          "visible": 180,
+          "mix": {
+            "MAT_Pearl_White": 0.6,
+            "MAT_Pearl_Black": 0.4
+          },
+          "spill": "20 perles au sol"
+        },
+        "sockets": {
+          "Grab": [
+            0,
+            0,
+            0.3
+          ]
+        },
+        "ucx": "1 prisme",
+        "physics": {
+          "mass_kg": 6
+        }
+      },
+      "pearl_sack_closed": {
+        "export": "SM_Loot_PearlSack_Closed",
+        "lot": "tresor",
+        "role": "meme sac ferme, noue, etiquete d'un plomb (sceau sans armoiries)",
+        "size_m": [
+          0.22,
+          0.22,
+          0.36
+        ],
+        "sockets": {
+          "Grab": [
+            0,
+            0,
+            0.34
+          ]
+        },
+        "ucx": "1 prisme"
+      },
+      "coin": {
+        "export": "SM_Loot_Coin",
+        "lot": "tresor",
+        "role": "piece d'or (type louis d'or, frappe fictive illisible : profil + ecu generiques, pas de legende reelle)",
+        "size_m": [
+          0.02,
+          0.02,
+          0.002
+        ],
+        "real_ref": "louis d'or ~24 mm (non verifie) x 0,8 pour la lisibilite"
+      },
+      "coin_pile": {
+        "export": "SM_Loot_CoinPile",
+        "lot": "tresor",
+        "role": "tas de pieces (~400 instances posees par chute simulee hors ligne ou dispersion sur calotte) + 2 piles droites",
+        "size_m": [
+          0.5,
+          0.4,
+          0.12
+        ],
+        "sockets": {
+          "Grab": [
+            0,
+            0,
+            0.1
+          ]
+        },
+        "ucx": "1 prisme"
+      },
+      "quay_6m": {
+        "export": "SM_Port_Quay_6m",
+        "lot": "port",
+        "role": "quai en blocs de corail tailles et pierres de lest, couronnement de pierre de taille, anneaux d'amarrage",
+        "size_m": [
+          6.0,
+          3.0
+        ],
+        "top_z_scene": -0.33,
+        "face": {
+          "from_z_scene": -2.97,
+          "batter": "1/10",
+          "material": "Fort_CoralAshlar en couronnement, Fort_Ballast en parement, algues vertes/brunes sous Z -1.65 + 0,3 (zone de marnage), balanes"
+        },
+        "local_frame": "pivot = milieu du module sur l'arete du quai, Z = 0 = dessus du quai (scene Z -0.33) ; -Y = lagon",
+        "sockets": {
+          "Bollard": [
+            0,
+            0.6,
+            0
+          ],
+          "Ring_L": [
+            -1.5,
+            -0.05,
+            -0.4
+          ],
+          "Ring_R": [
+            1.5,
+            -0.05,
+            -0.4
+          ],
+          "Snap_L": [
+            -3.0,
+            0,
+            0
+          ],
+          "Snap_R": [
+            3.0,
+            0,
+            0
+          ]
+        },
+        "ucx": "1 boite",
+        "bean_check": "dessus a 1,32 au-dessus du lagon : Bean n'y remonte pas a la nage (escaliers de quai)"
+      },
+      "quay_stairs": {
+        "export": "SM_Port_QuayStairs",
+        "lot": "port",
+        "role": "module de quai de 4,0 m avec escalier parallele au parement, du quai jusqu'a l'eau (accostage de la chaloupe)",
+        "size_m": [
+          4.0,
+          3.0
+        ],
+        "risers": 9,
+        "rise_m": 0.165,
+        "tread_m": 0.3,
+        "width_m": 1.2,
+        "bottom_z_scene": -1.815,
+        "note": "derniere marche a -1,82 : 0,17 sous l'eau moyenne (algues glissantes)",
+        "sockets": {
+          "BoatDock": [
+            0,
+            -1.3,
+            -1.485
+          ],
+          "Top": [
+            0,
+            0.3,
+            0
+          ]
+        },
+        "ucx": "coin de rampe"
+      },
+      "jetty_6m": {
+        "export": "SM_Port_Jetty_6m",
+        "lot": "port",
+        "role": "jetee maconnee (blocs de corail, remplissage de gravats, dallage de beachrock), 4,0 m de large",
+        "size_m": [
+          4.0,
+          6.0
+        ],
+        "top_z_scene": -0.33,
+        "sockets": {
+          "Bollard_L": [
+            -1.6,
+            0,
+            0
+          ],
+          "Bollard_R": [
+            1.6,
+            0,
+            0
+          ],
+          "Snap_N": [
+            0,
+            3.0,
+            0
+          ],
+          "Snap_S": [
+            0,
+            -3.0,
+            0
+          ]
+        },
+        "ucx": "1 boite"
+      },
+      "pier_6m": {
+        "export": "SM_Port_Pier_6m",
+        "lot": "port",
+        "role": "ponton sur pieux : pieux de cocotier/tamanu O 0,25 (palees tous les 2,0 m), chapeaux, longerons, platelage de planches usees, contreventement en croix, cordages",
+        "size_m": [
+          2.4,
+          6.0
+        ],
+        "deck_z_scene": -0.33,
+        "piles_to_z_scene": -4.0,
+        "sockets": {
+          "Bollard": [
+            1.05,
+            0,
+            0
+          ],
+          "Snap_N": [
+            0,
+            3.0,
+            0
+          ],
+          "Snap_S": [
+            0,
+            -3.0,
+            0
+          ]
+        },
+        "ucx": "1 boite tablier (pieux : prismes)",
+        "bean_check": "2,4 m, pas de garde-corps (historique)"
+      },
+      "pier_head": {
+        "export": "SM_Port_PierHead",
+        "lot": "port",
+        "role": "musoir en T du ponton (8 x 4) avec debarcadere a marches cote est pour la chaloupe, 2 bittes, poulie de charge",
+        "size_m": [
+          8.0,
+          4.0
+        ],
+        "landing": {
+          "risers": 8,
+          "bottom_z_scene": -1.65
+        },
+        "sockets": {
+          "BoatDock": [
+            3.2,
+            -2.6,
+            -1.32
+          ],
+          "Bollard_E": [
+            3.6,
+            1.6,
+            0
+          ],
+          "Bollard_W": [
+            -3.6,
+            1.6,
+            0
+          ],
+          "Lantern": [
+            0,
+            -1.8,
+            0
+          ]
+        },
+        "depth_note": "fond a -4,62 : 2,97 d'eau (galion 1,7 de tirant d'eau : la chaloupe fait la navette, le galion reste au mouillage)",
+        "ucx": "tablier + marches (coin)"
+      },
+      "bollard": {
+        "export": "SM_Port_Bollard",
+        "lot": "port",
+        "role": "bitte d'amarrage : vieux canon de fer enfonce culasse en haut (usage reel des ports XVIIIe) - variante B poteau de tamanu cercle",
+        "height_m": 0.42,
+        "d_m": 0.22,
+        "variants": [
+          "cannon",
+          "post"
+        ],
+        "ucx": "prisme 8 pans"
+      },
+      "crane": {
+        "export": "SM_Port_Crane",
+        "lot": "port",
+        "role": "grue de quai a potence pivotante en bois (mat 4,5, fleche 3,5, contrefiche), treuil a manivelles, palan a 2 poulies, crochet, filet de charge",
+        "mast_h_m": 4.5,
+        "jib_m": 3.5,
+        "base_m": [
+          1.6,
+          1.6
+        ],
+        "pivot": "axe du mat au sol",
+        "anim": "rotation Z de la partie haute (objet enfant SM_Port_Crane_Jib) ; crochet = socket",
+        "sockets": {
+          "Hook": [
+            0,
+            -3.3,
+            3.6
+          ],
+          "Winch": [
+            0,
+            0.9,
+            0.7
+          ]
+        },
+        "ucx": "mat + base + fleche"
+      },
+      "warehouse": {
+        "export": "SM_Port_Warehouse",
+        "lot": "port",
+        "role": "magasin portuaire : rez de maconnerie de corail, grand portail de bois sur le quai, comble de stockage, toit de bardeaux, poulie de grenier",
+        "footprint_m": [
+          10.0,
+          6.0
+        ],
+        "floor_z": 0.165,
+        "eave_z": 2.805,
+        "roof": "2 pans, bardeaux de bois (essentes) gris argent",
+        "door_m": [
+          2.0,
+          2.31
+        ],
+        "loft_door_m": [
+          1.0,
+          1.2
+        ],
+        "interior": "tonneaux en rangs, caisses, sacs, cordages, balance ; praticable 9,0 x 5,0",
+        "sockets": {
+          "Door": [
+            0,
+            -3.1,
+            0
+          ],
+          "Hoist": [
+            0,
+            -3.3,
+            4.2
+          ]
+        },
+        "ucx": "murs, toit, piles de marchandises"
+      },
+      "cannon": {
+        "export": "SM_Fort_Cannon",
+        "lot": "habillage",
+        "role": "canon de place sur affut marin (affuts de marine courants dans les batteries de cote)",
+        "builder": "factory/kits/galleon/cannons.cannon('demi_culverin', detail='high') : tube L 2,0 + affut a roues, deja a l'echelle Bean",
+        "trunnion_z": 0.39,
+        "sockets": {
+          "Muzzle": [
+            0,
+            2.0,
+            0.39
+          ],
+          "Breech": [
+            0,
+            -0.3,
+            0.39
+          ]
+        },
+        "ucx": "affut (boite) + tube (prisme)"
+      },
+      "shot_pile": {
+        "export": "SM_Fort_ShotPile",
+        "lot": "habillage",
+        "role": "pyramide de boulets O 0,06 (4 lits) sur un cadre de bois",
+        "balls": 30,
+        "ball_d_m": 0.06
+      },
+      "crate_a": {
+        "export": "SM_Fort_Crate_A",
+        "lot": "habillage",
+        "role": "caisse de planches cerclee de corde, marquee au pochoir (fleur de lys + numero)",
+        "size_m": [
+          0.6,
+          0.4,
+          0.4
+        ]
+      },
+      "crate_b": {
+        "export": "SM_Fort_Crate_B",
+        "lot": "habillage",
+        "role": "caisse longue a mousquets",
+        "size_m": [
+          1.2,
+          0.35,
+          0.3
+        ]
+      },
+      "barrel": {
+        "export": "SM_Fort_Barrel",
+        "lot": "habillage",
+        "role": "tonneau de vivres / eau douce",
+        "reuse": "maquettes/loot-barrels (douelles, cerclages) a 0,6 x O 0,42 ferme ; ou SM_Galleon fittings_cargo",
+        "size_m": [
+          0.42,
+          0.42,
+          0.6
+        ]
+      },
+      "powder_barrel": {
+        "export": "SM_Fort_PowderBarrel",
+        "lot": "habillage",
+        "role": "baril de poudre cercle de bois/cuivre (pas de fer)",
+        "reuse": "bean-powder-keg agrandi (x2,4)",
+        "size_m": [
+          0.32,
+          0.32,
+          0.42
+        ]
+      }
+    },
+    "scene_layout": {
+      "note": "positions monde du pivot de chaque module, rotation Z en degres ; le lot scene LIE les collections des modules (modules/<lot>.blend) et cree des collection instances a ces positions",
+      "court_m": {
+        "x": [
+          -20.0,
+          20.0
+        ],
+        "y": [
+          -16.0,
+          16.0
+        ],
+        "z": 0.0,
+        "surface": "sable corallien compacte + allees de dalles de beachrock (porte -> citerne -> logis, branches vers caserne, prison, cuisine), herbe rase aux pieds des murs"
+      },
+      "curtains": [
+        {
+          "m": "curtain_4m_access",
+          "pos": [
+            -16,
+            -20.2,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "curtain_4m_embrasure",
+          "pos": [
+            -12,
+            -20.2,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            -8,
+            -20.2,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            8,
+            -20.2,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "curtain_4m_embrasure",
+          "pos": [
+            12,
+            -20.2,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            16,
+            -20.2,
+            0
+          ],
+          "rot_z": 0
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            -16,
+            20.2,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            -12,
+            20.2,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "curtain_4m_embrasure",
+          "pos": [
+            -8,
+            20.2,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            -4,
+            20.2,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            0,
+            20.2,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            4,
+            20.2,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "curtain_4m_embrasure",
+          "pos": [
+            8,
+            20.2,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            12,
+            20.2,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            16,
+            20.2,
+            0
+          ],
+          "rot_z": 180
+        },
+        {
+          "m": "curtain_4m_access",
+          "pos": [
+            24.2,
+            -12,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "curtain_4m_embrasure",
+          "pos": [
+            24.2,
+            -8,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            24.2,
+            -4,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "curtain_4m_embrasure",
+          "pos": [
+            24.2,
+            0,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            24.2,
+            4,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "curtain_4m_embrasure",
+          "pos": [
+            24.2,
+            8,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            24.2,
+            12,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            -24.2,
+            -12,
+            0
+          ],
+          "rot_z": 270
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            -24.2,
+            -8,
+            0
+          ],
+          "rot_z": 270
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            -24.2,
+            -4,
+            0
+          ],
+          "rot_z": 270
+        },
+        {
+          "m": "curtain_4m_embrasure",
+          "pos": [
+            -24.2,
+            0,
+            0
+          ],
+          "rot_z": 270
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            -24.2,
+            4,
+            0
+          ],
+          "rot_z": 270
+        },
+        {
+          "m": "curtain_4m",
+          "pos": [
+            -24.2,
+            8,
+            0
+          ],
+          "rot_z": 270
+        },
+        {
+          "m": "curtain_4m_access",
+          "pos": [
+            -24.2,
+            12,
+            0
+          ],
+          "rot_z": 270
+        }
+      ],
+      "bastions": [
+        {
+          "name": "NE",
+          "pos": [
+            24.2,
+            20.2,
+            0
+          ],
+          "rot_z": 0,
+          "tower": true
+        },
+        {
+          "name": "NW",
+          "pos": [
+            -24.2,
+            20.2,
+            0
+          ],
+          "rot_z": 90
+        },
+        {
+          "name": "SW",
+          "pos": [
+            -24.2,
+            -20.2,
+            0
+          ],
+          "rot_z": 180,
+          "vault": true,
+          "m": "bastion_vault"
+        },
+        {
+          "name": "SE",
+          "pos": [
+            24.2,
+            -20.2,
+            0
+          ],
+          "rot_z": 270
+        }
+      ],
+      "echauguettes": "une par bastion sur son SOCKET_Echauguette (4)",
+      "gatehouse": {
+        "pos": [
+          0,
+          -20.2,
+          0
+        ],
+        "rot_z": 0,
+        "doors": "ouvertes a 80 deg",
+        "portcullis": "relevee (z +2,5)",
+        "drawbridge": "abaisse"
+      },
+      "drawbridge": {
+        "pos": [
+          0,
+          -20.6,
+          0
+        ],
+        "rot_z": 0
+      },
+      "bridge_fixed": {
+        "pos": [
+          0,
+          -23.4,
+          0
+        ],
+        "rot_z": 0
+      },
+      "ramps": [
+        {
+          "name": "W",
+          "pos": [
+            -19.0,
+            -3.85,
+            0
+          ],
+          "rot_z": 0,
+          "note": "monte vers le nord"
+        },
+        {
+          "name": "E",
+          "pos": [
+            19.0,
+            3.85,
+            0
+          ],
+          "rot_z": 180,
+          "note": "monte vers le sud"
+        }
+      ],
+      "ramps_note": "W : x -20..-18, pied y -3,85, palier y 11..13 face a la courtine d'acces (-24,2 ; 12) ; E : x 18..20, pied y 3,85, palier y -11..-13 face a la courtine d'acces (24,2 ; -12) (longe la prison, mur contre mur)",
+      "stairs": [
+        {
+          "name": "SW",
+          "pos": [
+            -9.42,
+            -15.4,
+            0
+          ],
+          "rot_z": 90,
+          "note": "monte vers l'ouest le long de la courtine sud (pied x -9,42 -> palier superieur x -15,1..-16,3) ; debouche par la courtine d'acces (-16 ; -20,2)"
+        }
+      ],
+      "signal_tower": {
+        "pos": [
+          25.0,
+          21.0,
+          2.97
+        ],
+        "rot_z": 315,
+        "note": "sur le terre-plein du bastion NE, porte tournee vers le sud-ouest (chemin de ronde)"
+      },
+      "flag": "sur SOCKET_Flag de la tour (mat 6 m, sommet a 14.25)",
+      "guardhouse": {
+        "pos": [
+          6.0,
+          -13.5,
+          0
+        ],
+        "rot_z": 180
+      },
+      "governor_house": {
+        "pos": [
+          0.0,
+          11.0,
+          0
+        ],
+        "rot_z": 0
+      },
+      "barracks": {
+        "pos": [
+          -13.8,
+          0.0,
+          0
+        ],
+        "rot_z": 90
+      },
+      "kitchen": {
+        "pos": [
+          -6.0,
+          -10.55,
+          0
+        ],
+        "rot_z": 180
+      },
+      "cistern": {
+        "pos": [
+          0.0,
+          -2.0,
+          0
+        ],
+        "rot_z": 0
+      },
+      "powder_magazine": {
+        "pos": [
+          -13.5,
+          12.5,
+          0
+        ],
+        "rot_z": 0
+      },
+      "chapel": {
+        "pos": [
+          14.0,
+          11.0,
+          0
+        ],
+        "rot_z": 0
+      },
+      "prison": {
+        "pos": [
+          14.5,
+          -8.5,
+          0
+        ],
+        "rot_z": 270,
+        "note": "porte a l'ouest (11,0 ; -6,7)"
+      },
+      "cages": [
+        {
+          "m": "cage_ground",
+          "pos": [
+            7.2,
+            -4.2,
+            0
+          ],
+          "rot_z": 15
+        },
+        {
+          "m": "cage_ground",
+          "pos": [
+            9.6,
+            -4.8,
+            0
+          ],
+          "rot_z": -8
+        },
+        {
+          "m": "gibbet",
+          "pos": [
+            5.0,
+            -6.2,
+            0
+          ],
+          "rot_z": 0,
+          "cage": "cage_hanging sur SOCKET_Hang, fond a 1,0"
+        }
+      ],
+      "treasure_vault": {
+        "pos": [
+          -25.0,
+          -21.0,
+          -0.99
+        ],
+        "rot_z": 0,
+        "entrance_world": [
+          -19.0,
+          -15.7,
+          0.0
+        ]
+      },
+      "treasure_fill": {
+        "Loot_GoldStack_1": "gold_stack_l",
+        "Loot_GoldStack_2": "gold_stack_m",
+        "Loot_GoldStack_3": "gold_stack_m",
+        "Loot_GoldBar_Loose": "gold_bar x3",
+        "Loot_Chest_1": "chest_open",
+        "Loot_Chest_2": "chest_closed",
+        "Loot_Chest_3": "chest_open",
+        "Loot_Chest_4": "chest_closed",
+        "Loot_Chest_5": "chest_closed",
+        "Loot_Gems_1": "gem_bowl",
+        "Loot_Gems_2": "gem_bowl",
+        "Loot_Gems_3": "gems (5 pierres en vrac)",
+        "Loot_PearlSack_1": "pearl_sack_open",
+        "Loot_PearlSack_2": "pearl_sack_closed",
+        "Loot_PearlSack_3": "pearl_sack_open",
+        "Loot_Coins_1": "coin_pile",
+        "Loot_Coins_2": "coin_pile"
+      },
+      "cannons": "un SM_Fort_Cannon sur chaque socket Gun des 4 bastions (24) + courtines E (3) et S (2) ; courtine N : affuts vides (2) ; canon pointe vers l'exterieur, recul 0",
+      "lanterns": "sockets Lantern de la porte, du logis, du corps de garde, de la prison, de la tour, du musoir + 6 sur les murs interieurs des courtines",
+      "port": {
+        "shore": "rive du lagon a y ~ -42 (quai) ; esplanade : Z 0 de la contrescarpe a y -38, puis pente 1:12 jusqu'au quai (-0.33)",
+        "quay": [
+          {
+            "pos": [
+              -21,
+              -42.0,
+              -0.33
+            ],
+            "rot_z": 0
+          },
+          {
+            "pos": [
+              -15,
+              -42.0,
+              -0.33
+            ],
+            "rot_z": 0
+          },
+          {
+            "pos": [
+              -9,
+              -42.0,
+              -0.33
+            ],
+            "rot_z": 0
+          },
+          {
+            "pos": [
+              9,
+              -42.0,
+              -0.33
+            ],
+            "rot_z": 0
+          },
+          {
+            "pos": [
+              15,
+              -42.0,
+              -0.33
+            ],
+            "rot_z": 0
+          },
+          {
+            "pos": [
+              21,
+              -42.0,
+              -0.33
+            ],
+            "rot_z": 0
+          }
+        ],
+        "quay_note": "quai de x -24 a +24 ; la jetee (x -2..2) remplace le module central ; x -6..-2 et 2..6 : quai_stairs a x -4 et +4",
+        "quay_stairs": [
+          {
+            "pos": [
+              -4.0,
+              -42.0,
+              -0.33
+            ],
+            "rot_z": 0
+          },
+          {
+            "pos": [
+              4.0,
+              -42.0,
+              -0.33
+            ],
+            "rot_z": 0
+          }
+        ],
+        "jetty": [
+          {
+            "pos": [
+              0,
+              -45.0,
+              -0.33
+            ],
+            "rot_z": 0
+          },
+          {
+            "pos": [
+              0,
+              -51.0,
+              -0.33
+            ],
+            "rot_z": 0
+          },
+          {
+            "pos": [
+              0,
+              -57.0,
+              -0.33
+            ],
+            "rot_z": 0
+          }
+        ],
+        "pier": [
+          {
+            "pos": [
+              0,
+              -63.0,
+              -0.33
+            ],
+            "rot_z": 0
+          },
+          {
+            "pos": [
+              0,
+              -69.0,
+              -0.33
+            ],
+            "rot_z": 0
+          }
+        ],
+        "pier_head": {
+          "pos": [
+            0,
+            -74.0,
+            -0.33
+          ],
+          "rot_z": 0
+        },
+        "crane": {
+          "pos": [
+            1.2,
+            -44.5,
+            -0.33
+          ],
+          "rot_z": 90,
+          "note": "fleche au-dessus de l'eau cote est de la jetee"
+        },
+        "warehouse": {
+          "pos": [
+            -10.0,
+            -36.0,
+            0
+          ],
+          "rot_z": 0
+        },
+        "bollards": "sur tous les sockets Bollard (quai, jetee, ponton, musoir) ; variante cannon 2 fois sur 3",
+        "boat": {
+          "src": "maquettes/barque/exports/barque.glb",
+          "scale": 0.75,
+          "pos": [
+            3.4,
+            -76.4,
+            -1.65
+          ],
+          "rot_z": 90,
+          "name": "REF-Chaloupe",
+          "note": "chaloupe amarree au debarcadere du musoir (x0,75 comme BP_Barque)"
+        },
+        "lagoon_depths": {
+          "quay_face": -2.97,
+          "pier_head": -4.62,
+          "anchorage": -6.6,
+          "passe": -9.0
+        }
+      },
+      "galleon": {
+        "enabled": true,
+        "src": "maquettes/galion-anglais/exports/SM_Galleon.glb (+ Sails, Flag ; Rigging si RAM < 5 Go)",
+        "origin": "flottaison",
+        "pos": [
+          32.0,
+          -62.0,
+          -1.65
+        ],
+        "rot_z": 80,
+        "name": "REF-Galleon",
+        "note": "au mouillage dans le lagon pres de la passe, etrave a l'est (alizes) ; 30,5 m hors tout, cercle d'evitage ~45 m libre ; pavillon anglais d'origine conserve (navire capture / visiteur : a confirmer) ; textures reduites a 1K ; position rapprochee (32 ; -62) pour etre visible dans la vue aerienne (2 m d'eau sous la quille)"
+      },
+      "props": {
+        "barrels": [
+          [
+            -14.0,
+            -39.8,
+            0
+          ],
+          [
+            -13.4,
+            -40.1,
+            0
+          ],
+          [
+            -6.2,
+            -40.5,
+            -0.33
+          ],
+          [
+            2.6,
+            -60.0,
+            -0.33
+          ],
+          [
+            -9.0,
+            -12.9,
+            0
+          ],
+          [
+            -2.6,
+            -9.8,
+            0
+          ]
+        ],
+        "crates": [
+          [
+            -12.0,
+            -40.2,
+            0
+          ],
+          [
+            -5.6,
+            -40.9,
+            -0.33
+          ],
+          [
+            -1.2,
+            -58.0,
+            -0.33
+          ],
+          [
+            3.6,
+            -10.8,
+            0
+          ]
+        ],
+        "powder_barrels": "dans le magasin a poudre (12) + 2 sur le terre-plein du bastion SE",
+        "shot_piles": "sockets ShotPile des bastions et des embrasures",
+        "note": "positions indicatives, ajustees par le builder pour ne pas obstruer les couloirs Bean (1,2 m libres : porte -> cour -> logis, rampes, escalier, prison, salle des coffres, quai -> musoir)"
+      },
+      "bean": [
+        {
+          "name": "REF-Bean_Gate",
+          "pos": [
+            0.5,
+            -21.9,
+            0
+          ],
+          "rot_z_deg": 0,
+          "note": "sur le pont-levis abaisse, face au sud (vers la camera porte) : lecture directe passage 2,2 x 2,64 / Bean 1,05"
+        },
+        {
+          "name": "REF-Bean_Walk",
+          "pos": [
+            -10.0,
+            -17.6,
+            2.97
+          ],
+          "rot_z_deg": 0,
+          "note": "sur le chemin de ronde de la courtine sud, regarde le port par un creneau (sill 0,66)"
+        }
+      ],
+      "vegetation": {
+        "source": "art/archives/environnements/atoll_tuamotu/scene/atoll_tuamotu.blend (LIB_Palms, LIB_Shrubs, LIB_GroundCover, LIB_Props) via marae_scene.append_atoll + instances",
+        "rules": [
+          "glacis degage : aucun arbre a moins de 15 m de la contrescarpe (champ de tir - realiste) ; seulement herbes rases et ipomees",
+          "cocoteraie au-dela (x < -50 et entre le fort et la plage oceane y > 50) : 60-80 cocotiers penches vers le lagon (alizes de l'est), pandanus et naupaka en lisiere oceane",
+          "dans la cour : 2 jeunes cocotiers pres du logis, herbes dans les joints, mousse/algues sechees au pied des murs nord",
+          "plage du lagon : laisse de mer (palmes seches, coquillages Lambis, bois flotte) ; platier ocean : blocs de corail (SM_CoralBlock_*), soupe de corail",
+          "max ~400 instances ; couloirs Bean et esplanade du port toujours libres"
+        ],
+        "seed": 1717
+      }
+    },
+    "materials_kit": {
+      "Fort_CoralRubble": "factory/assets/textures/artifacts/coral_fort_wall_02 (2K) : moellons de corail beige, joints de chaux ; masque de salissures (coulures noires sous les gargouilles, sel blanc en pied, lichens orange sur les faces nord)",
+      "Fort_CoralAshlar": "coral_fort_wall_01 (2K) eclairci + aretes epaufrees (geometry pointiness / bevel) : pierre de taille corallienne",
+      "Fort_LimeRender": "art/textures/props/minka/clay_plaster (2K) teinte blanc casse #E6E0D2 + masque d'enduit tombe (laisse voir Fort_CoralRubble), coulures, efflorescences",
+      "Fort_Beachrock": "art/textures/ground/coral_ground_02 (2K) : dalles de sol, marches, couronnements",
+      "Fort_Ballast": "coral_fort_wall_03 + Rock035_2K (2K) : pierres de lest sombres, soubassements et quais ; algues/balanes sous la ligne de marnage",
+      "Fort_Brick": "briques rouges francaises : scan CC0 a telecharger (Poly Haven 'red_brick_03' ou ambientCG Bricks, 2K) dans factory/assets/textures/fort/ (SOURCES.md) ; repli procedural si hors ligne",
+      "Fort_RoofTiles": "art/textures/props/minka/clay_roof_tiles (2K) teinte terre cuite delavee, lichens, tuiles deplacees",
+      "Fort_WoodOak": "factory/assets/textures/ship/dark_wooden_planks + art/textures/characters/weathered_planks (2K) : portes, affuts, plates-formes (goudronne)",
+      "Fort_WoodTamanu": "factory/assets/textures/ship/brown_planks_03 / art/textures/characters/fine_grained_wood (2K) teinte rouge-brun : galerie, poutres, potence",
+      "Fort_Coconut": "art/textures/palm/palm_tree_bark (2K) : pieux du ponton, chevrons",
+      "Fort_Shingles": "art/textures/characters/weathered_planks a petite echelle + decoupe en ecailles (bardeaux gris argent)",
+      "Fort_IronRust": "factory/assets/textures/ship/rusty_metal_04 + Metal046B (1K) : grilles, cages, ferrures, chaines, lanternes",
+      "Fort_Copper": "Metal048C teinte cuivre oxyde (vert-de-gris en creux) (1K) : porte de la poudriere, coupelles",
+      "Fort_Canvas": "art/textures/characters/Fabric019 (1K) : pavillon, bannes",
+      "Fort_Jute": "art/textures/characters/hessian_230 (1K) : sacs de perles, sacs de vivres",
+      "Fort_Rope": "art/textures/characters/Rope001 (1K)",
+      "Fort_Puddle": "eau saumatre peu profonde (glossy + normal T_Water_N, absorption verdatre)",
+      "Fort_Lagoon / Fort_Ocean": "voir params.site.water",
+      "treasure": "factory/kits/artifacts/treasure.material : MAT_Gold_Aged, MAT_Gem_Ruby, MAT_Gem_Sapphire, MAT_Gem_Emerald, MAT_Gem_Amethyst, MAT_Gem_Topaz, MAT_Pearl_White, MAT_Pearl_Black (UE_RECIPES documentees)",
+      "weathering": "partout : couche de sel (Rock040 desature), coulures (gradient Z + bruit), mousse/algues (art/textures/characters/Moss002) au pied des murs et sur les faces nord, rouille ruisselant sous les ferrures ; aucune surface propre",
+      "unreal": "chaque MAT-Fort_* porte ue_recipe (comme treasure.UE_RECIPES) ; normales OpenGL -> Flip Green a l'import",
+      "layering": "Implementation (factory/kits/fort_mat.py) : les maconneries partagent 2 materiaux a couches melangees par l'attribut de couleur de coin `Blend` (exporte FBX / glTF COLOR_0) pour tenir 4 materiaux par module : MAT-Fort_CoralRubble = Fort_CoralRubble (base) + Fort_Ballast (R) + Fort_LimeRender (G, enduit tombe par plaques) ; MAT-Fort_CoralAshlar = Fort_CoralAshlar (base) + Fort_Beachrock (B). Blend.A = niveau du sol au pied de la piece (base / 10 + 0,5) pour l'usure de pied de mur. Tas de pieces : MAT_Gold_CoinHeap (MAT_Gold_Aged + relief de pieces). SM_Fort_Chest_Open garde 5 materiaux (chene, fer, or des pieces, rubis, perles)."
+    },
+    "views": {
+      "note": "rendus dans post_build (scripts/scene.py), EEVEE 1600x900, un par un ; options par vue : samples, exposure (EV ajoutes), world_strength (facteur du ciel HDRI : vues interieures sans sonde de lumiere), sun_strength ; FORT_VIEWS=v1,v2 pour ne rendre que certaines vues",
+      "aerienne": {
+        "loc": [
+          -62.0,
+          -118.0,
+          58.0
+        ],
+        "target": [
+          6.0,
+          -24.0,
+          0.0
+        ],
+        "lens": 30
+      },
+      "plan": {
+        "loc": [
+          15.0,
+          -28.0,
+          180.0
+        ],
+        "target": [
+          15.0,
+          -28.0,
+          0.0
+        ],
+        "lens": 50,
+        "ortho_scale": 240.0
+      },
+      "porte": {
+        "loc": [
+          5.5,
+          -35.0,
+          1.7
+        ],
+        "target": [
+          0.0,
+          -21.0,
+          2.0
+        ],
+        "lens": 30
+      },
+      "port": {
+        "loc": [
+          26.0,
+          -84.0,
+          7.5
+        ],
+        "target": [
+          -2.0,
+          -52.0,
+          0.5
+        ],
+        "lens": 26
+      },
+      "cour": {
+        "loc": [
+          -18.5,
+          -14.5,
+          5.2
+        ],
+        "target": [
+          3.0,
+          5.0,
+          1.2
+        ],
+        "lens": 22
+      },
+      "prison": {
+        "loc": [
+          3.0,
+          -1.0,
+          2.2
+        ],
+        "target": [
+          13.0,
+          -8.0,
+          1.0
+        ],
+        "lens": 24
+      },
+      "cachots": {
+        "loc": [
+          12.3,
+          -6.4,
+          1.2
+        ],
+        "target": [
+          14.7,
+          -10.0,
+          0.6
+        ],
+        "lens": 18,
+        "samples": 48,
+        "world_strength": 0.25,
+        "exposure": 0.8,
+        "note": "depuis le couloir vers le cachot 2 a travers la grille (soupirail eclaire)"
+      },
+      "salle_des_coffres": {
+        "loc": [
+          -23.1,
+          -19.7,
+          -0.04
+        ],
+        "target": [
+          -27.0,
+          -21.4,
+          -0.64
+        ],
+        "lens": 17,
+        "samples": 48,
+        "note": "depuis la porte blindee vers les piles de lingots du mur ouest (vue recadree sur le butin) ; interieur eclaire par lights_scene ; exposition +1",
+        "exposure": 1.0,
+        "world_strength": 0.03
+      },
+      "chemin_de_ronde": {
+        "loc": [
+          -5.2,
+          -16.6,
+          4.05
+        ],
+        "target": [
+          -10.5,
+          -18.9,
+          3.5
+        ],
+        "lens": 24
+      },
+      "tour_signal": {
+        "loc": [
+          8.0,
+          4.0,
+          6.5
+        ],
+        "target": [
+          25.0,
+          21.0,
+          6.0
+        ],
+        "lens": 28
+      }
+    },
+    "assumptions": [
+      "Echelle du monde x0,58 (Bean 1,05 / humain 1,80), comme galion-anglais : un fort reel d'environ 110 x 95 m devient 63 x 55 m (cordons) ; le butin suit le x0,7 des loots.",
+      "Z = 0 = sol de la cour ; lagon a -1,65 (le motu culmine a ~+1,6 au-dessus de la mer, +2,3 sur le bourrelet de tempete) ; maree negligeable (micro-tidal aux Tuamotu) - a confirmer avec la hauteur d'eau du niveau Unreal.",
+      "Oeil de Bean suppose a 0,78 m et saut < 0,5 m (non mesures) : creneaux a 0,66, garde-corps a 0,495, escarpe 4,29 infranchissable.",
+      "Fosse SEC (nappe saumatre visible en flaques) plutot qu'en eau : plus credible sur un platier et plus lisible en jeu.",
+      "Salle des coffres en casemate sous le bastion SO (plancher -0,99) et non en vrai sous-sol : une cave profonde serait sous la nappe d'un motu.",
+      "Embrasures a ciel ouvert, genouillere 0,28 (impose par l'affut du galion) bloquee par UCX invisible ; parapets maconnes de 1,2 m (au lieu des parapets de terre de 5-6 m de Vauban) : compromis de lisibilite.",
+      "Canons et affuts = ceux du galion (demi_culverin) : affuts marins plausibles en batterie cotiere.",
+      "Pavillon : blanc seme de fleurs de lys d'or sans armoiries (pavillon royal simplifie) ; variante blanc uni. Presence francaise aux Tuamotu au XVIIIe = FICTION assumee (la France ne s'y installe qu'au XIXe).",
+      "Le galion du port est l'anglais du projet (pavillon de Saint-Georges) : navire du joueur au mouillage ; a remplacer par un navire francais si le scenario l'exige.",
+      "Texture de briques absente du depot : a telecharger (CC0) par le builder ; repli procedural sinon.",
+      "Collisions simplifiees : UCX boites/prismes, rampes pour escaliers ; portes, herse, pont-levis, grue, cages = SM separes animables.",
+      "Le terrain (REF-Site_*) n'est pas exporte : dans Unreal, Landscape + M_Terrain_Atoll et eau du Water plugin ; seul SM_Fort_Ditch (fosse + contrescarpe) est exporte."
+    ],
+    "to_confirm": [
+      "Echelle x0,58 du monde (fort 63 x 55 m) ou fort plus grand pour le gameplay ?",
+      "Hauteur de saut de Bean et hauteur de son oeil (creneaux, garde-corps, escarpe).",
+      "Fosse sec ou en eau ? Pont-levis fonctionnel en jeu ?",
+      "Pavillon : blanc fleurdelise ou blanc uni ?",
+      "Galion au mouillage : l'anglais du projet, ou prevoir un navire francais ?",
+      "Chapelle a garder ?",
+      "Niveau de la mer dans Unreal (Z -1,65 ici sous la cour).",
+      "Nombre de lingots (135) et valeur du tresor."
+    ]
+  },
+  "gameplay": {
+    "role": "Fort colonial francais fictif (place forte de l'archipel) : hub de quetes, prison des pirates, tresor du gouverneur a piller.",
+    "usage": "Debarquer par la chaloupe au musoir -> ponton -> jetee -> esplanade -> pont-levis -> porte -> cour ; monter sur les remparts par les 2 rampes ou l'escalier SO ; tour de guet par le bastion NE ; liberer des prisonniers (cachots, cages, gibet) ; forcer la porte blindee de la salle des coffres (bastion SO) et emporter lingots, gemmes, sacs de perles, pieces.",
+    "physics": {
+      "collision": "UCX par module ; escaliers en rampes ; embrasures bouchees jusqu'a 1,32",
+      "walkable": [
+        "esplanade, quai, jetee, ponton, musoir",
+        "pont dormant + pont-levis",
+        "cour",
+        "rampes, escalier, chemins de ronde, terre-pleins des bastions",
+        "tour (3 niveaux)",
+        "rez + etage du logis, corps de garde, caserne, prison, magasin portuaire",
+        "couloir + chambre de la salle des coffres"
+      ]
+    },
+    "loot_sockets": "SOCKET_Loot_* de SM_Fort_TreasureVault (params.modules.treasure_vault.sockets) ; contenu par defaut : params.scene_layout.treasure_fill",
+    "stats": {
+      "gold_bar_mass_kg": 5.5,
+      "gold_bars_total": 135,
+      "chest_mass_kg": 35,
+      "pearl_sack_mass_kg": 6
+    },
+    "notes": [
+      "Valeurs de masse/loot = suggestions a equilibrer en jeu.",
+      "Portes, herse, pont-levis, porte blindee, portes-grilles : SM separes, pivots aux gonds, prets pour des Blueprints."
+    ]
+  },
+  "units": {
+    "system": "METRIC",
+    "length": "METERS",
+    "scale_length": 1.0
+  },
+  "materials": {},
+  "collections": [
+    "Fort_Rampart",
+    "Fort_Gate",
+    "Fort_Tower",
+    "Fort_Buildings",
+    "Fort_Prison",
+    "Fort_Treasure",
+    "Port",
+    "Props",
+    "Site",
+    "Vegetation",
+    "REF"
+  ],
+  "objects": [],
+  "scripts": [
+    "scripts/scene.py"
+  ],
+  "camera": {
+    "location": [
+      -62.0,
+      -118.0,
+      58.0
+    ],
+    "look_at": [
+      6.0,
+      -24.0,
+      0.0
+    ],
+    "lens": 30
+  },
+  "lights": [
+    {
+      "name": "soleil",
+      "type": "SUN",
+      "energy": 4.0,
+      "rotation_deg": [
+        42,
+        0,
+        -125
+      ],
+      "color": [
+        1.0,
+        0.96,
+        0.9
+      ]
+    }
+  ],
+  "world": {
+    "color": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "strength": 1.0,
+    "hdri": "factory/assets/hdri/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
+    "hdri_rotation_deg": 120
+  },
+  "render": {
+    "engine": "EEVEE",
+    "resolution": [
+      1600,
+      900
+    ],
+    "samples": 32
+  },
+  "outputs": {
+    "blend": true,
+    "exports": [],
+    "preview": true
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "date": "2026-10-06",
+      "author": "factory",
+      "notes": "Creation de la spec : fort bastionne modulaire (SM_Fort_*, SM_Port_*, SM_Loot_*), geologie de motu, build par lots en sous-processus."
+    },
+    {
+      "version": "0.2.0",
+      "date": "2026-10-06",
+      "author": "factory",
+      "notes": "Premier build : remparts, porte, tour, batiments, prison, salle des coffres, port"
+    }
+  ]
+}

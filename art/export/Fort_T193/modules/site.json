@@ -1,0 +1,240 @@
+{
+  "lot": "site",
+  "blender": "5.2.2 LTS",
+  "modules": {
+    "SM_Fort_Ditch": {
+      "key": "ditch",
+      "export": "SM_Fort_Ditch",
+      "collection": "SM_Fort_Ditch",
+      "dims_m": [
+        80.058,
+        71.759,
+        1.402
+      ],
+      "bbox": {
+        "min": [
+          -40.029,
+          -35.88,
+          -1.402
+        ],
+        "max": [
+          40.029,
+          35.88,
+          0.0
+        ]
+      },
+      "height_vs_bean": 1.33,
+      "tris": 21108,
+      "tris_raw": 21108,
+      "budget": 25000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralGravel",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_Puddle"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Ditch_00",
+        "UCX_SM_Fort_Ditch_01",
+        "UCX_SM_Fort_Ditch_02",
+        "UCX_SM_Fort_Ditch_03",
+        "UCX_SM_Fort_Ditch_04",
+        "UCX_SM_Fort_Ditch_05",
+        "UCX_SM_Fort_Ditch_06",
+        "UCX_SM_Fort_Ditch_07",
+        "UCX_SM_Fort_Ditch_08",
+        "UCX_SM_Fort_Ditch_09",
+        "UCX_SM_Fort_Ditch_10",
+        "UCX_SM_Fort_Ditch_11",
+        "UCX_SM_Fort_Ditch_12",
+        "UCX_SM_Fort_Ditch_13",
+        "UCX_SM_Fort_Ditch_14",
+        "UCX_SM_Fort_Ditch_15",
+        "UCX_SM_Fort_Ditch_16",
+        "UCX_SM_Fort_Ditch_17",
+        "UCX_SM_Fort_Ditch_18",
+        "UCX_SM_Fort_Ditch_19",
+        "UCX_SM_Fort_Ditch_20",
+        "UCX_SM_Fort_Ditch_21",
+        "UCX_SM_Fort_Ditch_22",
+        "UCX_SM_Fort_Ditch_23",
+        "UCX_SM_Fort_Ditch_24",
+        "UCX_SM_Fort_Ditch_25",
+        "UCX_SM_Fort_Ditch_26",
+        "UCX_SM_Fort_Ditch_27",
+        "UCX_SM_Fort_Ditch_28",
+        "UCX_SM_Fort_Ditch_29",
+        "UCX_SM_Fort_Ditch_30",
+        "UCX_SM_Fort_Ditch_31",
+        "UCX_SM_Fort_Ditch_32",
+        "UCX_SM_Fort_Ditch_33",
+        "UCX_SM_Fort_Ditch_34",
+        "UCX_SM_Fort_Ditch_35",
+        "UCX_SM_Fort_Ditch_36",
+        "UCX_SM_Fort_Ditch_37",
+        "UCX_SM_Fort_Ditch_38",
+        "UCX_SM_Fort_Ditch_39",
+        "UCX_SM_Fort_Ditch_40",
+        "UCX_SM_Fort_Ditch_41",
+        "UCX_SM_Fort_Ditch_42",
+        "UCX_SM_Fort_Ditch_43",
+        "UCX_SM_Fort_Ditch_44",
+        "UCX_SM_Fort_Ditch_45",
+        "UCX_SM_Fort_Ditch_46",
+        "UCX_SM_Fort_Ditch_47",
+        "UCX_SM_Fort_Ditch_48",
+        "UCX_SM_Fort_Ditch_49",
+        "UCX_SM_Fort_Ditch_50",
+        "UCX_SM_Fort_Ditch_51",
+        "UCX_SM_Fort_Ditch_52",
+        "UCX_SM_Fort_Ditch_53",
+        "UCX_SM_Fort_Ditch_54",
+        "UCX_SM_Fort_Ditch_55",
+        "UCX_SM_Fort_Ditch_56",
+        "UCX_SM_Fort_Ditch_57",
+        "UCX_SM_Fort_Ditch_58",
+        "UCX_SM_Fort_Ditch_59",
+        "UCX_SM_Fort_Ditch_60",
+        "UCX_SM_Fort_Ditch_61",
+        "UCX_SM_Fort_Ditch_62",
+        "UCX_SM_Fort_Ditch_63",
+        "UCX_SM_Fort_Ditch_64",
+        "UCX_SM_Fort_Ditch_65",
+        "UCX_SM_Fort_Ditch_66",
+        "UCX_SM_Fort_Ditch_67",
+        "UCX_SM_Fort_Ditch_68",
+        "UCX_SM_Fort_Ditch_69",
+        "UCX_SM_Fort_Ditch_70",
+        "UCX_SM_Fort_Ditch_71",
+        "UCX_SM_Fort_Ditch_72",
+        "UCX_SM_Fort_Ditch_73",
+        "UCX_SM_Fort_Ditch_74",
+        "UCX_SM_Fort_Ditch_75",
+        "UCX_SM_Fort_Ditch_76",
+        "UCX_SM_Fort_Ditch_77",
+        "UCX_SM_Fort_Ditch_78",
+        "UCX_SM_Fort_Ditch_79"
+      ],
+      "children": [],
+      "sockets": {
+        "Bridge_Counterscarp": {
+          "pos": [
+            0.0,
+            -26.915,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "counterscarp_points": 480,
+        "width_bottom_m": 6.0
+      },
+      "files": [
+        "SM_Fort_Ditch.fbx",
+        "SM_Fort_Ditch.glb"
+      ],
+      "build_s": 10.71
+    },
+    "REF-site_terrain": {
+      "key": "site_terrain",
+      "export": "REF-site_terrain",
+      "collection": "REF-site_terrain",
+      "dims_m": [
+        5000.0,
+        5000.0,
+        19.4
+      ],
+      "bbox": {
+        "min": [
+          -2500.0,
+          -2500.0,
+          -18.0
+        ],
+        "max": [
+          2500.0,
+          2500.0,
+          1.4
+        ]
+      },
+      "height_vs_bean": 18.48,
+      "tris": 122772,
+      "tris_raw": null,
+      "budget": null,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Site_Ground",
+        "MAT-Site_Lagoon"
+      ],
+      "ucx": [],
+      "children": [
+        "REF-Site_Terrain_Far",
+        "REF-Lagoon",
+        "REF-Ocean",
+        "REF-Court_Paths"
+      ],
+      "sockets": {},
+      "info": {
+        "near_m": [
+          164.0,
+          172.0
+        ],
+        "far_m": [
+          356,
+          304
+        ]
+      },
+      "files": [],
+      "build_s": 8.07
+    }
+  },
+  "errors": {},
+  "build_s": 19.5,
+  "images": [
+    "T_Water_N.png",
+    "coral_fort_wall_01_diff_2k.jpg",
+    "coral_fort_wall_01_disp_2k.jpg",
+    "coral_fort_wall_01_nor_gl_2k.jpg",
+    "coral_fort_wall_01_rough_2k.jpg",
+    "coral_fort_wall_02_diff_2k.jpg",
+    "coral_fort_wall_02_disp_2k.jpg",
+    "coral_fort_wall_02_nor_gl_2k.jpg",
+    "coral_fort_wall_02_rough_2k.jpg",
+    "coral_fort_wall_03_diff_2k.jpg",
+    "coral_fort_wall_03_disp_2k.jpg",
+    "coral_fort_wall_03_nor_gl_2k.jpg",
+    "coral_fort_wall_03_rough_2k.jpg",
+    "coral_gravel_diff_2k.jpg",
+    "coral_gravel_disp_2k.jpg",
+    "coral_gravel_nor_gl_2k.jpg",
+    "coral_gravel_rough_2k.jpg",
+    "coral_ground_02_diff_2k.jpg",
+    "coral_ground_02_disp_2k.jpg",
+    "coral_ground_02_nor_gl_2k.jpg",
+    "coral_ground_02_rough_2k.jpg",
+    "feo_ch.png",
+    "feo_n.png",
+    "litter_ch.png",
+    "litter_n.png",
+    "rubble_ch.png",
+    "rubble_n.png",
+    "sand_dry_ch.png",
+    "sand_dry_n.png",
+    "sand_wet_ch.png",
+    "sand_wet_n.png",
+    "soil_ch.png",
+    "soil_n.png",
+    "white_plaster_02_diff_2k.jpg",
+    "white_plaster_02_disp_2k.jpg",
+    "white_plaster_02_nor_gl_2k.jpg",
+    "white_plaster_02_rough_2k.jpg",
+    "wrack_ch.png",
+    "wrack_n.png"
+  ]
+}

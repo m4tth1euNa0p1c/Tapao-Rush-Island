@@ -1,0 +1,1153 @@
+{
+  "lot": "rempart",
+  "blender": "5.2.2 LTS",
+  "modules": {
+    "SM_Fort_Curtain_4m": {
+      "key": "curtain_4m",
+      "export": "SM_Fort_Curtain_4m",
+      "collection": "SM_Fort_Curtain_4m",
+      "dims_m": [
+        4.037,
+        5.5,
+        5.66
+      ],
+      "bbox": {
+        "min": [
+          -2.037,
+          -0.76,
+          -1.37
+        ],
+        "max": [
+          2.0,
+          4.74,
+          4.29
+        ]
+      },
+      "height_vs_bean": 5.39,
+      "tris": 2076,
+      "tris_raw": 2076,
+      "budget": 5000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Curtain_4m_00",
+        "UCX_SM_Fort_Curtain_4m_01",
+        "UCX_SM_Fort_Curtain_4m_02",
+        "UCX_SM_Fort_Curtain_4m_03",
+        "UCX_SM_Fort_Curtain_4m_04",
+        "UCX_SM_Fort_Curtain_4m_05",
+        "UCX_SM_Fort_Curtain_4m_06"
+      ],
+      "children": [],
+      "sockets": {
+        "Snap_L": {
+          "pos": [
+            -2.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Snap_R": {
+          "pos": [
+            2.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Walk": {
+          "pos": [
+            0.0,
+            2.7,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Crenel_1": {
+          "pos": [
+            -1.0,
+            1.0,
+            3.63
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Crenel_2": {
+          "pos": [
+            1.0,
+            1.0,
+            3.63
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Lantern": {
+          "pos": [
+            0.0,
+            4.25,
+            2.37
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "variant": "plain"
+      },
+      "files": [
+        "SM_Fort_Curtain_4m.fbx",
+        "SM_Fort_Curtain_4m.glb"
+      ],
+      "build_s": 7.95
+    },
+    "SM_Fort_Curtain_4m_Embrasure": {
+      "key": "curtain_4m_embrasure",
+      "export": "SM_Fort_Curtain_4m_Embrasure",
+      "collection": "SM_Fort_Curtain_4m_Embrasure",
+      "dims_m": [
+        4.009,
+        5.5,
+        5.66
+      ],
+      "bbox": {
+        "min": [
+          -2.009,
+          -0.76,
+          -1.37
+        ],
+        "max": [
+          2.0,
+          4.74,
+          4.29
+        ]
+      },
+      "height_vs_bean": 5.39,
+      "tris": 2208,
+      "tris_raw": 2208,
+      "budget": 6500,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Curtain_4m_Embrasure_00",
+        "UCX_SM_Fort_Curtain_4m_Embrasure_01",
+        "UCX_SM_Fort_Curtain_4m_Embrasure_02",
+        "UCX_SM_Fort_Curtain_4m_Embrasure_03",
+        "UCX_SM_Fort_Curtain_4m_Embrasure_04"
+      ],
+      "children": [],
+      "sockets": {
+        "Snap_L": {
+          "pos": [
+            -2.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Snap_R": {
+          "pos": [
+            2.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Walk": {
+          "pos": [
+            0.0,
+            2.7,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Lantern": {
+          "pos": [
+            0.0,
+            4.25,
+            2.37
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Gun": {
+          "pos": [
+            0.0,
+            2.35,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "ShotPile": {
+          "pos": [
+            1.4,
+            3.6,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Embrasure": {
+          "pos": [
+            0.0,
+            1.0,
+            3.25
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "variant": "emb",
+        "gun_platform_m": [
+          2.4,
+          2.6
+        ]
+      },
+      "files": [
+        "SM_Fort_Curtain_4m_Embrasure.fbx",
+        "SM_Fort_Curtain_4m_Embrasure.glb"
+      ],
+      "build_s": 5.73
+    },
+    "SM_Fort_Curtain_4m_Access": {
+      "key": "curtain_4m_access",
+      "export": "SM_Fort_Curtain_4m_Access",
+      "collection": "SM_Fort_Curtain_4m_Access",
+      "dims_m": [
+        4.028,
+        5.257,
+        5.66
+      ],
+      "bbox": {
+        "min": [
+          -2.028,
+          -0.76,
+          -1.37
+        ],
+        "max": [
+          2.0,
+          4.497,
+          4.29
+        ]
+      },
+      "height_vs_bean": 5.39,
+      "tris": 2440,
+      "tris_raw": 2440,
+      "budget": 5000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Curtain_4m_Access_00",
+        "UCX_SM_Fort_Curtain_4m_Access_01",
+        "UCX_SM_Fort_Curtain_4m_Access_02",
+        "UCX_SM_Fort_Curtain_4m_Access_03",
+        "UCX_SM_Fort_Curtain_4m_Access_04",
+        "UCX_SM_Fort_Curtain_4m_Access_05",
+        "UCX_SM_Fort_Curtain_4m_Access_06",
+        "UCX_SM_Fort_Curtain_4m_Access_07"
+      ],
+      "children": [],
+      "sockets": {
+        "Snap_L": {
+          "pos": [
+            -2.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Snap_R": {
+          "pos": [
+            2.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Walk": {
+          "pos": [
+            0.0,
+            2.7,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Crenel_1": {
+          "pos": [
+            -1.0,
+            1.0,
+            3.63
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Crenel_2": {
+          "pos": [
+            1.0,
+            1.0,
+            3.63
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Lantern": {
+          "pos": [
+            0.0,
+            4.25,
+            2.37
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "variant": "access"
+      },
+      "files": [
+        "SM_Fort_Curtain_4m_Access.fbx",
+        "SM_Fort_Curtain_4m_Access.glb"
+      ],
+      "build_s": 5.19
+    },
+    "SM_Fort_Curtain_Corner": {
+      "key": "curtain_corner",
+      "export": "SM_Fort_Curtain_Corner",
+      "collection": "SM_Fort_Curtain_Corner",
+      "dims_m": [
+        4.96,
+        4.96,
+        5.66
+      ],
+      "bbox": {
+        "min": [
+          -0.76,
+          -0.76,
+          -1.37
+        ],
+        "max": [
+          4.2,
+          4.2,
+          4.29
+        ]
+      },
+      "height_vs_bean": 5.39,
+      "tris": 2648,
+      "tris_raw": 2648,
+      "budget": 5000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Curtain_Corner_00",
+        "UCX_SM_Fort_Curtain_Corner_01",
+        "UCX_SM_Fort_Curtain_Corner_02",
+        "UCX_SM_Fort_Curtain_Corner_03",
+        "UCX_SM_Fort_Curtain_Corner_04",
+        "UCX_SM_Fort_Curtain_Corner_05",
+        "UCX_SM_Fort_Curtain_Corner_06"
+      ],
+      "children": [],
+      "sockets": {
+        "Snap_X": {
+          "pos": [
+            4.2,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Snap_Y": {
+          "pos": [
+            0.0,
+            4.2,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Echauguette": {
+          "pos": [
+            -0.35,
+            -0.35,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            225.0
+          ]
+        }
+      },
+      "info": {},
+      "files": [
+        "SM_Fort_Curtain_Corner.fbx",
+        "SM_Fort_Curtain_Corner.glb"
+      ],
+      "build_s": 5.15
+    },
+    "SM_Fort_Bastion": {
+      "key": "bastion",
+      "export": "SM_Fort_Bastion",
+      "collection": "SM_Fort_Bastion",
+      "dims_m": [
+        15.405,
+        15.405,
+        5.66
+      ],
+      "bbox": {
+        "min": [
+          -6.96,
+          -6.96,
+          -1.37
+        ],
+        "max": [
+          8.445,
+          8.445,
+          4.29
+        ]
+      },
+      "height_vs_bean": 5.39,
+      "tris": 14236,
+      "tris_raw": 14236,
+      "budget": 45000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Bastion_00",
+        "UCX_SM_Fort_Bastion_01",
+        "UCX_SM_Fort_Bastion_02",
+        "UCX_SM_Fort_Bastion_03",
+        "UCX_SM_Fort_Bastion_04",
+        "UCX_SM_Fort_Bastion_05",
+        "UCX_SM_Fort_Bastion_06",
+        "UCX_SM_Fort_Bastion_07",
+        "UCX_SM_Fort_Bastion_08",
+        "UCX_SM_Fort_Bastion_09",
+        "UCX_SM_Fort_Bastion_10",
+        "UCX_SM_Fort_Bastion_11",
+        "UCX_SM_Fort_Bastion_12",
+        "UCX_SM_Fort_Bastion_13",
+        "UCX_SM_Fort_Bastion_14",
+        "UCX_SM_Fort_Bastion_15",
+        "UCX_SM_Fort_Bastion_16",
+        "UCX_SM_Fort_Bastion_17",
+        "UCX_SM_Fort_Bastion_18",
+        "UCX_SM_Fort_Bastion_19",
+        "UCX_SM_Fort_Bastion_20",
+        "UCX_SM_Fort_Bastion_21",
+        "UCX_SM_Fort_Bastion_22",
+        "UCX_SM_Fort_Bastion_23",
+        "UCX_SM_Fort_Bastion_24",
+        "UCX_SM_Fort_Bastion_25",
+        "UCX_SM_Fort_Bastion_26",
+        "UCX_SM_Fort_Bastion_27",
+        "UCX_SM_Fort_Bastion_28"
+      ],
+      "children": [],
+      "sockets": {
+        "Gun_FlankB": {
+          "pos": [
+            2.5,
+            -3.85,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            -180.0
+          ]
+        },
+        "Gun_FaceB_1": {
+          "pos": [
+            3.5132,
+            -1.2571,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            -100.342
+          ]
+        },
+        "Gun_FaceB_2": {
+          "pos": [
+            4.3632,
+            3.4009,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            -100.342
+          ]
+        },
+        "Gun_FaceA_1": {
+          "pos": [
+            3.4009,
+            4.3632,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            10.342
+          ]
+        },
+        "Gun_FaceA_2": {
+          "pos": [
+            -1.2571,
+            3.5132,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            10.342
+          ]
+        },
+        "Gun_FlankA": {
+          "pos": [
+            -3.85,
+            2.5,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            -270.0
+          ]
+        },
+        "Echauguette": {
+          "pos": [
+            7.85,
+            7.85,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            135.0
+          ]
+        },
+        "Tower": {
+          "pos": [
+            1.2,
+            1.2,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Flag": {
+          "pos": [
+            -2.5,
+            -2.5,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "ShotPile_1": {
+          "pos": [
+            -1.0,
+            2.0,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "ShotPile_2": {
+          "pos": [
+            2.0,
+            -1.0,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "face_m": 13.926,
+        "flank_m": 5.0,
+        "embrasures": 6,
+        "salient_deg": 69.3
+      },
+      "files": [
+        "SM_Fort_Bastion.fbx",
+        "SM_Fort_Bastion.glb"
+      ],
+      "build_s": 5.64
+    },
+    "SM_Fort_Bastion_Vault": {
+      "key": "bastion_vault",
+      "export": "SM_Fort_Bastion_Vault",
+      "collection": "SM_Fort_Bastion_Vault",
+      "dims_m": [
+        15.405,
+        15.405,
+        5.66
+      ],
+      "bbox": {
+        "min": [
+          -6.96,
+          -6.96,
+          -1.37
+        ],
+        "max": [
+          8.445,
+          8.445,
+          4.29
+        ]
+      },
+      "height_vs_bean": 5.39,
+      "tris": 14238,
+      "tris_raw": 14238,
+      "budget": 45000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Bastion_Vault_00",
+        "UCX_SM_Fort_Bastion_Vault_01",
+        "UCX_SM_Fort_Bastion_Vault_02",
+        "UCX_SM_Fort_Bastion_Vault_03",
+        "UCX_SM_Fort_Bastion_Vault_04",
+        "UCX_SM_Fort_Bastion_Vault_05",
+        "UCX_SM_Fort_Bastion_Vault_06",
+        "UCX_SM_Fort_Bastion_Vault_07",
+        "UCX_SM_Fort_Bastion_Vault_08",
+        "UCX_SM_Fort_Bastion_Vault_09",
+        "UCX_SM_Fort_Bastion_Vault_10",
+        "UCX_SM_Fort_Bastion_Vault_11",
+        "UCX_SM_Fort_Bastion_Vault_12",
+        "UCX_SM_Fort_Bastion_Vault_13",
+        "UCX_SM_Fort_Bastion_Vault_14",
+        "UCX_SM_Fort_Bastion_Vault_15",
+        "UCX_SM_Fort_Bastion_Vault_16",
+        "UCX_SM_Fort_Bastion_Vault_17",
+        "UCX_SM_Fort_Bastion_Vault_18",
+        "UCX_SM_Fort_Bastion_Vault_19",
+        "UCX_SM_Fort_Bastion_Vault_20",
+        "UCX_SM_Fort_Bastion_Vault_21",
+        "UCX_SM_Fort_Bastion_Vault_22",
+        "UCX_SM_Fort_Bastion_Vault_23",
+        "UCX_SM_Fort_Bastion_Vault_24",
+        "UCX_SM_Fort_Bastion_Vault_25",
+        "UCX_SM_Fort_Bastion_Vault_26",
+        "UCX_SM_Fort_Bastion_Vault_27",
+        "UCX_SM_Fort_Bastion_Vault_28",
+        "UCX_SM_Fort_Bastion_Vault_29",
+        "UCX_SM_Fort_Bastion_Vault_30",
+        "UCX_SM_Fort_Bastion_Vault_31",
+        "UCX_SM_Fort_Bastion_Vault_32",
+        "UCX_SM_Fort_Bastion_Vault_33",
+        "UCX_SM_Fort_Bastion_Vault_34",
+        "UCX_SM_Fort_Bastion_Vault_35",
+        "UCX_SM_Fort_Bastion_Vault_36"
+      ],
+      "children": [],
+      "sockets": {
+        "Gun_FlankB": {
+          "pos": [
+            2.5,
+            -3.85,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            -180.0
+          ]
+        },
+        "Gun_FaceB_1": {
+          "pos": [
+            3.5132,
+            -1.2571,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            -100.342
+          ]
+        },
+        "Gun_FaceB_2": {
+          "pos": [
+            4.3632,
+            3.4009,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            -100.342
+          ]
+        },
+        "Gun_FaceA_1": {
+          "pos": [
+            3.4009,
+            4.3632,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            10.342
+          ]
+        },
+        "Gun_FaceA_2": {
+          "pos": [
+            -1.2571,
+            3.5132,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            10.342
+          ]
+        },
+        "Gun_FlankA": {
+          "pos": [
+            -3.85,
+            2.5,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            -270.0
+          ]
+        },
+        "Echauguette": {
+          "pos": [
+            7.85,
+            7.85,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            135.0
+          ]
+        },
+        "Tower": {
+          "pos": [
+            1.2,
+            1.2,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Flag": {
+          "pos": [
+            -2.5,
+            -2.5,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "ShotPile_1": {
+          "pos": [
+            -1.0,
+            2.0,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "ShotPile_2": {
+          "pos": [
+            2.0,
+            -1.0,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "face_m": 13.926,
+        "flank_m": 5.0,
+        "embrasures": 6,
+        "salient_deg": 69.3
+      },
+      "files": [
+        "SM_Fort_Bastion_Vault.fbx",
+        "SM_Fort_Bastion_Vault.glb"
+      ],
+      "build_s": 5.81
+    },
+    "SM_Fort_Ramp": {
+      "key": "ramp",
+      "export": "SM_Fort_Ramp",
+      "collection": "SM_Fort_Ramp",
+      "dims_m": [
+        2.35,
+        16.88,
+        3.585
+      ],
+      "bbox": {
+        "min": [
+          -1.02,
+          0.0,
+          -0.06
+        ],
+        "max": [
+          1.33,
+          16.88,
+          3.525
+        ]
+      },
+      "height_vs_bean": 3.41,
+      "tris": 320,
+      "tris_raw": 320,
+      "budget": 3000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_WoodOak"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Ramp_00",
+        "UCX_SM_Fort_Ramp_01",
+        "UCX_SM_Fort_Ramp_02",
+        "UCX_SM_Fort_Ramp_03",
+        "UCX_SM_Fort_Ramp_04"
+      ],
+      "children": [],
+      "sockets": {
+        "Foot": {
+          "pos": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Top": {
+          "pos": [
+            0.0,
+            15.85,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "slope_deg": 11.31
+      },
+      "files": [
+        "SM_Fort_Ramp.fbx",
+        "SM_Fort_Ramp.glb"
+      ],
+      "build_s": 5.15
+    },
+    "SM_Fort_Stair": {
+      "key": "stair",
+      "export": "SM_Fort_Stair",
+      "collection": "SM_Fort_Stair",
+      "dims_m": [
+        1.2,
+        6.906,
+        3.647
+      ],
+      "bbox": {
+        "min": [
+          -0.6,
+          -0.026,
+          0.0
+        ],
+        "max": [
+          0.6,
+          6.88,
+          3.647
+        ]
+      },
+      "height_vs_bean": 3.47,
+      "tris": 1188,
+      "tris_raw": 1188,
+      "budget": 4000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Stair_00",
+        "UCX_SM_Fort_Stair_01",
+        "UCX_SM_Fort_Stair_02",
+        "UCX_SM_Fort_Stair_03"
+      ],
+      "children": [],
+      "sockets": {
+        "Foot": {
+          "pos": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Top": {
+          "pos": [
+            0.0,
+            5.98,
+            2.97
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "run_m": 5.68,
+        "top_landing_m": 1.2
+      },
+      "files": [
+        "SM_Fort_Stair.fbx",
+        "SM_Fort_Stair.glb"
+      ],
+      "build_s": 5.1
+    },
+    "SM_Fort_Echauguette": {
+      "key": "echauguette",
+      "export": "SM_Fort_Echauguette",
+      "collection": "SM_Fort_Echauguette",
+      "dims_m": [
+        2.0,
+        2.0,
+        4.67
+      ],
+      "bbox": {
+        "min": [
+          -1.0,
+          -1.0,
+          -1.37
+        ],
+        "max": [
+          1.0,
+          1.0,
+          3.3
+        ]
+      },
+      "height_vs_bean": 4.45,
+      "tris": 1758,
+      "tris_raw": 1758,
+      "budget": 6000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralAshlar"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Echauguette_00",
+        "UCX_SM_Fort_Echauguette_01"
+      ],
+      "children": [],
+      "sockets": {
+        "Inside": {
+          "pos": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Lantern": {
+          "pos": [
+            0.0,
+            0.45,
+            1.6
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "door_m": [
+          1.0,
+          1.65
+        ],
+        "clear_m": 2.31
+      },
+      "files": [
+        "SM_Fort_Echauguette.fbx",
+        "SM_Fort_Echauguette.glb"
+      ],
+      "build_s": 2.04
+    }
+  },
+  "errors": {},
+  "build_s": 48.5,
+  "images": [
+    "coral_fort_wall_01_diff_2k.jpg",
+    "coral_fort_wall_01_disp_2k.jpg",
+    "coral_fort_wall_01_nor_gl_2k.jpg",
+    "coral_fort_wall_01_rough_2k.jpg",
+    "coral_fort_wall_02_diff_2k.jpg",
+    "coral_fort_wall_02_disp_2k.jpg",
+    "coral_fort_wall_02_nor_gl_2k.jpg",
+    "coral_fort_wall_02_rough_2k.jpg",
+    "coral_fort_wall_03_diff_2k.jpg",
+    "coral_fort_wall_03_disp_2k.jpg",
+    "coral_fort_wall_03_nor_gl_2k.jpg",
+    "coral_fort_wall_03_rough_2k.jpg",
+    "coral_ground_02_diff_2k.jpg",
+    "coral_ground_02_disp_2k.jpg",
+    "coral_ground_02_nor_gl_2k.jpg",
+    "coral_ground_02_rough_2k.jpg",
+    "dark_wooden_planks_diff_1k.jpg",
+    "dark_wooden_planks_nor_gl_1k.jpg",
+    "dark_wooden_planks_rough_1k.jpg",
+    "rusty_metal_04_ao_1k.jpg",
+    "rusty_metal_04_diff_1k.jpg",
+    "rusty_metal_04_nor_gl_1k.jpg",
+    "rusty_metal_04_rough_1k.jpg",
+    "white_plaster_02_diff_2k.jpg",
+    "white_plaster_02_disp_2k.jpg",
+    "white_plaster_02_nor_gl_2k.jpg",
+    "white_plaster_02_rough_2k.jpg"
+  ]
+}

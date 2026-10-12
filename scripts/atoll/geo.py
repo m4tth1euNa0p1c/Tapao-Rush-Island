@@ -17,16 +17,33 @@ class MeshBuilder:
     """Accumulates per-vertex position / UV / color and polygons, then builds one bpy mesh.
 
     Colors go to a POINT color attribute "Col": RGB = tint multiplier, A = dryness (0..1).
+
+    Wind (baked for the foliage wind material MF_FoliageWind): every vertex gets
+    branch weight, flutter weight and phase; the bend weight is computed at build from the height.
+    Set mb.wind_group = (anchor, length, phase) while adding a swaying part (frond, twig): its
+    vertices get branch = (distance to anchor / length) ** 1.5. Strips (leaves, leaflets, blades)
+    flutter along their length.
     """
 
     def __init__(self):
         self.co, self.uv, self.col = [], [], []
+        self.wind = []
+        self.wind_group = None
         self.polys = []
         self.n = 0
 
-    def verts(self, co, uv=None, col=None):
+    def verts(self, co, uv=None, col=None, wind=None):
         co = np.asarray(co, np.float32).reshape(-1, 3)
         m = len(co)
+        w = np.zeros((m, 3), np.float32)
+        if wind is not None:
+            w = np.asarray(wind, np.float32).reshape(-1, 3)
+        elif self.wind_group is not None:
+            anchor, length, phase = self.wind_group
+            d = np.linalg.norm(co - np.asarray(anchor, np.float32), axis=1) / max(float(length), 1e-3)
+            w[:, 0] = np.clip(d, 0, 1) ** 1.5
+            w[:, 2] = phase
+        self.wind.append(w)
         uv = np.zeros((m, 2), np.float32) if uv is None else np.asarray(uv, np.float32).reshape(-1, 2)
         if col is None:
             col = np.tile(np.array([1, 1, 1, 0], np.float32), (m, 1))
@@ -65,6 +82,19 @@ class MeshBuilder:
         me.polygons.foreach_set("material_index", mats)
         uvl = me.uv_layers.new(name="UVMap")
         uvl.data.foreach_set("uv", uv[loops].ravel())
+        wind = np.concatenate(self.wind)
+        if self.co:  # always: the vegetation materials read UV2/UV3 (zeros = still), a missing channel would be UV0
+            # UV1 = copy of UV0 (spare for lightmaps), UV2 = (bend, branch), UV3 = (flutter, phase).
+            # FBX -> UE flips V (v' = 1 - v): V is stored flipped so Unreal reads the value itself.
+            z = co[:, 2] - co[:, 2].min()
+            bend = np.clip(z / max(float(z.max()), 1e-3), 0, 1) ** 2
+            if not wind.any():
+                bend[:] = 0.0  # rigid object (nut, loose leaf): no wind of its own
+            me.uv_layers.new(name="UVLight").data.foreach_set("uv", uv[loops].ravel())
+            w0 = np.stack([bend, 1.0 - wind[:, 0]], 1).astype(np.float32)
+            w1 = np.stack([wind[:, 1], 1.0 - wind[:, 2]], 1).astype(np.float32)
+            me.uv_layers.new(name="UVWind0").data.foreach_set("uv", w0[loops].ravel())
+            me.uv_layers.new(name="UVWind1").data.foreach_set("uv", w1[loops].ravel())
         ca = me.color_attributes.new("Col", "FLOAT_COLOR", "POINT")
         ca.data.foreach_set("color", col.ravel())
         me.update(calc_edges=True)
@@ -76,12 +106,13 @@ class MeshBuilder:
         return me
 
 
-def add_strips(mb, C, U, W, F=None, col=None, mat=0, v=None):
+def add_strips(mb, C, U, W, F=None, col=None, mat=0, v=None, wind=None):
     """Leaf / blade ribbons with a folded midrib (3 vertices across).
 
     C (N,S1,3) centerlines, U (N,S1,3) wanted surface normal, W (N,S1) half widths,
     F (N,S1) midrib offset along the normal (+ ridge up, - channel), col (N,4) or (N,S1,4).
     UV: u across (0, .5, 1), v along (0 base .. 1 tip).
+    Wind: flutter = v; wind = (anchor (N,3), length (N,), phase (N,)) per strip, else mb.wind_group.
     """
     C = np.asarray(C, np.float64)
     N, S1, _ = C.shape
@@ -111,7 +142,19 @@ def add_strips(mb, C, U, W, F=None, col=None, mat=0, v=None):
         if col.ndim == 2:
             col = np.broadcast_to(col[:, None, :], (N, S1, 4))
         c = np.broadcast_to(col[:, :, None, :], (N, S1, 3, 4)).reshape(-1, 4)
-    base = mb.verts(V.reshape(-1, 3), uv.reshape(-1, 2), c)
+    wv = np.zeros((N, S1, 3, 3), np.float32)
+    wv[..., 1] = np.asarray(v, np.float32)[..., None]
+    if wind is not None:
+        anchor, length, phase = (np.asarray(a, np.float64) for a in wind)
+        d = np.linalg.norm(V - anchor[:, None, None, :], axis=-1) / np.maximum(length, 1e-3)[:, None, None]
+        wv[..., 0] = np.clip(d, 0, 1) ** 1.5
+        wv[..., 2] = phase[:, None, None]
+    elif mb.wind_group is not None:
+        anchor, length, phase = mb.wind_group
+        d = np.linalg.norm(V - np.asarray(anchor), axis=-1) / max(float(length), 1e-3)
+        wv[..., 0] = np.clip(d, 0, 1) ** 1.5
+        wv[..., 2] = phase
+    base = mb.verts(V.reshape(-1, 3), uv.reshape(-1, 2), c, wv.reshape(-1, 3))
     idx = base + np.arange(N * S1 * 3).reshape(N, S1, 3)
     q1 = np.stack([idx[:, :-1, 0], idx[:, 1:, 0], idx[:, 1:, 1], idx[:, :-1, 1]], -1)
     q2 = np.stack([idx[:, :-1, 1], idx[:, 1:, 1], idx[:, 1:, 2], idx[:, :-1, 2]], -1)
@@ -347,6 +390,14 @@ class Noise:
             nrm += amp
             amp *= gain
         return tot / nrm
+
+
+def wind_phase(*keys):
+    """Deterministic phase in [0, 1) from floats (does not consume the generators' random streams)."""
+    x = 0.0
+    for i, k in enumerate(np.ravel(keys)):
+        x += float(k) * (12.9898 + 31.7 * i)
+    return float((math.sin(x) * 43758.5453) % 1.0)
 
 
 def smoothstep(e0, e1, x):

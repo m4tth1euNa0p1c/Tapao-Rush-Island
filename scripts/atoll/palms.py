@@ -11,7 +11,7 @@ import math
 import numpy as np
 
 from .geo import (GOLDEN, UP, MeshBuilder, add_strips, add_tube, align_z, integrate_path, leaf_profile, norm,
-                  perp_basis, polyline_length, rot_axis, spline, stamp, uv_sphere)
+                  perp_basis, polyline_length, rot_axis, spline, stamp, uv_sphere, wind_phase)
 
 BARK, LEAF, FIBER, NUTM, EOPHYLL = range(5)
 
@@ -49,6 +49,8 @@ def nut_color(rng, maturity):
 def frond(mb, rng, origin, az, pitch, length, age, *, dead=False, spear=False, lying=False,
           n_side=84, bend=None, leaflet_scale=1.0, width_scale=1.0):
     """One pinnate frond. age 0 (young) .. 1 (old). Leaflets droop with gravity."""
+    prev_group = mb.wind_group
+    mb.wind_group = (np.asarray(origin, np.float64), length, wind_phase(az, length, *origin))
     h = np.array([math.cos(az), math.sin(az), 0.0])
     side = np.array([-math.sin(az), math.cos(az), 0.0])
     S = 24
@@ -144,6 +146,7 @@ def frond(mb, rng, origin, az, pitch, length, age, *, dead=False, spear=False, l
     col = np.concatenate([np.broadcast_to(lt[:, None, :], (N, Sx + 1, 3)), dry[..., None]
                           * np.ones((N, Sx + 1, 1))], -1)
     add_strips(mb, C, U, W, F, col, LEAF)
+    mb.wind_group = prev_group
     return pos
 
 

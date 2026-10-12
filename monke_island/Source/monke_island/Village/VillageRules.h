@@ -7,8 +7,12 @@
 #include "Village/VillageLayout.h"
 #include "VillageRules.generated.h"
 
+class AFlagCeremonySite;
 class AVillageAmbienceActor;
+class UFlagCeremonyRules;
+class UStaticMesh;
 class UVillageAmbienceRules;
+class UVillageHouseKit;
 
 /** Kind of plant of the vegetation, for the clearing margins (scripts/map/village_clearing.py) */
 UENUM(BlueprintType)
@@ -136,6 +140,28 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Houses")
 	bool bHousesBlockCamera = true;
 
+	/** Houses built from parts (T-186): a layout mesh that is the SourceMesh of a kit is built as the kit's shell,
+	 *  solid all over, with its sliding doors and its contents (DA_MinkaKit for SM_Minka) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Houses")
+	TArray<TObjectPtr<UVillageHouseKit>> HouseKits;
+
+	/** Flag site put on the square of every pacifiable village (AFlagCeremonySite); none: no ceremony */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Ceremony")
+	TSubclassOf<AFlagCeremonySite> FlagSiteClass;
+
+	/** Rules of those flag sites (DA_FlagCeremonyRules) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Ceremony")
+	TObjectPtr<UFlagCeremonyRules> FlagCeremonyRules;
+
+	/** A flag site already in the level this close to the centre of a village stands for it: none is added (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Ceremony", meta=(ClampMin="0", Units="cm"))
+	float FlagSiteMatchRadius = 2500.0f;
+
+	/** The hamlets between the zones get their stone pile and flag too (owner 2026-10-07: "sur les petits villages il
+	 *  n'y a pas le drapeau avec le petit tas de pierre"); they stay without guardians */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Ceremony")
+	bool bFlagSitesInHamlets = true;
+
 	/** Village ambience (lights that follow the day, butterflies, fireflies); no ambience, no light */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Ambience")
 	TObjectPtr<UVillageAmbienceRules> AmbienceRules;
@@ -204,4 +230,7 @@ public:
 
 	/** True when the instances of a mesh (its path name) may be cleared */
 	bool IsClearable(const FString& MeshPath) const;
+
+	/** Kit that builds the houses of a layout mesh (with a shell), nullptr when the mesh is placed as it is */
+	UVillageHouseKit* FindHouseKit(const UStaticMesh* Mesh) const;
 };

@@ -1,0 +1,458 @@
+{
+  "lot": "batiments",
+  "blender": "5.2.2 LTS",
+  "modules": {
+    "SM_Fort_GovernorHouse": {
+      "key": "governor_house",
+      "export": "SM_Fort_GovernorHouse",
+      "collection": "SM_Fort_GovernorHouse",
+      "dims_m": [
+        14.994,
+        10.347,
+        9.556
+      ],
+      "bbox": {
+        "min": [
+          -7.497,
+          -6.35,
+          -0.01
+        ],
+        "max": [
+          7.497,
+          3.997,
+          9.546
+        ]
+      },
+      "height_vs_bean": 9.1,
+      "tris": 49364,
+      "tris_raw": 49364,
+      "budget": 60000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_Brick",
+        "MAT-Fort_RoofTiles"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_GovernorHouse_00",
+        "UCX_SM_Fort_GovernorHouse_01",
+        "UCX_SM_Fort_GovernorHouse_02",
+        "UCX_SM_Fort_GovernorHouse_03",
+        "UCX_SM_Fort_GovernorHouse_04",
+        "UCX_SM_Fort_GovernorHouse_05",
+        "UCX_SM_Fort_GovernorHouse_06",
+        "UCX_SM_Fort_GovernorHouse_07",
+        "UCX_SM_Fort_GovernorHouse_08",
+        "UCX_SM_Fort_GovernorHouse_09",
+        "UCX_SM_Fort_GovernorHouse_10",
+        "UCX_SM_Fort_GovernorHouse_11",
+        "UCX_SM_Fort_GovernorHouse_12",
+        "UCX_SM_Fort_GovernorHouse_13",
+        "UCX_SM_Fort_GovernorHouse_14",
+        "UCX_SM_Fort_GovernorHouse_15",
+        "UCX_SM_Fort_GovernorHouse_16",
+        "UCX_SM_Fort_GovernorHouse_17",
+        "UCX_SM_Fort_GovernorHouse_18",
+        "UCX_SM_Fort_GovernorHouse_19",
+        "UCX_SM_Fort_GovernorHouse_20",
+        "UCX_SM_Fort_GovernorHouse_21"
+      ],
+      "children": [],
+      "sockets": {
+        "Door": {
+          "pos": [
+            0.0,
+            -5.6,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Desk": {
+          "pos": [
+            4.5,
+            1.5,
+            0.495
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Strongbox": {
+          "pos": [
+            5.8,
+            2.6,
+            0.495
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Balcony": {
+          "pos": [
+            0.0,
+            -4.5,
+            3.135
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Lantern_L": {
+          "pos": [
+            -3.0,
+            -3.6,
+            2.5
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Lantern_R": {
+          "pos": [
+            3.0,
+            -3.6,
+            2.5
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "ridge_z": 8.926,
+        "clear_height_m": 2.59
+      },
+      "files": [
+        "SM_Fort_GovernorHouse.fbx",
+        "SM_Fort_GovernorHouse.glb"
+      ],
+      "build_s": 11.85
+    },
+    "SM_Fort_Barracks": {
+      "key": "barracks",
+      "export": "SM_Fort_Barracks",
+      "collection": "SM_Fort_Barracks",
+      "dims_m": [
+        17.3,
+        6.8,
+        5.244
+      ],
+      "bbox": {
+        "min": [
+          -8.65,
+          -3.4,
+          0.0
+        ],
+        "max": [
+          8.65,
+          3.4,
+          5.244
+        ]
+      },
+      "height_vs_bean": 4.99,
+      "tris": 32732,
+      "tris_raw": 32732,
+      "budget": 40000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_RoofTiles",
+        "MAT-Fort_Jute"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Barracks_00",
+        "UCX_SM_Fort_Barracks_01",
+        "UCX_SM_Fort_Barracks_02",
+        "UCX_SM_Fort_Barracks_03",
+        "UCX_SM_Fort_Barracks_04",
+        "UCX_SM_Fort_Barracks_05",
+        "UCX_SM_Fort_Barracks_06",
+        "UCX_SM_Fort_Barracks_07",
+        "UCX_SM_Fort_Barracks_08",
+        "UCX_SM_Fort_Barracks_09",
+        "UCX_SM_Fort_Barracks_10",
+        "UCX_SM_Fort_Barracks_11",
+        "UCX_SM_Fort_Barracks_12",
+        "UCX_SM_Fort_Barracks_13",
+        "UCX_SM_Fort_Barracks_14"
+      ],
+      "children": [],
+      "sockets": {
+        "Door_1": {
+          "pos": [
+            -4.0,
+            -3.1,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Door_2": {
+          "pos": [
+            4.0,
+            -3.1,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "WeaponRack": {
+          "pos": [
+            0.0,
+            2.7,
+            1.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "ridge_z": 5.149,
+        "bunks": 20
+      },
+      "files": [
+        "SM_Fort_Barracks.fbx",
+        "SM_Fort_Barracks.glb"
+      ],
+      "build_s": 9.08
+    },
+    "SM_Fort_Kitchen": {
+      "key": "kitchen",
+      "export": "SM_Fort_Kitchen",
+      "collection": "SM_Fort_Kitchen",
+      "dims_m": [
+        7.2,
+        5.2,
+        5.57
+      ],
+      "bbox": {
+        "min": [
+          -3.6,
+          -2.6,
+          0.0
+        ],
+        "max": [
+          3.6,
+          2.6,
+          5.57
+        ]
+      },
+      "height_vs_bean": 5.3,
+      "tris": 6970,
+      "tris_raw": 6970,
+      "budget": 20000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_Brick",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_RoofTiles"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Kitchen_00",
+        "UCX_SM_Fort_Kitchen_01",
+        "UCX_SM_Fort_Kitchen_02",
+        "UCX_SM_Fort_Kitchen_03",
+        "UCX_SM_Fort_Kitchen_04",
+        "UCX_SM_Fort_Kitchen_05",
+        "UCX_SM_Fort_Kitchen_06",
+        "UCX_SM_Fort_Kitchen_07",
+        "UCX_SM_Fort_Kitchen_08",
+        "UCX_SM_Fort_Kitchen_09"
+      ],
+      "children": [],
+      "sockets": {
+        "Door": {
+          "pos": [
+            0.0,
+            -2.35,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Fire": {
+          "pos": [
+            -1.6,
+            1.7,
+            0.2
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Smoke": {
+          "pos": [
+            -1.6,
+            2.0,
+            5.6
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "ridge_z": 4.38
+      },
+      "files": [
+        "SM_Fort_Kitchen.fbx",
+        "SM_Fort_Kitchen.glb"
+      ],
+      "build_s": 6.93
+    },
+    "SM_Fort_Cistern": {
+      "key": "cistern",
+      "export": "SM_Fort_Cistern",
+      "collection": "SM_Fort_Cistern",
+      "dims_m": [
+        2.991,
+        2.551,
+        3.23
+      ],
+      "bbox": {
+        "min": [
+          -1.539,
+          -1.47,
+          -0.6
+        ],
+        "max": [
+          1.452,
+          1.081,
+          2.63
+        ]
+      },
+      "height_vs_bean": 3.08,
+      "tris": 1550,
+      "tris_raw": 1550,
+      "budget": 5000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_Rope"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Cistern_00",
+        "UCX_SM_Fort_Cistern_01"
+      ],
+      "children": [],
+      "sockets": {
+        "Interact": {
+          "pos": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Bucket": {
+          "pos": [
+            0.0,
+            0.0,
+            1.6
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "curb_m": 0.66
+      },
+      "files": [
+        "SM_Fort_Cistern.fbx",
+        "SM_Fort_Cistern.glb"
+      ],
+      "build_s": 3.46
+    }
+  },
+  "errors": {},
+  "build_s": 32.1,
+  "images": [
+    "Rope001_1K-JPG_Color.jpg",
+    "Rope001_1K-JPG_Metalness.jpg",
+    "Rope001_1K-JPG_NormalGL.jpg",
+    "Rope001_1K-JPG_Roughness.jpg",
+    "brown_planks_03_diff_2k.jpg",
+    "brown_planks_03_nor_gl_2k.jpg",
+    "brown_planks_03_rough_2k.jpg",
+    "clay_roof_tiles_02_diff_2k.jpg",
+    "clay_roof_tiles_02_disp_2k.jpg",
+    "clay_roof_tiles_02_nor_gl_2k.jpg",
+    "clay_roof_tiles_02_rough_2k.jpg",
+    "coral_fort_wall_01_diff_2k.jpg",
+    "coral_fort_wall_01_disp_2k.jpg",
+    "coral_fort_wall_01_nor_gl_2k.jpg",
+    "coral_fort_wall_01_rough_2k.jpg",
+    "coral_fort_wall_02_diff_2k.jpg",
+    "coral_fort_wall_02_disp_2k.jpg",
+    "coral_fort_wall_02_nor_gl_2k.jpg",
+    "coral_fort_wall_02_rough_2k.jpg",
+    "coral_fort_wall_03_diff_2k.jpg",
+    "coral_fort_wall_03_disp_2k.jpg",
+    "coral_fort_wall_03_nor_gl_2k.jpg",
+    "coral_fort_wall_03_rough_2k.jpg",
+    "coral_ground_02_diff_2k.jpg",
+    "coral_ground_02_disp_2k.jpg",
+    "coral_ground_02_nor_gl_2k.jpg",
+    "coral_ground_02_rough_2k.jpg",
+    "hessian_230_diff_1k.jpg",
+    "hessian_230_nor_gl_1k.jpg",
+    "hessian_230_rough_1k.jpg",
+    "red_brick_03_diff_2k.jpg",
+    "red_brick_03_disp_2k.jpg",
+    "red_brick_03_nor_gl_2k.jpg",
+    "red_brick_03_rough_2k.jpg",
+    "rusty_metal_04_ao_1k.jpg",
+    "rusty_metal_04_diff_1k.jpg",
+    "rusty_metal_04_nor_gl_1k.jpg",
+    "rusty_metal_04_rough_1k.jpg",
+    "white_plaster_02_diff_2k.jpg",
+    "white_plaster_02_disp_2k.jpg",
+    "white_plaster_02_nor_gl_2k.jpg",
+    "white_plaster_02_rough_2k.jpg"
+  ]
+}

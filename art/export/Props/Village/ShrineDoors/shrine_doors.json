@@ -1,0 +1,135 @@
+{
+ "task": "T-189",
+ "frame": "Unreal cm, frame of SM_Village_Shrine: x = Blender x, y = -Blender y, z; yaw degrees",
+ "shell": {
+  "mesh": "SM_Village_Shrine_Shell",
+  "tris": 2256,
+  "ucx": 27,
+  "convexes": [
+   "base",
+   "stone_step_0",
+   "stone_step_1",
+   "stone_step_2",
+   "wood_step_1",
+   "wood_step_2",
+   "wood_step_3",
+   "platform",
+   "post_-1-1",
+   "post_-1+1",
+   "post_+1-1",
+   "post_+1+1",
+   "wall_left",
+   "wall_right",
+   "wall_back",
+   "wall_front_left",
+   "wall_front_right",
+   "wall_lintel",
+   "ceiling",
+   "roof_0",
+   "roof_1",
+   "ridge",
+   "gable_front",
+   "gable_back",
+   "altar",
+   "mirror",
+   "offering_box"
+  ],
+  "materials": [
+   "M_Minka_Cedar",
+   "M_Minka_Ceramic",
+   "M_Minka_FloorWood",
+   "M_Minka_Lacquer",
+   "M_Minka_LanternGlow",
+   "M_Minka_Plaster",
+   "M_Minka_Rope",
+   "M_Minka_Stone",
+   "M_Minka_Thatch",
+   "M_Minka_Timber",
+   "M_Minka_Washi",
+   "M_Village_Bronze"
+  ]
+ },
+ "panel_meshes": {
+  "SM_Village_ShrineDoor": {
+   "tris": 192,
+   "materials": [
+    "M_Minka_Timber"
+   ],
+   "size_cm": [
+    55.0,
+    4.0,
+    128.0
+   ]
+  }
+ },
+ "panels": [
+  {
+   "name": "Shrine_Door_0",
+   "mesh": "SM_Village_ShrineDoor",
+   "type": "tobira",
+   "doorway": "Shrine_Door",
+   "doorway_index": 0,
+   "closed": [
+    -55.0,
+    97.0,
+    102.0
+   ],
+   "yaw": -0.0,
+   "open_yaw": -95.0,
+   "travel": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "open_fraction": 1.0
+  },
+  {
+   "name": "Shrine_Door_1",
+   "mesh": "SM_Village_ShrineDoor",
+   "type": "tobira",
+   "doorway": "Shrine_Door",
+   "doorway_index": 0,
+   "closed": [
+    55.0,
+    93.0,
+    102.0
+   ],
+   "yaw": -180.0,
+   "open_yaw": 95.0,
+   "travel": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "open_fraction": 1.0
+  }
+ ],
+ "doorways": [
+  {
+   "name": "Shrine_Door",
+   "type": "tobira",
+   "centre": [
+    0.0,
+    95.0,
+    102.0
+   ],
+   "yaw": 0.0,
+   "half_width": 55.0,
+   "height": 128.0
+  }
+ ],
+ "slots": {
+  "relic": [
+   {
+    "location": [
+     0.0,
+     -63.0,
+     145.0
+    ],
+    "yaw": 0.0,
+    "room": "altar"
+   }
+  ],
+  "items": []
+ }
+}

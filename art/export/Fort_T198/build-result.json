@@ -1,0 +1,492 @@
+{
+  "task": "T-198",
+  "meshes": {
+    "SM_Fort_GovernorHouse": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_GovernorHouse.fbx",
+      "materials": [
+        "MAT-Fort_Brick",
+        "MAT-Fort_Copper",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_RoofTiles",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_WoodWeathered",
+        "MAT-Rework_BlueCloth",
+        "MAT-Rework_Ceramic",
+        "MAT-Rework_GoldStamp",
+        "MAT-Rework_Ink",
+        "MAT-Rework_Leather",
+        "MAT-Rework_Linen",
+        "MAT-Rework_Parchment",
+        "MAT-Rework_RedCloth"
+      ],
+      "triangles": 150892,
+      "size_cm": [
+        1499.3842124938965,
+        1034.692120552063,
+        955.5934682488441
+      ],
+      "collision": "complex",
+      "ucx_count": 22
+    },
+    "SM_Fort_Barracks": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_Barracks.fbx",
+      "materials": [
+        "MAT-Fort_Copper",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_Jute",
+        "MAT-Fort_RoofTiles",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_WoodWeathered",
+        "MAT-Rework_BlueCloth",
+        "MAT-Rework_GoldStamp",
+        "MAT-Rework_Leather",
+        "MAT-Rework_Linen",
+        "MAT-Rework_Parchment"
+      ],
+      "triangles": 54092,
+      "size_cm": [
+        1729.9999237060547,
+        680.0001621246338,
+        524.3856906890869
+      ],
+      "collision": "complex",
+      "ucx_count": 15
+    },
+    "SM_Fort_GuardHouse": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_GuardHouse.fbx",
+      "materials": [
+        "MAT-Fort_Copper",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_RoofTiles",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_WoodWeathered",
+        "MAT-Rework_BlueCloth",
+        "MAT-Rework_Ceramic",
+        "MAT-Rework_GoldStamp",
+        "MAT-Rework_Ink",
+        "MAT-Rework_Leather",
+        "MAT-Rework_Linen",
+        "MAT-Rework_Parchment"
+      ],
+      "triangles": 20572,
+      "size_cm": [
+        789.3842220306396,
+        589.3842220306396,
+        468.55292320251465
+      ],
+      "collision": "complex",
+      "ucx_count": 11
+    },
+    "SM_Fort_Kitchen": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_Kitchen.fbx",
+      "materials": [
+        "MAT-Fort_Brick",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_RoofTiles",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_WoodWeathered",
+        "MAT-Rework_Ceramic",
+        "MAT-Rework_GoldStamp",
+        "MAT-Rework_Leather",
+        "MAT-Rework_Parchment"
+      ],
+      "triangles": 12898,
+      "size_cm": [
+        720.0000286102295,
+        520.0000286102295,
+        557.0000171661377
+      ],
+      "collision": "complex",
+      "ucx_count": 10
+    },
+    "SM_Fort_Prison": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_Prison.fbx",
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_Jute",
+        "MAT-Fort_WoodOak",
+        "MAT-Rework_Ceramic",
+        "MAT-Rework_Linen"
+      ],
+      "triangles": 31920,
+      "size_cm": [
+        622.000002861023,
+        711.0000610351562,
+        335.99999621510506
+      ],
+      "collision": "complex",
+      "ucx_count": 21
+    },
+    "SM_Fort_Chapel": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_Chapel.fbx",
+      "materials": [
+        "MAT-Fort_Copper",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_RoofTiles",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Rework_GoldStamp",
+        "MAT-Rework_Leather",
+        "MAT-Rework_Linen",
+        "MAT-Rework_Parchment",
+        "MAT-Rework_RedCloth"
+      ],
+      "triangles": 17298,
+      "size_cm": [
+        570.0000286102295,
+        912.0000839233398,
+        775.6409645080566
+      ],
+      "collision": "complex",
+      "ucx_count": 15
+    },
+    "SM_Fort_TreasureVault": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_TreasureVault.fbx",
+      "materials": [
+        "MAT-Fort_Brick",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_WoodWeathered",
+        "MAT-Rework_BlueCloth",
+        "MAT-Rework_GoldStamp",
+        "MAT-Rework_Leather",
+        "MAT-Rework_Linen",
+        "MAT-Rework_Parchment"
+      ],
+      "triangles": 12032,
+      "size_cm": [
+        1060.0000143051147,
+        852.5000810623169,
+        444.9999988079071
+      ],
+      "collision": "complex",
+      "ucx_count": 22
+    },
+    "SM_Port_Warehouse": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Port_Warehouse.fbx",
+      "materials": [
+        "MAT-Fort_Copper",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_Jute",
+        "MAT-Fort_Shingles",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_WoodWeathered",
+        "MAT-Rework_Ceramic",
+        "MAT-Rework_GoldStamp",
+        "MAT-Rework_Ink",
+        "MAT-Rework_Leather",
+        "MAT-Rework_Parchment"
+      ],
+      "triangles": 13452,
+      "size_cm": [
+        1130.000114440918,
+        737.0000600814819,
+        578.2298773527145
+      ],
+      "collision": "complex",
+      "ucx_count": 11
+    },
+    "SM_Fort_SignalTower": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_SignalTower.fbx",
+      "materials": [
+        "MAT-Fort_Copper",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_Rope",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Rework_GoldStamp",
+        "MAT-Rework_Leather",
+        "MAT-Rework_Parchment"
+      ],
+      "triangles": 44202,
+      "size_cm": [
+        533.9926719665527,
+        520.0000286102295,
+        1158.9815020561218
+      ],
+      "collision": "complex",
+      "ucx_count": 39
+    },
+    "SM_Fort_PowderMagazine": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_PowderMagazine.fbx",
+      "materials": [
+        "MAT-Fort_Copper",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_Jute",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Rework_Linen"
+      ],
+      "triangles": 10712,
+      "size_cm": [
+        806.0000896453857,
+        708.0000877380371,
+        400.73528960347176
+      ],
+      "collision": "complex",
+      "ucx_count": 15
+    },
+    "SM_Loot_GoldBar": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Loot_GoldBar.fbx",
+      "materials": [
+        "MAT-Rework_GoldStamp",
+        "MAT_Gold_Aged"
+      ],
+      "triangles": 1304,
+      "size_cm": [
+        17.98013299703598,
+        8.469448238611221,
+        2.4620000272989273
+      ],
+      "collision": "simple",
+      "ucx_count": 1,
+      "bar_count": 1,
+      "mass_kg": 5.5,
+      "value": 500
+    },
+    "SM_Loot_GoldStack_S": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Loot_GoldStack_S.fbx",
+      "materials": [
+        "MAT-Rework_GoldStamp",
+        "MAT_Gold_Aged"
+      ],
+      "triangles": 7824,
+      "size_cm": [
+        18.182216584682465,
+        17.295173555612564,
+        7.8620001673698425
+      ],
+      "collision": "simple",
+      "ucx_count": 6,
+      "bar_count": 6,
+      "mass_kg": 33.0,
+      "value": 3000
+    },
+    "SM_Loot_GoldStack_M": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Loot_GoldStack_M.fbx",
+      "materials": [
+        "MAT-Rework_GoldStamp",
+        "MAT_Gold_Aged"
+      ],
+      "triangles": 15648,
+      "size_cm": [
+        18.202795088291168,
+        26.071323454380035,
+        10.561999678611755
+      ],
+      "collision": "simple",
+      "ucx_count": 12,
+      "bar_count": 12,
+      "mass_kg": 66.0,
+      "value": 6000
+    },
+    "SM_Loot_GoldStack_L": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Loot_GoldStack_L.fbx",
+      "materials": [
+        "MAT-Rework_GoldStamp",
+        "MAT_Gold_Aged"
+      ],
+      "triangles": 31296,
+      "size_cm": [
+        36.798980832099915,
+        17.29782223701477,
+        15.9620001912117
+      ],
+      "collision": "simple",
+      "ucx_count": 24,
+      "bar_count": 24,
+      "mass_kg": 132.0,
+      "value": 12000
+    },
+    "SM_Fort_MoatWater": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_MoatWater.fbx",
+      "materials": [
+        "MAT-Rework_MoatWater"
+      ],
+      "triangles": 768,
+      "size_cm": [
+        7669.078826904297,
+        6866.048431396484,
+        0.0
+      ],
+      "collision": "none",
+      "ucx_count": 0
+    },
+    "SM_Fort_MoatSteps": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_MoatSteps.fbx",
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_WoodWeathered"
+      ],
+      "triangles": 440,
+      "size_cm": [
+        142.5999641418457,
+        226.2859344482422,
+        206.77499175071716
+      ],
+      "collision": "complex",
+      "ucx_count": 0
+    },
+    "SM_Fort_CourtyardDetails": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_CourtyardDetails.fbx",
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_WoodWeathered",
+        "MAT-Rework_Leather",
+        "MAT-Rework_Parchment"
+      ],
+      "triangles": 4440,
+      "size_cm": [
+        2185.8049392700195,
+        1575.8049011230469,
+        150.0
+      ],
+      "collision": "complex",
+      "ucx_count": 0
+    },
+    "SM_Fort_Ditch": {
+      "file": "C:\\Users\\matth\\monk-island\\art\\export\\Fort_T198\\exports\\SM_Fort_Ditch.fbx",
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralGravel",
+        "MAT-Fort_CoralRubble"
+      ],
+      "triangles": 20940,
+      "size_cm": [
+        8005.817413330078,
+        7175.908660888672,
+        140.16982316970825
+      ],
+      "collision": "complex",
+      "ucx_count": 80
+    }
+  },
+  "rooms": {
+    "SM_Fort_GovernorHouse": {
+      "old_primitives_removed": 92,
+      "new_furniture": {
+        "rug": 2,
+        "table": 3,
+        "chair": 7,
+        "book": 54,
+        "shelf": 3,
+        "desk": 1,
+        "chest": 2,
+        "cushion": 2,
+        "bed": 2
+      }
+    },
+    "SM_Fort_Barracks": {
+      "old_primitives_removed": 162,
+      "new_furniture": {
+        "cushion": 16,
+        "bed": 8,
+        "chest": 8,
+        "table": 2,
+        "bench": 2,
+        "book": 24,
+        "shelf": 2
+      }
+    },
+    "SM_Fort_GuardHouse": {
+      "old_primitives_removed": 33,
+      "new_furniture": {
+        "cushion": 2,
+        "bed": 2,
+        "book": 13,
+        "desk": 1,
+        "chair": 1,
+        "shelf": 1,
+        "chest": 1
+      }
+    },
+    "SM_Fort_Kitchen": {
+      "old_primitives_removed": 6,
+      "new_furniture": {
+        "table": 1,
+        "shelf": 1,
+        "jar": 10,
+        "book": 1
+      }
+    },
+    "SM_Fort_Prison": {
+      "old_primitives_removed": 12,
+      "new_furniture": {
+        "cushion": 3,
+        "bed": 3,
+        "jar": 3,
+        "rug": 3
+      }
+    },
+    "SM_Fort_Chapel": {
+      "old_primitives_removed": 24,
+      "new_furniture": {
+        "bench": 6,
+        "rug": 1,
+        "book": 1
+      }
+    },
+    "SM_Fort_TreasureVault": {
+      "old_primitives_removed": 42,
+      "new_furniture": {
+        "table": 2,
+        "book": 1,
+        "chair": 1,
+        "shelf": 2,
+        "rug": 1
+      }
+    },
+    "SM_Port_Warehouse": {
+      "old_primitives_removed": 28,
+      "new_furniture": {
+        "shelf": 2,
+        "book": 1,
+        "desk": 1,
+        "chair": 1,
+        "chest": 5
+      }
+    },
+    "SM_Fort_SignalTower": {
+      "old_primitives_removed": 0,
+      "new_furniture": {
+        "table": 1,
+        "book": 1,
+        "chest": 1
+      }
+    },
+    "SM_Fort_PowderMagazine": {
+      "old_primitives_removed": 0,
+      "new_furniture": {
+        "rug": 1
+      }
+    }
+  },
+  "moat": {
+    "surface_local_m": -0.5,
+    "depth_m": 0.82
+  }
+}

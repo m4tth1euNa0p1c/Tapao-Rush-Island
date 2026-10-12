@@ -3,6 +3,7 @@
 #include "DayNight/DayNightCycleActor.h"
 #include "DayNight/DayNightMath.h"
 #include "DayNight/DayNightRules.h"
+#include "Run/RunSubsystem.h"
 #include "monke_island.h"
 #include "Components/DirectionalLightComponent.h"
 #include "Components/ExponentialHeightFogComponent.h"
@@ -79,11 +80,16 @@ void ADayNightCycleActor::BeginPlay()
 		Clock.Speed = 1.0f;
 		// a random hour of the day for this game (a debug start time keeps the clock as it is)
 		const double Period = DayNightMath::DayPeriod(*Rules);
-		if (Rules->bRandomStartHour && StartElapsedSeconds <= 0.0f && Period > 0.0)
+		// the campaign makes the night fall early from its day (owner 2026-10-07): the expedition starts late in the day
+		FFloatInterval Hours = Rules->RandomStartHours;
+		const URunSubsystem* Run = URunSubsystem::Get(this);
+		const bool bEarlyNight = Run && Run->GetEarlyNightStartHours(Hours);
+		if ((Rules->bRandomStartHour || bEarlyNight) && StartElapsedSeconds <= 0.0f && Period > 0.0)
 		{
-			const float Hour = FMath::FRandRange(Rules->RandomStartHours.Min, FMath::Max(Rules->RandomStartHours.Min, Rules->RandomStartHours.Max));
+			const float Hour = FMath::FRandRange(Hours.Min, FMath::Max(Hours.Min, Hours.Max));
 			Clock.CycleOffset = FMath::Fmod(DayNightMath::ElapsedForHour(*Rules, FMath::Fmod(Hour, 24.0f), 0.0) - Rules->Keys[0].ElapsedSeconds, Period);
-			UE_LOG(Logmonke_island, Log, TEXT("%s: the game starts at %.2f h (cycle %.0f s ahead)"), *GetName(), Hour, Clock.CycleOffset);
+			UE_LOG(Logmonke_island, Log, TEXT("%s: the game starts at %.2f h (cycle %.0f s ahead)%s"), *GetName(), Hour, Clock.CycleOffset,
+				bEarlyNight ? TEXT(", the night falls early (campaign)") : TEXT(""));
 		}
 	}
 

@@ -19,6 +19,7 @@
 #include "GameFramework/PlayerController.h"
 #include "HAL/PlatformTime.h"
 #include "Net/UnrealNetwork.h"
+#include "UObject/Package.h"
 #include "EngineUtils.h"
 #include "HAL/IConsoleManager.h"
 #include "Materials/MaterialInterface.h"

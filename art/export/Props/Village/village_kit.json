@@ -38,18 +38,18 @@
    "ucx": 67
   },
   "SM_Village_Kura": {
-   "tris": 176,
-   "ucx": 1,
+   "tris": 13284,
+   "ucx": 3,
    "bbox": [
     [
-     -2.705,
-     -3.25,
+     -2.75,
+     -3.58,
      -0.6
     ],
     [
-     2.705,
-     3.25,
-     6.244
+     2.75,
+     3.39,
+     6.509
     ]
    ],
    "ground": [
@@ -59,6 +59,14 @@
      2.22,
      2.82
     ]
+   ],
+   "materials": [
+    "M_Minka_Cedar",
+    "M_Minka_Iron",
+    "M_Minka_Stone",
+    "M_Minka_Timber",
+    "M_Village_RoofTiles",
+    "M_Village_WhitePlaster"
    ]
   },
   "SM_Village_Well": {

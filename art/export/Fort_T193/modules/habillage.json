@@ -1,0 +1,409 @@
+{
+  "lot": "habillage",
+  "blender": "5.2.2 LTS",
+  "modules": {
+    "SM_Fort_Cannon": {
+      "key": "cannon",
+      "export": "SM_Fort_Cannon",
+      "collection": "SM_Fort_Cannon",
+      "dims_m": [
+        0.54,
+        2.21,
+        0.504
+      ],
+      "bbox": {
+        "min": [
+          -0.27,
+          -1.05,
+          0.001
+        ],
+        "max": [
+          0.27,
+          1.16,
+          0.505
+        ]
+      },
+      "height_vs_bean": 0.48,
+      "tris": 2920,
+      "tris_raw": 2920,
+      "budget": 6000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_Iron"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Cannon_00",
+        "UCX_SM_Fort_Cannon_01"
+      ],
+      "children": [],
+      "sockets": {
+        "Muzzle": {
+          "pos": [
+            0.0,
+            1.16,
+            0.3996
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Breech": {
+          "pos": [
+            0.0,
+            -0.98,
+            0.3996
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Trunnion": {
+          "pos": [
+            0.0,
+            0.0,
+            0.3996
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "trunnion_z": 0.4,
+        "muzzle": [
+          0.0,
+          1.16,
+          0.4
+        ]
+      },
+      "files": [
+        "SM_Fort_Cannon.fbx",
+        "SM_Fort_Cannon.glb"
+      ],
+      "build_s": 1.69
+    },
+    "SM_Fort_ShotPile": {
+      "key": "shot_pile",
+      "export": "SM_Fort_ShotPile",
+      "collection": "SM_Fort_ShotPile",
+      "dims_m": [
+        0.32,
+        0.32,
+        0.226
+      ],
+      "bbox": {
+        "min": [
+          -0.16,
+          -0.16,
+          0.0
+        ],
+        "max": [
+          0.16,
+          0.16,
+          0.226
+        ]
+      },
+      "height_vs_bean": 0.22,
+      "tris": 2850,
+      "tris_raw": 3220,
+      "budget": 3000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_Iron"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_ShotPile_00"
+      ],
+      "children": [],
+      "sockets": {
+        "Top": {
+          "pos": [
+            0.0,
+            0.0,
+            0.227
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "balls": 30
+      },
+      "files": [
+        "SM_Fort_ShotPile.fbx",
+        "SM_Fort_ShotPile.glb"
+      ],
+      "build_s": 0.47
+    },
+    "SM_Fort_Crate_A": {
+      "key": "crate_a",
+      "export": "SM_Fort_Crate_A",
+      "collection": "SM_Fort_Crate_A",
+      "dims_m": [
+        0.598,
+        0.441,
+        0.441
+      ],
+      "bbox": {
+        "min": [
+          -0.299,
+          -0.221,
+          -0.021
+        ],
+        "max": [
+          0.299,
+          0.221,
+          0.421
+        ]
+      },
+      "height_vs_bean": 0.42,
+      "tris": 474,
+      "tris_raw": 1200,
+      "budget": 500,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_WoodWeathered",
+        "MAT-Fort_Rope"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Crate_A_00"
+      ],
+      "children": [],
+      "sockets": {
+        "Top": {
+          "pos": [
+            0.0,
+            0.0,
+            0.4
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {},
+      "files": [
+        "SM_Fort_Crate_A.fbx",
+        "SM_Fort_Crate_A.glb"
+      ],
+      "build_s": 0.59
+    },
+    "SM_Fort_Crate_B": {
+      "key": "crate_b",
+      "export": "SM_Fort_Crate_B",
+      "collection": "SM_Fort_Crate_B",
+      "dims_m": [
+        1.319,
+        0.384,
+        0.3
+      ],
+      "bbox": {
+        "min": [
+          -0.66,
+          -0.192,
+          0.0
+        ],
+        "max": [
+          0.66,
+          0.192,
+          0.3
+        ]
+      },
+      "height_vs_bean": 0.29,
+      "tris": 474,
+      "tris_raw": 1012,
+      "budget": 500,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_WoodWeathered",
+        "MAT-Fort_Rope"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Crate_B_00"
+      ],
+      "children": [],
+      "sockets": {
+        "Top": {
+          "pos": [
+            0.0,
+            0.0,
+            0.3
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {},
+      "files": [
+        "SM_Fort_Crate_B.fbx",
+        "SM_Fort_Crate_B.glb"
+      ],
+      "build_s": 0.33
+    },
+    "SM_Fort_Barrel": {
+      "key": "barrel",
+      "export": "SM_Fort_Barrel",
+      "collection": "SM_Fort_Barrel",
+      "dims_m": [
+        0.444,
+        0.444,
+        0.6
+      ],
+      "bbox": {
+        "min": [
+          -0.222,
+          -0.222,
+          0.0
+        ],
+        "max": [
+          0.222,
+          0.222,
+          0.6
+        ]
+      },
+      "height_vs_bean": 0.57,
+      "tris": 1152,
+      "tris_raw": 1152,
+      "budget": 1500,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_BarrelStaves",
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Barrel_00"
+      ],
+      "children": [],
+      "sockets": {
+        "Top": {
+          "pos": [
+            0.0,
+            0.0,
+            0.6
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {},
+      "files": [
+        "SM_Fort_Barrel.fbx",
+        "SM_Fort_Barrel.glb"
+      ],
+      "build_s": 0.56
+    },
+    "SM_Fort_PowderBarrel": {
+      "key": "powder_barrel",
+      "export": "SM_Fort_PowderBarrel",
+      "collection": "SM_Fort_PowderBarrel",
+      "dims_m": [
+        0.345,
+        0.345,
+        0.42
+      ],
+      "bbox": {
+        "min": [
+          -0.173,
+          -0.173,
+          0.0
+        ],
+        "max": [
+          0.173,
+          0.173,
+          0.42
+        ]
+      },
+      "height_vs_bean": 0.4,
+      "tris": 1040,
+      "tris_raw": 1040,
+      "budget": 1200,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_BarrelStaves",
+        "MAT-Fort_Copper",
+        "MAT-Fort_WoodOak"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_PowderBarrel_00"
+      ],
+      "children": [],
+      "sockets": {
+        "Top": {
+          "pos": [
+            0.0,
+            0.0,
+            0.42
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {},
+      "files": [
+        "SM_Fort_PowderBarrel.fbx",
+        "SM_Fort_PowderBarrel.glb"
+      ],
+      "build_s": 0.71
+    }
+  },
+  "errors": {},
+  "build_s": 5.1,
+  "images": [
+    "Metal046B_diff_1k.jpg",
+    "Metal046B_metal_1k.jpg",
+    "Metal046B_nor_gl_1k.jpg",
+    "Metal046B_rough_1k.jpg",
+    "Metal048C_diff_1k.jpg",
+    "Metal048C_metal_1k.jpg",
+    "Metal048C_nor_gl_1k.jpg",
+    "Metal048C_rough_1k.jpg",
+    "Rope001_1K-JPG_Color.jpg",
+    "Rope001_1K-JPG_Metalness.jpg",
+    "Rope001_1K-JPG_NormalGL.jpg",
+    "Rope001_1K-JPG_Roughness.jpg",
+    "dark_wooden_planks_diff_1k.jpg",
+    "dark_wooden_planks_nor_gl_1k.jpg",
+    "dark_wooden_planks_rough_1k.jpg",
+    "fine_grained_wood_ao_1k.jpg",
+    "fine_grained_wood_diff_1k.jpg",
+    "fine_grained_wood_nor_gl_1k.jpg",
+    "fine_grained_wood_rough_1k.jpg",
+    "rough_wood_ao_1k.jpg",
+    "rough_wood_diff_1k.jpg",
+    "rough_wood_nor_gl_1k.jpg",
+    "rough_wood_rough_1k.jpg",
+    "rusty_metal_04_ao_1k.jpg",
+    "rusty_metal_04_diff_1k.jpg",
+    "rusty_metal_04_nor_gl_1k.jpg",
+    "rusty_metal_04_rough_1k.jpg",
+    "weathered_planks_diff_1k.jpg",
+    "weathered_planks_nor_gl_1k.jpg",
+    "weathered_planks_rough_1k.jpg",
+    "wooden_barrel_diff_1k.jpg",
+    "wooden_barrel_nor_gl_1k.jpg",
+    "wooden_barrel_rough_1k.jpg"
+  ]
+}

@@ -183,3 +183,38 @@ Depuis T-094/T-095, une partie se joue dans **un fragment tiré au hasard** (`FR
 - Il les garde dans `villages.json` (`doors` : nom, maison, position, cap vers le portail, distance en cm).
 - Dans `Lvl_Raraka`, 36 TargetPoints `Door_Vxx_PorteNN` (dossier `Raraka/Villages/<village>/Doors`) portent les tags `VillageDoor`, `Village.Vxx`, `Area.maison_NN` et `Gate.513`. Leur avant regarde le portail.
 - Quand un villageois est tué, les autres rentrent chez eux par là et s'y cachent (`docs/features/characters-tiki.md`).
+
+## Maisons, sanctuaire et kura des villages de fragment (T-186, T-189, T-190, 2026-10-06)
+Demande du propriétaire : « modélise solide toutes les formes même les toits et les portes, crée une animation d'ouverture de porte, mets des objets posés dans les maisons, mets un tidal relic par maison » ; puis le sanctuaire (« modélise l'intérieur et mets-y un artefact légendaire ») et les kura (« plus jolis et réalistes »).
+- **Kits de maison** (`UVillageHouseKit`, `Village/VillageHouseKit.h`) : `DA_VillageRules.HouseKits` liste `DA_MinkaKit` (source `SM_Minka`) et `DA_ShrineKit` (source `SM_Village_Shrine`). `AVillageSpawner` construit chaque maison d'un mesh qui a un kit à partir de sa coque (`ShellMesh`), de ses panneaux et de son contenu. Les DA des villages ne changent pas ; le PCG des villages de Motutapu garde `SM_Minka` figée.
+- **Coques solides** :
+  - `SM_Minka_Shell` (`scripts/props/minka_doors.py`) : la minka sans ses 27 panneaux, 125 UCX. On y retrouve les 67 boîtes de la structure, plus :
+    - toit en 4 pans épais, prisme du pignon et faîtage ;
+    - sablières, impostes au-dessus des baies, plafond, entraits et pannes ;
+    - socle et vide sous les planchers et l'engawa, marches de pierre ;
+    - mobilier : irori, bouilloire, futon, andon, vase, coussins, étagère, bols, bois, seau, balai.
+  - `SM_Village_Shrine_Shell` (`scripts/props/shrine_interior.py`) : salle creuse sur son socle, 27 UCX. Elle a trois marches de bois, un autel avec miroir de bronze, bougeoirs, flacons de saké et gohei, un shimenawa et une boîte à offrandes.
+- **Portes** (`UVillageDoorsComponent` sur le spawner) :
+  - 14 baies par minka : entrée, shoji, fusuma et itado. Les panneaux coulissent ; ils sont en ISM mobiles, WorldDynamic, avec collision.
+  - Les deux vantaux du sanctuaire tournent sur leurs gonds (`OpenYaw`).
+  - Le serveur ouvre une baie tant qu'un pion est à moins de 1,5 m de son plan, et la referme 1,2 s après le départ du dernier. Les baies ouvertes sont répliquées (`OpenDoorways`).
+  - Un client ouvre aussi tout de suite les baies proches de son propre pion. Chaque machine anime le glissement en 0,35 s (0,5 s pour les vantaux), avec un tick seulement pendant le mouvement.
+  - **Ouverture anticipée** (T-301, revue réseau R-08) : la baie s'ouvre devant un pion qui court vers elle, avant qu'il atteigne la zone de 1,5 m.
+    - Le serveur et chaque client regardent tout le trajet du pion sur le temps d'avance (`VillageDoorMath::IsNearDoorwayAhead`), en vitesse horizontale, à `MaxLeadDistance` (4 m) au plus.
+    - Temps d'avance = `LeadSlideShare` × `SlideSeconds` (le panneau à moitié ouvert) + `CheckInterval` + `LeadExtraSeconds`. Pour le pion d'un client, le serveur ajoute la moitié de son aller-retour, plafonnée à `MaxLeadPingSeconds`. Il voit en effet ce pion avec ce retard.
+    - Exemple : au sprint (600 cm/s), avec 100 ms de latence, la baie s'ouvre environ 2,25 m avant la zone. Le serveur ne repousse plus le client contre un panneau encore fermé chez lui.
+    - Valeurs dans le kit (`DA_MinkaKit`, catégorie `Doors|Network`) : 0,5 / 0,05 s / 0,2 s / 400 cm. Spec : `monke_island.Village.Doors` (cas `Lead`).
+    - `compilé` le 2026-10-11 ; PIE non fait. Essai n°6 de `docs/audit/revue-reseau-T268.md` : le client sprinte vers une porte à 0, 100 puis 200 ms, avec `p.NetShowCorrections 1`.
+- **Contenu** (serveur, répliqué, posé endormi sur son emplacement) :
+  - une Relique des Marées au tokonoma de chaque minka ;
+  - 2 à 3 objets du quotidien tirés de `DA_LootRules_Houses` (12 objets de 30 cm au plus) sur 19 emplacements à l'écart des passages ;
+  - dans chaque sanctuaire, un artefact légendaire tiré parmi `BP_Artifact_HeartOfTheReef`, `FishGodFragment`, `EclipseStone` et `CrownOfTheLastAriki` (masse et valeur de la maquette).
+- **Kura** (`SM_Village_Kura`, `scripts/props/kura_export.py`) : 13 284 tris au lieu de 176, même emprise. Le modèle comprend :
+  - soubassement de pierres et namako-kabe ;
+  - lourdes portes ouvertes et porte à claire-voie, auvent, fenêtres à barreaux ;
+  - toit de kawara à onigawara et mon au pignon.
+- **Vérifié** : PIE L_Test_Flat du 2026-10-06 à 23:32, « 17 houses with 225 doorways (434 sliding panels), 17 relics and 39 objects », puis « 56 objects put in the houses (17 relics) ». Specs `monke_island.Village.Doors` : 11/11 (suite Village + Arena 27/27).
+- **Non testé** : client réseau (prédiction et réplication des portes), ressenti en jeu des portes et des collisions, performance avec 6 villages (~1 400 baies).
+
+## Habitants des maisons et cérémonie du drapeau (T-194, T-195, 2026-10-07)
+Chaque minka a un habitant (`DA_MinkaKit.Residents` = 1) qui vit à l'intérieur, sur 17 points de passage (`scripts/props/minka_nav.py`). Il surveille le joueur qui entre, panique si on le vole ou le frappe, et rejoint la cérémonie du drapeau avec la Tidal Relic de sa maison. Le sanctuaire (`DA_ShrineKit.bSealedUntilFlag`) reste fermé jusqu'au drapeau hissé. Au centre de chaque village pacifiable se trouve un tas de pierres (`AFlagCeremonySite`, posé par le spawner). Détails : `docs/features/ceremonie-drapeau.md`.

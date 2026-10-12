@@ -4,6 +4,19 @@
 #include "EngineUtils.h"
 #include "Engine/World.h"
 #include "monke_island.h"
+#include "GameFramework/GameStateBase.h"
+#include "HAL/IConsoleManager.h"
+#include "Water/WaveRules.h"
+#include "Water/WaveSurfaceActor.h"
+
+namespace
+{
+	TAutoConsoleVariable<int32> CVarWaves(
+		TEXT("monke.Waves"), 1,
+		TEXT("Gerstner waves on the sea: 1 on, 0 flat sea (read when a world starts playing)"));
+}
+
+const TCHAR* UIslandWaterSubsystem::DefaultWaveRulesPath = TEXT("/Game/MonkeIsland/Environment/Water/DA_WaveRules.DA_WaveRules");
 
 const FName UIslandWaterSubsystem::WaterSurfaceTag(TEXT("IslandWaterSurface"));
 
@@ -43,6 +56,40 @@ void UIslandWaterSubsystem::OnWorldBeginPlay(UWorld& InWorld)
 		UE_LOG(Logmonke_island, Log, TEXT("No actor tagged '%s' in %s: sea level stays at %.1f cm"),
 			*WaterSurfaceTag.ToString(), *InWorld.GetName(), SeaLevel);
 	}
+
+	// waves: every machine computes them (buoyancy on the server, drawing on the clients)
+	WaveRules = CVarWaves.GetValueOnGameThread() != 0 ? LoadObject<UWaveRules>(nullptr, DefaultWaveRulesPath, nullptr, LOAD_NoWarn) : nullptr;
+	WaveTrains.Reset();
+	if (!WaveRules)
+	{
+		UE_LOG(Logmonke_island, Log, TEXT("Waves: %s missing or monke.Waves 0, flat sea"), DefaultWaveRulesPath);
+		return;
+	}
+	WaveTrains = WaveMath::MakeTrains(WaveRules->Waves, WaveRules->Intensity, WaveRules->Gravity, UWaveRules::MaxWaves);
+	if (InWorld.GetNetMode() != NM_DedicatedServer)
+	{
+		FActorSpawnParameters Params;
+		Params.ObjectFlags |= RF_Transient;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		if (AWaveSurfaceActor* Surface = InWorld.SpawnActor<AWaveSurfaceActor>(Params))
+		{
+			Surface->Init(WaveRules, this);
+			WaveSurface = Surface;
+		}
+	}
+}
+
+float UIslandWaterSubsystem::GetWaveTime() const
+{
+	const UWorld* World = GetWorld();
+	const AGameStateBase* GameState = World ? World->GetGameState() : nullptr;
+	const double Time = GameState ? GameState->GetServerWorldTimeSeconds() : (World ? World->GetTimeSeconds() : 0.0);
+	return static_cast<float>(Time);
+}
+
+float UIslandWaterSubsystem::GetWaveHeightAt(const FVector& Location) const
+{
+	return WaveTrains.Num() > 0 ? WaveMath::HeightAt(WaveTrains, FVector2D(Location.X, Location.Y), GetWaveTime()) : 0.0f;
 }
 
 void UIslandWaterSubsystem::SetSeaLevel(float NewSeaLevel)
@@ -75,7 +122,7 @@ float UIslandWaterSubsystem::GetWaterDepthAt(const FVector& Location) const
 
 float UIslandWaterSubsystem::GetWaterSurfaceAt(const FVector& Location) const
 {
-	float SurfaceZ = SeaLevel;
+	float SurfaceZ = SeaLevel + GetWaveHeightAt(Location);
 	float LocalZ = 0.0f;
 	if (SurfaceProvider && SurfaceProviderOwner.IsValid() && SurfaceProvider(Location, LocalZ))
 	{

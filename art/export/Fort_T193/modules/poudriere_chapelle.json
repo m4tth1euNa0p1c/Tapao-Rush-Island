@@ -1,0 +1,229 @@
+{
+  "lot": "poudriere_chapelle",
+  "blender": "5.2.2 LTS",
+  "modules": {
+    "SM_Fort_PowderMagazine": {
+      "key": "powder_magazine",
+      "export": "SM_Fort_PowderMagazine",
+      "collection": "SM_Fort_PowderMagazine",
+      "dims_m": [
+        8.06,
+        7.08,
+        4.007
+      ],
+      "bbox": {
+        "min": [
+          -4.03,
+          -3.55,
+          -0.07
+        ],
+        "max": [
+          4.03,
+          3.53,
+          3.937
+        ]
+      },
+      "height_vs_bean": 3.82,
+      "tris": 8732,
+      "tris_raw": 8732,
+      "budget": 20000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_Copper",
+        "MAT-Fort_WoodTamanu"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_PowderMagazine_00",
+        "UCX_SM_Fort_PowderMagazine_01",
+        "UCX_SM_Fort_PowderMagazine_02",
+        "UCX_SM_Fort_PowderMagazine_03",
+        "UCX_SM_Fort_PowderMagazine_04",
+        "UCX_SM_Fort_PowderMagazine_05",
+        "UCX_SM_Fort_PowderMagazine_06",
+        "UCX_SM_Fort_PowderMagazine_07",
+        "UCX_SM_Fort_PowderMagazine_08",
+        "UCX_SM_Fort_PowderMagazine_09",
+        "UCX_SM_Fort_PowderMagazine_10",
+        "UCX_SM_Fort_PowderMagazine_11",
+        "UCX_SM_Fort_PowderMagazine_12",
+        "UCX_SM_Fort_PowderMagazine_13",
+        "UCX_SM_Fort_PowderMagazine_14"
+      ],
+      "children": [],
+      "sockets": {
+        "Door": {
+          "pos": [
+            0.0,
+            -2.75,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Kegs": {
+          "pos": [
+            0.0,
+            0.3,
+            0.1
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "EnclosureGate": {
+          "pos": [
+            0.0,
+            -3.5,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "vault": [
+          1.32,
+          2.31
+        ],
+        "ridge_z": 4.0
+      },
+      "files": [
+        "SM_Fort_PowderMagazine.fbx",
+        "SM_Fort_PowderMagazine.glb"
+      ],
+      "build_s": 8.18
+    },
+    "SM_Fort_Chapel": {
+      "key": "chapel",
+      "export": "SM_Fort_Chapel",
+      "collection": "SM_Fort_Chapel",
+      "dims_m": [
+        5.7,
+        9.12,
+        7.756
+      ],
+      "bbox": {
+        "min": [
+          -2.85,
+          -4.57,
+          0.0
+        ],
+        "max": [
+          2.85,
+          4.55,
+          7.756
+        ]
+      },
+      "height_vs_bean": 7.39,
+      "tris": 14614,
+      "tris_raw": 14614,
+      "budget": 25000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_RoofTiles",
+        "MAT-Fort_Copper"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Chapel_00",
+        "UCX_SM_Fort_Chapel_01",
+        "UCX_SM_Fort_Chapel_02",
+        "UCX_SM_Fort_Chapel_03",
+        "UCX_SM_Fort_Chapel_04",
+        "UCX_SM_Fort_Chapel_05",
+        "UCX_SM_Fort_Chapel_06",
+        "UCX_SM_Fort_Chapel_07",
+        "UCX_SM_Fort_Chapel_08",
+        "UCX_SM_Fort_Chapel_09",
+        "UCX_SM_Fort_Chapel_10",
+        "UCX_SM_Fort_Chapel_11",
+        "UCX_SM_Fort_Chapel_12",
+        "UCX_SM_Fort_Chapel_13",
+        "UCX_SM_Fort_Chapel_14"
+      ],
+      "children": [],
+      "sockets": {
+        "Door": {
+          "pos": [
+            0.0,
+            -4.1,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Bell": {
+          "pos": [
+            0.0,
+            -4.0,
+            7.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "ridge_z": 5.398,
+        "bellcote_top": 7.4
+      },
+      "files": [
+        "SM_Fort_Chapel.fbx",
+        "SM_Fort_Chapel.glb"
+      ],
+      "build_s": 7.91
+    }
+  },
+  "errors": {},
+  "build_s": 16.8,
+  "images": [
+    "Metal048C_diff_1k.jpg",
+    "Metal048C_metal_1k.jpg",
+    "Metal048C_nor_gl_1k.jpg",
+    "Metal048C_rough_1k.jpg",
+    "brown_planks_03_diff_2k.jpg",
+    "brown_planks_03_nor_gl_2k.jpg",
+    "brown_planks_03_rough_2k.jpg",
+    "clay_roof_tiles_02_diff_2k.jpg",
+    "clay_roof_tiles_02_disp_2k.jpg",
+    "clay_roof_tiles_02_nor_gl_2k.jpg",
+    "clay_roof_tiles_02_rough_2k.jpg",
+    "coral_fort_wall_01_diff_2k.jpg",
+    "coral_fort_wall_01_disp_2k.jpg",
+    "coral_fort_wall_01_nor_gl_2k.jpg",
+    "coral_fort_wall_01_rough_2k.jpg",
+    "coral_fort_wall_02_diff_2k.jpg",
+    "coral_fort_wall_02_disp_2k.jpg",
+    "coral_fort_wall_02_nor_gl_2k.jpg",
+    "coral_fort_wall_02_rough_2k.jpg",
+    "coral_fort_wall_03_diff_2k.jpg",
+    "coral_fort_wall_03_disp_2k.jpg",
+    "coral_fort_wall_03_nor_gl_2k.jpg",
+    "coral_fort_wall_03_rough_2k.jpg",
+    "coral_ground_02_diff_2k.jpg",
+    "coral_ground_02_disp_2k.jpg",
+    "coral_ground_02_nor_gl_2k.jpg",
+    "coral_ground_02_rough_2k.jpg",
+    "white_plaster_02_diff_2k.jpg",
+    "white_plaster_02_disp_2k.jpg",
+    "white_plaster_02_nor_gl_2k.jpg",
+    "white_plaster_02_rough_2k.jpg"
+  ]
+}

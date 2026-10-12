@@ -2,7 +2,7 @@
 
   blender --background --factory-startup --python scripts/atoll/export_ue.py -- [groupe|SM_Nom ...]
 
-Groups: palms, sprouts, shrubs, groundcover, props (default: everything except palms, already in UE).
+Groups: palms, sprouts, shrubs, groundcover, props, wind (default: everything except palms, already in UE).
 Writes art/export/<Category>/<SM_Name>.fbx and art/export/ue_manifest.json (read by the UE import).
 
 Unreal conventions (docs/conventions/asset-naming.md):
@@ -107,6 +107,10 @@ def registry():
         R.append((f"SM_Driftwood_{'AB'[i]}", "props", "Props/Beach", be, (lambda s=seed: props.driftwood(s)),
                   ["MI_Driftwood"], "segments", False))
     R.append(("SM_LambisShell", "props", "Props/Beach", be, "lambis", ["MI_LambisShell"], None, False))
+    wl = UE + "Wind/Meshes"
+    for key, mat in [("PalmLeaflet", "MI_CoconutPalm_Leaf"), ("Naupaka", "MI_Naupaka_Leaf"), ("Dry", "MI_Tahinu_Leaf")]:
+        R.append((f"SM_WindLeaf_{key}", "wind", "Wind", wl, (lambda k=key: plants.wind_leaf(k)),
+                  ["MI_Shrub_Bark", mat], None, True))
     return R
 
 
@@ -277,7 +281,7 @@ def export_fbx(objs, path):
 
 def main():
     args = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
-    groups = {"palms", "sprouts", "shrubs", "groundcover", "props"}
+    groups = {"palms", "sprouts", "shrubs", "groundcover", "props", "wind"}
     want_groups = {a for a in args if a in groups} or (groups - {"palms"} if not args else set())
     want_names = {a for a in args if a not in groups}
     bpy.ops.wm.read_factory_settings(use_empty=True)

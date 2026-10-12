@@ -113,7 +113,66 @@ Recette visée : cahier §6.1 (la submersion couvre progressivement les terres a
 - La surface locale alimente `UIslandWaterSubsystem::GetWaterSurfaceAt` et `GetWaterDepthAt` : le joueur patauge, nage et se noie avec l'inondation, et la barque flotte dessus (monk-island-aa).
 - Réseau : chaque machine fait tourner les mêmes pas déterministes depuis l'horloge répliquée : `ClockState` et `Phase` de l'expédition, sinon l'horloge jour/nuit. Le serveur fait foi pour le gameplay.
 
+## Météo qui tourne : artefact du temple saisi (T-203, lot L5)
+Demande du propriétaire (campagne de 10 jours, `docs/features/campagne-dix-jours.md`) : « dès que je saisis [l'artefact du temple], la météo change en 10 secondes, vent violent, pluie ». Cahier §5 (la tempête finale reste liée à la submersion), §6.1 (rendu dérivé du temps serveur), §8 (pas de flash), §18 (volume « Ambiance »).
+
+**Statut : code écrit et compilé fichier par fichier (UBT `-SingleFile`, 2026-10-10) ; assets à construire par l'action éditeur `stormartifact` ; rien n'est encore testé en éditeur, en build ni à plusieurs machines.**
+
+### Règle
+- **Déclencheur (serveur)** : `AWeatherDirector` regarde toutes les `TriggerCheckInterval` (0,25 s) ce que tiennent les joueurs (`UIslanderGrabComponent::GetHeldComponent`). Un objet d'une classe d'artefact (`DA_WeatherRules.ArtifactClasses`, les 6 `BP_Artifact_*`, plus l'`ArtifactPool` des temples de la map), posé par un temple (son propriétaire est un `AMaraeSite`, `bOnlyTempleArtifacts`), fait tourner la météo. Les mêmes artefacts dans les sanctuaires des villages (T-189) ne la font pas tourner.
+- **Une fois par jour** : l'état répliqué est l'heure serveur de la saisie (`FWeatherTurnState`). Il ne revient jamais au beau. L'île suivante est un autre monde (voyage serveur) : elle repart au beau.
+- **Transition** : `WeatherMath::TurnWeight`, de 0 à 1 en `TransitionSeconds` (10 s), avec un lissage (smoothstep : 0,5 à 5 s). C'est une fonction pure de l'heure de saisie répliquée et de l'horloge serveur : chaque machine voit la même météo. Spec : `monke_island.Weather.Transition`.
+- **Vent violent** : la force moyenne du vent ne descend plus sous `WindStrength` × poids (1 = la pleine tempête des forces de `DA_WindRules` ; turbulence conservée). `AWindStormActor::WindAt` prend ce plancher. Les rafales plus fortes et le vent ultra violent de la submersion (`DeadlineStrength`) restent prioritaires. Une map sans vent (L_Test_Flat) en reçoit un à la saisie (`WindRulesForMapsWithoutWind` = `DA_WindRules`). Les règles du vent sont désormais répliquées une fois.
+- **Ciel** : `SkyStormFactor` × poids est fusionné (max) avec le facteur tempête des rafales dans `ADayNightCycleActor::SetStormFactor` : soleil ×0,25, brouillard ×4, exposition −0,7 EV, valeurs de `DA_DayNightRules`. Sans cycle jour/nuit (L_Test_Flat), `UWeatherPresentationComponent` assombrit directement les lumières posées : soleil `FallbackSunFraction`, ciel `FallbackSkyLightFraction`, brouillard `FallbackFogMultiplier`, exposition `FallbackExposureBias`.
+- `AWindStormActor::IsStormy()` (vent ultra violent ou météo tournée) et `IsWeatherStorm()` sont prêts pour le HUD et l'ambiance (voir « À brancher »).
+
+### Pluie et sons (présentation locale, jamais sur serveur dédié)
+- **Pluie** : `NS_Rain`, système Niagara sans état (GPU, copie de `FountainLightweight`, réglée par l'action). Un pavé de 32 × 32 m sur 6 m, à `RainHeight` (9 m) au-dessus de la caméra locale, décalé contre le vent. Environ 2 600 gouttes par seconde (environ 4 000 en vie), traits de 1,6 × 80 cm qui tombent à 10 m/s et vivent de 1,3 à 1,7 s.
+  - Le composant suit la caméra et penche avec le vent (`RainTiltPerWind` 18° par unité de vent, `MaxRainTiltDeg` 35°).
+  - Matériau `M_Rain_Streak` : translucide éclairé (volumétrique par sommet), donc le jour, la nuit et la tempête l'éclairent comme le reste de la scène.
+  - Le jeu écrit le fondu dans `MPC_Weather.RainOpacity`.
+- **Couverture** : pas de pluie sous un toit (trait vertical de `RoofCheckHeight`, 25 m, contre les maillages dont le nom contient `RoofMeshKeywords` : maisons, kura, temple, fort, galion) ni sous l'eau. Les gouttes traversent les maillages, d'où l'arrêt. Le fondu dure `RainFadeSeconds`.
+- **Galion** : il y pleut comme ailleurs. Le cahier ne le garde pas au sec, et la zone calme `WindCalmZone` ne concerne que le vent. `RainInCalmZones` = 0 l'arrêterait. Le menu n'a pas de temple : la météo n'y tourne jamais. Le directeur y existe pourtant, comme dans tout monde de jeu ; il ne coûte qu'un contrôle des objets tenus toutes les 0,25 s.
+- **Tempête finale** : la pluie tombe aussi dès le vent ultra violent de la submersion (`bRainInFinalStorm`), avec un fondu local purement visuel.
+- **Sons** (classe `SC_Ambience`, réglage « Ambiance » du §18), pris parmi les sons CC0 préparés par T-234 (`/Game/MonkeIsland/Audio/Expedition`, action `expeditionaudio`) :
+  - `SW_Exp_Rain` en boucle 2D qui suit la météo tournée. Elle est étouffée sous un toit (`IndoorVolume`, passe-bas `IndoorLowPassHz`) et coupée sous l'eau. Elle s'efface quand la tempête finale commence : ses boucles appartiennent à `UExpeditionAudioSubsystem`.
+  - Le vent : on entend la boucle « WindStrong » de `UExpeditionAudioSubsystem` (T-234), qui suit déjà la force du vent. `StormWindSound` reste vide pour ne pas la doubler.
+  - À la saisie : `SW_Exp_ArtifactCurse`, puis un tonnerre lointain `SW_Exp_Thunder` à `ThunderDelaySeconds` (2 s), sans flash.
+- **Coût** : un seul système de particules sans état par machine, aucun script VM, un trait vertical toutes les 0,25 s. Au repos, le composant ne tient qu'une veille à 2 Hz, sans regarder la caméra. Translucide : à mesurer contre le budget « eau et translucides ≤ 1,5 ms » (`docs/conventions/performance.md`).
+
+### Code et données
+- `Source/monke_island/Storm/` :
+  - `WeatherRules.h` (`DA_WeatherRules`) et `WeatherMath.h` (règles pures) ;
+  - `WeatherSubsystem.*` (fait apparaître le directeur sur le serveur ; `RulesPath` dans `DefaultGame.ini`, sinon `/Game/MonkeIsland/Environment/Weather/DA_WeatherRules`) ;
+  - `WeatherDirector.*` (état répliqué, déclencheur, vent manquant) et `WeatherPresentationComponent.*` (pluie, sons, ciel de repli) ;
+  - `WindStormActor.*` (plancher, ciel, `IsStormy`, règles répliquées, zones calmes publiques) ;
+  - spec `Tests/WeatherTransitionSpec.cpp`.
+- Contenu dans `/Game/MonkeIsland/Environment/Weather/`, cuit en entier (`DirectoriesToAlwaysCook`) : `MPC_Weather`, `M_Rain_Streak`, `NS_Rain`, `DA_WeatherRules`. Script : `scripts/editor/storm_artifact_setup_ue.py` (action `stormartifact`, rapport `Saved/T203/storm-artifact-result.json`).
+- **Fait le 2026-10-10 (02:32)** : action `stormartifact` passée dans l'éditeur, encore sans le build.
+  - Créés et enregistrés : `MPC_Weather` (`RainOpacity`, défaut 1), `M_Rain_Streak` et `NS_Rain`.
+  - Relu dans `NS_Rain` : boucle infinie, 2 600 /s, pavé 32 × 32 × 6 m, vitesse locale (0, 0, −1000), traits de 1,6 × 80 cm alignés sur Z local, rendu `CustomAlignment` avec `M_Rain_Streak`, gravité, traînée et bruit coupés.
+  - Vignette du matériau : `docs/production/captures/T-203/M_Rain_Streak.png`.
+  - `DA_WeatherRules` attend le build.
+  - Contrainte du réglage par script : une distribution ne peut pas changer la longueur de son tableau de canaux. La taille et la vitesse sont donc constantes ; la durée de vie varie.
+- Dépendances en lecture : Interaction (objet tenu), Marae (pools d'artefacts, propriétaire des artefacts posés).
+
+### À vérifier (lead, après le build)
+1. Relancer l'action `stormartifact` : elle crée `DA_WeatherRules` après le build (avant, elle construit seulement `MPC_Weather`, `M_Rain_Streak` et `NS_Rain`). Lancer aussi `expeditionaudio` s'il n'est pas passé, pour les sons.
+2. PIE solo sur L_Test_Flat, au temple :
+   - saisir un artefact (F maintenu) ; le journal doit afficher « holds the artifact … », puis « seized, the weather turns in 10 s » et « this map had no wind, … spawned » ;
+   - en 10 s, le ciel s'assombrit, la pluie tombe en penchant avec le vent, les cocotiers plient et on entend la pluie et le vent ;
+   - sous le toit d'une maison, la pluie s'arrête et le son est étouffé ;
+   - en débogage : `monke.Weather.Turn` et `monke.Weather.Clear` (serveur).
+3. Hôte + client : même transition des deux côtés (même début, même plancher de vent), sons d'alerte chez le client.
+4. Coût : `stat gpu` sous la pluie (translucides), `stat unit` (le composant ne coûte rien au repos).
+
+### À brancher (hors de mon périmètre)
+- HUD (`Player/IslanderHUD.cpp`) : afficher « Tempête » avec `IsStormy()` au lieu de `IsDeadlineWind()`. Sinon, la météo tournée apparaît comme « Coup de vent ».
+- `UExpeditionAudioSubsystem` (T-234) : s'il passe sa tempête sur `IsStormy()`, ses boucles « Rain » et « WindStorm » et son tonnerre joueront aussi pour la météo tournée. Il faudra alors mettre `RainVolume` à 0 dans `DA_WeatherRules`, pour ne pas doubler la pluie.
+
 ## Débogage (hors Shipping, serveur)
+`monke.Weather.Turn` fait tourner la météo comme un artefact saisi ; `monke.Weather.Clear` la remet au beau (T-203).
+
 `monke.SetTime 285`, `monke.FloodNow`, `monke.SetHour 19`, `monke.TimeSpeed 5`. Ces commandes ne valent que pour le repli jour/nuit. Sur l'horloge d'expédition, `monke.FloodNow` journalise un avertissement et ne déplace pas l'eau : Expedition/Core n'a pas encore de commande de saut.
 
 ## Limites connues
@@ -121,7 +180,8 @@ Recette visée : cahier §6.1 (la submersion couvre progressivement les terres a
 - Le tablier reprend `M_Water_Lagoon`. Son rendu (raccord avec les parcelles, scintillement au bord du fondu, vagues de Gerstner du plan de mer) n'a pas encore été vu en PIE.
 - Le centre est fixé une fois, au départ. Une expédition qui change de fragment en cours de partie ne déplace pas la grille.
 - Avec `bRaiseGlobalSea` coché : `SM_Raraka_Water` a le profil `BlockAllDynamic` (QueryAndPhysics). S'il a une géométrie de collision, chaque pas de 2 cm la déplace dans la scène physique.
-- Pas encore de pluie ni de sons de tempête. Seuls les cocotiers bougent avec le vent, pas les buissons.
+- Pluie et sons de la météo tournée : T-203 (section plus haut), pas encore vus en éditeur. Seuls les cocotiers bougent avec le vent, pas les buissons.
+- La pluie suit la caméra (les émetteurs sans état simulent en espace local) : marcher sous la pluie ne fait pas « avancer dans les gouttes ». Si cela se voit, poser des tuiles fixes autour de la caméra.
 
 ## Critères d'acceptation
 - [ ] T-103 : `monke_island.Flood.SeaLevel` passe (niveau = base + montée, jamais en baisse, poursuite jusqu'au plafond, réglages par défaut, mesure d'un pas). Compilé en cible jeu le 2026-10-04 ; tests et PIE pas encore lancés.
