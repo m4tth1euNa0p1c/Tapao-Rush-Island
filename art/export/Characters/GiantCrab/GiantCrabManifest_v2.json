@@ -1,0 +1,6881 @@
+{
+  "format": "giant-crab-manifest/2",
+  "version": "2.0.0",
+  "task": "T-260",
+  "fps": 30,
+  "units": "m (Blender) / cm (Unreal)",
+  "unreal_root": "/Game/MonkeIsland/Characters/GiantCrab",
+  "paths": {
+    "meshes": "/Game/MonkeIsland/Characters/GiantCrab/Meshes",
+    "anims": "/Game/MonkeIsland/Characters/GiantCrab/Anims",
+    "materials": "/Game/MonkeIsland/Characters/GiantCrab/Materials",
+    "textures": "/Game/MonkeIsland/Characters/GiantCrab/Textures",
+    "notifies": "/Game/MonkeIsland/Characters/_Shared/Notifies"
+  },
+  "export_settings": "FBX : armature 'Armature', FBX_SCALE_NONE + apply_unit_scale, -Y avant / Z haut, axe d'os primaire Y / secondaire X, sans os de bout, os déformants seulement ; une action par fichier",
+  "skeleton": {
+    "blender": "SKEL_GiantCrab",
+    "count": 58,
+    "deform_bones": [
+      "root",
+      "body",
+      "eye_stalk_l",
+      "eye_l",
+      "eye_stalk_r",
+      "eye_r",
+      "antenna_l_01",
+      "antenna_l_02",
+      "antenna_l_03",
+      "antennule_l",
+      "antenna_r_01",
+      "antenna_r_02",
+      "antenna_r_03",
+      "antennule_r",
+      "mouth",
+      "mandible_l",
+      "mandible_r",
+      "abdomen",
+      "claw_l_arm",
+      "claw_l_forearm",
+      "claw_l_hand",
+      "claw_l_finger",
+      "claw_r_arm",
+      "claw_r_forearm",
+      "claw_r_hand",
+      "claw_r_finger",
+      "leg_l1_coxa",
+      "leg_l1_merus",
+      "leg_l1_propodus",
+      "leg_l1_dactyl",
+      "leg_l2_coxa",
+      "leg_l2_merus",
+      "leg_l2_propodus",
+      "leg_l2_dactyl",
+      "leg_l3_coxa",
+      "leg_l3_merus",
+      "leg_l3_propodus",
+      "leg_l3_dactyl",
+      "leg_l4_coxa",
+      "leg_l4_merus",
+      "leg_l4_propodus",
+      "leg_l4_dactyl",
+      "leg_r1_coxa",
+      "leg_r1_merus",
+      "leg_r1_propodus",
+      "leg_r1_dactyl",
+      "leg_r2_coxa",
+      "leg_r2_merus",
+      "leg_r2_propodus",
+      "leg_r2_dactyl",
+      "leg_r3_coxa",
+      "leg_r3_merus",
+      "leg_r3_propodus",
+      "leg_r3_dactyl",
+      "leg_r4_coxa",
+      "leg_r4_merus",
+      "leg_r4_propodus",
+      "leg_r4_dactyl"
+    ],
+    "unreal": "/Game/MonkeIsland/Characters/GiantCrab/Meshes/SK_GiantCrab_Skeleton",
+    "note": "identique à la v1 (noms, hiérarchie, repères de repos)"
+  },
+  "meshes": {
+    "lod0": "art/export/Characters/GiantCrab/SK_GiantCrab.fbx",
+    "lod0_tris": 107924,
+    "lods": [
+      {
+        "lod": 1,
+        "file": "art/export/Characters/GiantCrab/SK_GiantCrab_LOD1.fbx",
+        "tris": 38022
+      },
+      {
+        "lod": 2,
+        "file": "art/export/Characters/GiantCrab/SK_GiantCrab_LOD2.fbx",
+        "tris": 10592
+      },
+      {
+        "lod": 3,
+        "file": "art/export/Characters/GiantCrab/SK_GiantCrab_LOD3.fbx",
+        "tris": 6256
+      }
+    ]
+  },
+  "material_slots": [
+    "MI_GiantCrab_Chitin",
+    "MI_GiantCrab_Legs",
+    "MI_GiantCrab_Eye"
+  ],
+  "material_instances": {
+    "MI_GiantCrab_Chitin": "MI_GiantCrab_Body",
+    "MI_GiantCrab_Legs": "MI_GiantCrab_Legs",
+    "MI_GiantCrab_Eye": "MI_GiantCrab_Eyes"
+  },
+  "materials_ue": {
+    "MI_GiantCrab_Body": {
+      "slot": "MI_GiantCrab_Chitin",
+      "parent": "/Game/MonkeIsland/Characters/_Shared/Materials/M_Character_Baked",
+      "textures": {
+        "BaseColor": "T_GiantCrab_Body_BC",
+        "ORM": "T_GiantCrab_Body_ORM",
+        "Normal": "T_GiantCrab_Body_N"
+      },
+      "scalars": {
+        "EmissiveStrength": 0.0
+      }
+    },
+    "MI_GiantCrab_Legs": {
+      "slot": "MI_GiantCrab_Legs",
+      "parent": "/Game/MonkeIsland/Characters/_Shared/Materials/M_Character_Baked",
+      "textures": {
+        "BaseColor": "T_GiantCrab_Legs_BC",
+        "ORM": "T_GiantCrab_Legs_ORM",
+        "Normal": "T_GiantCrab_Legs_N"
+      },
+      "scalars": {
+        "EmissiveStrength": 0.0
+      }
+    },
+    "MI_GiantCrab_Eyes": {
+      "slot": "MI_GiantCrab_Eye",
+      "parent": "/Game/MonkeIsland/Characters/GiantCrab/Materials/M_GiantCrab_Eyes",
+      "textures": {
+        "BaseColor": "T_GiantCrab_Eyes_BC",
+        "ORM": "T_GiantCrab_Eyes_ORM",
+        "Normal": "T_GiantCrab_Eyes_N",
+        "EmissiveMask": "T_GiantCrab_Eyes_E"
+      },
+      "vectors": {
+        "EmissiveColor": [
+          1.0,
+          0.45,
+          0.06,
+          1.0
+        ]
+      },
+      "scalars": {
+        "EmissiveStrength": 2.0,
+        "DeadEyes": 0.0
+      },
+      "note": "émission = EmissiveMask x EmissiveColor x EmissiveStrength ; frénésie (T-261, UGiantCrabRules::FrenzyEyeColorParams) : EmissiveColor rouge HDR"
+    }
+  },
+  "textures": [
+    {
+      "asset": "T_GiantCrab_Body_BC",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Body_BC.png",
+      "kind": "color",
+      "srgb": true,
+      "size": 2048
+    },
+    {
+      "asset": "T_GiantCrab_Body_ORM",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Body_ORM.png",
+      "kind": "masks",
+      "srgb": false,
+      "size": 2048
+    },
+    {
+      "asset": "T_GiantCrab_Body_N",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Body_N.png",
+      "kind": "normal_directx",
+      "srgb": false,
+      "size": 2048
+    },
+    {
+      "asset": "T_GiantCrab_Legs_BC",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Legs_BC.png",
+      "kind": "color",
+      "srgb": true,
+      "size": 2048
+    },
+    {
+      "asset": "T_GiantCrab_Legs_ORM",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Legs_ORM.png",
+      "kind": "masks",
+      "srgb": false,
+      "size": 2048
+    },
+    {
+      "asset": "T_GiantCrab_Legs_N",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Legs_N.png",
+      "kind": "normal_directx",
+      "srgb": false,
+      "size": 2048
+    },
+    {
+      "asset": "T_GiantCrab_Eyes_BC",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Eyes_BC.png",
+      "kind": "color",
+      "srgb": true,
+      "size": 512
+    },
+    {
+      "asset": "T_GiantCrab_Eyes_ORM",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Eyes_ORM.png",
+      "kind": "masks",
+      "srgb": false,
+      "size": 512
+    },
+    {
+      "asset": "T_GiantCrab_Eyes_N",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Eyes_N.png",
+      "kind": "normal_directx",
+      "srgb": false,
+      "size": 512
+    },
+    {
+      "asset": "T_GiantCrab_Eyes_E",
+      "file": "art/export/Characters/GiantCrab/Textures/T_GiantCrab_Eyes_E.png",
+      "kind": "mask",
+      "srgb": false,
+      "size": 512
+    }
+  ],
+  "normal_convention": "DirectX (vert inversé), ne pas cocher Flip Green Channel",
+  "morph_targets": {
+    "DeadEyes": "0 = œil normal, 1 = voile laiteux ; courbe DeadEyes des clips Death*"
+  },
+  "sockets": [
+    {
+      "name": "SOCKET_ClawGrab_L",
+      "bone": "claw_l_hand",
+      "note": "idem côté coupeuse (secours)",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          1.028,
+          0.087
+        ],
+        "rotation_quat_wxyz": [
+          0.70711,
+          0.0,
+          -0.70711,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -102.8,
+          8.7
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          90.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        34.29,
+        257.03,
+        107.9
+      ]
+    },
+    {
+      "name": "SOCKET_ClawHit_L",
+      "bone": "claw_l_hand",
+      "note": "capsule de rayon 0,26 m et de demi-hauteur 0,65 m",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.65,
+          0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          -0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -65.0,
+          0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        63.06,
+        231.03,
+        106.96
+      ]
+    },
+    {
+      "name": "SOCKET_ClawTip_L",
+      "bone": "claw_l_finger",
+      "note": "pointe : traînée du Swipe",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.6,
+          -0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -60.0,
+          -0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        16.26,
+        272.71,
+        124.05
+      ]
+    },
+    {
+      "name": "SOCKET_ClawGrab_R",
+      "bone": "claw_r_hand",
+      "note": "entre les doigts, à 60 % de la longueur du doigt fixe ; axe Z = haut de Bean quand la pince est horizontale. Bean (spine_01) s'y attache en AttachToComponent(SnapToTarget).",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          1.14,
+          0.1172
+        ],
+        "rotation_quat_wxyz": [
+          0.70711,
+          -0.0,
+          0.70711,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -114.0,
+          11.72
+        ],
+        "rotation_deg_rpy": [
+          -0.0,
+          -90.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -43.28,
+        271.13,
+        100.07
+      ]
+    },
+    {
+      "name": "SOCKET_ClawHit_R",
+      "bone": "claw_r_hand",
+      "note": "centre de la hitbox de la pince droite : capsule de rayon 0,34 m et de demi-hauteur 0,75 m le long de la paume et des doigts",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.7,
+          0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          -0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -70.0,
+          0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -72.7,
+        236.38,
+        99.24
+      ]
+    },
+    {
+      "name": "SOCKET_ClawTip_R",
+      "bone": "claw_r_finger",
+      "note": "pointe : FX d'impact du Slam, poussière",
+      "blender_bone_space": {
+        "location_m": [
+          0.0,
+          0.62,
+          -0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          0.0,
+          -62.0,
+          -0.0
+        ],
+        "rotation_deg_rpy": [
+          -0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -24.21,
+        292.57,
+        116.59
+      ]
+    },
+    {
+      "name": "SOCKET_Throw_Release",
+      "bone": "claw_r_hand",
+      "note": "point de lâcher de Bean (= SOCKET_ClawGrab_R) ; vitesse appliquée sur AN_Throw_Release",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          1.14,
+          0.1172
+        ],
+        "rotation_quat_wxyz": [
+          0.70711,
+          -0.0,
+          0.70711,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -114.0,
+          11.72
+        ],
+        "rotation_deg_rpy": [
+          -0.0,
+          -90.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -43.28,
+        271.13,
+        100.07
+      ]
+    },
+    {
+      "name": "SOCKET_Mouth",
+      "bone": "mouth",
+      "note": "bulles, écume, cri",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.15,
+          0.06
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -15.0,
+          6.0
+        ],
+        "rotation_deg_rpy": [
+          -0.0,
+          -0.0,
+          0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        0.0,
+        107.98,
+        147.43
+      ]
+    },
+    {
+      "name": "WeakPoint_Eye_L",
+      "bone": "eye_l",
+      "note": "sphère de rayon 0,09 m ; dégâts x3, déclenche Hit_React",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.077,
+          0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          0.0,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -7.7,
+          0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          -0.0,
+          0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        53.28,
+        127.79,
+        204.33
+      ]
+    },
+    {
+      "name": "WeakPoint_Eye_R",
+      "bone": "eye_r",
+      "note": "idem",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.077,
+          -0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          -0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -7.7,
+          -0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -53.28,
+        127.79,
+        204.33
+      ]
+    },
+    {
+      "name": "WeakPoint_ClawJoint_L",
+      "bone": "claw_l_forearm",
+      "note": "membrane du coude ; dégâts x2",
+      "blender_bone_space": {
+        "location_m": [
+          0.0,
+          -0.0,
+          -0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          -0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          0.0,
+          0.0,
+          -0.0
+        ],
+        "rotation_deg_rpy": [
+          -0.0,
+          0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        140.13,
+        157.93,
+        146.22
+      ]
+    },
+    {
+      "name": "WeakPoint_ClawJoint_R",
+      "bone": "claw_r_forearm",
+      "note": "membrane du coude ; dégâts x2, surtout exposée quand la pince reste plantée après un Slam",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          -0.0,
+          0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          -0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -144.32,
+        153.54,
+        143.76
+      ]
+    },
+    {
+      "name": "WeakPoint_Belly",
+      "bone": "abdomen",
+      "note": "plaque abdominale ; dégâts x4, touchable par-dessous (mousquet) ou quand le crabe est retourné (Flipped)",
+      "blender_bone_space": {
+        "location_m": [
+          0.0,
+          0.55,
+          -0.05
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          0.0,
+          -55.0,
+          -5.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        0.0,
+        -25.0,
+        120.0
+      ]
+    },
+    {
+      "name": "WeakPoint_Mouth",
+      "bone": "mouth",
+      "note": "dégâts x1,5 ; estoc au sabre depuis le front",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.12,
+          0.04
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -12.0,
+          4.0
+        ],
+        "rotation_deg_rpy": [
+          -0.0,
+          -0.0,
+          0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        0.0,
+        105.79,
+        150.29
+      ]
+    },
+    {
+      "name": "SOCKET_LegTip_L1",
+      "bone": "leg_l1_dactyl",
+      "note": "",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.8464,
+          -0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          -0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -84.64,
+          -0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        236.0,
+        193.0,
+        -0.0
+      ]
+    },
+    {
+      "name": "SOCKET_LegTip_L2",
+      "bone": "leg_l2_dactyl",
+      "note": "",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.92,
+          -0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -92.0,
+          -0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        296.0,
+        78.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SOCKET_LegTip_L3",
+      "bone": "leg_l3_dactyl",
+      "note": "",
+      "blender_bone_space": {
+        "location_m": [
+          0.0,
+          0.92,
+          0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          0.0,
+          -92.0,
+          0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        292.0,
+        -98.0,
+        -0.0
+      ]
+    },
+    {
+      "name": "SOCKET_LegTip_L4",
+      "bone": "leg_l4_dactyl",
+      "note": "",
+      "blender_bone_space": {
+        "location_m": [
+          0.0,
+          0.782,
+          0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          0.0,
+          -78.2,
+          0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        199.0,
+        -189.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SOCKET_LegTip_R1",
+      "bone": "leg_r1_dactyl",
+      "note": "",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.8464,
+          0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -84.64,
+          0.0
+        ],
+        "rotation_deg_rpy": [
+          -0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -236.0,
+        193.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SOCKET_LegTip_R2",
+      "bone": "leg_r2_dactyl",
+      "note": "",
+      "blender_bone_space": {
+        "location_m": [
+          0.0,
+          0.92,
+          -0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          -0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          0.0,
+          -92.0,
+          -0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -296.0,
+        78.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SOCKET_LegTip_R3",
+      "bone": "leg_r3_dactyl",
+      "note": "",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.92,
+          0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -92.0,
+          0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -292.0,
+        -98.0,
+        -0.0
+      ]
+    },
+    {
+      "name": "SOCKET_LegTip_R4",
+      "bone": "leg_r4_dactyl",
+      "note": "",
+      "blender_bone_space": {
+        "location_m": [
+          -0.0,
+          0.782,
+          0.0
+        ],
+        "rotation_quat_wxyz": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "unreal_relative": {
+        "location_cm": [
+          -0.0,
+          -78.2,
+          0.0
+        ],
+        "rotation_deg_rpy": [
+          0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "component_space_rest_cm": [
+        -199.0,
+        -189.0,
+        0.0
+      ]
+    }
+  ],
+  "leg_tips": [
+    {
+      "bone": "leg_l1_dactyl",
+      "socket": "SOCKET_LegTip_L1",
+      "tip_bone_space_cm": [
+        0.0,
+        84.6,
+        0.0
+      ],
+      "contact_height_cm": 0.0,
+      "notify": "AN_Step_leg_l1_dactyl"
+    },
+    {
+      "bone": "leg_l2_dactyl",
+      "socket": "SOCKET_LegTip_L2",
+      "tip_bone_space_cm": [
+        0.0,
+        92.0,
+        0.0
+      ],
+      "contact_height_cm": 0.0,
+      "notify": "AN_Step_leg_l2_dactyl"
+    },
+    {
+      "bone": "leg_l3_dactyl",
+      "socket": "SOCKET_LegTip_L3",
+      "tip_bone_space_cm": [
+        0.0,
+        92.0,
+        0.0
+      ],
+      "contact_height_cm": 0.0,
+      "notify": "AN_Step_leg_l3_dactyl"
+    },
+    {
+      "bone": "leg_l4_dactyl",
+      "socket": "SOCKET_LegTip_L4",
+      "tip_bone_space_cm": [
+        0.0,
+        78.2,
+        0.0
+      ],
+      "contact_height_cm": 0.0,
+      "notify": "AN_Step_leg_l4_dactyl"
+    },
+    {
+      "bone": "leg_r1_dactyl",
+      "socket": "SOCKET_LegTip_R1",
+      "tip_bone_space_cm": [
+        0.0,
+        84.6,
+        0.0
+      ],
+      "contact_height_cm": 0.0,
+      "notify": "AN_Step_leg_r1_dactyl"
+    },
+    {
+      "bone": "leg_r2_dactyl",
+      "socket": "SOCKET_LegTip_R2",
+      "tip_bone_space_cm": [
+        0.0,
+        92.0,
+        0.0
+      ],
+      "contact_height_cm": 0.0,
+      "notify": "AN_Step_leg_r2_dactyl"
+    },
+    {
+      "bone": "leg_r3_dactyl",
+      "socket": "SOCKET_LegTip_R3",
+      "tip_bone_space_cm": [
+        0.0,
+        92.0,
+        0.0
+      ],
+      "contact_height_cm": 0.0,
+      "notify": "AN_Step_leg_r3_dactyl"
+    },
+    {
+      "bone": "leg_r4_dactyl",
+      "socket": "SOCKET_LegTip_R4",
+      "tip_bone_space_cm": [
+        0.0,
+        78.2,
+        0.0
+      ],
+      "contact_height_cm": 0.0,
+      "notify": "AN_Step_leg_r4_dactyl"
+    }
+  ],
+  "physics_asset_hint": "art/export/Characters/GiantCrab/PHAT_GiantCrab_hint.json",
+  "leg_tips_note": "os de pointe = leg_<s><n>_dactyl, pointe au bout de l'os (queue, 'tip_bone_space_cm'), socket SOCKET_LegTip_<S><n> au même endroit ; contact au sol à 0 cm",
+  "clips": [
+    {
+      "name": "Idle",
+      "asset": "A_GiantCrab_Idle",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Idle.fbx",
+      "frames": 90,
+      "seconds": 3.0,
+      "fps": 30,
+      "loop": true,
+      "category": "Locomotion",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [],
+      "peak_frame": 27,
+      "speed_cm_s": 0,
+      "blendspace": [
+        0,
+        0
+      ],
+      "step_contacts": []
+    },
+    {
+      "name": "Walk_Sideways_L",
+      "asset": "A_GiantCrab_Walk_Sideways_L",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Walk_Sideways_L.fbx",
+      "frames": 24,
+      "seconds": 0.8,
+      "fps": 30,
+      "loop": true,
+      "category": "Locomotion",
+      "enable_root_motion": false,
+      "root_motion": "en place ; 0.80 m par cycle vers +X = 100 cm/s",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 12,
+          "time_s": 0.4
+        }
+      ],
+      "peak_frame": 6,
+      "speed_cm_s": 100,
+      "direction": "+X (gauche du crabe)",
+      "blendspace": [
+        90,
+        100
+      ],
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 12,
+          "time_s": 0.4
+        }
+      ]
+    },
+    {
+      "name": "Walk_Sideways_R",
+      "asset": "A_GiantCrab_Walk_Sideways_R",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Walk_Sideways_R.fbx",
+      "frames": 24,
+      "seconds": 0.8,
+      "fps": 30,
+      "loop": true,
+      "category": "Locomotion",
+      "enable_root_motion": false,
+      "root_motion": "en place ; 0.80 m par cycle vers -X = 100 cm/s",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 12,
+          "time_s": 0.4
+        }
+      ],
+      "peak_frame": 6,
+      "speed_cm_s": 100,
+      "direction": "-X",
+      "blendspace": [
+        -90,
+        100
+      ],
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 12,
+          "time_s": 0.4
+        }
+      ]
+    },
+    {
+      "name": "Walk_Forward",
+      "asset": "A_GiantCrab_Walk_Forward",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Walk_Forward.fbx",
+      "frames": 36,
+      "seconds": 1.2,
+      "fps": 30,
+      "loop": true,
+      "category": "Locomotion",
+      "enable_root_motion": false,
+      "root_motion": "en place ; 0,60 m par cycle vers l'avant (-Y) = 50 cm/s",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 18,
+          "time_s": 0.6
+        }
+      ],
+      "peak_frame": 9,
+      "speed_cm_s": 50,
+      "direction": "-Y (avant)",
+      "blendspace": [
+        0,
+        50
+      ],
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 18,
+          "time_s": 0.6
+        }
+      ]
+    },
+    {
+      "name": "Turn_L",
+      "asset": "A_GiantCrab_Turn_L",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Turn_L.fbx",
+      "frames": 36,
+      "seconds": 1.2,
+      "fps": 30,
+      "loop": false,
+      "category": "Locomotion",
+      "enable_root_motion": true,
+      "root_motion": "lacet de +90° sur root, sans translation (pivot au centre)",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.204
+        ],
+        [
+          0.0,
+          0.0,
+          0.802
+        ],
+        [
+          0.0,
+          0.0,
+          1.771
+        ],
+        [
+          0.0,
+          0.0,
+          3.086
+        ],
+        [
+          0.0,
+          0.0,
+          4.726
+        ],
+        [
+          0.0,
+          0.0,
+          6.667
+        ],
+        [
+          0.0,
+          0.0,
+          8.885
+        ],
+        [
+          0.0,
+          0.0,
+          11.358
+        ],
+        [
+          0.0,
+          0.0,
+          14.062
+        ],
+        [
+          0.0,
+          0.0,
+          16.975
+        ],
+        [
+          0.0,
+          0.0,
+          20.073
+        ],
+        [
+          0.0,
+          0.0,
+          23.333
+        ],
+        [
+          0.0,
+          0.0,
+          26.732
+        ],
+        [
+          0.0,
+          0.0,
+          30.247
+        ],
+        [
+          0.0,
+          0.0,
+          33.854
+        ],
+        [
+          0.0,
+          0.0,
+          37.531
+        ],
+        [
+          0.0,
+          0.0,
+          41.254
+        ],
+        [
+          0.0,
+          0.0,
+          45.0
+        ],
+        [
+          0.0,
+          0.0,
+          48.746
+        ],
+        [
+          0.0,
+          0.0,
+          52.469
+        ],
+        [
+          0.0,
+          0.0,
+          56.146
+        ],
+        [
+          0.0,
+          0.0,
+          59.753
+        ],
+        [
+          0.0,
+          0.0,
+          63.268
+        ],
+        [
+          0.0,
+          0.0,
+          66.667
+        ],
+        [
+          0.0,
+          0.0,
+          69.927
+        ],
+        [
+          0.0,
+          0.0,
+          73.025
+        ],
+        [
+          0.0,
+          0.0,
+          75.938
+        ],
+        [
+          0.0,
+          0.0,
+          78.642
+        ],
+        [
+          0.0,
+          0.0,
+          81.115
+        ],
+        [
+          0.0,
+          0.0,
+          83.333
+        ],
+        [
+          0.0,
+          0.0,
+          85.274
+        ],
+        [
+          0.0,
+          0.0,
+          86.914
+        ],
+        [
+          0.0,
+          0.0,
+          88.229
+        ],
+        [
+          0.0,
+          0.0,
+          89.198
+        ],
+        [
+          0.0,
+          0.0,
+          89.796
+        ],
+        [
+          0.0,
+          0.0,
+          90.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 35,
+          "time_s": 1.167
+        }
+      ],
+      "peak_frame": 18,
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          0,
+          0
+        ],
+        "yaw_deg": 90.0
+      },
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 35,
+          "time_s": 1.167
+        }
+      ]
+    },
+    {
+      "name": "Turn_R",
+      "asset": "A_GiantCrab_Turn_R",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Turn_R.fbx",
+      "frames": 36,
+      "seconds": 1.2,
+      "fps": 30,
+      "loop": false,
+      "category": "Locomotion",
+      "enable_root_motion": true,
+      "root_motion": "lacet de -90° sur root, sans translation (pivot au centre)",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.204
+        ],
+        [
+          0.0,
+          0.0,
+          -0.802
+        ],
+        [
+          0.0,
+          0.0,
+          -1.771
+        ],
+        [
+          0.0,
+          0.0,
+          -3.086
+        ],
+        [
+          0.0,
+          0.0,
+          -4.726
+        ],
+        [
+          0.0,
+          0.0,
+          -6.667
+        ],
+        [
+          0.0,
+          0.0,
+          -8.885
+        ],
+        [
+          0.0,
+          0.0,
+          -11.358
+        ],
+        [
+          0.0,
+          0.0,
+          -14.062
+        ],
+        [
+          0.0,
+          0.0,
+          -16.975
+        ],
+        [
+          0.0,
+          0.0,
+          -20.073
+        ],
+        [
+          0.0,
+          0.0,
+          -23.333
+        ],
+        [
+          0.0,
+          0.0,
+          -26.732
+        ],
+        [
+          0.0,
+          0.0,
+          -30.247
+        ],
+        [
+          0.0,
+          0.0,
+          -33.854
+        ],
+        [
+          0.0,
+          0.0,
+          -37.531
+        ],
+        [
+          0.0,
+          0.0,
+          -41.254
+        ],
+        [
+          0.0,
+          0.0,
+          -45.0
+        ],
+        [
+          0.0,
+          0.0,
+          -48.746
+        ],
+        [
+          0.0,
+          0.0,
+          -52.469
+        ],
+        [
+          0.0,
+          0.0,
+          -56.146
+        ],
+        [
+          0.0,
+          0.0,
+          -59.753
+        ],
+        [
+          0.0,
+          0.0,
+          -63.268
+        ],
+        [
+          0.0,
+          0.0,
+          -66.667
+        ],
+        [
+          0.0,
+          0.0,
+          -69.927
+        ],
+        [
+          0.0,
+          0.0,
+          -73.025
+        ],
+        [
+          0.0,
+          0.0,
+          -75.938
+        ],
+        [
+          0.0,
+          0.0,
+          -78.642
+        ],
+        [
+          0.0,
+          0.0,
+          -81.115
+        ],
+        [
+          0.0,
+          0.0,
+          -83.333
+        ],
+        [
+          0.0,
+          0.0,
+          -85.274
+        ],
+        [
+          0.0,
+          0.0,
+          -86.914
+        ],
+        [
+          0.0,
+          0.0,
+          -88.229
+        ],
+        [
+          0.0,
+          0.0,
+          -89.198
+        ],
+        [
+          0.0,
+          0.0,
+          -89.796
+        ],
+        [
+          0.0,
+          0.0,
+          -90.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Footstep_Heavy",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 35,
+          "time_s": 1.167
+        }
+      ],
+      "peak_frame": 18,
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          0,
+          0
+        ],
+        "yaw_deg": -90.0
+      },
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 35,
+          "time_s": 1.167
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 35,
+          "time_s": 1.167
+        }
+      ]
+    },
+    {
+      "name": "Taunt_ClawClack",
+      "asset": "A_GiantCrab_Taunt_ClawClack",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Taunt_ClawClack.fbx",
+      "frames": 60,
+      "seconds": 2.0,
+      "fps": 30,
+      "loop": false,
+      "category": "Combat",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Claw_Snap",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "name": "AN_Claw_Snap",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Claw_Snap",
+          "frame": 34,
+          "time_s": 1.133
+        },
+        {
+          "name": "AN_Claw_Snap",
+          "frame": 42,
+          "time_s": 1.4
+        }
+      ],
+      "peak_frame": 18,
+      "optional": true,
+      "step_contacts": []
+    },
+    {
+      "name": "Attack_ClawSwipe",
+      "asset": "A_GiantCrab_Attack_ClawSwipe",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Attack_ClawSwipe.fbx",
+      "frames": 48,
+      "seconds": 1.6,
+      "fps": 30,
+      "loop": false,
+      "category": "Combat",
+      "enable_root_motion": true,
+      "root_motion": "0,25 m vers l'avant (-Y), images 10 à 24",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0036,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0138,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0295,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0496,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0729,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0984,
+          0.0
+        ],
+        [
+          0.0,
+          -0.125,
+          0.0
+        ],
+        [
+          0.0,
+          -0.1516,
+          0.0
+        ],
+        [
+          0.0,
+          -0.1771,
+          0.0
+        ],
+        [
+          0.0,
+          -0.2004,
+          0.0
+        ],
+        [
+          0.0,
+          -0.2205,
+          0.0
+        ],
+        [
+          0.0,
+          -0.2362,
+          0.0
+        ],
+        [
+          0.0,
+          -0.2464,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        [
+          0.0,
+          -0.25,
+          0.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_Attack_Windup",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "name": "AN_Claw_Whoosh",
+          "frame": 17,
+          "time_s": 0.567
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "frame": 25,
+          "time_s": 0.833
+        }
+      ],
+      "peak_frame": 20,
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          -0.25,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 18,
+          "time_s": 0.6
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 26,
+          "time_s": 0.867
+        }
+      ]
+    },
+    {
+      "name": "Attack_ClawSlam",
+      "asset": "A_GiantCrab_Attack_ClawSlam",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Attack_ClawSlam.fbx",
+      "frames": 60,
+      "seconds": 2.0,
+      "fps": 30,
+      "loop": false,
+      "category": "Combat",
+      "enable_root_motion": true,
+      "root_motion": "0,40 m vers l'avant (-Y), images 22 à 32",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0112,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0416,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0864,
+          0.0
+        ],
+        [
+          0.0,
+          -0.1408,
+          0.0
+        ],
+        [
+          0.0,
+          -0.2,
+          0.0
+        ],
+        [
+          0.0,
+          -0.2592,
+          0.0
+        ],
+        [
+          0.0,
+          -0.3136,
+          0.0
+        ],
+        [
+          0.0,
+          -0.3584,
+          0.0
+        ],
+        [
+          0.0,
+          -0.3888,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4,
+          0.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_Attack_Windup",
+          "frame": 10,
+          "time_s": 0.333
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "frame": 28,
+          "time_s": 0.933
+        },
+        {
+          "name": "AN_GroundPound_Impact",
+          "frame": 31,
+          "time_s": 1.033
+        },
+        {
+          "name": "AN_ClawStuck_Begin",
+          "frame": 31,
+          "time_s": 1.033
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "frame": 32,
+          "time_s": 1.067
+        },
+        {
+          "name": "AN_ClawStuck_End",
+          "frame": 44,
+          "time_s": 1.467
+        }
+      ],
+      "peak_frame": 31,
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          -0.4,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "impact_tip_clip_space_m": [
+        -0.62,
+        -3.3,
+        -0.06
+      ],
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 54,
+          "time_s": 1.8
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 54,
+          "time_s": 1.8
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 54,
+          "time_s": 1.8
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 54,
+          "time_s": 1.8
+        }
+      ]
+    },
+    {
+      "name": "Attack_Grab",
+      "asset": "A_GiantCrab_Attack_Grab",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Attack_Grab.fbx",
+      "frames": 54,
+      "seconds": 1.8,
+      "fps": 30,
+      "loop": false,
+      "category": "Combat",
+      "enable_root_motion": true,
+      "root_motion": "fente de 0,60 m vers l'avant (-Y), images 8 à 20",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0118,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0444,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0938,
+          0.0
+        ],
+        [
+          0.0,
+          -0.1556,
+          0.0
+        ],
+        [
+          0.0,
+          -0.2257,
+          0.0
+        ],
+        [
+          0.0,
+          -0.3,
+          0.0
+        ],
+        [
+          0.0,
+          -0.3743,
+          0.0
+        ],
+        [
+          0.0,
+          -0.4444,
+          0.0
+        ],
+        [
+          0.0,
+          -0.5062,
+          0.0
+        ],
+        [
+          0.0,
+          -0.5556,
+          0.0
+        ],
+        [
+          0.0,
+          -0.5882,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ],
+        [
+          0.0,
+          -0.6,
+          0.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_Attack_Windup",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "name": "AN_Grab_Check",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_Grab_Attach",
+          "frame": 21,
+          "time_s": 0.7
+        }
+      ],
+      "peak_frame": 20,
+      "montage_sections": {
+        "Grab": [
+          0,
+          24
+        ],
+        "Miss": [
+          24,
+          54
+        ]
+      },
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          -0.6,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "grab_socket_clip_space_m": [
+        -0.3,
+        -2.98,
+        0.5
+      ],
+      "grab_frame": 21,
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 21,
+          "time_s": 0.7
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 21,
+          "time_s": 0.7
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 21,
+          "time_s": 0.7
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 21,
+          "time_s": 0.7
+        }
+      ]
+    },
+    {
+      "name": "Grab_Hold",
+      "asset": "A_GiantCrab_Grab_Hold",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Grab_Hold.fbx",
+      "frames": 30,
+      "seconds": 1.0,
+      "fps": 30,
+      "loop": true,
+      "category": "Combat",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Squeeze_Tick",
+          "frame": 15,
+          "time_s": 0.5
+        }
+      ],
+      "peak_frame": 15,
+      "hold_socket_m": [
+        -0.28,
+        -2.12,
+        1.6
+      ],
+      "step_contacts": []
+    },
+    {
+      "name": "Throw",
+      "asset": "A_GiantCrab_Throw",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Throw.fbx",
+      "frames": 48,
+      "seconds": 1.6,
+      "fps": 30,
+      "loop": false,
+      "category": "Combat",
+      "enable_root_motion": true,
+      "root_motion": "lacet de -30° (images 0 à 16) puis retour à 0° (26 à 34)",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.337
+        ],
+        [
+          0.0,
+          0.0,
+          -1.289
+        ],
+        [
+          0.0,
+          0.0,
+          -2.769
+        ],
+        [
+          0.0,
+          0.0,
+          -4.688
+        ],
+        [
+          0.0,
+          0.0,
+          -6.958
+        ],
+        [
+          0.0,
+          0.0,
+          -9.492
+        ],
+        [
+          0.0,
+          0.0,
+          -12.202
+        ],
+        [
+          0.0,
+          0.0,
+          -15.0
+        ],
+        [
+          0.0,
+          0.0,
+          -17.798
+        ],
+        [
+          0.0,
+          0.0,
+          -20.508
+        ],
+        [
+          0.0,
+          0.0,
+          -23.042
+        ],
+        [
+          0.0,
+          0.0,
+          -25.312
+        ],
+        [
+          0.0,
+          0.0,
+          -27.231
+        ],
+        [
+          0.0,
+          0.0,
+          -28.711
+        ],
+        [
+          0.0,
+          0.0,
+          -29.663
+        ],
+        [
+          0.0,
+          0.0,
+          -30.0
+        ],
+        [
+          0.0,
+          0.0,
+          -30.0
+        ],
+        [
+          0.0,
+          0.0,
+          -30.0
+        ],
+        [
+          0.0,
+          0.0,
+          -30.0
+        ],
+        [
+          0.0,
+          0.0,
+          -28.117
+        ],
+        [
+          0.0,
+          0.0,
+          -23.259
+        ],
+        [
+          0.0,
+          0.0,
+          -16.618
+        ],
+        [
+          0.0,
+          0.0,
+          -9.382
+        ],
+        [
+          0.0,
+          0.0,
+          -2.741
+        ],
+        [
+          0.0,
+          0.0,
+          2.117
+        ],
+        [
+          0.0,
+          0.0,
+          4.0
+        ],
+        [
+          0.0,
+          0.0,
+          3.828
+        ],
+        [
+          0.0,
+          0.0,
+          3.375
+        ],
+        [
+          0.0,
+          0.0,
+          2.734
+        ],
+        [
+          0.0,
+          0.0,
+          2.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.266
+        ],
+        [
+          0.0,
+          0.0,
+          0.625
+        ],
+        [
+          0.0,
+          0.0,
+          0.172
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_Throw_Release",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "name": "AN_Claw_Snap",
+          "frame": 30,
+          "time_s": 1.0
+        }
+      ],
+      "peak_frame": 26,
+      "release": {
+        "frame": 26,
+        "speed_m_s": 6.0,
+        "pitch_deg": 35,
+        "distance_m": 4.5
+      },
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          0,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 10,
+          "time_s": 0.333
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 10,
+          "time_s": 0.333
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 10,
+          "time_s": 0.333
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 10,
+          "time_s": 0.333
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 27,
+          "time_s": 0.9
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 34,
+          "time_s": 1.133
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 34,
+          "time_s": 1.133
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 34,
+          "time_s": 1.133
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 34,
+          "time_s": 1.133
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 40,
+          "time_s": 1.333
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 40,
+          "time_s": 1.333
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 40,
+          "time_s": 1.333
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 40,
+          "time_s": 1.333
+        }
+      ]
+    },
+    {
+      "name": "Block_Start",
+      "asset": "A_GiantCrab_Block_Start",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Block_Start.fbx",
+      "frames": 12,
+      "seconds": 0.4,
+      "fps": 30,
+      "loop": false,
+      "category": "Defense",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_BlockWindow_Begin",
+          "frame": 6,
+          "time_s": 0.2
+        }
+      ],
+      "peak_frame": 12,
+      "step_contacts": []
+    },
+    {
+      "name": "Block_Loop",
+      "asset": "A_GiantCrab_Block_Loop",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Block_Loop.fbx",
+      "frames": 30,
+      "seconds": 1.0,
+      "fps": 30,
+      "loop": true,
+      "category": "Defense",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [],
+      "peak_frame": 15,
+      "step_contacts": []
+    },
+    {
+      "name": "Block_End",
+      "asset": "A_GiantCrab_Block_End",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Block_End.fbx",
+      "frames": 12,
+      "seconds": 0.4,
+      "fps": 30,
+      "loop": false,
+      "category": "Defense",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_BlockWindow_End",
+          "frame": 4,
+          "time_s": 0.133
+        }
+      ],
+      "peak_frame": 12,
+      "step_contacts": []
+    },
+    {
+      "name": "Hit_React",
+      "asset": "A_GiantCrab_Hit_React",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Hit_React.fbx",
+      "frames": 24,
+      "seconds": 0.8,
+      "fps": 30,
+      "loop": false,
+      "category": "Reaction",
+      "enable_root_motion": true,
+      "root_motion": "recul de 0,20 m (+Y)",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0125,
+          0.0
+        ],
+        [
+          0.0,
+          0.0422,
+          0.0
+        ],
+        [
+          0.0,
+          0.0778,
+          0.0
+        ],
+        [
+          0.0,
+          0.1075,
+          0.0
+        ],
+        [
+          0.0,
+          0.12,
+          0.0
+        ],
+        [
+          0.0,
+          0.1227,
+          0.0
+        ],
+        [
+          0.0,
+          0.1301,
+          0.0
+        ],
+        [
+          0.0,
+          0.1407,
+          0.0
+        ],
+        [
+          0.0,
+          0.1534,
+          0.0
+        ],
+        [
+          0.0,
+          0.1666,
+          0.0
+        ],
+        [
+          0.0,
+          0.1793,
+          0.0
+        ],
+        [
+          0.0,
+          0.1899,
+          0.0
+        ],
+        [
+          0.0,
+          0.1973,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ],
+        [
+          0.0,
+          0.2,
+          0.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_HitFlash",
+          "frame": 1,
+          "time_s": 0.033
+        }
+      ],
+      "peak_frame": 3,
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          0.2,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 11,
+          "time_s": 0.367
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 11,
+          "time_s": 0.367
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 11,
+          "time_s": 0.367
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 11,
+          "time_s": 0.367
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 16,
+          "time_s": 0.533
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 16,
+          "time_s": 0.533
+        }
+      ]
+    },
+    {
+      "name": "Stagger_Flip",
+      "asset": "A_GiantCrab_Stagger_Flip",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Stagger_Flip.fbx",
+      "frames": 66,
+      "seconds": 2.2,
+      "fps": 30,
+      "loop": false,
+      "category": "Reaction",
+      "enable_root_motion": true,
+      "root_motion": "1,0 m latéral (+X) ; la bascule de 180° en roulis est portée par l'os body (root reste à plat)",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0014,
+          0.0,
+          0.0
+        ],
+        [
+          0.0052,
+          0.0,
+          0.0
+        ],
+        [
+          0.0108,
+          0.0,
+          0.0
+        ],
+        [
+          0.0176,
+          0.0,
+          0.0
+        ],
+        [
+          0.025,
+          0.0,
+          0.0
+        ],
+        [
+          0.0324,
+          0.0,
+          0.0
+        ],
+        [
+          0.0392,
+          0.0,
+          0.0
+        ],
+        [
+          0.0448,
+          0.0,
+          0.0
+        ],
+        [
+          0.0486,
+          0.0,
+          0.0
+        ],
+        [
+          0.05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0547,
+          0.0,
+          0.0
+        ],
+        [
+          0.0682,
+          0.0,
+          0.0
+        ],
+        [
+          0.0895,
+          0.0,
+          0.0
+        ],
+        [
+          0.1176,
+          0.0,
+          0.0
+        ],
+        [
+          0.1516,
+          0.0,
+          0.0
+        ],
+        [
+          0.1904,
+          0.0,
+          0.0
+        ],
+        [
+          0.2331,
+          0.0,
+          0.0
+        ],
+        [
+          0.2788,
+          0.0,
+          0.0
+        ],
+        [
+          0.3264,
+          0.0,
+          0.0
+        ],
+        [
+          0.375,
+          0.0,
+          0.0
+        ],
+        [
+          0.4236,
+          0.0,
+          0.0
+        ],
+        [
+          0.4712,
+          0.0,
+          0.0
+        ],
+        [
+          0.5169,
+          0.0,
+          0.0
+        ],
+        [
+          0.5596,
+          0.0,
+          0.0
+        ],
+        [
+          0.5984,
+          0.0,
+          0.0
+        ],
+        [
+          0.6324,
+          0.0,
+          0.0
+        ],
+        [
+          0.6605,
+          0.0,
+          0.0
+        ],
+        [
+          0.6818,
+          0.0,
+          0.0
+        ],
+        [
+          0.6953,
+          0.0,
+          0.0
+        ],
+        [
+          0.7,
+          0.0,
+          0.0
+        ],
+        [
+          0.7084,
+          0.0,
+          0.0
+        ],
+        [
+          0.7312,
+          0.0,
+          0.0
+        ],
+        [
+          0.7648,
+          0.0,
+          0.0
+        ],
+        [
+          0.8056,
+          0.0,
+          0.0
+        ],
+        [
+          0.85,
+          0.0,
+          0.0
+        ],
+        [
+          0.8944,
+          0.0,
+          0.0
+        ],
+        [
+          0.9352,
+          0.0,
+          0.0
+        ],
+        [
+          0.9688,
+          0.0,
+          0.0
+        ],
+        [
+          0.9916,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_Stagger_Stumble",
+          "frame": 8,
+          "time_s": 0.267
+        },
+        {
+          "name": "AN_BodyFall",
+          "frame": 40,
+          "time_s": 1.333
+        },
+        {
+          "name": "AN_CameraShake",
+          "frame": 40,
+          "time_s": 1.333
+        }
+      ],
+      "peak_frame": 40,
+      "root_motion_total": {
+        "translation_m": [
+          1.0,
+          0,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "step_contacts": [
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 14,
+          "time_s": 0.467
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 15,
+          "time_s": 0.5
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 17,
+          "time_s": 0.567
+        }
+      ]
+    },
+    {
+      "name": "Flipped_Loop",
+      "asset": "A_GiantCrab_Flipped_Loop",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Flipped_Loop.fbx",
+      "frames": 60,
+      "seconds": 2.0,
+      "fps": 30,
+      "loop": true,
+      "category": "Reaction",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [],
+      "peak_frame": 30,
+      "belly_height_m": 0.78,
+      "step_contacts": []
+    },
+    {
+      "name": "Recover",
+      "asset": "A_GiantCrab_Recover",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Recover.fbx",
+      "frames": 60,
+      "seconds": 2.0,
+      "fps": 30,
+      "loop": false,
+      "category": "Reaction",
+      "enable_root_motion": true,
+      "root_motion": "0,40 m latéral (-X, retour)",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.002,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0079,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0172,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0296,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0448,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0625,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0822,
+          0.0,
+          0.0
+        ],
+        [
+          -0.1037,
+          0.0,
+          0.0
+        ],
+        [
+          -0.1266,
+          0.0,
+          0.0
+        ],
+        [
+          -0.1505,
+          0.0,
+          0.0
+        ],
+        [
+          -0.1751,
+          0.0,
+          0.0
+        ],
+        [
+          -0.2,
+          0.0,
+          0.0
+        ],
+        [
+          -0.2249,
+          0.0,
+          0.0
+        ],
+        [
+          -0.2495,
+          0.0,
+          0.0
+        ],
+        [
+          -0.2734,
+          0.0,
+          0.0
+        ],
+        [
+          -0.2963,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3178,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3375,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3552,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3704,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3828,
+          0.0,
+          0.0
+        ],
+        [
+          -0.3921,
+          0.0,
+          0.0
+        ],
+        [
+          -0.398,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        [
+          -0.4,
+          0.0,
+          0.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_Land",
+          "frame": 44,
+          "time_s": 1.467
+        },
+        {
+          "name": "AN_StaggerEnd",
+          "frame": 56,
+          "time_s": 1.867
+        }
+      ],
+      "peak_frame": 30,
+      "root_motion_total": {
+        "translation_m": [
+          -0.4,
+          0,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "step_contacts": [
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 25,
+          "time_s": 0.833
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 26,
+          "time_s": 0.867
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 44,
+          "time_s": 1.467
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 44,
+          "time_s": 1.467
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 44,
+          "time_s": 1.467
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 44,
+          "time_s": 1.467
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 44,
+          "time_s": 1.467
+        }
+      ]
+    },
+    {
+      "name": "Death",
+      "asset": "A_GiantCrab_Death",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Death.fbx",
+      "frames": 90,
+      "seconds": 3.0,
+      "fps": 30,
+      "loop": false,
+      "category": "Death",
+      "enable_root_motion": true,
+      "root_motion": "0,30 m vers l'arrière (+Y)",
+      "root_motion_per_frame": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0011,
+          0.0
+        ],
+        [
+          0.0,
+          0.0042,
+          0.0
+        ],
+        [
+          0.0,
+          0.0091,
+          0.0
+        ],
+        [
+          0.0,
+          0.0156,
+          0.0
+        ],
+        [
+          0.0,
+          0.0234,
+          0.0
+        ],
+        [
+          0.0,
+          0.0324,
+          0.0
+        ],
+        [
+          0.0,
+          0.0423,
+          0.0
+        ],
+        [
+          0.0,
+          0.0528,
+          0.0
+        ],
+        [
+          0.0,
+          0.0638,
+          0.0
+        ],
+        [
+          0.0,
+          0.075,
+          0.0
+        ],
+        [
+          0.0,
+          0.0862,
+          0.0
+        ],
+        [
+          0.0,
+          0.0972,
+          0.0
+        ],
+        [
+          0.0,
+          0.1077,
+          0.0
+        ],
+        [
+          0.0,
+          0.1176,
+          0.0
+        ],
+        [
+          0.0,
+          0.1266,
+          0.0
+        ],
+        [
+          0.0,
+          0.1344,
+          0.0
+        ],
+        [
+          0.0,
+          0.1409,
+          0.0
+        ],
+        [
+          0.0,
+          0.1458,
+          0.0
+        ],
+        [
+          0.0,
+          0.1489,
+          0.0
+        ],
+        [
+          0.0,
+          0.15,
+          0.0
+        ],
+        [
+          0.0,
+          0.1522,
+          0.0
+        ],
+        [
+          0.0,
+          0.1583,
+          0.0
+        ],
+        [
+          0.0,
+          0.1677,
+          0.0
+        ],
+        [
+          0.0,
+          0.1797,
+          0.0
+        ],
+        [
+          0.0,
+          0.1937,
+          0.0
+        ],
+        [
+          0.0,
+          0.209,
+          0.0
+        ],
+        [
+          0.0,
+          0.225,
+          0.0
+        ],
+        [
+          0.0,
+          0.241,
+          0.0
+        ],
+        [
+          0.0,
+          0.2563,
+          0.0
+        ],
+        [
+          0.0,
+          0.2703,
+          0.0
+        ],
+        [
+          0.0,
+          0.2823,
+          0.0
+        ],
+        [
+          0.0,
+          0.2917,
+          0.0
+        ],
+        [
+          0.0,
+          0.2978,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ],
+        [
+          0.0,
+          0.3,
+          0.0
+        ]
+      ],
+      "notifies": [
+        {
+          "name": "AN_DeathStart",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_BodyFall",
+          "frame": 34,
+          "time_s": 1.133
+        },
+        {
+          "name": "AN_DeadEyes",
+          "frame": 40,
+          "time_s": 1.333
+        },
+        {
+          "name": "AN_DeathEnd",
+          "frame": 80,
+          "time_s": 2.667
+        }
+      ],
+      "peak_frame": 50,
+      "curves": {
+        "DeadEyes": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0
+          ],
+          [
+            1.667,
+            1.0
+          ],
+          [
+            3.0,
+            1.0
+          ]
+        ]
+      },
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          0.3,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 63,
+          "time_s": 2.1
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 63,
+          "time_s": 2.1
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 63,
+          "time_s": 2.1
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 71,
+          "time_s": 2.367
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 71,
+          "time_s": 2.367
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 71,
+          "time_s": 2.367
+        }
+      ]
+    },
+    {
+      "name": "Death_Flipped",
+      "asset": "A_GiantCrab_Death_Flipped",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Death_Flipped.fbx",
+      "frames": 60,
+      "seconds": 2.0,
+      "fps": 30,
+      "loop": false,
+      "category": "Death",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_DeathStart",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_DeadEyes",
+          "frame": 20,
+          "time_s": 0.667
+        },
+        {
+          "name": "AN_DeathEnd",
+          "frame": 55,
+          "time_s": 1.833
+        }
+      ],
+      "peak_frame": 40,
+      "curves": {
+        "DeadEyes": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.267,
+            0.0
+          ],
+          [
+            0.667,
+            1.0
+          ],
+          [
+            2.0,
+            1.0
+          ]
+        ]
+      },
+      "step_contacts": []
+    },
+    {
+      "name": "BellySlam",
+      "asset": "A_GiantCrab_BellySlam",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_BellySlam.fbx",
+      "frames": 60,
+      "seconds": 2.0,
+      "fps": 30,
+      "loop": false,
+      "category": "Combat",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Attack_Windup",
+          "frame": 12,
+          "time_s": 0.4
+        },
+        {
+          "name": "AN_BellySlam_Impact",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "name": "AN_CameraShake",
+          "frame": 30,
+          "time_s": 1.0
+        }
+      ],
+      "peak_frame": 30,
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          0,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "impact_frame": 30,
+      "flat_frames": [
+        30,
+        44
+      ],
+      "body_drop_m": 1.16,
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 30,
+          "time_s": 1.0
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 52,
+          "time_s": 1.733
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 52,
+          "time_s": 1.733
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 52,
+          "time_s": 1.733
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 52,
+          "time_s": 1.733
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 58,
+          "time_s": 1.933
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 58,
+          "time_s": 1.933
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 58,
+          "time_s": 1.933
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 58,
+          "time_s": 1.933
+        }
+      ],
+      "v2": true
+    },
+    {
+      "name": "Roar",
+      "asset": "A_GiantCrab_Roar",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Roar.fbx",
+      "frames": 75,
+      "seconds": 2.5,
+      "fps": 30,
+      "loop": false,
+      "category": "Combat",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Roar",
+          "frame": 22,
+          "time_s": 0.733
+        },
+        {
+          "name": "AN_CameraShake",
+          "frame": 23,
+          "time_s": 0.767
+        }
+      ],
+      "peak_frame": 22,
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          0,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "roar_frame": 22,
+      "step_contacts": [
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 11,
+          "time_s": 0.367
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 11,
+          "time_s": 0.367
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 11,
+          "time_s": 0.367
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 11,
+          "time_s": 0.367
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 67,
+          "time_s": 2.233
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 67,
+          "time_s": 2.233
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 67,
+          "time_s": 2.233
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 67,
+          "time_s": 2.233
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 70,
+          "time_s": 2.333
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 70,
+          "time_s": 2.333
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 70,
+          "time_s": 2.333
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 70,
+          "time_s": 2.333
+        }
+      ],
+      "v2": true
+    },
+    {
+      "name": "LegStomp",
+      "asset": "A_GiantCrab_LegStomp",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_LegStomp.fbx",
+      "frames": 45,
+      "seconds": 1.5,
+      "fps": 30,
+      "loop": false,
+      "category": "Combat",
+      "enable_root_motion": false,
+      "root_motion": "aucun",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Stomp_L",
+          "frame": 13,
+          "time_s": 0.433
+        },
+        {
+          "name": "AN_Stomp_R",
+          "frame": 27,
+          "time_s": 0.9
+        }
+      ],
+      "peak_frame": 13,
+      "root_motion_total": {
+        "translation_m": [
+          0,
+          0,
+          0
+        ],
+        "yaw_deg": 0
+      },
+      "stomp_points_clip_space_m": {
+        "L1": [
+          2.112,
+          -1.848,
+          0.0
+        ],
+        "R1": [
+          -2.112,
+          -1.848,
+          0.0
+        ]
+      },
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 13,
+          "time_s": 0.433
+        },
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 22,
+          "time_s": 0.733
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 27,
+          "time_s": 0.9
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 37,
+          "time_s": 1.233
+        }
+      ],
+      "v2": true
+    },
+    {
+      "name": "Charge",
+      "asset": "A_GiantCrab_Charge",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Charge.fbx",
+      "frames": 12,
+      "seconds": 0.4,
+      "fps": 30,
+      "loop": true,
+      "category": "Locomotion",
+      "enable_root_motion": false,
+      "root_motion": "en place ; 0.90 m par appui, 4.5 m/s vers +X (gauche du crabe)",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 6,
+          "time_s": 0.2
+        }
+      ],
+      "peak_frame": 3,
+      "speed_cm_s": 450,
+      "direction": "+X (gauche du crabe)",
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 6,
+          "time_s": 0.2
+        }
+      ],
+      "duty_factor": 0.5,
+      "body_low_m": -0.3,
+      "v2": true
+    },
+    {
+      "name": "Charge_R",
+      "asset": "A_GiantCrab_Charge_R",
+      "file": "art/export/Characters/GiantCrab/Anims/A_GiantCrab_Charge_R.fbx",
+      "frames": 12,
+      "seconds": 0.4,
+      "fps": 30,
+      "loop": true,
+      "category": "Locomotion",
+      "enable_root_motion": false,
+      "root_motion": "en place ; 0.90 m par appui, 4.5 m/s vers -X (droite du crabe)",
+      "root_motion_per_frame": null,
+      "notifies": [
+        {
+          "name": "AN_Step_leg_l1_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l3_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r2_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_r4_dactyl",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Step_leg_l2_dactyl",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "name": "AN_Step_leg_l4_dactyl",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "name": "AN_Step_leg_r1_dactyl",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "name": "AN_Step_leg_r3_dactyl",
+          "frame": 6,
+          "time_s": 0.2
+        }
+      ],
+      "peak_frame": 3,
+      "speed_cm_s": 450,
+      "direction": "-X",
+      "step_contacts": [
+        {
+          "bone": "leg_l1_dactyl",
+          "socket": "SOCKET_LegTip_L1",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l3_dactyl",
+          "socket": "SOCKET_LegTip_L3",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r2_dactyl",
+          "socket": "SOCKET_LegTip_R2",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_r4_dactyl",
+          "socket": "SOCKET_LegTip_R4",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "bone": "leg_l2_dactyl",
+          "socket": "SOCKET_LegTip_L2",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "bone": "leg_l4_dactyl",
+          "socket": "SOCKET_LegTip_L4",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "bone": "leg_r1_dactyl",
+          "socket": "SOCKET_LegTip_R1",
+          "frame": 6,
+          "time_s": 0.2
+        },
+        {
+          "bone": "leg_r3_dactyl",
+          "socket": "SOCKET_LegTip_R3",
+          "frame": 6,
+          "time_s": 0.2
+        }
+      ],
+      "duty_factor": 0.5,
+      "body_low_m": -0.3,
+      "v2": true
+    }
+  ],
+  "new_clips_v2": [
+    "BellySlam",
+    "Roar",
+    "LegStomp",
+    "Charge",
+    "Charge_R"
+  ],
+  "checks": {
+    "Idle": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Walk_Sideways_L": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Walk_Sideways_R": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Walk_Forward": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Turn_L": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Turn_R": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Attack_ClawSwipe": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Attack_ClawSlam": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Attack_Grab": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Grab_Hold": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Throw": {
+      "max_stance_slip_m_per_frame": 0.00724,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 7,
+      "ik_unreachable_legs": [
+        "l1",
+        "l4",
+        "r3",
+        "r4"
+      ]
+    },
+    "Block_Start": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Block_Loop": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Block_End": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Hit_React": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Stagger_Flip": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0855,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 3,
+      "ik_unreachable_legs": [
+        "l2",
+        "r4"
+      ]
+    },
+    "Flipped_Loop": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": 0.9419,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Recover": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0417,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 1,
+      "ik_unreachable_legs": [
+        "l2",
+        "l3"
+      ]
+    },
+    "Death": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Death_Flipped": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": 0.9,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Taunt_ClawClack": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Charge": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Charge_R": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "BellySlam": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "Roar": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    },
+    "LegStomp": {
+      "max_stance_slip_m_per_frame": 0.0,
+      "min_tip_z_m": -0.0,
+      "loop_error": 0.0,
+      "ik_unreachable_frames": 0,
+      "ik_unreachable_legs": []
+    }
+  },
+  "build": {
+    "tris": {
+      "LOD0": 107924,
+      "LOD1": 38022,
+      "LOD2": 10592,
+      "LOD3": 6256
+    },
+    "atlas": {
+      "MI_GiantCrab_Chitin": {
+        "px_per_m": 289.4,
+        "rects": 84,
+        "fill": 0.635
+      },
+      "MI_GiantCrab_Legs": {
+        "px_per_m": 289.2,
+        "rects": 182,
+        "fill": 0.652
+      },
+      "MI_GiantCrab_Eye": {
+        "px_per_m": 1364.8,
+        "rects": 2,
+        "fill": 0.823
+      }
+    },
+    "skin": {
+      "vertices": 57322,
+      "unweighted": 0,
+      "weight_sum_errors": 0,
+      "blended_membrane_vertices": 2874
+    },
+    "measures": {
+      "bbox_min_m": [
+        -3.105,
+        -2.935,
+        -0.0
+      ],
+      "bbox_max_m": [
+        3.111,
+        1.998,
+        2.336
+      ],
+      "max_height_with_spines_m": 2.336,
+      "body_top_with_spines_m": 2.072,
+      "carapace_dorsal_top_m": 1.95,
+      "belly_clearance_m": 1.16,
+      "leg_span_tips_m": 5.92,
+      "tips_min_z_m": -0.0
+    },
+    "deform_bones": 58,
+    "anim_checks": {
+      "Idle": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Walk_Sideways_L": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Walk_Sideways_R": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Walk_Forward": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Turn_L": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Turn_R": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Attack_ClawSwipe": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Attack_ClawSlam": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Attack_Grab": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Grab_Hold": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Throw": {
+        "max_stance_slip_m_per_frame": 0.00724,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 7,
+        "ik_unreachable_legs": [
+          "l1",
+          "l4",
+          "r3",
+          "r4"
+        ]
+      },
+      "Block_Start": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Block_Loop": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Block_End": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Hit_React": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Stagger_Flip": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0855,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 3,
+        "ik_unreachable_legs": [
+          "l2",
+          "r4"
+        ]
+      },
+      "Flipped_Loop": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": 0.9419,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Recover": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0417,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 1,
+        "ik_unreachable_legs": [
+          "l2",
+          "l3"
+        ]
+      },
+      "Death": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Death_Flipped": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": 0.9,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Taunt_ClawClack": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Charge": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Charge_R": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "BellySlam": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "Roar": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      },
+      "LegStomp": {
+        "max_stance_slip_m_per_frame": 0.0,
+        "min_tip_z_m": -0.0,
+        "loop_error": 0.0,
+        "ik_unreachable_frames": 0,
+        "ik_unreachable_legs": []
+      }
+    },
+    "ground": {
+      "Idle": {
+        "min_z_m": -0.0,
+        "frame": 0,
+        "part": "leg_l3_dactyl"
+      },
+      "Walk_Sideways_L": {
+        "min_z_m": -0.0,
+        "frame": 12,
+        "part": "leg_l4_dactyl"
+      },
+      "Walk_Sideways_R": {
+        "min_z_m": -0.0,
+        "frame": 14,
+        "part": "leg_l1_dactyl"
+      },
+      "Walk_Forward": {
+        "min_z_m": -0.0,
+        "frame": 14,
+        "part": "leg_l3_dactyl"
+      },
+      "Turn_L": {
+        "min_z_m": -0.0,
+        "frame": 14,
+        "part": "leg_l4_dactyl"
+      },
+      "Turn_R": {
+        "min_z_m": -0.0,
+        "frame": 20,
+        "part": "leg_r2_dactyl"
+      },
+      "Taunt_ClawClack": {
+        "min_z_m": -0.0,
+        "frame": 58,
+        "part": "leg_l3_dactyl"
+      },
+      "Attack_ClawSwipe": {
+        "min_z_m": -0.068,
+        "frame": 20,
+        "part": "claw_l_hand"
+      },
+      "Attack_ClawSlam": {
+        "min_z_m": -0.059,
+        "frame": 42,
+        "part": "claw_r_hand"
+      },
+      "Attack_Grab": {
+        "min_z_m": -0.084,
+        "frame": 18,
+        "part": "claw_r_arm"
+      },
+      "Grab_Hold": {
+        "min_z_m": -0.0,
+        "frame": 14,
+        "part": "leg_r3_dactyl"
+      },
+      "Throw": {
+        "min_z_m": -0.0,
+        "frame": 10,
+        "part": "leg_l3_dactyl"
+      },
+      "Block_Start": {
+        "min_z_m": -0.0,
+        "frame": 4,
+        "part": "leg_r3_dactyl"
+      },
+      "Block_Loop": {
+        "min_z_m": -0.0,
+        "frame": 20,
+        "part": "leg_l3_dactyl"
+      },
+      "Block_End": {
+        "min_z_m": -0.0,
+        "frame": 8,
+        "part": "leg_r3_dactyl"
+      },
+      "Hit_React": {
+        "min_z_m": -0.0,
+        "frame": 18,
+        "part": "leg_r4_dactyl"
+      },
+      "Stagger_Flip": {
+        "min_z_m": -0.176,
+        "frame": 28,
+        "part": "leg_l3_dactyl"
+      },
+      "Flipped_Loop": {
+        "min_z_m": -0.096,
+        "frame": 54,
+        "part": "claw_r_finger"
+      },
+      "Recover": {
+        "min_z_m": -0.263,
+        "frame": 36,
+        "part": "claw_r_hand"
+      },
+      "Death": {
+        "min_z_m": -0.143,
+        "frame": 22,
+        "part": "claw_r_hand"
+      },
+      "Death_Flipped": {
+        "min_z_m": -0.234,
+        "frame": 38,
+        "part": "leg_l3_propodus"
+      },
+      "BellySlam": {
+        "min_z_m": -0.011,
+        "frame": 30,
+        "part": "abdomen"
+      },
+      "Roar": {
+        "min_z_m": -0.0,
+        "frame": 36,
+        "part": "leg_r4_dactyl"
+      },
+      "LegStomp": {
+        "min_z_m": -0.0,
+        "frame": 38,
+        "part": "leg_r2_dactyl"
+      },
+      "Charge": {
+        "min_z_m": -0.003,
+        "frame": 4,
+        "part": "claw_r_hand"
+      },
+      "Charge_R": {
+        "min_z_m": -0.0,
+        "frame": 6,
+        "part": "leg_l2_dactyl"
+      }
+    }
+  }
+}

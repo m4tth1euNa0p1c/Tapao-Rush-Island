@@ -7,8 +7,10 @@
 #include "TikiRagdollCorpse.generated.h"
 
 class UMaterialInterface;
+class UNetRestComponent;
 class USkeletalMesh;
 class USkeletalMeshComponent;
+class UTikiDismemberSet;
 class UTikiRules;
 struct FTikiBodySnapshot;
 
@@ -29,8 +31,19 @@ public:
 	ATikiRagdollCorpse();
 
 	/** Server: the ragdoll of a body (a dead creature), its bodies placed and moving as in the snapshot;
-	 *  nullptr when the mesh has no physics asset (the caller falls back on a rigid corpse) */
-	static ATikiRagdollCorpse* Spawn(UWorld* World, UTikiRules* Rules, const FTikiBodySnapshot& Body, const USkeletalMeshComponent* MovingFrom);
+	 *  nullptr when the mesh has no physics asset (the caller falls back on a rigid corpse). bFrozen keeps the pose
+	 *  of the snapshot, laid on the ground and asleep (T-151) */
+	static ATikiRagdollCorpse* Spawn(UWorld* World, UTikiRules* Rules, const FTikiBodySnapshot& Body, const USkeletalMeshComponent* MovingFrom, bool bFrozen = false);
+
+	/** Calms a simulating body (every machine): damping, slow push out of overlaps, bounded spin, joints locked
+	 *  in place with projection (no stretch); warns once about bodies without a joint to their parent */
+	static void CalmRagdoll(USkeletalMeshComponent* Mesh, const UTikiRules* Rules);
+
+	/** Bounds the speed of every body of a simulating mesh (cm/s) */
+	static void BoundSpeeds(USkeletalMeshComponent* Mesh, float MaxSpeed);
+
+	/** Moves every body so the lowest one lies on the ground below it (vertical trace); true when moved */
+	static bool SnapToGround(USkeletalMeshComponent* Mesh, const UTikiRules* Rules);
 
 	/** Server: replaces it by its two halves, the upper one flung along Direction */
 	void CutInTwo(const FVector& Direction);
@@ -54,6 +67,11 @@ private:
 	/** Held item, following the body */
 	UPROPERTY(VisibleAnywhere, Category="Components")
 	TObjectPtr<USkeletalMeshComponent> Held;
+
+	/** Network rest: no replication while it lies asleep; in the barque or on the galleon's deck it rides glued, its
+	 *  movement not sent (T-312) */
+	UPROPERTY(VisibleAnywhere, Category="Components")
+	TObjectPtr<UNetRestComponent> NetRest;
 
 	/** Body mesh (replicated once) */
 	UPROPERTY(Replicated)
@@ -79,13 +97,26 @@ private:
 	UPROPERTY(Replicated)
 	TArray<FName> CutBones;
 
+	/** Keeps the pose it was spawned with, asleep on the ground (replicated once) */
+	UPROPERTY(Replicated)
+	bool bFrozen = false;
+
+	/** World transforms of the bodies once the server laid the corpse down, in skeleton order of the bones with a
+	 *  body: every machine ends on the same pose */
+	UPROPERTY(ReplicatedUsing=OnRep_SettledBodies)
+	TArray<FTransform> SettledBodies;
+
 	/** Mass of the whole body (kg, replicated once) */
 	UPROPERTY(Replicated)
 	float MassKg = 40.0f;
 
-	/** Rules of the creatures (server) */
-	UPROPERTY(Transient)
+	/** Rules of the creatures (replicated once: every machine calms the ragdoll the same way) */
+	UPROPERTY(Replicated)
 	TObjectPtr<UTikiRules> Rules;
+
+	/** Closed modules of the body, handed to the halves when it is cut in two (server, T-155) */
+	UPROPERTY()
+	TObjectPtr<UTikiDismemberSet> DismemberSet;
 
 	/** Velocities of the bodies at the handover, by bone (server, applied once at BeginPlay) */
 	TMap<FName, FVector> StartVelocities;
@@ -93,9 +124,23 @@ private:
 	/** Timer of the flood check (server) */
 	FTimerHandle FloodTimer;
 
+	/** Timer that lays a moving corpse down (server) */
+	FTimerHandle SettleTimer;
+
+	/** Server: lays the corpse on the ground, puts it to sleep and replicates the pose */
+	void Settle();
+
+	/** Puts the bodies at the pose the server settled on, asleep (clients) */
+	UFUNCTION()
+	void OnRep_SettledBodies();
+
+	/** Bounds the speeds after a hit (the push of the weapon comes after the damage) */
+	void BoundSpeedsAfterHit();
+
 	/** Builds the ragdoll from the replicated snapshot (every machine) */
 	void ApplyLook();
 
-	/** Washes the corpse away once the water covers it (server) */
+	/** Washes the corpse away once the water covers it; lays it down again if it went to sleep above the ground
+	 *  (server) */
 	void CheckFlood();
 };

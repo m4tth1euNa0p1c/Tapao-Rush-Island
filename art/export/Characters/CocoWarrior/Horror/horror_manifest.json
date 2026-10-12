@@ -1,0 +1,345 @@
+{
+ "format": "tiki-horror/1",
+ "version": "1.0",
+ "task": "T-274",
+ "mob": "CocoWarrior",
+ "label": "Guerrier Coco",
+ "built_at": "2026-10-10T20:28:44.338014+00:00",
+ "skeleton": {
+  "blender": "SKEL_CocoWarrior",
+  "unreal": "/Game/MonkeIsland/Characters/CocoWarrior/Meshes/SK_CocoWarrior_Skeleton",
+  "bones": [
+   "root",
+   "pelvis",
+   "spine_01",
+   "spine_02",
+   "head",
+   "crest",
+   "upperarm_l",
+   "lowerarm_l",
+   "hand_l",
+   "upperarm_r",
+   "lowerarm_r",
+   "hand_r",
+   "weapon_r",
+   "thigh_l",
+   "calf_l",
+   "foot_l",
+   "thigh_r",
+   "calf_r",
+   "foot_r"
+  ],
+  "heads_m": {
+   "root": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "pelvis": [
+    0.0,
+    0.0,
+    0.27
+   ],
+   "spine_01": [
+    0.0,
+    0.0,
+    0.37
+   ],
+   "spine_02": [
+    0.0,
+    0.0,
+    0.46
+   ],
+   "head": [
+    0.0,
+    0.0,
+    0.67
+   ],
+   "crest": [
+    0.0,
+    0.0,
+    0.97
+   ],
+   "upperarm_l": [
+    0.29,
+    0.0,
+    0.55
+   ],
+   "lowerarm_l": [
+    0.345,
+    -0.005,
+    0.455
+   ],
+   "hand_l": [
+    0.375,
+    -0.012,
+    0.375
+   ],
+   "upperarm_r": [
+    -0.29,
+    0.0,
+    0.55
+   ],
+   "lowerarm_r": [
+    -0.345,
+    -0.005,
+    0.455
+   ],
+   "hand_r": [
+    -0.375,
+    -0.012,
+    0.375
+   ],
+   "weapon_r": [
+    -0.38047,
+    -0.02165,
+    0.32853
+   ],
+   "thigh_l": [
+    0.165,
+    0.0,
+    0.27
+   ],
+   "calf_l": [
+    0.165,
+    -0.005,
+    0.155
+   ],
+   "foot_l": [
+    0.165,
+    0.0,
+    0.075
+   ],
+   "thigh_r": [
+    -0.165,
+    0.0,
+    0.27
+   ],
+   "calf_r": [
+    -0.165,
+    -0.005,
+    0.155
+   ],
+   "foot_r": [
+    -0.165,
+    0.0,
+    0.075
+   ]
+  }
+ },
+ "height_m": 1.0,
+ "bbox_m": [
+  [
+   -0.4367,
+   -0.3341,
+   -0.0288
+  ],
+  [
+   0.4437,
+   0.3013,
+   1.1199
+  ]
+ ],
+ "meshes": {
+  "lod0": "art/export/Characters/CocoWarrior/Horror/SK_CocoWarrior.fbx",
+  "lod0_tris": 53721,
+  "lods": [
+   {
+    "lod": 1,
+    "file": "art/export/Characters/CocoWarrior/Horror/LOD/SK_CocoWarrior_LOD1.fbx",
+    "tris": 26852
+   },
+   {
+    "lod": 2,
+    "file": "art/export/Characters/CocoWarrior/Horror/LOD/SK_CocoWarrior_LOD2.fbx",
+    "tris": 10741
+   }
+  ],
+  "weapon_sk": "art/export/Characters/CocoWarrior/Horror/SK_CocoWarrior_Spear.fbx",
+  "weapon_sm": "art/export/Characters/CocoWarrior/Horror/SM_CocoWarrior_Spear.fbx",
+  "weapon_tris": 6000,
+  "weapon_sm_bbox_m": [
+   [
+    -0.0682,
+    -0.0297,
+    -0.36
+   ],
+   [
+    0.0682,
+    0.0352,
+    1.084
+   ]
+  ]
+ },
+ "modules": [
+  {
+   "module": "Head",
+   "file": "art/export/Characters/CocoWarrior/Horror/Dismember/SK_CocoWarrior_Head.fbx",
+   "tris": 20246,
+   "boundary_edges": 20,
+   "mass_kg": 56.18
+  },
+  {
+   "module": "Torso",
+   "file": "art/export/Characters/CocoWarrior/Horror/Dismember/SK_CocoWarrior_Torso.fbx",
+   "tris": 31437,
+   "boundary_edges": 251,
+   "mass_kg": 91.2
+  },
+  {
+   "module": "Pelvis",
+   "file": "art/export/Characters/CocoWarrior/Horror/Dismember/SK_CocoWarrior_Pelvis.fbx",
+   "tris": 11923,
+   "boundary_edges": 55,
+   "mass_kg": 42.48
+  },
+  {
+   "module": "Arm_L",
+   "file": "art/export/Characters/CocoWarrior/Horror/Dismember/SK_CocoWarrior_Arm_L.fbx",
+   "tris": 3916,
+   "boundary_edges": 0,
+   "mass_kg": 5.7
+  },
+  {
+   "module": "Arm_R",
+   "file": "art/export/Characters/CocoWarrior/Horror/Dismember/SK_CocoWarrior_Arm_R.fbx",
+   "tris": 3482,
+   "boundary_edges": 0,
+   "mass_kg": 5.21
+  },
+  {
+   "module": "Leg_L",
+   "file": "art/export/Characters/CocoWarrior/Horror/Dismember/SK_CocoWarrior_Leg_L.fbx",
+   "tris": 4026,
+   "boundary_edges": 0,
+   "mass_kg": 8.45
+  },
+  {
+   "module": "Leg_R",
+   "file": "art/export/Characters/CocoWarrior/Horror/Dismember/SK_CocoWarrior_Leg_R.fbx",
+   "tris": 4602,
+   "boundary_edges": 0,
+   "mass_kg": 8.69
+  }
+ ],
+ "textures": [
+  {
+   "asset": "T_CocoWarrior_Body_BC",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Body_BC.png",
+   "kind": "color"
+  },
+  {
+   "asset": "T_CocoWarrior_Body_N",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Body_N.png",
+   "kind": "normal_gl"
+  },
+  {
+   "asset": "T_CocoWarrior_Body_ORM",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Body_ORM.png",
+   "kind": "masks"
+  },
+  {
+   "asset": "T_CocoWarrior_Body_E",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Body_E.png",
+   "kind": "emissive"
+  },
+  {
+   "asset": "T_CocoWarrior_Weapon_BC",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Weapon_BC.png",
+   "kind": "color"
+  },
+  {
+   "asset": "T_CocoWarrior_Weapon_N",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Weapon_N.png",
+   "kind": "normal_gl"
+  },
+  {
+   "asset": "T_CocoWarrior_Weapon_ORM",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Weapon_ORM.png",
+   "kind": "masks"
+  },
+  {
+   "asset": "T_CocoWarrior_Gore_BC",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Gore_BC.png",
+   "kind": "color"
+  },
+  {
+   "asset": "T_CocoWarrior_Gore_N",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Gore_N.png",
+   "kind": "normal_gl"
+  },
+  {
+   "asset": "T_CocoWarrior_Gore_ORM",
+   "file": "art/export/Characters/CocoWarrior/Horror/Textures/T_CocoWarrior_Gore_ORM.png",
+   "kind": "masks"
+  }
+ ],
+ "materials": {
+  "M_CocoWarrior_Body": {
+   "mi": "MI_CocoWarrior_Body",
+   "textures": {
+    "BaseColor": "T_CocoWarrior_Body_BC",
+    "Normal": "T_CocoWarrior_Body_N",
+    "ORM": "T_CocoWarrior_Body_ORM",
+    "Emissive": "T_CocoWarrior_Body_E"
+   },
+   "scalars": {
+    "EmissiveStrength": 1.0,
+    "EmissivePulse": 0.0,
+    "EmissivePulseSpeed": 0.3
+   }
+  },
+  "M_CocoWarrior_Weapon": {
+   "mi": "MI_CocoWarrior_Weapon",
+   "textures": {
+    "BaseColor": "T_CocoWarrior_Weapon_BC",
+    "Normal": "T_CocoWarrior_Weapon_N",
+    "ORM": "T_CocoWarrior_Weapon_ORM"
+   },
+   "scalars": {
+    "EmissiveStrength": 0.0
+   }
+  },
+  "M_CocoWarrior_Gore": {
+   "mi": "MI_CocoWarrior_Gore",
+   "textures": {
+    "BaseColor": "T_CocoWarrior_Gore_BC",
+    "Normal": "T_CocoWarrior_Gore_N",
+    "ORM": "T_CocoWarrior_Gore_ORM"
+   },
+   "scalars": {
+    "EmissiveStrength": 0.0
+   }
+  }
+ },
+ "material_slots": {
+  "body": [
+   "M_CocoWarrior_Body"
+  ],
+  "weapon": [
+   "M_CocoWarrior_Weapon"
+  ],
+  "modules": [
+   "M_CocoWarrior_Body",
+   "M_CocoWarrior_Gore"
+  ]
+ },
+ "texture_settings": {
+  "_BC": "sRGB, TC_Default",
+  "_N": "TC_Normalmap, Flip Green Channel (normale OpenGL)",
+  "_ORM": "sRGB off, TC_Masks (R = AO, G = rugosité, B = métal)",
+  "_E": "sRGB, émissif"
+ },
+ "gore_atlas": [
+  "skin",
+  "fat",
+  "muscle",
+  "bone",
+  "marrow",
+  "husk_cut",
+  "nut_shell",
+  "meat",
+  "pulp",
+  "milk"
+ ]
+}

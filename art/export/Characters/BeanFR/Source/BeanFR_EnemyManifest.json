@@ -1,0 +1,1177 @@
+{
+  "format": "bean-fr-enemy/1",
+  "skeleton": {
+    "blender": "SKEL_Bean (bone_table de scripts/character/bean_soldier.py)",
+    "unreal": "/Game/MonkeIsland/Characters/Bean/SK_Bean_Body_Skeleton",
+    "note": "Même squelette que le player : toutes les animations A_Bean_* s'appliquent aux skins."
+  },
+  "export_settings": "FBX : armature 'Armature', FBX_SCALE_NONE, -Y avant / Z haut, os déformants, 24 i/s, racine fixe (pas de root motion).",
+  "unreal_root": "/Game/MonkeIsland/Characters/BeanFR",
+  "skins": [
+    {
+      "id": "fr1",
+      "name": "CFM_Fusilier",
+      "label": "Fusilier des Compagnies franches de la Marine",
+      "period": "1730-1760",
+      "ref_plate_index": 1,
+      "role": "Fusilier de base (garnison du fort)",
+      "files": {
+        "combined_fbx": "exports/CFM_Fusilier/SK_BeanFR_CFM_Fusilier.fbx",
+        "body_fbx": "exports/CFM_Fusilier/SK_BeanFR_CFM_Fusilier_Body.fbx",
+        "outfit_fbx": "exports/CFM_Fusilier/SK_BeanFR_CFM_Fusilier_Outfit.fbx",
+        "hat_fbx": "exports/CFM_Fusilier/SM_BeanFR_CFM_Fusilier_Hat.fbx",
+        "glb": "exports/CFM_Fusilier/SK_BeanFR_CFM_Fusilier.glb"
+      },
+      "materials": [
+        "MAT-BeanFR_Eye_Red",
+        "MAT-BeanFR_Hair",
+        "MAT-BeanFR_Skin",
+        "MAT-cocarde_blanche",
+        "MAT-cuir_brun",
+        "MAT-cuir_chaussure",
+        "MAT-feutre_noir",
+        "MAT-galon_or",
+        "MAT-laine_bleu_marine",
+        "MAT-laine_grisblanc",
+        "MAT-laiton",
+        "MAT-toile_noire"
+      ],
+      "tris_body": 21800,
+      "tris_outfit": 56388,
+      "tris_hat": 12368,
+      "tris_total": 90556,
+      "height_m": 1.104,
+      "bbox_m": [
+        0.755,
+        0.622,
+        1.104
+      ]
+    },
+    {
+      "id": "fr2",
+      "name": "Fusilier_1767",
+      "label": "Fusilier, habit bleu à revers verts",
+      "period": "vers 1767-1779",
+      "ref_plate_index": 2,
+      "role": "Fusilier (baudrier blanc)",
+      "files": {
+        "combined_fbx": "exports/Fusilier_1767/SK_BeanFR_Fusilier_1767.fbx",
+        "body_fbx": "exports/Fusilier_1767/SK_BeanFR_Fusilier_1767_Body.fbx",
+        "outfit_fbx": "exports/Fusilier_1767/SK_BeanFR_Fusilier_1767_Outfit.fbx",
+        "hat_fbx": "exports/Fusilier_1767/SM_BeanFR_Fusilier_1767_Hat.fbx",
+        "glb": "exports/Fusilier_1767/SK_BeanFR_Fusilier_1767.glb"
+      },
+      "materials": [
+        "MAT-BeanFR_Eye_Red",
+        "MAT-BeanFR_Hair",
+        "MAT-BeanFR_Skin",
+        "MAT-buffle_blanc",
+        "MAT-cocarde_blanche",
+        "MAT-cuir_chaussure",
+        "MAT-cuir_noir",
+        "MAT-etain",
+        "MAT-feutre_noir",
+        "MAT-laine_bleu_roi",
+        "MAT-laine_verte",
+        "MAT-laiton",
+        "MAT-lin_blanc"
+      ],
+      "tris_body": 21800,
+      "tris_outfit": 60752,
+      "tris_hat": 12368,
+      "tris_total": 94920,
+      "height_m": 1.104,
+      "bbox_m": [
+        0.755,
+        0.622,
+        1.104
+      ]
+    },
+    {
+      "id": "fr3",
+      "name": "Fusilier_Bicorne",
+      "label": "Fusilier de ligne en bicorne",
+      "period": "vers 1786-1791",
+      "ref_plate_index": 3,
+      "role": "Fusilier (tir en ligne)",
+      "files": {
+        "combined_fbx": "exports/Fusilier_Bicorne/SK_BeanFR_Fusilier_Bicorne.fbx",
+        "body_fbx": "exports/Fusilier_Bicorne/SK_BeanFR_Fusilier_Bicorne_Body.fbx",
+        "outfit_fbx": "exports/Fusilier_Bicorne/SK_BeanFR_Fusilier_Bicorne_Outfit.fbx",
+        "hat_fbx": "exports/Fusilier_Bicorne/SM_BeanFR_Fusilier_Bicorne_Hat.fbx",
+        "glb": "exports/Fusilier_Bicorne/SK_BeanFR_Fusilier_Bicorne.glb"
+      },
+      "materials": [
+        "MAT-BeanFR_Eye_Red",
+        "MAT-BeanFR_Hair",
+        "MAT-BeanFR_Skin",
+        "MAT-buffle_blanc",
+        "MAT-cocarde_blanche",
+        "MAT-cuir_chaussure",
+        "MAT-cuir_noir",
+        "MAT-feutre_noir",
+        "MAT-laine_blanche",
+        "MAT-laine_bleu_roi",
+        "MAT-laine_rouge",
+        "MAT-laiton",
+        "MAT-plumet_rouge",
+        "MAT-toile_noire"
+      ],
+      "tris_body": 19120,
+      "tris_outfit": 61284,
+      "tris_hat": 6864,
+      "tris_total": 87268,
+      "height_m": 1.272,
+      "bbox_m": [
+        0.735,
+        0.564,
+        1.272
+      ]
+    },
+    {
+      "id": "fr4",
+      "name": "Chasseur_Shako",
+      "label": "Chasseur en shako, gilet vert",
+      "period": "vers 1806",
+      "ref_plate_index": 4,
+      "role": "Tirailleur (tir à distance, mobile)",
+      "files": {
+        "combined_fbx": "exports/Chasseur_Shako/SK_BeanFR_Chasseur_Shako.fbx",
+        "body_fbx": "exports/Chasseur_Shako/SK_BeanFR_Chasseur_Shako_Body.fbx",
+        "outfit_fbx": "exports/Chasseur_Shako/SK_BeanFR_Chasseur_Shako_Outfit.fbx",
+        "hat_fbx": "exports/Chasseur_Shako/SM_BeanFR_Chasseur_Shako_Hat.fbx",
+        "glb": "exports/Chasseur_Shako/SK_BeanFR_Chasseur_Shako.glb"
+      },
+      "materials": [
+        "MAT-BeanFR_Eye_Red",
+        "MAT-BeanFR_Hair",
+        "MAT-BeanFR_Skin",
+        "MAT-buffle_blanc",
+        "MAT-cocarde_blanche",
+        "MAT-cuir_chaussure",
+        "MAT-cuir_noir",
+        "MAT-feutre_noir",
+        "MAT-galon_or",
+        "MAT-laine_bleu_roi",
+        "MAT-laine_rouge",
+        "MAT-laine_rouge_vif",
+        "MAT-laine_verte",
+        "MAT-laiton",
+        "MAT-toile_noire"
+      ],
+      "tris_body": 19120,
+      "tris_outfit": 61288,
+      "tris_hat": 3604,
+      "tris_total": 84012,
+      "height_m": 1.272,
+      "bbox_m": [
+        0.735,
+        0.564,
+        1.272
+      ]
+    },
+    {
+      "id": "fr5",
+      "name": "Grenadier",
+      "label": "Grenadier en bonnet à poil",
+      "period": "vers 1806",
+      "ref_plate_index": 5,
+      "role": "Grenadier (élite, charge à la baïonnette)",
+      "files": {
+        "combined_fbx": "exports/Grenadier/SK_BeanFR_Grenadier.fbx",
+        "body_fbx": "exports/Grenadier/SK_BeanFR_Grenadier_Body.fbx",
+        "outfit_fbx": "exports/Grenadier/SK_BeanFR_Grenadier_Outfit.fbx",
+        "hat_fbx": "exports/Grenadier/SM_BeanFR_Grenadier_Hat.fbx",
+        "glb": "exports/Grenadier/SK_BeanFR_Grenadier.glb"
+      },
+      "materials": [
+        "MAT-BeanFR_Eye_Red",
+        "MAT-BeanFR_Hair",
+        "MAT-BeanFR_Skin",
+        "MAT-buffle_blanc",
+        "MAT-cocarde_blanche",
+        "MAT-cuir_chaussure",
+        "MAT-cuir_noir",
+        "MAT-laine_blanche",
+        "MAT-laine_bleu_roi",
+        "MAT-laine_rouge",
+        "MAT-laine_rouge_vif",
+        "MAT-laiton",
+        "MAT-plumet_rouge",
+        "MAT-poil_ours",
+        "MAT-toile_noire"
+      ],
+      "tris_body": 19120,
+      "tris_outfit": 62724,
+      "tris_hat": 15168,
+      "tris_total": 97012,
+      "height_m": 1.409,
+      "bbox_m": [
+        0.735,
+        0.564,
+        1.409
+      ]
+    },
+    {
+      "id": "fr6",
+      "name": "Sergent",
+      "label": "Sergent en shako à plumet et cordon",
+      "period": "vers 1812",
+      "ref_plate_index": 6,
+      "role": "Sous-officier (commande la patrouille, sabre)",
+      "files": {
+        "combined_fbx": "exports/Sergent/SK_BeanFR_Sergent.fbx",
+        "body_fbx": "exports/Sergent/SK_BeanFR_Sergent_Body.fbx",
+        "outfit_fbx": "exports/Sergent/SK_BeanFR_Sergent_Outfit.fbx",
+        "hat_fbx": "exports/Sergent/SM_BeanFR_Sergent_Hat.fbx",
+        "glb": "exports/Sergent/SK_BeanFR_Sergent.glb"
+      },
+      "materials": [
+        "MAT-BeanFR_Eye_Red",
+        "MAT-BeanFR_Hair",
+        "MAT-BeanFR_Skin",
+        "MAT-buffle_blanc",
+        "MAT-cocarde_blanche",
+        "MAT-cuir_chaussure",
+        "MAT-cuir_noir",
+        "MAT-feutre_noir",
+        "MAT-galon_argent",
+        "MAT-galon_or",
+        "MAT-laine_blanche",
+        "MAT-laine_bleu_roi",
+        "MAT-laine_rouge",
+        "MAT-laine_rouge_vif",
+        "MAT-laiton",
+        "MAT-plumet_rouge"
+      ],
+      "tris_body": 19120,
+      "tris_outfit": 64100,
+      "tris_hat": 4228,
+      "tris_total": 87448,
+      "height_m": 1.468,
+      "bbox_m": [
+        0.735,
+        0.577,
+        1.468
+      ]
+    },
+    {
+      "id": "fr7",
+      "name": "Officier_Marine",
+      "label": "Officier des troupes de la Marine (fort des Tuamotu)",
+      "period": "vers 1750-1770",
+      "ref_plate_index": 7,
+      "role": "Officier (chef de la garnison, mini-boss)",
+      "files": {
+        "combined_fbx": "exports/Officier_Marine/SK_BeanFR_Officier_Marine.fbx",
+        "body_fbx": "exports/Officier_Marine/SK_BeanFR_Officier_Marine_Body.fbx",
+        "outfit_fbx": "exports/Officier_Marine/SK_BeanFR_Officier_Marine_Outfit.fbx",
+        "hat_fbx": "exports/Officier_Marine/SM_BeanFR_Officier_Marine_Hat.fbx",
+        "glb": "exports/Officier_Marine/SK_BeanFR_Officier_Marine.glb"
+      },
+      "materials": [
+        "MAT-BeanFR_Eye_Red",
+        "MAT-BeanFR_Hair",
+        "MAT-BeanFR_Skin",
+        "MAT-cocarde_blanche",
+        "MAT-cuir_brun",
+        "MAT-cuir_chaussure",
+        "MAT-dore",
+        "MAT-email_bleu",
+        "MAT-feutre_noir",
+        "MAT-galon_or",
+        "MAT-laine_bleu_roi",
+        "MAT-laine_rouge",
+        "MAT-lin_blanc",
+        "MAT-soie_blanche"
+      ],
+      "tris_body": 21800,
+      "tris_outfit": 61456,
+      "tris_hat": 12368,
+      "tris_total": 95624,
+      "height_m": 1.104,
+      "bbox_m": [
+        0.755,
+        0.622,
+        1.104
+      ]
+    }
+  ],
+  "common": {
+    "bayonet_fbx": "exports/Common/SM_Bean_Bayonet.fbx",
+    "bayonet_glb": "exports/Common/SM_Bean_Bayonet.glb"
+  },
+  "weapons": {
+    "musket": {
+      "skeletal": "maquettes/bean-musket/exports/SK_Bean_Musket.fbx",
+      "static": "maquettes/bean-musket/exports/SM_Bean_Musket.fbx",
+      "note": "réutilisé tel quel. Dans la scène Blender, la petite couronne britannique du platine est retirée (l'ancre, emblème aussi de la Marine royale, est gardée) ; le FBX livré de bean-musket la porte encore."
+    },
+    "bayonet": {
+      "static": "maquettes/bean-francais/exports/Common/SM_Bean_Bayonet.fbx",
+      "attach": "SK_Bean_Musket socket_muzzle",
+      "blade_m": 0.215
+    },
+    "sabre": {
+      "static": "maquettes/bean-cutlass/exports/SM_Bean_Cutlass.fbx"
+    },
+    "scabbard": {
+      "static": "maquettes/bean-scabbard/exports/SM_Bean_Scabbard.fbx"
+    }
+  },
+  "sockets": {
+    "hand_r/sabre_grip": {
+      "bone": "hand_r",
+      "blender_bone_space": {
+        "location_m": [
+          -0.00491,
+          0.07488,
+          -0.00036
+        ],
+        "rotation_euler_deg_xyz": [
+          -34.98,
+          124.23,
+          -85.22
+        ]
+      },
+      "unreal_socket_guess": {
+        "location_cm": [
+          -0.49,
+          -7.49,
+          -0.04
+        ],
+        "rotation_deg_roll_pitch_yaw": [
+          -34.98,
+          -124.23,
+          85.22
+        ]
+      }
+    },
+    "pelvis/scabbard": {
+      "bone": "pelvis",
+      "blender_bone_space": {
+        "location_m": [
+          0.24228,
+          0.19,
+          0.13318
+        ],
+        "rotation_euler_deg_xyz": [
+          -150.48,
+          46.04,
+          -67.82
+        ]
+      },
+      "unreal_socket_guess": {
+        "location_cm": [
+          24.23,
+          -19.0,
+          13.32
+        ],
+        "rotation_deg_roll_pitch_yaw": [
+          -150.48,
+          -46.04,
+          67.82
+        ]
+      }
+    },
+    "pelvis/sabre_sheathed": {
+      "bone": "pelvis",
+      "blender_bone_space": {
+        "location_m": [
+          0.2274,
+          0.18777,
+          0.23255
+        ],
+        "rotation_euler_deg_xyz": [
+          -150.48,
+          46.04,
+          -67.82
+        ]
+      },
+      "unreal_socket_guess": {
+        "location_cm": [
+          22.74,
+          -18.78,
+          23.25
+        ],
+        "rotation_deg_roll_pitch_yaw": [
+          -150.48,
+          -46.04,
+          67.82
+        ]
+      }
+    },
+    "spine_02/musket_back": {
+      "bone": "spine_02",
+      "blender_bone_space": {
+        "location_m": [
+          -0.08827,
+          -0.09321,
+          -0.29198
+        ],
+        "rotation_euler_deg_xyz": [
+          180.0,
+          2.87,
+          56.47
+        ]
+      },
+      "unreal_socket_guess": {
+        "location_cm": [
+          -8.83,
+          9.32,
+          -29.2
+        ],
+        "rotation_deg_roll_pitch_yaw": [
+          180.0,
+          -2.87,
+          -56.47
+        ]
+      }
+    },
+    "hand_r/musket_grip": {
+      "bone": "hand_r",
+      "blender_bone_space": {
+        "location_m": [
+          -0.00529,
+          0.07532,
+          -0.00213
+        ],
+        "rotation_euler_deg_xyz": [
+          163.27,
+          12.71,
+          -6.05
+        ]
+      },
+      "unreal_socket_guess": {
+        "location_cm": [
+          -0.53,
+          -7.53,
+          -0.21
+        ],
+        "rotation_deg_roll_pitch_yaw": [
+          163.27,
+          -12.71,
+          6.05
+        ]
+      }
+    },
+    "SK_Bean_Musket/socket_muzzle -> SM_Bean_Bayonet": {
+      "note": "baïonnette attachée au socket 'muzzle' du mousquet, sans décalage (pivot de SM_Bean_Bayonet = bouche)",
+      "musket_local_m": [
+        0.626,
+        0.0,
+        0.045
+      ]
+    }
+  },
+  "anims": [
+    {
+      "asset": "A_Bean_Idle",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Idle.fbx",
+      "frames_blender": [
+        1,
+        49
+      ],
+      "length_s": 2.0,
+      "fps": 24,
+      "loop": true,
+      "category": "Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [],
+      "enemy_role": "Idle"
+    },
+    {
+      "asset": "A_Bean_Walk",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Walk.fbx",
+      "frames_blender": [
+        61,
+        99
+      ],
+      "length_s": 1.583,
+      "fps": 24,
+      "loop": true,
+      "category": "Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 0.417
+        },
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.792
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 1.208
+        }
+      ],
+      "no_slide_speed_cm_s": 49,
+      "enemy_role": "Walk"
+    },
+    {
+      "asset": "A_Bean_Run",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Run.fbx",
+      "frames_blender": [
+        111,
+        135
+      ],
+      "length_s": 1.0,
+      "fps": 24,
+      "loop": true,
+      "category": "Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 0.25
+        },
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.5
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 0.75
+        }
+      ],
+      "no_slide_speed_cm_s": 112,
+      "enemy_role": "Run"
+    },
+    {
+      "asset": "A_Bean_Musket_Hold",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Hold.fbx",
+      "frames_blender": [
+        1,
+        25
+      ],
+      "length_s": 1.0,
+      "fps": 24,
+      "loop": true,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [],
+      "prop_anim": null,
+      "enemy_role": "Musket_Hold"
+    },
+    {
+      "asset": "A_Bean_Musket_Aim",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Aim.fbx",
+      "frames_blender": [
+        159,
+        169
+      ],
+      "length_s": 0.417,
+      "fps": 24,
+      "loop": true,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [],
+      "prop_anim": null,
+      "enemy_role": "Musket_Aim"
+    },
+    {
+      "asset": "A_Bean_Musket_Fire",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Fire.fbx",
+      "frames_blender": [
+        159,
+        189
+      ],
+      "length_s": 1.25,
+      "fps": 24,
+      "loop": false,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_FireTrigger",
+          "time_s": 0.417
+        },
+        {
+          "name": "AN_PanFlash",
+          "time_s": 0.5
+        },
+        {
+          "name": "AN_FireShot",
+          "time_s": 0.542
+        },
+        {
+          "name": "AN_Recoil",
+          "time_s": 0.583
+        }
+      ],
+      "prop_anim": "maquettes/bean-musket-anim/exports/A_Musket_Fire.fbx",
+      "enemy_role": "Musket_Fire"
+    },
+    {
+      "asset": "A_Bean_Musket_Reload",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Reload.fbx",
+      "frames_blender": [
+        1,
+        159
+      ],
+      "length_s": 6.583,
+      "fps": 24,
+      "loop": false,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Reload_HalfCock",
+          "time_s": 0.583
+        },
+        {
+          "name": "AN_Reload_Prime",
+          "time_s": 1.0
+        },
+        {
+          "name": "AN_Reload_Powder",
+          "time_s": 2.708
+        },
+        {
+          "name": "AN_Reload_Ball",
+          "time_s": 3.708
+        },
+        {
+          "name": "AN_Reload_Ram",
+          "time_s": 5.0
+        },
+        {
+          "name": "AN_Reload_Cock",
+          "time_s": 6.083
+        },
+        {
+          "name": "AN_Reload_Complete",
+          "time_s": 6.583
+        }
+      ],
+      "prop_anim": "maquettes/bean-musket-anim/exports/A_Musket_Reload.fbx",
+      "enemy_role": "Musket_Reload"
+    },
+    {
+      "asset": "A_Bean_Musket_Lower",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Musket_Lower.fbx",
+      "frames_blender": [
+        193,
+        208
+      ],
+      "length_s": 0.625,
+      "fps": 24,
+      "loop": false,
+      "category": "Musket",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [],
+      "prop_anim": null,
+      "enemy_role": "Musket_Lower"
+    },
+    {
+      "asset": "A_Bean_Sabre_Draw",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Draw.fbx",
+      "frames_blender": [
+        11,
+        27
+      ],
+      "length_s": 0.667,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Draw_Grab",
+          "time_s": 0.25
+        },
+        {
+          "name": "AN_Draw_AttachToHand",
+          "time_s": 0.5
+        },
+        {
+          "name": "AN_Draw_Complete",
+          "time_s": 0.667
+        }
+      ],
+      "enemy_role": "Sabre_Draw"
+    },
+    {
+      "asset": "A_Bean_Sabre_Idle",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Idle.fbx",
+      "frames_blender": [
+        27,
+        34
+      ],
+      "length_s": 0.292,
+      "fps": 24,
+      "loop": true,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [],
+      "enemy_role": "Sabre_Idle"
+    },
+    {
+      "asset": "A_Bean_Sabre_Slash_R",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Slash_R.fbx",
+      "frames_blender": [
+        34,
+        47
+      ],
+      "length_s": 0.542,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.167
+        },
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.208
+        },
+        {
+          "name": "AN_ComboWindow",
+          "time_s": 0.292
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.333
+        }
+      ],
+      "enemy_role": "Sabre_Slash_R"
+    },
+    {
+      "asset": "A_Bean_Sabre_Slash_L",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Slash_L.fbx",
+      "frames_blender": [
+        47,
+        59
+      ],
+      "length_s": 0.5,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.125
+        },
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.167
+        },
+        {
+          "name": "AN_ComboWindow",
+          "time_s": 0.25
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.292
+        }
+      ],
+      "enemy_role": "Sabre_Slash_L"
+    },
+    {
+      "asset": "A_Bean_Sabre_Thrust",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Thrust.fbx",
+      "frames_blender": [
+        85,
+        95
+      ],
+      "length_s": 0.417,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.042
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.125
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.292
+        }
+      ],
+      "enemy_role": "Sabre_Thrust"
+    },
+    {
+      "asset": "A_Bean_Sabre_Finisher",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Finisher.fbx",
+      "frames_blender": [
+        59,
+        85
+      ],
+      "length_s": 1.083,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.042
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.5
+        },
+        {
+          "name": "AN_Dismember_Check",
+          "time_s": 0.583
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.667
+        }
+      ],
+      "enemy_role": "Sabre_Finisher"
+    },
+    {
+      "asset": "A_Bean_Sabre_Block",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Block.fbx",
+      "frames_blender": [
+        751,
+        773
+      ],
+      "length_s": 0.917,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_BlockWindow_Begin",
+          "time_s": 0.167
+        },
+        {
+          "name": "AN_BlockImpact",
+          "time_s": 0.458
+        },
+        {
+          "name": "AN_BlockWindow_End",
+          "time_s": 0.667
+        }
+      ],
+      "enemy_role": "Sabre_Block"
+    },
+    {
+      "asset": "A_Bean_Sabre_Sheathe",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Sabre_Sheathe.fbx",
+      "frames_blender": [
+        95,
+        111
+      ],
+      "length_s": 0.667,
+      "fps": 24,
+      "loop": false,
+      "category": "Sabre",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Sheathe_Insert",
+          "time_s": 0.208
+        },
+        {
+          "name": "AN_Sheathe_AttachToScabbard",
+          "time_s": 0.458
+        }
+      ],
+      "enemy_role": "Sabre_Sheathe"
+    },
+    {
+      "asset": "A_Bean_Hit_React",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Hit_React.fbx",
+      "frames_blender": [
+        579,
+        593
+      ],
+      "length_s": 0.583,
+      "fps": 24,
+      "loop": false,
+      "category": "Reaction",
+      "root_motion": false,
+      "montage_slot": "FullBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_HitFlash",
+          "time_s": 0.042
+        }
+      ],
+      "enemy_role": "Hit_React"
+    },
+    {
+      "asset": "A_Bean_Death",
+      "file": "maquettes/bean-anim-library/exports/anims/A_Bean_Death.fbx",
+      "frames_blender": [
+        605,
+        643
+      ],
+      "length_s": 1.583,
+      "fps": 24,
+      "loop": false,
+      "category": "Reaction",
+      "root_motion": false,
+      "montage_slot": "FullBody",
+      "blend_in_s": 0.15,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_BodyFall",
+          "time_s": 0.75
+        }
+      ],
+      "enemy_role": "Death"
+    },
+    {
+      "asset": "A_BeanFR_Idle_Guard",
+      "enemy_role": "Idle_Guard",
+      "file": "maquettes/bean-francais/exports/anims/A_BeanFR_Idle_Guard.fbx",
+      "frames_blender": [
+        1,
+        49
+      ],
+      "length_s": 2.0,
+      "fps": 24,
+      "loop": true,
+      "category": "Enemy_Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "speed_mps": null,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": []
+    },
+    {
+      "asset": "A_BeanFR_Patrol",
+      "enemy_role": "Patrol",
+      "file": "maquettes/bean-francais/exports/anims/A_BeanFR_Patrol.fbx",
+      "frames_blender": [
+        61,
+        99
+      ],
+      "length_s": 1.583,
+      "fps": 24,
+      "loop": true,
+      "category": "Enemy_Locomotion",
+      "root_motion": false,
+      "montage_slot": null,
+      "speed_mps": 0.49,
+      "blend_in_s": 0.0,
+      "blend_out_s": 0.0,
+      "notifies": [
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 0.417
+        },
+        {
+          "name": "AN_Footstep_L",
+          "time_s": 0.792
+        },
+        {
+          "name": "AN_Footstep_R",
+          "time_s": 1.208
+        }
+      ]
+    },
+    {
+      "asset": "A_BeanFR_Bayonet_Thrust",
+      "enemy_role": "Bayonet_Thrust",
+      "file": "maquettes/bean-francais/exports/anims/A_BeanFR_Bayonet_Thrust.fbx",
+      "frames_blender": [
+        111,
+        137
+      ],
+      "length_s": 1.083,
+      "fps": 24,
+      "loop": false,
+      "category": "Enemy_Attack",
+      "root_motion": false,
+      "montage_slot": "FullBody",
+      "speed_mps": null,
+      "blend_in_s": 0.12,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.208
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.375
+        },
+        {
+          "name": "AN_BayonetHit",
+          "time_s": 0.458
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.625
+        }
+      ]
+    },
+    {
+      "asset": "A_BeanFR_Sabre_Combo",
+      "enemy_role": "Sabre_Combo",
+      "file": "maquettes/bean-francais/exports/anims/A_BeanFR_Sabre_Combo.fbx",
+      "frames_blender": [
+        149,
+        180
+      ],
+      "length_s": 1.292,
+      "fps": 24,
+      "loop": false,
+      "category": "Enemy_Attack",
+      "root_motion": false,
+      "montage_slot": "UpperBody",
+      "speed_mps": null,
+      "blend_in_s": 0.12,
+      "blend_out_s": 0.2,
+      "notifies": [
+        {
+          "name": "AN_Stamina_Consume",
+          "time_s": 0.042
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.167
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.292
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 0.583
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 0.708
+        },
+        {
+          "name": "AN_HitWindow_Begin",
+          "time_s": 1.0
+        },
+        {
+          "name": "AN_HitWindow_End",
+          "time_s": 1.125
+        }
+      ]
+    }
+  ],
+  "ai": {
+    "units": "cm (Unreal)",
+    "ranges": {
+      "musket_fire": {
+        "min": 300,
+        "ideal": 900,
+        "max": 1500,
+        "note": "AN_FireShot à 0,542 s de A_Bean_Musket_Fire ; rechargement complet 6,6 s (A_Bean_Musket_Reload)"
+      },
+      "bayonet": {
+        "min": 60,
+        "max": 115,
+        "note": "fente de 0,10 m + mousquet 0,92 m + baïonnette 0,22 m ; fenêtre de coup 0,375-0,625 s"
+      },
+      "sabre": {
+        "min": 40,
+        "max": 85,
+        "note": "Slash_R / Slash_L / Thrust / Sabre_Combo ; sabre au fourreau tant que la cible est à plus de 300 cm"
+      },
+      "switch_to_sabre": {
+        "below": 140,
+        "note": "Sabre_Draw (0,667 s) : mousquet vers spine_02/musket_back et sabre vers hand_r/sabre_grip à AN_Draw_AttachToHand"
+      }
+    },
+    "damage_suggested": {
+      "musket": 45,
+      "bayonet": 25,
+      "sabre_slash": 15,
+      "sabre_combo_total": 40
+    },
+    "cooldowns_s": {
+      "musket_reload": 6.6,
+      "bayonet": 1.4,
+      "sabre_combo": 1.8
+    },
+    "speeds_cm_s": {
+      "patrol": 49,
+      "run": 112
+    },
+    "roles": {
+      "fr1": "fusilier",
+      "fr2": "fusilier",
+      "fr3": "fusilier",
+      "fr4": "tirailleur (préfère la distance)",
+      "fr5": "grenadier (charge à la baïonnette)",
+      "fr6": "sergent (sabre, commande la patrouille)",
+      "fr7": "officier (mini-boss : sabre + tir, plus de PV)"
+    }
+  }
+}

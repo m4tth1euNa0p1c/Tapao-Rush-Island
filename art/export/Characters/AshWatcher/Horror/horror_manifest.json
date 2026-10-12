@@ -1,0 +1,355 @@
+{
+ "format": "tiki-horror/1",
+ "version": "1.0",
+ "task": "T-274",
+ "mob": "AshWatcher",
+ "label": "Veilleur des Cendres",
+ "built_at": "2026-10-10T20:19:24.561210+00:00",
+ "skeleton": {
+  "blender": "SKEL_AshWatcher",
+  "unreal": "/Game/MonkeIsland/Characters/AshWatcher/Meshes/SK_AshWatcher_Skeleton",
+  "bones": [
+   "root",
+   "pelvis",
+   "spine_01",
+   "spine_02",
+   "head",
+   "crest",
+   "upperarm_l",
+   "lowerarm_l",
+   "hand_l",
+   "upperarm_r",
+   "lowerarm_r",
+   "hand_r",
+   "weapon_r",
+   "thigh_l",
+   "calf_l",
+   "foot_l",
+   "thigh_r",
+   "calf_r",
+   "foot_r"
+  ],
+  "heads_m": {
+   "root": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "pelvis": [
+    0.0,
+    0.0,
+    0.273
+   ],
+   "spine_01": [
+    0.0,
+    0.0,
+    0.403
+   ],
+   "spine_02": [
+    0.0,
+    0.0,
+    0.507
+   ],
+   "head": [
+    0.0,
+    0.0,
+    0.78
+   ],
+   "crest": [
+    0.0,
+    0.0,
+    1.118
+   ],
+   "upperarm_l": [
+    0.403,
+    0.0,
+    0.611
+   ],
+   "lowerarm_l": [
+    0.481,
+    -0.013,
+    0.494
+   ],
+   "hand_l": [
+    0.52,
+    -0.026,
+    0.39
+   ],
+   "upperarm_r": [
+    -0.403,
+    0.0,
+    0.611
+   ],
+   "lowerarm_r": [
+    -0.481,
+    -0.013,
+    0.494
+   ],
+   "hand_r": [
+    -0.52,
+    -0.026,
+    0.39
+   ],
+   "weapon_r": [
+    -0.52693,
+    -0.05048,
+    0.32419
+   ],
+   "thigh_l": [
+    0.221,
+    0.0,
+    0.273
+   ],
+   "calf_l": [
+    0.221,
+    -0.0065,
+    0.169
+   ],
+   "foot_l": [
+    0.221,
+    0.0,
+    0.0845
+   ],
+   "thigh_r": [
+    -0.221,
+    0.0,
+    0.273
+   ],
+   "calf_r": [
+    -0.221,
+    -0.0065,
+    0.169
+   ],
+   "foot_r": [
+    -0.221,
+    0.0,
+    0.0845
+   ]
+  }
+ },
+ "height_m": 1.3,
+ "bbox_m": [
+  [
+   -0.5999,
+   -0.4707,
+   -0.004
+  ],
+  [
+   0.6134,
+   0.3796,
+   1.4429
+  ]
+ ],
+ "meshes": {
+  "lod0": "art/export/Characters/AshWatcher/Horror/SK_AshWatcher.fbx",
+  "lod0_tris": 54043,
+  "lods": [
+   {
+    "lod": 1,
+    "file": "art/export/Characters/AshWatcher/Horror/LOD/SK_AshWatcher_LOD1.fbx",
+    "tris": 27020
+   },
+   {
+    "lod": 2,
+    "file": "art/export/Characters/AshWatcher/Horror/LOD/SK_AshWatcher_LOD2.fbx",
+    "tris": 10808
+   }
+  ],
+  "weapon_sk": "art/export/Characters/AshWatcher/Horror/SK_AshWatcher_ObsidianClub.fbx",
+  "weapon_sm": "art/export/Characters/AshWatcher/Horror/SM_AshWatcher_ObsidianClub.fbx",
+  "weapon_tris": 3984,
+  "weapon_sm_bbox_m": [
+   [
+    -0.1431,
+    -0.1383,
+    -0.2438
+   ],
+   [
+    0.1593,
+    0.1539,
+    0.8194
+   ]
+  ]
+ },
+ "modules": [
+  {
+   "module": "Head",
+   "file": "art/export/Characters/AshWatcher/Horror/Dismember/SK_AshWatcher_Head.fbx",
+   "tris": 27140,
+   "boundary_edges": 134,
+   "mass_kg": 158.5
+  },
+  {
+   "module": "Torso",
+   "file": "art/export/Characters/AshWatcher/Horror/Dismember/SK_AshWatcher_Torso.fbx",
+   "tris": 20787,
+   "boundary_edges": 261,
+   "mass_kg": 219.2
+  },
+  {
+   "module": "Pelvis",
+   "file": "art/export/Characters/AshWatcher/Horror/Dismember/SK_AshWatcher_Pelvis.fbx",
+   "tris": 14208,
+   "boundary_edges": 0,
+   "mass_kg": 65.19
+  },
+  {
+   "module": "Arm_L",
+   "file": "art/export/Characters/AshWatcher/Horror/Dismember/SK_AshWatcher_Arm_L.fbx",
+   "tris": 2420,
+   "boundary_edges": 0,
+   "mass_kg": 15.05
+  },
+  {
+   "module": "Arm_R",
+   "file": "art/export/Characters/AshWatcher/Horror/Dismember/SK_AshWatcher_Arm_R.fbx",
+   "tris": 1852,
+   "boundary_edges": 0,
+   "mass_kg": 12.04
+  },
+  {
+   "module": "Leg_L",
+   "file": "art/export/Characters/AshWatcher/Horror/Dismember/SK_AshWatcher_Leg_L.fbx",
+   "tris": 1836,
+   "boundary_edges": 0,
+   "mass_kg": 12.22
+  },
+  {
+   "module": "Leg_R",
+   "file": "art/export/Characters/AshWatcher/Horror/Dismember/SK_AshWatcher_Leg_R.fbx",
+   "tris": 1832,
+   "boundary_edges": 0,
+   "mass_kg": 12.63
+  }
+ ],
+ "textures": [
+  {
+   "asset": "T_AshWatcher_Body_BC",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Body_BC.png",
+   "kind": "color"
+  },
+  {
+   "asset": "T_AshWatcher_Body_N",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Body_N.png",
+   "kind": "normal_gl"
+  },
+  {
+   "asset": "T_AshWatcher_Body_ORM",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Body_ORM.png",
+   "kind": "masks"
+  },
+  {
+   "asset": "T_AshWatcher_Body_E",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Body_E.png",
+   "kind": "emissive"
+  },
+  {
+   "asset": "T_AshWatcher_Weapon_BC",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Weapon_BC.png",
+   "kind": "color"
+  },
+  {
+   "asset": "T_AshWatcher_Weapon_N",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Weapon_N.png",
+   "kind": "normal_gl"
+  },
+  {
+   "asset": "T_AshWatcher_Weapon_ORM",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Weapon_ORM.png",
+   "kind": "masks"
+  },
+  {
+   "asset": "T_AshWatcher_Weapon_E",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Weapon_E.png",
+   "kind": "emissive"
+  },
+  {
+   "asset": "T_AshWatcher_Gore_BC",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Gore_BC.png",
+   "kind": "color"
+  },
+  {
+   "asset": "T_AshWatcher_Gore_N",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Gore_N.png",
+   "kind": "normal_gl"
+  },
+  {
+   "asset": "T_AshWatcher_Gore_ORM",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Gore_ORM.png",
+   "kind": "masks"
+  },
+  {
+   "asset": "T_AshWatcher_Gore_E",
+   "file": "art/export/Characters/AshWatcher/Horror/Textures/T_AshWatcher_Gore_E.png",
+   "kind": "emissive"
+  }
+ ],
+ "materials": {
+  "M_AshWatcher_Body": {
+   "mi": "MI_AshWatcher_Body",
+   "textures": {
+    "BaseColor": "T_AshWatcher_Body_BC",
+    "Normal": "T_AshWatcher_Body_N",
+    "ORM": "T_AshWatcher_Body_ORM",
+    "Emissive": "T_AshWatcher_Body_E"
+   },
+   "scalars": {
+    "EmissiveStrength": 5.0,
+    "EmissivePulse": 0.35,
+    "EmissivePulseSpeed": 0.32
+   }
+  },
+  "M_AshWatcher_Weapon": {
+   "mi": "MI_AshWatcher_Weapon",
+   "textures": {
+    "BaseColor": "T_AshWatcher_Weapon_BC",
+    "Normal": "T_AshWatcher_Weapon_N",
+    "ORM": "T_AshWatcher_Weapon_ORM",
+    "Emissive": "T_AshWatcher_Weapon_E"
+   },
+   "scalars": {
+    "EmissiveStrength": 3.0,
+    "EmissivePulse": 0.3,
+    "EmissivePulseSpeed": 0.27
+   }
+  },
+  "M_AshWatcher_Gore": {
+   "mi": "MI_AshWatcher_Gore",
+   "textures": {
+    "BaseColor": "T_AshWatcher_Gore_BC",
+    "Normal": "T_AshWatcher_Gore_N",
+    "ORM": "T_AshWatcher_Gore_ORM",
+    "Emissive": "T_AshWatcher_Gore_E"
+   },
+   "scalars": {
+    "EmissiveStrength": 4.0,
+    "EmissivePulse": 0.25,
+    "EmissivePulseSpeed": 0.4
+   }
+  }
+ },
+ "material_slots": {
+  "body": [
+   "M_AshWatcher_Body"
+  ],
+  "weapon": [
+   "M_AshWatcher_Weapon"
+  ],
+  "modules": [
+   "M_AshWatcher_Body",
+   "M_AshWatcher_Gore"
+  ]
+ },
+ "texture_settings": {
+  "_BC": "sRGB, TC_Default",
+  "_N": "TC_Normalmap, Flip Green Channel (normale OpenGL)",
+  "_ORM": "sRGB off, TC_Masks (R = AO, G = rugosité, B = métal)",
+  "_E": "sRGB, émissif"
+ },
+ "gore_atlas": [
+  "crust_cut",
+  "cinder",
+  "ember_core",
+  "char_skin"
+ ]
+}

@@ -1,0 +1,479 @@
+{
+ "format": "capture-clips/1",
+ "task": "T-337 (lot L5), contrat avec T-336",
+ "status": "built",
+ "built_by": "scripts/props/capture_kit/build.py (clips.py, rig.py)",
+ "built_at": "2026-10-11T22:28:54",
+ "skeleton": {
+  "blender": "SKEL_Bean (art/blender/characters/bean_soldier.blend, lu sans être modifié)",
+  "unreal": "/Game/MonkeIsland/Characters/Bean/Meshes/SK_Bean_Body_Skeleton",
+  "note": "même squelette pour le joueur (BP_IslanderBean) et les soldats français (SK_BeanFR_*)"
+ },
+ "export": {
+  "fps": 30,
+  "root_motion": false,
+  "frame_mapping": "images Blender 0..N, toutes clés cuites (N+1 clés)",
+  "settings": "réglages des clips de la bibliothèque (anim_export.export_range, scripts/character/bean_swim_clips.py) : armature seule renommée Armature, FBX_SCALE_NONE + apply_unit_scale, -Y avant / Z haut, os déformants, primary Y / secondary X",
+  "root_scale": "os root à x100 comme tous les A_Bean_* (dépliage du noeud Armature) : pas de PoseRoot requis",
+  "arm_scale_keys": "bras étirés uniformément quand il le faut (qa.max_stretch), la mitaine gardée à sa taille (échelle locale inverse), comme les clips de la bibliothèque",
+  "unreal_import": "commandlet (le MCP n'importe pas un FBX d'animation seule) : options de scripts/character/import_bean_library.py task_for (skeleton = SK_Bean_Body_Skeleton, FBXALIT_EXPORTED_TIME, remove_redundant_keys False) ; cible conseillée /Game/MonkeIsland/Capture/Animations/"
+ },
+ "clips": {
+  "A_BeanFR_Captive_Idle": {
+   "file": "art/export/Characters/Capture/A_BeanFR_Captive_Idle.fbx",
+   "skeleton": "/Game/MonkeIsland/Characters/Bean/Meshes/SK_Bean_Body_Skeleton",
+   "target": "French captive (BP_BeanFR_*)",
+   "summary": "hunched, head down, wrists bound in front, weight shifting",
+   "fps": 30,
+   "frames": 90,
+   "keys": 91,
+   "seconds": 3.0,
+   "loop": true,
+   "root_motion": false,
+   "events": [],
+   "qa": {
+    "max_stretch": 1.214,
+    "max_hand_error_m": 0.0,
+    "max_leg_error_m": 0.0,
+    "worst_hand_frame": 88
+   }
+  },
+  "A_BeanFR_Captive_Walk": {
+   "file": "art/export/Characters/Capture/A_BeanFR_Captive_Walk.fbx",
+   "skeleton": "/Game/MonkeIsland/Characters/Bean/Meshes/SK_Bean_Body_Skeleton",
+   "target": "French captive (BP_BeanFR_*)",
+   "summary": "short constrained steps, hunched, wrists bound in front",
+   "fps": 30,
+   "frames": 48,
+   "keys": 49,
+   "seconds": 1.6,
+   "loop": true,
+   "root_motion": false,
+   "events": [
+    {
+     "name": "Footstep_L",
+     "frame": 0,
+     "time_s": 0.0
+    },
+    {
+     "name": "Footstep_R",
+     "frame": 12,
+     "time_s": 0.4
+    },
+    {
+     "name": "Footstep_L",
+     "frame": 24,
+     "time_s": 0.8
+    },
+    {
+     "name": "Footstep_R",
+     "frame": 36,
+     "time_s": 1.2
+    }
+   ],
+   "qa": {
+    "max_stretch": 1.219,
+    "max_hand_error_m": 0.0,
+    "max_leg_error_m": 0.0,
+    "worst_hand_frame": 48
+   },
+   "no_slide_speed_cm_s": 30.7
+  },
+  "A_Bean_Lead_Walk": {
+   "file": "art/export/Characters/Capture/A_Bean_Lead_Walk.fbx",
+   "skeleton": "/Game/MonkeIsland/Characters/Bean/Meshes/SK_Bean_Body_Skeleton",
+   "target": "player (BP_IslanderBean)",
+   "summary": "the library's walk, the left mitten holding the leash behind",
+   "fps": 30,
+   "frames": 48,
+   "keys": 49,
+   "seconds": 1.6,
+   "loop": true,
+   "root_motion": false,
+   "events": [
+    {
+     "name": "Footstep_L",
+     "frame": 0,
+     "time_s": 0.0
+    },
+    {
+     "name": "Footstep_R",
+     "frame": 12,
+     "time_s": 0.4
+    },
+    {
+     "name": "Footstep_L",
+     "frame": 24,
+     "time_s": 0.8
+    },
+    {
+     "name": "Footstep_R",
+     "frame": 36,
+     "time_s": 1.2
+    }
+   ],
+   "qa": {
+    "max_stretch": 1.005,
+    "max_hand_error_m": 0.0,
+    "max_leg_error_m": 0.0,
+    "worst_hand_frame": 47
+   },
+   "no_slide_speed_cm_s": 49.3
+  },
+  "A_Bean_Cuff": {
+   "file": "art/export/Characters/Capture/A_Bean_Cuff.fbx",
+   "skeleton": "/Game/MonkeIsland/Characters/Bean/Meshes/SK_Bean_Body_Skeleton",
+   "target": "player (BP_IslanderBean)",
+   "summary": "lean forward, both mittens on the captive's wrists, click, release",
+   "fps": 30,
+   "frames": 36,
+   "keys": 37,
+   "seconds": 1.2,
+   "loop": false,
+   "root_motion": false,
+   "events": [
+    {
+     "name": "GrabWrists",
+     "frame": 15,
+     "time_s": 0.5
+    },
+    {
+     "name": "CuffsClosed",
+     "frame": 21,
+     "time_s": 0.7
+    }
+   ],
+   "qa": {
+    "max_stretch": 1.294,
+    "max_hand_error_m": 0.0,
+    "max_leg_error_m": 0.0,
+    "worst_hand_frame": 36
+   }
+  },
+  "A_Bean_Cage_Place": {
+   "file": "art/export/Characters/Capture/A_Bean_Cage_Place.fbx",
+   "skeleton": "/Game/MonkeIsland/Characters/Bean/Meshes/SK_Bean_Body_Skeleton",
+   "target": "player (BP_IslanderBean)",
+   "summary": "crouch, set the folded cage down in front, pull it open, stand up",
+   "fps": 30,
+   "frames": 45,
+   "keys": 46,
+   "seconds": 1.5,
+   "loop": false,
+   "root_motion": false,
+   "events": [
+    {
+     "name": "CrateDown",
+     "frame": 12,
+     "time_s": 0.4
+    },
+    {
+     "name": "CagePlaced",
+     "frame": 28,
+     "time_s": 0.933
+    }
+   ],
+   "qa": {
+    "max_stretch": 1.221,
+    "max_hand_error_m": 0.0,
+    "max_leg_error_m": 0.0,
+    "worst_hand_frame": 45
+   }
+  }
+ },
+ "attachments": {
+  "note": "transformations relatives à un os : espace os Blender (exact) et conversion Unreal du projet (location cm (x, -y, z), FRotator(-ey, -ez, ex) comme TorchRules::GripInHand) À VÉRIFIER dans l'éditeur ; repère personnage = X avant du bean, Y sa droite, Z haut, origine aux pieds (cm, lacet en degrés)",
+  "folded_cage_in_hand_r": {
+   "bone": "hand_r",
+   "blender_bone_space": {
+    "location_m": [
+     -0.00483,
+     0.32583,
+     -0.00033
+    ],
+    "quaternion_wxyz": [
+     0.47551,
+     0.47551,
+     0.523345,
+     -0.523345
+    ],
+    "rotation_euler_deg_xyz": [
+     90.0,
+     95.484,
+     0.0
+    ]
+   },
+   "unreal_guess": {
+    "location_cm": [
+     -0.483,
+     -32.583,
+     -0.033
+    ],
+    "rotator_pitch_yaw_roll_deg": [
+     -95.484,
+     -0.0,
+     90.0
+    ],
+    "convention": "like TorchRules::GripInHand (attach_torch.json): to check in the editor"
+   },
+   "mesh": "SM_Capture_Cage_Folded",
+   "socket_at_mitten": "grip",
+   "what": "origine du maillage (dessous de la caisse) relative à hand_r",
+   "grip_socket": {
+    "bone": "hand_r",
+    "blender_bone_space": {
+     "location_m": [
+      -0.00483,
+      0.07583,
+      -0.00033
+     ],
+     "quaternion_wxyz": [
+      0.47551,
+      0.47551,
+      0.523345,
+      -0.523345
+     ],
+     "rotation_euler_deg_xyz": [
+      90.0,
+      95.484,
+      0.0
+     ]
+    },
+    "unreal_guess": {
+     "location_cm": [
+      -0.483,
+      -7.583,
+      -0.033
+     ],
+     "rotator_pitch_yaw_roll_deg": [
+      -95.484,
+      -0.0,
+      90.0
+     ],
+     "convention": "like TorchRules::GripInHand (attach_torch.json): to check in the editor"
+    }
+   },
+   "use": "objet tenu (main droite, sur le côté, comme une valise) et début de A_Bean_Cage_Place ; DA_CaptureRules.FoldedCageInHand = grip_socket.unreal_guess (socket grip sur hand_r)"
+  },
+  "open_handcuffs_in_hand_r": {
+   "bone": "hand_r",
+   "blender_bone_space": {
+    "location_m": [
+     -0.00483,
+     0.07583,
+     -0.00033
+    ],
+    "quaternion_wxyz": [
+     0.47551,
+     0.47551,
+     0.523345,
+     -0.523345
+    ],
+    "rotation_euler_deg_xyz": [
+     90.0,
+     95.484,
+     0.0
+    ]
+   },
+   "unreal_guess": {
+    "location_cm": [
+     -0.483,
+     -7.583,
+     -0.033
+    ],
+    "rotator_pitch_yaw_roll_deg": [
+     -95.484,
+     -0.0,
+     90.0
+    ],
+    "convention": "like TorchRules::GripInHand (attach_torch.json): to check in the editor"
+   },
+   "mesh": "SM_Steel_Handcuffs_Open",
+   "socket_at_mitten": "grip",
+   "what": "origine du maillage = son socket grip (anneau du milieu) relative à hand_r",
+   "use": "objet tenu et début de A_Bean_Cuff (cachées à CuffsClosed) ; DA_CaptureRules.HandcuffsInHand = unreal_guess"
+  },
+  "handcuffs_on_captive": {
+   "bone": "hand_r",
+   "blender_bone_space": {
+    "location_m": [
+     0.08574,
+     0.05949,
+     -0.02936
+    ],
+    "quaternion_wxyz": [
+     0.426674,
+     0.877052,
+     0.20754,
+     -0.075211
+    ],
+    "rotation_euler_deg_xyz": [
+     131.051,
+     18.001,
+     18.379
+    ]
+   },
+   "unreal_guess": {
+    "location_cm": [
+     8.574,
+     -5.949,
+     -2.936
+    ],
+    "rotator_pitch_yaw_roll_deg": [
+     -18.001,
+     -18.379,
+     131.051
+    ],
+    "convention": "like TorchRules::GripInHand (attach_torch.json): to check in the editor"
+   },
+   "mesh": "SM_Steel_Handcuffs",
+   "fit_error_max_m": 0.0,
+   "what": "origine du maillage (milieu des bracelets) relative à hand_r du captif ; DA_CaptureRules.CuffsOnBone = unreal_guess, CuffBones = [hand_r]",
+   "two_point_fallback": {
+    "cuff_r": {
+     "bone": "hand_r",
+     "unreal_bone_space_cm": [
+      0.0,
+      -3.1,
+      0.0
+     ]
+    },
+    "cuff_l": {
+     "bone": "hand_l",
+     "unreal_bone_space_cm": [
+      0.0,
+      -3.1,
+      0.0
+     ]
+    },
+    "note": "centre de chaque bracelet = 3,1 cm le long de l’os de la main (vers la mitaine) : placer le maillage pour que ses sockets cuff_r / cuff_l tombent sur ces deux points si la rotation ci-dessus se lit mal dans l’éditeur"
+   },
+   "use": "attacher à hand_r du captif (KeepRelative avec cette transformation) dès CuffsClosed ; le bracelet gauche suit le poignet gauche dans les deux clips captifs (écart max fit_error_max_m)"
+  },
+  "leash_hand": {
+   "bone": "hand_l",
+   "blender_bone_space": {
+    "location_m": [
+     0.00483,
+     0.07583,
+     -0.00033
+    ],
+    "quaternion_wxyz": [
+     0.701454,
+     0.709453,
+     0.0,
+     0.068107
+    ],
+    "rotation_euler_deg_xyz": [
+     90.383,
+     -5.546,
+     5.509
+    ]
+   },
+   "unreal_guess": {
+    "location_cm": [
+     0.483,
+     -7.583,
+     -0.033
+    ],
+    "rotator_pitch_yaw_roll_deg": [
+     5.546,
+     -5.509,
+     90.383
+    ],
+    "convention": "like TorchRules::GripInHand (attach_torch.json): to check in the editor"
+   },
+   "note": "seule la position compte (centre de la mitaine)",
+   "use": "bout de la laisse dans la mitaine gauche du joueur (A_Bean_Lead_Walk) : centre de la mitaine relatif à hand_l"
+  },
+  "mitten_centre_r": {
+   "bone": "hand_r",
+   "blender_bone_space": {
+    "location_m": [
+     -0.00483,
+     0.07583,
+     -0.00033
+    ],
+    "quaternion_wxyz": [
+     0.701454,
+     0.709453,
+     -0.0,
+     -0.068107
+    ],
+    "rotation_euler_deg_xyz": [
+     90.383,
+     5.546,
+     -5.509
+    ]
+   },
+   "unreal_guess": {
+    "location_cm": [
+     -0.483,
+     -7.583,
+     -0.033
+    ],
+    "rotator_pitch_yaw_roll_deg": [
+     -5.546,
+     5.509,
+     90.383
+    ],
+    "convention": "like TorchRules::GripInHand (attach_torch.json): to check in the editor"
+   },
+   "note": "seule la position compte (centre de la mitaine)"
+  },
+  "cage_place": {
+   "crate_down": {
+    "location_cm": [
+     40.0,
+     4.0,
+     0.0
+    ],
+    "yaw_deg": -90.0,
+    "event": "CrateDown",
+    "use": "la caisse quitte la main et reste au sol à cette place (pivot = dessous)"
+   },
+   "cage_spawn": {
+    "location_cm": [
+     150.0,
+     -0.0,
+     0.0
+    ],
+    "yaw_deg": -180.0,
+    "event": "CagePlaced",
+    "use": "SM_Capture_Cage (centre de la base) : porte face au joueur, son plan à ~88 cm de lui ; la caisse disparaît"
+   }
+  },
+  "cuff_pair": {
+   "location_cm": [
+    84.0,
+    -0.0,
+    0.0
+   ],
+   "yaw_deg": -180.0,
+   "use": "racine du captif (pieds) dans le repère du joueur pendant A_Bean_Cuff : 84 cm devant lui, face à lui (lacet 180) ; le captif tient déjà la pose A_BeanFR_Captive_Idle (les mains du joueur visent ses poignets dans cette pose, chapeaux et corps sans contact, mesuré) ; menottes visibles à CuffsClosed"
+  }
+ },
+ "qa_contacts_A_Bean_Cuff": {
+  "frames_checked": [
+   0,
+   3,
+   6,
+   9,
+   12,
+   15,
+   18,
+   21,
+   24,
+   27,
+   30,
+   33,
+   36
+  ],
+  "hats_overlapping_faces_max": 0,
+  "bodies_overlapping_faces_max": 0,
+  "how": "joueur (bean, tricorne) et captif (SK_BeanFR_Fusilier_1767.glb) dans la paire cuff_pair, captif dans la pose A_BeanFR_Captive_Idle : faces des chapeaux et des corps qui se croisent (BVH), une image sur trois"
+ },
+ "loops": "les boucles ont leur dernière image égale à la première",
+ "veilleurs_tiki": "non livré : chaque veilleur (Guerrier Coco, Veilleur des Cendres, Gardien Crabe) a son propre squelette et ses proportions (scripts/character/tiki_horror.py) et ses clips de jeu viennent de packs différents (racine x1 des clips GoreBox) ; un clip captif par mob demande un réglage par squelette et une vérification en jeu : pose procédurale des bras côté code (poignets devant, mêmes menottes attachées à hand_r)",
+ "runtime_tested": false
+}

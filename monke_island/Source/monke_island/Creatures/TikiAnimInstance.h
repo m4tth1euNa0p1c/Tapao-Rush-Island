@@ -58,8 +58,9 @@ class MONKE_ISLAND_API UTikiAnimInstance : public UAnimInstance
 
 public:
 
-	/** Crossfades to Clip over BlendTime (s); nothing happens when it is already the clip coming in, unless bRestart */
-	void PlayClip(UAnimSequenceBase* Clip, bool bLoop, float BlendTime, float PlayRate = 1.0f, bool bRestart = false);
+	/** Crossfades to Clip over BlendTime (s), from StartTime in the clip (s); nothing happens when it is already the
+	 *  clip coming in, unless bRestart */
+	void PlayClip(UAnimSequenceBase* Clip, bool bLoop, float BlendTime, float PlayRate = 1.0f, bool bRestart = false, float StartTime = 0.0f);
 
 	/** Speed of the clip coming in (the locomotion follows the body) */
 	void SetPlayRate(float PlayRate) { In.PlayRate = PlayRate; }

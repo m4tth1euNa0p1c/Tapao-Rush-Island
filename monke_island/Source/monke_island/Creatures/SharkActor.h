@@ -8,6 +8,7 @@
 #include "SharkActor.generated.h"
 
 class UIslanderHealthComponent;
+class UMobHealthBarComponent;
 class USharkRules;
 class USphereComponent;
 class UStaticMeshComponent;
@@ -61,6 +62,12 @@ protected:
 
 	virtual void BeginPlay() override;
 
+	/** Client: the body keeps where it is drawn and glides to the new replicated place (T-312, review R-34) */
+	virtual void PostNetReceiveLocationAndRotation() override;
+
+	/** Client: the replicated speed, carried on between two updates (T-312) */
+	virtual void PostNetReceiveVelocity(const FVector& NewVelocity) override;
+
 private:
 
 	/** Body collision (pawn), root */
@@ -78,6 +85,10 @@ private:
 	/** Health, damage and death */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	TObjectPtr<UIslanderHealthComponent> Health;
+
+	/** Health bar above the creature once it is hurt (local players) */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<UMobHealthBarComponent> HealthBar;
 
 	/** Current state */
 	UPROPERTY(ReplicatedUsing=OnRep_State)
@@ -106,6 +117,20 @@ private:
 
 	/** Bite lunge left (s, every machine) */
 	float LungeTime = 0.0f;
+
+	/** Lunge of the body this frame (cm along its snout, every machine) */
+	float Lunge = 0.0f;
+
+	/** Client: where the body is drawn relative to the replicated shark (cm, its own frame) and its yaw offset (deg);
+	 *  both fade over ClientSmoothTime */
+	FVector SmoothOffset = FVector::ZeroVector;
+	float SmoothYaw = 0.0f;
+
+	/** Client: world time of the last replicated place */
+	double LastRepTime = -1.0e6;
+
+	/** Rotation of the body in the actor as set up (Blueprint), the glide turns it about the vertical */
+	FQuat BodyBaseRotation = FQuat::Identity;
 
 	/** Cached water subsystem */
 	TWeakObjectPtr<UIslandWaterSubsystem> Water;

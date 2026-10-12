@@ -84,4 +84,21 @@ public:
 	/** Time a dead shark takes to sink before it disappears (s) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Shark", meta=(ClampMin="0", Units="s"))
 	float CorpseLifetime = 10.0f;
+
+	/** Network updates per second of the shark (T-312; the engine default is 100): a client carries it on by its speed
+	 *  between two updates and glides its body over the corrections */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Shark|Network", meta=(ClampMin="1", ClampMax="100"))
+	float NetUpdateFrequency = 20.0f;
+
+	/** Time a client takes to glide the body onto a new replicated place (s); 0 = it jumps there (review R-34) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Shark|Network", meta=(ClampMin="0", Units="s"))
+	float ClientSmoothTime = 0.12f;
+
+	/** Longest a client carries the shark on by its last replicated speed without news (s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Shark|Network", meta=(ClampMin="0", Units="s"))
+	float ClientExtrapolateTime = 0.25f;
+
+	/** A correction farther than this is not glided: the body jumps (a spawn, a teleport) (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Shark|Network", meta=(ClampMin="0", Units="cm"))
+	float ClientMaxSmoothDistance = 400.0f;
 };

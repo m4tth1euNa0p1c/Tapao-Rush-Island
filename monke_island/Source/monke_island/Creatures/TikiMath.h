@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Village/VillageMath.h"
 
 /** Locomotion clip a creature plays for its speed */
 enum class ETikiLocomotion : uint8
@@ -33,6 +34,138 @@ enum class ETikiActivity : uint8
 /** Pure rules of the tiki creatures, tested without a world */
 namespace TikiMath
 {
+	/** First reason a candidate cannot be placed (also the keys of the placement summary) */
+	enum class ETotemReject : uint8
+	{
+		None, Invalid, Cap, Spacing, Quiet, Building, NoGround, Water, Slope, Bush, Spawn, Count
+	};
+
+	/** Finite initial-placement request, with no UObject ownership */
+	struct FTotemRequest
+	{
+		FVector Location = FVector::ZeroVector;
+		float Yaw = 0.0f;
+		bool bHouse = false;
+	};
+
+	/** Pure jittered darts for a Poisson disk sample. A dart reserves no space until EvaluateTotemCandidate accepts
+	 *  its traced ground: rejected water cannot starve narrow/disconnected strips of land. Bounded CPU and memory. */
+	inline TArray<FVector> GroundTotemCandidates(const FBox2D& Bounds, float Spacing, int32 Seed, float Jitter, int32 Budget)
+	{
+		TArray<FVector> Points;
+		if (!Bounds.bIsValid || Bounds.Min.ContainsNaN() || Bounds.Max.ContainsNaN() || !FMath::IsFinite(Spacing)
+			|| Spacing <= 0.0f || !FMath::IsFinite(Jitter) || Budget <= 0)
+		{
+			return Points;
+		}
+		const FVector2D Size = Bounds.GetSize();
+		if (Size.X <= 0.0 || Size.Y <= 0.0)
+		{
+			return Points;
+		}
+		const double CellSize = Spacing / FMath::Sqrt(2.0);
+		const int32 NX = FMath::CeilToInt(FMath::Clamp(Size.X / CellSize, 1.0, 1000000.0));
+		const int32 NY = FMath::CeilToInt(FMath::Clamp(Size.Y / CellSize, 1.0, 1000000.0));
+		const float Amount = FMath::Clamp(Jitter, 0.0f, 1.0f);
+		FRandomStream Stream(Seed);
+		Budget = FMath::Clamp(Budget, 0, 20000);
+		Points.Reserve(Budget);
+		for (int32 Index = 0; Index < Budget; ++Index)
+		{
+			const int32 X = Stream.RandHelper(NX);
+			const int32 Y = Stream.RandHelper(NY);
+			const double U = (X + 0.5 + (Stream.FRand() - 0.5) * Amount) / NX;
+			const double V = (Y + 0.5 + (Stream.FRand() - 0.5) * Amount) / NY;
+			Points.Emplace(Bounds.Min.X + Size.X * U, Bounds.Min.Y + Size.Y * V, 0.0);
+		}
+		return Points;
+	}
+
+	/** Pure clearance test shared by ground and indoor placement. Houses bypass their own footprint, never quiet zones */
+	inline ETotemReject TotemExclusion(const FVector& Point, const TArray<FSphere>& Quiet,
+		const TArray<FVillageClearArea>& Areas, float Margin, bool bHouse)
+	{
+		if (Point.ContainsNaN())
+		{
+			return ETotemReject::Invalid;
+		}
+		for (const FSphere& Zone : Quiet)
+		{
+			if (FVector::DistSquared2D(Point, Zone.Center) <= FMath::Square(Zone.W))
+			{
+				return ETotemReject::Quiet;
+			}
+		}
+		if (!bHouse)
+		{
+			for (const FVillageClearArea& Area : Areas)
+			{
+				if ((Area.Kind == EVillageClearKind::Building || Area.Kind == EVillageClearKind::Plaza)
+					&& VillageMath::IsInArea(Area, FVector2D(Point), FMath::Max(0.0f, Margin)))
+				{
+					return ETotemReject::Building;
+				}
+			}
+		}
+		return ETotemReject::None;
+	}
+
+	/** Validate the measured surface without a world. Accepted ground points form a capped Poisson disk sample in XY */
+	inline ETotemReject EvaluateTotemCandidate(const FVector& Point, bool bHasGround, float WaterZ, float Clearance,
+		float NormalZ, float MinNormalZ, const TArray<FVector>& Taken, float Spacing, int32 MaxCount,
+		const TArray<FSphere>& Quiet, const TArray<FVillageClearArea>& Areas, float Margin, bool bHouse = false)
+	{
+		if (Point.ContainsNaN() || !FMath::IsFinite(WaterZ) || !FMath::IsFinite(NormalZ)
+			|| !FMath::IsFinite(Spacing) || !FMath::IsFinite(Clearance))
+		{
+			return ETotemReject::Invalid;
+		}
+		const ETotemReject Excluded = TotemExclusion(Point, Quiet, Areas, Margin, bHouse);
+		if (Excluded != ETotemReject::None)
+		{
+			return Excluded;
+		}
+		if (!bHasGround) { return ETotemReject::NoGround; }
+		if (Point.Z < WaterZ + FMath::Max(0.0f, Clearance)) { return ETotemReject::Water; }
+		if (NormalZ < MinNormalZ) { return ETotemReject::Slope; }
+		if (!bHouse)
+		{
+			if (MaxCount <= Taken.Num()) { return ETotemReject::Cap; }
+			for (const FVector& Other : Taken)
+			{
+				if (FVector::DistSquared2D(Point, Other) < FMath::Square(static_cast<double>(Spacing)))
+				{
+					return ETotemReject::Spacing;
+				}
+			}
+		}
+		return ETotemReject::None;
+	}
+
+	/** House base Z is kept for a short interior floor trace. Offsets rotate with the house, away from the mesh pivot */
+	inline FVector HouseTotemPoint(const FTransform& House, const FBox& MeshBounds, const FVector& Offset, float Inset)
+	{
+		const FVector Center = MeshBounds.GetCenter();
+		const FVector Extent = MeshBounds.GetExtent();
+		const double X = FMath::Max(0.0, Extent.X - FMath::Max(0.0f, Inset));
+		const double Y = FMath::Max(0.0, Extent.Y - FMath::Max(0.0f, Inset));
+		return House.TransformPosition(FVector(Center.X + FMath::Clamp(Offset.X, -X, X),
+			Center.Y + FMath::Clamp(Offset.Y, -Y, Y), 0.0));
+	}
+
+	/** Pure seeded orientation; reversed bounds are normalized */
+	inline float HouseTotemYaw(float HouseYaw, const FVector2D& Range, float Random01)
+	{
+		return HouseYaw + FMath::Lerp(FMath::Min(Range.X, Range.Y), FMath::Max(Range.X, Range.Y),
+			static_cast<double>(FMath::Clamp(Random01, 0.0f, 1.0f)));
+	}
+
+	/** Move a spawned mesh so its lowest bound rests on the measured floor, even with a centred pivot */
+	inline FVector RestTotemOnFloor(const FVector& ActorLocation, double BoundsBottom, double FloorZ, float Clearance)
+	{
+		return ActorLocation + FVector(0.0, 0.0, FloorZ + FMath::Max(0.0f, Clearance) - BoundsBottom);
+	}
+
 	/** Activity of a point of interest from its tag value ("work", "pray"...), None when unknown */
 	inline ETikiActivity ActivityFromName(const FName& Name)
 	{
@@ -140,6 +273,26 @@ namespace TikiMath
 		}
 		const float Next = Time + Delta;
 		return bLoop ? FMath::Fmod(FMath::Fmod(Next, Length) + Length, Length) : FMath::Clamp(Next, 0.0f, Length);
+	}
+
+	/** A one-shot action received Late seconds after the server started it (T-306, review R-27): it plays Duration
+	 *  seconds in all (0: the clip once at Rate), so it starts OutStart seconds into its clip (wrapped when it loops) and
+	 *  plays OutLeft more seconds, ending when the server's does; false once it is over (nothing plays) */
+	inline bool LateActionStart(float Late, float Duration, float Rate, float ClipLength, bool bLoop, float& OutStart, float& OutLeft)
+	{
+		const float SafeRate = FMath::Max(Rate, 0.05f);
+		const float SafeClip = FMath::Max(ClipLength, KINDA_SMALL_NUMBER);
+		const float Total = Duration > 0.0f ? Duration : SafeClip / SafeRate;
+		const float Behind = FMath::Max(Late, 0.0f);
+		OutStart = 0.0f;
+		OutLeft = 0.0f;
+		if (Behind >= Total)
+		{
+			return false;
+		}
+		OutLeft = Total - Behind;
+		OutStart = bLoop ? FMath::Fmod(Behind * SafeRate, SafeClip) : FMath::Min(Behind * SafeRate, SafeClip);
+		return true;
 	}
 
 	/** Speed of a locomotion clip so the feet keep up with the body: the body speed over the speed the clip was
@@ -278,6 +431,12 @@ namespace TikiMath
 		return DepthAhead <= MaxDepth || DepthAhead < DepthHere - 1.0f;
 	}
 
+	/** A hostile count scaled by the time of day: rounded, never below one when the base is not zero */
+	inline int32 ScaleSpawnCount(int32 Base, float Scale)
+	{
+		return Base <= 0 ? 0 : FMath::Max(1, FMath::RoundToInt(Base * FMath::Max(0.0f, Scale)));
+	}
+
 	/** Where a dropped weapon pickup appears (its mesh in grip space, long axis +Z): at the grip of the bone in the world,
 	 *  +Z along the held weapon, from the grip toward MiddleInBone (the middle of the weapon at rest, in the bone frame) */
 	inline FTransform WeaponDropTransform(const FTransform& GripWorld, const FVector& MiddleInBone, const FVector& Scale)
@@ -287,5 +446,85 @@ namespace TikiMath
 		// the roll around the weapon follows the bone axis the least aligned with it
 		const FVector Side = FMath::Abs(FVector::DotProduct(Axis, Bone.GetForwardVector())) < 0.9f ? Bone.GetForwardVector() : Bone.GetRightVector();
 		return FTransform(FRotationMatrix::MakeFromZX(Axis, Side).ToQuat(), GripWorld.GetLocation(), Scale);
+	}
+
+	/** Speed of a dead body bounded by MaxSpeed (cm/s), direction kept; none when MaxSpeed is 0 (T-151) */
+	inline FVector BoundedVelocity(const FVector& Velocity, float MaxSpeed)
+	{
+		return MaxSpeed <= 0.0f ? FVector::ZeroVector : Velocity.GetClampedToMaxSize(MaxSpeed);
+	}
+
+	/** Vertical move that lays a corpse on the ground: its lowest point onto GroundZ, nothing within Tolerance
+	 *  (positive lifts a body sunk in the ground, negative lowers a body floating above it) */
+	inline float GroundSnapOffset(float LowestZ, float GroundZ, float Tolerance)
+	{
+		const float Gap = GroundZ - LowestZ;
+		return FMath::Abs(Gap) > FMath::Max(0.0f, Tolerance) ? Gap : 0.0f;
+	}
+
+	/** Vertical move that lays a frozen corpse down before it simulates (T-151): its lowest collision point Clearance
+	 *  above GroundZ. bLower false only lifts a part out of the ground (a flung piece falls on its own) */
+	inline float CorpseRestOffset(float LowestZ, float GroundZ, float Clearance, bool bLower)
+	{
+		const float Offset = GroundZ + FMath::Max(0.0f, Clearance) - LowestZ;
+		return bLower ? Offset : FMath::Max(0.0f, Offset);
+	}
+
+	/** Move of a frozen corpse toward the ground (T-151): never up (a mesh touching the ground stays), nothing within
+	 *  DeadZone, else down to the ground exactly (never under it) */
+	inline float FrozenSettleOffset(float LowestZ, float GroundZ, float DeadZone)
+	{
+		const float Gap = GroundZ - LowestZ;
+		return Gap < -FMath::Max(0.0f, DeadZone) ? Gap : 0.0f;
+	}
+
+	/** Part of a remaining descent (negative, cm) done in Delta at Speed (cm/s): slow, never past the end */
+	inline float SettleStep(float Remaining, float Speed, float Delta)
+	{
+		return Remaining >= 0.0f ? 0.0f : FMath::Max(Remaining, -FMath::Max(0.0f, Speed) * FMath::Max(0.0f, Delta));
+	}
+
+	/** Speed a corpse starts with: none when frozen (no jump), else bounded */
+	inline FVector CorpseSpawnVelocity(const FVector& Velocity, float MaxSpeed, bool bFrozen)
+	{
+		return bFrozen ? FVector::ZeroVector : BoundedVelocity(Velocity, MaxSpeed);
+	}
+
+	/** Speed a cut piece (a limb, a half) starts with (T-155): flat, along the blow, at most MaxSpeed (cm/s); it only
+	 *  drifts a little and falls by its weight at the foot of the body, never thrown up */
+	inline FVector CutPieceVelocity(const FVector& Velocity, float MaxSpeed)
+	{
+		return BoundedVelocity(FVector(Velocity.X, Velocity.Y, 0.0), MaxSpeed);
+	}
+
+	/** Speed of a corpse or a piece after a blow (an impulse giving it Change, cm/s) (T-155): the blow pushes it to
+	 *  MaxSpeed at most, and never speeds up a body already faster than that (a fall keeps its speed) */
+	inline FVector BoundedBlowVelocity(const FVector& Current, const FVector& Change, float MaxSpeed)
+	{
+		if (MaxSpeed <= 0.0f)
+		{
+			return Current;
+		}
+		const FVector After = Current + Change;
+		return Current.SizeSquared() >= FMath::Square(MaxSpeed) ? Current : After.GetClampedToMaxSize(MaxSpeed);
+	}
+
+	/** True when a fresh piece may go to sleep (T-155): slower than RestSpeed, MinAge after it appeared (time to fall) */
+	inline bool IsPieceAtRest(float Speed, float Age, float RestSpeed, float MinAge)
+	{
+		return Age >= MinAge && Speed <= RestSpeed;
+	}
+
+	/** Water above a corpse (cm): from its lowest point, never from below the ground it lies on (bHasGround), so a
+	 *  sea lower than the dry ground never covers it, whatever the bounds say (T-151) */
+	inline float CorpseWaterDepth(float SurfaceZ, float LowestZ, bool bHasGround, float GroundZ)
+	{
+		return SurfaceZ - (bHasGround ? FMath::Max(LowestZ, GroundZ) : LowestZ);
+	}
+
+	/** True when the water covers a corpse deeper than FloodDepth: it is washed away */
+	inline bool IsCorpseWashedAway(float WaterDepth, float FloodDepth)
+	{
+		return WaterDepth > FloodDepth;
 	}
 }

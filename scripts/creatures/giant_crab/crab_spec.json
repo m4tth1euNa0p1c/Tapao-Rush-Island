@@ -1,0 +1,1768 @@
+{
+ "_provenance": "Copie de OneDrive/maquette-blender/maquettes/crabe-geant/maquette.json (v0.2.0, 2e PC, 2026-10-07), rapatriée le 2026-10-09 (T-260). params = gabarit du squelette et des dimensions, inchangé en v2 ; les réglages visuels v2 sont dans crab_kit.PALETTE et crab_kit.V2.",
+ "$schema": "../../factory/schema/maquette.schema.json",
+ "format": "maquette/1",
+ "id": "crabe-geant",
+ "title": "Crabe géant « Tupa Nui », boss gardien du récif (SK_GiantCrab + animations + démo de combat contre Bean)",
+ "description": "Boss original pour l'univers polynésien pirate du jeu. Anatomie et proportions du sculpt neutre (ref/ref_forme_sculpt.png) : carapace de brachyoure en trapèze aplati avec épines antérolatérales, front ridé, yeux pédonculés sur le bord avant, 4 paires de pattes ambulatoires longues à 4 segments terminées en pointe, 2 pinces longues et asymétriques (broyeuse à droite, coupeuse à gauche). Registre de couleurs et de matières inspiré de ref/ref_style_couleurs.jpg : violet profond dégradé vers le magenta, or patiné en veines et plaques soudées dans les sillons, perles blanches et noires de Tahiti en grappes de nacre. Aucune reprise du personnage protégé de la référence ; le choix est documenté dans BRIEF.md. Échelle justifiée par Bean (1,05 m) : dos à 1,95 m, ventre à 1,25 m (Bean passe dessous), carapace de 2,70 m (3,14 m avec les épines), envergure des pattes de 5,9 m, pince droite à ouverture de 0,70 m qui saisit Bean à la taille. Livrables : SK_GiantCrab riggé (58 os déformants, skinning rigide par segment d'exosquelette), 4 LOD, matériaux 2K, hint de Physics Asset, sockets de saisie, de hitbox et de points faibles, 20 clips A_GiantCrab_* à 30 i/s (locomotion en place, root motion sur les clips ponctuels), manifeste et script d'import Unreal. Scènes : présentation à l'échelle (sable de l'atoll, règle graduée, Bean), bibliothèque d'animations, démo de combat jouable dans la timeline. Unités : mètres, Z vers le haut, avant du crabe vers -Y (convention SK_Bean et mobs tiki), gauche du crabe vers +X, origine au centre de l'emprise au sol. Hypothèses : voir params.assumptions et params.open_questions.",
+ "brief": "Crée maintenant un modèle de crabe géant comparé à Bean, fais en sorte qu'il se déplace et combatte un Bean comme un crabe géant ; pour le design reprends le style type sur ces images (ref/ref_style_couleurs.jpg : registre couleurs et matières seulement, personnage protégé non copié ; ref/ref_forme_sculpt.png : forme et anatomie).",
+ "version": "0.2.0",
+ "status": "built",
+ "tags": [
+  "creature",
+  "boss",
+  "crabe",
+  "skeletal",
+  "animation",
+  "combat",
+  "unreal",
+  "polynesie",
+  "tresor"
+ ],
+ "units": {
+  "system": "METRIC",
+  "length": "METERS",
+  "scale_length": 1.0
+ },
+ "params": {
+  "design_doc": "BRIEF.md",
+  "references": {
+   "forme": "ref/ref_forme_sculpt.png",
+   "style": "ref/ref_style_couleurs.jpg",
+   "ip_note": "ref_style_couleurs.jpg = personnage Disney protégé : seul le registre est repris (violet vers magenta, or et perles incrustés, pattes épaisses). Interdits : dos en monticule de trésors, visage expressif ou anthropomorphe, grands yeux globuleux, bioluminescence, carapace entièrement dorée."
+  },
+  "naming": {
+   "asset": "GiantCrab",
+   "display_name": "Tupa Nui, gardien du récif",
+   "skeletal_mesh": "SK_GiantCrab",
+   "skeleton_blender": "SKEL_GiantCrab",
+   "anim_prefix": "A_GiantCrab_",
+   "montage_prefix": "AM_GiantCrab_",
+   "unreal_root": "/Game/MonkeIsland/Characters/GiantCrab"
+  },
+  "axes": {
+   "forward": "-Y",
+   "left": "+X",
+   "up": "+Z",
+   "origin": "centre de l'emprise au sol (sous le centre de la carapace), z = 0",
+   "fbx": "anim_export.py : FBX_SCALE_NONE + apply_unit_scale, axis_forward -Y, axis_up Z, primary_bone_axis Y, secondary X, add_leaf_bones false, os déformants seulement"
+  },
+  "scale_vs_bean": {
+   "bean_height_m": 1.05,
+   "bean_body_diameter_m": 0.45,
+   "bean_walk_cm_s": 49,
+   "bean_run_cm_s": 112,
+   "crab_back_height_m": 1.95,
+   "crab_back_over_bean": 1.86,
+   "belly_clearance_idle_m": 1.25,
+   "belly_clearance_note": "1,25 m = Bean + 0,20 m (chapeau compris, avec marge) : Bean peut courir sous le corps en idle et en marche. En Block, en Slam et en Grab, le corps descend à 0,80 m et le passage se ferme.",
+   "carapace_width_m": 2.7,
+   "carapace_width_with_spines_m": 3.14,
+   "carapace_length_m": 2.2,
+   "leg_span_m": 5.9,
+   "leg_span_over_bean": 5.6,
+   "claw_r_gape_m": 0.7,
+   "claw_r_gape_note": "ouverture de 0,70 m pour un torse de Bean de 0,45 m : la pince droite le saisit à la taille (os spine_01). La gauche (0,50 m) peut aussi saisir, mais l'IA utilise la droite.",
+   "claw_r_palm_length_m": 0.85,
+   "claw_r_palm_note": "paume de 0,85 m, à peu près la hauteur du corps de Bean (0,89 m sans le chapeau)",
+   "claw_reach_from_center_m": 3.2,
+   "mass_kg": 850,
+   "real_world_note": "Le crabe-araignée géant du Japon atteint environ 3,7 m d'envergure ; ce boss fait 1,6 fois plus (fantastique mais lisible)."
+  },
+  "body": {
+   "bone_pivot": [
+    0.0,
+    0.05,
+    1.6
+   ],
+   "carapace": {
+    "shape": "trapèze aplati vu de dessus, plus large à l'avant (y = -0,55), bord avant presque droit entre les orbites, arrière arrondi qui se rétrécit ; profil en dôme bas",
+    "width_m": 2.7,
+    "length_m": 2.2,
+    "front_edge_y": -1.15,
+    "rear_edge_y": 1.05,
+    "ventral_z": 1.25,
+    "dorsal_top_z": 1.95,
+    "rim_z": [
+     1.53,
+     1.71
+    ],
+    "rim_thickness_m": 0.18,
+    "anterolateral_spines": {
+     "tip_L": [
+      1.57,
+      -0.6,
+      1.7
+     ],
+     "tip_R": [
+      -1.57,
+      -0.6,
+      1.7
+     ],
+     "length_m": 0.22,
+     "base_diameter_m": 0.12
+    },
+    "secondary_teeth": "3 dents arrondies le long de chaque bord antérolatéral (0,06 à 0,09 m)",
+    "grooves": "sillon cervical en H et régions branchiales gravés (profondeur 2 à 3 cm) : ils guident l'or et les perles"
+   },
+   "face": {
+    "frons": "front ridé sous le bord avant (comme sur le sculpt), de z 1,25 à 1,60 m, largeur 0,90 m : bourrelets horizontaux asymétriques, ni bouche ni regard humain",
+    "mouth_plates": {
+     "size_m": [
+      0.5,
+      0.08,
+      0.3
+     ],
+     "center": [
+      0.0,
+      -1.03,
+      1.47
+     ],
+     "bones": [
+      "mouth"
+     ],
+     "note": "plaques encastrées dans le cadre buccal (bas à 1,32 m, au-dessus du ventre) : ne pas lire comme des dents"
+    },
+    "mandibles": {
+     "L": [
+      0.12,
+      -1.0,
+      1.42
+     ],
+     "R": [
+      -0.12,
+      -1.0,
+      1.42
+     ],
+     "length_m": 0.18,
+     "bones": [
+      "mandible_l",
+      "mandible_r"
+     ]
+    }
+   },
+   "eyes": {
+    "orbit_L": [
+     0.42,
+     -1.12,
+     1.72
+    ],
+    "orbit_R": [
+     -0.42,
+     -1.12,
+     1.72
+    ],
+    "stalk_length_m": 0.3,
+    "stalk_diameter_m": 0.07,
+    "eye_diameter_m": 0.14,
+    "look": "œil composé sombre et brillant, anneau ambré fin, petit (non expressif)",
+    "retract": "en Block, Hit et Flip, les pédoncules se rabattent vers l'extérieur dans une rainure de l'orbite (rotation d'environ 80°)",
+    "bones": [
+     "eye_stalk_l",
+     "eye_l",
+     "eye_stalk_r",
+     "eye_r"
+    ]
+   },
+   "antennae": {
+    "base_L": [
+     0.18,
+     -1.16,
+     1.66
+    ],
+    "base_R": [
+     -0.18,
+     -1.16,
+     1.66
+    ],
+    "length_m": 1.2,
+    "base_diameter_m": 0.03,
+    "bones_per_side": 3,
+    "antennules": "2 courtes (0,25 m), os antennule_l / antennule_r",
+    "bones": [
+     "antenna_l_01",
+     "antenna_l_02",
+     "antenna_l_03",
+     "antenna_r_01",
+     "antenna_r_02",
+     "antenna_r_03",
+     "antennule_l",
+     "antennule_r"
+    ]
+   },
+   "abdomen": {
+    "shape": "plaque triangulaire repliée sous le ventre (abdomen de brachyoure), membrane rose sur le pourtour",
+    "size_m": [
+     0.9,
+     1.1,
+     0.08
+    ],
+    "center": [
+     0.0,
+     0.25,
+     1.24
+    ],
+    "bone": "abdomen"
+   }
+  },
+  "claws": {
+   "shoulder_L": [
+    0.8,
+    -0.98,
+    1.42
+   ],
+   "shoulder_R": [
+    -0.8,
+    -0.98,
+    1.42
+   ],
+   "bones_per_side": [
+    "claw_<s>_arm",
+    "claw_<s>_forearm",
+    "claw_<s>_hand",
+    "claw_<s>_finger"
+   ],
+   "anatomy": "arm = mérus, forearm = carpe, hand = propode avec doigt fixe, finger = dactyle mobile",
+   "rest_pose": "garde semi-repliée devant le front, pinces légèrement ouvertes (15°), extrémités à y ≈ -2,4 m et z ≈ 1,1 m",
+   "R_crusher": {
+    "role": "broyeuse : Slam, Grab, Throw",
+    "arm": {
+     "length_m": 0.85,
+     "diameter_m": 0.38
+    },
+    "forearm": {
+     "length_m": 0.5,
+     "diameter_m": 0.42
+    },
+    "palm": {
+     "length_m": 0.85,
+     "height_m": 0.62,
+     "thickness_m": 0.4
+    },
+    "fixed_finger_m": 0.55,
+    "movable_finger_m": 0.62,
+    "finger_teeth": "molaires arrondies (broyage)",
+    "gape_max_m": 0.7,
+    "open_max_deg": 55,
+    "grab_closed_deg": 18,
+    "grab_closed_note": "arrêt à 18° sur Bean (pas de fermeture complète : Bean reste visible)"
+   },
+   "L_cutter": {
+    "role": "coupeuse : Swipe, garde",
+    "arm": {
+     "length_m": 0.85,
+     "diameter_m": 0.32
+    },
+    "forearm": {
+     "length_m": 0.5,
+     "diameter_m": 0.34
+    },
+    "palm": {
+     "length_m": 0.72,
+     "height_m": 0.46,
+     "thickness_m": 0.3
+    },
+    "fixed_finger_m": 0.58,
+    "movable_finger_m": 0.6,
+    "finger_teeth": "dents fines dentelées (coupe)",
+    "gape_max_m": 0.5,
+    "open_max_deg": 50
+   },
+   "finger_tips_color": "pince_pointe (quasi noir) sur les 0,18 derniers mètres des doigts"
+  },
+  "legs": {
+   "pairs": 4,
+   "gait_groups": {
+    "A": [
+     "leg_l1",
+     "leg_r2",
+     "leg_l3",
+     "leg_r4"
+    ],
+    "B": [
+     "leg_r1",
+     "leg_l2",
+     "leg_r3",
+     "leg_l4"
+    ],
+    "note": "tétrapode alterné (marche des crabes) : A en appui pendant que B se déplace, et inversement"
+   },
+   "segments": [
+    "coxa",
+    "merus",
+    "propodus",
+    "dactyl"
+   ],
+   "segments_note": "4 os par patte (le carpe est fusionné au propode, stylisation). Os nommés leg_<l|r><1..4>_<segment>, 1 = avant, 4 = arrière. Un os ik_leg_<s><n> non déformant par patte, enfant de root.",
+   "base_lengths_m": {
+    "coxa": 0.2,
+    "merus": 1.1,
+    "propodus": 0.95,
+    "dactyl": 0.92
+   },
+   "pair_scale": {
+    "1": 0.92,
+    "2": 1.0,
+    "3": 1.0,
+    "4": 0.85
+   },
+   "sections_m": {
+    "coxa": [
+     0.36,
+     0.34
+    ],
+    "merus": [
+     0.46,
+     0.34
+    ],
+    "propodus": [
+     0.34,
+     0.27
+    ],
+    "dactyl": [
+     0.22,
+     0.02
+    ]
+   },
+   "sections_note": "sections ovales (largeur, épaisseur) au milieu du segment, segments épais et charnus comme le sculpt (mérus environ 2 fois plus épais que la v0) ; le dactyle ne s'effile qu'en pointe (dernier tiers), légèrement courbé",
+   "coxa_L": {
+    "1": [
+     1.12,
+     -0.62,
+     1.4
+    ],
+    "2": [
+     1.2,
+     -0.2,
+     1.38
+    ],
+    "3": [
+     1.15,
+     0.22,
+     1.38
+    ],
+    "4": [
+     0.98,
+     0.62,
+     1.4
+    ]
+   },
+   "coxa_R": "miroir en X de coxa_L",
+   "splay_deg": {
+    "1": -35,
+    "2": -10,
+    "3": 15,
+    "4": 40
+   },
+   "splay_note": "orientation en lacet depuis l'axe latéral (+X à gauche, -X à droite) ; négatif = vers l'avant (-Y)",
+   "rest_feet_L": {
+    "1": [
+     2.36,
+     -1.93,
+     0.0
+    ],
+    "2": [
+     2.96,
+     -0.78,
+     0.0
+    ],
+    "3": [
+     2.92,
+     0.98,
+     0.0
+    ],
+    "4": [
+     1.99,
+     1.89,
+     0.0
+    ]
+   },
+   "rest_profile": "mérus montant de 20° vers l'extérieur (genou à environ 1,78 m), propode descendant à -68°, dactyle presque vertical à -78°, pointe au sol",
+   "joint_membranes": "manchons courts en matériau membrane (rose) à chaque articulation, pondérés 50/50 entre les deux os",
+   "rest_feet_note": "pieds de repos à 80-85 % de la portée pour les paires 1 et 4 (marge d'IK de 0,3 m pour la foulée de 0,48 m) ; l'envergure (5,92 m) est donnée par la paire 2"
+  },
+  "ornaments": {
+   "kit": "factory/kits/artifacts/treasure.py (sphere, dome, strap, surface_path, material) : à réutiliser sans le modifier",
+   "shared_materials": [
+    "MAT_Gold_Aged",
+    "MAT_Pearl_White",
+    "MAT_Pearl_Black"
+   ],
+   "gold": {
+    "dorsal_coverage": 0.35,
+    "form": "veines et plaques soudées dans les sillons (cervical, branchiaux) et autour des épines, relief de 0,5 à 2 cm, bords noyés dans la chitine ; pas de pièces, pas d'objets empilés",
+    "claw_flecks": "taches d'or en feuille sur le dessus des paumes et des avant-bras (masque de texture et léger relief), environ 20 % de la surface",
+    "scale_note": "treasure.TILE = 3 cm est réglé pour des bijoux : passer un paramètre d'échelle UV d'environ 0,25 (1 UV = 12 cm) pour un objet de 3 m"
+   },
+   "pearls": {
+    "count_lod0": 180,
+    "black_ratio": 0.2,
+    "diameter_m": [
+     0.03,
+     0.09
+    ],
+    "baroque": 0.25,
+    "placement": "grappes de 3 à 9 perles en blisters de nacre (à moitié enchâssées, 30 à 50 % de la sphère), le long des sillons dorsaux, à la base des épines et sur le bord frontal ; aucune sur le ventre ni sur les pattes",
+    "seed": 20261007
+   },
+   "reef_growth": "balanes (cônes de 3 à 6 cm, matériau balane) et petits coraux (matériau corail) sur les mérus des pattes 3 et 4 et sur le bord postérieur ; 40 pièces au maximum en LOD0"
+  },
+  "materials_pipeline": {
+   "blender": "Principled procédural (MAT-chitine_dos, etc., déclarés dans materials) : bruit et Voronoi pour les écailles et les rayures, dégradé violet vers magenta piloté par un attribut de sommet ou un masque de courbure",
+   "unreal": "cuisson légère en 2K par émission (1 échantillon, sans cuisson high vers low) : T_GiantCrab_Body_BC / _N / _ORM (2048) ; or et perles en slots séparés partagés (recettes UE de treasure.UE_RECIPES)",
+   "texture_max_px": 2048,
+   "material_slots": [
+    "MI_GiantCrab_Chitin",
+    "MI_GiantCrab_Membrane",
+    "MI_GiantCrab_Eye",
+    "MAT_Gold_Aged",
+    "MAT_Pearl_White",
+    "MAT_Pearl_Black"
+   ]
+  },
+  "rig": {
+   "skeleton": "SKEL_GiantCrab (exporté sous le nom Armature)",
+   "deform_bones": 58,
+   "hierarchy": {
+    "root": [
+     "body",
+     "ik_*"
+    ],
+    "body": [
+     "eye_stalk_l",
+     "eye_stalk_r",
+     "antenna_l_01",
+     "antenna_r_01",
+     "antennule_l",
+     "antennule_r",
+     "mouth",
+     "mandible_l",
+     "mandible_r",
+     "abdomen",
+     "claw_l_arm",
+     "claw_r_arm",
+     "leg_l1_coxa",
+     "leg_l2_coxa",
+     "leg_l3_coxa",
+     "leg_l4_coxa",
+     "leg_r1_coxa",
+     "leg_r2_coxa",
+     "leg_r3_coxa",
+     "leg_r4_coxa"
+    ],
+    "eye_stalk_<s>": [
+     "eye_<s>"
+    ],
+    "antenna_<s>_01": [
+     "antenna_<s>_02"
+    ],
+    "antenna_<s>_02": [
+     "antenna_<s>_03"
+    ],
+    "claw_<s>_arm": [
+     "claw_<s>_forearm"
+    ],
+    "claw_<s>_forearm": [
+     "claw_<s>_hand"
+    ],
+    "claw_<s>_hand": [
+     "claw_<s>_finger"
+    ],
+    "leg_<s><n>_coxa": [
+     "leg_<s><n>_merus"
+    ],
+    "leg_<s><n>_merus": [
+     "leg_<s><n>_propodus"
+    ],
+    "leg_<s><n>_propodus": [
+     "leg_<s><n>_dactyl"
+    ]
+   },
+   "count_check": "root 1 + body 1 + yeux 4 + antennes 8 + bouche 3 + abdomen 1 + pinces 8 + pattes 32 = 58",
+   "non_deform": [
+    "ik_leg_l1..l4",
+    "ik_leg_r1..r4",
+    "ik_claw_l",
+    "ik_claw_r",
+    "pole_*"
+   ],
+   "skinning": "exosquelette rigide : chaque segment est pondéré à 100 % sur son os ; seules les membranes articulaires mélangent les deux os voisins. Pas de déformation molle de la carapace.",
+   "ik": "IK à 3 os (merus, propodus, dactyl) par patte avec cible au sol et pôle vers l'extérieur et le haut ; IK à 3 os par pince (arm, forearm, hand). Cuisson en FK avant l'export (anim_export.bake_pose).",
+   "morph_targets": {
+    "DeadEyes": "convention des mobs : 0 = œil normal, 1 = œil terne et voilé (gris laiteux), piloté par la courbe DeadEyes des clips Death*"
+   }
+  },
+  "sockets": [
+   {
+    "name": "SOCKET_ClawGrab_R",
+    "bone": "claw_r_hand",
+    "note": "entre les doigts, à 60 % de la longueur du doigt fixe ; axe Z = haut de Bean quand la pince est horizontale. Bean (spine_01) s'y attache en AttachToComponent(SnapToTarget)."
+   },
+   {
+    "name": "SOCKET_ClawGrab_L",
+    "bone": "claw_l_hand",
+    "note": "idem côté coupeuse (secours)"
+   },
+   {
+    "name": "SOCKET_ClawHit_R",
+    "bone": "claw_r_hand",
+    "note": "centre de la hitbox de la pince droite : capsule de rayon 0,34 m et de demi-hauteur 0,75 m le long de la paume et des doigts"
+   },
+   {
+    "name": "SOCKET_ClawHit_L",
+    "bone": "claw_l_hand",
+    "note": "capsule de rayon 0,26 m et de demi-hauteur 0,65 m"
+   },
+   {
+    "name": "SOCKET_ClawTip_R",
+    "bone": "claw_r_finger",
+    "note": "pointe : FX d'impact du Slam, poussière"
+   },
+   {
+    "name": "SOCKET_ClawTip_L",
+    "bone": "claw_l_finger",
+    "note": "pointe : traînée du Swipe"
+   },
+   {
+    "name": "SOCKET_Mouth",
+    "bone": "mouth",
+    "note": "bulles, écume, cri"
+   },
+   {
+    "name": "SOCKET_Throw_Release",
+    "bone": "claw_r_hand",
+    "note": "point de lâcher de Bean (= SOCKET_ClawGrab_R) ; vitesse appliquée sur AN_Throw_Release"
+   },
+   {
+    "name": "WeakPoint_Eye_L",
+    "bone": "eye_l",
+    "note": "sphère de rayon 0,09 m ; dégâts x3, déclenche Hit_React"
+   },
+   {
+    "name": "WeakPoint_Eye_R",
+    "bone": "eye_r",
+    "note": "idem"
+   },
+   {
+    "name": "WeakPoint_ClawJoint_L",
+    "bone": "claw_l_forearm",
+    "note": "membrane du coude ; dégâts x2"
+   },
+   {
+    "name": "WeakPoint_ClawJoint_R",
+    "bone": "claw_r_forearm",
+    "note": "membrane du coude ; dégâts x2, surtout exposée quand la pince reste plantée après un Slam"
+   },
+   {
+    "name": "WeakPoint_Belly",
+    "bone": "abdomen",
+    "note": "plaque abdominale ; dégâts x4, touchable par-dessous (mousquet) ou quand le crabe est retourné (Flipped)"
+   },
+   {
+    "name": "WeakPoint_Mouth",
+    "bone": "mouth",
+    "note": "dégâts x1,5 ; estoc au sabre depuis le front"
+   }
+  ],
+  "lod": {
+   "LOD0": {
+    "tris_max": 45000,
+    "content": "complet : 180 perles, plaques d'or en relief, balanes"
+   },
+   "LOD1": {
+    "tris_max": 22000,
+    "screen_size": 0.5,
+    "content": "perles réduites à 90 (les plus grosses), sections à 50 % des segments"
+   },
+   "LOD2": {
+    "tris_max": 10000,
+    "screen_size": 0.25,
+    "content": "pas de perles ni de balanes (couleur cuite dans la BC), or en texture seulement, antennules supprimées"
+   },
+   "LOD3": {
+    "tris_max": 4000,
+    "screen_size": 0.1,
+    "content": "silhouette : carapace, segments en 6 côtés, pinces simplifiées"
+   },
+   "method": "régénération par qualité (q = 1 / 0,5 / 0,25 comme treasure.LOD_Q) plutôt que décimation, pour garder le skinning rigide propre ; mêmes os"
+  },
+  "physics": {
+   "character_capsule": {
+    "radius_m": 0.95,
+    "half_height_m": 1.0,
+    "collision": "WorldStatic et WorldDynamic bloqués, Pawn ignoré (Bean doit pouvoir passer sous le corps)"
+   },
+   "physics_asset_hint": "ue/PHAT_GiantCrab_hint.json : un corps par os principal",
+   "bodies": {
+    "body": {
+     "shape": "box",
+     "size_m": [
+      2.4,
+      1.9,
+      0.62
+     ],
+     "center_z": 1.6,
+     "pawn": "block"
+    },
+    "leg_*_merus": {
+     "shape": "sphyl",
+     "radius_m": 0.14,
+     "pawn": "ignore",
+     "weapon_trace": "block"
+    },
+    "leg_*_propodus": {
+     "shape": "sphyl",
+     "radius_m": 0.11,
+     "pawn": "ignore",
+     "weapon_trace": "block"
+    },
+    "leg_*_dactyl": {
+     "shape": "sphyl",
+     "radius_m": 0.08,
+     "pawn": "ignore",
+     "weapon_trace": "block"
+    },
+    "claw_*_arm": {
+     "shape": "sphyl",
+     "radius_m": 0.19
+    },
+    "claw_*_forearm": {
+     "shape": "sphyl",
+     "radius_m": 0.21,
+     "phys_material": "PM_GiantCrab_WeakPoint"
+    },
+    "claw_r_hand": {
+     "shape": "box",
+     "size_m": [
+      0.4,
+      1.3,
+      0.62
+     ]
+    },
+    "claw_l_hand": {
+     "shape": "box",
+     "size_m": [
+      0.3,
+      1.2,
+      0.46
+     ]
+    },
+    "claw_*_finger": {
+     "shape": "sphyl",
+     "radius_m": 0.09
+    },
+    "eye_*": {
+     "shape": "sphere",
+     "radius_m": 0.09,
+     "phys_material": "PM_GiantCrab_WeakPoint"
+    },
+    "abdomen": {
+     "shape": "box",
+     "size_m": [
+      0.9,
+      1.1,
+      0.12
+     ],
+     "phys_material": "PM_GiantCrab_WeakPoint"
+    }
+   },
+   "phys_materials": {
+    "PM_GiantCrab_Shell": "carapace : dégâts x0,1, ricochet des balles de mousquet, étincelles",
+    "PM_GiantCrab_WeakPoint": "membranes, yeux, ventre : dégâts x2 à x4 selon le socket WeakPoint_*"
+   },
+   "ragdoll": "contraintes de cône limitées (pattes ±35°, pinces ±45°) pour une option de ragdoll après Death ; non requis pour la démo"
+  },
+  "animation": {
+   "fps": 30,
+   "convention": "comme mob_anims : 30 i/s, image 0 = pose de base, cycles bouclés (dernière image = première). Locomotion EN PLACE (le CharacterMovement déplace l'acteur ; vitesse sans glissement dans le manifeste). Clips ponctuels avec ROOT MOTION sur l'os root (EnableRootMotion, RootMotionRootLock = RefPose), déplacement documenté par clip.",
+   "gait": {
+    "pattern": "tétrapode alterné (groupes A et B), facteur de service de 0,6 (appui 60 %, vol 40 %)",
+    "sideways": "les pattes du côté de la marche tirent (le dactyle se pose loin puis le genou se replie), celles du côté opposé poussent (extension) ; corps : bob vertical de 2 cm deux fois par cycle et roulis de ±2°",
+    "foot_lock": "pointes verrouillées au sol pendant l'appui (contrôle de glissement inférieur à 1 cm par image)",
+    "ground_check": "aucune pointe sous z = -0,005 ; marge de 4 mm comme combat-followups"
+   },
+   "clips": [
+    {
+     "name": "Idle",
+     "frames": 90,
+     "seconds": 3.0,
+     "loop": true,
+     "root_motion": "aucun",
+     "content": "respiration de la carapace (±1 cm), plaques buccales qui battent, antennes qui ondulent, yeux qui pivotent, pinces qui s'entrouvrent, transfert de poids entre les pattes"
+    },
+    {
+     "name": "Walk_Sideways_L",
+     "frames": 24,
+     "seconds": 0.8,
+     "loop": true,
+     "root_motion": "en place ; 0,80 m par cycle vers +X = 100 cm/s",
+     "notifies": {
+      "AN_Footstep_Heavy": "pose de chaque groupe (images 0 et 12)"
+     }
+    },
+    {
+     "name": "Walk_Sideways_R",
+     "frames": 24,
+     "seconds": 0.8,
+     "loop": true,
+     "root_motion": "en place ; miroir de L, 100 cm/s vers -X"
+    },
+    {
+     "name": "Walk_Forward",
+     "frames": 36,
+     "seconds": 1.2,
+     "loop": true,
+     "root_motion": "en place ; 0,60 m par cycle = 50 cm/s (marche avant lente et maladroite, voulue)",
+     "notifies": {
+      "AN_Footstep_Heavy": "images 0 et 18"
+     }
+    },
+    {
+     "name": "Turn_L",
+     "frames": 36,
+     "seconds": 1.2,
+     "loop": false,
+     "root_motion": "lacet de +90° sur root, sans translation",
+     "content": "pas en 2 groupes, pivot sur le centre"
+    },
+    {
+     "name": "Turn_R",
+     "frames": 36,
+     "seconds": 1.2,
+     "loop": false,
+     "root_motion": "lacet de -90°"
+    },
+    {
+     "name": "Attack_ClawSwipe",
+     "frames": 48,
+     "seconds": 1.6,
+     "loop": false,
+     "root_motion": "0,25 m vers l'avant",
+     "content": "pince gauche (coupeuse) armée en arrière et vers l'extérieur, puis balayage horizontal sur 150° devant le crabe à z 0,4 à 0,9 m (hauteur du torse de Bean)",
+     "notifies": {
+      "AN_Attack_Windup": 6,
+      "AN_HitWindow_Begin": 16,
+      "AN_HitWindow_End": 25,
+      "AN_Claw_Whoosh": 17
+     },
+     "gameplay": {
+      "damage": 25,
+      "reach_m": 3.2,
+      "knockback_m": 3.0,
+      "blockable_by_bean": true
+     }
+    },
+    {
+     "name": "Attack_ClawSlam",
+     "frames": 60,
+     "seconds": 2.0,
+     "loop": false,
+     "root_motion": "0,4 m vers l'avant",
+     "content": "pince droite levée (pointe à 3,4 m), maintien télégraphié (images 18 à 26), frappe verticale au sol, pince plantée dans le sable (images 31 à 44 : coude exposé), extraction",
+     "notifies": {
+      "AN_Attack_Windup": 10,
+      "AN_HitWindow_Begin": 28,
+      "AN_GroundPound_Impact": 31,
+      "AN_HitWindow_End": 32,
+      "AN_ClawStuck_Begin": 31,
+      "AN_ClawStuck_End": 44
+     },
+     "gameplay": {
+      "damage": 40,
+      "shockwave_radius_m": 2.0,
+      "shockwave_damage": 15,
+      "knockdown": true,
+      "camera_shake": true
+     }
+    },
+    {
+     "name": "Attack_Grab",
+     "frames": 54,
+     "seconds": 1.8,
+     "loop": false,
+     "root_motion": "fente de 0,6 m vers l'avant",
+     "content": "corps qui baisse à 0,80 m, pince droite grande ouverte (55°), fente, fermeture rapide à l'image 20 ; section Miss à partir de l'image 24 si rien n'est saisi",
+     "notifies": {
+      "AN_Attack_Windup": 6,
+      "AN_Grab_Check": 20,
+      "AN_Grab_Attach": 21
+     },
+     "montage_sections": {
+      "Grab": [
+       0,
+       24
+      ],
+      "Miss": [
+       24,
+       54
+      ]
+     },
+     "gameplay": {
+      "grab_sphere_radius_m": 0.45,
+      "grab_damage": 10
+     }
+    },
+    {
+     "name": "Grab_Hold",
+     "frames": 30,
+     "seconds": 1.0,
+     "loop": true,
+     "root_motion": "aucun",
+     "content": "Bean soulevé à environ 1,6 m devant la bouche, serrements rythmés",
+     "notifies": {
+      "AN_Squeeze_Tick": 15
+     },
+     "gameplay": {
+      "squeeze_dps": 8,
+      "escape": "3 coups au sabre sur WeakPoint_ClawJoint_R ou 8 appuis rapides en 3 s",
+      "max_hold_s": 3.0
+     }
+    },
+    {
+     "name": "Throw",
+     "frames": 48,
+     "seconds": 1.6,
+     "loop": false,
+     "root_motion": "rotation de lacet de -30° puis retour",
+     "content": "Bean levé à 2,6 m, rotation du bras, lâcher, pince qui claque",
+     "notifies": {
+      "AN_Throw_Release": 26,
+      "AN_Claw_Snap": 30
+     },
+     "gameplay": {
+      "release_speed_m_s": 6.0,
+      "release_pitch_deg": 35,
+      "throw_distance_m": 4.5,
+      "damage": 20
+     }
+    },
+    {
+     "name": "Block_Start",
+     "frames": 12,
+     "seconds": 0.4,
+     "loop": false,
+     "root_motion": "aucun",
+     "content": "corps qui descend à 0,80 m, pinces croisées devant le front, yeux rabattus",
+     "notifies": {
+      "AN_BlockWindow_Begin": 6
+     }
+    },
+    {
+     "name": "Block_Loop",
+     "frames": 30,
+     "seconds": 1.0,
+     "loop": true,
+     "root_motion": "aucun",
+     "notifies": {
+      "AN_BlockImpact": "déclenché par le jeu"
+     },
+     "gameplay": {
+      "frontal_damage_reduction": 0.9
+     }
+    },
+    {
+     "name": "Block_End",
+     "frames": 12,
+     "seconds": 0.4,
+     "loop": false,
+     "root_motion": "aucun",
+     "notifies": {
+      "AN_BlockWindow_End": 4
+     }
+    },
+    {
+     "name": "Hit_React",
+     "frames": 24,
+     "seconds": 0.8,
+     "loop": false,
+     "root_motion": "recul de 0,2 m",
+     "content": "corps qui part en arrière, yeux rabattus, pinces qui s'écartent, pattes qui se réajustent",
+     "notifies": {
+      "AN_HitFlash": 1
+     }
+    },
+    {
+     "name": "Stagger_Flip",
+     "frames": 66,
+     "seconds": 2.2,
+     "loop": false,
+     "root_motion": "1,0 m latéral ; la bascule de 180° en roulis est portée par l'os body (root reste à plat)",
+     "content": "cabré, perte d'appui d'un côté, chute sur le dos, rebond",
+     "notifies": {
+      "AN_Stagger_Stumble": 8,
+      "AN_BodyFall": 40,
+      "AN_CameraShake": 40
+     }
+    },
+    {
+     "name": "Flipped_Loop",
+     "frames": 60,
+     "seconds": 2.0,
+     "loop": true,
+     "root_motion": "aucun ; dos au sol, ventre à environ 0,80 m (hauteur des coups de sabre de Bean)",
+     "content": "pattes qui s'agitent en l'air, pinces qui griffent le sable, abdomen exposé",
+     "gameplay": {
+      "weakness_duration_s": 5.0,
+      "belly_damage_multiplier": 4
+     }
+    },
+    {
+     "name": "Recover",
+     "frames": 60,
+     "seconds": 2.0,
+     "loop": false,
+     "root_motion": "0,4 m latéral (retour)",
+     "content": "les pinces poussent sur le sol et le crabe se remet sur ses pattes",
+     "notifies": {
+      "AN_Land": 44,
+      "AN_StaggerEnd": 56
+     }
+    },
+    {
+     "name": "Death",
+     "frames": 90,
+     "seconds": 3.0,
+     "loop": false,
+     "root_motion": "0,3 m vers l'arrière",
+     "content": "pattes qui flanchent vers l'extérieur, corps qui tombe au sol, pinces qui s'étalent, dernier tressaillement, yeux qui tombent ; courbe DeadEyes de 0 à 1 (images 30 à 50)",
+     "notifies": {
+      "AN_DeathStart": 0,
+      "AN_BodyFall": 34,
+      "AN_DeadEyes": 40,
+      "AN_DeathEnd": 80
+     }
+    },
+    {
+     "name": "Death_Flipped",
+     "frames": 60,
+     "seconds": 2.0,
+     "loop": false,
+     "root_motion": "aucun",
+     "content": "depuis Flipped_Loop : pattes qui se replient sur le ventre",
+     "notifies": {
+      "AN_DeathStart": 0,
+      "AN_DeadEyes": 20,
+      "AN_DeathEnd": 55
+     }
+    }
+   ],
+   "optional_clips": [
+    {
+     "name": "Taunt_ClawClack",
+     "frames": 60,
+     "seconds": 2.0,
+     "note": "intro du boss : se dresse et fait claquer les deux pinces (utilisé dans la démo)"
+    },
+    {
+     "name": "Walk_Backward",
+     "frames": 36,
+     "seconds": 1.2,
+     "note": "non demandé : peut être remplacé par Walk_Forward lu à l'envers"
+    }
+   ],
+   "blendspaces": {
+    "BS_GiantCrab_Locomotion": "2D (Direction -180..180, Speed 0..100 cm/s) : Idle au centre ; Walk_Sideways_L à +90°, Walk_Sideways_R à -90°, Walk_Forward à 0° ; Walk_Forward à l'envers à 180° (si Walk_Backward absent)"
+   },
+   "ai_hint": "Le crabe se déplace latéralement face au joueur (strafe) : orienter le corps perpendiculairement à la direction de déplacement et rester face à Bean pendant le combat.",
+   "export": {
+    "per_clip_fbx": "exports/GiantCrab/A_GiantCrab_<Clip>.fbx (anim_export.export_range, une action par fichier)",
+    "mesh_fbx": [
+     "exports/GiantCrab/SK_GiantCrab.fbx",
+     "exports/GiantCrab/SK_GiantCrab_LOD1.fbx",
+     "exports/GiantCrab/SK_GiantCrab_LOD2.fbx",
+     "exports/GiantCrab/SK_GiantCrab_LOD3.fbx"
+    ],
+    "textures": "exports/GiantCrab/Textures/T_GiantCrab_Body_{BC,N,ORM}.png (2048)",
+    "raw_data": "crab-anims.json (images clés, notifies en images, instant de pic de chaque clip, root motion par image)",
+    "unreal": [
+     "ue/GiantCrabManifest.json",
+     "ue/import_giant_crab.py",
+     "ue/GIANT_CRAB_UE.md",
+     "ue/PHAT_GiantCrab_hint.json"
+    ],
+    "bean_paired": "exports/Bean/A_Bean_Grabbed_Loop.fbx, A_Bean_Thrown.fbx, A_Bean_Thrown_Land.fbx sur SK_Bean_Body (nouveaux clips de Bean nécessaires au Grab et au Throw ; 30 i/s, comme les packs de combat)"
+   }
+  },
+  "combat_demo": {
+   "scene": "SCN-Combat-Demo",
+   "fps": 30,
+   "frames": [
+    1,
+    1050
+   ],
+   "playable": "lecture directe dans la timeline de Blender (actions de Bean et du crabe dans des pistes NLA, marqueurs nommés par temps fort, caméra animée CAM-Combat et caméra fixe CAM-Combat_Large)",
+   "bean_sources": "bean_fit.append_bean() + actions de maquettes/bean-anim-library/bean-anim-library.blend (A_Bean_Sabre_*, Musket_*, Jump_*, Hit_React, Walk, Run) ; sabre de bean-cutlass et mousquet de bean-musket comme dans combat-dismemberment/scripts/bean_sources.py ; clips de Bean à 24 i/s ré-échantillonnés à 30 i/s",
+   "start": {
+    "crab": [
+     6.2,
+     0.0,
+     0.0
+    ],
+    "crab_facing": "vers Bean (-X), donc avancer latéralement vers -X = Walk_Sideways_R",
+    "bean": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bean_facing": "+X"
+   },
+   "beats": [
+    {
+     "frames": [
+      1,
+      91
+     ],
+     "crab": "Idle puis Taunt_ClawClack (face à Bean)",
+     "bean": "Idle puis Sabre_Draw, Sabre_Idle",
+     "marker": "INTRO"
+    },
+    {
+     "frames": [
+      91,
+      265
+     ],
+     "crab": "Turn_L, Walk_Sideways_R x4 (3,2 m, côté droit vers Bean), Turn_R (face à Bean)",
+     "bean": "Sabre_Idle",
+     "marker": "APPROCHE"
+    },
+    {
+     "frames": [
+      265,
+      319
+     ],
+     "crab": "Block_Start, Block_Loop, Block_End (pinces croisées basses)",
+     "bean": "Walk puis Sabre_Slash_R sur la pince gauche (contact image 288)",
+     "marker": "BEAN_ATTAQUE_BLOQUE"
+    },
+    {
+     "frames": [
+      319,
+      369
+     ],
+     "crab": "Attack_ClawSwipe",
+     "bean": "Sabre_Block (parade, contact image 339), repoussé de 1,0 m",
+     "marker": "CRABE_FRAPPE"
+    },
+    {
+     "frames": [
+      369,
+      420
+     ],
+     "crab": "Hit_React",
+     "bean": "Run puis Sabre_Thrust sur la patte avant (contact image 375)",
+     "marker": "BEAN_TOUCHE"
+    },
+    {
+     "frames": [
+      420,
+      486
+     ],
+     "crab": "Attack_ClawSlam (impact 451, onde de choc)",
+     "bean": "Jump_Start, Jump_Loop, Jump_Land : esquive latérale de 1,5 m",
+     "marker": "SLAM_ESQUIVE"
+    },
+    {
+     "frames": [
+      486,
+      510
+     ],
+     "crab": "Attack_Grab, section Grab (saisie image 507)",
+     "bean": "Run vers la pince, Hit_React, attaché à SOCKET_ClawGrab_R (Child Of animée)",
+     "marker": "SAISIE"
+    },
+    {
+     "frames": [
+      510,
+      570
+     ],
+     "crab": "Grab_Hold x2",
+     "bean": "A_Bean_Grabbed_Loop",
+     "marker": "ETREINTE"
+    },
+    {
+     "frames": [
+      570,
+      648
+     ],
+     "crab": "Throw (lâcher image 596), Idle",
+     "bean": "A_Bean_Thrown : vol balistique (6 m/s, 35°), A_Bean_Thrown_Land",
+     "marker": "LANCER"
+    },
+    {
+     "frames": [
+      648,
+      704
+     ],
+     "crab": "Walk_Sideways_L x2 (strafe), Idle",
+     "bean": "Musket_Hold, Musket_AimIn",
+     "marker": "PHASE_2"
+    },
+    {
+     "frames": [
+      704,
+      770
+     ],
+     "crab": "Stagger_Flip",
+     "bean": "Musket_Fire à l'œil droit (tir image ~707, traceur)",
+     "marker": "RENVERSE"
+    },
+    {
+     "frames": [
+      770,
+      880
+     ],
+     "crab": "Flipped_Loop x2",
+     "bean": "Musket_Hold, Run vers le crabe, Sabre_Draw, Sabre_Idle",
+     "marker": "FAIBLESSE"
+    },
+    {
+     "frames": [
+      880,
+      935
+     ],
+     "crab": "Death_Flipped (DeadEyes de 898 à 910)",
+     "bean": "Sabre_Finisher sur le plastron (contact image 898)",
+     "marker": "COUP_FINAL"
+    },
+    {
+     "frames": [
+      935,
+      1050
+     ],
+     "crab": "pose finale",
+     "bean": "Celebrate, Idle",
+     "marker": "VICTOIRE"
+    }
+   ],
+   "contacts": "les contacts lame et cible sont mesurés par BVH comme dans combat-dismemberment/scripts/paired_combat.py ; tolérance de 3 cm, sinon décalage de l'acteur",
+   "fallback": "si la phase 2 (beats PHASE_2 à VICTOIRE) dépasse le budget, livrer d'abord les images 1 à 594 (demande principale : approche, blocage, frappe, saisie)",
+   "timing_note": "Temps forts recalés de +48 images par rapport au premier plan : le crabe se tourne (Turn_L) pour approcher latéralement puis se remet face à Bean (Turn_R). L'œil (z = 2,0 m) est hors de portée du sabre de Bean : l'estoc de BEAN_TOUCHE vise la patte avant ; l'œil est touché au mousquet en phase 2."
+  },
+  "scenes": {
+   "SCN-Presentation": "scène principale (preview) : crabe en pose Idle au centre, Bean à (-3,7, -1,0, 0) face à -Y, règle graduée, ruban de 6 m au sol, sable",
+   "SCN-Anim-Library": "un crabe par clip en grille de 4 x 5 (espacement 7 m) ou une seule instance avec les clips enchaînés en NLA et des marqueurs ; choisir la variante la plus légère en RAM",
+   "SCN-Combat-Demo": "voir combat_demo"
+  },
+  "renders": {
+   "preview": "renders/preview.png (SCN-Presentation, 1920 x 1080)",
+   "turnaround": "renders/view_*.png (camera.views) + renders/turnaround.png (planche de 8 angles en EEVEE 960 x 540)",
+   "anim_sheet": "renders/anim_sheet.png : une case par clip à l'instant de pic, avec son nom et sa durée",
+   "combat": "renders/combat_beats.png (une case par temps fort) ; vidéo optionnelle renders/combat_demo.mp4 en 960 x 540, EEVEE 8 échantillons",
+   "viewport": "renders/viewport.png (règle du projet : envoyer preview et viewport à l'utilisateur)"
+  },
+  "machine_budget": {
+   "ram_free_gb": 8,
+   "textures_max_px": 2048,
+   "engine": "EEVEE",
+   "no_heavy_bake": true,
+   "single_headless_blender": true,
+   "onedrive": "écrire les fichiers en .partial puis os.replace (comme bean_sources.copy_atomic), ne pas garder de .blend1 inutiles"
+  },
+  "pipeline": {
+   "factory/kits/crab_kit.py": "paramètres (lecture de params), géométrie : carapace (loft et déformation radiale, sillons, épines, dents), segments en loft ovale (réutiliser bean_kit.loft / revolve), pinces asymétriques avec dents, yeux, antennes, bouche, abdomen, membranes ; matériaux de chitine ; ornements via artifacts.treasure (or, perles) et balanes ; LOD par qualité",
+   "factory/kits/crab_rig.py": "SKEL_GiantCrab, skinning rigide, IK de pattes et de pinces avec pôles, sockets (empties SOCKET_* et WeakPoint_* parentés aux os, et liste pour Unreal), hint de Physics Asset, export de SK_GiantCrab et des LOD (réglages d'anim_export)",
+   "factory/kits/crab_anims.py": "CrabAnimator : générateur de marche tétrapode (verrouillage des pieds, contrôle du sol), poses clés des attaques et réactions, notifies, root motion, crab-anims.json, export A_GiantCrab_* (anim_export.bake_pose + export_range), manifeste ue/GiantCrabManifest.json",
+   "factory/kits/crab_scene.py": "run(ctx) : construit le crabe dans les trois scènes, ajoute Bean (bean_fit.append_bean), la démo de combat (NLA, contraintes Child Of pour la saisie, vol balistique, marqueurs, caméras) et les rendus supplémentaires",
+   "maquettes/crabe-geant/scripts/build.py": "aiguillage post_build vers crab_scene.run (déjà écrit)",
+   "maquettes/crabe-geant/scripts/render_sheets.py": "à lancer séparément après le build (un seul Blender headless) : turnaround.png, anim_sheet.png, combat_beats.png, mp4 optionnel",
+   "maquettes/crabe-geant/ue/import_giant_crab.py": "import Unreal : SK et LOD, séquences, root motion par clip, notifies AN_* (dossier partagé _Shared/Notifies), montages AM_GiantCrab_* avec sections, blendspace, sockets, PhysicsAsset depuis le hint",
+   "reuse_without_modifying": [
+    "factory/kits/anim_export.py",
+    "factory/kits/bean_fit.py",
+    "factory/kits/bean_kit.py",
+    "factory/kits/artifacts/treasure.py",
+    "maquettes/combat-dismemberment/scripts/bean_sources.py (modèle)"
+   ]
+  },
+  "qa_targets": {
+   "dimensions_tolerance_m": 0.03,
+   "checks": [
+    "hauteur du dos de 1,95 m (± 0,03), ventre à 1,25 m en Idle",
+    "envergure des pattes de 5,9 m (± 0,15)",
+    "ouverture de la pince droite ≥ 0,65 m",
+    "58 os déformants, aucun sommet non pondéré, poids de segment = 1,0",
+    "LOD0 ≤ 45 000 triangles",
+    "pieds : glissement inférieur à 1 cm par image en appui, aucune pointe sous z = -0,005",
+    "boucles : dernière image = première (tolérance de 1e-4)",
+    "Bean passe sous le ventre en Idle (test de capsule de Bean, rayon 0,25 m et hauteur 1,10 m)",
+    "démo : saisie, contact de lame et de balle à moins de 3 cm aux images annoncées"
+   ]
+  },
+  "assumptions": [
+   "Taille : dos à 1,95 m et ventre à 1,25 m pour que Bean (1,05 m, 1,10 m avec le chapeau) puisse passer dessous ; carapace de 2,70 m et envergure de 5,9 m, dans la fourchette demandée.",
+   "Avant du crabe vers -Y et gauche vers +X, comme SK_Bean et les mobs tiki (le format générique dit +X pour les props statiques ; on suit la convention des personnages).",
+   "Pinces asymétriques (droite broyeuse, gauche coupeuse) : choix de design original et de lisibilité de gameplay ; le sculpt de référence montre des pinces symétriques.",
+   "Patte à 4 os : coxa, mérus, propode (carpe fusionné), dactyle.",
+   "30 i/s comme les mobs et les packs de combat ; les clips de Bean (24 i/s) sont ré-échantillonnés dans la démo.",
+   "Locomotion en place (CharacterMovement) ; root motion seulement sur les clips ponctuels.",
+   "Dégâts et durées de gameplay : propositions à équilibrer dans les DataAssets du jeu.",
+   "Nom « Tupa Nui » (tupa = crabe de terre en tahitien) et lien de lore avec les Gardiens Crabes (mob-2) : propositions."
+  ],
+  "open_questions": [
+   "Bean doit-il pouvoir passer sous le crabe (choix actuel : oui en Idle et en marche, avec le ventre exposé) ? Sinon, ventre à 0,9 m et dos à 1,6 m.",
+   "Asymétrie des pinces : la garder (broyeuse et coupeuse) ou deux pinces identiques comme sur le sculpt ?",
+   "Vitesse latérale de 100 cm/s (Bean court à 112 cm/s sans glissement) : faut-il que le boss puisse rattraper Bean ? Une ruée à rate x1,6 est possible.",
+   "Nouveaux clips de Bean (Grabbed_Loop, Thrown, Thrown_Land) : les livrer dans ce pack, ou les ajouter plutôt à bean-anim-library ?",
+   "Phase 2 de la démo (mousquet, renversement, coup final) : à garder ou s'arrêter au lancer ?",
+   "Nom affiché et lore (Tupa Nui, gardien du trésor de l'épave, parent des Gardiens Crabes) à valider.",
+   "PV du boss et multiplicateurs de dégâts : il faut connaître les PV de Bean et les dégâts de base du sabre et du mousquet."
+  ]
+ },
+ "gameplay": {
+  "role": "Boss de zone (récif de l'atoll) : gardien du trésor de l'épave",
+  "usage": "Combat en arène sur le sable. Le crabe se déplace latéralement face à Bean, alterne Swipe (pince gauche), Slam (pince droite, onde de choc), Grab puis Throw ; il bloque de face (-90 %). Fenêtres de punition : pince plantée après le Slam (coude exposé), phase renversée (ventre exposé, 5 s). Il se renverse après 3 coups sur un point faible en 6 s, un tir de mousquet à l'œil ou au ventre, ou un coup sur le coude pendant que la pince est plantée.",
+  "physics": {
+   "mass_kg": 850,
+   "capsule": {
+    "radius_m": 0.95,
+    "half_height_m": 1.0,
+    "pawn": "ignore"
+   },
+   "physics_asset": "ue/PHAT_GiantCrab_hint.json",
+   "belly_clearance_m": 1.25
+  },
+  "damage": {
+   "Attack_ClawSwipe": {
+    "damage": 25,
+    "reach_m": 3.2,
+    "knockback_m": 3.0
+   },
+   "Attack_ClawSlam": {
+    "damage": 40,
+    "shockwave_radius_m": 2.0,
+    "shockwave_damage": 15,
+    "knockdown": true
+   },
+   "Attack_Grab": {
+    "damage": 10,
+    "squeeze_dps": 8,
+    "max_hold_s": 3.0
+   },
+   "Throw": {
+    "damage": 20,
+    "distance_m": 4.5
+   }
+  },
+  "stats": {
+   "hp_proposal": 1500,
+   "multipliers": {
+    "carapace": 0.1,
+    "legs": 0.5,
+    "claw_joint": 2.0,
+    "eye": 3.0,
+    "mouth": 1.5,
+    "belly": 4.0
+   },
+   "sideways_speed_cm_s": 100,
+   "forward_speed_cm_s": 50,
+   "block_frontal_reduction": 0.9,
+   "flipped_duration_s": 5.0
+  },
+  "notes": [
+   "Toutes les valeurs de dégâts et de PV sont des propositions.",
+   "Les balles de mousquet ricochent sur la carapace (PM_GiantCrab_Shell) : il faut viser les yeux, les articulations ou le ventre.",
+   "Les noms de notifies réutilisent le dossier partagé _Shared/Notifies des mobs ; nouveaux : AN_Footstep_Heavy, AN_Grab_Check, AN_Grab_Attach, AN_Squeeze_Tick, AN_Throw_Release, AN_ClawStuck_Begin/End, AN_Claw_Whoosh, AN_CameraShake."
+  ]
+ },
+ "materials": {
+  "sable": {
+   "base_color": [
+    0.807,
+    0.716,
+    0.527,
+    1.0
+   ],
+   "roughness": 0.95
+  },
+  "regle_blanc": {
+   "base_color": [
+    0.85,
+    0.85,
+    0.82,
+    1.0
+   ],
+   "roughness": 0.6
+  },
+  "regle_noir": {
+   "base_color": [
+    0.02,
+    0.02,
+    0.02,
+    1.0
+   ],
+   "roughness": 0.6
+  },
+  "etiquette": {
+   "base_color": [
+    0.03,
+    0.03,
+    0.04,
+    1.0
+   ],
+   "roughness": 0.7
+  },
+  "chitine_dos": {
+   "base_color": [
+    0.042,
+    0.0103,
+    0.147,
+    1.0
+   ],
+   "roughness": 0.32,
+   "inputs": {
+    "Coat Weight": 0.6,
+    "Coat Roughness": 0.12
+   }
+  },
+  "chitine_magenta": {
+   "base_color": [
+    0.445,
+    0.042,
+    0.262,
+    1.0
+   ],
+   "roughness": 0.35,
+   "inputs": {
+    "Coat Weight": 0.5,
+    "Coat Roughness": 0.15
+   }
+  },
+  "ventre": {
+   "base_color": [
+    0.584,
+    0.479,
+    0.687,
+    1.0
+   ],
+   "roughness": 0.55,
+   "inputs": {
+    "Coat Weight": 0.2
+   }
+  },
+  "pince_pointe": {
+   "base_color": [
+    0.0103,
+    0.0044,
+    0.0176,
+    1.0
+   ],
+   "roughness": 0.25,
+   "inputs": {
+    "Coat Weight": 0.7,
+    "Coat Roughness": 0.08
+   }
+  },
+  "membrane": {
+   "base_color": [
+    0.658,
+    0.144,
+    0.323,
+    1.0
+   ],
+   "roughness": 0.6,
+   "inputs": {
+    "Subsurface Weight": 0.2
+   }
+  },
+  "oeil": {
+   "base_color": [
+    0.012,
+    0.008,
+    0.01,
+    1.0
+   ],
+   "roughness": 0.05,
+   "inputs": {
+    "Coat Weight": 1.0,
+    "Coat Roughness": 0.02
+   }
+  },
+  "oeil_iris": {
+   "base_color": [
+    0.753,
+    0.178,
+    0.023,
+    1.0
+   ],
+   "roughness": 0.2
+  },
+  "balane": {
+   "base_color": [
+    0.509,
+    0.462,
+    0.381,
+    1.0
+   ],
+   "roughness": 0.85
+  },
+  "corail": {
+   "base_color": [
+    0.693,
+    0.223,
+    0.147,
+    1.0
+   ],
+   "roughness": 0.8
+  }
+ },
+ "collections": [
+  "crabe",
+  "bean",
+  "echelle",
+  "decor"
+ ],
+ "objects": [
+  {
+   "name": "REF-sable",
+   "type": "plane",
+   "params": {
+    "size": 30
+   },
+   "location": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "material": "sable",
+   "collection": "decor"
+  },
+  {
+   "name": "REF-repere_bean",
+   "type": "empty",
+   "params": {
+    "display": "SINGLE_ARROW",
+    "size": 0.4
+   },
+   "location": [
+    -3.7,
+    -1.0,
+    0.0
+   ],
+   "collection": "bean",
+   "props": {
+    "role": "position de Bean dans SCN-Presentation (face à -Y)"
+   }
+  },
+  {
+   "name": "REF-regle_mat",
+   "type": "cube",
+   "params": {
+    "size": 1
+   },
+   "location": [
+    -4.6,
+    -0.4,
+    1.25
+   ],
+   "dimensions": [
+    0.08,
+    0.08,
+    2.5
+   ],
+   "material": "regle_blanc",
+   "collection": "echelle"
+  },
+  {
+   "name": "REF-regle_graduations",
+   "type": "cube",
+   "params": {
+    "size": 1
+   },
+   "location": [
+    -4.6,
+    -0.4,
+    0.125
+   ],
+   "dimensions": [
+    0.086,
+    0.086,
+    0.25
+   ],
+   "material": "regle_noir",
+   "collection": "echelle",
+   "modifiers": [
+    {
+     "type": "ARRAY",
+     "count": 5,
+     "use_relative_offset": true,
+     "relative_offset_displace": [
+      0,
+      0,
+      2
+     ]
+    }
+   ],
+   "props": {
+    "note": "bandes noires de 0,25 m, une sur deux, de 0 à 2,25 m"
+   }
+  },
+  {
+   "name": "REF-cote_1m",
+   "type": "text",
+   "params": {
+    "body": "1 m",
+    "size": 0.16,
+    "extrude": 0.005,
+    "align_x": "RIGHT"
+   },
+   "location": [
+    -4.7,
+    -0.4,
+    0.95
+   ],
+   "rotation_deg": [
+    90,
+    0,
+    0
+   ],
+   "material": "etiquette",
+   "collection": "echelle"
+  },
+  {
+   "name": "REF-cote_2m",
+   "type": "text",
+   "params": {
+    "body": "2 m",
+    "size": 0.16,
+    "extrude": 0.005,
+    "align_x": "RIGHT"
+   },
+   "location": [
+    -4.7,
+    -0.4,
+    1.95
+   ],
+   "rotation_deg": [
+    90,
+    0,
+    0
+   ],
+   "material": "etiquette",
+   "collection": "echelle"
+  },
+  {
+   "name": "REF-cote_bean",
+   "type": "text",
+   "params": {
+    "body": "Bean 1,05 m",
+    "size": 0.14,
+    "extrude": 0.005
+   },
+   "location": [
+    -3.7,
+    -1.0,
+    1.3
+   ],
+   "rotation_deg": [
+    90,
+    0,
+    0
+   ],
+   "material": "etiquette",
+   "collection": "echelle"
+  },
+  {
+   "name": "REF-cote_crabe",
+   "type": "text",
+   "params": {
+    "body": "Tupa Nui : dos 1,95 m, ventre 1,25 m",
+    "size": 0.16,
+    "extrude": 0.005
+   },
+   "location": [
+    0.0,
+    -0.4,
+    2.75
+   ],
+   "rotation_deg": [
+    90,
+    0,
+    0
+   ],
+   "material": "etiquette",
+   "collection": "echelle"
+  },
+  {
+   "name": "REF-ruban_base",
+   "type": "cube",
+   "params": {
+    "size": 1
+   },
+   "location": [
+    0.0,
+    -3.3,
+    0.006
+   ],
+   "dimensions": [
+    6.0,
+    0.12,
+    0.012
+   ],
+   "material": "regle_blanc",
+   "collection": "echelle"
+  },
+  {
+   "name": "REF-ruban_graduations",
+   "type": "cube",
+   "params": {
+    "size": 1
+   },
+   "location": [
+    -2.75,
+    -3.3,
+    0.008
+   ],
+   "dimensions": [
+    0.5,
+    0.124,
+    0.014
+   ],
+   "material": "regle_noir",
+   "collection": "echelle",
+   "modifiers": [
+    {
+     "type": "ARRAY",
+     "count": 6,
+     "use_relative_offset": true,
+     "relative_offset_displace": [
+      2,
+      0,
+      0
+     ]
+    }
+   ],
+   "props": {
+    "note": "ruban de 6 m sous l'envergure des pattes (5,9 m), graduations de 0,5 m"
+   }
+  },
+  {
+   "name": "REF-cote_envergure",
+   "type": "text",
+   "params": {
+    "body": "envergure des pattes 5,9 m",
+    "size": 0.16,
+    "extrude": 0.005
+   },
+   "location": [
+    0.0,
+    -3.45,
+    0.12
+   ],
+   "rotation_deg": [
+    90,
+    0,
+    0
+   ],
+   "material": "etiquette",
+   "collection": "echelle"
+  }
+ ],
+ "scripts": [
+  "scripts/build.py"
+ ],
+ "camera": {
+  "location": [
+   3.0,
+   -11.5,
+   2.8
+  ],
+  "look_at": [
+   -0.7,
+   0.0,
+   1.0
+  ],
+  "lens": 40,
+  "type": "PERSP",
+  "views": [
+   "three_quarter",
+   "front",
+   "left",
+   "back",
+   "top"
+  ]
+ },
+ "lights": [
+  {
+   "name": "LGT-soleil",
+   "type": "SUN",
+   "rotation_deg": [
+    50,
+    0,
+    -35
+   ],
+   "energy": 4.0,
+   "color": [
+    1.0,
+    0.95,
+    0.88,
+    1.0
+   ]
+  },
+  {
+   "name": "LGT-remplissage",
+   "type": "AREA",
+   "location": [
+    -6.0,
+    -8.0,
+    5.0
+   ],
+   "look_at": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "energy": 600,
+   "size": 6.0,
+   "color": [
+    0.85,
+    0.9,
+    1.0,
+    1.0
+   ]
+  }
+ ],
+ "world": {
+  "color": [
+   1,
+   1,
+   1,
+   1
+  ],
+  "strength": 0.8,
+  "hdri": "art/hdri/secluded_beach_4k.hdr",
+  "hdri_rotation_deg": 40,
+  "background_color": [
+   0.8,
+   0.85,
+   0.9,
+   1.0
+  ]
+ },
+ "render": {
+  "engine": "EEVEE",
+  "resolution": [
+   1920,
+   1080
+  ],
+  "samples": 32
+ },
+ "outputs": {
+  "blend": true,
+  "exports": [],
+  "preview": true
+ },
+ "history": [
+  {
+   "version": "0.1.0",
+   "date": "2026-10-07",
+   "author": "maquette-architect",
+   "notes": "Création de la spec : anatomie d'après le sculpt, registre violet, or et perles (design original, BRIEF.md), échelle par rapport à Bean, rig de 58 os, 20 clips + 2 optionnels, démo de combat, pipeline des kits."
+  },
+  {
+   "version": "0.2.0",
+   "date": "2026-10-07",
+   "author": "factory",
+   "notes": "Premier build : modele, rig, animations, demo de combat"
+  }
+ ]
+}
