@@ -36,6 +36,13 @@ python scripts/chantier.py --env                                              # 
 Éditeur partagé entre sessions (Claude + Codex) : **verrou obligatoire** avant fermeture, build principal, tests headless ou relance — `python scripts/editor_lock.py status | acquire --owner <session> --reason … | close-editor | release` (vérifié par `ue.ps1`, propriétaire dans `MONKE_LOCK_OWNER`).
 Éditeur ouvert → compiler par **Live Coding via MCP**, seulement pour du code dans les corps de fonctions ; tout changement de header réfléchi exige l'éditeur fermé et un build.
 
+## Git et GitHub
+Dépôt privé `git@github.com:m4tth1euNa0p1c/Tapao-Rush-Island.git`, binaires sous Git LFS (~8,5 Gio : pour jouer, prendre le zip de la release plutôt que cloner).
+- **Auteur unique : Matthieu Barraque `<matthieu.barraque@outlook.fr>`** (config du dépôt). **Jamais de ligne `Co-Authored-By: Claude`, de `Claude-Session` ni de signature « Generated with Claude Code »** dans les commits et les PR, quel que soit l'agent ; le CI `Vérifications` les refuse.
+- `main` ne reçoit que des PR ; `ga` = dernière version publiée (tag `vX.Y.Z` + release avec le zip Windows) ; `dev/T-NNN` = branches de l'usine.
+- Issue **#N = ticket T-N** du chantier ; une PR ferme ses tickets par `Closes #N`. `board.md` reste la source, GitHub la reflète.
+- Historique réécrit le 2026-10-12 : les anciens SHA cités dans les docs se retrouvent dans `docs/production/sha-map.md`.
+
 ## MCP
 - `unreal` : plugin officiel UE 5.8 « Unreal MCP » sur `http://127.0.0.1:8000/mcp` (jamais `localhost` : IPv4 seulement), démarré avec l'éditeur. Mode tool search : `list_toolsets` → `describe_toolset` → `call_tool`. Toolsets, limites et astuces : skill `ue-editor`.
 - `blender` : Blender MCP (addon à connecter dans Blender) ; skill `blender-asset`. **Depuis le 2026-10-03, les maquettes sont faites sur le 2e PC** (Claude Code + Blender) et récupérées dans `C:\Users\matth\OneDrive\maquette-blender` (lecture seule, fichier synchronisé avant import) ; ce PC se concentre sur l'intégration gameplay et l'orchestration.

@@ -1,0 +1,88 @@
+name: Vérifications
+
+on:
+  pull_request:
+  push:
+    branches: [main, ga]
+
+permissions:
+  contents: read
+
+jobs:
+  verifications:
+    name: Dépôt, scripts et chantier
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Pas de téléchargement LFS : les fichiers restent des pointeurs, le quota de bande passante est préservé
+      - name: Récupérer le dépôt sans les fichiers LFS
+        uses: actions/checkout@v4
+        env:
+          GIT_LFS_SKIP_SMUDGE: "1"
+        with:
+          lfs: false
+          fetch-depth: 0
+
+      - name: Pas de co-auteur IA dans les commits
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            range="${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+          elif [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+            range="${{ github.sha }}~1..${{ github.sha }}"
+          else
+            range="${{ github.event.before }}..${{ github.sha }}"
+          fi
+          if git log --format=%B "$range" | grep -inE '^\s*(co-authored-by:\s*claude|claude-session:)'; then
+            echo "::error::Un commit contient une ligne de co-auteur ou de session Claude."
+            exit 1
+          fi
+          echo "Messages de commit conformes ($range)."
+
+      - name: Fichiers binaires sous Git LFS
+        shell: bash
+        run: |
+          bad=0
+          while IFS= read -r -d '' f; do
+            [ -f "$f" ] || continue
+            if ! head -c 64 "$f" | grep -q '^version https://git-lfs.github.com/spec/v1'; then
+              echo "::error file=$f::fichier binaire suivi hors Git LFS"
+              bad=1
+            fi
+          done < <(git ls-files -z ':(attr:filter=lfs)')
+          exit $bad
+
+      - name: Aucun fichier de plus de 50 Mo hors LFS
+        shell: bash
+        run: |
+          big=$(git ls-files -z | xargs -0 stat -c '%s %n' 2>/dev/null | awk '$1 > 52428800')
+          if [ -n "$big" ]; then
+            echo "$big"
+            echo "::error::fichier de plus de 50 Mo suivi hors Git LFS"
+            exit 1
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Scripts Python compilables
+        run: python -m compileall -q scripts
+
+      - name: Chantier lisible
+        shell: bash
+        run: |
+          python - <<'EOF'
+          import re, sys
+          ids = []
+          for line in open("docs/production/board.md", encoding="utf-8"):
+              m = re.match(r"^\| (T-\d{3}) \|", line)
+              if m:
+                  ids.append(m.group(1))
+                  if line.count("|") < 8:
+                      sys.exit(f"ligne incomplète au chantier : {m.group(1)}")
+          dup = sorted({i for i in ids if ids.count(i) > 1})
+          if dup:
+              sys.exit(f"identifiants en double au chantier : {dup}")
+          print(f"{len(ids)} tickets, identifiants uniques")
+          EOF
