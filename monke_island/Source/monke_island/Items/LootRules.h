@@ -80,6 +80,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Scatter")
 	int32 Seed = 0;
 
+	/** Value of each item scattered, times a draw between X and Y (the French fort: its common objects from 5 to 120,
+	 *  owner request 2026-10-07); (1, 1) = the values of the items */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Scatter")
+	FVector2D ValueScaleRange = FVector2D(1.0, 1.0);
+
+	/** A scattered item is never worth more than this (0 = no cap) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Scatter", meta=(ClampMin="0"))
+	int32 MaxValue = 0;
+
+	/** Height above a spot the ground is looked for from (cm): high on the open island (over the trees), just over the
+	 *  floor inside buildings so the roof is not taken for the ground (the French fort, T-217) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Scatter", meta=(ClampMin="10", Units="cm"))
+	float GroundSearchHeight = 3000.0f;
+
 	/** Candidate spots (UE cm, Z = approximate ground): land above the sea, out of the real village of Motutapu
 	 *  (scripts/map/place_loot.py, collectibles/loot_spots.json) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Scatter")

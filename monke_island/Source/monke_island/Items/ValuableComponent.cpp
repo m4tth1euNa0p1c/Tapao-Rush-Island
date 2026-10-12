@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "Net/UnrealNetwork.h"
+#include "Run/RunSubsystem.h"
 #include "monke_island.h"
 
 UValuableComponent::UValuableComponent()
@@ -24,14 +25,43 @@ void UValuableComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Value = BaseValue;
-	if (GetOwner() && GetOwner()->HasAuthority())
+	// a client keeps the value the server replicated, received before this BeginPlay: its BaseValue lacks the zone
+	// multiplier and the losses, and the server sends Value again only when it changes (network review R-07)
+	AActor* Owner = GetOwner();
+	if (!Owner || !Owner->HasAuthority())
 	{
-		if (UPrimitiveComponent* Root = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent()))
+		return;
+	}
+	// ADR-007 §11: the loot of a further zone, or of a greed day, is worth more; a value restored (T-309) already is
+	if (!bValueRestored)
+	{
+		if (const URunSubsystem* Run = URunSubsystem::Get(this))
 		{
-			Root->SetNotifyRigidBodyCollision(true);
-			Root->OnComponentHit.AddDynamic(this, &UValuableComponent::HandleHit);
+			BaseValue = FMath::Max(0, FMath::RoundToInt(BaseValue * Run->GetLootValueScale()));
 		}
+		Value = BaseValue;
+	}
+	if (UPrimitiveComponent* Root = Cast<UPrimitiveComponent>(Owner->GetRootComponent()))
+	{
+		Root->SetNotifyRigidBodyCollision(true);
+		Root->OnComponentHit.AddDynamic(this, &UValuableComponent::HandleHit);
+	}
+}
+
+void UValuableComponent::RestoreValue(int32 InBaseValue, int32 InValue)
+{
+	if (!GetOwner() || !GetOwner()->HasAuthority())
+	{
+		return;
+	}
+	const int32 OldValue = Value;
+	BaseValue = FMath::Max(0, InBaseValue);
+	Value = FMath::Clamp(InValue, 0, BaseValue);
+	bValueRestored = true;
+	// before BeginPlay nobody listens yet; the clients get Value with the object
+	if (HasBegunPlay() && Value != OldValue)
+	{
+		OnValueChanged.Broadcast(Value, OldValue - Value);
 	}
 }
 

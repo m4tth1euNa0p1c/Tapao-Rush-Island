@@ -27,6 +27,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Loot")
 	TObjectPtr<ULootRules> Rules;
 
+	/** The spots of the rules are in this spawner's frame, not in the world: they follow it when the site moves (the
+	 *  French fort of L_Test_Flat placed as a level instance on the expedition map, T-205) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Loot")
+	bool bSpotsInActorFrame = false;
+
 	/** Items scattered by this spawner (server) */
 	UFUNCTION(BlueprintPure, Category="Loot")
 	int32 GetScatteredCount() const { return Scattered.Num(); }

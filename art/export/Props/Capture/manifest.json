@@ -1,0 +1,564 @@
+{
+ "format": "capture-kit/1",
+ "task": "T-337 (lot L5), contrat avec T-336",
+ "status": "built",
+ "built_by": "scripts/props/capture_kit/build.py",
+ "built_at": "2026-10-11T22:28:54",
+ "blender": "5.2.2 LTS",
+ "units": {
+  "blender": "mètres, Z haut, avant de l'objet = +X",
+  "unreal": "cm ; Unreal = (x*100, -y*100, z*100) depuis Blender ; avant = +X dans Unreal ; un lacet Blender de a degrés vaut -a dans Unreal",
+  "fbx": "FBX_SCALE_NONE, global_scale 1, apply_unit_scale, axis_forward -Y, axis_up Z (réglages de scripts/props/barque.py) : géométrie déjà en cm dans le fichier, importer à l'échelle 1",
+  "sockets": "empties SOCKET_<nom> dans le FBX -> sockets Unreal ; remettre relative_scale à 1 après l'import (piège x100 des sockets, mémoire ue-mcp-import-pitfalls)",
+  "collision": "UCX_<NomMesh>_NN (boîtes convexes) dans le FBX de la cage, de la porte et de la caisse : importer sans collision auto ; menottes et maillon sans UCX (objets attachés, NoCollision ; pour un objet au sol, ajouter une boîte : action pickupcollision)"
+ },
+ "assets": {
+  "SM_Capture_Cage": {
+   "files": [
+    "art/export/Props/Capture/SM_Capture_Cage.fbx"
+   ],
+   "triangles": 6832,
+   "vertices": 4122,
+   "size_m": [
+    1.2961,
+    1.774,
+    1.9
+   ],
+   "bounds_min_m": [
+    -0.6481,
+    -0.887,
+    0.0
+   ],
+   "bounds_max_m": [
+    0.6481,
+    0.887,
+    1.9
+   ],
+   "size_cm_unreal": [
+    129.6,
+    177.4,
+    190.0
+   ],
+   "collision": [
+    "UCX_SM_Capture_Cage_00",
+    "UCX_SM_Capture_Cage_01",
+    "UCX_SM_Capture_Cage_02",
+    "UCX_SM_Capture_Cage_03",
+    "UCX_SM_Capture_Cage_04",
+    "UCX_SM_Capture_Cage_05",
+    "UCX_SM_Capture_Cage_06",
+    "UCX_SM_Capture_Cage_07"
+   ],
+   "sockets": {
+    "prisoner": {
+     "blender_m": [
+      0.0,
+      0.0,
+      0.2
+     ],
+     "unreal_cm": [
+      0.0,
+      -0.0,
+      20.0
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "door_hinge": {
+     "blender_m": [
+      0.615,
+      -0.36,
+      0.2
+     ],
+     "unreal_cm": [
+      61.5,
+      36.0,
+      20.0
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "door_handle": {
+     "blender_m": [
+      0.65,
+      0.296,
+      0.936
+     ],
+     "unreal_cm": [
+      65.0,
+      -29.6,
+      93.6
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "lock": {
+     "blender_m": [
+      0.63,
+      0.372,
+      1.05
+     ],
+     "unreal_cm": [
+      63.0,
+      -37.2,
+      105.0
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "entry": {
+     "blender_m": [
+      1.05,
+      0.0,
+      0.0
+     ],
+     "unreal_cm": [
+      105.0,
+      -0.0,
+      0.0
+     ],
+     "unreal_yaw_deg": -180.0
+    },
+    "captor": {
+     "blender_m": [
+      1.55,
+      0.15,
+      0.0
+     ],
+     "unreal_cm": [
+      155.0,
+      -15.0,
+      0.0
+     ],
+     "unreal_yaw_deg": -180.0
+    }
+   },
+   "materials": [
+    "M_Capture_Wood",
+    "M_Capture_Iron"
+   ],
+   "info": {
+    "clear_inside_m": [
+     1.0,
+     1.4,
+     1.6
+    ],
+    "door_opening_m": [
+     0.72,
+     1.5
+    ],
+    "floor_top_m": 0.2,
+    "bar_pitch_m": 0.12,
+    "bar_diameter_m": 0.025,
+    "frame_size_m": [
+     1.2,
+     1.6,
+     1.9
+    ],
+    "note": "cadre 1,2 x 1,6 x 1,9 m ; la boîte englobante ajoute les anneaux de levage (5 cm de chaque côté en X), les bouts des patins (Y) et la quincaillerie de la porte"
+   }
+  },
+  "SM_Capture_Cage_Door": {
+   "files": [
+    "art/export/Props/Capture/SM_Capture_Cage_Door.fbx"
+   ],
+   "triangles": 1140,
+   "vertices": 650,
+   "size_m": [
+    0.0904,
+    0.813,
+    1.463
+   ],
+   "bounds_min_m": [
+    -0.0162,
+    -0.017,
+    0.012
+   ],
+   "bounds_max_m": [
+    0.0742,
+    0.796,
+    1.475
+   ],
+   "size_cm_unreal": [
+    9.0,
+    81.3,
+    146.3
+   ],
+   "collision": [
+    "UCX_SM_Capture_Cage_Door_00"
+   ],
+   "sockets": {
+    "handle": {
+     "blender_m": [
+      0.035,
+      0.656,
+      0.736
+     ],
+     "unreal_cm": [
+      3.5,
+      -65.6,
+      73.6
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "padlock": {
+     "blender_m": [
+      0.045,
+      0.766,
+      0.775
+     ],
+     "unreal_cm": [
+      4.5,
+      -76.6,
+      77.5
+     ],
+     "unreal_yaw_deg": 0.0
+    }
+   },
+   "materials": [
+    "M_Capture_Iron"
+   ],
+   "info": {
+    "size_m": [
+     0.06,
+     0.74,
+     1.475
+    ],
+    "open_axis": "Z of the pivot",
+    "open_blender_deg": -100.0,
+    "open_unreal_yaw_deg": 100.0
+   }
+  },
+  "SM_Capture_Cage_Folded": {
+   "files": [
+    "art/export/Props/Capture/SM_Capture_Cage_Folded.fbx"
+   ],
+   "triangles": 1868,
+   "vertices": 1136,
+   "size_m": [
+    0.472,
+    0.1703,
+    0.272
+   ],
+   "bounds_min_m": [
+    -0.236,
+    -0.089,
+    -0.006
+   ],
+   "bounds_max_m": [
+    0.236,
+    0.0813,
+    0.266
+   ],
+   "size_cm_unreal": [
+    47.2,
+    17.0,
+    27.2
+   ],
+   "collision": [
+    "UCX_SM_Capture_Cage_Folded_00"
+   ],
+   "sockets": {
+    "grip": {
+     "blender_m": [
+      0.0,
+      0.0,
+      0.25
+     ],
+     "unreal_cm": [
+      0.0,
+      -0.0,
+      25.0
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "hand_l": {
+     "blender_m": [
+      0.0,
+      0.085,
+      0.1128
+     ],
+     "unreal_cm": [
+      0.0,
+      -8.5,
+      11.28
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "hand_r": {
+     "blender_m": [
+      0.0,
+      -0.085,
+      0.1128
+     ],
+     "unreal_cm": [
+      0.0,
+      8.5,
+      11.28
+     ],
+     "unreal_yaw_deg": 0.0
+    }
+   },
+   "materials": [
+    "M_Capture_Wood",
+    "M_Capture_Iron"
+   ],
+   "info": {
+    "size_m": [
+     0.46,
+     0.15,
+     0.266
+    ],
+    "grip_height_m": 0.25
+   }
+  },
+  "SM_Chain_Link": {
+   "files": [
+    "art/export/Props/Capture/SM_Chain_Link.fbx"
+   ],
+   "triangles": 288,
+   "vertices": 144,
+   "size_m": [
+    0.052,
+    0.0356,
+    0.01
+   ],
+   "bounds_min_m": [
+    -0.026,
+    -0.0178,
+    -0.005
+   ],
+   "bounds_max_m": [
+    0.026,
+    0.0178,
+    0.005
+   ],
+   "size_cm_unreal": [
+    5.2,
+    3.6,
+    1.0
+   ],
+   "collision": [],
+   "sockets": {},
+   "materials": [
+    "M_Capture_Steel"
+   ],
+   "info": {
+    "pitch_m": 0.032,
+    "length_m": 0.052,
+    "width_m": 0.036,
+    "wire_diameter_m": 0.01,
+    "tiling": "link n centred at n * pitch along +X, rolled 90 deg about X from link n-1"
+   }
+  },
+  "SM_Steel_Handcuffs": {
+   "files": [
+    "art/export/Props/Capture/SM_Steel_Handcuffs.fbx"
+   ],
+   "triangles": 1904,
+   "vertices": 972,
+   "size_m": [
+    0.3225,
+    0.1396,
+    0.1102
+   ],
+   "bounds_min_m": [
+    -0.1613,
+    -0.0756,
+    -0.0506
+   ],
+   "bounds_max_m": [
+    0.1613,
+    0.0641,
+    0.0596
+   ],
+   "size_cm_unreal": [
+    32.2,
+    14.0,
+    11.0
+   ],
+   "collision": [],
+   "sockets": {
+    "cuff_r": {
+     "blender_m": [
+      -0.095,
+      0.0,
+      0.0
+     ],
+     "unreal_cm": [
+      -9.5,
+      -0.0,
+      0.0
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "cuff_l": {
+     "blender_m": [
+      0.095,
+      0.0,
+      0.0
+     ],
+     "unreal_cm": [
+      9.5,
+      -0.0,
+      0.0
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "chain_anchor": {
+     "blender_m": [
+      0.0,
+      0.0458,
+      -0.0407
+     ],
+     "unreal_cm": [
+      0.0,
+      -4.58,
+      -4.07
+     ],
+     "unreal_yaw_deg": 0.0
+    }
+   },
+   "materials": [
+    "M_Capture_Steel"
+   ],
+   "info": {
+    "bracelet_inner_radius_m": 0.058,
+    "bracelet_outer_radius_m": 0.066,
+    "band_width_m": 0.022,
+    "centre_distance_m": 0.19
+   }
+  },
+  "SM_Steel_Handcuffs_Open": {
+   "files": [
+    "art/export/Props/Capture/SM_Steel_Handcuffs_Open.fbx"
+   ],
+   "triangles": 2336,
+   "vertices": 1188,
+   "size_m": [
+    0.3473,
+    0.0746,
+    0.2698
+   ],
+   "bounds_min_m": [
+    -0.1525,
+    -0.0373,
+    -0.2532
+   ],
+   "bounds_max_m": [
+    0.1949,
+    0.0373,
+    0.0166
+   ],
+   "size_cm_unreal": [
+    34.7,
+    7.5,
+    27.0
+   ],
+   "collision": [],
+   "sockets": {
+    "grip": {
+     "blender_m": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "unreal_cm": [
+      0.0,
+      -0.0,
+      0.0
+     ],
+     "unreal_yaw_deg": 0.0
+    },
+    "chain_anchor": {
+     "blender_m": [
+      0.0,
+      0.0,
+      -0.013
+     ],
+     "unreal_cm": [
+      0.0,
+      -0.0,
+      -1.3
+     ],
+     "unreal_yaw_deg": 0.0
+    }
+   },
+   "materials": [
+    "M_Capture_Steel"
+   ],
+   "info": {
+    "held_by": "the middle ring (socket grip, pivot) in the right mitten",
+    "jaw_open_deg": 60.0
+   }
+  }
+ },
+ "gameplay_hints": {
+  "cage_door": "SM_Capture_Cage_Door attachée au socket door_hinge de la cage ; fermée = lacet relatif 0 ; ouverte vers l'extérieur (+X) = lacet relatif POSITIF dans Unreal jusqu'à +100 (Blender -100)",
+  "prisoner": "socket prisoner : pieds du captif au centre du plancher (20 cm), regard vers la porte (+X)",
+  "entry": "socket entry : 45 cm devant la porte, dehors, regard vers l'intérieur (lacet 180) ; captor : place du joueur pour pousser le captif",
+  "clear_inside_m": [
+   1.0,
+   1.4,
+   1.6
+  ],
+  "door_opening_m": [
+   0.72,
+   1.5
+  ],
+  "handcuffs": "SM_Steel_Handcuffs se fixe sur l'os hand_r du captif avec la transformation donnée dans art/export/Characters/Capture/manifest.json (attachments.handcuffs_on_captive) : ses deux bracelets tombent sur les poignets dans A_BeanFR_Captive_Idle et A_BeanFR_Captive_Walk",
+  "chain": "laisse = SM_Chain_Link répété au pas (info.pitch_m) le long de X, chaque maillon tourné de 90 deg autour de X par rapport au précédent ; du socket chain_anchor des menottes à la mitaine gauche du joueur (attachments.leash_hand)"
+ },
+ "materials": {
+  "M_Capture_Wood": {
+   "textures": {
+    "D": "art/export/Props/Capture/Textures/T_Capture_Wood_D.png",
+    "N": "art/export/Props/Capture/Textures/T_Capture_Wood_N.png",
+    "ORM": "art/export/Props/Capture/Textures/T_Capture_Wood_ORM.png"
+   },
+   "source": "https://polyhaven.com/a/rough_wood",
+   "license": "CC0 1.0",
+   "look": "teck / bois de cocotier patiné (rampe brun chaud)"
+  },
+  "M_Capture_Iron": {
+   "textures": {
+    "D": "art/export/Props/Capture/Textures/T_Capture_Iron_D.png",
+    "N": "art/export/Props/Capture/Textures/T_Capture_Iron_N.png",
+    "ORM": "art/export/Props/Capture/Textures/T_Capture_Iron_ORM.png"
+   },
+   "source": "https://polyhaven.com/a/rusty_metal_04",
+   "license": "CC0 1.0",
+   "look": "fer forgé noirci, rouille dans les creux (comme les cages du fort)"
+  },
+  "M_Capture_Steel": {
+   "textures": {
+    "D": "art/export/Props/Capture/Textures/T_Capture_Steel_D.png",
+    "N": "art/export/Props/Capture/Textures/T_Capture_Steel_N.png",
+    "ORM": "art/export/Props/Capture/Textures/T_Capture_Steel_ORM.png"
+   },
+   "source": "https://ambientcg.com/view?id=Metal054B",
+   "license": "CC0 1.0",
+   "look": "acier usé, rayé, légère rouille"
+  },
+  "convention": "D sRGB ; N DirectX (vert vers le bas : TC_Normalmap sans flip) ; ORM linéaire (TC_Masks, sRGB off) R = AO, G = rugosité, B = métal ; textures en répétition (UV en mètres / tuile : bois 0,6 m, fer 1 m, acier 0,35 m) : brancher sur M_Character_Baked (BaseColor / ORM / Normal) ou un maître équivalent ; les FBX ne portent que les noms des emplacements (aucun chemin de texture : créer les MI depuis ce manifeste)",
+  "slots": "les noms d'emplacements des FBX sont les noms des matériaux (M_Capture_Wood, M_Capture_Iron, M_Capture_Steel)"
+ },
+ "icons": {
+  "T_Icon_Capture_Cage": "art/ui/icons/capture/T_Icon_Capture_Cage.png",
+  "T_Icon_Capture_Cage_Folded": "art/ui/icons/capture/T_Icon_Capture_Cage_Folded.png",
+  "T_Icon_Steel_Handcuffs": "art/ui/icons/capture/T_Icon_Steel_Handcuffs.png",
+  "T_Icon_Steel_Handcuffs_Open": "art/ui/icons/capture/T_Icon_Steel_Handcuffs_Open.png",
+  "format": "512 x 512 RGBA, fond transparent, ombre douce (comme art/ui/icons/weapons)",
+  "made_by": "scripts/ui/render_capture_icons.py (Blender, depuis build/capture_kit/glb) puis scripts/ui/finish_capture_icons.py (Pillow)",
+  "suggested": {
+   "cage": "T_Icon_Capture_Cage",
+   "menottes": "T_Icon_Steel_Handcuffs"
+  }
+ },
+ "previews": [
+  "art/_previews/capture/cage_closed_open.png",
+  "art/_previews/capture/items_crate_cuffs_chain.png",
+  "art/_previews/capture/captive_idle_3views.png",
+  "art/_previews/capture/captive_walk_3views.png",
+  "art/_previews/capture/player_cage_place.png",
+  "art/_previews/capture/player_cuff.png",
+  "art/_previews/capture/lead_walk_leash.png"
+ ],
+ "runtime_tested": false
+}

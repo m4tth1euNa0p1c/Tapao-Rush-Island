@@ -47,3 +47,26 @@
   - 47 objets à moins de 300 m du départ, le plus proche à 52 m ;
   - vignettes texturées.
 - **Non vérifié :** l'aspect au sol en jeu (la capture de la vue éditeur ne montre pas le monde du PIE), la saisie avec F, le coût réseau de 300 objets répliqués.
+
+## Réseau des objets libres (T-312, T-294, T-295, T-316 ; revue réseau T-268 R-04, R-05, R-28, R-43)
+Tout `APhysicsPropActor` porte un `UNetRestComponent` (`Items/NetRestComponent.h`) : butin, artefacts, totems, reliques, objets des camps et des marae. Depuis T-316, les armes et munitions au sol (`AInventoryPickup`, `AMobWeaponPickup`, `AAmmoPickup`) et la caisse de transport (`ALootCrateActor`) le portent aussi. Le serveur simule l'objet et en réplique le mouvement.
+- **En mouvement** : `AwakeNetUpdateFrequency` envois par seconde (30), au lieu de 100 par défaut dans le moteur.
+- **Au repos** :
+  - endormi, l'objet ne se réplique plus du tout (dormance `DORM_DormantAll`) ;
+  - il se réveille dès qu'il bouge (événement de réveil physique, ou contrôle toutes les `CheckInterval`, 0,25 s), qu'un joueur le saisit, qu'un PNJ le porte ou qu'il est rangé ;
+  - un changement sans mouvement (caché, attaché, collision, valeur) est envoyé une fois ;
+  - `UNetRestComponent::WakeActorNet(Actor)` réveille un objet à la demande (serveur).
+  - Règle (T-316) : tout changement d'état répliqué d'un objet qui peut dormir l'appelle **avant** un multicast et avant de cacher l'objet. Un multicast ne part que vers les clients pour qui l'acteur est pertinent, et un acteur caché sans collision ne l'est pour aucun : on cache alors son mesh, pas l'acteur, s'il doit encore envoyer un état. Une destruction n'a pas besoin de réveil : le moteur l'envoie aussi aux clients dont le canal dort.
+- **Sur une base qui bouge** (T-294 : pont du galion, qui roule à chaque image) :
+  - l'objet ne s'endort jamais, et la revue estimait environ 3 Ko/s par objet et par client ;
+  - une fois immobile sur le pont pendant `GlueDelay` (0,75 s), le serveur le colle au pont ;
+  - chaque machine le porte alors avec son propre pont. Son mouvement n'est plus envoyé ; l'objet reste éveillé, mais le serveur ne le regarde que `GluedNetUpdateFrequency` fois par seconde (2), et rien ne part tant que rien ne change. Il n'est pas dormant : un client qui recrée le pont ou la barque le recollerait à rien ;
+  - il continue de simuler : la saisie, le compte de la cale du galion (recouvrement du volume) et le transport le trouvent comme avant ;
+  - un joueur qui le prend le libère partout.
+- **Dans la barque** (T-295) : la barque colle à sa coque, de la même façon, la cargaison qu'elle arrime.
+- Valeurs : propriétés du composant, réglables dans chaque Blueprint (`Network`, `Network|Moving base`).
+- Spec : `monke_island.Items.NetRest`.
+- **Statut** : `compilé` le 2026-10-11 ; PIE non fait.
+  - Essai n°5 de `docs/audit/revue-reseau-T268.md` : 20 objets et la caisse sur le pont, `stat net` et `net.Profile`, `LogMonkeNetRest Verbose`.
+  - Attendu : les objets collés ne coûtent plus rien au repos, la caisse T-258 non plus depuis T-316.
+- **T-316** (pickups et caisse) : `compilé` le 2026-10-11 (fichier par fichier) ; specs `monke_island.Weapons.Inventory`, `monke_island.LootCrate`, `monke_island.Items.Consumable` non exécutées ; PIE non fait.

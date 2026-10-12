@@ -84,9 +84,12 @@ void AConsumablePickupActor::Interact_Implementation(APawn* User)
 	UE_LOG(Logmonke_island, Log, TEXT("%s consumed %s: +%.0f health"), *GetNameSafe(User), *GetName(), Healed);
 
 	bConsumed = true;
+	// initially dormant (no channel): woken first, then its sound sent while it is still shown. A multicast goes only to the
+	// clients the actor is relevant for, and an actor hidden without collision is relevant for none (T-316). A static
+	// coconut has no UNetRestComponent: that one serves the free physics bodies
 	FlushNetDormancy();
-	OnRep_Consumed();
 	MulticastConsumed();
+	OnRep_Consumed();
 	SetLifeSpan(FMath::Max(DestroyDelay, 0.01f));
 }
 
@@ -94,7 +97,9 @@ void AConsumablePickupActor::OnRep_Consumed()
 {
 	if (bConsumed)
 	{
-		SetActorHiddenInGame(true);
+		// hidden through its mesh, not the actor: still relevant, so bConsumed opens the woken channel and every client hides
+		// it now, not only when it is destroyed (T-316)
+		Mesh->SetVisibility(false, /*bPropagateToChildren*/ true);
 		SetActorEnableCollision(false);
 	}
 }

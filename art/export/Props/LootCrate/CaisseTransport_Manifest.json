@@ -1,0 +1,1545 @@
+{
+  "format": "caisse-transport/ue-manifest/1",
+  "version": "0.3.0",
+  "units": "Blender : mètres, +Z haut ; Unreal : cm (import FBX, échelle 1.0, Convert Scene ON)",
+  "assets": {
+    "SM_LootCrate": {
+      "files": [
+        "exports/SM_LootCrate.fbx",
+        "exports/SM_LootCrate.glb",
+        "exports/SM_LootCrate_LOD1.fbx",
+        "exports/SM_LootCrate_LOD1.glb",
+        "exports/SM_LootCrate_LOD2.fbx",
+        "exports/SM_LootCrate_LOD2.glb"
+      ],
+      "lod_tris": [
+        11276,
+        7514,
+        2815
+      ],
+      "dims": {
+        "outer_body_m": [
+          0.8,
+          0.45,
+          0.3
+        ],
+        "inner_m": [
+          0.744,
+          0.394,
+          0.266
+        ],
+        "inner_volume_l": 78.0,
+        "floor_top_z": 0.034
+      },
+      "ucx": [
+        {
+          "name": "UCX_SM_LootCrate_00",
+          "role": "fond",
+          "min": [
+            -0.4,
+            -0.225,
+            0.0
+          ],
+          "max": [
+            0.4,
+            0.225,
+            0.034
+          ]
+        },
+        {
+          "name": "UCX_SM_LootCrate_01",
+          "role": "paroi avant (-Y)",
+          "min": [
+            -0.4,
+            -0.225,
+            0.034
+          ],
+          "max": [
+            0.4,
+            -0.197,
+            0.3
+          ]
+        },
+        {
+          "name": "UCX_SM_LootCrate_02",
+          "role": "paroi arrière (+Y, côté porteur)",
+          "min": [
+            -0.4,
+            0.197,
+            0.034
+          ],
+          "max": [
+            0.4,
+            0.225,
+            0.3
+          ]
+        },
+        {
+          "name": "UCX_SM_LootCrate_03",
+          "role": "bout +X",
+          "min": [
+            0.372,
+            -0.197,
+            0.034
+          ],
+          "max": [
+            0.4,
+            0.197,
+            0.3
+          ]
+        },
+        {
+          "name": "UCX_SM_LootCrate_04",
+          "role": "bout -X",
+          "min": [
+            -0.4,
+            -0.197,
+            0.034
+          ],
+          "max": [
+            -0.372,
+            0.197,
+            0.3
+          ]
+        }
+      ],
+      "sockets": {
+        "SOCKET_Grab_L": {
+          "blender": "SOCKET_Grab_L",
+          "loc": [
+            0.24,
+            0.275,
+            0.236
+          ],
+          "usage": "main gauche de Bean (centre de la mitaine) sur la corde de la face arrière (+Y, côté ventre) ; X -> vers la caisse"
+        },
+        "SOCKET_Grab_R": {
+          "blender": "SOCKET_Grab_R",
+          "loc": [
+            -0.24,
+            0.275,
+            0.236
+          ],
+          "usage": "main droite de Bean (centre de la mitaine) sur la corde de la face arrière (+Y, côté ventre) ; X -> vers la caisse"
+        },
+        "SOCKET_Carry": {
+          "blender": "SOCKET_Carry",
+          "loc": [
+            0.0,
+            0.225,
+            0.23
+          ],
+          "usage": "point d'appui contre le ventre de Bean en portage (X -> vers le porteur) ; mode simple : attacher ici un socket squelette CrateCarry"
+        },
+        "SOCKET_BoatSlot": {
+          "blender": "SOCKET_BoatSlot",
+          "loc": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "usage": "pivot de pose : à aligner sur un SOCKET_Slot_## de la barque (plancher), grand axe parallèle à la quille"
+        },
+        "SOCKET_Lid": {
+          "blender": "SOCKET_Lid",
+          "loc": [
+            0.0,
+            0.0,
+            0.3
+          ],
+          "usage": "pivot du couvercle SM_LootCrate_Lid (dessous du plateau) quand il est posé"
+        },
+        "SOCKET_LootZone": {
+          "blender": "SOCKET_LootZone",
+          "loc": [
+            0.0,
+            0.0,
+            0.192
+          ],
+          "usage": "centre du volume TRG_LootZone (BoxComponent du Blueprint)"
+        },
+        "SOCKET_Slot_00": {
+          "blender": "SOCKET_Slot_00",
+          "loc": [
+            -0.2976,
+            -0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 0 colonne 0 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_01": {
+          "blender": "SOCKET_Slot_01",
+          "loc": [
+            -0.1488,
+            -0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 0 colonne 1 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_02": {
+          "blender": "SOCKET_Slot_02",
+          "loc": [
+            0.0,
+            -0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 0 colonne 2 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_03": {
+          "blender": "SOCKET_Slot_03",
+          "loc": [
+            0.1488,
+            -0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 0 colonne 3 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_04": {
+          "blender": "SOCKET_Slot_04",
+          "loc": [
+            0.2976,
+            -0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 0 colonne 4 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_05": {
+          "blender": "SOCKET_Slot_05",
+          "loc": [
+            -0.2976,
+            -0.0,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 1 colonne 0 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_06": {
+          "blender": "SOCKET_Slot_06",
+          "loc": [
+            -0.1488,
+            -0.0,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 1 colonne 1 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_07": {
+          "blender": "SOCKET_Slot_07",
+          "loc": [
+            0.0,
+            -0.0,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 1 colonne 2 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_08": {
+          "blender": "SOCKET_Slot_08",
+          "loc": [
+            0.1488,
+            -0.0,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 1 colonne 3 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_09": {
+          "blender": "SOCKET_Slot_09",
+          "loc": [
+            0.2976,
+            -0.0,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 1 colonne 4 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_10": {
+          "blender": "SOCKET_Slot_10",
+          "loc": [
+            -0.2976,
+            0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 2 colonne 0 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_11": {
+          "blender": "SOCKET_Slot_11",
+          "loc": [
+            -0.1488,
+            0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 2 colonne 1 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_12": {
+          "blender": "SOCKET_Slot_12",
+          "loc": [
+            0.0,
+            0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 2 colonne 2 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_13": {
+          "blender": "SOCKET_Slot_13",
+          "loc": [
+            0.1488,
+            0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 2 colonne 3 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_14": {
+          "blender": "SOCKET_Slot_14",
+          "loc": [
+            0.2976,
+            0.1313,
+            0.034
+          ],
+          "usage": "emplacement couche 0 rang 2 colonne 4 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_15": {
+          "blender": "SOCKET_Slot_15",
+          "loc": [
+            -0.2976,
+            -0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 0 colonne 0 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_16": {
+          "blender": "SOCKET_Slot_16",
+          "loc": [
+            -0.1488,
+            -0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 0 colonne 1 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_17": {
+          "blender": "SOCKET_Slot_17",
+          "loc": [
+            0.0,
+            -0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 0 colonne 2 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_18": {
+          "blender": "SOCKET_Slot_18",
+          "loc": [
+            0.1488,
+            -0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 0 colonne 3 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_19": {
+          "blender": "SOCKET_Slot_19",
+          "loc": [
+            0.2976,
+            -0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 0 colonne 4 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_20": {
+          "blender": "SOCKET_Slot_20",
+          "loc": [
+            -0.2976,
+            -0.0,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 1 colonne 0 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_21": {
+          "blender": "SOCKET_Slot_21",
+          "loc": [
+            -0.1488,
+            -0.0,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 1 colonne 1 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_22": {
+          "blender": "SOCKET_Slot_22",
+          "loc": [
+            0.0,
+            -0.0,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 1 colonne 2 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_23": {
+          "blender": "SOCKET_Slot_23",
+          "loc": [
+            0.1488,
+            -0.0,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 1 colonne 3 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_24": {
+          "blender": "SOCKET_Slot_24",
+          "loc": [
+            0.2976,
+            -0.0,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 1 colonne 4 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_25": {
+          "blender": "SOCKET_Slot_25",
+          "loc": [
+            -0.2976,
+            0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 2 colonne 0 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_26": {
+          "blender": "SOCKET_Slot_26",
+          "loc": [
+            -0.1488,
+            0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 2 colonne 1 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_27": {
+          "blender": "SOCKET_Slot_27",
+          "loc": [
+            0.0,
+            0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 2 colonne 2 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_28": {
+          "blender": "SOCKET_Slot_28",
+          "loc": [
+            0.1488,
+            0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 2 colonne 3 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_29": {
+          "blender": "SOCKET_Slot_29",
+          "loc": [
+            0.2976,
+            0.1313,
+            0.167
+          ],
+          "usage": "emplacement couche 1 rang 2 colonne 4 (pivot d'objet posé au fond de la case)"
+        }
+      },
+      "slots": [
+        {
+          "name": "SOCKET_Slot_00",
+          "layer": 0,
+          "row": 0,
+          "col": 0,
+          "loc": [
+            -0.2976,
+            -0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_01",
+          "layer": 0,
+          "row": 0,
+          "col": 1,
+          "loc": [
+            -0.1488,
+            -0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_02",
+          "layer": 0,
+          "row": 0,
+          "col": 2,
+          "loc": [
+            0.0,
+            -0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_03",
+          "layer": 0,
+          "row": 0,
+          "col": 3,
+          "loc": [
+            0.1488,
+            -0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_04",
+          "layer": 0,
+          "row": 0,
+          "col": 4,
+          "loc": [
+            0.2976,
+            -0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_05",
+          "layer": 0,
+          "row": 1,
+          "col": 0,
+          "loc": [
+            -0.2976,
+            -0.0,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_06",
+          "layer": 0,
+          "row": 1,
+          "col": 1,
+          "loc": [
+            -0.1488,
+            -0.0,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_07",
+          "layer": 0,
+          "row": 1,
+          "col": 2,
+          "loc": [
+            0.0,
+            -0.0,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_08",
+          "layer": 0,
+          "row": 1,
+          "col": 3,
+          "loc": [
+            0.1488,
+            -0.0,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_09",
+          "layer": 0,
+          "row": 1,
+          "col": 4,
+          "loc": [
+            0.2976,
+            -0.0,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_10",
+          "layer": 0,
+          "row": 2,
+          "col": 0,
+          "loc": [
+            -0.2976,
+            0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_11",
+          "layer": 0,
+          "row": 2,
+          "col": 1,
+          "loc": [
+            -0.1488,
+            0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_12",
+          "layer": 0,
+          "row": 2,
+          "col": 2,
+          "loc": [
+            0.0,
+            0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_13",
+          "layer": 0,
+          "row": 2,
+          "col": 3,
+          "loc": [
+            0.1488,
+            0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_14",
+          "layer": 0,
+          "row": 2,
+          "col": 4,
+          "loc": [
+            0.2976,
+            0.1313,
+            0.034
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_15",
+          "layer": 1,
+          "row": 0,
+          "col": 0,
+          "loc": [
+            -0.2976,
+            -0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_16",
+          "layer": 1,
+          "row": 0,
+          "col": 1,
+          "loc": [
+            -0.1488,
+            -0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_17",
+          "layer": 1,
+          "row": 0,
+          "col": 2,
+          "loc": [
+            0.0,
+            -0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_18",
+          "layer": 1,
+          "row": 0,
+          "col": 3,
+          "loc": [
+            0.1488,
+            -0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_19",
+          "layer": 1,
+          "row": 0,
+          "col": 4,
+          "loc": [
+            0.2976,
+            -0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_20",
+          "layer": 1,
+          "row": 1,
+          "col": 0,
+          "loc": [
+            -0.2976,
+            -0.0,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_21",
+          "layer": 1,
+          "row": 1,
+          "col": 1,
+          "loc": [
+            -0.1488,
+            -0.0,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_22",
+          "layer": 1,
+          "row": 1,
+          "col": 2,
+          "loc": [
+            0.0,
+            -0.0,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_23",
+          "layer": 1,
+          "row": 1,
+          "col": 3,
+          "loc": [
+            0.1488,
+            -0.0,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_24",
+          "layer": 1,
+          "row": 1,
+          "col": 4,
+          "loc": [
+            0.2976,
+            -0.0,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_25",
+          "layer": 1,
+          "row": 2,
+          "col": 0,
+          "loc": [
+            -0.2976,
+            0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_26",
+          "layer": 1,
+          "row": 2,
+          "col": 1,
+          "loc": [
+            -0.1488,
+            0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_27",
+          "layer": 1,
+          "row": 2,
+          "col": 2,
+          "loc": [
+            0.0,
+            0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_28",
+          "layer": 1,
+          "row": 2,
+          "col": 3,
+          "loc": [
+            0.1488,
+            0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_29",
+          "layer": 1,
+          "row": 2,
+          "col": 4,
+          "loc": [
+            0.2976,
+            0.1313,
+            0.167
+          ],
+          "cell_size": [
+            0.1488,
+            0.1313,
+            0.133
+          ]
+        }
+      ],
+      "trigger": {
+        "name": "TRG_LootZone",
+        "center": [
+          0,
+          0,
+          0.192
+        ],
+        "extent_m": [
+          0.372,
+          0.197,
+          0.158
+        ]
+      },
+      "material": "MI_LootCrate <- M_PropPBR (BaseColor, Normal DX, ORM)"
+    },
+    "SM_LootCrate_Lid": {
+      "files": [
+        "exports/SM_LootCrate_Lid.fbx",
+        "exports/SM_LootCrate_Lid.glb",
+        "exports/SM_LootCrate_Lid_LOD1.fbx",
+        "exports/SM_LootCrate_Lid_LOD1.glb",
+        "exports/SM_LootCrate_Lid_LOD2.fbx",
+        "exports/SM_LootCrate_Lid_LOD2.glb"
+      ],
+      "lod_tris": [
+        2688,
+        2054,
+        889
+      ],
+      "ucx": [
+        {
+          "name": "UCX_SM_LootCrate_Lid_00",
+          "role": "plateau + tasseaux",
+          "min": [
+            -0.4,
+            -0.225,
+            0.0
+          ],
+          "max": [
+            0.4,
+            0.225,
+            0.028
+          ]
+        },
+        {
+          "name": "UCX_SM_LootCrate_Lid_01",
+          "role": "taquets de centrage",
+          "min": [
+            -0.366,
+            -0.192,
+            -0.018
+          ],
+          "max": [
+            0.366,
+            0.192,
+            0.0
+          ]
+        }
+      ],
+      "sockets": {
+        "SOCKET_Grab": {
+          "blender": "SOCKET_Lid_Grab",
+          "loc": [
+            0.0,
+            0.0,
+            0.06
+          ],
+          "usage": "anse du couvercle (main de Bean)"
+        }
+      },
+      "usage": "couvercle amovible ; se pose sur SOCKET_Lid de la caisse (pivot = dessous du plateau)"
+    },
+    "SM_LootCrate_Small": {
+      "files": [
+        "exports/SM_LootCrate_Small.fbx",
+        "exports/SM_LootCrate_Small.glb",
+        "exports/SM_LootCrate_Small_LOD1.fbx",
+        "exports/SM_LootCrate_Small_LOD1.glb",
+        "exports/SM_LootCrate_Small_LOD2.fbx",
+        "exports/SM_LootCrate_Small_LOD2.glb"
+      ],
+      "lod_tris": [
+        7216,
+        4046,
+        1887
+      ],
+      "dims": {
+        "outer_body_m": [
+          0.32,
+          0.22,
+          0.2
+        ],
+        "inner_m": [
+          0.272,
+          0.172,
+          0.172
+        ],
+        "inner_volume_l": 8.0,
+        "floor_top_z": 0.028
+      },
+      "ucx": [
+        {
+          "name": "UCX_SM_LootCrate_Small_00",
+          "role": "fond",
+          "min": [
+            -0.16,
+            -0.11,
+            0.0
+          ],
+          "max": [
+            0.16,
+            0.11,
+            0.028
+          ]
+        },
+        {
+          "name": "UCX_SM_LootCrate_Small_01",
+          "role": "paroi avant (-Y)",
+          "min": [
+            -0.16,
+            -0.11,
+            0.028
+          ],
+          "max": [
+            0.16,
+            -0.086,
+            0.2
+          ]
+        },
+        {
+          "name": "UCX_SM_LootCrate_Small_02",
+          "role": "paroi arrière (+Y, côté porteur)",
+          "min": [
+            -0.16,
+            0.086,
+            0.028
+          ],
+          "max": [
+            0.16,
+            0.11,
+            0.2
+          ]
+        },
+        {
+          "name": "UCX_SM_LootCrate_Small_03",
+          "role": "bout +X",
+          "min": [
+            0.136,
+            -0.086,
+            0.028
+          ],
+          "max": [
+            0.16,
+            0.086,
+            0.2
+          ]
+        },
+        {
+          "name": "UCX_SM_LootCrate_Small_04",
+          "role": "bout -X",
+          "min": [
+            -0.16,
+            -0.086,
+            0.028
+          ],
+          "max": [
+            -0.136,
+            0.086,
+            0.2
+          ]
+        }
+      ],
+      "sockets": {
+        "SOCKET_Grab_L": {
+          "blender": "SOCKET_S_Grab_L",
+          "loc": [
+            0.2,
+            0.07,
+            0.17
+          ],
+          "usage": "prise à deux mains sur le tasseau haut du bout"
+        },
+        "SOCKET_Grab_R": {
+          "blender": "SOCKET_S_Grab_R",
+          "loc": [
+            -0.2,
+            0.07,
+            0.17
+          ],
+          "usage": "prise à deux mains sur le tasseau haut du bout"
+        },
+        "SOCKET_Grab_Top": {
+          "blender": "SOCKET_S_Grab_Top",
+          "loc": [
+            0.0,
+            0.0,
+            0.318
+          ],
+          "usage": "anse : port à une main (main au centre de l'anse)"
+        },
+        "SOCKET_Carry": {
+          "blender": "SOCKET_S_Carry",
+          "loc": [
+            0.0,
+            0.11,
+            0.17
+          ],
+          "usage": "point d'appui contre le ventre de Bean en portage (X -> vers le porteur) ; mode simple : attacher ici un socket squelette CrateCarry"
+        },
+        "SOCKET_BoatSlot": {
+          "blender": "SOCKET_S_BoatSlot",
+          "loc": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "usage": "pivot de pose : à aligner sur un SOCKET_Slot_## de la barque (plancher), grand axe parallèle à la quille"
+        },
+        "SOCKET_LootZone": {
+          "blender": "SOCKET_S_LootZone",
+          "loc": [
+            0.0,
+            0.0,
+            0.139
+          ],
+          "usage": "centre du volume TRG_LootZone (BoxComponent du Blueprint)"
+        },
+        "SOCKET_Slot_00": {
+          "blender": "SOCKET_S_Slot_00",
+          "loc": [
+            -0.068,
+            0.0,
+            0.028
+          ],
+          "usage": "emplacement couche 0 rang 0 colonne 0 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_01": {
+          "blender": "SOCKET_S_Slot_01",
+          "loc": [
+            0.068,
+            0.0,
+            0.028
+          ],
+          "usage": "emplacement couche 0 rang 0 colonne 1 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_02": {
+          "blender": "SOCKET_S_Slot_02",
+          "loc": [
+            -0.068,
+            0.0,
+            0.114
+          ],
+          "usage": "emplacement couche 1 rang 0 colonne 0 (pivot d'objet posé au fond de la case)"
+        },
+        "SOCKET_Slot_03": {
+          "blender": "SOCKET_S_Slot_03",
+          "loc": [
+            0.068,
+            0.0,
+            0.114
+          ],
+          "usage": "emplacement couche 1 rang 0 colonne 1 (pivot d'objet posé au fond de la case)"
+        }
+      },
+      "slots": [
+        {
+          "name": "SOCKET_Slot_00",
+          "layer": 0,
+          "row": 0,
+          "col": 0,
+          "loc": [
+            -0.068,
+            0.0,
+            0.028
+          ],
+          "cell_size": [
+            0.136,
+            0.172,
+            0.086
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_01",
+          "layer": 0,
+          "row": 0,
+          "col": 1,
+          "loc": [
+            0.068,
+            0.0,
+            0.028
+          ],
+          "cell_size": [
+            0.136,
+            0.172,
+            0.086
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_02",
+          "layer": 1,
+          "row": 0,
+          "col": 0,
+          "loc": [
+            -0.068,
+            0.0,
+            0.114
+          ],
+          "cell_size": [
+            0.136,
+            0.172,
+            0.086
+          ]
+        },
+        {
+          "name": "SOCKET_Slot_03",
+          "layer": 1,
+          "row": 0,
+          "col": 1,
+          "loc": [
+            0.068,
+            0.0,
+            0.114
+          ],
+          "cell_size": [
+            0.136,
+            0.172,
+            0.086
+          ]
+        }
+      ],
+      "trigger": {
+        "name": "TRG_LootZone",
+        "center": [
+          0,
+          0,
+          0.139
+        ],
+        "extent_m": [
+          0.136,
+          0.086,
+          0.111
+        ]
+      },
+      "usage": "petite caisse à anse : port à une main (SOCKET_Grab_Top), 4 slots"
+    }
+  },
+  "textures": {
+    "BaseColor": "textures/T_LootCrate_BaseColor.png",
+    "Normal_GL": "textures/T_LootCrate_Normal_GL.png",
+    "Normal": "textures/T_LootCrate_Normal.png",
+    "ORM": "textures/T_LootCrate_ORM.png",
+    "resolution": 2048,
+    "notes": "Normal : version DirectX pour Unreal (T_LootCrate_Normal), version OpenGL pour Blender/GLB (_Normal_GL). ORM en Linear (sRGB décoché), compression Masks."
+  },
+  "capacity": {
+    "SM_LootCrate": {
+      "inner_m": {
+        "x": 0.744,
+        "y": 0.394,
+        "z": 0.266
+      },
+      "inner_volume_l": 78.0,
+      "slots": 30,
+      "slot_grid": "5 colonnes (X) x 3 rangs (Y) x 2 couches (Z)",
+      "mass_empty_kg": 12.71,
+      "mass_lid_kg": 4.05,
+      "mass_max_recommended_kg": 25,
+      "demo_loot_mass_kg": 5.71,
+      "walk_speed_multiplier": {
+        "vide": 0.85,
+        "<= 8 kg": 0.75,
+        "<= 16 kg": 0.65,
+        "<= 25 kg": 0.55
+      }
+    },
+    "SM_LootCrate_Small": {
+      "inner_volume_l": 8.0,
+      "slots": 4,
+      "mass_empty_kg": 2.86,
+      "mass_max_recommended_kg": 6
+    }
+  },
+  "carry": {
+    "attach_bone": "hand_r",
+    "attach_rule": "KeepWorld (la caisse suit hand_r ; main gauche en IK sur SOCKET_Grab_L)",
+    "carry_pose_crate_in_bean_space_m": {
+      "location": [
+        0.0,
+        -0.529,
+        0.39
+      ],
+      "note": "Bean regarde -Y (Blender) ; caisse centrée devant lui, grand axe gauche-droite"
+    },
+    "crate_back_to_bean_center_m": 0.304,
+    "crate_bottom_z_m": 0.39,
+    "crate_top_z_m": 0.69,
+    "bean_eye_bottom_z_m": 0.743,
+    "arm_reach_used_m": 0.2463,
+    "arm_reach_rest_m": 0.322,
+    "hand_r_to_crate_offset": {
+      "matrix_rows": [
+        [
+          0.9907,
+          0.0263,
+          -0.1333,
+          0.2568
+        ],
+        [
+          -0.0955,
+          -0.5631,
+          -0.8209,
+          0.3975
+        ],
+        [
+          -0.0966,
+          0.826,
+          -0.5553,
+          -0.1196
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "note": "caisse = hand_r(monde) x offset ; espace Blender de l'os (Y le long de l'os)"
+    },
+    "simple_mode": "Sans hand_r : créer un socket squelette 'CrateCarry' sur spine_02 et y attacher SOCKET_Carry (SnapToTarget) pendant Crate_Carry_* ; IK deux os des mains vers SOCKET_Grab_L/R dans l'AnimBP."
+  },
+  "animations": [
+    {
+      "name": "Crate_Pickup",
+      "file": "exports/anims/A_Bean_Crate_Pickup.fbx",
+      "frames": 37,
+      "seconds": 1.5,
+      "loop": false,
+      "montage": "FullBody",
+      "speed_mps": null,
+      "notifies": [
+        {
+          "name": "AN_CrateAttach",
+          "frame": 13,
+          "time_s": 0.542
+        }
+      ],
+      "qa": {
+        "frames": 19,
+        "body_overlap_frames": [],
+        "arm_overlap_frames": [],
+        "arm_rope_contact_frames": [],
+        "hand_contact_frames": 12,
+        "grip_err_mm_max": 4.0,
+        "grip_err_mm_mean": 2.0,
+        "rot_err_deg_max": 0.0
+      }
+    },
+    {
+      "name": "Crate_Carry_Idle",
+      "file": "exports/anims/A_Bean_Crate_Carry_Idle.fbx",
+      "frames": 49,
+      "seconds": 2.0,
+      "loop": true,
+      "montage": "Loop",
+      "speed_mps": null,
+      "notifies": [],
+      "qa": {
+        "frames": 25,
+        "body_overlap_frames": [],
+        "arm_overlap_frames": [],
+        "arm_rope_contact_frames": [],
+        "hand_contact_frames": 25,
+        "grip_err_mm_max": 4.0,
+        "grip_err_mm_mean": 2.0,
+        "rot_err_deg_max": 0.0
+      }
+    },
+    {
+      "name": "Crate_Carry_Walk",
+      "file": "exports/anims/A_Bean_Crate_Carry_Walk.fbx",
+      "frames": 44,
+      "seconds": 1.792,
+      "loop": true,
+      "montage": "Loop",
+      "speed_mps": 0.29,
+      "notifies": [
+        {
+          "name": "AN_Footstep_L",
+          "frame": 0,
+          "time_s": 0.0
+        },
+        {
+          "name": "AN_Footstep_R",
+          "frame": 11,
+          "time_s": 0.458
+        },
+        {
+          "name": "AN_Footstep_L",
+          "frame": 22,
+          "time_s": 0.917
+        },
+        {
+          "name": "AN_Footstep_R",
+          "frame": 32,
+          "time_s": 1.333
+        }
+      ],
+      "qa": {
+        "frames": 22,
+        "body_overlap_frames": [],
+        "arm_overlap_frames": [],
+        "arm_rope_contact_frames": [],
+        "hand_contact_frames": 22,
+        "grip_err_mm_max": 4.0,
+        "grip_err_mm_mean": 2.0,
+        "rot_err_deg_max": 0.0
+      }
+    },
+    {
+      "name": "Crate_PutDown",
+      "file": "exports/anims/A_Bean_Crate_PutDown.fbx",
+      "frames": 35,
+      "seconds": 1.417,
+      "loop": false,
+      "montage": "FullBody",
+      "speed_mps": null,
+      "notifies": [
+        {
+          "name": "AN_CrateDetach",
+          "frame": 21,
+          "time_s": 0.875
+        }
+      ],
+      "qa": {
+        "frames": 18,
+        "body_overlap_frames": [],
+        "arm_overlap_frames": [],
+        "arm_rope_contact_frames": [],
+        "hand_contact_frames": 11,
+        "grip_err_mm_max": 4.0,
+        "grip_err_mm_mean": 2.0,
+        "rot_err_deg_max": 0.0
+      }
+    },
+    {
+      "name": "Crate_LoadBoat",
+      "file": "exports/anims/A_Bean_Crate_LoadBoat.fbx",
+      "frames": 54,
+      "seconds": 2.208,
+      "loop": false,
+      "montage": "FullBody",
+      "speed_mps": null,
+      "notifies": [
+        {
+          "name": "AN_CrateDetach",
+          "frame": 20,
+          "time_s": 0.833
+        },
+        {
+          "name": "AN_CrateToBoatSlot",
+          "frame": 20,
+          "time_s": 0.833
+        }
+      ],
+      "qa": {
+        "frames": 27,
+        "body_overlap_frames": [],
+        "arm_overlap_frames": [],
+        "arm_rope_contact_frames": [],
+        "hand_contact_frames": 11,
+        "grip_err_mm_max": 4.0,
+        "grip_err_mm_mean": 2.0,
+        "rot_err_deg_max": 0.0
+      }
+    }
+  ],
+  "anim_skeleton": "SK_Bean_Body (SKEL_Bean) — FBX armature seule, 24 i/s, racine fixe (pas de root motion)",
+  "boat": {
+    "scale": 0.75,
+    "slot_used": "SOCKET_Slot_07",
+    "slot_lift_m": 0.006,
+    "crate_world_at_slot": [
+      0.0,
+      -1.68,
+      -0.069
+    ],
+    "loadboat_path_overlap_frames": [],
+    "final_overlap": false,
+    "min_clearance_to_hull_m": 0.0027,
+    "crates_fitting_on_barque_slots": 1,
+    "slots_fitting": [
+      "SOCKET_Slot_04"
+    ],
+    "free_layout_on_centerline": {
+      "en_long": {
+        "count": 2,
+        "x_world": [
+          -0.61,
+          0.2
+        ]
+      },
+      "en_travers": {
+        "count": 3,
+        "x_world": [
+          -0.86,
+          -0.36,
+          0.14
+        ]
+      }
+    },
+    "interior_x075": {
+      "floor_z_world": -0.0705,
+      "inner_width_m_at_0.05_above_floor": 1.274,
+      "inner_width_m_at_0.20_above_floor": 1.524,
+      "inner_width_m_at_0.35_above_floor": 1.613,
+      "clear_length_between_thwarts_m": 1.815,
+      "gunwale_top_z_world": 0.418
+    }
+  },
+  "trigger": {
+    "name": "TRG_LootZone",
+    "component": "BoxComponent",
+    "attach": "SOCKET_LootZone",
+    "extent_cm": [
+      37.2,
+      19.7,
+      15.8
+    ],
+    "collision": "OverlapAllDynamic, GenerateOverlapEvents"
+  },
+  "blueprint": "BP_LootCrate (voir README_UE.md)"
+}
