@@ -103,6 +103,9 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void OnEquippedChanged() override;
+
+	/** Forgets the bindings of a former carrier: the next carrier binds its own (T-288) */
+	virtual void OnInputBindingsRemoved() override;
 	virtual void OnAttachedToCarrier() override;
 
 	UFUNCTION(Server, Reliable)

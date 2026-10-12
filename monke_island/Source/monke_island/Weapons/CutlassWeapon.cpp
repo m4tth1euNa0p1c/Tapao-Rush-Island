@@ -4,18 +4,25 @@
 #include "Weapons/CutlassMath.h"
 
 #include "Weapons/IslanderInventoryComponent.h"
+#include "Weapons/MusketMath.h"
 #include "monke_island.h"
 #include "AnimationRuntime.h"
 #include "Camera/CameraComponent.h"
+#include "Camera/CameraShakeBase.h"
+#include "Camera/PlayerCameraManager.h"
 #include "Character/Bean/BeanAnimDriverComponent.h"
 #include "Character/Bean/BeanFirstPersonArmsComponent.h"
 #include "Character/Bean/BeanPuppetComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/SkinnedAsset.h"
 #include "EnhancedInputComponent.h"
 #include "Engine/OverlapResult.h"
 #include "Engine/World.h"
 #include "GameFramework/DamageType.h"
+#include "GameFramework/PlayerController.h"
+#include "GameFramework/RootMotionSource.h"
 #include "Interaction/IslanderGrabComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
@@ -37,7 +44,7 @@ namespace
 		return Mesh;
 	}
 
-	/** Server tolerance on the end of a move: the carrier's clock runs a little ahead of the server's (s) */
+	/** Server tolerance on the cancel window of a move: the carrier's clock runs a little ahead of the server's (s) */
 	constexpr double MoveEndTolerance = 0.12;
 
 	/** Server tolerance on the finisher charge (s) */
@@ -45,6 +52,15 @@ namespace
 
 	/** Life of a damage number (s) */
 	constexpr double HitMarkerLife = 1.2;
+
+	/** Enemies farther above or below the bean's centre are out of the arc and of the soft aim (cm) */
+	constexpr float ArcHeightTolerance = 160.0f;
+
+	/** First person soft aim: the camera is released once this close to the enemy (deg) */
+	constexpr float AimAssistDoneDegrees = 0.5f;
+
+	/** Root motion source of the lunge */
+	const FName LungeSourceName(TEXT("CutlassLunge"));
 }
 
 ACutlassWeapon::ACutlassWeapon()
@@ -140,6 +156,8 @@ void ACutlassWeapon::OnAttachedToCarrier()
 void ACutlassWeapon::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	GetWorldTimerManager().ClearAllTimersForObject(this);
+	ReleaseHitStop();
+	SetAttackSlowdown(false);
 	if (Arms.IsValid() && bArmsDriven)
 	{
 		Arms->ClearPoseOverride();
@@ -166,9 +184,31 @@ bool ACutlassWeapon::IsUsable() const
 	return !(Move && Move->IsSwimming());
 }
 
-float ACutlassWeapon::GetLocalMoveElapsed() const
+bool ACutlassWeapon::UsesFirstPersonViewModel() const
+{
+	return Rules && Rules->bFirstPersonViewModel;
+}
+
+CutlassMath::FMoveWindows ACutlassWeapon::GetLocalWindows() const
+{
+	return Rules ? CutlassMath::GetMoveWindows(*Rules, LocalMove) : CutlassMath::FMoveWindows();
+}
+
+float ACutlassWeapon::GetLocalPlayed() const
 {
 	return LocalMove == ECutlassMove::None ? 0.0f : static_cast<float>(GetWorld()->GetTimeSeconds() - LocalMoveStart);
+}
+
+float ACutlassWeapon::GetLocalMoveElapsed() const
+{
+	if (LocalMove == ECutlassMove::None || !Rules)
+	{
+		return 0.0f;
+	}
+	// an attack's recovery plays faster than its track: the track time keeps the body clip on the blade
+	const CutlassMath::FMoveWindows Windows = GetLocalWindows();
+	const float Played = GetLocalPlayed();
+	return Windows.bAttack ? Windows.TrackTime(Played) : Played;
 }
 
 float ACutlassWeapon::GetLocalMoveDuration() const
@@ -204,20 +244,31 @@ void ACutlassWeapon::BindInput()
 	// the bindings stay; the mapping context decides when the keys reach them
 	if (AttackAction)
 	{
-		Input->BindAction(AttackAction, ETriggerEvent::Started, this, &ACutlassWeapon::HandleAttackStarted);
-		Input->BindAction(AttackAction, ETriggerEvent::Completed, this, &ACutlassWeapon::HandleAttackCompleted);
+		KeepInputBinding(Input, Input->BindAction(AttackAction, ETriggerEvent::Started, this, &ACutlassWeapon::HandleAttackStarted).GetHandle());
+		KeepInputBinding(Input, Input->BindAction(AttackAction, ETriggerEvent::Completed, this, &ACutlassWeapon::HandleAttackCompleted).GetHandle());
 	}
 	if (ParryAction)
 	{
-		Input->BindAction(ParryAction, ETriggerEvent::Started, this, &ACutlassWeapon::HandleParryStarted);
-		Input->BindAction(ParryAction, ETriggerEvent::Completed, this, &ACutlassWeapon::HandleParryCompleted);
+		KeepInputBinding(Input, Input->BindAction(ParryAction, ETriggerEvent::Started, this, &ACutlassWeapon::HandleParryStarted).GetHandle());
+		KeepInputBinding(Input, Input->BindAction(ParryAction, ETriggerEvent::Completed, this, &ACutlassWeapon::HandleParryCompleted).GetHandle());
 	}
 	bInputBound = true;
 }
 
+void ACutlassWeapon::OnInputBindingsRemoved()
+{
+	Super::OnInputBindingsRemoved();
+	bInputBound = false;
+}
+
 void ACutlassWeapon::HandleAttackStarted()
 {
-	if (!IsUsable() || bParrying)
+	// keys of a former carrier never drive the item someone else now holds (T-288, network review R-37)
+	if (!IsCarrierLocallyControlled())
+	{
+		return;
+	}
+	if (!IsUsable() || bParrying || bParryWanted)
 	{
 		return;
 	}
@@ -235,6 +286,10 @@ void ACutlassWeapon::HandleAttackStarted()
 
 void ACutlassWeapon::HandleAttackCompleted()
 {
+	if (!IsCarrierLocallyControlled())
+	{
+		return;
+	}
 	// released before the charge: a combo blow (the finisher already left from Tick otherwise)
 	if (LocalChargeStart >= 0.0 && !bChargeSpent)
 	{
@@ -246,11 +301,19 @@ void ACutlassWeapon::HandleAttackCompleted()
 
 void ACutlassWeapon::HandleParryStarted()
 {
+	if (!IsCarrierLocallyControlled())
+	{
+		return;
+	}
 	SetParrying(true);
 }
 
 void ACutlassWeapon::HandleParryCompleted()
 {
+	if (!IsCarrierLocallyControlled())
+	{
+		return;
+	}
 	SetParrying(false);
 }
 
@@ -263,13 +326,14 @@ void ACutlassWeapon::RequestAttack(bool bFinisher)
 		return;
 	}
 	const double Now = GetWorld()->GetTimeSeconds();
-	const bool bBusy = LocalMove != ECutlassMove::None && Now < LocalMoveStart + Rules->GetMoveDuration(LocalMove);
-	if (bBusy)
+	if (Now < LocalAttackOpen)
 	{
-		// one click is kept and played when the blow ends
-		bQueuedAttack = !bFinisher;
+		// buffered: played as soon as the running move can be cancelled (Tick)
+		BufferedPressTime = Now;
+		bBufferedFinisher = bFinisher;
 		return;
 	}
+	BufferedPressTime = -1.0;
 	const UIslanderMovementComponent* Move = GetCarrierMovement();
 	if (!Move || !CutlassMath::HasStaminaFor(Move->GetStamina(), Move->MaxStamina, Rules->StaminaCostFraction))
 	{
@@ -301,7 +365,7 @@ bool ACutlassWeapon::CanAttackNow() const
 {
 	const UIslanderMovementComponent* Move = GetCarrierMovement();
 	return IsUsable() && !bParrying && Move
-		&& GetWorld()->GetTimeSeconds() >= ServerMoveEnd - MoveEndTolerance
+		&& GetWorld()->GetTimeSeconds() >= ServerAttackOpen - MoveEndTolerance
 		&& CutlassMath::HasStaminaFor(Move->GetStamina(), Move->MaxStamina, Rules->StaminaCostFraction);
 }
 
@@ -331,41 +395,159 @@ void ACutlassWeapon::ServerAttack_Implementation(ECutlassMove Move)
 		return;
 	}
 
+	// the blow being cancelled finishes its sweep first, while it is still the move the creatures read
+	UpdateServerBlade(Now);
+
 	UIslanderMovementComponent* CarrierMove = GetCarrierMovement();
 	CarrierMove->ConsumeStamina(CutlassMath::StaminaCost(CarrierMove->MaxStamina, Rules->StaminaCostFraction));
 
+	const CutlassMath::FMoveWindows Windows = CutlassMath::GetMoveWindows(*Rules, Move);
 	ServerMove = Move;
-	ServerMoveEnd = Now + Rules->GetMoveDuration(Move);
+	ServerMoveStart = Now;
+	ServerAttackOpen = Now + Windows.AttackCancel;
+	ServerDefensiveOpen = Now + Windows.DefensiveCancel;
 	if (Move != ECutlassMove::Finisher)
 	{
 		LastComboMove = Move;
-		LastComboEnd = ServerMoveEnd;
+		LastComboEnd = Now + Windows.Duration;
 	}
+	ServerBlowTargets.Reset();
+	bServerBladeStarted = false;
+	bServerBladeDone = false;
+	bServerArcDone = false;
+
 	MoveState.Move = Move;
 	++MoveState.Counter;
 	// the server is the carrier (host) or watches another player: OnRep does not run here
 	PlayMove(Move);
-	GetWorldTimerManager().SetTimer(HitTimer, this, &ACutlassWeapon::ApplyHit, FMath::Max(Attack->HitTime, 0.01f), false);
 }
 
 void ACutlassWeapon::ClientRejectAttack_Implementation()
 {
-	// back to the guard; the stamina comes back with the server's correction
-	LocalMove = ECutlassMove::None;
-	bQueuedAttack = false;
+	// back to the guard; the stamina and the position come back with the server's corrections
+	StopLocalMove();
+	BufferedPressTime = -1.0;
+	LocalAttackOpen = 0.0;
+	LocalDefensiveOpen = 0.0;
+	SetAttackSlowdown(false);
+	if (const AIslanderCharacter* Carrier = GetCarrier())
+	{
+		if (UCharacterMovementComponent* Movement = Carrier->GetCharacterMovement())
+		{
+			Movement->RemoveRootMotionSource(LungeSourceName);
+		}
+	}
 }
 
-void ACutlassWeapon::ApplyHit()
+// ---------------------------------------------------------------- blade (server)
+
+FTransform ACutlassWeapon::GetBladeFrame() const
 {
-	AIslanderCharacter* Carrier = GetCarrier();
+	const AIslanderCharacter* Carrier = GetCarrier();
+	if (!Carrier)
+	{
+		return GetActorTransform();
+	}
+	const USceneComponent* Body = Puppet.IsValid() ? static_cast<const USceneComponent*>(Puppet.Get()) : static_cast<const USceneComponent*>(Carrier->GetMesh());
+	return Body ? Body->GetComponentTransform() : Carrier->GetActorTransform();
+}
+
+void ACutlassWeapon::UpdateServerBlade(double Now)
+{
+	if (bServerBladeDone || !HasAuthority())
+	{
+		return;
+	}
 	const FCutlassAttack* Attack = Rules ? Rules->GetAttack(ServerMove) : nullptr;
-	if (!Carrier || !Attack || !IsUsable())
+	if (!Attack || !GetCarrier() || !IsUsable())
+	{
+		bServerBladeDone = true;
+		return;
+	}
+	const CutlassMath::FMoveWindows Windows = CutlassMath::GetMoveWindows(*Rules, ServerMove);
+	const float Played = static_cast<float>(Now - ServerMoveStart);
+	if (Played < Windows.ActiveStart)
 	{
 		return;
 	}
 
+	// played time is the track time up to the last active frame
+	const float To = FMath::Min(Played, Windows.ActiveEnd);
+	const FTransform Frame = GetBladeFrame();
+	if (!bServerBladeStarted)
+	{
+		bServerBladeStarted = true;
+		ServerBladeTime = Windows.ActiveStart;
+		ServerBladeFrame = Frame;
+	}
+
+	FHitBatch Batch;
+	SweepBlade(*Attack, ServerBladeTime, To, ServerBladeFrame, Frame, Batch);
+	if (!bServerArcDone && To >= Windows.HitTime)
+	{
+		bServerArcDone = true;
+		CheckArc(*Attack, Batch);
+	}
+	ServerBladeTime = To;
+	ServerBladeFrame = Frame;
+	if (Played >= Windows.ActiveEnd)
+	{
+		bServerBladeDone = true;
+	}
+	SendHits(Batch);
+}
+
+void ACutlassWeapon::SweepBlade(const FCutlassAttack& Attack, float From, float To, const FTransform& FrameFrom, const FTransform& FrameTo, FHitBatch& Batch)
+{
+	const AIslanderCharacter* Carrier = GetCarrier();
+	FCollisionObjectQueryParams ObjectParams;
+	for (const TEnumAsByte<EObjectTypeQuery>& Type : Rules->HitObjectTypes)
+	{
+		ObjectParams.AddObjectTypesToQuery(UEngineTypes::ConvertToCollisionChannel(Type));
+	}
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(CutlassBlade), false, Carrier);
+	Params.AddIgnoredActor(this);
+	const FCollisionShape Sphere = FCollisionShape::MakeSphere(Rules->BladeSweepRadiusCm);
+
+	// sub-steps along the track: a slow server frame still follows the curve of the cut
+	const int32 Steps = CutlassMath::SubstepCount(From, To, Rules->BladeSubstepSeconds);
+	TArray<FVector> Previous;
+	TArray<FVector> Current;
+	CutlassMath::BladePoints(CutlassMath::SampleKeys(Attack.Keys, From, Rules->GuardKey), Rules->BladeStartCm, Rules->BladeTipCm,
+		Rules->BladeSamples, FrameFrom, Previous);
+	TArray<FHitResult> Hits;
+	for (int32 Step = 1; Step <= Steps; ++Step)
+	{
+		const float Alpha = static_cast<float>(Step) / static_cast<float>(Steps);
+		FTransform Frame;
+		Frame.Blend(FrameFrom, FrameTo, Alpha);
+		CutlassMath::BladePoints(CutlassMath::SampleKeys(Attack.Keys, FMath::Lerp(From, To, Alpha), Rules->GuardKey), Rules->BladeStartCm,
+			Rules->BladeTipCm, Rules->BladeSamples, Frame, Current);
+		for (int32 Index = 0; Index < Current.Num() && Index < Previous.Num(); ++Index)
+		{
+			Hits.Reset();
+			GetWorld()->SweepMultiByObjectType(Hits, Previous[Index], Current[Index], FQuat::Identity, ObjectParams, Sphere, Params);
+			for (const FHitResult& Hit : Hits)
+			{
+				AActor* Target = Hit.GetActor();
+				if (!Target || ServerBlowTargets.Contains(Target))
+				{
+					continue;
+				}
+				const FVector Impact = Hit.bStartPenetrating ? Current[Index] : FVector(Hit.ImpactPoint);
+				StrikeTarget(Target, Hit.GetComponent(), Impact, Attack, Batch);
+			}
+		}
+		Swap(Previous, Current);
+	}
+}
+
+void ACutlassWeapon::CheckArc(const FCutlassAttack& Attack, FHitBatch& Batch)
+{
+	const AIslanderCharacter* Carrier = GetCarrier();
 	const FVector Origin = Carrier->GetActorLocation();
-	const FVector Forward = FRotator(0.0f, Carrier->GetBaseAimRotation().Yaw, 0.0f).Vector();
+	// the bean faces its blow (turned toward the aim or the soft aim target)
+	const FVector Forward = Carrier->GetActorForwardVector();
 	const float SearchRadius = Rules->ReachCm + Rules->TargetRadiusAllowance + 100.0f;
 
 	FCollisionObjectQueryParams ObjectParams;
@@ -378,18 +560,10 @@ void ACutlassWeapon::ApplyHit()
 	TArray<FOverlapResult> Overlaps;
 	GetWorld()->OverlapMultiByObjectType(Overlaps, Origin, FQuat::Identity, ObjectParams, FCollisionShape::MakeSphere(SearchRadius), Params);
 
-	TArray<FVector_NetQuantize> Locations;
-	TArray<float> Damages;
-	TArray<bool> Kills;
-	TSet<const AActor*> Done;
-	// cuts carry their own damage type: a creature killed by one, or a corpse hit by one, may fall in two halves
-	const TSubclassOf<UDamageType> DamageType = UDamageType::StaticClass();
-	FVector StruckBodyLocation = FVector::ZeroVector;
-	bool bStruckBody = false;
 	for (const FOverlapResult& Overlap : Overlaps)
 	{
 		AActor* Target = Overlap.GetActor();
-		if (!Target || Done.Contains(Target))
+		if (!Target || ServerBlowTargets.Contains(Target))
 		{
 			continue;
 		}
@@ -398,75 +572,97 @@ void ACutlassWeapon::ApplyHit()
 		const float TargetRadius = TargetCharacter && TargetCharacter->GetCapsuleComponent()
 			? FMath::Min(TargetCharacter->GetCapsuleComponent()->GetScaledCapsuleRadius(), Rules->TargetRadiusAllowance)
 			: Rules->TargetRadiusAllowance * 0.5f;
-		if (FMath::Abs(Offset.Z) > 160.0f || !CutlassMath::IsInSweep(Forward, Offset, Rules->ReachCm + TargetRadius, Attack->ArcDegrees))
+		if (FMath::Abs(Offset.Z) > ArcHeightTolerance || !CutlassMath::IsInSweep(Forward, Offset, Rules->ReachCm + TargetRadius, Attack.ArcDegrees))
 		{
 			continue;
 		}
-		Done.Add(Target);
+		UPrimitiveComponent* Component = Overlap.GetComponent();
+		StrikeTarget(Target, Component, Component ? Component->GetComponentLocation() : Target->GetActorLocation(), Attack, Batch);
+	}
+}
 
-		const APawn* TargetPawn = Cast<APawn>(Target);
-		const bool bFriendly = TargetPawn && TargetPawn->IsPlayerControlled();
-		if (bFriendly && !Rules->bFriendlyFire)
-		{
-			continue;
-		}
-
-		const FVector Direction = FVector(Offset.X, Offset.Y, 0.0f).GetSafeNormal();
-		if (TargetPawn)
-		{
-			const UIslanderHealthComponent* Health = Target->FindComponentByClass<UIslanderHealthComponent>();
-			const bool bWasAlive = !Health || !Health->IsDead();
-			const float Damage = CutlassMath::BlowDamage(Attack->Damage, Sharpness, Rules->DullThreshold, Rules->DullDamageMultiplier);
-			FHitResult Hit(Target, Overlap.GetComponent(), Target->GetActorLocation(), -Direction);
-			UGameplayStatics::ApplyPointDamage(Target, Damage, Direction, Hit, Carrier->GetController(), this, DamageType);
-			const bool bKill = bWasAlive && Health && Health->IsDead();
-			if (ACharacter* HitCharacter = Cast<ACharacter>(Target); HitCharacter && !bKill)
-			{
-				HitCharacter->LaunchCharacter(Direction * Rules->KnockbackSpeed + FVector(0.0f, 0.0f, 60.0f), true, false);
-			}
-			Sharpness = FMath::Max(0.0f, Sharpness - Rules->SharpnessLossPerHit);
-			Locations.Add(Target->GetActorLocation() + FVector(0.0f, 0.0f, 60.0f));
-			Damages.Add(Damage);
-			Kills.Add(bKill && Attack->bCut);
-			UE_LOG(Logmonke_island, Log, TEXT("Cutlass: %s hits %s for %.0f%s"), *Carrier->GetName(), *Target->GetName(), Damage, bKill ? TEXT(" (kill)") : TEXT(""));
-		}
-		else if (UPrimitiveComponent* Body = Overlap.GetComponent(); Body && Body->IsSimulatingPhysics())
-		{
-			// loose bodies (a corpse may split in two on a cut) take the blow, then the push
-			const float Damage = CutlassMath::BlowDamage(Attack->Damage, Sharpness, Rules->DullThreshold, Rules->DullDamageMultiplier);
-			FHitResult Hit(Target, Body, Body->GetComponentLocation(), -Direction);
-			UGameplayStatics::ApplyPointDamage(Target, Damage, Direction, Hit, Carrier->GetController(), this, DamageType);
-			if (IsValid(Body) && Body->IsSimulatingPhysics())
-			{
-				Body->AddImpulseAtLocation(Direction * Rules->PhysicsImpulse, Body->GetComponentLocation());
-			}
-			if (!bStruckBody)
-			{
-				bStruckBody = true;
-				StruckBodyLocation = Hit.ImpactPoint;
-			}
-		}
+void ACutlassWeapon::StrikeTarget(AActor* Target, UPrimitiveComponent* Component, const FVector& ImpactPoint, const FCutlassAttack& Attack, FHitBatch& Batch)
+{
+	// each target once per blow, whichever check found it first
+	ServerBlowTargets.Add(Target);
+	AIslanderCharacter* Carrier = GetCarrier();
+	const APawn* TargetPawn = Cast<APawn>(Target);
+	if (TargetPawn && TargetPawn->IsPlayerControlled() && !Rules->bFriendlyFire)
+	{
+		return;
 	}
 
-	if (Locations.Num() == 0 && bStruckBody)
+	FVector Direction = (Target->GetActorLocation() - Carrier->GetActorLocation()).GetSafeNormal2D();
+	if (Direction.IsNearlyZero())
 	{
-		MulticastBladeSound(ECutlassSound::Hit, StruckBodyLocation);
+		Direction = Carrier->GetActorForwardVector();
 	}
-	if (Locations.Num() > 0)
+	// cuts carry their own damage type: a creature killed by one, or a corpse hit by one, may fall in two halves
+	const TSubclassOf<UDamageType> DamageType = UDamageType::StaticClass();
+	const float Damage = CutlassMath::BlowDamage(Attack.Damage, Sharpness, Rules->DullThreshold, Rules->DullDamageMultiplier);
+	if (TargetPawn)
 	{
-		MulticastBladeSound(Kills.Contains(true) ? ECutlassSound::Kill : ECutlassSound::Hit, Locations[0]);
-		if (IsCarrierLocallyControlled())
+		const UIslanderHealthComponent* Health = Target->FindComponentByClass<UIslanderHealthComponent>();
+		const bool bWasAlive = !Health || !Health->IsDead();
+		FHitResult Hit(Target, Component, ImpactPoint, -Direction);
+		UGameplayStatics::ApplyPointDamage(Target, Damage, Direction, Hit, Carrier->GetController(), this, DamageType);
+		const bool bKill = bWasAlive && Health && Health->IsDead();
+		if (ACharacter* HitCharacter = Cast<ACharacter>(Target); HitCharacter && !bKill)
 		{
-			ClientShowHits_Implementation(Locations, Damages, Kills);
+			HitCharacter->LaunchCharacter(Direction * Rules->KnockbackSpeed + FVector(0.0f, 0.0f, 60.0f), true, false);
 		}
-		else
+		Sharpness = FMath::Max(0.0f, Sharpness - Rules->SharpnessLossPerHit);
+		Batch.Locations.Add(Target->GetActorLocation() + FVector(0.0f, 0.0f, 60.0f));
+		Batch.Damages.Add(Damage);
+		Batch.Kills.Add(CutlassMath::IsKillBlow(bKill, Rules->bEdged, Attack.bCut));
+		Batch.Struck.Add(Target);
+		Batch.bAnyKill |= bKill;
+		UE_LOG(Logmonke_island, Log, TEXT("Cutlass: %s hits %s for %.0f%s"), *Carrier->GetName(), *Target->GetName(), Damage, bKill ? TEXT(" (kill)") : TEXT(""));
+	}
+	else if (Component && Component->IsSimulatingPhysics())
+	{
+		// loose bodies (a corpse may split in two on a cut) take the blow, then the push
+		FHitResult Hit(Target, Component, ImpactPoint, -Direction);
+		UGameplayStatics::ApplyPointDamage(Target, Damage, Direction, Hit, Carrier->GetController(), this, DamageType);
+		if (IsValid(Component) && Component->IsSimulatingPhysics())
 		{
-			ClientShowHits(Locations, Damages, Kills);
+			Component->AddImpulseAtLocation(Direction * Rules->PhysicsImpulse, ImpactPoint);
+		}
+		Batch.Struck.Add(Target);
+		if (!Batch.bStruckBody)
+		{
+			Batch.bStruckBody = true;
+			Batch.BodyLocation = ImpactPoint;
 		}
 	}
 }
 
-void ACutlassWeapon::ClientShowHits_Implementation(const TArray<FVector_NetQuantize>& Locations, const TArray<float>& Damages, const TArray<bool>& Kills)
+void ACutlassWeapon::SendHits(FHitBatch& Batch)
+{
+	if (Batch.Locations.Num() == 0 && Batch.bStruckBody)
+	{
+		MulticastBladeSound(ECutlassSound::Hit, Batch.BodyLocation);
+	}
+	if (Batch.Locations.Num() > 0)
+	{
+		MulticastBladeSound(Batch.Kills.Contains(true) ? ECutlassSound::Kill : ECutlassSound::Hit, Batch.Locations[0]);
+	}
+	if (Batch.Struck.Num() == 0)
+	{
+		return;
+	}
+	if (IsCarrierLocallyControlled())
+	{
+		ClientShowHits_Implementation(Batch.Locations, Batch.Damages, Batch.Kills, Batch.Struck, Batch.bAnyKill);
+	}
+	else
+	{
+		ClientShowHits(Batch.Locations, Batch.Damages, Batch.Kills, Batch.Struck, Batch.bAnyKill);
+	}
+}
+
+void ACutlassWeapon::ClientShowHits_Implementation(const TArray<FVector_NetQuantize>& Locations, const TArray<float>& Damages, const TArray<bool>& Kills,
+	const TArray<AActor*>& Struck, bool bAnyKill)
 {
 	const double Now = GetWorld()->GetTimeSeconds();
 	HitMarkers.RemoveAll([Now](const FCutlassHitMarker& Marker) { return Now - Marker.Time > HitMarkerLife; });
@@ -478,21 +674,270 @@ void ACutlassWeapon::ClientShowHits_Implementation(const TArray<FVector_NetQuant
 		Marker.Time = Now;
 		Marker.bKill = Kills.IsValidIndex(Index) && Kills[Index];
 	}
+	if (IsCarrierLocallyControlled())
+	{
+		PlayHitFeel(Struck, bAnyKill || Kills.Contains(true));
+	}
 }
+
+// ---------------------------------------------------------------- feel (carrier)
+
+void ACutlassWeapon::PlayHitFeel(const TArray<AActor*>& Struck, bool bKill)
+{
+	const AIslanderCharacter* Carrier = GetCarrier();
+	if (!Rules || !Carrier)
+	{
+		return;
+	}
+	const double Now = GetWorld()->GetTimeSeconds();
+
+	// hit-stop on this machine only: the blade holds still (Tick) and the struck enemies slow down, per actor (never
+	// the world: other players keep playing). The carrier's pawn is left alone, its movement is predicted.
+	const float Stop = bKill ? Rules->KillHitStopSeconds : Rules->HitStopSeconds;
+	if (Stop > 0.0f)
+	{
+		LocalHitStopUntil = FMath::Max(LocalHitStopUntil, Now + Stop);
+		for (AActor* Actor : Struck)
+		{
+			if (IsValid(Actor) && Actor != Carrier)
+			{
+				Actor->CustomTimeDilation = Rules->HitStopTimeDilation;
+				HitStopActors.AddUnique(Actor);
+			}
+		}
+		HitStopActorsUntil = FMath::Max(HitStopActorsUntil, Now + Stop);
+	}
+
+	if (Rules->HitCameraShake)
+	{
+		if (const APlayerController* Controller = Cast<APlayerController>(Carrier->GetController()); Controller && Controller->PlayerCameraManager)
+		{
+			Controller->PlayerCameraManager->StartCameraShake(Rules->HitCameraShake, bKill ? Rules->KillShakeScale : Rules->HitShakeScale);
+		}
+	}
+}
+
+void ACutlassWeapon::ReleaseHitStop()
+{
+	for (const TWeakObjectPtr<AActor>& Actor : HitStopActors)
+	{
+		if (Actor.IsValid())
+		{
+			Actor->CustomTimeDilation = 1.0f;
+		}
+	}
+	HitStopActors.Reset();
+	HitStopActorsUntil = 0.0;
+}
+
+// ---------------------------------------------------------------- strike direction, lunge, slowdown (owner and server)
+
+void ACutlassWeapon::GatherEnemies(float Radius, TArray<AActor*>& OutEnemies) const
+{
+	OutEnemies.Reset();
+	const AIslanderCharacter* Carrier = GetCarrier();
+	if (!Carrier || Radius <= 0.0f)
+	{
+		return;
+	}
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(CutlassAim), false, Carrier);
+	Params.AddIgnoredActor(this);
+	TArray<FOverlapResult> Overlaps;
+	const FVector Origin = Carrier->GetActorLocation();
+	GetWorld()->OverlapMultiByObjectType(Overlaps, Origin, FQuat::Identity, FCollisionObjectQueryParams(ECC_Pawn),
+		FCollisionShape::MakeSphere(Radius), Params);
+	for (const FOverlapResult& Overlap : Overlaps)
+	{
+		APawn* Pawn = Cast<APawn>(Overlap.GetActor());
+		// never toward a friend; the dead are no longer enemies
+		if (!Pawn || Pawn->IsPlayerControlled() || OutEnemies.Contains(Pawn)
+			|| FMath::Abs(Pawn->GetActorLocation().Z - Origin.Z) > ArcHeightTolerance)
+		{
+			continue;
+		}
+		if (const UIslanderHealthComponent* Health = Pawn->FindComponentByClass<UIslanderHealthComponent>(); Health && Health->IsDead())
+		{
+			continue;
+		}
+		OutEnemies.Add(Pawn);
+	}
+}
+
+void ACutlassWeapon::BeginStrike(ECutlassMove Move)
+{
+	AIslanderCharacter* Carrier = GetCarrier();
+	const FCutlassAttack* Attack = Rules ? Rules->GetAttack(Move) : nullptr;
+	if (!Carrier || !Attack)
+	{
+		return;
+	}
+	const FVector Origin = Carrier->GetActorLocation();
+	StrikeYaw = Rules->bFaceAimOnAttack ? Carrier->GetBaseAimRotation().Yaw : Carrier->GetActorRotation().Yaw;
+	bStrikeAssisted = false;
+	bStrikeTurning = true;
+
+	TArray<AActor*> Enemies;
+	GatherEnemies(FMath::Max(Rules->bAimAssist ? Rules->AimAssistRangeCm : 0.0f, Rules->LungeBlockDistanceCm + Attack->LungeDistanceCm), Enemies);
+	TArray<FVector, TInlineAllocator<8>> Points;
+	for (const AActor* Enemy : Enemies)
+	{
+		Points.Add(Enemy->GetActorLocation());
+	}
+
+	// soft aim: toward the nearest enemy in the cone around the aim
+	if (Rules->bAimAssist)
+	{
+		const int32 Target = CutlassMath::PickAimTarget(Origin, StrikeYaw, Points, Rules->AimAssistConeDegrees, Rules->AimAssistRangeCm);
+		if (Target != INDEX_NONE)
+		{
+			const FVector ToTarget = (Points[Target] - Origin).GetSafeNormal2D();
+			if (!ToTarget.IsNearlyZero())
+			{
+				StrikeYaw = ToTarget.Rotation().Yaw;
+				bStrikeAssisted = true;
+			}
+		}
+	}
+
+	// lunge: a short step toward the blow, none against an enemy already at the blade
+	UCharacterMovementComponent* Movement = Carrier->GetCharacterMovement();
+	if (Attack->LungeDistanceCm <= 0.0f || !Movement || !Movement->IsMovingOnGround())
+	{
+		return;
+	}
+	const FVector Forward = FRotator(0.0f, StrikeYaw, 0.0f).Vector();
+	float NearestAhead = -1.0f;
+	for (const FVector& Point : Points)
+	{
+		const FVector Flat(Point.X - Origin.X, Point.Y - Origin.Y, 0.0f);
+		const float Distance = Flat.Size();
+		if (FVector::DotProduct(Flat, Forward) > 0.0f || Distance < 1.0f)
+		{
+			NearestAhead = NearestAhead < 0.0f ? Distance : FMath::Min(NearestAhead, Distance);
+		}
+	}
+	const float Distance = CutlassMath::LungeDistance(Attack->LungeDistanceCm, NearestAhead, Rules->LungeBlockDistanceCm);
+	if (Distance <= 1.0f)
+	{
+		return;
+	}
+	Movement->RemoveRootMotionSource(LungeSourceName);
+	TSharedPtr<FRootMotionSource_ConstantForce> Source = MakeShared<FRootMotionSource_ConstantForce>();
+	Source->InstanceName = LungeSourceName;
+	Source->AccumulateMode = ERootMotionAccumulateMode::Additive;
+	Source->Priority = 5;
+	Source->Force = Forward * (Distance / FMath::Max(Rules->LungeSeconds, 0.01f));
+	Source->Duration = Rules->LungeSeconds;
+	Source->FinishVelocityParams.Mode = ERootMotionFinishVelocityMode::MaintainLastRootMotionVelocity;
+	Movement->ApplyRootMotionSource(Source);
+}
+
+void ACutlassWeapon::UpdateStrikeTurn(float DeltaSeconds)
+{
+	AIslanderCharacter* Carrier = GetCarrier();
+	const CutlassMath::FMoveWindows Windows = GetLocalWindows();
+	if (!bStrikeTurning || !Carrier || !Windows.bAttack || GetLocalPlayed() >= Windows.ActiveEnd)
+	{
+		bStrikeTurning = false;
+		return;
+	}
+	if (!Carrier->bUseControllerRotationYaw)
+	{
+		// third person: the body faces the blow until its last active frame (it would turn to its movement otherwise)
+		FRotator Rotation = Carrier->GetActorRotation();
+		Rotation.Yaw = CutlassMath::StepYawToward(Rotation.Yaw, StrikeYaw, Rules->BodyTurnRateDegPerSec * DeltaSeconds);
+		Carrier->SetActorRotation(Rotation);
+		return;
+	}
+	// first person: the body follows the camera; only the soft aim turns the camera, then lets go of it
+	AController* Controller = Carrier->GetController();
+	if (!bStrikeAssisted || !IsCarrierLocallyControlled() || !Controller)
+	{
+		bStrikeTurning = false;
+		return;
+	}
+	FRotator Rotation = Controller->GetControlRotation();
+	Rotation.Yaw = CutlassMath::StepYawToward(Rotation.Yaw, StrikeYaw, Rules->AimAssistTurnRateDegPerSec * DeltaSeconds);
+	Controller->SetControlRotation(Rotation);
+	if (FMath::Abs(FRotator::NormalizeAxis(StrikeYaw - Rotation.Yaw)) < AimAssistDoneDegrees)
+	{
+		bStrikeTurning = false;
+	}
+}
+
+void ACutlassWeapon::SetAttackSlowdown(bool bSlow)
+{
+	if (bSlow && SlowedBaseWalkSpeed < 0.0f && Rules)
+	{
+		const AIslanderCharacter* Carrier = GetCarrier();
+		UCharacterMovementComponent* Movement = Carrier ? Carrier->GetCharacterMovement() : nullptr;
+		if (Movement)
+		{
+			SlowedMovement = Movement;
+			SlowedBaseWalkSpeed = Movement->MaxWalkSpeed;
+			Movement->MaxWalkSpeed = SlowedBaseWalkSpeed * Rules->AttackMoveSpeedMultiplier;
+		}
+	}
+	else if (!bSlow && SlowedBaseWalkSpeed >= 0.0f)
+	{
+		if (SlowedMovement.IsValid())
+		{
+			SlowedMovement->MaxWalkSpeed = SlowedBaseWalkSpeed;
+		}
+		SlowedMovement.Reset();
+		SlowedBaseWalkSpeed = -1.0f;
+	}
+}
+
+bool ACutlassWeapon::IsCarrierTryingToMove() const
+{
+	const AIslanderCharacter* Carrier = GetCarrier();
+	const UCharacterMovementComponent* Movement = Carrier ? Carrier->GetCharacterMovement() : nullptr;
+	if (!Movement)
+	{
+		return false;
+	}
+	if (Movement->IsFalling())
+	{
+		return true;
+	}
+	// the carrier and the server know the input; the other players only see the speed
+	if (HasAuthority() || IsCarrierLocallyControlled())
+	{
+		return !Movement->GetCurrentAcceleration().IsNearlyZero(1.0);
+	}
+	return Movement->Velocity.SizeSquared2D() > FMath::Square(Rules->MovementCancelSpeed);
+}
+
+// ---------------------------------------------------------------- parry
 
 void ACutlassWeapon::SetParrying(bool bInParrying)
 {
-	// the carrier raises the blade at once; the server keeps it for the damage and the other players
-	bParrying = bInParrying && IsUsable();
+	// the carrier raises the blade as soon as its move allows it; the server keeps it for the damage and the others
+	bParryWanted = bInParrying;
+	UpdateParry(GetWorld()->GetTimeSeconds());
 	if (!HasAuthority())
 	{
-		ServerSetParrying(bParrying);
+		ServerSetParrying(bInParrying);
 	}
 }
 
 void ACutlassWeapon::ServerSetParrying_Implementation(bool bInParrying)
 {
-	bParrying = bInParrying && IsUsable();
+	bParryWanted = bInParrying;
+	UpdateParry(GetWorld()->GetTimeSeconds());
+}
+
+void ACutlassWeapon::UpdateParry(double Now)
+{
+	const double Open = HasAuthority() ? ServerDefensiveOpen : LocalDefensiveOpen;
+	const bool bWasParrying = bParrying;
+	bParrying = bParryWanted && IsUsable() && Now >= Open;
+	if (bParrying && !bWasParrying && GetLocalWindows().bAttack)
+	{
+		// the parry cancels the end of the blow
+		StopLocalMove();
+	}
 }
 
 float ACutlassWeapon::ModifyIncomingDamage(float Damage, const AActor* DamageCauser)
@@ -505,15 +950,48 @@ float ACutlassWeapon::ModifyIncomingDamage(float Damage, const AActor* DamageCau
 	}
 	const FVector ToCauser = (DamageCauser->GetActorLocation() - Carrier->GetActorLocation()).GetSafeNormal2D();
 	const float FacingDot = FVector::DotProduct(Carrier->GetActorForwardVector().GetSafeNormal2D(), ToCauser);
-	const bool bHasStamina = CutlassMath::HasStaminaFor(Move->GetStamina(), Move->MaxStamina, Rules->StaminaCostFraction);
+	const bool bHasStamina = CutlassMath::HasStaminaFor(Move->GetStamina(), Move->MaxStamina, Rules->ParryStaminaCostFraction);
 	const float Result = CutlassMath::ParriedDamage(Damage, true, FacingDot, Rules->ParryFrontDot, Rules->ParryReduction, bHasStamina);
 	if (Result < Damage)
 	{
-		Move->ConsumeStamina(CutlassMath::StaminaCost(Move->MaxStamina, Rules->StaminaCostFraction));
+		Move->ConsumeStamina(CutlassMath::StaminaCost(Move->MaxStamina, Rules->ParryStaminaCostFraction));
 		MulticastBladeSound(ECutlassSound::Parry, Carrier->GetActorLocation() + Carrier->GetActorForwardVector() * 40.0f + FVector(0.0f, 0.0f, 30.0f));
+		// the carrier feels the block: the blade recoils in its view, the camera jolts
+		if (IsCarrierLocallyControlled())
+		{
+			PlayBlockFeel();
+		}
+		else
+		{
+			ClientParryBlocked();
+		}
 	}
 	return Result;
 }
+
+void ACutlassWeapon::ClientParryBlocked_Implementation()
+{
+	PlayBlockFeel();
+}
+
+void ACutlassWeapon::PlayBlockFeel()
+{
+	const AIslanderCharacter* Carrier = GetCarrier();
+	if (!Rules || !Carrier || !IsCarrierLocallyControlled())
+	{
+		return;
+	}
+	BlockRecoilStart = GetWorld()->GetTimeSeconds();
+	if (Rules->BlockCameraShake)
+	{
+		if (const APlayerController* Controller = Cast<APlayerController>(Carrier->GetController()); Controller && Controller->PlayerCameraManager)
+		{
+			Controller->PlayerCameraManager->StartCameraShake(Rules->BlockCameraShake, Rules->BlockShakeScale);
+		}
+	}
+}
+
+// ---------------------------------------------------------------- moves
 
 void ACutlassWeapon::OnEquippedChanged()
 {
@@ -521,7 +999,8 @@ void ACutlassWeapon::OnEquippedChanged()
 	{
 		return;
 	}
-	const bool bArrival = GetWorld()->GetTimeSeconds() - SpawnTime < 0.2;
+	const double Now = GetWorld()->GetTimeSeconds();
+	const bool bArrival = Now - SpawnTime < 0.2;
 	if (IsEquipped())
 	{
 		// key 2: out of the scabbard (an item equipped on arrival is already in hand)
@@ -537,7 +1016,10 @@ void ACutlassWeapon::OnEquippedChanged()
 		if (HasAuthority())
 		{
 			ServerMove = ECutlassMove::Draw;
-			ServerMoveEnd = GetWorld()->GetTimeSeconds() + Rules->DrawSeconds;
+			ServerMoveStart = Now;
+			ServerAttackOpen = bArrival ? Now : Now + Rules->DrawSeconds;
+			ServerDefensiveOpen = ServerAttackOpen;
+			bServerBladeDone = true;
 		}
 	}
 	else
@@ -548,13 +1030,17 @@ void ACutlassWeapon::OnEquippedChanged()
 			PlayBladeSound(ECutlassSound::Sheathe, GetActorLocation());
 		}
 		bParrying = false;
-		bQueuedAttack = false;
+		bParryWanted = false;
+		BufferedPressTime = -1.0;
 		LocalChargeStart = -1.0;
+		bStrikeTurning = false;
+		SetAttackSlowdown(false);
 		if (HasAuthority())
 		{
-			GetWorldTimerManager().ClearTimer(HitTimer);
 			ServerMove = ECutlassMove::None;
-			ServerMoveEnd = 0.0;
+			ServerAttackOpen = 0.0;
+			ServerDefensiveOpen = 0.0;
+			bServerBladeDone = true;
 		}
 	}
 }
@@ -566,17 +1052,32 @@ void ACutlassWeapon::OnRep_MoveState()
 
 void ACutlassWeapon::PlayMove(ECutlassMove Move)
 {
+	const double Now = GetWorld()->GetTimeSeconds();
 	LocalMove = Move;
-	LocalMoveStart = GetWorld()->GetTimeSeconds();
+	LocalMoveStart = Now;
+	++LocalMoveSerial;
+	const CutlassMath::FMoveWindows Windows = GetLocalWindows();
+	LocalAttackOpen = Now + Windows.AttackCancel;
+	LocalDefensiveOpen = Now + Windows.DefensiveCancel;
 	if (Rules && Rules->GetAttack(Move))
 	{
 		if (Move != ECutlassMove::Finisher)
 		{
 			LocalLastCombo = Move;
-			LocalLastComboEnd = LocalMoveStart + Rules->GetMoveDuration(Move);
+			LocalLastComboEnd = Now + Windows.Duration;
 		}
 		PlayBladeSound(Move == ECutlassMove::Finisher ? ECutlassSound::FinisherSwing : ECutlassSound::Swing, GetActorLocation());
+		if (HasAuthority() || IsCarrierLocallyControlled())
+		{
+			BeginStrike(Move);
+		}
 	}
+}
+
+void ACutlassWeapon::StopLocalMove()
+{
+	LocalMove = ECutlassMove::None;
+	bStrikeTurning = false;
 }
 
 void ACutlassWeapon::MulticastBladeSound_Implementation(ECutlassSound Sound, FVector_NetQuantize Location)
@@ -612,17 +1113,15 @@ void ACutlassWeapon::PlayBladeSound(ECutlassSound Sound, const FVector& Location
 
 FCutlassKey ACutlassWeapon::ComputeTargetPose() const
 {
-	const double Now = GetWorld()->GetTimeSeconds();
 	if (LocalMove != ECutlassMove::None)
 	{
 		const TArray<FCutlassKey>* Keys = Rules->GetKeys(LocalMove);
-		const float Duration = Rules->GetMoveDuration(LocalMove);
-		const float Elapsed = static_cast<float>(Now - LocalMoveStart);
-		if (Keys && Keys->Num() > 0 && Elapsed < Duration)
+		const CutlassMath::FMoveWindows Windows = GetLocalWindows();
+		const float Played = GetLocalPlayed();
+		if (Keys && Keys->Num() > 0 && Played < Windows.Duration)
 		{
-			// draw and sheathe are stretched to their tunable time
-			const float TrackLength = FMath::Max(Keys->Last().Time, 0.01f);
-			return CutlassMath::SampleKeys(*Keys, Elapsed * TrackLength / FMath::Max(Duration, 0.01f), Rules->GuardKey);
+			// the recovery plays faster than the track; draw and sheathe are stretched to their tunable time
+			return CutlassMath::SampleKeys(*Keys, Windows.TrackTime(Played), Rules->GuardKey);
 		}
 	}
 	if (!IsUsable())
@@ -663,9 +1162,10 @@ void ACutlassWeapon::Tick(float DeltaSeconds)
 	const bool bUsable = IsUsable();
 	const double Now = GetWorld()->GetTimeSeconds();
 
-	if (HasAuthority() && !bUsable)
+	// first, while the running blow is still the move the creatures read: its blade sweep
+	if (HasAuthority())
 	{
-		bParrying = false;
+		UpdateServerBlade(Now);
 	}
 
 	if (IsCarrierLocallyControlled())
@@ -674,8 +1174,17 @@ void ACutlassWeapon::Tick(float DeltaSeconds)
 		SetInputContextActive(CutlassMappingContext, CutlassMappingPriority, bUsable);
 		if (!bUsable)
 		{
-			bParrying = false;
+			bParryWanted = false;
 			LocalChargeStart = -1.0;
+			BufferedPressTime = -1.0;
+		}
+		// hit-stop: the blade (and the body clip that follows it) holds still a moment
+		if (Now < LocalHitStopUntil && GetLocalWindows().bAttack)
+		{
+			LocalMoveStart += DeltaSeconds;
+			LocalAttackOpen += DeltaSeconds;
+			LocalDefensiveOpen += DeltaSeconds;
+			LocalLastComboEnd += DeltaSeconds;
 		}
 		// held long enough: the finisher leaves without waiting for the release
 		if (LocalChargeStart >= 0.0 && !bChargeSpent && Now - LocalChargeStart >= Rules->FinisherChargeSeconds)
@@ -683,17 +1192,54 @@ void ACutlassWeapon::Tick(float DeltaSeconds)
 			bChargeSpent = true;
 			RequestAttack(true);
 		}
-		// a click during the last blow
-		if (bQueuedAttack && (LocalMove == ECutlassMove::None || Now >= LocalMoveStart + Rules->GetMoveDuration(LocalMove)))
+		// a click during the last blow: played as soon as the blow can be cancelled
+		if (BufferedPressTime >= 0.0)
 		{
-			bQueuedAttack = false;
-			RequestAttack(false);
+			switch (CutlassMath::EvaluateBufferedInput(Now, BufferedPressTime, Rules->InputBufferSeconds, LocalAttackOpen))
+			{
+			case CutlassMath::EBufferedInput::Fire:
+				{
+					const bool bFinisher = bBufferedFinisher;
+					BufferedPressTime = -1.0;
+					RequestAttack(bFinisher);
+					break;
+				}
+			case CutlassMath::EBufferedInput::Expired:
+				BufferedPressTime = -1.0;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
-	if (LocalMove != ECutlassMove::None && Now >= LocalMoveStart + Rules->GetMoveDuration(LocalMove))
+	if (HitStopActors.Num() > 0 && Now >= HitStopActorsUntil)
 	{
-		LocalMove = ECutlassMove::None;
+		ReleaseHitStop();
+	}
+
+	const bool bDrivesCarrier = HasAuthority() || IsCarrierLocallyControlled();
+	if (bDrivesCarrier)
+	{
+		UpdateParry(Now);
+	}
+
+	// end of the move: played out, or its recovery cancelled by a step or a jump
+	if (LocalMove != ECutlassMove::None)
+	{
+		const CutlassMath::FMoveWindows Windows = GetLocalWindows();
+		const float Played = GetLocalPlayed();
+		if (Played >= Windows.Duration || (Windows.bAttack && Played >= Windows.DefensiveCancel && IsCarrierTryingToMove()))
+		{
+			StopLocalMove();
+		}
+	}
+
+	if (bDrivesCarrier)
+	{
+		UpdateStrikeTurn(DeltaSeconds);
+		const CutlassMath::FMoveWindows Windows = GetLocalWindows();
+		SetAttackSlowdown(bUsable && Windows.bAttack && GetLocalPlayed() < Windows.DefensiveCancel);
 	}
 
 	// inside a move the track is followed exactly; outside, the pose blends to the guard, the parry or the scabbard
@@ -718,18 +1264,90 @@ void ACutlassWeapon::Tick(float DeltaSeconds)
 	}
 	const bool bDrawn = bUsable || LocalMove == ECutlassMove::Sheathe;
 
-	// first person with the library: the owner sees the body's own arms, the blade stays in the body's hand
+	// first person with the library: the owner sees the body's own arms, the blade stays in the body's hand; the view model
+	// of T-239 needs UBeanAnimDriverComponent to leave the arm meshes to the cutlass (UsesFirstPersonViewModel)
 	const bool bBodyArms = AnimDriver.IsValid() && AnimDriver->ShowsBodyArmsInFirstPerson();
 	const bool bFirstPersonView = IsCarrierLocallyControlled() && Carrier->IsFirstPerson() && !Carrier->IsRagdoll() && !bBodyArms;
-	UpdateFirstPerson(bDrawn && bUsable && bFirstPersonView);
-	UpdateThirdPerson(!bFirstPersonView || !bUsable, bDrawn && !bFirstPersonView && !bOtherItem && !Carrier->IsRagdoll());
+	if (bBodyArms && !bWarnedBodyArms && UsesFirstPersonViewModel() && IsCarrierLocallyControlled() && Carrier->IsFirstPerson())
+	{
+		bWarnedBodyArms = true;
+		UE_LOG(Logmonke_island, Log, TEXT("Cutlass %s: first person view model not shown, the animation library shows the body arms (BeanAnimDriver bBodyArmsInFirstPerson)"), *GetName());
+	}
+	// the sheathe plays in first person too (the blade goes down to the hip, out of view)
+	const bool bShowFirstPerson = bFirstPersonView && (bUsable || LocalMove == ECutlassMove::Sheathe);
+	UpdateFirstPerson(bShowFirstPerson, DeltaSeconds);
+	// put away, a weapon without a scabbard (a mob's spear or club, T-161) is hidden instead of hanging at the hip
+	UpdateThirdPerson(CutlassMath::ShowsThirdPersonMesh(bShowFirstPerson, bDrawn, Rules->bShowWhenPutAway),
+		bDrawn && !bFirstPersonView && !bOtherItem && !Carrier->IsRagdoll());
 }
 
-void ACutlassWeapon::UpdateFirstPerson(bool bShow)
+FCutlassViewKey ACutlassWeapon::ComputeViewPose() const
 {
+	if (LocalMove != ECutlassMove::None)
+	{
+		const TArray<FCutlassViewKey>* Keys = Rules->GetViewKeys(LocalMove);
+		const CutlassMath::FMoveWindows Windows = GetLocalWindows();
+		const float Played = GetLocalPlayed();
+		if (Keys && Keys->Num() > 0 && Played < Windows.Duration)
+		{
+			// same clock as the body: the recovery plays faster, the draw and the sheathe are stretched, the hit-stop holds
+			return CutlassMath::SampleViewKeys(*Keys, Windows.TrackTime(Played), Rules->FirstPersonGuardKey);
+		}
+	}
+	if (bParrying)
+	{
+		return Rules->FirstPersonParryKey;
+	}
+	// charging the long blow: the blade goes up to the start of its track, raised above the view
+	if (const float Charge = GetChargeProgress(); Charge > 0.25f && Rules->Finisher.ViewKeys.Num() > 0)
+	{
+		return CutlassMath::BlendViewKeys(Rules->FirstPersonGuardKey, Rules->Finisher.ViewKeys[0], FMath::SmoothStep(0.25f, 1.0f, Charge));
+	}
+	return Rules->FirstPersonGuardKey;
+}
+
+CutlassMath::FViewSway ACutlassWeapon::UpdateViewSway(float DeltaSeconds)
+{
+	const AIslanderCharacter* Carrier = GetCarrier();
+	const UCharacterMovementComponent* Movement = Carrier ? Carrier->GetCharacterMovement() : nullptr;
+
+	// breath: a slow sine, always on (too small to read during a blow)
+	BreathPhase = FMath::Fmod(BreathPhase + DeltaSeconds * Rules->BreathFrequencyHz, 1.0f);
+	CutlassMath::FViewSway Sway = CutlassMath::ViewBreath(BreathPhase, Rules->BreathAmplitudeCm, Rules->BreathPitchDegrees);
+
+	// run bob: the stride phase advances with the ground speed; the amplitude follows it with a lag (none at a stop, in the
+	// air or in the water) and drops during a blow
+	const float Speed = Movement ? static_cast<float>(Movement->Velocity.Size2D()) : 0.0f;
+	const float SpeedWeight = CutlassMath::BobTargetWeight(Speed, Rules->BobReferenceSpeed, Movement && Movement->IsMovingOnGround());
+	BobPhase = FMath::Fmod(BobPhase + DeltaSeconds * Rules->BobFrequencyHz * SpeedWeight, 1.0f);
+	const float TargetWeight = GetLocalWindows().bAttack ? SpeedWeight * Rules->BobAttackScale : SpeedWeight;
+	BobWeight = FMath::FInterpTo(BobWeight, TargetWeight, DeltaSeconds, Rules->BobDampingSpeed);
+	Sway += CutlassMath::ViewBob(BobPhase, BobWeight, Rules->BobVerticalCm, Rules->BobLateralCm, Rules->BobRollDegrees);
+
+	// a blocked hit pushes the set back toward the face, out and back
+	if (BlockRecoilStart >= 0.0)
+	{
+		const float Elapsed = static_cast<float>(GetWorld()->GetTimeSeconds() - BlockRecoilStart);
+		if (Elapsed >= Rules->BlockRecoilSeconds)
+		{
+			BlockRecoilStart = -1.0;
+		}
+		else
+		{
+			const float Envelope = CutlassMath::BlockRecoilEnvelope(Elapsed, Rules->BlockRecoilSeconds);
+			Sway.Location += Rules->BlockRecoilLocation * Envelope;
+			Sway.Rotation += Rules->BlockRecoilRotation * Envelope;
+		}
+	}
+	return Sway;
+}
+
+void ACutlassWeapon::UpdateFirstPerson(bool bShow, float DeltaSeconds)
+{
+	const bool bWasShown = !FirstPersonMesh->bHiddenInGame;
 	if (!bShow)
 	{
-		if (!FirstPersonMesh->bHiddenInGame)
+		if (bWasShown)
 		{
 			FirstPersonMesh->SetHiddenInGame(true);
 		}
@@ -738,27 +1356,63 @@ void ACutlassWeapon::UpdateFirstPerson(bool bShow)
 			Arms->ClearPoseOverride();
 		}
 		bArmsDriven = false;
+		BobWeight = 0.0f;
+		LeftHandWeight = 0.0f;
+		BlockRecoilStart = -1.0;
 		return;
 	}
-	FirstPersonMesh->SetHiddenInGame(false);
 
-	// bean mesh space -> first person camera: the camera sits at the eyes, looking along the mesh +Y
-	const FVector Eye = Puppet.IsValid() ? Puppet->FirstPersonEyeLocation : FVector(0.0, 27.0, 82.0);
-	const FTransform EyeInMesh(FRotator(0.0f, 90.0f, 0.0f), Eye);
-	const FTransform KeyInMesh(CurrentPose.GripRotation, CurrentPose.GripLocation);
-	FTransform InCamera = KeyInMesh.GetRelativeTransform(EyeInMesh);
-	InCamera.AddToTranslation(Rules->FirstPersonOffset);
-	FirstPersonMesh->SetRelativeTransform(InCamera);
-
-	if (Arms.IsValid())
+	// the move's own first person track is followed exactly, blended in from the pose shown when it starts (the long blow
+	// from the charge, a buffered blow from the recovery of the last one); the parry, the charge and the guard are blended into
+	const FCutlassViewKey Target = ComputeViewPose();
+	if (!bWasShown)
 	{
-		// right arm from its shoulder to the grip; left arm out of view
-		const FVector Grip = InCamera.GetLocation();
-		const FVector Direction = (Grip - Rules->FirstPersonShoulder).GetSafeNormal();
-		const FBeanArmPose Right(Grip - Direction * Rules->FirstPersonArmLength, Direction.Rotation());
-		Arms->SetPoseOverride(Right, Arms->RestPose);
-		bArmsDriven = true;
+		FirstPersonMesh->SetHiddenInGame(false);
+		ViewPose = Target;
+		ViewMoveSerial = LocalMoveSerial;
+		BreathPhase = 0.0f;
 	}
+	else if (LocalMove != ECutlassMove::None)
+	{
+		if (ViewMoveSerial != LocalMoveSerial)
+		{
+			ViewMoveSerial = LocalMoveSerial;
+			ViewMoveStartPose = ViewPose;
+		}
+		const float BlendIn = Rules->ViewMoveBlendInSeconds > KINDA_SMALL_NUMBER ? FMath::SmoothStep(0.0f, Rules->ViewMoveBlendInSeconds, GetLocalPlayed()) : 1.0f;
+		ViewPose = BlendIn >= 1.0f ? Target : CutlassMath::BlendViewKeys(ViewMoveStartPose, Target, BlendIn);
+	}
+	else
+	{
+		ViewPose = CutlassMath::BlendViewKeys(ViewPose, Target, 1.0f - FMath::Exp(-Rules->PoseBlendSpeed * DeltaSeconds));
+	}
+
+	// breath, run bob and the recoil of a blocked hit move the whole set about the camera; never through the near clip plane
+	const FTransform Swayed = FTransform(ViewPose.Rotation, ViewPose.Location) * UpdateViewSway(DeltaSeconds).ToTransform();
+	FCutlassViewKey Shown = ViewPose;
+	Shown.Location = Swayed.GetLocation();
+	Shown.Rotation = Swayed.Rotator();
+	Shown = CutlassMath::KeepAheadOfNearPlane(Shown, Rules->FirstPersonHiltCm, Rules->BladeTipCm, Rules->FirstPersonNearClipCm);
+	FirstPersonMesh->SetRelativeTransform(CutlassMath::MeshOnGrip(FTransform(Shown.Rotation, Shown.Location), Rules->MeshInGrip));
+
+	if (!Arms.IsValid())
+	{
+		return;
+	}
+	// right mitten on the grip (rubber arm from its shoulder, as the musket); the left one comes up on the flat of the
+	// blade while the parry is held, and goes back out of view
+	const FBeanArmPose Right = MusketMath::SolveArm(Rules->FirstPersonShoulder, Shown.Location, Rules->FirstPersonArmHandPoint, Rules->FirstPersonArmMaxStretch);
+	const float LeftTarget = bParrying && Rules->bParryLeftHand ? 1.0f : 0.0f;
+	LeftHandWeight = bWasShown ? FMath::FInterpTo(LeftHandWeight, LeftTarget, DeltaSeconds, Rules->LeftHandBlendSpeed) : LeftTarget;
+	FBeanArmPose Left = Arms->RestPose;
+	if (LeftHandWeight > KINDA_SMALL_NUMBER)
+	{
+		const FVector Support = Shown.Location + Shown.Rotation.RotateVector(FVector(Rules->ParryLeftHandAlongBladeCm, 0.0, 0.0)) + Rules->ParryLeftHandOffset;
+		const FBeanArmPose Hold = MusketMath::MirrorArm(MusketMath::SolveArm(Rules->FirstPersonLeftShoulder, Support, Rules->FirstPersonArmHandPoint, Rules->FirstPersonArmMaxStretch));
+		Left = CutlassMath::BlendArmPoses(Left, Hold, LeftHandWeight);
+	}
+	Arms->SetPoseOverride(Right, Left);
+	bArmsDriven = true;
 }
 
 void ACutlassWeapon::UpdateThirdPerson(bool bShowBlade, bool bDriveArm)
@@ -789,7 +1443,7 @@ void ACutlassWeapon::UpdateThirdPerson(bool bShowBlade, bool bDriveArm)
 		// drawn: the arm reaches for the key, then the blade goes where the mitten really is (the bean's arm is short)
 		BladeOnBody.SetLocation(ReachArm(BladeOnBody.GetLocation()));
 	}
-	ThirdPersonMesh->SetRelativeTransform(BladeOnBody);
+	ThirdPersonMesh->SetRelativeTransform(CutlassMath::MeshOnGrip(BladeOnBody, Rules->MeshInGrip));
 	if (ThirdPersonMesh->bHiddenInGame == bShowBlade)
 	{
 		ThirdPersonMesh->SetHiddenInGame(!bShowBlade);

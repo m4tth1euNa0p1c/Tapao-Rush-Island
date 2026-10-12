@@ -7,6 +7,7 @@
 #include "Weapons/TorchRules.h"
 #include "TorchItem.generated.h"
 
+class UBeanFirstPersonArmsComponent;
 class UBeanPuppetComponent;
 class UPointLightComponent;
 class UStaticMeshComponent;
@@ -28,7 +29,9 @@ struct FTorchMoveState
  *  Bean's hand torch (T-099), inventory slot 3, held in the left hand. Key 3 takes it from the hip (and lights it with
  *  the flint the first time it is out), key 3 again puts it out and hangs it back. Right click held raises it (lights
  *  farther), left click a blow: damage, and a lit head sets the target on fire. Burns BurnTime seconds of fuel,
- *  goes out in the water. Server authoritative: lit state, fuel and moves replicate; the light flickers locally.
+ *  goes out in the water. Server authoritative: lit state and moves replicate; the fuel replicates only when the torch
+ *  is lit or put out (the fuel left then and the server time it was lit), every machine computes the fuel left from
+ *  them (network review R-40); the light flickers locally. Low net frequency, every change forces an update.
  *  The body animation is the library's (UBeanAnimDriverComponent plays A_Bean_Torch_* on the upper body).
  */
 UCLASS()
@@ -52,9 +55,12 @@ public:
 	UFUNCTION(BlueprintPure, Category="Torch")
 	bool IsRaised() const { return bRaised; }
 
-	/** Fuel left (s) */
+	/** Fuel left (s), computed from the last lighting on every machine */
 	UFUNCTION(BlueprintPure, Category="Torch")
-	float GetFuel() const { return Fuel; }
+	float GetFuel() const;
+
+	/** Fuel left (s) at server time Now: FuelAtChange, burnt down since LitTime while lit, never below zero */
+	static float ComputeFuel(float FuelAtChange, double LitTime, double Now, bool bInLit);
 
 	/** Move playing on this machine, its elapsed time and duration (for the body animation) */
 	ETorchMove GetLocalMove() const { return LocalMove; }
@@ -64,6 +70,9 @@ public:
 	/** The torch can be used now (in hand, carrier standing and alive) */
 	bool IsUsable() const;
 
+	/** In first person the carrier sees the torch's own view model in the first person arms, not the body's arms (T-330) */
+	bool UsesFirstPersonViewModel() const { return Rules && Rules->bFirstPersonViewModel; }
+
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
@@ -72,6 +81,9 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void OnEquippedChanged() override;
+
+	/** Forgets the bindings of a former carrier: the next carrier binds its own (T-288) */
+	virtual void OnInputBindingsRemoved() override;
 	virtual void OnAttachedToCarrier() override;
 
 	UFUNCTION(Server, Reliable)
@@ -94,6 +106,9 @@ private:
 	/** Server: the flint catches */
 	void FlameOn();
 
+	/** Server: the flame goes out, the fuel left kept */
+	void PutOut();
+
 	/** Server: the blow reaches its arc */
 	void ApplySwingHit();
 
@@ -111,8 +126,23 @@ private:
 	/** Flame and light of this frame */
 	void UpdateFlame(float DeltaSeconds);
 
+	/** First person torch of the carrier's own view: shown or not, its pose, the left first person arm on its grip and
+	 *  the light on its flame (T-330) */
+	void UpdateFirstPerson(float DeltaSeconds);
+
+	/** Pose of the first person torch for the move playing and the raise, relative to the camera */
+	FTransform ComputeFirstPersonPose() const;
+
 	UPROPERTY(VisibleAnywhere, Category="Components")
 	TObjectPtr<UStaticMeshComponent> TorchMesh;
+
+	/** First person torch, seen by its carrier only, attached to its first person camera (T-330) */
+	UPROPERTY(VisibleAnywhere, Category="Components")
+	TObjectPtr<UStaticMeshComponent> FirstPersonTorch;
+
+	/** Flame of the first person torch */
+	UPROPERTY(VisibleAnywhere, Category="Components")
+	TObjectPtr<UStaticMeshComponent> FirstPersonFlame;
 
 	UPROPERTY(VisibleAnywhere, Category="Components")
 	TObjectPtr<UStaticMeshComponent> FlameMesh;
@@ -129,8 +159,13 @@ private:
 	UPROPERTY(Replicated)
 	bool bRaised = false;
 
+	/** Fuel left (s) when the torch was last lit or put out (set by the server; sent only then) */
 	UPROPERTY(Replicated)
-	float Fuel = 300.0f;
+	float FuelAtChange = 300.0f;
+
+	/** Server world time the torch was lit (GetServerWorldTimeSeconds): while lit, the fuel burns down from FuelAtChange */
+	UPROPERTY(Replicated)
+	double LitServerTime = 0.0;
 
 	ETorchMove LocalMove = ETorchMove::None;
 	double LocalMoveStart = 0.0;
@@ -141,4 +176,18 @@ private:
 	FTimerHandle HitTimer;
 	FTimerHandle IgniteTimer;
 	TWeakObjectPtr<UBeanPuppetComponent> Puppet;
+
+	/** Carrier's procedural first person arms (the left one holds the first person torch) */
+	TWeakObjectPtr<UBeanFirstPersonArmsComponent> Arms;
+
+	/** First person pose shown (blended toward the target of the frame) */
+	FTransform FirstPersonPose = FTransform::Identity;
+
+	/** The first person torch drives the arms / the light rides on its flame */
+	bool bArmsDriven = false;
+	bool bLightOnFirstPerson = false;
+
+	/** Walk bob of the first person torch: phase and weight */
+	float BobPhase = 0.0f;
+	float BobWeight = 0.0f;
 };

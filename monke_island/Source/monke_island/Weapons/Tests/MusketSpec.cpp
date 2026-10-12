@@ -87,9 +87,15 @@ void FMusketSpec::Define()
 		TestFalse(TEXT("recovering"), MusketMath::CanFire(Ammo, false, true));
 	});
 
-	It("reloads in about 6 s and plays its first person keys in order", [this]()
+	It("reloads in a few seconds and plays its first person keys in order", [this]()
 	{
-		TestEqual(TEXT("reload time"), Rules->ReloadSeconds, 6.0f, 0.01f);
+		// class default 6 s; the shipped DA_MusketRules is tuned shorter (1.5 s, owner request 2026-10-06): both stay in a playable range
+		TestEqual(TEXT("default reload time"), Rules->ReloadSeconds, 6.0f, 0.01f);
+		if (const UMusketRules* Shipped = LoadObject<UMusketRules>(nullptr, TEXT("/Game/MonkeIsland/Weapons/Musket/DA_MusketRules.DA_MusketRules")))
+		{
+			TestTrue(FString::Printf(TEXT("DA reload time %.2f s in [1, 6]"), Shipped->ReloadSeconds),
+				Shipped->ReloadSeconds >= 1.0f && Shipped->ReloadSeconds <= 6.0f);
+		}
 		TestTrue(TEXT("reload keys"), Rules->ReloadKeys.Num() >= 10);
 		for (int32 Index = 1; Index < Rules->ReloadKeys.Num(); ++Index)
 		{

@@ -1,0 +1,8 @@
+{
+  "id": "bean-pirate-shotgun",
+  "version": "0.2.0-local",
+  "title": "Bean - fusil à pompe pirate v2 réaliste (type 1897), maniement TP/FP, construit dans le dépôt (T-247)",
+  "based_on": "OneDrive maquettes/bean-pirate-shotgun v0.1.0 (second PC, lecture seule) : mêmes 16 gestes, os, sockets et événements ; + Discard (propriétaire 2026-10-09)",
+  "shotgun_params": {},
+  "textures": {"weapon_size": 2048, "ammo_size": 1024, "ao_samples": 24}
+}

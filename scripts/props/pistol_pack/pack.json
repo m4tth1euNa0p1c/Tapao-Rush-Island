@@ -1,0 +1,16 @@
+{
+  "id": "bean-pirate-pistol",
+  "version": "2.0.0-local",
+  "title": "Bean - pistolet a silex de marine (TP/FP), v2 realiste construite dans le depot (T-248)",
+  "based_on": "OneDrive maquettes/bean-pirate-pistol v0.1.0 (second PC, lecture seule) : memes 14 gestes, os, sockets et evenements ; + Discard (owner 2026-10-09)",
+  "fps": 30,
+  "variants": {
+    "single": {"pack": "bean-pirate-pistol", "manifest": "pistol-manifest.json", "format": "bean-pirate-pistol/1",
+               "weapon": "PiratePistol", "clip_weapon": "Pistol", "fp_base": "SK_Bean_Pistol_FP", "tp_base": "SK_Bean_Pistol_TP",
+               "material": "M_PiratePistol", "texture": "T_PiratePistol"},
+    "double": {"pack": "bean-pirate-pistol-double", "manifest": "pistol-double-manifest.json", "format": "bean-pirate-pistol-double/1",
+               "weapon": "PirateDoublePistol", "clip_weapon": "DoublePistol", "fp_base": "SK_Bean_DoublePistol_FP", "tp_base": "SK_Bean_DoublePistol_TP",
+               "material": "M_PirateDoublePistol", "texture": "T_PirateDoublePistol"}
+  },
+  "bake": {"size": 2048, "ammo_size": 1024, "ao_samples": 48, "color_samples": 24, "margin": 12}
+}

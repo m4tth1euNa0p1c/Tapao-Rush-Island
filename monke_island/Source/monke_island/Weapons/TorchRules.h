@@ -193,6 +193,66 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
 	int32 MappingPriority = 2;
 
+	// ---- first person (T-330: the body holds the torch beside its head, out of the view of its own eyes) ----
+
+	/** In first person the carrier sees a torch of its own in front of the view, in the left first person arm; off = the
+	 *  body's arms and torch, as before */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person")
+	bool bFirstPersonViewModel = true;
+
+	/** Torch held, relative to the first person camera (X forward, Y right, Z up; the grip at the origin of the torch,
+	 *  its head along +Z): the hand just inside the bottom left of the view (tuned in PIE, 2026-10-11) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person")
+	FTransform FirstPersonHeld = FTransform(FRotator(-24.0, 4.0, -10.0), FVector(44.0, -21.0, -19.0));
+
+	/** Torch raised (key of the raise): higher and nearer the middle, the flame lights ahead */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person")
+	FTransform FirstPersonRaised = FTransform(FRotator(-14.0, 0.0, -9.0), FVector(46.0, -15.0, -14.0));
+
+	/** Torch below the view, where it comes from and where it goes (equip and put away) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person")
+	FTransform FirstPersonLowered = FTransform(FRotator(-55.0, 0.0, -25.0), FVector(28.0, -26.0, -66.0));
+
+	/** Torch drawn back on the left before the blow */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person")
+	FTransform FirstPersonSwingFrom = FTransform(FRotator(-6.0, 0.0, -40.0), FVector(30.0, -36.0, -16.0));
+
+	/** Torch at the end of the blow, across the view to the right */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person")
+	FTransform FirstPersonSwingTo = FTransform(FRotator(-48.0, 0.0, 42.0), FVector(50.0, 16.0, -26.0));
+
+	/** Left shoulder of the first person arms, relative to the camera (as the sabre's) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person")
+	FVector FirstPersonLeftShoulder = FVector(-6.0, -18.0, -24.0);
+
+	/** Point of the first person arm mesh that holds the grip (as the sabre's) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person")
+	FVector FirstPersonArmHandPoint = FVector(36.0, 0.0, -1.5);
+
+	/** Longest stretch of the first person arm reaching the grip */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person", meta=(ClampMin="1"))
+	float FirstPersonArmMaxStretch = 1.6f;
+
+	/** Speed of the blend between the held and raised poses (1/s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person", meta=(ClampMin="0"))
+	float FirstPersonPoseBlendSpeed = 12.0f;
+
+	/** Walk bob of the first person torch: height and side (cm), steps per second at FirstPersonBobReferenceSpeed */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person", meta=(ClampMin="0"))
+	float FirstPersonBobVerticalCm = 1.2f;
+
+	/** See FirstPersonBobVerticalCm */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person", meta=(ClampMin="0"))
+	float FirstPersonBobLateralCm = 0.8f;
+
+	/** See FirstPersonBobVerticalCm */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person", meta=(ClampMin="0"))
+	float FirstPersonBobFrequencyHz = 1.8f;
+
+	/** Ground speed of a full bob (cm/s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="First Person", meta=(ClampMin="1", Units="cm/s"))
+	float FirstPersonBobReferenceSpeed = 350.0f;
+
 	/** Duration of a move as played */
 	float GetMoveDuration(ETorchMove Move) const
 	{

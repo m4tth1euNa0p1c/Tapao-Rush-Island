@@ -57,6 +57,17 @@ namespace MusketMath
 		return true;
 	}
 
+	/** Play rate that stretches a clip of ClipSeconds over TargetSeconds (T-170: the 6 s GroundReload over
+	 *  ReloadSeconds); 1 when either length is not positive */
+	inline float StretchRate(float ClipSeconds, float TargetSeconds)
+	{
+		if (ClipSeconds <= 0.0f || TargetSeconds <= 0.0f)
+		{
+			return 1.0f;
+		}
+		return FMath::Clamp(ClipSeconds / TargetSeconds, 0.1f, 20.0f);
+	}
+
 	/** Blends the musket of two first person keys (Alpha 0 = A); the mitten holds switch at half way */
 	inline FMusketFirstPersonKey BlendKeys(const FMusketFirstPersonKey& A, const FMusketFirstPersonKey& B, float Alpha)
 	{
