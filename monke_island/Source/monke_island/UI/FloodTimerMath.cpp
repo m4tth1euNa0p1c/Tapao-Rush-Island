@@ -15,6 +15,11 @@ namespace FloodTimerMath
 		}
 		if (Input.bGameOver)
 		{
+			// the day is over (survived or lost): the countdown to the travel; none when the campaign is lost (T-173)
+			if (Input.RestartTime < 0.0)
+			{
+				return Snapshot;
+			}
 			Snapshot.Mode = EFloodTimerMode::GameOver;
 			Snapshot.SecondsLeft = FMath::Max(0.0, Input.RestartTime - Input.Now);
 			return Snapshot;

@@ -17,7 +17,7 @@ enum class EFloodTimerMode : uint8
 	Evacuation,
 	/** The rise is over */
 	Over,
-	/** Every player is dead: countdown to the next expedition */
+	/** The day is over, survived aboard or lost (every player dead, T-173): countdown to the travel to the next island */
 	GameOver
 };
 
@@ -45,10 +45,11 @@ struct MONKE_ISLAND_API FFloodTimerInput
 	/** Whether the source confirms that the expedition resolved */
 	bool bResolved = false;
 
-	/** Whether every player is dead */
+	/** Whether the day is over: survived aboard, or lost with every player dead */
 	bool bGameOver = false;
 
-	/** Time the next expedition starts after a game over (s) */
+	/** Time of the travel to the next island once the day is over (s); negative when none follows (the campaign is lost:
+	 *  an execution, or a crew wiped on its milestone day): nothing to count down, the timer hides */
 	double RestartTime = 0.0;
 };
 

@@ -82,6 +82,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Layout", meta=(ClampMin="14"))
 	int32 NotificationFontSize = 18;
 
+	/**
+	 *  Writes the day of the contract and the quota before the clock ("Jour 2/3 · Quota 9 648 / 5 500 · 8:22", ADR-007).
+	 *  Off by default (T-283): the TAPAO HUD shows the day of the campaign, the quota and the deadline of the contract top
+	 *  left, small, with one count of the days; the timer top right keeps the clock alone
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Layout")
+	bool bShowRunDayInClock = false;
+
 	/** Text of the countdown before the rise */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Colors")
 	FLinearColor CountdownColor = FLinearColor(0.96f, 0.93f, 0.86f, 1.0f);

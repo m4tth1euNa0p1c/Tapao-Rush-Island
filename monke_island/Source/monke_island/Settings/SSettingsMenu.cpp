@@ -80,7 +80,8 @@ void SSettingsMenu::Construct(const FArguments& InArgs)
 						+ SHorizontalBox::Slot().AutoWidth().Padding(0, 0, 8, 0)[MakeTabButton(ETab::Audio, LOCTEXT("TabAudio", "Audio"))]
 						+ SHorizontalBox::Slot().AutoWidth().Padding(0, 0, 8, 0)[MakeTabButton(ETab::Display, LOCTEXT("TabDisplay", "Affichage"))]
 						+ SHorizontalBox::Slot().AutoWidth().Padding(0, 0, 8, 0)[MakeTabButton(ETab::Mouse, LOCTEXT("TabMouse", "Souris"))]
-						+ SHorizontalBox::Slot().AutoWidth()[MakeTabButton(ETab::Comfort, LOCTEXT("TabComfort", "Confort"))]
+						+ SHorizontalBox::Slot().AutoWidth().Padding(0, 0, 8, 0)[MakeTabButton(ETab::Comfort, LOCTEXT("TabComfort", "Confort"))]
+						+ SHorizontalBox::Slot().AutoWidth()[MakeTabButton(ETab::Voice, LOCTEXT("TabVoice", "Voix"))]
 					]
 					+ SVerticalBox::Slot().AutoHeight()
 					[
@@ -91,6 +92,7 @@ void SSettingsMenu::Construct(const FArguments& InArgs)
 							+ SWidgetSwitcher::Slot()[MakeDisplayTab()]
 							+ SWidgetSwitcher::Slot()[MakeMouseTab()]
 							+ SWidgetSwitcher::Slot()[MakeComfortTab()]
+							+ SWidgetSwitcher::Slot()[MakeVoiceTab()]
 						]
 					]
 					+ SVerticalBox::Slot().AutoHeight().Padding(0, 18, 0, 0)
@@ -377,6 +379,108 @@ TSharedRef<SWidget> SSettingsMenu::MakeComfortTab()
 		];
 }
 
+TSharedRef<SWidget> SSettingsMenu::MakeVoiceTab()
+{
+	// T-263, cahier §18 "Voix L7": push-to-talk by default, voice activation with its threshold, off; the voices' volume;
+	// a local microphone test that nobody else hears. The voice chat (Voice/) applies these values, the menu edits them
+	const USettingsSubsystem* Subsystem = Owner.Get();
+	const USettingsRules* Rules = Subsystem ? Subsystem->GetRules() : nullptr;
+	const FVector2D Range = Rules ? Rules->MicThresholdRange : FVector2D(0.01f, 0.4f);
+	TArray<TPair<FText, int32>> Modes =
+	{
+		{ LOCTEXT("MicPushToTalk", "Appuyer pour parler (maintenir T)"), static_cast<int32>(EVoiceMicMode::PushToTalk) },
+		{ LOCTEXT("MicVoiceActivation", "Activation vocale (micro ouvert)"), static_cast<int32>(EVoiceMicMode::VoiceActivation) },
+		{ LOCTEXT("MicOff", "Micro coupé"), static_cast<int32>(EVoiceMicMode::Off) },
+	};
+	const auto Preview = [this]()
+	{
+		if (USettingsSubsystem* Owning = Owner.Get())
+		{
+			Owning->PreviewVoice(Pending);
+		}
+	};
+	// the engine's voice loopback (the test) does not exist in a Shipping build
+#if UE_BUILD_SHIPPING
+	const bool bCanTestMic = false;
+	const FText Help = LOCTEXT("VoiceHelpShipping", "Les joueurs proches vous entendent, de moins en moins loin (au-delà de 25 m, plus du tout). Parler fait du bruit : la nuit, les mobs proches vous entendent.");
+#else
+	const bool bCanTestMic = true;
+	const FText Help = LOCTEXT("VoiceHelp", "Les joueurs proches vous entendent, de moins en moins loin (au-delà de 25 m, plus du tout). Parler fait du bruit : la nuit, les mobs proches vous entendent. Le test vous renvoie votre voix sans la diffuser aux autres joueurs ; il s'arrête en fermant ce menu.");
+#endif
+
+	return SNew(SVerticalBox)
+		+ SVerticalBox::Slot().AutoHeight().Padding(0, 6)
+		[
+			MakeRow(LOCTEXT("MicMode", "Micro"), MakeChoice(Modes,
+				[this]() { return static_cast<int32>(Pending.MicMode); },
+				[this](int32 Value) { Pending.MicMode = static_cast<EVoiceMicMode>(Value); }))
+		]
+		+ SVerticalBox::Slot().AutoHeight().Padding(0, 6)
+		[
+			MakeRow(LOCTEXT("MicThreshold", "Seuil d'activation vocale"),
+				SNew(SBox)
+				.IsEnabled_Lambda([this]() { return Pending.MicMode == EVoiceMicMode::VoiceActivation; })
+				[
+					MakeSlider(
+						[this]() { return Pending.MicThreshold; },
+						[this, Preview](float Value)
+						{
+							Pending.MicThreshold = Value;
+							Preview();
+						},
+						static_cast<float>(Range.X), static_cast<float>(Range.Y),
+						[](float Value) { return FText::Format(LOCTEXT("ThresholdFmt", "{0} %"), Percent(Value)); })
+				])
+		]
+		+ SVerticalBox::Slot().AutoHeight().Padding(0, 6)
+		[
+			MakeRow(LOCTEXT("VoiceChatVolume", "Volume des voix"), MakeSlider(
+				[this]() { return Pending.Volume(ESettingsVolume::VoiceChat); },
+				[this](float Value)
+				{
+					Pending.Volume(ESettingsVolume::VoiceChat) = Value;
+					if (USettingsSubsystem* Owning = Owner.Get())
+					{
+						Owning->PreviewAudio(Pending);
+					}
+				},
+				0.0f, 1.0f, [](float Value) { return FText::Format(LOCTEXT("VoicePercentFmt", "{0} %"), Percent(Value)); }))
+		]
+		+ SVerticalBox::Slot().AutoHeight().Padding(0, 6)
+		[
+			MakeRow(LOCTEXT("MicTest", "Test du micro"),
+				SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot().AutoWidth()
+				[
+					SNew(SButton)
+					.OnClicked(this, &SSettingsMenu::OnToggleMicTest)
+					.IsEnabled(bCanTestMic)
+					[
+						SNew(STextBlock).Font(Font(13)).Text_Lambda([this]()
+						{
+							const USettingsSubsystem* Owning = Owner.Get();
+							return Owning && Owning->IsMicTestOn() ? LOCTEXT("MicTestStop", "Arrêter le test") : LOCTEXT("MicTestStart", "Tester le micro");
+						})
+					]
+				])
+		]
+		+ SVerticalBox::Slot().AutoHeight().Padding(0, 10)
+		[
+			SNew(STextBlock).Font(Font(11)).ColorAndOpacity(Dim).AutoWrapText(true).Text(Help)
+		];
+}
+
+FReply SSettingsMenu::OnToggleMicTest()
+{
+	if (USettingsSubsystem* Subsystem = Owner.Get())
+	{
+		// the threshold being edited is heard during the test
+		Subsystem->PreviewVoice(Pending);
+		Subsystem->SetMicTest(!Subsystem->IsMicTestOn());
+	}
+	return FReply::Handled();
+}
+
 bool SSettingsMenu::HasChanges() const
 {
 	const USettingsSubsystem* Subsystem = Owner.Get();
@@ -393,7 +497,8 @@ bool SSettingsMenu::HasChanges() const
 		}
 	}
 	return !FMath::IsNearlyEqual(Pending.Sensitivity, Applied.Sensitivity) || Pending.bInvertY != Applied.bInvertY
-		|| !FMath::IsNearlyEqual(Pending.FieldOfView, Applied.FieldOfView) || Pending.DisplayDiffers(Applied);
+		|| !FMath::IsNearlyEqual(Pending.FieldOfView, Applied.FieldOfView) || Pending.DisplayDiffers(Applied)
+		|| Pending.VoiceDiffers(Applied);
 }
 
 FReply SSettingsMenu::OnRestoreTab()
@@ -407,9 +512,14 @@ FReply SSettingsMenu::OnRestoreTab()
 	switch (CurrentTab)
 	{
 	case ETab::Audio:
+	{
+		// the voices' volume belongs to the voice tab
+		const float VoiceChat = Pending.Volume(ESettingsVolume::VoiceChat);
 		FMemory::Memcpy(Pending.Volumes, Defaults.Volumes, sizeof(Pending.Volumes));
+		Pending.Volume(ESettingsVolume::VoiceChat) = VoiceChat;
 		Subsystem->PreviewAudio(Pending);
 		break;
+	}
 	case ETab::Display:
 		Pending.FrameRateLimit = Defaults.FrameRateLimit;
 		Pending.bVSync = false;
@@ -421,6 +531,13 @@ FReply SSettingsMenu::OnRestoreTab()
 		break;
 	case ETab::Comfort:
 		Pending.FieldOfView = Defaults.FieldOfView;
+		break;
+	case ETab::Voice:
+		Pending.MicMode = Defaults.MicMode;
+		Pending.MicThreshold = Defaults.MicThreshold;
+		Pending.Volume(ESettingsVolume::VoiceChat) = Defaults.Volume(ESettingsVolume::VoiceChat);
+		Subsystem->PreviewAudio(Pending);
+		Subsystem->PreviewVoice(Pending);
 		break;
 	default:
 		break;

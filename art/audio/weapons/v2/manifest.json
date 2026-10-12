@@ -1,0 +1,5005 @@
+{
+  "schema": 1,
+  "task": "T-259",
+  "generated_at": "2026-10-09T15:16:40.953075+00:00",
+  "format": "48 kHz PCM16 mono",
+  "validation": "decoded WAV data only; Unreal import by scripts/audio/weapons_audio_setup_ue.py, listening in PIE to do",
+  "sounds": [
+    {
+      "asset": "SW_Ammo_Pickup",
+      "group": "SW_Ammo_Pickup",
+      "variant": 1,
+      "variants": 1,
+      "role": "ammunition picked up: no field yet (see the doc)",
+      "file": "art/audio/weapons/v2/SW_Ammo_Pickup.wav",
+      "sha256": "96442a869961be4e435605377e346a794accb6866351dcf7ae0d893fcd7a63e5",
+      "seconds": 0.61,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -12.0,
+      "loudest_100ms_db": -29.99,
+      "loudness_lufs": -30.57,
+      "centroid_hz": 5333.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "handleSmallLeather.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.048,
+          "seconds": 0.34,
+          "at_s": 0.0,
+          "gain_db": -2
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "handleCoins2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.018,
+          "seconds": 0.34,
+          "at_s": 0.06,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "beltHandle1.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.016,
+          "seconds": 0.28,
+          "at_s": 0.36,
+          "gain_db": -5
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Blunderbuss_Fire_01",
+      "group": "SW_Blunderbuss_Fire",
+      "variant": 1,
+      "variants": 3,
+      "role": "FireSound of DA_BlunderbussRules (event Shot)",
+      "file": "art/audio/weapons/v2/SW_Blunderbuss_Fire_01.wav",
+      "sha256": "db10d11e0eb6ec5d5f5b9cbc8c2f53ee02eda46d773ad32bb53fcf810cc9d2dc",
+      "seconds": 2.39,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -7.39,
+      "loudness_lufs": -12.75,
+      "centroid_hz": 3213.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.068,
+          "seconds": 2.0,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 2.6,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.0,
+          "seconds": 2.6,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "rubberduck_bangs",
+          "file": "cannon_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/25-cc0-bang-firework-sfx",
+          "start_s": 0.04,
+          "seconds": 1.0,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.145,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 70,
+          "f_end": 30,
+          "decay_s": 0.12,
+          "at_s": 0.0,
+          "gain_db": -7
+        },
+        {
+          "synth": "pellets",
+          "count": 26,
+          "seed": 327979363,
+          "at_s": 0.0,
+          "gain_db": -22
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.6,
+          "slaps": [
+            [
+              0.26,
+              0.4
+            ],
+            [
+              0.68,
+              0.25
+            ]
+          ],
+          "seed": 566063305,
+          "at_s": 0.0,
+          "gain_db": -14
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -7.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Blunderbuss_Fire_02",
+      "group": "SW_Blunderbuss_Fire",
+      "variant": 2,
+      "variants": 3,
+      "role": "FireSound of DA_BlunderbussRules (event Shot)",
+      "file": "art/audio/weapons/v2/SW_Blunderbuss_Fire_02.wav",
+      "sha256": "0eb96746cab2716cc9b6b18a5135be74acebf12b5b10e76ec44b0599144c0ed2",
+      "seconds": 2.46,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -7.39,
+      "loudness_lufs": -13.12,
+      "centroid_hz": 3332.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.068,
+          "seconds": 2.0,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 2.6,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.0,
+          "seconds": 2.6,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "rubberduck_bangs",
+          "file": "cannon_03.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/25-cc0-bang-firework-sfx",
+          "start_s": 0.036,
+          "seconds": 1.0,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.838,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 70,
+          "f_end": 30,
+          "decay_s": 0.12,
+          "at_s": 0.0,
+          "gain_db": -7
+        },
+        {
+          "synth": "pellets",
+          "count": 26,
+          "seed": 1023050482,
+          "at_s": 0.0,
+          "gain_db": -22
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.6,
+          "slaps": [
+            [
+              0.26,
+              0.4
+            ],
+            [
+              0.68,
+              0.25
+            ]
+          ],
+          "seed": 50284053,
+          "at_s": 0.0,
+          "gain_db": -14
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -7.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Blunderbuss_Fire_03",
+      "group": "SW_Blunderbuss_Fire",
+      "variant": 3,
+      "variants": 3,
+      "role": "FireSound of DA_BlunderbussRules (event Shot)",
+      "file": "art/audio/weapons/v2/SW_Blunderbuss_Fire_03.wav",
+      "sha256": "bd93971e693aaccda4d9ed0cb07d01b63a1a6321cfd3d4f2744385392fb711ad",
+      "seconds": 2.33,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -7.85,
+      "loudness_lufs": -13.05,
+      "centroid_hz": 3376.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.068,
+          "seconds": 2.0,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 2.6,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.0,
+          "seconds": 2.6,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "rubberduck_bangs",
+          "file": "cannon_05.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/25-cc0-bang-firework-sfx",
+          "start_s": 0.014,
+          "seconds": 1.0,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 1.553,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 70,
+          "f_end": 30,
+          "decay_s": 0.12,
+          "at_s": 0.0,
+          "gain_db": -7
+        },
+        {
+          "synth": "pellets",
+          "count": 26,
+          "seed": 504184349,
+          "at_s": 0.0,
+          "gain_db": -22
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.6,
+          "slaps": [
+            [
+              0.26,
+              0.4
+            ],
+            [
+              0.68,
+              0.25
+            ]
+          ],
+          "seed": 586233021,
+          "at_s": 0.0,
+          "gain_db": -14
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -7.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Blunderbuss_ShotPour",
+      "group": "SW_Blunderbuss_ShotPour",
+      "variant": 1,
+      "variants": 1,
+      "role": "event ShotPour (blunderbuss)",
+      "file": "art/audio/weapons/v2/SW_Blunderbuss_ShotPour.wav",
+      "sha256": "28fca15eefdcab4260bdeba2966ef7156d7e28f330d61e46764163e72ec7d9c9",
+      "seconds": 0.52,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -12.0,
+      "loudest_100ms_db": -31.09,
+      "loudness_lufs": -30.27,
+      "centroid_hz": 7278.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "handleCoins.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.052,
+          "seconds": 0.6,
+          "at_s": 0.0,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "grains",
+          "rate_hz": 120,
+          "seconds": 0.45,
+          "seed": 41,
+          "at_s": 0.05,
+          "gain_db": 0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_DoublePistol_Fire_01",
+      "group": "SW_DoublePistol_Fire",
+      "variant": 1,
+      "variants": 3,
+      "role": "FireSound of DA_DoublePistolRules",
+      "file": "art/audio/weapons/v2/SW_DoublePistol_Fire_01.wav",
+      "sha256": "24d39098b94d99ebd8ee62032b2e5ad745172aff5204387404965b0d3e3bdc2e",
+      "seconds": 0.92,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -11.16,
+      "loudness_lufs": -17.04,
+      "centroid_hz": 3584.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.015,
+          "seconds": 0.05,
+          "at_s": 0.0,
+          "gain_db": -14
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.838,
+          "seconds": 0.5,
+          "at_s": 0.03,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_shot",
+          "file": "234869_3883507-hq.mp3",
+          "author": "mlsulli",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/mlsulli/sounds/234869/",
+          "start_s": 0.714,
+          "seconds": 0.9,
+          "at_s": 0.03,
+          "gain_db": -5
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 105,
+          "f_end": 52,
+          "decay_s": 0.05,
+          "at_s": 0.03,
+          "gain_db": -11
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 1.0,
+          "slaps": [
+            [
+              0.18,
+              0.3
+            ],
+            [
+              0.39,
+              0.16
+            ]
+          ],
+          "seed": 787973346,
+          "at_s": 0.03,
+          "gain_db": -16
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -10.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_DoublePistol_Fire_02",
+      "group": "SW_DoublePistol_Fire",
+      "variant": 2,
+      "variants": 3,
+      "role": "FireSound of DA_DoublePistolRules",
+      "file": "art/audio/weapons/v2/SW_DoublePistol_Fire_02.wav",
+      "sha256": "223e766d2e04c24217d718b2fcafb750e10b5ca471db52e59c6c565241b26840",
+      "seconds": 0.9,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -10.99,
+      "loudness_lufs": -17.51,
+      "centroid_hz": 2756.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.015,
+          "seconds": 0.05,
+          "at_s": 0.0,
+          "gain_db": -14
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 2.26,
+          "seconds": 0.5,
+          "at_s": 0.03,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_shot",
+          "file": "234869_3883507-hq.mp3",
+          "author": "mlsulli",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/mlsulli/sounds/234869/",
+          "start_s": 0.714,
+          "seconds": 0.9,
+          "at_s": 0.03,
+          "gain_db": -5
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 105,
+          "f_end": 52,
+          "decay_s": 0.05,
+          "at_s": 0.03,
+          "gain_db": -11
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 1.0,
+          "slaps": [
+            [
+              0.18,
+              0.3
+            ],
+            [
+              0.39,
+              0.16
+            ]
+          ],
+          "seed": 924246307,
+          "at_s": 0.03,
+          "gain_db": -16
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -10.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_DoublePistol_Fire_03",
+      "group": "SW_DoublePistol_Fire",
+      "variant": 3,
+      "variants": 3,
+      "role": "FireSound of DA_DoublePistolRules",
+      "file": "art/audio/weapons/v2/SW_DoublePistol_Fire_03.wav",
+      "sha256": "0e964c6b820120575fc2e1a24f86397e4dfc80223539468f28efafc21116861a",
+      "seconds": 0.88,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -10.59,
+      "loudness_lufs": -17.09,
+      "centroid_hz": 2916.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.015,
+          "seconds": 0.05,
+          "at_s": 0.0,
+          "gain_db": -14
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 3.505,
+          "seconds": 0.5,
+          "at_s": 0.03,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_shot",
+          "file": "234869_3883507-hq.mp3",
+          "author": "mlsulli",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/mlsulli/sounds/234869/",
+          "start_s": 0.714,
+          "seconds": 0.9,
+          "at_s": 0.03,
+          "gain_db": -5
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 105,
+          "f_end": 52,
+          "decay_s": 0.05,
+          "at_s": 0.03,
+          "gain_db": -11
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 1.0,
+          "slaps": [
+            [
+              0.18,
+              0.3
+            ],
+            [
+              0.39,
+              0.16
+            ]
+          ],
+          "seed": 674489171,
+          "at_s": 0.03,
+          "gain_db": -16
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -10.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Firearm_DiscardEmpty",
+      "group": "SW_Firearm_DiscardEmpty",
+      "variant": 1,
+      "variants": 1,
+      "role": "event Empty (Discard clip)",
+      "file": "art/audio/weapons/v2/SW_Firearm_DiscardEmpty.wav",
+      "sha256": "13a496b03153e91c1b6a499a1a84eac75e9d505d0ad06da0c562795a16782cc4",
+      "seconds": 0.42,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -9.0,
+      "loudest_100ms_db": -22.43,
+      "loudness_lufs": -25.23,
+      "centroid_hz": 5907.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 19.646,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "handleSmallLeather2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.075,
+          "seconds": 0.3,
+          "at_s": 0.22,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Firearm_DiscardRelease_01",
+      "group": "SW_Firearm_DiscardRelease",
+      "variant": 1,
+      "variants": 2,
+      "role": "event Release (Discard clip)",
+      "file": "art/audio/weapons/v2/SW_Firearm_DiscardRelease_01.wav",
+      "sha256": "710b7e1ab5f9f620280f1d066176f6db54a0c3f4f0d121c1858b40d9496c903b",
+      "seconds": 0.81,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.0,
+      "loudest_100ms_db": -18.44,
+      "loudness_lufs": -27.27,
+      "centroid_hz": 1139.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "swishes",
+          "file": "swish-7.wav",
+          "author": "artisticdude",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/swishes-sound-pack",
+          "start_s": 0.019,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": -3
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactSoft_heavy_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.5,
+          "at_s": 0.3,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_heavy_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.31,
+          "at_s": 0.3,
+          "gain_db": -4
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.3,
+          "at_s": 0.31,
+          "gain_db": -9
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_light_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.27,
+          "at_s": 0.47,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Firearm_DiscardRelease_02",
+      "group": "SW_Firearm_DiscardRelease",
+      "variant": 2,
+      "variants": 2,
+      "role": "event Release (Discard clip)",
+      "file": "art/audio/weapons/v2/SW_Firearm_DiscardRelease_02.wav",
+      "sha256": "e85c6d592c834993f53ce114f61cdc0a521e98aea721e284b48e5049f51e6446",
+      "seconds": 0.82,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.0,
+      "loudest_100ms_db": -19.62,
+      "loudness_lufs": -27.95,
+      "centroid_hz": 700.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "swishes",
+          "file": "swish-8.wav",
+          "author": "artisticdude",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/swishes-sound-pack",
+          "start_s": 0.038,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": -3
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactSoft_heavy_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.5,
+          "at_s": 0.3,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_heavy_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.31,
+          "at_s": 0.3,
+          "gain_db": -4
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.3,
+          "at_s": 0.31,
+          "gain_db": -9
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.27,
+          "at_s": 0.47,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Firearm_Draw",
+      "group": "SW_Firearm_Draw",
+      "variant": 1,
+      "variants": 1,
+      "role": "event DrawWeapon",
+      "file": "art/audio/weapons/v2/SW_Firearm_Draw.wav",
+      "sha256": "d4fc562994410da83cb5ffd97e0461d28d1818d7f5359ebf386902b0a4c3047f",
+      "seconds": 0.68,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -34.34,
+      "loudness_lufs": -37.89,
+      "centroid_hz": 7980.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "clothBelt.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.04,
+          "seconds": 0.7,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "metalLatch.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.038,
+          "seconds": 0.2,
+          "at_s": 0.28,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Firearm_HandGrab",
+      "group": "SW_Firearm_HandGrab",
+      "variant": 1,
+      "variants": 1,
+      "role": "events AssistLeft, LeftHandRegrab",
+      "file": "art/audio/weapons/v2/SW_Firearm_HandGrab.wav",
+      "sha256": "c57eeeb569fee9656bc4ca3ce3a2aa541cb8d4fd93a29338ab8a66aa49ae3b94",
+      "seconds": 0.32,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -18.0,
+      "loudest_100ms_db": -34.02,
+      "loudness_lufs": -37.31,
+      "centroid_hz": 4057.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "cloth4.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.0,
+          "seconds": 0.3,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "handleSmallLeather.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.048,
+          "seconds": 0.25,
+          "at_s": 0.02,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Firearm_Ready",
+      "group": "SW_Firearm_Ready",
+      "variant": 1,
+      "variants": 1,
+      "role": "event Ready",
+      "file": "art/audio/weapons/v2/SW_Firearm_Ready.wav",
+      "sha256": "72b4e3fc0b2d1a6c6f93d845f267764bafc7af6d168ee3752b22d390e47274fb",
+      "seconds": 0.23,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -18.0,
+      "loudest_100ms_db": -36.35,
+      "loudness_lufs": -38.25,
+      "centroid_hz": 6459.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "handleSmallLeather2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.075,
+          "seconds": 0.31,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Firearm_Stow",
+      "group": "SW_Firearm_Stow",
+      "variant": 1,
+      "variants": 1,
+      "role": "event StowWeapon",
+      "file": "art/audio/weapons/v2/SW_Firearm_Stow.wav",
+      "sha256": "9b4b6436c384db54b0c06c25048c5fdc87e3f4d8bc02a9ca365cea9f331254f0",
+      "seconds": 0.62,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -15.0,
+      "loudest_100ms_db": -34.66,
+      "loudness_lufs": -34.45,
+      "centroid_hz": 8570.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "clothBelt2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.007,
+          "seconds": 0.7,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "beltHandle1.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.016,
+          "seconds": 0.28,
+          "at_s": 0.36,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_BagReach",
+      "group": "SW_Grenade_BagReach",
+      "variant": 1,
+      "variants": 1,
+      "role": "event BagReach",
+      "file": "art/audio/weapons/v2/SW_Grenade_BagReach.wav",
+      "sha256": "c7664ff218e872fd60d59a2c0d45d82e1386194766e88d6ad077a1851f700d33",
+      "seconds": 0.62,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -34.34,
+      "loudness_lufs": -37.61,
+      "centroid_hz": 7027.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "clothBelt.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.04,
+          "seconds": 0.6,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.15,
+          "at_s": 0.16,
+          "gain_db": -7
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.15,
+          "at_s": 0.31,
+          "gain_db": -7
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_BagToss",
+      "group": "SW_Grenade_BagToss",
+      "variant": 1,
+      "variants": 1,
+      "role": "event Release (grenade)",
+      "file": "art/audio/weapons/v2/SW_Grenade_BagToss.wav",
+      "sha256": "68550d6da2a99167d7eef73cd4ba07cf6125894386d202a1fb2ed146f8325acd",
+      "seconds": 0.63,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -12.0,
+      "loudest_100ms_db": -23.01,
+      "loudness_lufs": -30.14,
+      "centroid_hz": 4053.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "swishes",
+          "file": "swish-3.wav",
+          "author": "artisticdude",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/swishes-sound-pack",
+          "start_s": 0.03,
+          "seconds": 0.15,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "dropLeather.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.011,
+          "seconds": 0.42,
+          "at_s": 0.3,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_Bounce_01",
+      "group": "SW_Grenade_Bounce",
+      "variant": 1,
+      "variants": 3,
+      "role": "BounceSound of DA_GrenadeRules",
+      "file": "art/audio/weapons/v2/SW_Grenade_Bounce_01.wav",
+      "sha256": "440c4515e914152c2097058f35ccf89c174b93e7aab115cae86ddc90757f5cfb",
+      "seconds": 0.47,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -3.0,
+      "loudest_100ms_db": -15.17,
+      "loudness_lufs": -23.09,
+      "centroid_hz": 281.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.36,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactSoft_heavy_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -4
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_Bounce_02",
+      "group": "SW_Grenade_Bounce",
+      "variant": 2,
+      "variants": 3,
+      "role": "BounceSound of DA_GrenadeRules",
+      "file": "art/audio/weapons/v2/SW_Grenade_Bounce_02.wav",
+      "sha256": "e355983ad68ba5d5fd2ccdd45fcc667d0b400c0379e39503cc610f3dcc564654",
+      "seconds": 0.47,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -3.0,
+      "loudest_100ms_db": -14.59,
+      "loudness_lufs": -22.49,
+      "centroid_hz": 278.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.36,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactSoft_heavy_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -4
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_Bounce_03",
+      "group": "SW_Grenade_Bounce",
+      "variant": 3,
+      "variants": 3,
+      "role": "BounceSound of DA_GrenadeRules",
+      "file": "art/audio/weapons/v2/SW_Grenade_Bounce_03.wav",
+      "sha256": "a89cb9bfb41da1045b155fe2f81ea3b38f9d3b0a5a9720ef31709788070a375e",
+      "seconds": 0.48,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -3.0,
+      "loudest_100ms_db": -14.2,
+      "loudness_lufs": -22.72,
+      "centroid_hz": 458.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.36,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactSoft_heavy_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMining_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.4,
+          "at_s": 0.0,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_EmptyBag",
+      "group": "SW_Grenade_EmptyBag",
+      "variant": 1,
+      "variants": 1,
+      "role": "events DryClick and Empty (grenade)",
+      "file": "art/audio/weapons/v2/SW_Grenade_EmptyBag.wav",
+      "sha256": "68e90b8bae1c78f58d8e54277ffe069b1a35fa33a4e5f3f59f2e846f1cd4d4f8",
+      "seconds": 0.49,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -15.0,
+      "loudest_100ms_db": -29.44,
+      "loudness_lufs": -33.53,
+      "centroid_hz": 2259.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "cloth3.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.022,
+          "seconds": 0.3,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "cloth2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.058,
+          "seconds": 0.3,
+          "at_s": 0.17,
+          "gain_db": -3
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_Explosion_01",
+      "group": "SW_Grenade_Explosion",
+      "variant": 1,
+      "variants": 3,
+      "role": "ExplosionSound of DA_GrenadeRules",
+      "file": "art/audio/weapons/v2/SW_Grenade_Explosion_01.wav",
+      "sha256": "7a756199b56272d662706429aa84fc2ea87c605436cef05fc7209cf347172f5a",
+      "seconds": 3.0,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -7.51,
+      "loudness_lufs": -12.84,
+      "centroid_hz": 3526.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_grenade",
+          "file": "609587_1038806-hq.mp3",
+          "author": "unfa",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/unfa/sounds/609587/",
+          "start_s": 0.0,
+          "seconds": 5.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_explosion_medium",
+          "file": "516914_2247456-hq.mp3",
+          "author": "Kinoton",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/Kinoton/sounds/516914/",
+          "start_s": 0.31,
+          "seconds": 1.5,
+          "at_s": 0.0,
+          "gain_db": -10
+        },
+        {
+          "source": "qubodup_explosion",
+          "file": "synthetic_explosion_1.flac",
+          "author": "qubodup",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/synthesized-explosion",
+          "start_s": 0.0,
+          "seconds": 1.15,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.0,
+          "seconds": 3.2,
+          "at_s": 0.02,
+          "gain_db": -9
+        },
+        {
+          "source": "rpg",
+          "file": "stones_02.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.121,
+          "seconds": 0.8,
+          "at_s": 0.35,
+          "gain_db": -16
+        },
+        {
+          "source": "rpg",
+          "file": "stones_04.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.02,
+          "seconds": 0.8,
+          "at_s": 0.7,
+          "gain_db": -16
+        },
+        {
+          "source": "foley2",
+          "file": "sfx100v2_stones_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-sfx-2",
+          "start_s": 0.017,
+          "seconds": 1.0,
+          "at_s": 0.5,
+          "gain_db": -17
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 65,
+          "f_end": 26,
+          "decay_s": 0.18,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "synth": "grains",
+          "rate_hz": 70,
+          "seconds": 1.4,
+          "seed": 39290885,
+          "at_s": 0.3,
+          "gain_db": -20
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 3.0,
+          "slaps": [
+            [
+              0.3,
+              0.4
+            ],
+            [
+              0.8,
+              0.25
+            ],
+            [
+              1.3,
+              0.12
+            ]
+          ],
+          "seed": 350919614,
+          "at_s": 0.0,
+          "gain_db": -12
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -6.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_Explosion_02",
+      "group": "SW_Grenade_Explosion",
+      "variant": 2,
+      "variants": 3,
+      "role": "ExplosionSound of DA_GrenadeRules",
+      "file": "art/audio/weapons/v2/SW_Grenade_Explosion_02.wav",
+      "sha256": "1fb779bef0a0f61284dce0a7acd3507644ee7142a7c8318d3cfc6bb86ad1750a",
+      "seconds": 4.77,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -6.0,
+      "loudness_lufs": -15.04,
+      "centroid_hz": 2539.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_explosion_medium",
+          "file": "516914_2247456-hq.mp3",
+          "author": "Kinoton",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/Kinoton/sounds/516914/",
+          "start_s": 0.31,
+          "seconds": 4.9,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "qubodup_explosion",
+          "file": "synthetic_explosion_1.flac",
+          "author": "qubodup",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/synthesized-explosion",
+          "start_s": 0.0,
+          "seconds": 1.15,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.0,
+          "seconds": 3.2,
+          "at_s": 0.02,
+          "gain_db": -9
+        },
+        {
+          "source": "rpg",
+          "file": "stones_02.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.121,
+          "seconds": 0.8,
+          "at_s": 0.4,
+          "gain_db": -16
+        },
+        {
+          "source": "rpg",
+          "file": "stones_04.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.02,
+          "seconds": 0.8,
+          "at_s": 0.75,
+          "gain_db": -16
+        },
+        {
+          "source": "foley2",
+          "file": "sfx100v2_stones_02.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-sfx-2",
+          "start_s": 0.021,
+          "seconds": 1.0,
+          "at_s": 0.5,
+          "gain_db": -17
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 65,
+          "f_end": 26,
+          "decay_s": 0.18,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "synth": "grains",
+          "rate_hz": 70,
+          "seconds": 1.4,
+          "seed": 339492666,
+          "at_s": 0.3,
+          "gain_db": -20
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 3.0,
+          "slaps": [
+            [
+              0.3,
+              0.4
+            ],
+            [
+              0.8,
+              0.25
+            ],
+            [
+              1.3,
+              0.12
+            ]
+          ],
+          "seed": 687091985,
+          "at_s": 0.0,
+          "gain_db": -12
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 4.69,
+          "loud_target_db": -6.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_Explosion_03",
+      "group": "SW_Grenade_Explosion",
+      "variant": 3,
+      "variants": 3,
+      "role": "ExplosionSound of DA_GrenadeRules",
+      "file": "art/audio/weapons/v2/SW_Grenade_Explosion_03.wav",
+      "sha256": "f0227355576a11280402160dd8288d028f29e59cd8e6421d395799924383d6d4",
+      "seconds": 3.26,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -7.23,
+      "loudness_lufs": -12.89,
+      "centroid_hz": 3273.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_grenade",
+          "file": "609587_1038806-hq.mp3",
+          "author": "unfa",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/unfa/sounds/609587/",
+          "start_s": 0.0,
+          "seconds": 5.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_explosion_medium",
+          "file": "516914_2247456-hq.mp3",
+          "author": "Kinoton",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/Kinoton/sounds/516914/",
+          "start_s": 0.31,
+          "seconds": 1.5,
+          "at_s": 0.0,
+          "gain_db": -10
+        },
+        {
+          "source": "qubodup_explosion",
+          "file": "synthetic_explosion_1.flac",
+          "author": "qubodup",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/synthesized-explosion",
+          "start_s": 0.0,
+          "seconds": 1.15,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.0,
+          "seconds": 3.2,
+          "at_s": 0.02,
+          "gain_db": -9
+        },
+        {
+          "source": "rpg",
+          "file": "stones_02.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.121,
+          "seconds": 0.8,
+          "at_s": 0.45,
+          "gain_db": -16
+        },
+        {
+          "source": "rpg",
+          "file": "stones_04.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.02,
+          "seconds": 0.8,
+          "at_s": 0.8,
+          "gain_db": -16
+        },
+        {
+          "source": "foley2",
+          "file": "sfx100v2_stones_03.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-sfx-2",
+          "start_s": 0.0,
+          "seconds": 1.0,
+          "at_s": 0.5,
+          "gain_db": -17
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 65,
+          "f_end": 26,
+          "decay_s": 0.18,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "synth": "grains",
+          "rate_hz": 70,
+          "seconds": 1.4,
+          "seed": 933952959,
+          "at_s": 0.3,
+          "gain_db": -20
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 3.0,
+          "slaps": [
+            [
+              0.3,
+              0.4
+            ],
+            [
+              0.8,
+              0.25
+            ],
+            [
+              1.3,
+              0.12
+            ]
+          ],
+          "seed": 353586610,
+          "at_s": 0.0,
+          "gain_db": -12
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -6.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_FuseLoop",
+      "group": "SW_Grenade_FuseLoop",
+      "variant": 1,
+      "variants": 1,
+      "role": "fuse on the projectile: no field yet (see the doc)",
+      "file": "art/audio/weapons/v2/SW_Grenade_FuseLoop.wav",
+      "sha256": "c7e957d5b8cb565c946848d966deb384be467f37d746b9c7297f49d7a11bc8cc",
+      "seconds": 3.0,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -10.0,
+      "loudest_100ms_db": -27.82,
+      "loudness_lufs": -26.81,
+      "centroid_hz": 6507.0,
+      "loop_seam_delta": 0.016449,
+      "loop_seam_ok": true,
+      "loop": true,
+      "sources": [
+        {
+          "source": "fs_fuse",
+          "file": "483320_2524442-hq.mp3",
+          "author": "craigsmith",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/craigsmith/sounds/483320/",
+          "start_s": 9.0,
+          "seconds": 3.3,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_Light",
+      "group": "SW_Grenade_Light",
+      "variant": 1,
+      "variants": 1,
+      "role": "event Light (grenade)",
+      "file": "art/audio/weapons/v2/SW_Grenade_Light.wav",
+      "sha256": "77a689b23becfd2943fdc384af9db3d15d2fd48c46b52ecb0db2d465468f4bf1",
+      "seconds": 0.95,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -9.0,
+      "loudest_100ms_db": -24.79,
+      "loudness_lufs": -23.63,
+      "centroid_hz": 7479.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_match",
+          "file": "237402_1502374-hq.mp3",
+          "author": "squareal",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/squareal/sounds/237402/",
+          "start_s": 0.0,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "fs_fuse",
+          "file": "483320_2524442-hq.mp3",
+          "author": "craigsmith",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/craigsmith/sounds/483320/",
+          "start_s": 6.0,
+          "seconds": 0.95,
+          "at_s": 0.06,
+          "gain_db": 0
+        },
+        {
+          "source": "fuse_short",
+          "file": "fuse_0.ogg",
+          "author": "themightyglider (from j1987, Freesound 111325, CC0)",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/simple-fuse-sound",
+          "start_s": 0.001,
+          "seconds": 0.5,
+          "at_s": 0.08,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_Take",
+      "group": "SW_Grenade_Take",
+      "variant": 1,
+      "variants": 1,
+      "role": "event HammerCocked (grenade)",
+      "file": "art/audio/weapons/v2/SW_Grenade_Take.wav",
+      "sha256": "b0ba8f239b82942e84680b22ff5d96dd96634506f8356b1d6aaded55e2463ead",
+      "seconds": 0.35,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -29.33,
+      "loudness_lufs": -34.69,
+      "centroid_hz": 3801.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "handleSmallLeather.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.048,
+          "seconds": 0.34,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_medium_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.05,
+          "gain_db": -4
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Grenade_Throw",
+      "group": "SW_Grenade_Throw",
+      "variant": 1,
+      "variants": 1,
+      "role": "event Fire (grenade throw)",
+      "file": "art/audio/weapons/v2/SW_Grenade_Throw.wav",
+      "sha256": "8b7c94a7a3c202249c3b41d9a18ccca09e69639416c96a6fdcf213ce614c129e",
+      "seconds": 0.31,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.0,
+      "loudest_100ms_db": -19.89,
+      "loudness_lufs": -25.66,
+      "centroid_hz": 1596.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "swishes",
+          "file": "swish-9.wav",
+          "author": "artisticdude",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/swishes-sound-pack",
+          "start_s": 0.033,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "cloth1.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.074,
+          "seconds": 0.3,
+          "at_s": 0.0,
+          "gain_db": -9
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_BallPatch",
+      "group": "SW_Longgun_BallPatch",
+      "variant": 1,
+      "variants": 1,
+      "role": "event BallAndPatch",
+      "file": "art/audio/weapons/v2/SW_Longgun_BallPatch.wav",
+      "sha256": "e620dd7d56374dafbcf305a8c33869b59a3aa82401d5761dfb0b7f9e783f9a9e",
+      "seconds": 0.32,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -13.0,
+      "loudest_100ms_db": -28.55,
+      "loudness_lufs": -33.06,
+      "centroid_hz": 3108.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "cloth4.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.0,
+          "seconds": 0.3,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.13,
+          "at_s": 0.12,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_FrizzenClose",
+      "group": "SW_Longgun_FrizzenClose",
+      "variant": 1,
+      "variants": 1,
+      "role": "event FrizzenClose",
+      "file": "art/audio/weapons/v2/SW_Longgun_FrizzenClose.wav",
+      "sha256": "627d330cb85d1e4bd2865cc2daed7abb958cba58321d3b8709b6417d044d8074",
+      "seconds": 0.13,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -9.0,
+      "loudest_100ms_db": -25.76,
+      "loudness_lufs": -23.82,
+      "centroid_hz": 6195.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "lfa_clicks3",
+          "file": "equipment_clicks3.wav",
+          "author": "LFA",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/equipment-clicks-iii",
+          "start_s": 2.858,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 17.518,
+          "seconds": 0.09,
+          "at_s": 0.004,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_FullCock",
+      "group": "SW_Longgun_FullCock",
+      "variant": 1,
+      "variants": 1,
+      "role": "event FullCockEnd",
+      "file": "art/audio/weapons/v2/SW_Longgun_FullCock.wav",
+      "sha256": "376eab889b29753f0c76429c43192aab4d065b6a2ae39a080086956f42b1bfdb",
+      "seconds": 0.14,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.0,
+      "loudest_100ms_db": -29.1,
+      "loudness_lufs": -27.5,
+      "centroid_hz": 8244.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 6.576,
+          "seconds": 0.09,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 18.242,
+          "seconds": 0.09,
+          "at_s": 0.035,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_HalfCock",
+      "group": "SW_Longgun_HalfCock",
+      "variant": 1,
+      "variants": 1,
+      "role": "event HalfCockStart",
+      "file": "art/audio/weapons/v2/SW_Longgun_HalfCock.wav",
+      "sha256": "e5b77d4d3a6e10a7c8c8815084cf2277fb208b81cee08abfe3102c945b55e96a",
+      "seconds": 0.12,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -10.0,
+      "loudest_100ms_db": -29.5,
+      "loudness_lufs": -27.2,
+      "centroid_hz": 6466.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 4.954,
+          "seconds": 0.09,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_PanPrime",
+      "group": "SW_Longgun_PanPrime",
+      "variant": 1,
+      "variants": 1,
+      "role": "event PanPrime",
+      "file": "art/audio/weapons/v2/SW_Longgun_PanPrime.wav",
+      "sha256": "06bf2e297dbb4739d4034cac7faaf359cce31045c3b68236b560219ad2fff1ae",
+      "seconds": 0.38,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -15.0,
+      "loudest_100ms_db": -37.36,
+      "loudness_lufs": -37.19,
+      "centroid_hz": 8403.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "lfa_clicks3",
+          "file": "equipment_clicks3.wav",
+          "author": "LFA",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/equipment-clicks-iii",
+          "start_s": 5.089,
+          "seconds": 0.05,
+          "at_s": 0.0,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "grains",
+          "rate_hz": 260,
+          "seconds": 0.3,
+          "seed": 11,
+          "at_s": 0.06,
+          "gain_db": 0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_PowderCharge",
+      "group": "SW_Longgun_PowderCharge",
+      "variant": 1,
+      "variants": 1,
+      "role": "event PowderCharge",
+      "file": "art/audio/weapons/v2/SW_Longgun_PowderCharge.wav",
+      "sha256": "26765a040b4de974c9d3099274d3b4a531a48d6312199f31b6120312f0df4604",
+      "seconds": 0.57,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -13.0,
+      "loudest_100ms_db": -30.86,
+      "loudness_lufs": -30.41,
+      "centroid_hz": 5299.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "foley",
+          "file": "paper_02.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/node/85570",
+          "start_s": 0.003,
+          "seconds": 0.25,
+          "at_s": 0.0,
+          "gain_db": -2
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "grains",
+          "rate_hz": 900,
+          "seconds": 0.38,
+          "seed": 21,
+          "at_s": 0.18,
+          "gain_db": 0
+        },
+        {
+          "synth": "tube",
+          "at_s": 0.18,
+          "gain_db": -11
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_RamrodDraw",
+      "group": "SW_Longgun_RamrodDraw",
+      "variant": 1,
+      "variants": 1,
+      "role": "event RamrodDraw",
+      "file": "art/audio/weapons/v2/SW_Longgun_RamrodDraw.wav",
+      "sha256": "2cf8646f62faaa064256399e266d916ccdc53df1257e5f50d450b30897f29e63",
+      "seconds": 0.59,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -13.0,
+      "loudest_100ms_db": -24.45,
+      "loudness_lufs": -23.69,
+      "centroid_hz": 3858.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "lfa_clicks3",
+          "file": "equipment_clicks3.wav",
+          "author": "LFA",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/equipment-clicks-iii",
+          "start_s": 5.089,
+          "seconds": 0.05,
+          "at_s": 0.0,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.43,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "friction",
+          "seconds": 0.42,
+          "center_hz": 2600,
+          "seed": 31,
+          "at_s": 0.02,
+          "gain_db": 0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_RamrodReturn",
+      "group": "SW_Longgun_RamrodReturn",
+      "variant": 1,
+      "variants": 1,
+      "role": "event RamrodReturn",
+      "file": "art/audio/weapons/v2/SW_Longgun_RamrodReturn.wav",
+      "sha256": "b6a57ff488cbe2c53a2f663b347f84e5fe5cfc0d82b781ee7158ec7b8668f81b",
+      "seconds": 0.38,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -25.06,
+      "loudness_lufs": -25.38,
+      "centroid_hz": 3926.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 21.796,
+          "seconds": 0.09,
+          "at_s": 0.3,
+          "gain_db": -4
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "friction",
+          "seconds": 0.3,
+          "center_hz": 2300,
+          "seed": 37,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_RamrodStroke_01",
+      "group": "SW_Longgun_RamrodStroke",
+      "variant": 1,
+      "variants": 3,
+      "role": "event RamrodStroke (twice per reload)",
+      "file": "art/audio/weapons/v2/SW_Longgun_RamrodStroke_01.wav",
+      "sha256": "adca93885a41af30b4074ef2765b2fbb7298b6fd5c2d1d0fb0dc5bcb940ab589",
+      "seconds": 0.22,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -10.0,
+      "loudest_100ms_db": -24.34,
+      "loudness_lufs": -28.42,
+      "centroid_hz": 684.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_medium_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.25,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_medium_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "tube",
+          "at_s": 0.0,
+          "gain_db": -10
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_RamrodStroke_02",
+      "group": "SW_Longgun_RamrodStroke",
+      "variant": 2,
+      "variants": 3,
+      "role": "event RamrodStroke (twice per reload)",
+      "file": "art/audio/weapons/v2/SW_Longgun_RamrodStroke_02.wav",
+      "sha256": "857194858856edb753ac491e8eb8f0c2f2a2755268220374a9c397767fbbe24c",
+      "seconds": 0.35,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -10.0,
+      "loudest_100ms_db": -24.67,
+      "loudness_lufs": -30.45,
+      "centroid_hz": 1072.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_medium_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.25,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_medium_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "tube",
+          "at_s": 0.0,
+          "gain_db": -10
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_RamrodStroke_03",
+      "group": "SW_Longgun_RamrodStroke",
+      "variant": 3,
+      "variants": 3,
+      "role": "event RamrodStroke (twice per reload)",
+      "file": "art/audio/weapons/v2/SW_Longgun_RamrodStroke_03.wav",
+      "sha256": "47ea085116ae521b5af5d77fb37a429363c4d76a9470cea718b930df66cc45aa",
+      "seconds": 0.2,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -10.0,
+      "loudest_100ms_db": -25.4,
+      "loudness_lufs": -28.88,
+      "centroid_hz": 648.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_medium_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.25,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_medium_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "tube",
+          "at_s": 0.0,
+          "gain_db": -10
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_RamrodTurn",
+      "group": "SW_Longgun_RamrodTurn",
+      "variant": 1,
+      "variants": 1,
+      "role": "event RamrodTurn",
+      "file": "art/audio/weapons/v2/SW_Longgun_RamrodTurn.wav",
+      "sha256": "5ceafa3d25be143e4ee7e344aad627167b20022f500419d23fdc03d3e2bbb155",
+      "seconds": 0.21,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -15.0,
+      "loudest_100ms_db": -29.97,
+      "loudness_lufs": -33.11,
+      "centroid_hz": 3607.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "swishes",
+          "file": "swish-12.wav",
+          "author": "artisticdude",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/swishes-sound-pack",
+          "start_s": 0.008,
+          "seconds": 0.08,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.07,
+          "gain_db": -9
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_StockGround",
+      "group": "SW_Longgun_StockGround",
+      "variant": 1,
+      "variants": 1,
+      "role": "event StockLowered",
+      "file": "art/audio/weapons/v2/SW_Longgun_StockGround.wav",
+      "sha256": "71ba433294b8fa65dac29dc58cfed9dd8d7cece252d65826d4568e7a7f3cd3c0",
+      "seconds": 0.505,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -10.0,
+      "loudest_100ms_db": -20.79,
+      "loudness_lufs": -29.43,
+      "centroid_hz": 290.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_heavy_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.31,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactSoft_heavy_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.5,
+          "at_s": 0.005,
+          "gain_db": -3
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_Trigger_01",
+      "group": "SW_Longgun_Trigger",
+      "variant": 1,
+      "variants": 3,
+      "role": "event Trigger (musket, blunderbuss, rifle)",
+      "file": "art/audio/weapons/v2/SW_Longgun_Trigger_01.wav",
+      "sha256": "3cfbebf338b39f048754c6b01cf985b4e6657db5342a8e58866b1108502eb969",
+      "seconds": 0.24,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -5.0,
+      "loudest_100ms_db": -17.9,
+      "loudness_lufs": -18.98,
+      "centroid_hz": 4777.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 8.499,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_flint_lighter",
+          "file": "689655_3086325-hq.mp3",
+          "author": "ImmergoMedia",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/ImmergoMedia/sounds/689655/",
+          "start_s": 0.158,
+          "seconds": 0.08,
+          "at_s": 0.004,
+          "gain_db": -9
+        },
+        {
+          "source": "fs_flintlock_rifle",
+          "file": "675618_2524442-hq.mp3",
+          "author": "craigsmith",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/craigsmith/sounds/675618/",
+          "start_s": 0.02,
+          "seconds": 0.15,
+          "at_s": 0.035,
+          "gain_db": -3
+        },
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.015,
+          "seconds": 0.06,
+          "at_s": 0.03,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_Trigger_02",
+      "group": "SW_Longgun_Trigger",
+      "variant": 2,
+      "variants": 3,
+      "role": "event Trigger (musket, blunderbuss, rifle)",
+      "file": "art/audio/weapons/v2/SW_Longgun_Trigger_02.wav",
+      "sha256": "64c0278e203e8366544ff768032c4e29c9b7b8f9653711a96459fac8c51071a3",
+      "seconds": 0.24,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -5.0,
+      "loudest_100ms_db": -16.74,
+      "loudness_lufs": -17.82,
+      "centroid_hz": 4702.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 14.328,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_flint_lighter",
+          "file": "689655_3086325-hq.mp3",
+          "author": "ImmergoMedia",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/ImmergoMedia/sounds/689655/",
+          "start_s": 0.158,
+          "seconds": 0.08,
+          "at_s": 0.004,
+          "gain_db": -9
+        },
+        {
+          "source": "fs_flintlock_rifle",
+          "file": "675618_2524442-hq.mp3",
+          "author": "craigsmith",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/craigsmith/sounds/675618/",
+          "start_s": 0.02,
+          "seconds": 0.15,
+          "at_s": 0.04,
+          "gain_db": -3
+        },
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.015,
+          "seconds": 0.06,
+          "at_s": 0.03,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Longgun_Trigger_03",
+      "group": "SW_Longgun_Trigger",
+      "variant": 3,
+      "variants": 3,
+      "role": "event Trigger (musket, blunderbuss, rifle)",
+      "file": "art/audio/weapons/v2/SW_Longgun_Trigger_03.wav",
+      "sha256": "08269a991b0bc174c001cc46fff5eaaec7bb2317c7e249e8874486340ccc02a1",
+      "seconds": 0.25,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -5.0,
+      "loudest_100ms_db": -17.49,
+      "loudness_lufs": -18.72,
+      "centroid_hz": 4394.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 19.646,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_flint_lighter",
+          "file": "689655_3086325-hq.mp3",
+          "author": "ImmergoMedia",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/ImmergoMedia/sounds/689655/",
+          "start_s": 0.158,
+          "seconds": 0.08,
+          "at_s": 0.004,
+          "gain_db": -9
+        },
+        {
+          "source": "fs_flintlock_rifle",
+          "file": "675618_2524442-hq.mp3",
+          "author": "craigsmith",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/craigsmith/sounds/675618/",
+          "start_s": 0.02,
+          "seconds": 0.15,
+          "at_s": 0.045,
+          "gain_db": -3
+        },
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.015,
+          "seconds": 0.06,
+          "at_s": 0.03,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_PirateMusket_Fire_01",
+      "group": "SW_PirateMusket_Fire",
+      "variant": 1,
+      "variants": 3,
+      "role": "FireSound of DA_PirateMusketRules (event Shot)",
+      "file": "art/audio/weapons/v2/SW_PirateMusket_Fire_01.wav",
+      "sha256": "a05b1bc4dd887129004e903a55d3212bbc703b018896de7bfb7ff27fbd1b2941",
+      "seconds": 2.26,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -11.05,
+      "loudness_lufs": -17.85,
+      "centroid_hz": 4716.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 2.9,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.838,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -7
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": -8
+        },
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.0,
+          "seconds": 0.8,
+          "at_s": 0.0,
+          "gain_db": -19
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 90,
+          "f_end": 42,
+          "decay_s": 0.08,
+          "at_s": 0.0,
+          "gain_db": -10
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.0,
+          "slaps": [
+            [
+              0.24,
+              0.3
+            ],
+            [
+              0.62,
+              0.2
+            ]
+          ],
+          "seed": 502152767,
+          "at_s": 0.0,
+          "gain_db": -12
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -8.5
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_PirateMusket_Fire_02",
+      "group": "SW_PirateMusket_Fire",
+      "variant": 2,
+      "variants": 3,
+      "role": "FireSound of DA_PirateMusketRules (event Shot)",
+      "file": "art/audio/weapons/v2/SW_PirateMusket_Fire_02.wav",
+      "sha256": "839220e7b9e1d0d6ff2b88a4146f7e25f0073a83a1c2f0e122206cf17c95930d",
+      "seconds": 2.66,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -9.54,
+      "loudness_lufs": -18.6,
+      "centroid_hz": 2470.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_shot",
+          "file": "234869_3883507-hq.mp3",
+          "author": "mlsulli",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/mlsulli/sounds/234869/",
+          "start_s": 0.714,
+          "seconds": 1.5,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 2.26,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -7
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": -8
+        },
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.0,
+          "seconds": 0.8,
+          "at_s": 0.0,
+          "gain_db": -19
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.4,
+          "seconds": 2.6,
+          "at_s": 0.08,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 90,
+          "f_end": 42,
+          "decay_s": 0.08,
+          "at_s": 0.0,
+          "gain_db": -10
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.0,
+          "slaps": [
+            [
+              0.24,
+              0.3
+            ],
+            [
+              0.62,
+              0.2
+            ]
+          ],
+          "seed": 646987040,
+          "at_s": 0.0,
+          "gain_db": -15
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -8.5
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_PirateMusket_Fire_03",
+      "group": "SW_PirateMusket_Fire",
+      "variant": 3,
+      "variants": 3,
+      "role": "FireSound of DA_PirateMusketRules (event Shot)",
+      "file": "art/audio/weapons/v2/SW_PirateMusket_Fire_03.wav",
+      "sha256": "4f4a1d3e7087e7581148e7e8cc5bbba9a43a378bd0fe78ceef88087fd058755d",
+      "seconds": 2.69,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -8.54,
+      "loudness_lufs": -14.45,
+      "centroid_hz": 2352.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.068,
+          "seconds": 1.9,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 3.505,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": -5
+        },
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.0,
+          "seconds": 0.8,
+          "at_s": 0.0,
+          "gain_db": -19
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.4,
+          "seconds": 2.6,
+          "at_s": 0.08,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 90,
+          "f_end": 42,
+          "decay_s": 0.08,
+          "at_s": 0.0,
+          "gain_db": -10
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.0,
+          "slaps": [
+            [
+              0.24,
+              0.3
+            ],
+            [
+              0.62,
+              0.2
+            ]
+          ],
+          "seed": 1059799885,
+          "at_s": 0.0,
+          "gain_db": -17
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 9.19,
+          "loud_target_db": -8.5
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_Cock_01",
+      "group": "SW_Pistol_Cock",
+      "variant": 1,
+      "variants": 2,
+      "role": "events CockHammer, HammerCocked (pistols)",
+      "file": "art/audio/weapons/v2/SW_Pistol_Cock_01.wav",
+      "sha256": "5c039cca58bd2f8e92ced9d169f245859717eab18391a4d194370293e8a56300",
+      "seconds": 0.21,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.0,
+      "loudest_100ms_db": -29.8,
+      "loudness_lufs": -27.63,
+      "centroid_hz": 8908.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 17.518,
+          "seconds": 0.09,
+          "at_s": 0.0,
+          "gain_db": -2
+        },
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 18.242,
+          "seconds": 0.09,
+          "at_s": 0.11,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_Cock_02",
+      "group": "SW_Pistol_Cock",
+      "variant": 2,
+      "variants": 2,
+      "role": "events CockHammer, HammerCocked (pistols)",
+      "file": "art/audio/weapons/v2/SW_Pistol_Cock_02.wav",
+      "sha256": "a03c096a19057911cac17db60df22900b559c2d4db6f01931efbeca797d7270b",
+      "seconds": 0.21,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.0,
+      "loudest_100ms_db": -29.5,
+      "loudness_lufs": -27.35,
+      "centroid_hz": 8358.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 21.796,
+          "seconds": 0.09,
+          "at_s": 0.0,
+          "gain_db": -2
+        },
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 22.757,
+          "seconds": 0.09,
+          "at_s": 0.11,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_Fire_01",
+      "group": "SW_Pistol_Fire",
+      "variant": 1,
+      "variants": 3,
+      "role": "FireSound of DA_PistolRules (shot, pan flash 30 ms ahead)",
+      "file": "art/audio/weapons/v2/SW_Pistol_Fire_01.wav",
+      "sha256": "10aed6828874d856b5b20da92c623cfa3cbee3caa76305c2cd69303c64caf82f",
+      "seconds": 0.88,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -10.99,
+      "loudness_lufs": -18.82,
+      "centroid_hz": 3876.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.015,
+          "seconds": 0.05,
+          "at_s": 0.0,
+          "gain_db": -14
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.145,
+          "seconds": 0.5,
+          "at_s": 0.03,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.9,
+          "at_s": 0.03,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 120,
+          "f_end": 60,
+          "decay_s": 0.04,
+          "at_s": 0.03,
+          "gain_db": -13
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 0.8,
+          "slaps": [
+            [
+              0.18,
+              0.3
+            ],
+            [
+              0.39,
+              0.16
+            ]
+          ],
+          "seed": 140806905,
+          "at_s": 0.03,
+          "gain_db": -18
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 14.44,
+          "loud_target_db": -11.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_Fire_02",
+      "group": "SW_Pistol_Fire",
+      "variant": 2,
+      "variants": 3,
+      "role": "FireSound of DA_PistolRules (shot, pan flash 30 ms ahead)",
+      "file": "art/audio/weapons/v2/SW_Pistol_Fire_02.wav",
+      "sha256": "e79ee8e45a2f5f3c08799e6d4797b558e991925ad794c1b50161b55be9dbb583",
+      "seconds": 0.86,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -11.01,
+      "loudness_lufs": -19.1,
+      "centroid_hz": 3355.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.015,
+          "seconds": 0.05,
+          "at_s": 0.0,
+          "gain_db": -14
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 1.553,
+          "seconds": 0.5,
+          "at_s": 0.03,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.9,
+          "at_s": 0.03,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 120,
+          "f_end": 60,
+          "decay_s": 0.04,
+          "at_s": 0.03,
+          "gain_db": -13
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 0.8,
+          "slaps": [
+            [
+              0.18,
+              0.3
+            ],
+            [
+              0.39,
+              0.16
+            ]
+          ],
+          "seed": 656135125,
+          "at_s": 0.03,
+          "gain_db": -18
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 14.31,
+          "loud_target_db": -11.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_Fire_03",
+      "group": "SW_Pistol_Fire",
+      "variant": 3,
+      "variants": 3,
+      "role": "FireSound of DA_PistolRules (shot, pan flash 30 ms ahead)",
+      "file": "art/audio/weapons/v2/SW_Pistol_Fire_03.wav",
+      "sha256": "0ba6bc690bbb37eb4d5519ecc320ae7acf4d22dc3a4d66c8fc4b5607be51ff85",
+      "seconds": 0.84,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -11.19,
+      "loudness_lufs": -18.81,
+      "centroid_hz": 3429.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_musket_ignition",
+          "file": "347647_6207707-hq.mp3",
+          "author": "fennelliott",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/fennelliott/sounds/347647/",
+          "start_s": 0.015,
+          "seconds": 0.05,
+          "at_s": 0.0,
+          "gain_db": -14
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 2.942,
+          "seconds": 0.5,
+          "at_s": 0.03,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.9,
+          "at_s": 0.03,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 120,
+          "f_end": 60,
+          "decay_s": 0.04,
+          "at_s": 0.03,
+          "gain_db": -13
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 0.8,
+          "slaps": [
+            [
+              0.18,
+              0.3
+            ],
+            [
+              0.39,
+              0.16
+            ]
+          ],
+          "seed": 74504231,
+          "at_s": 0.03,
+          "gain_db": -18
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -11.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_HammerDrop_01",
+      "group": "SW_Pistol_HammerDrop",
+      "variant": 1,
+      "variants": 3,
+      "role": "event HammerDrop (pistols: shot and dry fire)",
+      "file": "art/audio/weapons/v2/SW_Pistol_HammerDrop_01.wav",
+      "sha256": "9b51b915e4c1c9446da7a1cfcc4069a158d021fa6d2d5ec728ce07be021cf1ff",
+      "seconds": 0.2,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -6.0,
+      "loudest_100ms_db": -19.96,
+      "loudness_lufs": -20.02,
+      "centroid_hz": 7440.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 14.328,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_flint_lighter",
+          "file": "689655_3086325-hq.mp3",
+          "author": "ImmergoMedia",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/ImmergoMedia/sounds/689655/",
+          "start_s": 0.158,
+          "seconds": 0.06,
+          "at_s": 0.003,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_HammerDrop_02",
+      "group": "SW_Pistol_HammerDrop",
+      "variant": 2,
+      "variants": 3,
+      "role": "event HammerDrop (pistols: shot and dry fire)",
+      "file": "art/audio/weapons/v2/SW_Pistol_HammerDrop_02.wav",
+      "sha256": "49f5f3dd5497164ac254d71a06c6dde32ac1ea69f52f96a489cb08d09bcdd91d",
+      "seconds": 0.2,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -6.0,
+      "loudest_100ms_db": -20.38,
+      "loudness_lufs": -20.4,
+      "centroid_hz": 7280.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 19.646,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_flint_lighter",
+          "file": "689655_3086325-hq.mp3",
+          "author": "ImmergoMedia",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/ImmergoMedia/sounds/689655/",
+          "start_s": 0.158,
+          "seconds": 0.06,
+          "at_s": 0.003,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_HammerDrop_03",
+      "group": "SW_Pistol_HammerDrop",
+      "variant": 3,
+      "variants": 3,
+      "role": "event HammerDrop (pistols: shot and dry fire)",
+      "file": "art/audio/weapons/v2/SW_Pistol_HammerDrop_03.wav",
+      "sha256": "7f2b382d6dd9e6778011a3c994bb3a47e1f73a0f29d6163f3c1f709ec39d9c05",
+      "seconds": 0.2,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -6.0,
+      "loudest_100ms_db": -19.3,
+      "loudness_lufs": -19.34,
+      "centroid_hz": 7474.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 23.997,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_flint_lighter",
+          "file": "689655_3086325-hq.mp3",
+          "author": "ImmergoMedia",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/ImmergoMedia/sounds/689655/",
+          "start_s": 0.158,
+          "seconds": 0.06,
+          "at_s": 0.003,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_PaperPickup",
+      "group": "SW_Pistol_PaperPickup",
+      "variant": 1,
+      "variants": 1,
+      "role": "event PaperPickup",
+      "file": "art/audio/weapons/v2/SW_Pistol_PaperPickup.wav",
+      "sha256": "32001ec79fd4de39162e398980b709c8111bbf6fcd2d2b8b72e7fe81df21293f",
+      "seconds": 0.4,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -35.11,
+      "loudness_lufs": -36.84,
+      "centroid_hz": 10342.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "beltHandle2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.084,
+          "seconds": 0.45,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "foley",
+          "file": "paper_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/node/85570",
+          "start_s": 0.014,
+          "seconds": 0.2,
+          "at_s": 0.18,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_PaperTransfer",
+      "group": "SW_Pistol_PaperTransfer",
+      "variant": 1,
+      "variants": 1,
+      "role": "event PaperTransfer",
+      "file": "art/audio/weapons/v2/SW_Pistol_PaperTransfer.wav",
+      "sha256": "37b91feceb0facbf6a1e42538dd3b107a2c4361d5a67d9fd2f4a771bb06a9565",
+      "seconds": 0.65,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -13.0,
+      "loudest_100ms_db": -28.91,
+      "loudness_lufs": -30.13,
+      "centroid_hz": 6094.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "foley",
+          "file": "paper_03.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/node/85570",
+          "start_s": 0.031,
+          "seconds": 0.22,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.12,
+          "at_s": 0.55,
+          "gain_db": -3
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "grains",
+          "rate_hz": 700,
+          "seconds": 0.28,
+          "seed": 51,
+          "at_s": 0.2,
+          "gain_db": -2
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_Ramrod",
+      "group": "SW_Pistol_Ramrod",
+      "variant": 1,
+      "variants": 1,
+      "role": "event RamrodGesture",
+      "file": "art/audio/weapons/v2/SW_Pistol_Ramrod.wav",
+      "sha256": "30aefc531fa22a7dd9b986e9b0358051fb46c38c459cc6051221223be5e4ef8a",
+      "seconds": 0.92,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -12.0,
+      "loudest_100ms_db": -24.75,
+      "loudness_lufs": -29.78,
+      "centroid_hz": 2233.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_medium_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.45,
+          "gain_db": -1
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_medium_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.76,
+          "gain_db": -1
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "friction",
+          "seconds": 0.24,
+          "center_hz": 2900,
+          "seed": 61,
+          "at_s": 0.0,
+          "gain_db": -2
+        },
+        {
+          "synth": "tube",
+          "at_s": 0.45,
+          "gain_db": -6
+        },
+        {
+          "synth": "tube",
+          "at_s": 0.76,
+          "gain_db": -6
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Pistol_RamrodReturn",
+      "group": "SW_Pistol_RamrodReturn",
+      "variant": 1,
+      "variants": 1,
+      "role": "event RamrodReturned",
+      "file": "art/audio/weapons/v2/SW_Pistol_RamrodReturn.wav",
+      "sha256": "b1555b32803ab54f1858d74a9d4d3dc782c4dde32d0bcb6b8671f5bfcfc5ac6e",
+      "seconds": 0.28,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -15.0,
+      "loudest_100ms_db": -26.16,
+      "loudness_lufs": -26.29,
+      "centroid_hz": 4524.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 22.757,
+          "seconds": 0.09,
+          "at_s": 0.2,
+          "gain_db": -5
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "friction",
+          "seconds": 0.2,
+          "center_hz": 2700,
+          "seed": 67,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Rifle_Fire_01",
+      "group": "SW_Rifle_Fire",
+      "variant": 1,
+      "variants": 3,
+      "role": "FireSound of DA_RifleRules (event Shot)",
+      "file": "art/audio/weapons/v2/SW_Rifle_Fire_01.wav",
+      "sha256": "31f7c1a2c1aec23ee78dbc6a128c93d4b3ce58f040aaa92d7812aadb2d440ef6",
+      "seconds": 2.62,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -8.5,
+      "loudness_lufs": -14.8,
+      "centroid_hz": 1875.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_rifle",
+          "file": "675618_2524442-hq.mp3",
+          "author": "craigsmith",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/craigsmith/sounds/675618/",
+          "start_s": 0.181,
+          "seconds": 2.55,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 1.553,
+          "seconds": 0.4,
+          "at_s": 0.0,
+          "gain_db": -3
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 80,
+          "f_end": 40,
+          "decay_s": 0.07,
+          "at_s": 0.0,
+          "gain_db": -7
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.4,
+          "slaps": [
+            [
+              0.33,
+              0.45
+            ],
+            [
+              0.71,
+              0.3
+            ],
+            [
+              1.1,
+              0.15
+            ]
+          ],
+          "seed": 126830493,
+          "at_s": 0.0,
+          "gain_db": -13
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 7.81,
+          "loud_target_db": -8.5
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Rifle_Fire_02",
+      "group": "SW_Rifle_Fire",
+      "variant": 2,
+      "variants": 3,
+      "role": "FireSound of DA_RifleRules (event Shot)",
+      "file": "art/audio/weapons/v2/SW_Rifle_Fire_02.wav",
+      "sha256": "00992ecacb1af9a52c34978f483c08024c813af9acfc20695cbc709effc57e04",
+      "seconds": 2.57,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -8.5,
+      "loudness_lufs": -16.05,
+      "centroid_hz": 1723.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_rifle",
+          "file": "675618_2524442-hq.mp3",
+          "author": "craigsmith",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/craigsmith/sounds/675618/",
+          "start_s": 0.181,
+          "seconds": 2.55,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 2.942,
+          "seconds": 0.4,
+          "at_s": 0.0,
+          "gain_db": -3
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 80,
+          "f_end": 40,
+          "decay_s": 0.07,
+          "at_s": 0.0,
+          "gain_db": -7
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.4,
+          "slaps": [
+            [
+              0.33,
+              0.45
+            ],
+            [
+              0.71,
+              0.3
+            ],
+            [
+              1.1,
+              0.15
+            ]
+          ],
+          "seed": 281806465,
+          "at_s": 0.0,
+          "gain_db": -13
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 5.44,
+          "loud_target_db": -8.5
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Rifle_Fire_03",
+      "group": "SW_Rifle_Fire",
+      "variant": 3,
+      "variants": 3,
+      "role": "FireSound of DA_RifleRules (event Shot)",
+      "file": "art/audio/weapons/v2/SW_Rifle_Fire_03.wav",
+      "sha256": "2d8d0734a13cfa7e4df185f37e6d72ec66e3451c2a4b681944549d3a9af5f663",
+      "seconds": 2.52,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -8.49,
+      "loudness_lufs": -16.14,
+      "centroid_hz": 1609.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_rifle",
+          "file": "675618_2524442-hq.mp3",
+          "author": "craigsmith",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/craigsmith/sounds/675618/",
+          "start_s": 0.181,
+          "seconds": 2.55,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.145,
+          "seconds": 0.4,
+          "at_s": 0.0,
+          "gain_db": -3
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 0.12,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 80,
+          "f_end": 40,
+          "decay_s": 0.07,
+          "at_s": 0.0,
+          "gain_db": -7
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.4,
+          "slaps": [
+            [
+              0.33,
+              0.45
+            ],
+            [
+              0.71,
+              0.3
+            ],
+            [
+              1.1,
+              0.15
+            ]
+          ],
+          "seed": 68675625,
+          "at_s": 0.0,
+          "gain_db": -13
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 4.94,
+          "loud_target_db": -8.5
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Rifle_PatchBox",
+      "group": "SW_Rifle_PatchBox",
+      "variant": 1,
+      "variants": 1,
+      "role": "event PatchBox (rifle)",
+      "file": "art/audio/weapons/v2/SW_Rifle_PatchBox.wav",
+      "sha256": "a11dcdf0e817763e0db6d9902d3764495dfd8c325bdc634df63f20854a048f68",
+      "seconds": 0.69,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -12.0,
+      "loudest_100ms_db": -29.96,
+      "loudness_lufs": -36.17,
+      "centroid_hz": 4468.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "metalLatch.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.038,
+          "seconds": 0.26,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "cloth4.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.0,
+          "seconds": 0.25,
+          "at_s": 0.18,
+          "gain_db": -10
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "metalClick.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.5,
+          "gain_db": -2
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_DryClick",
+      "group": "SW_Shotgun_DryClick",
+      "variant": 1,
+      "variants": 1,
+      "role": "event DryClick (shotgun)",
+      "file": "art/audio/weapons/v2/SW_Shotgun_DryClick.wav",
+      "sha256": "4bc667306f8948ea03cbed0ba7a69ba8dc43753140fb550563992e0451cfd936",
+      "seconds": 0.26,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.0,
+      "loudest_100ms_db": -19.49,
+      "loudness_lufs": -20.78,
+      "centroid_hz": 5060.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_flintlock_clicking",
+          "file": "656397_14213356-hq.mp3",
+          "author": "N3pomuk",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/N3pomuk/sounds/656397/",
+          "start_s": 23.997,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "lfa_clicks3",
+          "file": "equipment_clicks3.wav",
+          "author": "LFA",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/equipment-clicks-iii",
+          "start_s": 1.472,
+          "seconds": 0.13,
+          "at_s": 0.0,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_Fire_V2_01",
+      "group": "SW_Shotgun_Fire_V2",
+      "variant": 1,
+      "variants": 3,
+      "role": "FireSound of DA_ShotgunRules",
+      "file": "art/audio/weapons/v2/SW_Shotgun_Fire_V2_01.wav",
+      "sha256": "169d23bfa1b09b42e0f42efed04a6a250bf002fa08c8547dd445f01ae785cc6a",
+      "seconds": 1.8,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -10.37,
+      "loudness_lufs": -19.92,
+      "centroid_hz": 4491.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 3.505,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 1.6,
+          "at_s": 0.0,
+          "gain_db": -3
+        },
+        {
+          "source": "rubberduck_bangs",
+          "file": "shot_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/25-cc0-bang-firework-sfx",
+          "start_s": 0.0,
+          "seconds": 0.45,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 85,
+          "f_end": 38,
+          "decay_s": 0.07,
+          "at_s": 0.0,
+          "gain_db": -8
+        },
+        {
+          "synth": "pellets",
+          "count": 14,
+          "seed": 276263553,
+          "at_s": 0.0,
+          "gain_db": -26
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 1.5,
+          "slaps": [
+            [
+              0.2,
+              0.35
+            ],
+            [
+              0.5,
+              0.2
+            ]
+          ],
+          "seed": 610087380,
+          "at_s": 0.0,
+          "gain_db": -15
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -9.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_Fire_V2_02",
+      "group": "SW_Shotgun_Fire_V2",
+      "variant": 2,
+      "variants": 3,
+      "role": "FireSound of DA_ShotgunRules",
+      "file": "art/audio/weapons/v2/SW_Shotgun_Fire_V2_02.wav",
+      "sha256": "cbc9aab0430b0fa17b35695f4f200a785c97ed8a6348d434640deec3f200fa6c",
+      "seconds": 1.76,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -9.63,
+      "loudness_lufs": -19.79,
+      "centroid_hz": 3732.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 2.26,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 1.6,
+          "at_s": 0.0,
+          "gain_db": -3
+        },
+        {
+          "source": "rubberduck_bangs",
+          "file": "shot_02.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/25-cc0-bang-firework-sfx",
+          "start_s": 0.012,
+          "seconds": 0.45,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 85,
+          "f_end": 38,
+          "decay_s": 0.07,
+          "at_s": 0.0,
+          "gain_db": -8
+        },
+        {
+          "synth": "pellets",
+          "count": 14,
+          "seed": 773639790,
+          "at_s": 0.0,
+          "gain_db": -26
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 1.5,
+          "slaps": [
+            [
+              0.2,
+              0.35
+            ],
+            [
+              0.5,
+              0.2
+            ]
+          ],
+          "seed": 74721437,
+          "at_s": 0.0,
+          "gain_db": -15
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -9.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_Fire_V2_03",
+      "group": "SW_Shotgun_Fire_V2",
+      "variant": 3,
+      "variants": 3,
+      "role": "FireSound of DA_ShotgunRules",
+      "file": "art/audio/weapons/v2/SW_Shotgun_Fire_V2_03.wav",
+      "sha256": "27bec02a2ce05291746c994804ce64d68ca3c4eab08002a40fdef11a0ca0006d",
+      "seconds": 1.72,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -10.17,
+      "loudness_lufs": -20.79,
+      "centroid_hz": 3764.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kurt_gunshots",
+          "file": "Black Powder.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.838,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "fs_musket_bang",
+          "file": "538795_11519060-hq.mp3",
+          "author": "bruno.auzet",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/bruno.auzet/sounds/538795/",
+          "start_s": 0.287,
+          "seconds": 1.6,
+          "at_s": 0.0,
+          "gain_db": -3
+        },
+        {
+          "source": "rubberduck_bangs",
+          "file": "shot_03.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/25-cc0-bang-firework-sfx",
+          "start_s": 0.0,
+          "seconds": 0.45,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 85,
+          "f_end": 38,
+          "decay_s": 0.07,
+          "at_s": 0.0,
+          "gain_db": -8
+        },
+        {
+          "synth": "pellets",
+          "count": 14,
+          "seed": 549797896,
+          "at_s": 0.0,
+          "gain_db": -26
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 1.5,
+          "slaps": [
+            [
+              0.2,
+              0.35
+            ],
+            [
+              0.5,
+              0.2
+            ]
+          ],
+          "seed": 683508262,
+          "at_s": 0.0,
+          "gain_db": -15
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 15.94,
+          "loud_target_db": -9.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_PumpBack_01",
+      "group": "SW_Shotgun_PumpBack",
+      "variant": 1,
+      "variants": 3,
+      "role": "event PumpBackEnd",
+      "file": "art/audio/weapons/v2/SW_Shotgun_PumpBack_01.wav",
+      "sha256": "cc7ea82b176ea78528900f1e8a47c096270ac2322592d72bdd7f35d75b990a74",
+      "seconds": 0.16,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -7.0,
+      "loudest_100ms_db": -24.77,
+      "loudness_lufs": -23.59,
+      "centroid_hz": 8830.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_pump",
+          "file": "769904_16350347-hq.mp3",
+          "author": "kerozenne",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/kerozenne/sounds/769904/",
+          "start_s": 3.963,
+          "seconds": 0.15,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_PumpBack_02",
+      "group": "SW_Shotgun_PumpBack",
+      "variant": 2,
+      "variants": 3,
+      "role": "event PumpBackEnd",
+      "file": "art/audio/weapons/v2/SW_Shotgun_PumpBack_02.wav",
+      "sha256": "ef9e9706c616cd4d2807dc6a665209ad176a38e5f41a81acc40dd4adc4878b4a",
+      "seconds": 0.16,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -7.0,
+      "loudest_100ms_db": -26.43,
+      "loudness_lufs": -25.23,
+      "centroid_hz": 8734.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_pump",
+          "file": "769904_16350347-hq.mp3",
+          "author": "kerozenne",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/kerozenne/sounds/769904/",
+          "start_s": 6.181,
+          "seconds": 0.15,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_PumpBack_03",
+      "group": "SW_Shotgun_PumpBack",
+      "variant": 3,
+      "variants": 3,
+      "role": "event PumpBackEnd",
+      "file": "art/audio/weapons/v2/SW_Shotgun_PumpBack_03.wav",
+      "sha256": "ec72f4b0cd4ccd227ace2a9671a91ea7d200ac4d55b7e88f1132fe97aa68bb74",
+      "seconds": 0.16,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -7.0,
+      "loudest_100ms_db": -25.6,
+      "loudness_lufs": -24.39,
+      "centroid_hz": 9090.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_pump",
+          "file": "769904_16350347-hq.mp3",
+          "author": "kerozenne",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/kerozenne/sounds/769904/",
+          "start_s": 8.537,
+          "seconds": 0.15,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_PumpForward_01",
+      "group": "SW_Shotgun_PumpForward",
+      "variant": 1,
+      "variants": 3,
+      "role": "event PumpForwardEnd",
+      "file": "art/audio/weapons/v2/SW_Shotgun_PumpForward_01.wav",
+      "sha256": "1a74b07125fb7af9409073851c9ba7035f016afe836023217724fe62423b91cf",
+      "seconds": 0.18,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -6.0,
+      "loudest_100ms_db": -28.36,
+      "loudness_lufs": -27.68,
+      "centroid_hz": 8672.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_pump",
+          "file": "769904_16350347-hq.mp3",
+          "author": "kerozenne",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/kerozenne/sounds/769904/",
+          "start_s": 4.149,
+          "seconds": 0.16,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_PumpForward_02",
+      "group": "SW_Shotgun_PumpForward",
+      "variant": 2,
+      "variants": 3,
+      "role": "event PumpForwardEnd",
+      "file": "art/audio/weapons/v2/SW_Shotgun_PumpForward_02.wav",
+      "sha256": "3eba7acfd9776a6a339126e5f4dc9129bdecd29617dcbde2da793f5f1dff0bbe",
+      "seconds": 0.18,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -6.0,
+      "loudest_100ms_db": -25.57,
+      "loudness_lufs": -24.85,
+      "centroid_hz": 8570.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_pump",
+          "file": "769904_16350347-hq.mp3",
+          "author": "kerozenne",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/kerozenne/sounds/769904/",
+          "start_s": 6.383,
+          "seconds": 0.16,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_PumpForward_03",
+      "group": "SW_Shotgun_PumpForward",
+      "variant": 3,
+      "variants": 3,
+      "role": "event PumpForwardEnd",
+      "file": "art/audio/weapons/v2/SW_Shotgun_PumpForward_03.wav",
+      "sha256": "13e7cd20e569c71b4b9c6cd3d0bceb506d96a0bbda95e9f326bcb5e3e9536e18",
+      "seconds": 0.17,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -6.0,
+      "loudest_100ms_db": -26.45,
+      "loudness_lufs": -25.55,
+      "centroid_hz": 8557.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "fs_pump",
+          "file": "769904_16350347-hq.mp3",
+          "author": "kerozenne",
+          "license": "CC0-1.0",
+          "page": "https://freesound.org/people/kerozenne/sounds/769904/",
+          "start_s": 8.756,
+          "seconds": 0.16,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_PumpSlide",
+      "group": "SW_Shotgun_PumpSlide",
+      "variant": 1,
+      "variants": 1,
+      "role": "events PumpBackStart, PumpForwardStart",
+      "file": "art/audio/weapons/v2/SW_Shotgun_PumpSlide.wav",
+      "sha256": "52c8ba16c50ad607b84735a57e01763a9e39533ee1c0ec3a69bfb2619f692d09",
+      "seconds": 0.2,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -18.0,
+      "loudest_100ms_db": -30.39,
+      "loudness_lufs": -30.82,
+      "centroid_hz": 3441.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "handleSmallLeather2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.075,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "friction",
+          "seconds": 0.18,
+          "center_hz": 1600,
+          "seed": 71,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_ShellEject",
+      "group": "SW_Shotgun_ShellEject",
+      "variant": 1,
+      "variants": 1,
+      "role": "event EjectSpentShell",
+      "file": "art/audio/weapons/v2/SW_Shotgun_ShellEject.wav",
+      "sha256": "d2cf8f2eaccc0d400a467eb9c2bd12e1583be5763725ea12e700e026e8cecf95",
+      "seconds": 0.77,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -15.0,
+      "loudest_100ms_db": -35.5,
+      "loudness_lufs": -41.16,
+      "centroid_hz": 1544.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "lfa_clicks3",
+          "file": "equipment_clicks3.wav",
+          "author": "LFA",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/equipment-clicks-iii",
+          "start_s": 4.343,
+          "seconds": 0.03,
+          "at_s": 0.0,
+          "gain_db": -2
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.16,
+          "at_s": 0.48,
+          "gain_db": -4
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.6,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_ShellInsert_01",
+      "group": "SW_Shotgun_ShellInsert",
+      "variant": 1,
+      "variants": 3,
+      "role": "event InsertSlug (up to 8 per reload)",
+      "file": "art/audio/weapons/v2/SW_Shotgun_ShellInsert_01.wav",
+      "sha256": "c88c2d766b6114ae0a243e9ba942824c7bf58f02bfc8fa5d6855dc3a70e6d10d",
+      "seconds": 0.18,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -9.0,
+      "loudest_100ms_db": -27.65,
+      "loudness_lufs": -26.87,
+      "centroid_hz": 6072.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "zer0_shotgun",
+          "file": "Subsequent Shells.mp3",
+          "author": "zer0_sol",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/shotgun-reload-sound-effects",
+          "start_s": 0.727,
+          "seconds": 0.16,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_ShellInsert_02",
+      "group": "SW_Shotgun_ShellInsert",
+      "variant": 2,
+      "variants": 3,
+      "role": "event InsertSlug (up to 8 per reload)",
+      "file": "art/audio/weapons/v2/SW_Shotgun_ShellInsert_02.wav",
+      "sha256": "4f5d39a4cd1361e424e11966cd9373de0ae7080466f0b5a7c8635a649a2dd2bf",
+      "seconds": 0.18,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -9.0,
+      "loudest_100ms_db": -24.86,
+      "loudness_lufs": -24.18,
+      "centroid_hz": 5631.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "zer0_shotgun",
+          "file": "Subsequent Shells.mp3",
+          "author": "zer0_sol",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/shotgun-reload-sound-effects",
+          "start_s": 0.863,
+          "seconds": 0.16,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_ShellInsert_03",
+      "group": "SW_Shotgun_ShellInsert",
+      "variant": 3,
+      "variants": 3,
+      "role": "event InsertSlug (up to 8 per reload)",
+      "file": "art/audio/weapons/v2/SW_Shotgun_ShellInsert_03.wav",
+      "sha256": "06fca0d8f37a5e0f477a86a313687a6700ec4da5c75298f65f2fea82d105a156",
+      "seconds": 0.18,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -9.0,
+      "loudest_100ms_db": -26.22,
+      "loudness_lufs": -25.56,
+      "centroid_hz": 5265.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "zer0_shotgun",
+          "file": "First Shell.mp3",
+          "author": "zer0_sol",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/shotgun-reload-sound-effects",
+          "start_s": 0.496,
+          "seconds": 0.16,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_Shotgun_ShellPickup",
+      "group": "SW_Shotgun_ShellPickup",
+      "variant": 1,
+      "variants": 1,
+      "role": "event ShellPickup",
+      "file": "art/audio/weapons/v2/SW_Shotgun_ShellPickup.wav",
+      "sha256": "2d3ec20abb080323f3f86874cc2556bb06b563a73f04778f0ccec3b84ac3ae32",
+      "seconds": 0.45,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -16.0,
+      "loudest_100ms_db": -34.14,
+      "loudness_lufs": -37.62,
+      "centroid_hz": 4226.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "handleSmallLeather.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.048,
+          "seconds": 0.34,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "handleCoins2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.018,
+          "seconds": 0.3,
+          "at_s": 0.08,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    }
+  ]
+}

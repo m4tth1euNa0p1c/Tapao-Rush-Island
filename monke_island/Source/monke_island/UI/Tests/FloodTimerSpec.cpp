@@ -53,9 +53,15 @@ END_DEFINE_SPEC(FFloodTimerSpec)
 
 void FFloodTimerSpec::Define()
 {
-	// T-141, ADR-006: the timer shows the day of the period ("Jour N/5") when a run is in progress
+	// T-141, ADR-006: the day of the period ("Jour N/5") when a run is in progress; since T-283 written before the clock
+	// only when DA_HudTimerRules asks (bShowRunDayInClock), the TAPAO HUD shows the day top left
 	Describe("Day", [this]()
 	{
+		It("keeps the clock alone by default: one count of the days, top left in the TAPAO HUD (T-283)", [this]()
+		{
+			TestFalse(TEXT("the day is not written before the clock"), GetDefault<UHudTimerRules>()->bShowRunDayInClock);
+		});
+
 		It("writes Jour N/5 from the day and the days per period", [this]()
 		{
 			TestEqual(TEXT("day 2 of 5"), FloodTimerMath::FormatDay(2, 5).ToString(), FString(TEXT("Jour 2/5")));
@@ -164,7 +170,7 @@ void FFloodTimerSpec::Define()
 			TestEqual(TEXT("over at 180 s"), End.Mode, EFloodTimerMode::Over);
 		});
 
-		It("shows the game over and the time to the next expedition once every player is dead", [this]()
+		It("shows the lost day and the time to the next island once every player is dead (T-173)", [this]()
 		{
 			const FExpeditionClockParams Params = CahierParams();
 			const FExpeditionClockState State = ExpeditionClock::Start(0.0, Params);
@@ -172,15 +178,25 @@ void FFloodTimerSpec::Define()
 			Input.bGameOver = true;
 			Input.RestartTime = 56.0;
 			const FFloodTimerSnapshot Dead = FloodTimerMath::Evaluate(Input);
-			TestEqual(TEXT("game over before the flood"), Dead.Mode, EFloodTimerMode::GameOver);
-			TestEqual(TEXT("6 s to the restart"), Dead.SecondsLeft, 6.0);
+			TestEqual(TEXT("the day is lost before the flood"), Dead.Mode, EFloodTimerMode::GameOver);
+			TestEqual(TEXT("6 s to the travel"), Dead.SecondsLeft, 6.0);
 
 			Input = ExpeditionInput(State, 200.0, Params);
 			Input.bGameOver = true;
 			Input.RestartTime = 190.0;
 			const FFloodTimerSnapshot Late = FloodTimerMath::Evaluate(Input);
-			TestEqual(TEXT("game over wins over the submerged island"), Late.Mode, EFloodTimerMode::GameOver);
+			TestEqual(TEXT("the lost day wins over the submerged island"), Late.Mode, EFloodTimerMode::GameOver);
 			TestEqual(TEXT("never negative"), Late.SecondsLeft, 0.0);
+		});
+
+		It("hides when no travel follows the day: the campaign is lost (T-173)", [this]()
+		{
+			const FExpeditionClockParams Params = CahierParams();
+			const FExpeditionClockState State = ExpeditionClock::Start(0.0, Params);
+			FFloodTimerInput Input = ExpeditionInput(State, 50.0, Params);
+			Input.bGameOver = true;
+			Input.RestartTime = -1.0;
+			TestEqual(TEXT("nothing to count down"), FloodTimerMath::Evaluate(Input).Mode, EFloodTimerMode::Hidden);
 		});
 
 		It("a client never shows the evacuation before the server phase says so", [this]()

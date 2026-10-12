@@ -1,0 +1,37 @@
+{
+  "task": "T-333",
+  "made": "2026-10-11T19:03:44+00:00",
+  "sound": "SW_Trumpet_Call.wav",
+  "credit": {
+    "title": "Assembly (bugle call)",
+    "author": "U.S. Army",
+    "page": "https://commons.wikimedia.org/wiki/File:Assembly.mp3",
+    "file": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Assembly.mp3",
+    "original_source": "http://www.music.army.mil/music/buglecalls/default.asp",
+    "license": "Public domain ({{PD-USGov-Military}}: work of a U.S. military employee, official duties)",
+    "license_checked": "2026-10-11"
+  },
+  "source_sha256": "c19141b49d1ab4e300f9d87bb7f31f8007b699cb533c89db99ad9932c32598f6",
+  "output_sha256": "d508695e988c27316110c245c85a418e7c9e96402f8afe46f9e6042a6ddbc41d",
+  "cut": {
+    "start_s": 0.59,
+    "length_s": 8.4,
+    "loop_of_the_call_s": 8.416,
+    "fade_in_s": 0.008,
+    "fade_out_s": 0.45,
+    "high_pass_hz": 70.0
+  },
+  "gain_db": 4.15,
+  "reference": "SW_Trumpet_Fanfare.wav",
+  "reference_loudness_lufs": -10.52,
+  "measures": {
+    "seconds": 8.4,
+    "rate": 48000,
+    "channels": 1,
+    "peak_dbfs": -1.0,
+    "loudest_100ms_db": -8.77,
+    "loudness_lufs": -14.16,
+    "centroid_hz": 1523.0,
+    "ends_silent": true
+  }
+}

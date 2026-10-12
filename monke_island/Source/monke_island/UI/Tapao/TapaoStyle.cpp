@@ -2,6 +2,8 @@
 
 #include "UI/Tapao/TapaoStyle.h"
 #include "UI/Tapao/TapaoUISkin.h"
+#include "Brushes/SlateNoResource.h"
+#include "Brushes/SlateRoundedBoxBrush.h"
 #include "Engine/Font.h"
 #include "Engine/FontFace.h"
 #include "Fonts/CompositeFont.h"
@@ -127,4 +129,49 @@ FSlateFontInfo FTapaoStyle::Font(ETapaoFont Role, int32 Size, int32 OutlinePx) c
 		Info.OutlineSettings.OutlineColor = Skin->Ink;
 	}
 	return Info;
+}
+
+const FScrollBarStyle& FTapaoStyle::ScrollBar() const
+{
+	if (!ScrollBarStyle.IsValid())
+	{
+		const FLinearColor Gold = Skin ? Skin->Gold : FLinearColor(1.0f, 0.77f, 0.31f, 1.0f);
+		const FLinearColor Cream = Skin ? Skin->Cream : FLinearColor::White;
+		// the track reads as a groove of the dark panels, the thumb as the gold of the kit (brighter under the mouse)
+		const FSlateRoundedBoxBrush Track(FLinearColor(0.0f, 0.0f, 0.0f, 0.45f), 5.0f, FLinearColor(Cream.R, Cream.G, Cream.B, 0.2f), 1.0f);
+		const FSlateRoundedBoxBrush Thumb(FLinearColor(Gold.R, Gold.G, Gold.B, 0.72f), 5.0f);
+		const FSlateRoundedBoxBrush ThumbHovered(Gold, 5.0f);
+		const FSlateRoundedBoxBrush ThumbDragged(Gold, 5.0f, Cream, 1.0f);
+		const FSlateNoResource None;
+		TSharedRef<FScrollBarStyle> Made = MakeShared<FScrollBarStyle>();
+		Made->SetVerticalBackgroundImage(Track)
+			.SetHorizontalBackgroundImage(Track)
+			.SetVerticalTopSlotImage(None)
+			.SetVerticalBottomSlotImage(None)
+			.SetHorizontalTopSlotImage(None)
+			.SetHorizontalBottomSlotImage(None)
+			.SetNormalThumbImage(Thumb)
+			.SetHoveredThumbImage(ThumbHovered)
+			.SetDraggedThumbImage(ThumbDragged)
+			.SetThickness(10.0f);
+		ScrollBarStyle = Made;
+	}
+	return *ScrollBarStyle;
+}
+
+const FScrollBoxStyle& FTapaoStyle::ScrollBox() const
+{
+	if (!ScrollBoxStyle.IsValid())
+	{
+		// a default FSlateBrush draws a white box: the shadows draw nothing
+		const FSlateNoResource None;
+		TSharedRef<FScrollBoxStyle> Made = MakeShared<FScrollBoxStyle>();
+		Made->SetTopShadowBrush(None)
+			.SetBottomShadowBrush(None)
+			.SetLeftShadowBrush(None)
+			.SetRightShadowBrush(None)
+			.SetBarThickness(10.0f);
+		ScrollBoxStyle = Made;
+	}
+	return *ScrollBoxStyle;
 }

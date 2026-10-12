@@ -11,6 +11,7 @@
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 #include "Engine/GameViewportClient.h"
+#include "Engine/LocalPlayer.h"
 #include "Framework/Application/IInputProcessor.h"
 #include "Framework/Application/SlateApplication.h"
 #include "GameFramework/GameUserSettings.h"
@@ -88,6 +89,8 @@ void USettingsSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 void USettingsSubsystem::Deinitialize()
 {
 	CloseMenu();
+	OnVoiceSettingsChanged.Clear();
+	OnMicTestChanged.Clear();
 	if (InputProcessor.IsValid() && FSlateApplication::IsInitialized())
 	{
 		FSlateApplication::Get().UnregisterInputPreProcessor(InputProcessor);
@@ -127,6 +130,9 @@ void USettingsSubsystem::Load()
 		Applied.Sensitivity = Saved->Sensitivity;
 		Applied.bInvertY = Saved->bInvertY;
 		Applied.FieldOfView = Saved->FieldOfView;
+		// an ini saved before the voice chat holds the class defaults here (push-to-talk), Sanitize keeps them in range
+		Applied.MicMode = Saved->MicMode;
+		Applied.MicThreshold = Saved->MicThreshold;
 	}
 
 	if (const UGameUserSettings* Display = GEngine ? GEngine->GetGameUserSettings() : nullptr)
@@ -156,6 +162,8 @@ void USettingsSubsystem::Save() const
 	Saved->Sensitivity = Applied.Sensitivity;
 	Saved->bInvertY = Applied.bInvertY;
 	Saved->FieldOfView = Applied.FieldOfView;
+	Saved->MicMode = Applied.MicMode;
+	Saved->MicThreshold = Applied.MicThreshold;
 	Saved->SaveConfig();
 }
 
@@ -176,14 +184,35 @@ void USettingsSubsystem::Apply(const FMonkeSettingsValues& Values)
 	}
 	ApplyPlayers();
 	Save();
-	UE_LOG(Logmonke_island, Log, TEXT("Settings applied: master %.0f %%, ambience %.0f %%, effects %.0f %%, fov %.0f, %d fps"),
+	OnVoiceSettingsChanged.Broadcast(Applied, false);
+	UE_LOG(Logmonke_island, Log, TEXT("Settings applied: master %.0f %%, ambience %.0f %%, effects %.0f %%, voices %.0f %%, fov %.0f, %d fps, mic mode %d (threshold %.2f)"),
 		Applied.Volume(ESettingsVolume::Master) * 100.0f, Applied.Volume(ESettingsVolume::Ambience) * 100.0f,
-		Applied.Volume(ESettingsVolume::Effects) * 100.0f, Applied.FieldOfView, Applied.FrameRateLimit);
+		Applied.Volume(ESettingsVolume::Effects) * 100.0f, Applied.Volume(ESettingsVolume::VoiceChat) * 100.0f,
+		Applied.FieldOfView, Applied.FrameRateLimit, static_cast<int32>(Applied.MicMode), Applied.MicThreshold);
 }
 
 void USettingsSubsystem::Cancel()
 {
 	ApplyAudio(Applied);
+	OnVoiceSettingsChanged.Broadcast(Applied, false);
+}
+
+void USettingsSubsystem::PreviewVoice(const FMonkeSettingsValues& Values)
+{
+	FMonkeSettingsValues Preview = Values;
+	SettingsMath::Sanitize(*Rules, Preview);
+	OnVoiceSettingsChanged.Broadcast(Preview, true);
+}
+
+void USettingsSubsystem::SetMicTest(bool bTesting)
+{
+	if (bMicTest == bTesting)
+	{
+		return;
+	}
+	bMicTest = bTesting;
+	UE_LOG(Logmonke_island, Log, TEXT("Settings: microphone test %s"), bMicTest ? TEXT("started") : TEXT("stopped"));
+	OnMicTestChanged.Broadcast(bMicTest);
 }
 
 // ---------------------------------------------------------------- application
@@ -342,6 +371,8 @@ void USettingsSubsystem::CloseMenu()
 	{
 		return;
 	}
+	// the microphone test belongs to the menu (cahier §18): it ends with it
+	SetMicTest(false);
 	Cancel();
 	if (UGameViewportClient* Viewport = GetGameInstance() ? GetGameInstance()->GetGameViewportClient() : nullptr)
 	{

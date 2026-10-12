@@ -15,6 +15,7 @@
 #include "Widgets/Layout/SScrollBox.h"
 #include "Widgets/Layout/SWidgetSwitcher.h"
 #include "Widgets/Notifications/SProgressBar.h"
+#include "Engine/Texture2D.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/SOverlay.h"
 #include "Widgets/Text/STextBlock.h"
@@ -337,6 +338,36 @@ void STapaoLoading::Construct(const FArguments& InArgs)
 		.SetFillImage(*S->TextureBrush(Skin ? Skin->Fills.FindRef(TEXT("fill_gold")) : nullptr))
 		.SetMarqueeImage(FSlateNoResource());
 
+	// the gauge along the bottom of the screen, nearly from edge to edge (owner 2026-10-07: "la barre de chargement en bas,
+	// sur toute la largeur, ne touche pas les extrémités mais presque"): its frame drawn as a box, the wooden medallion
+	// and the rope ends kept as they are, only the middle drawn longer
+	constexpr float BarHeight = 60.0f;
+	constexpr float BarSideMargin = 40.0f;
+	constexpr float BarBottomMargin = 36.0f;
+	// the frame in three parts: the wooden medallion with the left rope and the right end keep their proportions, only the
+	// middle is drawn longer (a box brush would draw its ends at the texture's own size, flattening the medallion)
+	static FSlateBrush FrameLeft;
+	static FSlateBrush FrameMiddle;
+	static FSlateBrush FrameRight;
+	const FSlateBrush& Frame = *S->Brush(TEXT("bar_blank"));
+	const UTexture2D* FrameTexture = Cast<UTexture2D>(Frame.GetResourceObject());
+	const float Aspect = FrameTexture && FrameTexture->GetSizeY() > 0 ? static_cast<float>(FrameTexture->GetSizeX()) / FrameTexture->GetSizeY() : 6.4f;
+	// bar_blank (1280 x 200): the medallion and the left rope up to 235 px, the right rope and end from 1200 px
+	constexpr float LeftU = 0.184f;
+	constexpr float RightU = 0.9375f;
+	auto Part = [&Frame](FSlateBrush& Out, float U0, float U1)
+	{
+		Out = Frame;
+		Out.DrawAs = ESlateBrushDrawType::Image;
+		Out.Margin = FMargin();
+		Out.SetUVRegion(FBox2f(FVector2f(U0, 0.0f), FVector2f(U1, 1.0f)));
+	};
+	Part(FrameLeft, 0.0f, LeftU);
+	Part(FrameMiddle, LeftU, RightU);
+	Part(FrameRight, RightU, 1.0f);
+	const float LeftWidth = BarHeight * Aspect * LeftU;
+	const float RightWidth = BarHeight * Aspect * (1.0f - RightU);
+
 	ChildSlot
 	[
 		SNew(SOverlay)
@@ -344,6 +375,7 @@ void STapaoLoading::Construct(const FArguments& InArgs)
 		[
 			MakeBackground(*S, Skin ? Skin->LoadingBackground.Get() : nullptr)
 		]
+		// the logo alone in the middle of the screen
 		+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center)
 		[
 			SNew(SVerticalBox)
@@ -351,7 +383,7 @@ void STapaoLoading::Construct(const FArguments& InArgs)
 			[
 				MakeSprite(*S, TEXT("logo"), 620.0f)
 			]
-			// "Jour N / Période P" (ADR-006), passed as the line of the screen; nothing when empty
+			// the line of the screen, nothing when empty
 			+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center).Padding(0.0f, 6.0f)
 			[
 				SNew(STextBlock)
@@ -360,19 +392,31 @@ void STapaoLoading::Construct(const FArguments& InArgs)
 				.Font(S->Font(ETapaoFont::Title, 44, 2))
 				.ColorAndOpacity(Skin ? Skin->Cream : FLinearColor::White)
 			]
-			+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center).Padding(0.0f, 10.0f)
+		]
+		+ SOverlay::Slot().HAlign(HAlign_Fill).VAlign(VAlign_Bottom).Padding(FMargin(BarSideMargin, 0.0f, BarSideMargin, BarBottomMargin))
+		[
+			SNew(SBox).HeightOverride(BarHeight)
 			[
-				// 25 % finer than the kit's gauge (owner request 2026-10-04)
-				SNew(SBox).WidthOverride(640.0f).HeightOverride(52.0f)
+				SNew(SOverlay)
+				// the gold fill inside the frame's opening (from the medallion to under the right rope)
+				+ SOverlay::Slot().Padding(FMargin(LeftWidth, BarHeight * 0.23f, BarHeight * Aspect * 0.03f, BarHeight * 0.23f))
 				[
-					SNew(SOverlay)
-					+ SOverlay::Slot().Padding(FMargin(22.0f, 13.0f))
+					SNew(SProgressBar).Style(&BarStyle).Percent(this, &STapaoLoading::GetProgress)
+				]
+				+ SOverlay::Slot()
+				[
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot().AutoWidth()
 					[
-						SNew(SProgressBar).Style(&BarStyle).Percent(this, &STapaoLoading::GetProgress)
+						SNew(SBox).WidthOverride(LeftWidth)[SNew(SImage).Image(&FrameLeft)]
 					]
-					+ SOverlay::Slot()
+					+ SHorizontalBox::Slot().FillWidth(1.0f)
 					[
-						SNew(SImage).Image(S->Brush(TEXT("bar_blank")))
+						SNew(SImage).Image(&FrameMiddle)
+					]
+					+ SHorizontalBox::Slot().AutoWidth()
+					[
+						SNew(SBox).WidthOverride(RightWidth)[SNew(SImage).Image(&FrameRight)]
 					]
 				]
 			]
@@ -491,7 +535,11 @@ void STapaoConfirm::Construct(const FArguments& InArgs)
 					[
 						SNew(SHorizontalBox)
 						+ SHorizontalBox::Slot().AutoWidth().Padding(8.0f, 0.0f)[MakeTapaoTextButton(S, InArgs._Yes, Button, InArgs._OnYes)]
-						+ SHorizontalBox::Slot().AutoWidth().Padding(8.0f, 0.0f)[MakeTapaoTextButton(S, InArgs._No, Button, InArgs._OnNo)]
+						// a notice (nothing to choose, T-315: why a join was refused): the first button alone
+						+ SHorizontalBox::Slot().AutoWidth().Padding(8.0f, 0.0f)
+						[
+							InArgs._No.IsEmpty() ? SNullWidget::NullWidget : MakeTapaoTextButton(S, InArgs._No, Button, InArgs._OnNo)
+						]
 					]
 				]
 			]
@@ -518,11 +566,15 @@ void STapaoEndScreen::Construct(const FArguments& InArgs)
 	TSharedRef<SVerticalBox> Lines = SNew(SVerticalBox);
 	for (const FText& Line : InArgs._Lines)
 	{
-		Lines->AddSlot().AutoHeight().HAlign(HAlign_Center).Padding(0.0f, 4.0f)
+		// the whole width of the parchment, wrapped and centred: the Bureau's notices are long (T-173)
+		Lines->AddSlot().AutoHeight().HAlign(HAlign_Fill).Padding(0.0f, 4.0f)
 			[
 				SNew(STextBlock).Text(Line).Font(S->Font(ETapaoFont::Text, 24)).ColorAndOpacity(Skin ? Skin->Ink : FLinearColor::Black)
+				.AutoWrapText(true).Justification(ETextJustify::Center)
 			];
 	}
+	// a longer word on the ribbon ("CONTRAT ÉCHOUÉ") is written smaller, to stay inside it
+	const int32 RibbonFontSize = InArgs._RibbonText.ToString().Len() > 10 ? 36 : 44;
 	ChildSlot
 	[
 		SNew(SOverlay)
@@ -535,7 +587,21 @@ void STapaoEndScreen::Construct(const FArguments& InArgs)
 			SNew(SVerticalBox)
 			+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)
 			[
-				MakeSprite(*S, InArgs._Ribbon, 620.0f)
+				SNew(SOverlay)
+				+ SOverlay::Slot()
+				[
+					MakeSprite(*S, InArgs._Ribbon, 620.0f)
+				]
+				+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center).Padding(0.0f, 0.0f, 0.0f, 8.0f)
+				[
+					SNew(STextBlock)
+					.Visibility(InArgs._RibbonText.IsEmpty() ? EVisibility::Collapsed : EVisibility::HitTestInvisible)
+					.Text(InArgs._RibbonText)
+					.Font(S->Font(ETapaoFont::Title, RibbonFontSize, 2))
+					.ColorAndOpacity(FLinearColor(0.98f, 0.93f, 0.80f))
+					.ShadowOffset(FVector2D(2.0f, 2.0f))
+					.ShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.6f))
+				]
 			]
 			+ SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center).Padding(0.0f, 10.0f, 0.0f, 0.0f)
 			[

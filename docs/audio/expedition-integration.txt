@@ -1,0 +1,105 @@
+T-234 — Reprise de l'intégration audio, état au 8 octobre 2026
+
+MISE À JOUR DU 10 OCTOBRE 2026 (prime sur la suite de ce fichier)
+- Les cinq fichiers Audio/ sont dans l'arbre principal, copiés seuls (aucune
+  autre source du worktree) ; ReadRound lit l'issue de la campagne sur tout
+  GameState. Compilés fichier par fichier en cible éditeur (Succeeded) ;
+  build éditeur complet non fait.
+- scripts/audio/expedition_setup_ue.py réécrit : import par passages de 15 s
+  (reprise par empreinte), classes de son par canal §18, liaisons seulement
+  dans un champ vide ou un son provisoire listé (sable sec, sabre dégainer /
+  rengainer / parade, dégainer des soldats), sons T-259 / T-261 / barque /
+  rivage / sable humide laissés en l'état, DA_ExpeditionAudioRules seulement
+  après le build. Plus de PrimaryAssetLabel (ne cuit rien ici) : ajouter
+  /Game/MonkeIsland/Audio/Expedition à DirectoriesToAlwaysCook.
+- Premier passage de l'action expeditionaudio : l'éditeur partagé a planté
+  (libfbxsdk, juste après l'échec d'une action FBX d'une autre session) ;
+  rien de T-234 n'a été importé ni sauvegardé.
+- Ordre de reprise, écoute PIE et critères : docs/audio/expedition-validation-matrix.md.
+
+Demande : catalogue de 138 événements / 10 thèmes, intégration dans le jeu puis
+template de validation. Catalogue : docs/audio/expedition-audio.html.
+Le statut officiel reste docs/production/board.md via scripts/chantier.py.
+
+LIVRÉ ET VÉRIFIÉ
+- 14 banques CC0 téléchargées ; 76 WAV sélectionnés, 48 kHz PCM16, ~20 Mo.
+- Sources et empreintes : art/audio/expedition/manifest.json ; art/SOURCES.md.
+- 138 entrées complètes dans la fiche de sons (y compris ce qui reste à créer).
+- C++ nouveau, uniquement .worktrees/T-234/monke_island/Source/monke_island/Audio/ :
+  ExpeditionAudioRules.h, ExpeditionAudioMath.h, ExpeditionAudioSubsystem.h/.cpp,
+  Tests/ExpeditionAudioSpec.cpp.
+- Cible jeu Win64 Development compilée avec scripts/worktree.py build T-234.
+  Preuve : docs/audio/expedition-code-validation.json, Saved/T234/build-game.log.
+- Contrôles des WAV et du catalogue : scripts/audio/expedition_verify.py.
+  Preuve : docs/audio/expedition-audio-validation.json.
+- Syntaxe JS du catalogue passée avec node --check ; pas de rendu Chrome validé.
+
+CE QUI N'EST PAS VALIDÉ
+- AUCUN nouvel uasset importé ; aucun nouveau code installé dans l'éditeur.
+- Tests Automation écrits/compilés, NON exécutés (verrou nécessaire).
+- Aucune écoute PIE, recette réseau ni recette build packagé.
+- Voix françaises non enregistrées : scripts originaux expedition-voix-fr.txt.
+- Le catalogue indique explicitement les déclencheurs encore à créer : canons,
+  portes/coffres, ancre, voiles/cordages, vente, rareté, malédiction, etc.
+  Un son préparé n'implémente pas la mécanique correspondante.
+
+COORDINATION
+L'éditeur est tenu par monk-island-952add pour nouvelles animations, build v1.5
+et zip. Attendre la libération réelle avec scripts/editor_lock.py status.
+Ne pas toucher au PIE ou au packaging de cette session. Aucun watcher d'import
+en attente n'a été installé par T-234 ; aucune exécution différée cachée.
+
+REPRISE CONCRÈTE
+1. Lire monke.py status, task T-234 et les nouvelles notes owner du chantier.
+2. Revoir les cinq nouveaux fichiers Audio/ du worktree. La base Git main
+   (2cf95983 au départ) ne contient pas toutes les dépendances Run/Shop/Music du
+   projet courant. Les fichiers Source non audio ont été copiés UNIQUEMENT
+   comme contexte de compilation : Saved/T234/source-baseline.json.
+   NE PAS fusionner/commiter toute cette copie. Intégrer seulement Audio/ après
+   revue et comparer avec le Source principal courant.
+3. Pour le créneau éditeur, acquérir le verrou à son propre nom et annoncer
+   cette fenêtre dans la note T-234. MONKE_LOCK_OWNER doit correspondre.
+4. Les nouveaux headers UCLASS/USTRUCT demandent une reconstruction éditeur,
+   pas Live Coding. Fermer proprement via editor_lock.py close-editor, puis
+   scripts/ue.ps1 build et relancer sous coordination. Ne pas compiler main
+   pendant le packaging d'une autre session.
+5. Dans l'éditeur compilé : exécuter scripts/audio/expedition_setup_ue.py.
+   Préconditions : verrou propriétaire valide, aucun PIE, aucun package cible
+   déjà modifié non sauvegardé. Le script sauvegarde des copies des DA avant
+   modification dans Saved/T234/backups/, crée les WAV, classes de concurrence,
+   atténuations, DA_ExpeditionAudioRules et PAL_ExpeditionAudio (cook).
+   Les seules modifications d'assets existants sont des propriétés audio de
+   DA_BoatRules, DA_ShoreAmbienceRules, DA_FootstepRules, DA_CutlassRules,
+   DA_GiantCrabRules / _Sand et DA_FortSoldierRules. Aucun niveau/Blueprint.
+   Rapport avec lecture des propriétés : Saved/T234/import-report.json.
+6. Tester la suite monke_island.Audio.Expedition.Transitions via ue.ps1 test,
+   puis contrôler le rapport monke.py report --filter monke_island.Audio
+   --min-tests 1 --since <date ISO enregistrée avant le lancement>.
+7. PIE Test Flat puis une vraie expédition :
+   a. Écouter sable sec/humide, bois, réceptions, rames et sillage.
+   b. Marcher sur le galion, entrer/sortir de l'eau, tester caméra sous-marine.
+   c. Prendre un objet, ramasser une pile, équiper/déplacer l'inventaire
+      (aucun faux ramassage), acheter, manquer d'argent, inventaire plein.
+   d. Vérifier alertes 60/30/10 natives, ticks 9..1, bonus de temps sans spam,
+      quota, défaite/victoire, connexion tardive et changement de jour.
+   e. Tester vent/nuit/tempête, déplacement intérieur/extérieur, volume effets
+      et musique à zéro, pause et voyage sans boucle survivante.
+   f. Hôte + client : chacun entend sa présentation locale une seule fois.
+      Tester aussi la spatialisation des effets natifs (crabes, armes, barque).
+   Console : monke.Audio.Play QuotaMet ; monke.Audio.Report. Un événement
+   « submitted » ne prouve pas que le son a été entendu. Les boucles ne passent
+   pas par PlayEvent : elles sont contrôlées et stoppées par le subsystem.
+8. Écouter les jingles : noms success/failure candidats, intention musicale
+   à confirmer. Les anciennes musiques OneDrive n'ont pas été remplacées.
+9. Relancer expedition_catalogue.py après import ; la fiche affiche les preuves
+   d'import. Elle garde les cases PIE non validées tant qu'aucune vraie recette
+   d'écoute n'a été consignée ; ne pas colorier les 138 demandes en vert.
+
+LIMITES DU PREMIER RACCORDEMENT C++
+25 entrées configurées, dont sept couches ambiantes, les transitions nage,
+prise/ramassage, achat/refus, ouverture de boutique, douleur/mort, début,
+mi-parcours, compte à rebours et quota/victoire/défaite. Présentation locale,
+lecture des états répliqués ; pas de RPC ni de modification d'économie.
+Les impacts partagés existants continuent d'utiliser leur code natif.
+Reste notamment l'occlusion sous le pont, la synchronisation du tonnerre avec
+les éclairs, les raccordements marqués restants et le choix artistique final.

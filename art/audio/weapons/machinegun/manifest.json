@@ -1,0 +1,2026 @@
+{
+  "schema": 1,
+  "task": "T-273",
+  "generated_at": "2026-10-10T20:10:01.107702+00:00",
+  "format": "48 kHz PCM16 mono",
+  "validation": "decoded WAV data only; Unreal import by scripts/editor/machinegun_setup_ue.py, listening in PIE to do",
+  "sounds": [
+    {
+      "asset": "SW_MG_BeltIn",
+      "group": "SW_MG_BeltIn",
+      "variant": 1,
+      "variants": 1,
+      "role": "event BeltIn (Reload)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_BeltIn.wav",
+      "sha256": "d4822e4439f49bf8be4879fa0857c392a37d77d8d04afb819429708cdfd1bf47",
+      "seconds": 0.72,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -11.0,
+      "loudest_100ms_db": -27.7,
+      "loudness_lufs": -28.25,
+      "centroid_hz": 6153.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "rpg",
+          "file": "chain_03.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.017,
+          "seconds": 0.6,
+          "at_s": 0.0,
+          "gain_db": -2
+        },
+        {
+          "source": "foley",
+          "file": "switch_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/node/85570",
+          "start_s": 0.023,
+          "seconds": 0.2,
+          "at_s": 0.32,
+          "gain_db": 0
+        },
+        {
+          "source": "lfa_clicks3",
+          "file": "equipment_clicks3.wav",
+          "author": "LFA",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/equipment-clicks-iii",
+          "start_s": 2.858,
+          "seconds": 0.12,
+          "at_s": 0.4,
+          "gain_db": -4
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_BeltOut",
+      "group": "SW_MG_BeltOut",
+      "variant": 1,
+      "variants": 1,
+      "role": "event BeltOut (Reload)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_BeltOut.wav",
+      "sha256": "8da533dde27ef7d7eb7fd8d261fe45ac0b9e79ca427c6302725a8c83d68b2d43",
+      "seconds": 0.81,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -12.0,
+      "loudest_100ms_db": -25.98,
+      "loudness_lufs": -26.1,
+      "centroid_hz": 5848.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "rpg",
+          "file": "chain_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.015,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "cloth2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.058,
+          "seconds": 0.3,
+          "at_s": 0.05,
+          "gain_db": -6
+        },
+        {
+          "source": "rpg",
+          "file": "chain_02.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.005,
+          "seconds": 0.45,
+          "at_s": 0.28,
+          "gain_db": -3
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_BoxIn",
+      "group": "SW_MG_BoxIn",
+      "variant": 1,
+      "variants": 1,
+      "role": "event BoxIn (Reload)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_BoxIn.wav",
+      "sha256": "a633ca4ff859686f1065d64c40e75afd4342afe8e5fad1839cb6dab42f62cd63",
+      "seconds": 0.51,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -9.0,
+      "loudest_100ms_db": -23.4,
+      "loudness_lufs": -34.6,
+      "centroid_hz": 5285.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_heavy_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.3,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.3,
+          "at_s": 0.005,
+          "gain_db": -3
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "metalClick.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.3,
+          "gain_db": -4
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_BoxOut",
+      "group": "SW_MG_BoxOut",
+      "variant": 1,
+      "variants": 1,
+      "role": "event BoxOut (Reload)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_BoxOut.wav",
+      "sha256": "830cd2e25b426b9bf815565d27a4c13bd1cd2c020f791fab3a59f8cc915b6c14",
+      "seconds": 0.52,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -12.0,
+      "loudest_100ms_db": -29.45,
+      "loudness_lufs": -33.24,
+      "centroid_hz": 8097.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "metalLatch.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.038,
+          "seconds": 0.25,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_medium_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.25,
+          "at_s": 0.12,
+          "gain_db": -3
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "beltHandle2.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.084,
+          "seconds": 0.4,
+          "at_s": 0.2,
+          "gain_db": -6
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_BurstStart",
+      "group": "SW_MG_BurstStart",
+      "variant": 1,
+      "variants": 1,
+      "role": "BurstStartSound: the crank engages",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_BurstStart.wav",
+      "sha256": "7c181ecfae2809f51cbc7ea5a3b804f320c45d7bbf972e8f6032386bec24fff6",
+      "seconds": 0.39,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -10.0,
+      "loudest_100ms_db": -23.8,
+      "loudness_lufs": -28.97,
+      "centroid_hz": 3357.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "wood_metal",
+          "file": "metal_close_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-metal-and-wood-sfx",
+          "start_s": 0.045,
+          "seconds": 0.3,
+          "at_s": 0.0,
+          "gain_db": -2
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.25,
+          "at_s": 0.01,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "ticks",
+          "rate_hz": 22.0,
+          "slow_to": 40.0,
+          "seconds": 0.3,
+          "seed": 106608913,
+          "at_s": 0.02,
+          "gain_db": -9
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_BurstTail_01",
+      "group": "SW_MG_BurstTail",
+      "variant": 1,
+      "variants": 3,
+      "role": "BurstTailSound: echo of the place and the crank running down",
+      "kind": "shot",
+      "file": "art/audio/weapons/machinegun/SW_MG_BurstTail_01.wav",
+      "sha256": "38c199470634f6b9ee98c9cc28914947a11aed258da0f5ce33903aae26a325c1",
+      "seconds": 2.37,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -6.0,
+      "loudest_100ms_db": -18.0,
+      "loudness_lufs": -23.64,
+      "centroid_hz": 1947.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.25,
+          "seconds": 2.4,
+          "at_s": 0.05,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.4,
+          "slaps": [
+            [
+              0.26,
+              0.45
+            ],
+            [
+              0.62,
+              0.28
+            ],
+            [
+              1.15,
+              0.14
+            ]
+          ],
+          "seed": 162862395,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "synth": "ticks",
+          "rate_hz": 40.0,
+          "slow_to": 8.0,
+          "seconds": 0.45,
+          "seed": 894101465,
+          "at_s": 0.0,
+          "gain_db": -16
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_BurstTail_02",
+      "group": "SW_MG_BurstTail",
+      "variant": 2,
+      "variants": 3,
+      "role": "BurstTailSound: echo of the place and the crank running down",
+      "kind": "shot",
+      "file": "art/audio/weapons/machinegun/SW_MG_BurstTail_02.wav",
+      "sha256": "9bddfbab9618c12c15d578c5cffec62f42b50cd10c7e06c123a0f1e4060eff6b",
+      "seconds": 2.34,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -6.0,
+      "loudest_100ms_db": -19.19,
+      "loudness_lufs": -24.59,
+      "centroid_hz": 2108.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.25,
+          "seconds": 2.4,
+          "at_s": 0.05,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.4,
+          "slaps": [
+            [
+              0.29000000000000004,
+              0.45
+            ],
+            [
+              0.67,
+              0.28
+            ],
+            [
+              1.15,
+              0.14
+            ]
+          ],
+          "seed": 110014192,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "synth": "ticks",
+          "rate_hz": 40.0,
+          "slow_to": 8.0,
+          "seconds": 0.45,
+          "seed": 596210546,
+          "at_s": 0.0,
+          "gain_db": -16
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_BurstTail_03",
+      "group": "SW_MG_BurstTail",
+      "variant": 3,
+      "variants": 3,
+      "role": "BurstTailSound: echo of the place and the crank running down",
+      "kind": "shot",
+      "file": "art/audio/weapons/machinegun/SW_MG_BurstTail_03.wav",
+      "sha256": "9da901bd28bd98dce468fbf89911537729efffb4103c9fc8f5f03af76a91b5d0",
+      "seconds": 2.41,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -6.0,
+      "loudest_100ms_db": -16.5,
+      "loudness_lufs": -22.79,
+      "centroid_hz": 1986.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "thimras_cannon",
+          "file": "cannon_fire_0.ogg",
+          "author": "Thimras",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/cannon-fire",
+          "start_s": 0.25,
+          "seconds": 2.4,
+          "at_s": 0.05,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 2.4,
+          "slaps": [
+            [
+              0.32,
+              0.45
+            ],
+            [
+              0.72,
+              0.28
+            ],
+            [
+              1.15,
+              0.14
+            ]
+          ],
+          "seed": 501246386,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "synth": "ticks",
+          "rate_hz": 40.0,
+          "slow_to": 8.0,
+          "seconds": 0.45,
+          "seed": 870782219,
+          "at_s": 0.0,
+          "gain_db": -16
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_CasingLand_01",
+      "group": "SW_MG_CasingLand",
+      "variant": 1,
+      "variants": 6,
+      "role": "CasingLandSound: a spent case lands",
+      "kind": "brass",
+      "file": "art/audio/weapons/machinegun/SW_MG_CasingLand_01.wav",
+      "sha256": "d1921e3f5b80095996ede5dc199dba4dfda0307214ff161a45fe9911a1691c64",
+      "seconds": 0.25,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -30.06,
+      "loudness_lufs": -30.98,
+      "centroid_hz": 3576.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.12,
+          "at_s": 0.07,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "brass_ring",
+          "tune": 0.92,
+          "seed": 119996784,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_CasingLand_02",
+      "group": "SW_MG_CasingLand",
+      "variant": 2,
+      "variants": 6,
+      "role": "CasingLandSound: a spent case lands",
+      "kind": "brass",
+      "file": "art/audio/weapons/machinegun/SW_MG_CasingLand_02.wav",
+      "sha256": "c002eaad74d00b3534fa58427a0c0bc32c566e319e5fde832611d81fc93d9965",
+      "seconds": 0.25,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -31.15,
+      "loudness_lufs": -32.03,
+      "centroid_hz": 3579.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.12,
+          "at_s": 0.082,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "brass_ring",
+          "tune": 0.9500000000000001,
+          "seed": 333639289,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_CasingLand_03",
+      "group": "SW_MG_CasingLand",
+      "variant": 3,
+      "variants": 6,
+      "role": "CasingLandSound: a spent case lands",
+      "kind": "brass",
+      "file": "art/audio/weapons/machinegun/SW_MG_CasingLand_03.wav",
+      "sha256": "c129604f7ea03bd9b89fbd9dd28654e5df04c1934ea55793fd7db40851fd13d8",
+      "seconds": 0.25,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -30.86,
+      "loudness_lufs": -31.68,
+      "centroid_hz": 3453.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.12,
+          "at_s": 0.094,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "brass_ring",
+          "tune": 0.98,
+          "seed": 857840992,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_CasingLand_04",
+      "group": "SW_MG_CasingLand",
+      "variant": 4,
+      "variants": 6,
+      "role": "CasingLandSound: a spent case lands",
+      "kind": "brass",
+      "file": "art/audio/weapons/machinegun/SW_MG_CasingLand_04.wav",
+      "sha256": "998ccfcd5080fc172f70c45913a193b75e64bc4ff956f36b7f73382cdc35c99e",
+      "seconds": 0.25,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -30.3,
+      "loudness_lufs": -31.05,
+      "centroid_hz": 3498.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.12,
+          "at_s": 0.106,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "brass_ring",
+          "tune": 1.01,
+          "seed": 791111454,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_CasingLand_05",
+      "group": "SW_MG_CasingLand",
+      "variant": 5,
+      "variants": 6,
+      "role": "CasingLandSound: a spent case lands",
+      "kind": "brass",
+      "file": "art/audio/weapons/machinegun/SW_MG_CasingLand_05.wav",
+      "sha256": "599b26730c599fd27afe8210ca6d916e2853e4decdc5c4001f205aec96f7cdd9",
+      "seconds": 0.25,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -32.31,
+      "loudness_lufs": -32.92,
+      "centroid_hz": 3273.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.12,
+          "at_s": 0.118,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "brass_ring",
+          "tune": 1.04,
+          "seed": 930631172,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_CasingLand_06",
+      "group": "SW_MG_CasingLand",
+      "variant": 6,
+      "variants": 6,
+      "role": "CasingLandSound: a spent case lands",
+      "kind": "brass",
+      "file": "art/audio/weapons/machinegun/SW_MG_CasingLand_06.wav",
+      "sha256": "adfef098df7d5bf65f124ff7a61f3921433ec2fa27856906f346c25af2d8df01",
+      "seconds": 0.25,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.0,
+      "loudest_100ms_db": -30.01,
+      "loudness_lufs": -30.7,
+      "centroid_hz": 3579.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactTin_medium_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.12,
+          "at_s": 0.13,
+          "gain_db": -10
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "brass_ring",
+          "tune": 1.07,
+          "seed": 882328022,
+          "at_s": 0.0,
+          "gain_db": -7
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_Charge",
+      "group": "SW_MG_Charge",
+      "variant": 1,
+      "variants": 1,
+      "role": "event Charge (Reload)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_Charge.wav",
+      "sha256": "175f7fcb609925219a6aabed9552f9eb8dda2da37c3b8888ebdf05ed2c11887b",
+      "seconds": 0.88,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -7.0,
+      "loudest_100ms_db": -16.08,
+      "loudness_lufs": -16.76,
+      "centroid_hz": 5296.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "zer0_shotgun",
+          "file": "Rack.mp3",
+          "author": "zer0_sol",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/shotgun-reload-sound-effects",
+          "start_s": 0.636,
+          "seconds": 0.4,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "springy_reloads",
+          "file": "shotguncock_0.wav",
+          "author": "SpringySpringo",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gun-reload-sounds",
+          "start_s": 0.052,
+          "seconds": 0.35,
+          "at_s": 0.42,
+          "gain_db": -2
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.5,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_CoverClose",
+      "group": "SW_MG_CoverClose",
+      "variant": 1,
+      "variants": 1,
+      "role": "event CoverClose (Reload)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_CoverClose.wav",
+      "sha256": "2ad8a84a1fcea8baed871d40491ecdfc5578943ff2adff7b57730ca28770ee1a",
+      "seconds": 0.43,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.0,
+      "loudest_100ms_db": -22.1,
+      "loudness_lufs": -27.13,
+      "centroid_hz": 3014.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "wood_metal",
+          "file": "metal_slam_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-metal-and-wood-sfx",
+          "start_s": 0.03,
+          "seconds": 0.5,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "wood_metal",
+          "file": "metal_close_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-metal-and-wood-sfx",
+          "start_s": 0.045,
+          "seconds": 0.3,
+          "at_s": 0.01,
+          "gain_db": -4
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_CoverOpen",
+      "group": "SW_MG_CoverOpen",
+      "variant": 1,
+      "variants": 1,
+      "role": "event CoverOpen (Reload)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_CoverOpen.wav",
+      "sha256": "8eb7258f4c36341e7b838b01e40e3838cd758deac6f6a8848bb3aa31bbf6bf16",
+      "seconds": 0.76,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -10.0,
+      "loudest_100ms_db": -28.8,
+      "loudness_lufs": -33.21,
+      "centroid_hz": 3692.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "wood_metal",
+          "file": "lock_open_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-metal-and-wood-sfx",
+          "start_s": 0.027,
+          "seconds": 0.3,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "wood_metal",
+          "file": "metal_open_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-metal-and-wood-sfx",
+          "start_s": 0.051,
+          "seconds": 0.6,
+          "at_s": 0.08,
+          "gain_db": -4
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_CrankTick",
+      "group": "SW_MG_CrankTick",
+      "variant": 1,
+      "variants": 1,
+      "role": "event CrankTick (FireStart, FireEnd): the pawl in its detent",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_CrankTick.wav",
+      "sha256": "bd09d99e289dc50f6c0686f72d4a324c060edacc907b97cebdc6fdab78eec124",
+      "seconds": 0.31,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -12.0,
+      "loudest_100ms_db": -34.93,
+      "loudness_lufs": -35.24,
+      "centroid_hz": 5002.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "metalClick.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.0,
+          "seconds": 0.2,
+          "at_s": 0.05,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_medium_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.15,
+          "at_s": 0.055,
+          "gain_db": -8
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "ticks",
+          "rate_hz": 60.0,
+          "slow_to": null,
+          "seconds": 0.06,
+          "seed": 175491565,
+          "at_s": 0.0,
+          "gain_db": -6
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_DiscardRelease",
+      "group": "SW_MG_DiscardRelease",
+      "variant": 1,
+      "variants": 1,
+      "role": "event Release (Discard)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_DiscardRelease.wav",
+      "sha256": "6a88614072ddd0a8c390a49649ab0783c01e9483c67e425a7010ba1a14a2965d",
+      "seconds": 0.94,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -7.0,
+      "loudest_100ms_db": -17.1,
+      "loudness_lufs": -27.26,
+      "centroid_hz": 671.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "swishes",
+          "file": "swish-7.wav",
+          "author": "artisticdude",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/swishes-sound-pack",
+          "start_s": 0.019,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactSoft_heavy_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.5,
+          "at_s": 0.3,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.3,
+          "at_s": 0.3,
+          "gain_db": -3
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactWood_heavy_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.3,
+          "at_s": 0.32,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.25,
+          "at_s": 0.5,
+          "gain_db": -12
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_Draw",
+      "group": "SW_MG_Draw",
+      "variant": 1,
+      "variants": 1,
+      "role": "event DrawWeapon (Equip)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_Draw.wav",
+      "sha256": "e1992fd268d0870c9f1ce7af36796195fe60f0831b69ff1a2311c18716b3082c",
+      "seconds": 0.79,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -12.0,
+      "loudest_100ms_db": -29.03,
+      "loudness_lufs": -35.07,
+      "centroid_hz": 6631.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_rpg",
+          "file": "clothBelt.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.04,
+          "seconds": 0.7,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_heavy_004.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.25,
+          "at_s": 0.45,
+          "gain_db": -4
+        },
+        {
+          "source": "kenney_rpg",
+          "file": "metalLatch.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/rpg-audio",
+          "start_s": 0.038,
+          "seconds": 0.2,
+          "at_s": 0.6,
+          "gain_db": -9
+        }
+      ],
+      "synthetic_layers": [],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_MechanismLoop",
+      "group": "SW_MG_MechanismLoop",
+      "variant": 1,
+      "variants": 1,
+      "role": "MechanismLoopSound: crank and feed while the crank turns (loop, pitch with the cadence)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_MechanismLoop.wav",
+      "sha256": "c6392d1d40b8e845348a55e7297ef7cc9397711e2c4d5e3cb81a703ce86895a6",
+      "seconds": 2.0,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.87,
+      "loudest_100ms_db": -22.96,
+      "loudness_lufs": -23.41,
+      "centroid_hz": 3479.0,
+      "loop_seam_delta": 0.027924,
+      "loop_seam_ok": true,
+      "loop": true,
+      "sources": [
+        {
+          "source": "foley2",
+          "file": "sfx100v2_loop_machine_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-sfx-2",
+          "start_s": 1.0,
+          "seconds": 2.2,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.05,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.15,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.25,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.35,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.45,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.55,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.65,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.75,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.85,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 0.95,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.05,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.15,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.25,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.35,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.45,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.55,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.65,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.75,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.85,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 1.95,
+          "gain_db": -8
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 2.05,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.05,
+          "at_s": 2.15,
+          "gain_db": -8
+        },
+        {
+          "source": "rpg",
+          "file": "chain_03.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.017,
+          "seconds": 0.5,
+          "at_s": 0.164,
+          "gain_db": -17
+        },
+        {
+          "source": "rpg",
+          "file": "chain_03.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.017,
+          "seconds": 0.5,
+          "at_s": 0.827,
+          "gain_db": -17
+        },
+        {
+          "source": "rpg",
+          "file": "chain_03.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.017,
+          "seconds": 0.5,
+          "at_s": 1.46,
+          "gain_db": -17
+        },
+        {
+          "source": "rpg",
+          "file": "chain_03.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/80-cc0-rpg-sfx",
+          "start_s": 0.017,
+          "seconds": 0.5,
+          "at_s": 1.957,
+          "gain_db": -17
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "ticks",
+          "rate_hz": 40.0,
+          "slow_to": null,
+          "seconds": 2.2,
+          "seed": 256113266,
+          "at_s": 0.0,
+          "gain_db": -13
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_Overheat",
+      "group": "SW_MG_Overheat",
+      "variant": 1,
+      "variants": 1,
+      "role": "OverheatSound: at the start of the overheat",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_Overheat.wav",
+      "sha256": "12c91cd2ba2f6f0d9921ce02baf20ba39261e9d357db9ea9dc50bcd356c328c3",
+      "seconds": 1.65,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -8.0,
+      "loudest_100ms_db": -20.04,
+      "loudness_lufs": -20.66,
+      "centroid_hz": 10158.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "kenney_impact",
+          "file": "impactBell_heavy_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.6,
+          "at_s": 0.0,
+          "gain_db": -4
+        },
+        {
+          "source": "foley2",
+          "file": "sfx100v2_air_02.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-sfx-2",
+          "start_s": 0.007,
+          "seconds": 1.1,
+          "at_s": 0.04,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "steam_hiss",
+          "seconds": 1.6,
+          "decay_s": 0.5,
+          "whistle_hz": 3150.0,
+          "seed": 972582094,
+          "at_s": 0.05,
+          "gain_db": -3
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_Round_01",
+      "group": "SW_MG_Round",
+      "variant": 1,
+      "variants": 4,
+      "role": "FireSound of DA_MachineGunRules: one round",
+      "kind": "shot",
+      "file": "art/audio/weapons/machinegun/SW_MG_Round_01.wav",
+      "sha256": "3186cebf2db4c6ccabb38ba22d2a18ffdbd9ad605789c906b60474531631b49c",
+      "seconds": 0.43,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -2.0,
+      "loudest_100ms_db": -9.41,
+      "loudness_lufs": -13.22,
+      "centroid_hz": 2337.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "tabasco_gunshots",
+          "file": "mosin.wav",
+          "author": "Tabasco",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshot-sounds",
+          "start_s": 0.44,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Unkown.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.264,
+          "seconds": 0.08,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_000.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.08,
+          "at_s": 0.018,
+          "gain_db": -13
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 115,
+          "f_end": 48,
+          "decay_s": 0.035,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 0.45,
+          "slaps": [
+            [
+              0.09,
+              0.25
+            ],
+            [
+              0.21,
+              0.12
+            ]
+          ],
+          "seed": 631269274,
+          "at_s": 0.0,
+          "gain_db": -17
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 0.06,
+          "loud_target_db": -12.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_Round_02",
+      "group": "SW_MG_Round",
+      "variant": 2,
+      "variants": 4,
+      "role": "FireSound of DA_MachineGunRules: one round",
+      "kind": "shot",
+      "file": "art/audio/weapons/machinegun/SW_MG_Round_02.wav",
+      "sha256": "8dec1c518865cd584d097d1f76d988b17b3e2a7630087ab9790ed95b3ce7eed7",
+      "seconds": 0.43,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -2.0,
+      "loudest_100ms_db": -10.53,
+      "loudness_lufs": -14.23,
+      "centroid_hz": 2507.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "tabasco_gunshots",
+          "file": "sks.wav",
+          "author": "Tabasco",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshot-sounds",
+          "start_s": 2.292,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "22 Magnum.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.234,
+          "seconds": 0.08,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.08,
+          "at_s": 0.018,
+          "gain_db": -13
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 115,
+          "f_end": 48,
+          "decay_s": 0.035,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 0.45,
+          "slaps": [
+            [
+              0.09,
+              0.25
+            ],
+            [
+              0.21,
+              0.12
+            ]
+          ],
+          "seed": 507500591,
+          "at_s": 0.0,
+          "gain_db": -17
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 0.06,
+          "loud_target_db": -12.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_Round_03",
+      "group": "SW_MG_Round",
+      "variant": 3,
+      "variants": 4,
+      "role": "FireSound of DA_MachineGunRules: one round",
+      "kind": "shot",
+      "file": "art/audio/weapons/machinegun/SW_MG_Round_03.wav",
+      "sha256": "fd6c0bfb47c033038b7cc83cbf4b068dd6fec3c35e65f7d861f6eb24cbd39d89",
+      "seconds": 0.45,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -2.0,
+      "loudest_100ms_db": -10.21,
+      "loudness_lufs": -14.26,
+      "centroid_hz": 2423.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "tabasco_gunshots",
+          "file": "mosin.wav",
+          "author": "Tabasco",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshot-sounds",
+          "start_s": 5.992,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "Unkown.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 2.308,
+          "seconds": 0.08,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.08,
+          "at_s": 0.018,
+          "gain_db": -13
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 115,
+          "f_end": 48,
+          "decay_s": 0.035,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 0.45,
+          "slaps": [
+            [
+              0.09,
+              0.25
+            ],
+            [
+              0.21,
+              0.12
+            ]
+          ],
+          "seed": 679126247,
+          "at_s": 0.0,
+          "gain_db": -17
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 0.06,
+          "loud_target_db": -12.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_Round_04",
+      "group": "SW_MG_Round",
+      "variant": 4,
+      "variants": 4,
+      "role": "FireSound of DA_MachineGunRules: one round",
+      "kind": "shot",
+      "file": "art/audio/weapons/machinegun/SW_MG_Round_04.wav",
+      "sha256": "aafc92377781b84ecf7df8554a1402e2ec8935c1eae2a402df4f39f23c58398e",
+      "seconds": 0.42,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -2.0,
+      "loudest_100ms_db": -10.0,
+      "loudness_lufs": -14.25,
+      "centroid_hz": 2312.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "tabasco_gunshots",
+          "file": "cz.wav",
+          "author": "Tabasco",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshot-sounds",
+          "start_s": 2.817,
+          "seconds": 0.2,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "kurt_gunshots",
+          "file": "22 Magnum.wav",
+          "author": "kurt",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/gunshots",
+          "start_s": 0.935,
+          "seconds": 0.08,
+          "at_s": 0.0,
+          "gain_db": -6
+        },
+        {
+          "source": "kenney_impact",
+          "file": "impactMetal_light_003.ogg",
+          "author": "Kenney",
+          "license": "CC0-1.0",
+          "page": "https://kenney.nl/assets/impact-sounds",
+          "start_s": 0.0,
+          "seconds": 0.08,
+          "at_s": 0.018,
+          "gain_db": -13
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "punch",
+          "f_start": 115,
+          "f_end": 48,
+          "decay_s": 0.035,
+          "at_s": 0.0,
+          "gain_db": -9
+        },
+        {
+          "synth": "outdoor_tail",
+          "decay_s": 0.45,
+          "slaps": [
+            [
+              0.09,
+              0.25
+            ],
+            [
+              0.21,
+              0.12
+            ]
+          ],
+          "seed": 737727559,
+          "at_s": 0.0,
+          "gain_db": -17
+        },
+        {
+          "synth": "limiter",
+          "drive_db": 0.06,
+          "loud_target_db": -12.0
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_SteamLoop",
+      "group": "SW_MG_SteamLoop",
+      "variant": 1,
+      "variants": 1,
+      "role": "SteamLoopSound: the hot jacket simmering (loop)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_SteamLoop.wav",
+      "sha256": "fe0089c16c6f874dfd0edafee8d6294c587b85b6e58f77414f659e58ed4033df",
+      "seconds": 3.0,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -14.93,
+      "loudest_100ms_db": -30.6,
+      "loudness_lufs": -33.97,
+      "centroid_hz": 9482.0,
+      "loop_seam_delta": 0.014709,
+      "loop_seam_ok": true,
+      "loop": true,
+      "sources": [
+        {
+          "source": "water",
+          "file": "loop_bubbles_02.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/40-cc0-water-splash-slime-sfx",
+          "start_s": 0.5,
+          "seconds": 3.3,
+          "at_s": 0.0,
+          "gain_db": 0
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "steam_hiss",
+          "seconds": 3.3,
+          "decay_s": 100.0,
+          "whistle_hz": null,
+          "seed": 345000552,
+          "at_s": 0.0,
+          "gain_db": -12
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    },
+    {
+      "asset": "SW_MG_SteamVent",
+      "group": "SW_MG_SteamVent",
+      "variant": 1,
+      "variants": 1,
+      "role": "event SteamVent (Overheat)",
+      "kind": "handling",
+      "file": "art/audio/weapons/machinegun/SW_MG_SteamVent.wav",
+      "sha256": "c53a17a6444b4bcea6d63fa0a6b3ada99c20a72555fff60e593b5fbda5fd4744",
+      "seconds": 3.01,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -7.0,
+      "loudest_100ms_db": -18.84,
+      "loudness_lufs": -19.96,
+      "centroid_hz": 9768.0,
+      "ends_silent": true,
+      "loop": false,
+      "sources": [
+        {
+          "source": "foley2",
+          "file": "sfx100v2_air_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/100-cc0-sfx-2",
+          "start_s": 0.002,
+          "seconds": 2.6,
+          "at_s": 0.0,
+          "gain_db": 0
+        },
+        {
+          "source": "water",
+          "file": "bubble_01.ogg",
+          "author": "rubberduck",
+          "license": "CC0-1.0",
+          "page": "https://opengameart.org/content/40-cc0-water-splash-slime-sfx",
+          "start_s": 0.0,
+          "seconds": 0.6,
+          "at_s": 0.4,
+          "gain_db": -14
+        }
+      ],
+      "synthetic_layers": [
+        {
+          "synth": "steam_hiss",
+          "seconds": 3.0,
+          "decay_s": 1.1,
+          "whistle_hz": 2650.0,
+          "seed": 828867408,
+          "at_s": 0.0,
+          "gain_db": -2
+        }
+      ],
+      "licenses": [
+        "CC0-1.0"
+      ]
+    }
+  ]
+}

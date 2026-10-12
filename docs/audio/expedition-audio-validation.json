@@ -1,0 +1,395 @@
+{
+  "at": "2026-10-10T00:09:41.607038+00:00",
+  "success": true,
+  "level": "offline audio data and catalogue integrity only",
+  "manifest_sha256": "d8bcd89051891371631f4108c68b2a981cc212b72cca4b27017dd37d26f5aa2c",
+  "sounds": [
+    {
+      "id": "HullWater",
+      "sha256": "34461e73008f483c5d39595aa41efa79143e1064d2624c4fd4e585bb0d584d90",
+      "passed": true
+    },
+    {
+      "id": "ShoreSurf",
+      "sha256": "640ccb0adef2a0370a21bd8dc31f46a9340c82deabc1c69bec9fb535ff1aa7d4",
+      "passed": true
+    },
+    {
+      "id": "ShoreSea",
+      "sha256": "02f30be8702eb551dab62403af910e017df324a8112b5ea31513a5a37b5ea52c",
+      "passed": true
+    },
+    {
+      "id": "Underwater",
+      "sha256": "bee2f3763003479bb15f1bf7e2938da099e8a27aa86f86d478da4f7c9462eec5",
+      "passed": true
+    },
+    {
+      "id": "Rain",
+      "sha256": "26f8909d779ecc35f6b9dd9c72898918aeff4385123d879980cad13cdf3918b3",
+      "passed": true
+    },
+    {
+      "id": "WindLight",
+      "sha256": "2d924923ef0008bf828ffca8a7e831dadb872d922be25f56233971f3172fa750",
+      "passed": true
+    },
+    {
+      "id": "WindStrong",
+      "sha256": "38830b024d1f9bcd34f4f159ca9590bb9dae0b4eda85538b3828bee6c28a5ae5",
+      "passed": true
+    },
+    {
+      "id": "WindStorm",
+      "sha256": "329f783479d971378221b301d3696d66a2861dd68c4e272c09c4fb5a15d93692",
+      "passed": true
+    },
+    {
+      "id": "Thunder",
+      "sha256": "ff6b23d2f56f0c6a9417f8565477a32f3513306a2ad5764573e042f7f839cb2d",
+      "passed": true
+    },
+    {
+      "id": "Crickets",
+      "sha256": "73e9e8c13952d24153b728e54bb35d41c90a42a08dab0be7d5c8d220f12eca28",
+      "passed": true
+    },
+    {
+      "id": "Campfire",
+      "sha256": "12d040c6ce6dd7bb45ef6f6e2db2efa3563057f01fdd4a823a4dec0f313bdf0e",
+      "passed": true
+    },
+    {
+      "id": "Splash_01",
+      "sha256": "621b40f4d73e5527e3eb26e7380e846d1aa457d5c7046c11aacc573251a72afb",
+      "passed": true
+    },
+    {
+      "id": "WoodCreak_01",
+      "sha256": "eed8f7193159b9d1e02910c0488c8d1747aba8b2e177e5d703e447ffd2b39fd4",
+      "passed": true
+    },
+    {
+      "id": "Chain_01",
+      "sha256": "db3eab80124d37df7e37357d4b759cfaff663c9cac204c7b0c94945fb4159e17",
+      "passed": true
+    },
+    {
+      "id": "Coin_01",
+      "sha256": "bdc3a3bc4909620f27b67521e13883ae41bdd6f89eff72e31c7daaafbd789556",
+      "passed": true
+    },
+    {
+      "id": "Gem_01",
+      "sha256": "b978a1a00becb1d5f48fffcc40d97376a33964472213616ae65e76e22c93481e",
+      "passed": true
+    },
+    {
+      "id": "Splash_02",
+      "sha256": "f1040441e15fade76dd2c6b3da7729c86674afc1f1ce05bc9652be5da50e8b70",
+      "passed": true
+    },
+    {
+      "id": "WoodCreak_02",
+      "sha256": "b4448c8c4f84fabbc00fcd3bc9dfc367024af817f111ab2eef10c8ff70e49810",
+      "passed": true
+    },
+    {
+      "id": "Chain_02",
+      "sha256": "48a9f074403fd3f1d78bb30146e9164c7ac939a63df565af2446378a43bdb0bd",
+      "passed": true
+    },
+    {
+      "id": "Coin_02",
+      "sha256": "a608bd752a1e0fb8761a4cea11b24268843bbed85c6a15a71c4bd753531f7159",
+      "passed": true
+    },
+    {
+      "id": "Gem_02",
+      "sha256": "e1bdf713e75cbdc8490e17bff1e61b1c4a035403b9bc4999c46e17f6bf7576fa",
+      "passed": true
+    },
+    {
+      "id": "Splash_03",
+      "sha256": "dd5d04c7be5188a5c029aa819e58bf928ca8cdbefb8eb2ef88755a3372a90dc4",
+      "passed": true
+    },
+    {
+      "id": "WoodCreak_03",
+      "sha256": "396278b0ff131a49b117ef2e84e49a84ab04fdfaaacd171eb81cc2b1f09c7bd1",
+      "passed": true
+    },
+    {
+      "id": "Chain_03",
+      "sha256": "93f87a7a5954a9a1ff1a5bd3ed96de310a9a2480d5b2b403ab01491459a17f26",
+      "passed": true
+    },
+    {
+      "id": "Coin_03",
+      "sha256": "9eecc67e42def90852fbf9f1e1779dcac768203fbd2b2883ffcc263b4754192c",
+      "passed": true
+    },
+    {
+      "id": "Gem_03",
+      "sha256": "332b62496998359b9a2722e6a2e12bf00555d5b2c0851a058d9fb0ae5e8d1a30",
+      "passed": true
+    },
+    {
+      "id": "SwimEnter",
+      "sha256": "5f5c48fa87b8a9eb70f8c5d9cd9aa4a92e2031c3f81f35137f425dac0e297621",
+      "passed": true
+    },
+    {
+      "id": "SwimExit",
+      "sha256": "265ff934f0751fc0712a3a98639379804a0e7a3e62261ab1871b238b8eb5a68b",
+      "passed": true
+    },
+    {
+      "id": "WaterObject",
+      "sha256": "5d5edf0b36164ffc07179069525eaba977a23f9cb6bf8035d69a7b73509ad64e",
+      "passed": true
+    },
+    {
+      "id": "Bell",
+      "sha256": "c34f2fe806c10e4d291b51ab92dc6d4c9f67b7ca47aec725de2efe53f84a7476",
+      "passed": true
+    },
+    {
+      "id": "OarCreak",
+      "sha256": "754189c7b695a4be5a11beae9b5e66a881a291c4427eefc39e6dcaa6ab9a9ec0",
+      "passed": true
+    },
+    {
+      "id": "ChestOpen",
+      "sha256": "711749571d8d6eaf4126b436ab078858ad345601796f8a14ba970af084edcb25",
+      "passed": true
+    },
+    {
+      "id": "ChestClose",
+      "sha256": "b51c1f2c9e98db5c0654e9d51d765e13a197e18c84a19e726eae598c657b040b",
+      "passed": true
+    },
+    {
+      "id": "DoorOpen",
+      "sha256": "6042a2aa600ef75872be12ad4aac291775c08417658fbbd70268f9df3ccfd177",
+      "passed": true
+    },
+    {
+      "id": "DoorClose",
+      "sha256": "bc0d2f8f248de075d79328fe9738fc7ee70e02be1e9cddcd2f476e0e5d633d90",
+      "passed": true
+    },
+    {
+      "id": "Ceramic_01",
+      "sha256": "addb98b22c7d08c8c2f448a29e8ad3526139338d5ffb843c1dac5b3e2e1cc399",
+      "passed": true
+    },
+    {
+      "id": "FragileBreak_01",
+      "sha256": "0a82442a2aa7e18f0e35a7c6bfabd3841f26a854b954641ef97a5b8801e4b348",
+      "passed": true
+    },
+    {
+      "id": "StoneScrape_01",
+      "sha256": "5c2854230509972e6ae55a90a46ee2bbb686495cc0b3a6baf561022139c5a65e",
+      "passed": true
+    },
+    {
+      "id": "MetalHit_01",
+      "sha256": "3ca587864eee16e27a70c105dcc3582460d53c344d5bdec7f448ddb5a8861b29",
+      "passed": true
+    },
+    {
+      "id": "WoodHit_01",
+      "sha256": "e8abd1c5611fc1b6063d9e0cf6d66d4338dbfd51d2bc331134d11f03ef325f80",
+      "passed": true
+    },
+    {
+      "id": "Ceramic_02",
+      "sha256": "bc5cf2d73d5fe97546d86dc879c84e0ae25b2d13c38ada7c15677da88ec3fbf2",
+      "passed": true
+    },
+    {
+      "id": "FragileBreak_02",
+      "sha256": "a61f44bb5dff894237c4576cff83bc9130233d7109cf8aa6d5d38224a51980b5",
+      "passed": true
+    },
+    {
+      "id": "StoneScrape_02",
+      "sha256": "748155faa27b4b2f015bef37e27753d7b9ae979a7477283b6f4fbb9bbe653cda",
+      "passed": true
+    },
+    {
+      "id": "MetalHit_02",
+      "sha256": "2a8163a3415bb0011f5272e09e94d68f986e4df8ed2c1c1391ce380e7a2d1243",
+      "passed": true
+    },
+    {
+      "id": "WoodHit_02",
+      "sha256": "9760b138ee06d68b26f2c391193945e514e313cce41a5a9cbfa20e9facc5911c",
+      "passed": true
+    },
+    {
+      "id": "CannonFire",
+      "sha256": "e06ad4b386fa7304012f23531fe4fdac1923153054fb05532d32a97c6d5b51d8",
+      "passed": true
+    },
+    {
+      "id": "CannonWood",
+      "sha256": "59ae2da6b0f32a4dc6110021cf2407978a446ec62f781e50abd24decf6e4467a",
+      "passed": true
+    },
+    {
+      "id": "CannonStone",
+      "sha256": "2d5373067aaca45a4d01eaa491fa86eb7b02e5f63c28c7f45ec37de18df7c327",
+      "passed": true
+    },
+    {
+      "id": "CannonMetal",
+      "sha256": "a75b4fadd28cf22b70b2ab9d2a122f57fdb8de1a08ceb999c6e36169c3777136",
+      "passed": true
+    },
+    {
+      "id": "CannonWater",
+      "sha256": "93ebbc33367d2ddad21b356d82f26c3876b0301c644aa00edacdba62c60458e6",
+      "passed": true
+    },
+    {
+      "id": "ShipCollision",
+      "sha256": "a0a136465cc67a8eaebf9eb57b62ab32151c15c8188441f16e54dc37c83834b7",
+      "passed": true
+    },
+    {
+      "id": "BladeDraw",
+      "sha256": "53ea26de22ba4774bf2367c3140eeaddbcaf419c6be70206630fa8ed910ac5e4",
+      "passed": true
+    },
+    {
+      "id": "BladeSheathe",
+      "sha256": "06745d55cf4b3faed57cddecfd9308704f5dafc438725b3306c6bd774de270c9",
+      "passed": true
+    },
+    {
+      "id": "BladeParry",
+      "sha256": "fb3bbbd2b92e427e97f545086397107d3a6e66b1b068daf9fbc59bbfb5225428",
+      "passed": true
+    },
+    {
+      "id": "CrabClack",
+      "sha256": "07c923789e445864034d8568963240185e3b75e997307ba2f43370c83dc99cba",
+      "passed": true
+    },
+    {
+      "id": "CrabSlam",
+      "sha256": "827ad54b7c73820cde602c9cd8a19f1b78927b79091e5fa1a82c8cec1eb0580f",
+      "passed": true
+    },
+    {
+      "id": "CrabHurt",
+      "sha256": "1498d0ff2829b6403907bcb3732ca54b9d7d0c949c79eee06fef0f88c4f21b69",
+      "passed": true
+    },
+    {
+      "id": "CreatureRare",
+      "sha256": "1a58f6f44b68650ccf6c006ab15cd51627e39e90e725e5cedc3646f875c5a40a",
+      "passed": true
+    },
+    {
+      "id": "ArtifactPulse",
+      "sha256": "632d7c053e70d6a017309f3b8c99221889078852e01f35e421ed7180116e8dc8",
+      "passed": true
+    },
+    {
+      "id": "ArtifactCurse",
+      "sha256": "be1cda0705d0c9f216071879aa02c9cc1a0d8b480571960153805b300ef74ee9",
+      "passed": true
+    },
+    {
+      "id": "SandStep_01",
+      "sha256": "6013c59208644aa00bf63135c1ffdce9ec6ee0993d32a28f0ed720b5a032d666",
+      "passed": true
+    },
+    {
+      "id": "SandStep_02",
+      "sha256": "925bc008fc10d0c5a408ba628d8416e7b3203ddc865a31a53bd35b1ad7e6fb34",
+      "passed": true
+    },
+    {
+      "id": "SandStep_03",
+      "sha256": "681be4ddc3cd2580d8d389bf56a157346c88a81f696d06b4a021c6601b56fcc3",
+      "passed": true
+    },
+    {
+      "id": "SandStep_04",
+      "sha256": "9e408500a7ee3ba6dfb9de0d3c5e6f43d1e4303cfafc17100bffba90b0afad95",
+      "passed": true
+    },
+    {
+      "id": "WetStep_01",
+      "sha256": "34fed1b613c9fbd60e08f709db0946d880ed9c6e4895e116150639a42fe072d7",
+      "passed": true
+    },
+    {
+      "id": "WetStep_02",
+      "sha256": "e5cd2d2c45652ea580f2cab568e239c3d69f22ae905c26cb0ea8ccb1f3373f15",
+      "passed": true
+    },
+    {
+      "id": "WetStep_03",
+      "sha256": "66bafa9d30ce41d36f5e81434d3d46611ce4d43ac58425582e5744699e371a7b",
+      "passed": true
+    },
+    {
+      "id": "DayStart",
+      "sha256": "fb263ed29c904323cacd8d5bc6ba6ca673a84b8167405f699359163555389e31",
+      "passed": true
+    },
+    {
+      "id": "QuotaMet",
+      "sha256": "374cec63d3e5c6528563d4756f96ea4f76f6d8b451103a8da774b9b8ca56ce7c",
+      "passed": true
+    },
+    {
+      "id": "QuotaFailed",
+      "sha256": "a282df1789253c42a5c1865ec70e0438ab26884402e2d9767d1bff02b0874422",
+      "passed": true
+    },
+    {
+      "id": "Victory",
+      "sha256": "16486703b041fe35a86e166261901996805dd11f6d281d0ff8676ef378540d5d",
+      "passed": true
+    },
+    {
+      "id": "Defeat",
+      "sha256": "c2a3bca2d16e455dee5664789dae31147e6f40dde074326248b5625b41b470fa",
+      "passed": true
+    },
+    {
+      "id": "Merchant",
+      "sha256": "0551f738af7e54f917b29dc7f227ab9703483cf6384baf9ce824f0fdc8cb50c1",
+      "passed": true
+    },
+    {
+      "id": "Legendary",
+      "sha256": "ba77a2f9ed3d743754004d9d06ff15db0d55060040aaf0bb1eced99b970a38ab",
+      "passed": true
+    },
+    {
+      "id": "Danger",
+      "sha256": "ae0b1e0fc754a09a958a906100033861b493d7db639d9892221e419d36361c83",
+      "passed": true
+    },
+    {
+      "id": "PirateTheme",
+      "sha256": "919c6301a85e672c7b858613233bb2a5f71aa8e851e9fdc4db7f72e93cd51fe3",
+      "passed": true
+    }
+  ],
+  "events": 138,
+  "categories": 10,
+  "browser_render_verified": false,
+  "unreal_import_verified": false,
+  "pie_listened": false,
+  "packaged_tested": false,
+  "multiplayer_tested": false
+}

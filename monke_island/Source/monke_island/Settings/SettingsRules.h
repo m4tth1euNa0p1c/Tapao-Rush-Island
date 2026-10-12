@@ -25,7 +25,21 @@ enum class ESettingsVolume : uint8
 	Dialogue,
 	/** Menus and HUD */
 	Interface,
+	/** The other players' voices in the proximity voice chat (T-263, voice tab) */
+	VoiceChat,
 	Count UMETA(Hidden)
+};
+
+/** When the microphone transmits in the proximity voice chat (T-263, cahier §18 "Voix L7": push-to-talk by default) */
+UENUM(BlueprintType)
+enum class EVoiceMicMode : uint8
+{
+	/** Only while the push-to-talk key is held (V by default) */
+	PushToTalk,
+	/** Open microphone: the voice goes out whenever it is louder than the threshold */
+	VoiceActivation,
+	/** Never transmits; the others are still heard */
+	Off
 };
 
 /**
@@ -72,6 +86,19 @@ public:
 	/** Mouse sensitivity range (multiplier of the base look speed) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mouse")
 	FVector2D SensitivityRange = FVector2D(0.2f, 3.0f);
+
+	/** Microphone mode of a first launch (cahier §18 and security.md: push-to-talk) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Voice")
+	EVoiceMicMode DefaultMicMode = EVoiceMicMode::PushToTalk;
+
+	/** Voice activation threshold of a first launch: microphone level (0..1, the engine's silence detection) under which
+	 *  nothing goes out */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Voice", meta=(ClampMin="0", ClampMax="1"))
+	float DefaultMicThreshold = 0.08f;
+
+	/** Range of the voice activation threshold offered by the menu (microphone level 0..1) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Voice")
+	FVector2D MicThresholdRange = FVector2D(0.01f, 0.4f);
 
 	/** Default volume of a channel */
 	float DefaultVolume(ESettingsVolume Channel) const

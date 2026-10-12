@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "UI/FloodTimerMath.h"
+// TWeakObjectPtr members: the header compiles on its own (UBT -SingleFile, adaptive non-unity builds)
+#include "UObject/WeakObjectPtr.h"
+#include "UObject/WeakObjectPtrTemplates.h"
 
 class AExpeditionGameState;
 class AFloodSimulationActor;
