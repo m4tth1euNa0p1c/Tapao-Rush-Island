@@ -1,0 +1,291 @@
+<title>Feuille de route Taopao</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an admiralty route chart — the course of milestones across the top, the legs of the voyage (lots) below,
+   then the ship's log of every ticket. */
+:root {
+  --paper: #f1f5f5;
+  --panel: #ffffff;
+  --ink: #13233a;
+  --muted: #586a7c;
+  --line: #d2dcdf;
+  --lagoon: #0e7f82;
+  --lagoon-soft: #d6eeee;
+  --coral: #c9573a;
+  --s-fait: #2f8a5c;
+  --s-review: #b9861b;
+  --s-en-cours: #c9573a;
+  --s-a-faire: #8796a6;
+  --s-bloque: #b3261e;
+  --display: "Zilla Slab", "Rockwell", "Roboto Slab", Georgia, serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0b1522; --panel: #111f31; --ink: #e2ebf1; --muted: #93a5b7; --line: #233650;
+    --lagoon: #3cbfbb; --lagoon-soft: #12333a; --coral: #ee8a64;
+    --s-fait: #4cbb85; --s-review: #e0b04a; --s-en-cours: #ee8a64; --s-a-faire: #7f90a3; --s-bloque: #ef6a5f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0b1522; --panel: #111f31; --ink: #e2ebf1; --muted: #93a5b7; --line: #233650;
+  --lagoon: #3cbfbb; --lagoon-soft: #12333a; --coral: #ee8a64;
+  --s-fait: #4cbb85; --s-review: #e0b04a; --s-en-cours: #ee8a64; --s-a-faire: #7f90a3; --s-bloque: #ef6a5f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; display: grid; gap: 44px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 24px; font-weight: 600; }
+h3 { font-size: 18px; font-weight: 600; }
+p { margin: 0; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { max-width: 66ch; color: var(--muted); font-size: 16px; }
+.num { font-variant-numeric: tabular-nums; }
+section { display: grid; gap: 18px; min-width: 0; }
+.section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+
+/* header */
+header { display: grid; gap: 14px; }
+.totals { display: grid; gap: 10px; }
+.bar { display: flex; height: 14px; border-radius: 3px; overflow: hidden; background: var(--line); }
+.bar span { display: block; height: 100%; }
+.bar.slim { height: 8px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
+.legend b { color: var(--ink); font-weight: 600; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: 0; }
+.s-fait { background: var(--s-fait); } .s-review { background: var(--s-review); } .s-en-cours { background: var(--s-en-cours); }
+.s-a-faire { background: var(--s-a-faire); } .s-bloque { background: var(--s-bloque); }
+
+/* the course of milestones */
+.course { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; padding-top: 6px; }
+.course::before { content: ""; position: absolute; left: 0; right: 0; top: 22px; border-top: 2px dashed var(--line); }
+.port { position: relative; display: grid; gap: 8px; padding-right: 14px; align-content: start; }
+.port .mark { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--lagoon); background: var(--paper); position: relative; z-index: 1; margin-top: 13px; }
+.port.done .mark { background: var(--lagoon); }
+.port.next .mark { background: var(--coral); border-color: var(--coral); box-shadow: 0 0 0 5px color-mix(in srgb, var(--coral) 22%, transparent); }
+.port.later .mark { border-style: dashed; border-color: var(--muted); }
+.port .when { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.port .name { font-family: var(--display); font-size: 17px; font-weight: 600; }
+.port.next .name { color: var(--coral); }
+.port .what { font-size: 13px; color: var(--muted); }
+.note { font-size: 12.5px; color: var(--muted); }
+
+/* waiting for the owner */
+.asks { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.ask { border-left: 3px solid var(--coral); padding: 4px 0 4px 14px; display: grid; gap: 4px; }
+.ask h3 { font-size: 16px; }
+.ask p { font-size: 14px; color: var(--muted); }
+
+/* lots */
+.lots { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+.lot { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.lot-top { display: flex; align-items: baseline; gap: 10px; }
+.code { font-family: var(--mono); font-weight: 500; font-size: 13px; color: var(--lagoon); border: 1px solid var(--lagoon); border-radius: 3px; padding: 1px 6px; }
+.lot p { font-size: 13.5px; }
+.gate { color: var(--muted); }
+.gate b { color: var(--ink); font-weight: 500; }
+.counts { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12.5px; color: var(--muted); }
+.lot button { justify-self: start; }
+
+/* the log */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip { font: 500 13px var(--body); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip[aria-pressed="true"] { border-color: var(--lagoon); background: var(--lagoon-soft); }
+.chip:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--lagoon); outline-offset: 2px; }
+select, input[type="search"] { font: 14px var(--body); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
+input[type="search"] { min-width: 0; flex: 1 1 200px; }
+button.link { font: 500 13px var(--body); color: var(--lagoon); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.count-line { font-size: 13px; color: var(--muted); }
+.log { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 13.5px; }
+th { text-align: left; font: 500 12px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); padding: 10px 12px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--panel); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.id { font-family: var(--mono); white-space: nowrap; color: var(--muted); }
+td.title { min-width: 320px; }
+.kind { font-size: 11.5px; color: var(--muted); }
+.pill { display: inline-block; font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; white-space: nowrap; color: var(--ink); background: color-mix(in srgb, var(--c) 18%, transparent); border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); }
+.lotchip { font-family: var(--mono); font-size: 12px; color: var(--lagoon); }
+.owner { font-size: 11px; font-family: var(--mono); color: var(--coral); margin-left: 6px; white-space: nowrap; }
+td.agent, td.date { color: var(--muted); white-space: nowrap; font-size: 12.5px; }
+.empty { padding: 28px; text-align: center; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .course { grid-template-columns: 1fr; gap: 16px; }
+  .course::before { left: 8px; right: auto; top: 0; bottom: 0; border-top: 0; border-left: 2px dashed var(--line); }
+  .port { grid-template-columns: 18px 1fr; column-gap: 14px; padding-right: 0; }
+  .port .mark { margin-top: 2px; grid-row: span 3; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .port.next .mark { animation: beacon 2.4s ease-in-out infinite; }
+  @keyframes beacon { 50% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--coral) 8%, transparent); } }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="stamp">Feuille de route</div>
+    <h1>Taopao — Rush Island</h1>
+    <p class="lede">Crownfall Expeditions : coop 1 à 4 joueurs d'extraction maritime sur l'atoll de Raraka. Voici tout ce qui est fait, à vérifier et à faire, lot par lot, avec les prochaines escales.</p>
+    <div class="totals">
+      <div class="bar" id="totalBar" role="img"></div>
+      <div class="legend" id="totalLegend"></div>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-course">
+    <div class="section-head">
+      <h2 id="h-course">Le cap</h2>
+      <span class="note">Dates estimées le 11 octobre ; elles bougent si on ajoute de gros chantiers.</span>
+    </div>
+    <div class="course" id="course"></div>
+  </section>
+
+  <section aria-labelledby="h-asks">
+    <div class="section-head">
+      <h2 id="h-asks">Ce qui attend ta réponse</h2>
+      <span class="note">Le détail des 16 questions : docs/production/recette-2026-10-11.md, §6.</span>
+    </div>
+    <div class="asks" id="asks"></div>
+  </section>
+
+  <section aria-labelledby="h-lots">
+    <div class="section-head">
+      <h2 id="h-lots">Les lots du cahier des charges</h2>
+      <span class="note">Dans l'ordre du cahier : rien de L7, L8 ou E1 avant que le noyau soit validé.</span>
+    </div>
+    <div class="lots" id="lots"></div>
+  </section>
+
+  <section aria-labelledby="h-log">
+    <div class="section-head">
+      <h2 id="h-log">Le journal de bord</h2>
+      <span class="count-line num" id="countLine"></span>
+    </div>
+    <div class="filters" id="statusChips" role="group" aria-label="Statut"></div>
+    <div class="filters">
+      <label class="eyebrow" for="lotSel">Lot</label>
+      <select id="lotSel"></select>
+      <input type="search" id="q" placeholder="Chercher un ticket, une arme, un agent…" aria-label="Chercher">
+      <button class="chip" id="ownerChip" aria-pressed="false">Tes demandes</button>
+    </div>
+    <div class="log">
+      <table>
+        <thead><tr><th>Ticket</th><th>Sujet</th><th>Lot</th><th>Statut</th><th>Agent</th><th>Date</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const ST = DATA.status, ORDER = DATA.order;
+const cssVar = s => `var(--s-${s})`;
+const fmtDate = iso => {
+  if (!iso) return "plus tard";
+  const d = new Date(iso + "T12:00:00");
+  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
+};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function stacked(el, counts, total) {
+  el.innerHTML = ORDER.filter(s => counts[s]).map(s =>
+    `<span class="s-${s}" style="width:${(100 * counts[s] / total).toFixed(3)}%" title="${ST[s]} : ${counts[s]}"></span>`).join("");
+}
+
+// header
+const all = DATA.tickets.length;
+document.getElementById("stamp").textContent = `Feuille de route · état au ${fmtDate(DATA.generated)} · ${all} tickets`;
+stacked(document.getElementById("totalBar"), DATA.totals, all);
+document.getElementById("totalBar").setAttribute("aria-label", ORDER.map(s => `${ST[s]} ${DATA.totals[s]}`).join(", "));
+document.getElementById("totalLegend").innerHTML = ORDER.map(s =>
+  `<span><i class="dot s-${s}"></i>${ST[s]} <b class="num">${DATA.totals[s]}</b></span>`).join("");
+
+// course
+document.getElementById("course").innerHTML = DATA.milestones.map(m => `
+  <div class="port ${m.state}">
+    <div class="mark" aria-hidden="true"></div>
+    <div class="when">${m.state === "done" ? "fait · " : m.state === "next" ? "prochaine · " : ""}${m.date ? fmtDate(m.date) : "date à fixer"}</div>
+    <div class="name">${esc(m.name)}</div>
+    <div class="what">${esc(m.text)}</div>
+  </div>`).join("");
+
+// asks
+document.getElementById("asks").innerHTML = DATA.questions.map(q =>
+  `<div class="ask"><h3>${esc(q.title)}</h3><p>${esc(q.text)}</p></div>`).join("");
+
+// lots
+const lotsEl = document.getElementById("lots");
+lotsEl.innerHTML = DATA.lots.map(l => {
+  const total = ORDER.reduce((a, s) => a + l.counts[s], 0);
+  const open = total - l.counts.fait;
+  return `<article class="lot">
+    <div class="lot-top"><span class="code">${l.code}</span><h3>${esc(l.name)}</h3></div>
+    <p>${esc(l.scope)}</p>
+    <p class="gate"><b>Pour passer :</b> ${esc(l.gate)}</p>
+    ${total ? `<div class="bar slim" role="img" aria-label="${total} tickets">${""}</div>` : ""}
+    <div class="counts num">${total ? ORDER.filter(s => l.counts[s]).map(s => `<span><i class="dot s-${s}"></i>${ST[s]} ${l.counts[s]}</span>`).join("") : "Aucun ticket ouvert pour l'instant"}</div>
+    ${total ? `<button class="link" data-lot="${l.code}">Voir les ${total} tickets${open ? ` (${open} restants)` : ""}</button>` : ""}
+  </article>`;
+}).join("");
+lotsEl.querySelectorAll(".lot").forEach((card, i) => {
+  const l = DATA.lots[i], bar = card.querySelector(".bar");
+  if (bar) stacked(bar, l.counts, ORDER.reduce((a, s) => a + l.counts[s], 0));
+});
+
+// log
+const state = { statuses: new Set(ORDER.filter(s => s !== "fait")), lot: "", q: "", owner: false };
+try { const saved = JSON.parse(localStorage.getItem("roadmap-filters") || "null"); if (saved) { state.statuses = new Set(saved.statuses); state.lot = saved.lot || ""; state.owner = !!saved.owner; } } catch (e) {}
+const save = () => { try { localStorage.setItem("roadmap-filters", JSON.stringify({ statuses: [...state.statuses], lot: state.lot, owner: state.owner })); } catch (e) {} };
+
+const chips = document.getElementById("statusChips");
+chips.innerHTML = ORDER.map(s => `<button class="chip" data-s="${s}" aria-pressed="${state.statuses.has(s)}"><i class="dot s-${s}"></i>${ST[s]} <span class="num">${DATA.totals[s]}</span></button>`).join("");
+chips.addEventListener("click", e => {
+  const b = e.target.closest("button[data-s]"); if (!b) return;
+  const s = b.dataset.s; state.statuses.has(s) ? state.statuses.delete(s) : state.statuses.add(s);
+  b.setAttribute("aria-pressed", state.statuses.has(s)); save(); render();
+});
+const lotSel = document.getElementById("lotSel");
+const lotCodes = [...DATA.lots.map(l => l.code), "—"];
+lotSel.innerHTML = `<option value="">Tous les lots</option>` + lotCodes.map(c => `<option value="${c}">${c === "—" ? "Hors lot" : c + " · " + (DATA.lots.find(l => l.code === c) || {}).name}</option>`).join("");
+lotSel.value = state.lot;
+lotSel.addEventListener("change", () => { state.lot = lotSel.value; save(); render(); });
+const q = document.getElementById("q");
+q.addEventListener("input", () => { state.q = q.value.trim().toLowerCase(); render(); });
+const ownerChip = document.getElementById("ownerChip");
+ownerChip.setAttribute("aria-pressed", state.owner);
+ownerChip.addEventListener("click", () => { state.owner = !state.owner; ownerChip.setAttribute("aria-pressed", state.owner); save(); render(); });
+lotsEl.addEventListener("click", e => {
+  const b = e.target.closest("button[data-lot]"); if (!b) return;
+  state.lot = b.dataset.lot; lotSel.value = state.lot;
+  state.statuses = new Set(ORDER); chips.querySelectorAll("button").forEach(c => c.setAttribute("aria-pressed", "true"));
+  save(); render(); document.getElementById("h-log").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+function render() {
+  const rows = DATA.tickets
+    .filter(t => state.statuses.has(t.status))
+    .filter(t => !state.lot || t.lot === state.lot)
+    .filter(t => !state.owner || t.owner)
+    .filter(t => !state.q || (t.id + " " + t.title + " " + t.agent + " " + t.feature + " " + t.kinds.join(" ")).toLowerCase().includes(state.q))
+    .sort((a, b) => parseInt(b.id.slice(2)) - parseInt(a.id.slice(2)));
+  document.getElementById("countLine").textContent = `${rows.length} ticket${rows.length > 1 ? "s" : ""} affiché${rows.length > 1 ? "s" : ""} sur ${all}`;
+  document.getElementById("rows").innerHTML = rows.length ? rows.map(t => `<tr>
+      <td class="id">${t.id}</td>
+      <td class="title">${esc(t.title)}${t.owner ? `<span class="owner">ta demande</span>` : ""}${t.kinds.length ? `<div class="kind">${esc(t.kinds.join(" · "))}</div>` : ""}</td>
+      <td><span class="lotchip">${t.lot}</span></td>
+      <td><span class="pill" style="--c:${cssVar(t.status)}">${ST[t.status]}</span></td>
+      <td class="agent">${esc(t.agent)}</td>
+      <td class="date num">${esc(t.date)}</td>
+    </tr>`).join("") : `<tr><td colspan="6" class="empty">Aucun ticket ne correspond. Élargis les statuts ou le lot.</td></tr>`;
+}
+render();
+</script>

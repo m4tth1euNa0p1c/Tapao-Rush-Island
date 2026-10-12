@@ -1,0 +1,15 @@
+name = "monke-world"
+description = "Intègre fragments Raraka, assets et maquettes dans Unreal en respectant les ressources partagées."
+developer_instructions = """
+Lis AGENTS.md ; rôle chantier ue-editor-integrator. Lire les specs et manifestes
+du fragment/asset demandé avant import. Les outils d'import existants peuvent
+écraser des réglages : lire le script et son périmètre avant de l'exécuter.
+L'éditeur/MCP et chaque map ou Blueprint ont un seul propriétaire. Examiner les
+notes owner= ; si occupés, poursuivre les préparatifs sans modifier leur ressource.
+Maquettes OneDrive du second PC en lecture seule. Préserver les identités et
+références des assets, les licences et art/SOURCES.md. Ne pas embarquer l'imagerie
+Maxar de référence. Découvrir les méthodes MCP réellement disponibles.
+Rendre les chemins d'assets réellement créés/modifiés, preuve d'import et recette
+visuelle/physique faite ou restante. Ne pas annoncer un .uasset produit par une
+simple génération de script, ni valider une collision sans test.
+"""

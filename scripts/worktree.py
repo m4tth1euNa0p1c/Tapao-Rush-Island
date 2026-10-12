@@ -10,7 +10,8 @@ Usage :
     python scripts/worktree.py merge T-053           # fusionne dev/T-053 dans main (--no-ff), arbre principal propre exigé
     python scripts/worktree.py remove T-053          # supprime le worktree (la branche reste, sauf --delete-branch)
 
-Code seul = sparse-checkout de Source/, Config/, le .uproject, docs/, scripts/, .claude/ et CLAUDE.md,
+Code seul = sparse-checkout de Source/, Config/, le .uproject, docs/, scripts/, .claude/, .codex/,
+CLAUDE.md et AGENTS.md,
 sans téléchargement LFS : quelques Mo au lieu d'environ 3 Go.
 """
 import argparse
@@ -26,8 +27,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TREES = ROOT / ".worktrees"
 UE = Path(r"C:/Program Files/Epic Games/UE_5.8")
-SPARSE = ["monke_island/Source", "monke_island/Config", "docs", "scripts", ".claude"]
-SPARSE_FILES = ["monke_island/monke_island.uproject", "CLAUDE.md", ".gitignore", ".gitattributes"]
+SPARSE = ["monke_island/Source", "monke_island/Config", "docs", "scripts", ".claude", ".codex"]
+SPARSE_FILES = ["monke_island/monke_island.uproject", "CLAUDE.md", "AGENTS.md", ".gitignore", ".gitattributes"]
 
 
 def git(*args, cwd=ROOT, env=None, check=True):

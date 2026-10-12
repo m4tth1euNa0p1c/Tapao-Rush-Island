@@ -81,6 +81,14 @@ Taille de vague recommandée : 10 à 15 instances code et docs en worktrees, plu
 3. Elle termine en `review` (`env=rec`) ou `bloque` (avec ce qu'il faut pour débloquer). Jamais `fait` directement depuis DEV.
 4. `/factory-gate rec|int|prod <T-NNN|lot>` fait passer les gates.
 
+## 6 bis. Vague rapide dans l'arbre principal (pratique du 2026-10-11)
+Quand l'éditeur est ouvert et que le propriétaire y joue, la vague tourne dans l'arbre principal, sans worktree :
+- **Consignes** : `.claude/factory/brief-template.md`. Chaque agent a ses dossiers à lui (aucun fichier partagé sans contrat écrit dans les consignes) et compile fichier par fichier (`scripts/factory/build_editor.sh --single`). Ce qui se fait dans l'éditeur est un script `scripts/editor/*_ue.py` que le lead lance.
+- **Intégration en une commande** : `scripts/factory/integrate_wave.sh` (build complet, suite de tests, relance de l'éditeur, actions éditeur de la vague). Le lead ne ferme l'éditeur qu'après accord du propriétaire, verrou pris.
+- **Vérification en jeu** : `scripts/factory/pie_step.sh` (première étape `claim`) et `shot.sh`. Les étapes refusent toute partie que le lead n'a pas lancée lui-même.
+- **Goulot connu** : l'éditeur unique (PIE, imports, builds) est partagé avec le propriétaire. Regrouper les builds (un seul par vague), réserver des créneaux sans partie (la nuit) aux sessions de test, et écrire les recettes répétitives en tests Automation qui tournent sans interface (`ue.ps1 test`).
+- **Roadmap** : `python scripts/production/roadmap_page.py <out.html>` après chaque vague, republiée à la même adresse.
+
 ## 7. Conventions de chantier pour l'usine
 Titre : `[Lx][Cellule] <résultat attendu>`. Note : `env=dev|rec|int|prod ; owner=<ressource> ; recette=<IDs> ; après T-NNN ; preuve=<niveau>`. Le chantier (`scripts/chantier.py`) reste la source de vérité ; aucun autre tableau.
 

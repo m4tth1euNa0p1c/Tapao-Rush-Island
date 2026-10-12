@@ -1,0 +1,114 @@
+MONKE ISLAND / TAPAO - KIT DE TRANSFERT DEVELOPPEMENT - T-257
+
+Le kit est complet lorsque READY.json est present et que les 5 ZIP sont
+entierement synchronises par OneDrive. Copier/extraire hors de OneDrive pour
+developper, par exemple dans C:\Dev\Reprise-Tapao. Ne pas partager publiquement.
+
+CONTENU
+01-Jeu-Windows.zip : dernier package Windows termine au moment de la copie,
+  executable, donnees cuites, DLL et symboles de debogage.
+02-Projet-Unreal.zip : sources C++, Config, Content complet (template compris),
+  .uproject, scripts, specifications, chantier et profils/skills du projet.
+03-Sources-Art-et-Cartographie.zip : art, modeles, textures, WAV, sources audio,
+  cartes et references, sprite, packs Blender locaux y compris leurs sauvegardes.
+04-Historique-Git-LFS.zip : branches/tags Git et tous les objets LFS presents
+  sur le PC source. Les fichiers de travail non committes sont dans 02 et 03.
+05-Travaux-en-cours.zip : copies des fichiers presents dans les worktrees,
+  dont T-234 audio. Ce sont des travaux SEPARES, pas une nouvelle version du jeu.
+preuves/ : version moteur exacte, preuve UAT du package, HEAD Git, etat des
+  branches/index et preuves audio. *.files.json : inventaires SHA256 par fichier.
+Prerequis-Windows/ : vc_redist.x64.exe et GameInputRedist.msi livres avec UE 5.8.3.
+
+RECUPERER ET JOUER
+1. Dans OneDrive, rendre tout ce dossier disponible sur cet appareil et attendre
+   la fin du telechargement. Les coches OneDrive prouvent la synchronisation,
+   la presence locale du dossier sur le PC source ne suffit pas.
+2. Extraire 01-Jeu-Windows.zip, puis lancer Jeu-Windows\monke_island.exe.
+3. Si Windows signale un runtime Visual C++ manquant, utiliser l'installateur
+   Prerequis-Windows\vc_redist.x64.exe. GameInputRedist.msi est aussi fourni.
+Le journal UAT prouve la fin du packaging. Aucun nouveau test en partie ni test
+sur le second PC n'a ete realise pendant la preparation de ce kit.
+
+PREREQUIS POUR DEVELOPPER
+- Windows 64 bits ; Unreal Engine 5.8.3, changelist 58210709 (moteur non fourni).
+  Sur le PC source : C:\Program Files\Epic Games\UE_5.8.
+- Visual Studio avec Developpement de jeux en C++, outils MSVC x64/x86 v143
+  14.44 et SDK Windows. Le build source utilisait VS Community 18 avec MSVC
+  14.44.35207 et le SDK Windows 10.0.26100.0. Le fichier monke_island/.vsconfig
+  donne les workloads du projet ; verifier aussi la presence de MSVC 14.44.
+- Git pour Windows + Git LFS, Python 3.12 (le restaurateur utilise Python >=3.11).
+- Blender 5.2 pour les maquettes/generateurs ; pas requis pour jouer ni compiler
+  le jeu. Les .blend/export/textures locaux sont dans 03.
+- Le .uproject active des plugins livres avec ce moteur, notamment
+  ModelContextProtocol et Experimental/Toolsets, Niagara, StateTree et
+  ProceduralMeshComponent. Aucun plugin tiers de projet n'etait present.
+
+RESTAURATION AUTOMATIQUE CONSEILLEE
+Depuis PowerShell ouvert dans le dossier du kit OneDrive :
+  python .\restore_transfer.py --verify-only
+  python .\restore_transfer.py --destination C:\Dev\Reprise-Tapao
+Le dossier destination doit etre vide ou nouveau. Tous les ZIP sont verifies
+par SHA256 avant extraction. Git et ses objets LFS sont reconstitues localement,
+puis les vrais fichiers de travail sont restaures au-dessus de l'index de HEAD.
+Les changements non committes restent donc visibles dans git status.
+Les branches sont conservees ; aucun remote de publication n'est configure.
+--without-git permet de recuperer les fichiers sans installer Git au prealable.
+Si UE est ailleurs, ajouter --engine "D:\Epic Games\UE_5.8". Quand 5.8.3 est
+installe, le script associe la copie du .uproject a cette installation Windows.
+Sinon, apres installation, clic droit .uproject > Switch Unreal Engine version.
+
+PUIS OUVRIR LE PROJET
+  cd C:\Dev\Reprise-Tapao\monk-island
+  python scripts/monke.py doctor
+  powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ue.ps1 gen
+  powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ue.ps1 build
+  powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ue.ps1 editor
+Le moteur est code a son emplacement standard dans scripts/ue.ps1 et
+scripts/worktree.py : adapter ces deux chemins si l'installation differe.
+Le verrou editeur du PC source n'est pas copie. Respecter AGENTS.md et le verrou
+local si plusieurs agents utilisent le nouveau PC.
+Map de test : /Game/MonkeIsland/Maps/Test/L_Test_Flat.
+Map principale : /Game/MonkeIsland/Maps/Lvl_Raraka.
+Les Binaries, Intermediate, DerivedDataCache, caches IDE et journaux temporaires
+ne sont pas copies : le premier build et le premier chargement les recreent.
+
+OUTILS ART/AUDIO
+Depuis le dossier de reprise :
+  python -m venv .venv
+  .\.venv\Scripts\python -m pip install -r requirements-outils.txt
+Ce fichier fige les versions des 5 bibliotheques du pipeline art/audio presentes
+sur la machine source. Les scripts Blender s'executent dans Blender (bpy), les
+scripts *_ue.py dans Unreal : ne pas installer ces modules avec pip.
+Les maquettes du second PC restent dans OneDrive\maquette-blender (source en
+lecture seule) : synchroniser ce dossier aussi pour reprendre leur edition et
+les reimports. Elles ne sont pas dupliquees dans ce kit ; leurs assets importes
+sont bien dans Content. Adapter les chemins C:/Users/matth/OneDrive references
+par certains scripts si le compte Windows du nouveau PC porte un autre nom.
+
+TRAVAUX EN COURS A PRESERVER
+L'instantane capture les fichiers sauvegardes sur disque, pas les modifications
+non sauvegardees dans une fenetre Unreal/Blender. L'equipe continuait son travail
+pendant le transfert ; consulter la date de READY.json et le chantier inclus.
+Les worktrees sont livres comme copies de consultation sans leurs anciens
+pointeurs .git absolus. Pour reprendre une branche, recreer un worktree avec
+scripts/worktree.py new T-NNN puis comparer/copier son travail sauvegarde depuis
+travaux-en-cours/T-NNN. Voir preuves/worktrees/T-NNN/git-state.json pour les
+fichiers supprimes et staged.patch pour les changements stages. Ne jamais
+fusionner toutes ces copies automatiquement : plusieurs bases sont anciennes.
+
+T-234 AUDIO : 76 WAV et 138 besoins sont catalogues dans docs/audio/.
+Les 5 nouveaux fichiers Audio/Expedition* et Audio/Tests/ExpeditionAudioSpec.cpp
+sont dans travaux-en-cours/T-234/monke_island/Source/monke_island/.
+Seuls ces cinq fichiers appartiennent a l'integration audio. Les autres sources
+de ce worktree etaient une copie de dependances pour compiler : NE PAS les
+fusionner en bloc. Lire docs/audio/expedition-integration.txt.
+Compilation cible jeu reussie ; import, compilation editeur et PIE audio restant
+a realiser. Le build joue fourni n'inclut pas cette nouvelle integration.
+
+INTEGRITE / LIMITES
+Le kit conserve les sources actuelles et l'historique Git local, sans exporter
+les identifiants personnels Git ni les reglages locaux d'authentification.
+Les fichiers art ont leurs notices dans art/SOURCES.md et docs/legal/.
+Le moteur, Visual Studio, les comptes et licences s'installent sur le second PC.
+Les empreintes et CRC valident la copie, pas une compilation du projet restaure
+ni une partie multi-machines. Une verification sur le second PC reste a faire.

@@ -1,0 +1,183 @@
+PASSATION CODEX -> CLAUDE : T-198 ET T-208
+2026-10-07, 02:46 Europe/Paris
+
+Demande explicite du proprietaire : deleguer a Claude la suite du travail de Codex.
+Racine : C:/Users/matth/monk-island (arbre principal partage, pas de nouveau worktree pour ces assets).
+Destinataire : lead Claude, session qui detient actuellement le verrou monk-island-952add.
+Role d'execution conseille : ue-editor-integrator (profil .codex/agents/monke-world.toml).
+Taches existantes : T-198 (fort) et T-208 (vegetation). Ce document est une passation,
+pas un second backlog. Seul scripts/chantier.py gere board.md et journal.md.
+Codex cesse les imports, les modifications de la carte et les tests ; aucun worker
+Codex n'attend en arriere-plan. Le worker T208 precedent est termine sans application.
+
+OBJECTIF UTILISATEUR
+
+T208, priorite immediate : enlever les plantes du temple et du marae dans Test Flat,
+et remplacer celles du fort francais par les plantes utilisees a Raraka/Tuamotu.
+Inclure les anciennes maquettes Showcase et les sites generes sur l'ile de test.
+Conserver structures, objets sacres, autres villages, galion, barque et pickups.
+
+T198 a terminer : rework interieur/exterieur du fort, textures, douves en eau,
+mobilier logique, escaliers praticables, lingots modeles et empiles, valeurs de jeu.
+Ne pas refaire les anciens chantiers galion/Marae/Bean deja integres.
+
+ETAT EXACT A LA PASSATION
+
+T208 : PREPARE SEULEMENT. Aucun des retraits/remplacements de plantes n'a ete applique.
+Le mode jeu utilisateur etait actif jusqu'a 02:40 ; depuis, Claude detient l'editeur
+pour son build. Dernier ancien editeur ferme a 02:42:49. Son ancienne session Python
+T193 n'est donc plus disponible apres la relance, sauf si reinitialisee explicitement.
+
+T198 : derniere application sauvegardee a 02:17, 18 meshes, 40 materiaux PBR,
+39 objets valorises et 31 lumieres. Le rendu est deja present dans Test Flat.
+Des corrections preparees PLUS RECENTES que ce resultat restent a importer :
+- Tour : repartir du FBX original, ouvrir toute la trappe sans deformer la derniere
+  marche, degager les plafonds au-dessus des deux derniers vols d'escalier.
+- Lanternes : face tournee vers l'interieur et lumiere sur le socket Light reel.
+- Cour : retirer les fausses feuilles du mesh de mobilier ; les quatre pots
+  recevront de vrais naupaka Raraka via T208.
+Les FBX/BLEND correspondants sont deja generes. Pas besoin de tout remodeliser.
+La derniere table du tresor (sans papiers qui font tomber les coupes), les palettes
+deplacees dans la cour d'entrepot et les marches d'entrepot sont deja importees.
+
+PERIMETRE AUTORISE ET RESSOURCES EXCLUSIVES
+
+Carte : /Game/MonkeIsland/Maps/Test/L_Test_Flat
+Assets : /Game/MonkeIsland/Environment/FortFrench, notamment Revisions/T198 et T208.
+Regles temple/marae : creer/assigner les variantes LOCALES T208, conserver les
+DataAssets globaux d'origine. Cela evite de modifier les iles principales.
+Scripts : scripts/props/fort_rework_*.py, fort_showcase_{audit,validate,session}.py,
+fort_showcase_callback_cleanup.py, testflat_vegetation_{prepare,apply}.py.
+Sources : art/export/Fort_T198 ; preuves : monke_island/Saved/T198 et Saved/T208.
+OneDrive reste en lecture seule. Pas de modification C++ necessaire pour ce lot.
+Respecter le verrou actuel ; ne pas le remplacer par codex tant que Claude l'utilise.
+Ne jamais arreter une partie utilisateur. Ne pas utiliser --force.
+Preserver toutes les modifications des autres sessions, notamment T180, T192 et
+T194-T197/T209 que le lead est en train de compiler/integrer.
+
+T208 : FICHIERS PRETS
+
+scripts/props/testflat_vegetation_prepare.py a deja produit :
+monke_island/Saved/T208/prepare-result.json
+  DT_TestFlat_ClearSites_Hard.csv : 1047 lignes, 30 plantes retirees.
+  DT_TestFlat_ClearSites_Soft.csv : 4453 lignes, 346 plantes retirees.
+  DT_Fort_Raraka_Hard.csv : 89 instances.
+  DT_Fort_Raraka_Soft.csv : 191 instances, dont quatre naupaka de jardinieres.
+  replace_fort_labels : les 276 etiquettes exactes a supprimer.
+  Les 280 nouvelles instances utilisent les variantes, proportions et reglages
+  des vraies tables Raraka de Saved/T183/zone, avec seed208 reproductible.
+Les anciens vegetaux du fort utilisaient deja certaines memes familles de meshes :
+la modification remplace leur placement en acteurs par le PCG Raraka et ses variantes.
+Ne pas annoncer que toutes les especes sont de nouveaux modeles inedits.
+
+Rayons sans plantes : 2600cm autour de Marae(-44000,-10500) et Temple(-16000,10500).
+Origine fort : (-66000,0,115). Les autres fragments Raraka restent inchanges.
+
+scripts/props/fort_rework_vegetation.py (Unreal Python) :
+- Retire les 276 plantes du fort et les acteurs Showcase_Temple_/Showcase_Marae_
+  dont le mesh provient de /Environment/Vegetation/.
+- Duplique les regles de TestFlat_Marae et TestFlat_Temple dans
+  /Game/MonkeIsland/Environment/FortFrench/Revisions/T208/Data/DA_TestFlat_*_NoPlants.
+- Filtre les pieces vegetales, conserve les acteurs sacres, assigne ces variantes.
+- Ecrit scene-result.json ; verifie les autres meshes/transforms et sauvegarde.
+
+scripts/props/testflat_vegetation_apply.py (Python externe, MCP) :
+- Importe les quatre CSV avec GameplayTagTableRow.
+- Cree PCG_Fort_Raraka_Hard et PCG_Fort_Raraka_Soft.
+- Appelle le nettoyage Unreal ci-dessus via le pont Python T193.
+- Assigne les tables locales aux deux PCG_FRG_TestFlat_*_00 existants et aux deux
+  volumes du fort, execute les quatre graphes, sauvegarde et lance l'audit.
+- Graphes : /Game/MonkeIsland/Environment/PCG/PCG_Raraka_VegHard et VegSoft.
+- Resultats attendus : Saved/T208/{scene,apply,audit}-result.json.
+- Le script a passe py_compile, mais n'a PAS encore ete execute dans l'editeur.
+
+ADAPTER LA REPRISE A LA SESSION CLAUDE AVANT EXECUTION
+
+Les quatre gardes suivants attendent encore litteralement owner=codex :
+  testflat_vegetation_apply.py : guard() et boucle --wait-seconds.
+  fort_showcase_session.py : execute().
+  fort_showcase_validate.py : tick().
+Les adapter a un proprietaire explicite MONKE_LOCK_OWNER (celui de Claude), en
+conservant le controle d'expiration et l'interdiction PIE ; ne pas desactiver le verrou.
+Les helpers import_galleon_t149.check_lock, deja reutilises par les scripts Unreal,
+acceptent codex OU la session nommee dans MONKE_LOCK_OWNER.
+
+Choix de pont Python :
+1. Reutiliser scripts/editor/lead_session_t186.py, propriete du lead : ajouter des
+   actions dediees vers fort_rework_vegetation.py, fort_rework_apply.py,
+   fort_rework_vegetation_audit.py, fort_rework_validate.py et fort_rework_audit.py.
+   Adapter bridge() de testflat_vegetation_apply.py au canal T186 et aux noms choisis.
+   Ce pont recharge son dictionnaire ACTIONS depuis le disque a chaque requete.
+2. Ou initialiser fort_showcase_session.py dans le nouvel editeur, apres adaptation
+   du proprietaire. Attention : il lance apply a son demarrage. Avec apply-result T198
+   present, il applique T198, pas le vieil import T193. Relire avant execution.
+
+L'ancien protocole T193 etait : ecrire Saved/T198/request.json {"action":"vegetation"},
+puis Saved/T193/session-request.json {"action":"audit"}. fort_showcase_audit.py
+dispatchait vers la revision. Actions possibles : apply,validate,audit,vegetation,
+vegetation_audit. Attendre un nouveau session-result.json avec passed=true.
+Ne pas simplement ecrire une requete T193 apres relance sans avoir reinstalle ce pont.
+Les launchers fort_showcase_launch.py et fort_rework_resume.py sont specifiques Codex :
+NE PAS les utiliser depuis la session Claude qui detient deja le verrou.
+NE PAS relancer les anciennes actions T193 setup/loot : elles remplaceraient les
+nouveaux placements/prix. Aucun besoin de reimporter les sources T193 en masse.
+
+ORDRE D'APPLICATION ET VALIDATION
+
+1. Verifier verrou, absence PIE et carte Test Flat. Sauvegarder le travail du lead.
+2. Adapter le proprietaire et le pont comme indique, puis executer T208.
+3. Examiner l'audit T208 : comptes1047/4453/89/191, aucune intrusion dans les deux
+   cercles, anciennes plantes absentes, architecture et objets sacres conserves.
+4. Executer fort_rework_apply.py APRES T208 : importe les FBX dont le hash a change,
+   corrige les lanternes, utilise les 40 materiaux deja sauvegardes. Ce passage
+   recalcule aussi la reference de preservation apres les suppressions autorisees T208.
+5. Executer fort_rework_validate.py hors PIE ; cela installe le callback et archive
+   l'ancien rapport. Lancer ensuite SON PROPRE PIE via le MCP decouvert.
+   Le script ne demarre/arrete pas le jeu. Attendre traversal-result.json recent.
+6. Il controle 34 parcours CharacterMovement, 22 prises/relaches natives, masses,
+   valeurs, stabilite de 23 tresors de la cave, et fait sept captures.
+   Il appelle aussi l'audit T208 en jeu si T208/apply-result.json existe.
+7. Arreter uniquement ce PIE de test, verifier visuellement les captures recentes,
+   executer fort_rework_audit.py, sauvegarder la carte. Publier les preuves avec
+   chantier.py et rendre le verrou a la fin de sa propre fenetre.
+
+PREUVES ET LIMITES A NE PAS CONFONDRE
+
+Dernier PIE T198 termine le 2026-10-07 a 00:12:59 UTC :
+  23/34 parcours reussis ; 21/22 prises reussies ; 22/22 controles masse/prix/physique OK.
+  Ce rapport est ROUGE et concerne l'ancienne geometrie/le vieux pilotage du test.
+  Des oscillations autour de la cible a faible FPS donnaient plusieurs faux echecs :
+  la commande de deplacement ralentit maintenant pres de la cible, a retester.
+  Vrais correctifs prets : marches entrepot, deux plafonds/trappe tour, lanternes.
+  Derniere prise echouee : CrownOfTheLastAriki ; vise maintenant la bande inferieure
+  plutot que le centre vide, avec un second angle autorise. A retester.
+  Coupes de gemmes tombees : comptoir sans papiers + positions corrigees, a recontroler.
+Echecs parcours de cet ancien run : south_stairs,vault_inner_door,guardhouse,
+barracks_west,barracks_east,kitchen_aisle,warehouse,tower_entrance,tower_stair_3,
+tower_stair_4,tower_terrace. Les autres, dont les cinq nouvelles routes de pieces,
+etaient passes. Le nouveau run doit rester la preuve de la version courante.
+
+Controle geometrie Blender recent : art/export/Fort_T198/headroom-result.json,
+72 rayons de degagement valides (tour, entrepot, bureau). Ce n'est pas un test PIE.
+build-access.log et build-courtyard.log indiquent des exports reussis.
+Sources editables : art/export/Fort_T198/blend ; FBX : art/export/Fort_T198/exports.
+Les .blend ont des materiaux de travail ; les textures finales PBR sont raccordees
+dans Unreal. Ne pas annoncer les .blend comme entierement textures.
+
+Tarification actuelle de jeu, en couronnes : lingot5.5kg=500 ; piles6/12/24=
+3000/6000/12000, masses33/66/132kg. Parametres : fort_rework_rules.json.
+Ce ne sont pas des cotations financieres d'or reel ni une preuve d'equilibrage.
+L'eau des douves est une surface visuelle animee transparente, sans collision :
+aucun volume local de nage/flottabilite n'a ete ajoute.
+Aucun nouveau build/multijoueur n'est valide par ces tests d'art en PIE solo.
+Ne pas passer une tache gameplay a fait sur la seule presence des fichiers.
+
+COMMANDES DE LECTURE UTILES
+
+python scripts/monke.py task T-198
+python scripts/monke.py task T-208
+python scripts/editor_lock.py status
+python -m py_compile scripts/props/testflat_vegetation_apply.py scripts/props/fort_rework_vegetation.py scripts/props/fort_rework_vegetation_audit.py
+
+Le proprietaire a autorise la reprise et la passation : pas de nouvelle demande de
+confirmation pour importer ces changements dans Test Flat une fois l'editeur disponible.

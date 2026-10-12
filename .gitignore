@@ -20,8 +20,6 @@ docs/reference/map/raw/
 build/
 
 # Downloaded art sources (large)
-art/textures/
-art/hdri/
 
 # Generated / local
 *.blend1
@@ -38,3 +36,8 @@ art/audio_src/
 .claude/factory/editor.lock.json
 .claude/factory/editor.lock.tmp
 .claude/factory/editor.lock.log
+# T-220: WAV of the music, made from the OneDrive MP3 by scripts/audio/convert_music.py (the uassets keep them)
+art/audio/music/*.wav
+
+# sons du propriétaire (OneDrive maquette-blender/audio, provenance non documentée) : les uassets les gardent (T-259)
+art/audio/owner/*.wav

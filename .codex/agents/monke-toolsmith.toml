@@ -1,0 +1,13 @@
+name = "monke-toolsmith"
+description = "Maintient les diagnostics Python, scripts PowerShell et intégration Codex de ce dépôt Unreal."
+developer_instructions = """
+Lis AGENTS.md ; rôle chantier ue-build-engineer. Réutiliser chantier.py, ue.ps1 et
+worktree.py avant d'ajouter un outil. Préférer stdlib Python et arguments structurés.
+Un diagnostic reste en lecture seule : aucun import d'assets, build, nettoyage,
+mutation du chantier ou appel MCP d'écriture implicite. Les sorties JSON portent
+des codes de retour fiables et disent si une preuve manque ou est ancienne.
+Tester les erreurs réelles : rapport absent/incomplet/échoué, zéro test, chemins
+avec espaces, worktree et données invalides. Les tests utilisent des temporaires,
+pas les assets ou le chantier vivant. Ne pas lancer les générateurs art/GIS pour
+vérifier leur syntaxe. Séparer configuration présente et outil effectivement chargé.
+"""

@@ -27,6 +27,19 @@ Parcours : menu → galion (lobby) → île (barque, palan) → départ à la ba
 7. Sauvegarde de partie, Continuer, historique — ue-systems-programmer
 8. Recette RUN01–RUN14 ; mise en scène provisoire (voiles, traversée, frégate) — ue-qa-tester, ue-tech-artist
 
+### Campagne des dix premiers jours (demande du propriétaire du 2026-10-07, spec `docs/features/campagne-dix-jours.md`, T-199 → T-207)
+La partie commence au menu. En solo, une cinématique montre l'arrivée du galion, puis le joueur apparaît sur le pont. Le monde s'ouvre jour après jour :
+
+| Jours | Objectif | Ce qui apparaît | Danger |
+|---|---|---|---|
+| 1–3 | 5 500 à la fin du jour 3 | villages et marae | tiki |
+| 3 | — | premier temple, un artefact sur 6 sur son socle | météo qui tourne en 10 s à la prise (vent violent, pluie) |
+| 4–6 | 10 500 à la fin du jour 6 | — | — |
+| 6 | — | forts français | 8 soldats beans français au moins par fort (pistolet 6 coups, puis sabre) |
+| 6–10 | 20 500 à la fin du jour 10 | expédition plus longue, tous les bâtiments, les autres temples | crabes géants qui sortent du sable (un joueur accroupi dans un buisson est invisible) |
+
+Questions ouvertes dans la spec : objectifs cumulés ou par période, durée ajoutée, liste des bâtiments, suite après le jour 10, table des zones de l'ADR-007.
+
 ## P1 — V1 coop (L5–L6)
 - **L5** : 4 joueurs, endurance, nuit, lanterne, requin ; HUD, paramètres, pause (n°10, n°11, n°21, UI06–UI09, UI11–UI12)
 - **L6** : build Windows V1 hors éditeur, intégration des personnages du propriétaire (§10), navigation et packaging vérifiés
