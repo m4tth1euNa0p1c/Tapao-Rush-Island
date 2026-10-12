@@ -10,7 +10,7 @@ Options:
 Units: meters, +Z up, the character faces -Y (Blender front view), feet on z = 0.
 Body height without hat = P["height"] (1.05 m: a Minion next to a 1.80 m human, ~1/18 of an adult coconut palm).
 Modular parts (one shared skeleton "SKEL_Bean"), as the cosmetics system expects:
-  SK_Bean_Body          bean body, visor, eyes, mittens            (skin: body colour)
+  SK_Bean_Body          bean body, eyes, mittens (the merchant: visor too)  (skin: body colour)
   SK_Bean_Outfit_Redcoat coat, lapels, collar, cross belts, belt, pouch, breeches, boots
   SM_Bean_Hat_Tricorne  hat, pivot at the head contact point       (socket "hat_socket", own physics body)
 Every tunable dimension lives in P; colours in PALETTE (sRGB hex).
@@ -45,11 +45,11 @@ P = {
     "shoulder": (0.20, 0.625), "elbow": (0.268, 0.50), "wrist": (0.292, 0.40),
     "hand": (0.304, 0.325), "hip_x": 0.085, "knee_z": 0.13,
     "hat_z": 0.94, "hat_crown_r": 0.19, "brim_r": 0.33,
-    "fp_arm_length": 0.30, "fp_arm_back": 0.45,
+    "fp_arm_length": 0.30, "fp_arm_back": 0.62,   # back: the sleeve end stays out of the FP frame
 }
 
 PALETTE = {
-    "M_Bean_Skin": ("4FA3E0", 0.45, 0.0),
+    "M_Bean_Skin": ("D4B48D", 0.58, 0.0),        # beige like the merchant (owner request 2026-10-06, T-192); was blue 4FA3E0
     "M_Bean_Visor": ("F2E9DA", 0.35, 0.0),
     "M_Bean_Eye": ("141418", 0.12, 0.0),
     "M_Bean_CoatRed": ("C21F2A", 0.80, 0.0),
@@ -61,7 +61,18 @@ PALETTE = {
     "M_Bean_Felt": ("1B1B1E", 0.90, 0.0),
     "M_Bean_HatTrim": ("C8AD78", 0.70, 0.0),
     "M_Bean_SleeveRed": ("9E1622", 0.80, 0.0),
+    "M_Bean_Moustache": ("E0AE45", 0.70, 0.0),   # golden blond (owner request 2026-10-07), apart from the beige skin
+    "M_Bean_Hair": ("EDBE4F", 0.65, 0.0),        # golden blond hair under the tricorne
 }
+
+# English handlebar moustache, the merchant's (scripts/shop/merchant_showcase_model.py) raised just under the eyes
+# (owner requests 2026-10-07: "plus haut", then "baisse la moustache un peu": 1.5 cm lower): (x, z, radius) from the
+# middle to the tip of one side
+MOUSTACHE = [(0.004, 0.745, 0.014), (0.035, 0.731, 0.022), (0.068, 0.733, 0.019), (0.092, 0.750, 0.012),
+             (0.108, 0.765, 0.002)]
+HAIRLINE_Z = 0.905           # front hairline, just under the brim of the tricorne (visor top 0.859)
+HAIR_FACE_HALF_ANGLE = 1.05  # the face (theta around 0) stays bare below the hairline
+HAIR_BOTTOM_Z = 0.80         # lower edge of the hair on the sides and at the back
 
 TAU = 2 * math.pi
 
@@ -315,7 +326,35 @@ def outward(theta, z):
 
 # ---------------------------------------------------------------- parts
 
-def build_body(coll):
+def build_hair(coll):
+    """Blond hair of the player bean (owner request 2026-10-07): a cap over the top, the sides and the back of the head,
+    open on the face below the hairline, a wavy lower edge of locks, and an 18th century queue tied with a dark
+    ribbon at the back. Mostly under the tricorne; it shows when the hat falls."""
+    parts = []
+
+    def keep(th, z):
+        return not (abs(th) < HAIR_FACE_HALF_ANGLE and z < HAIRLINE_Z)
+    parts.append(shell("Bean_Hair_Cap", HAIR_BOTTOM_Z, P["height"] - 0.004, 0.009, "M_Bean_Hair", coll, keep=keep,
+                       dz=0.008, solidify=0.008, flare=lambda z: 0.008 * max(0.0, (0.88 - z) / 0.08)))
+    n = 14
+    for k in range(n):                    # locks along the lower edge, sides and back
+        th = HAIR_FACE_HALF_ANGLE + (TAU - 2 * HAIR_FACE_HALF_ANGLE) * (k + 0.5) / n
+        parts.append(blob(f"Bean_Hair_Lock_{k:02d}", surf(th, HAIR_BOTTOM_Z + 0.008, 0.014), (0.028, 0.026, 0.034),
+                          "M_Bean_Hair", coll, seg=12, ring=8))
+    queue = [surf(math.pi, 0.905, 0.02), surf(math.pi, 0.85, 0.034), surf(math.pi, 0.79, 0.044),
+             surf(math.pi, 0.735, 0.05)]
+    parts.append(tube("Bean_Hair_Queue", queue, [0.03, 0.026, 0.019, 0.006], "M_Bean_Hair", coll, segs=12))
+    knot = surf(math.pi, 0.875, 0.04)
+    for s in (-1, 1):                     # ribbon bow on the queue
+        parts.append(blob(f"Bean_Hair_Ribbon_{'l' if s > 0 else 'r'}", knot + Vector((s * 0.035, 0.0, 0.0)),
+                          (0.032, 0.008, 0.02), "M_Bean_Navy", coll, seg=12, ring=8))
+    parts.append(blob("Bean_Hair_Ribbon_Knot", knot, (0.014, 0.012, 0.014), "M_Bean_Navy", coll, seg=12, ring=8))
+    return parts
+
+
+def build_body(coll, moustache=False, hair=False, visor=True):
+    """visor: the white face plate around the eyes; the player bean has none (owner request 2026-10-07, "enlève le
+    rond blanc"): its eyes and moustache sit on the beige skin."""
     parts = []
     # bean: revolve the profile
     bm = bmesh.new()
@@ -336,18 +375,34 @@ def build_body(coll):
                 bm.faces.new(verts)
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     parts.append(obj_from_bm("Bean_Body", bm, "M_Bean_Skin", coll))
-    parts.append(ellipse_patch("Bean_Visor", 0, P["visor_z"], P["visor_w"], P["visor_h"], 0.002, "M_Bean_Visor",
-                               coll, dome=0.004, solidify=0.004))
+    if visor:
+        parts.append(ellipse_patch("Bean_Visor", 0, P["visor_z"], P["visor_w"], P["visor_h"], 0.002, "M_Bean_Visor",
+                                   coll, dome=0.004, solidify=0.004))
+    face = 0.006 if visor else 0.0        # height of the face plate under the eyes and the moustache
     for s in (-1, 1):
         parts.append(ellipse_patch(f"Bean_Eye_{'l' if s > 0 else 'r'}", s * P["eye_x"], P["eye_z"], P["eye_w"],
-                                   P["eye_h"], 0.007, "M_Bean_Eye", coll, dome=0.006, nr=6, na=32))
+                                   P["eye_h"], 0.001 + face, "M_Bean_Eye", coll, dome=0.006, nr=6, na=32))
         hx, hz = P["hand"]
         wx, wz = P["wrist"]
         parts.append(blob(f"Bean_Hand_{'l' if s > 0 else 'r'}", (s * hx, -0.012, hz), (0.050, 0.046, 0.064),
                           "M_Bean_Skin", coll))
         parts.append(blob(f"Bean_Thumb_{'l' if s > 0 else 'r'}", (s * (hx - 0.030), -0.040, hz + 0.022),
                           (0.022, 0.022, 0.030), "M_Bean_Skin", coll, seg=16, ring=10))
+        if moustache:     # the player bean (T-192); the merchant builds its own
+            pts = [surf_xz(s * x, z, 0.004 + face + r * 0.45) for x, z, r in MOUSTACHE]   # above the face
+            parts.append(tube(f"Bean_Moustache_{'l' if s > 0 else 'r'}", pts, [r for _, _, r in MOUSTACHE],
+                              "M_Bean_Moustache", coll, segs=12))
+    if hair:
+        parts += build_hair(coll)
     return parts
+
+
+def rigid_on_head(objs):
+    """The moustache and the hair follow the head only (as the merchant's moustache): one vertex group, weight 1"""
+    for ob in objs:
+        if ob.name.startswith(("Bean_Moustache", "Bean_Hair")):
+            ob.vertex_groups.clear()
+            ob.vertex_groups.new(name="head").add(list(range(len(ob.data.vertices))), 1.0, "REPLACE")
 
 
 def build_outfit(coat_coll):
@@ -528,32 +583,105 @@ def box_uvs(objs, size=0.20):
         bm.free()
 
 
+def smooth_interp(x, keys):
+    """Value at x of the (x, value) keys, smoothstep between two keys, held outside."""
+    if x <= keys[0][0]:
+        return keys[0][1]
+    for (a, va), (b, vb) in zip(keys, keys[1:]):
+        if x <= b:
+            t = (x - a) / max(b - a, 1e-9)
+            return va + (vb - va) * t * t * (3 - 2 * t)
+    return keys[-1][1]
+
+
+def lathe_x(name, profile, mat, coll, axis_z, segs=40, cap_start=False, cap_end=False):
+    """Surface of revolution around the first person arm axis (+X, centre (x, 0, axis_z(x))): profile = [(x, r)] from
+    the shoulder side to the hand side, it may fold back (a turned-back cuff: outer wall, lip, inner wall). No
+    subdivision: the radii are the real ones, so buttons and mitten sit on them (a Subsurf on few rings shrank the old
+    cuff into a pill and left its buttons and the mitten floating, owner report 2026-10-07). Rings counter-clockwise
+    around +X give outward normals on the forward walls and inward ones on the folded-back walls, as seen."""
+    bm = bmesh.new()
+    rows = []
+    for x, r in profile:
+        cz = axis_z(x)
+        rows.append([bm.verts.new((x, r * math.cos(TAU * i / segs), cz + r * math.sin(TAU * i / segs)))
+                     for i in range(segs)])
+    for a, b in zip(rows, rows[1:]):
+        for i in range(segs):
+            j = (i + 1) % segs
+            bm.faces.new((a[i], a[j], b[j], b[i]))
+    # the first cap faces the shoulder (-X), the last one the hand (+X), also at the bottom of a folded cuff
+    for ring, cap, rev in ((rows[0], cap_start, True), (rows[-1], cap_end, False)):
+        if cap:
+            c = bm.verts.new(sum((v.co for v in ring), Vector()) / segs)
+            for i in range(segs):
+                tri = (c, ring[i], ring[(i + 1) % segs])
+                bm.faces.new(tri[::-1] if rev else tri)
+    bm.normal_update()
+    return obj_from_bm(name, bm, mat, coll)
+
+
+def surface_box(name, x, angle, axis_z, radius, size, mat, coll):
+    """Thin box lying on the arm's round surface at x and at angle around +X (0 = +Y, pi/2 = top), its size along
+    (X, around, out); its inner face sinks 0.5 mm under the surface so it never floats."""
+    ob = box(name, (0, 0, 0), size, mat, coll, bevel=min(size) * 0.35)
+    normal = Vector((0.0, math.cos(angle), math.sin(angle)))
+    ob.location = Vector((x, 0.0, axis_z(x))) + normal * (radius + size[2] * 0.5 - 0.0005)
+    ob.rotation_euler = (angle - math.pi / 2, 0.0, 0.0)
+    return ob
+
+
 def build_fp_arm(coll):
     """Right arm for the first person view (static mesh): pivot at the shoulder, pointing along +X (UE forward),
-    mitten thumb up. The left arm is the same mesh mirrored in Unreal."""
+    mitten thumb up. The left arm is the same mesh mirrored in Unreal (and by the weapon packs).
+
+    The hand centre stays at (L + 0.06, 0, -0.015): the musket pack (scripts/props/musket_pack) puts that point on the
+    weapon grips. Every part overlaps the next one (sleeve in the cuff, wrist and mitten in the cuff opening) so nothing
+    floats whatever the angle; buttons are half sunk in the cuff."""
     parts = []
     L = P["fp_arm_length"]
     # the sleeve runs on far behind the shoulder pivot so its end always stays behind the camera, out of view:
     # in first person the arm then seems to come from the body instead of floating cut off
     back = P["fp_arm_back"]
-    pts = [Vector((-back, 0, -0.06)), Vector((-back * 0.5, 0, -0.025)), Vector((0.0, 0, 0)),
-           Vector((L * 0.55, 0, -0.01)), Vector((L, 0, -0.015))]
-    parts.append(tube("FPArm_Sleeve", pts, [0.074, 0.074, 0.072, 0.066, 0.062], "M_Bean_SleeveRed", coll, segs=24))
-    d = Vector((1, 0, 0))
-    c0 = Vector((L - 0.065, 0, -0.015))
-    parts.append(tube("FPArm_Cuff", [c0, Vector((L + 0.005, 0, -0.015))], [0.072, 0.072], "M_Bean_Navy", coll))
-    for k in range(2):
-        p = c0 + d * (0.02 + 0.03 * k) + Vector((0, 0, 0.073))
-        parts.append(button(f"FPArm_Btn{k}", p, Vector((0, 0, 1)), "M_Bean_Brass", coll, r=0.009))
     hand = Vector((L + 0.06, 0, -0.015))
-    # seen up close in first person: dense and subdivided, no facets
-    parts.append(blob("FPArm_Hand", hand, (0.064, 0.050, 0.046), "M_Bean_Skin", coll, seg=48, ring=24))
-    parts.append(blob("FPArm_Thumb", hand + Vector((-0.012, 0.030, 0.034)), (0.030, 0.022, 0.022), "M_Bean_Skin", coll,
+
+    def axis_z(x):
+        return smooth_interp(x, [(-back, -0.06), (-back * 0.5, -0.025), (0.0, 0.0), (L * 0.55, -0.01), (L, -0.015)])
+
+    xs = [-back, -back * 0.85, -back * 0.6, -back * 0.35, -back * 0.12, 0.0, 0.08, 0.15, 0.20, L - 0.045, L - 0.03]
+    sleeve = [(x, smooth_interp(x, [(-back * 0.5, 0.074), (0.0, 0.072), (L * 0.55, 0.067), (L - 0.03, 0.064)]))
+              for x in xs]
+    parts.append(lathe_x("FPArm_Sleeve", sleeve, "M_Bean_SleeveRed", coll, axis_z, cap_start=True, cap_end=True))
+
+    # turned-back navy cuff: tucked on the sleeve, slight flare, rounded lip, inner wall and a closed bottom
+    x0, x1 = L - 0.075, L + 0.010
+    cuff = [(x0, 0.0625), (x0 + 0.002, 0.0700), (x0 + 0.006, 0.0752), (x0 + 0.013, 0.0768), (L - 0.030, 0.0776),
+            (x1 - 0.007, 0.0786), (x1 - 0.0025, 0.0772), (x1, 0.0738), (x1 + 0.0008, 0.0660), (x1, 0.0560),
+            (x1 - 0.003, 0.0512), (x1 - 0.008, 0.0500), (L - 0.025, 0.0496)]
+    parts.append(lathe_x("FPArm_Cuff", cuff, "M_Bean_Navy", coll, axis_z, cap_end=True))
+
+    def cuff_radius(x):
+        """Radius of the cuff's outer wall at x, as meshed (linear between rings)."""
+        wall = cuff[2:6]
+        for (a, ra), (b, rb) in zip(wall, wall[1:]):
+            if a <= x <= b:
+                return ra + (rb - ra) * (x - a) / (b - a)
+        return wall[0][1] if x < wall[0][0] else wall[-1][1]
+
+    # three brass buttons on the top of the cuff, each on a cream lace bar (British regimental cuff), half sunk
+    for k, x in enumerate((L - 0.054, L - 0.031, L - 0.008)):
+        r = cuff_radius(x)
+        parts.append(surface_box(f"FPArm_Lace{k}", x, math.pi / 2, axis_z, r, (0.0085, 0.030, 0.0022), "M_Bean_Cream",
+                                 coll))
+        top = Vector((x, 0.0, axis_z(x) + r + 0.0022))
+        parts.append(button(f"FPArm_Btn{k}", top, Vector((0, 0, 1)), "M_Bean_Brass", coll, r=0.0078))
+
+    # skin wrist from inside the cuff into the mitten, then the mitten and its thumb (dense, no facets up close)
+    parts.append(lathe_x("FPArm_Wrist", [(L - 0.035, 0.040), (L - 0.010, 0.042), (L + 0.020, 0.043), (L + 0.040, 0.041)],
+                         "M_Bean_Skin", coll, lambda x: hand.z, segs=32, cap_start=True, cap_end=True))
+    parts.append(blob("FPArm_Hand", hand, (0.062, 0.050, 0.046), "M_Bean_Skin", coll, seg=48, ring=24))
+    parts.append(blob("FPArm_Thumb", hand + Vector((-0.010, 0.030, 0.031)), (0.030, 0.022, 0.022), "M_Bean_Skin", coll,
                       seg=32, ring=16))
-    for ob in parts:
-        if not any(m.type == "SUBSURF" for m in ob.modifiers):
-            mod = ob.modifiers.new("Subsurf", "SUBSURF")
-            mod.levels = mod.render_levels = 1
     return parts
 
 
@@ -747,13 +875,14 @@ def main():
     c_rig = collection("Rig", root)
     c_ref = collection("Reference", root)
 
-    body = build_body(c_body)
+    body = build_body(c_body, moustache=True, hair=True, visor=False)
     outfit = build_outfit(c_outfit)
     hat = build_hat(c_hat)
     bake_transforms(body + outfit + hat)
     box_uvs(body + outfit + hat)
     arm = build_armature(c_rig)
     weight_and_bind(body + outfit + hat, arm)  # hat: 100 % on bone "hat" (exported apart as a static mesh)
+    rigid_on_head(body)
     reference_figures(c_ref)
 
     zmax = max((ob.matrix_world @ Vector(c)).z for ob in hat for c in ob.bound_box)

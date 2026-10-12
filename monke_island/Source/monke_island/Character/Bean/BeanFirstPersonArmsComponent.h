@@ -99,6 +99,9 @@ public:
 	/** True while an item drives the arms */
 	bool HasPoseOverride() const { return bPoseOverride; }
 
+	/** Hides both arms while an equipped item shows its own first person arms (the pirate pistol and shotgun packs) */
+	void SetHiddenByItem(bool bInHidden) { bHiddenByItem = bInHidden; }
+
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 protected:
@@ -123,6 +126,9 @@ private:
 
 	/** An item drives the arms */
 	bool bPoseOverride = false;
+
+	/** An item shows its own arms: these stay hidden */
+	bool bHiddenByItem = false;
 
 	/** Arm poses given by the item (the left one is mirrored like the procedural poses) */
 	FBeanArmPose OverrideRight;

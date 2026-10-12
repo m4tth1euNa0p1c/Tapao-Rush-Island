@@ -76,7 +76,7 @@ void UBeanFirstPersonArmsComponent::TickComponent(float DeltaTime, ELevelTick Ti
 	}
 
 	// only for the local player in first person, standing (knocked out = third person)
-	const bool bShow = Islander->IsLocallyControlled() && Islander->IsFirstPerson() && !Islander->IsRagdoll();
+	const bool bShow = Islander->IsLocallyControlled() && Islander->IsFirstPerson() && !Islander->IsRagdoll() && !bHiddenByItem;
 	if (RightArm->IsVisible() != bShow)
 	{
 		RightArm->SetVisibility(bShow);

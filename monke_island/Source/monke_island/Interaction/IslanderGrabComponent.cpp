@@ -4,17 +4,21 @@
 #include "Engine/CollisionProfile.h"
 #include "Camera/CameraComponent.h"
 #include "Components/PrimitiveComponent.h"
+#include "Engine/OverlapResult.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/PlayerController.h"
 #include "Interaction/IslanderInteractable.h"
+#include "Props/LootCrate/LootContainer.h"
 #include "Net/UnrealNetwork.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "TimerManager.h"
 #include "Player/IslanderCharacter.h"
 #include "Player/IslanderMovementComponent.h"
 #include "monke_island.h"
+
 
 UIslanderGrabComponent::UIslanderGrabComponent()
 {
@@ -47,6 +51,7 @@ void UIslanderGrabComponent::BeginPlay()
 
 void UIslanderGrabComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	GetWorld()->GetTimerManager().ClearTimer(InteractHoldTimer);
 	// cahier §5: the object is released once when its holder leaves
 	if (GetOwner()->HasAuthority() && HeldComponent)
 	{
@@ -124,6 +129,20 @@ int32 UIslanderGrabComponent::CountHolders(const UPrimitiveComponent* Component)
 	return Count;
 }
 
+bool UIslanderGrabComponent::ConsumeRequest(const TCHAR* What)
+{
+	// one bucket per player for every interaction request: a flood at 1 000 per second made the host trace, use, lift
+	// and let go as often (security review T-269 M1)
+	const UWorld* World = GetWorld();
+	if (!World || RequestLimiter.Consume(World->GetTimeSeconds(), RequestBurst, RequestsPerSecond))
+	{
+		return true;
+	}
+	UE_LOG(Logmonke_island, Verbose, TEXT("%s: %s refused, more than %.0f requests at once (%d refused so far)"), *GetNameSafe(GetOwner()),
+		What, RequestBurst, RequestLimiter.Refused);
+	return false;
+}
+
 bool UIslanderGrabComponent::FindInteractionTarget(AActor*& OutInteractable, UPrimitiveComponent*& OutPhysics, FVector& OutPoint) const
 {
 	OutInteractable = nullptr;
@@ -178,14 +197,116 @@ bool UIslanderGrabComponent::FindInteractionTarget(AActor*& OutInteractable, UPr
 		OutPhysics = Component;
 		return true;
 	}
-	return false;
+	return FindAssistedInteractable(Eyes, Hit.ImpactPoint, OutInteractable, OutPoint);
+}
+
+bool UIslanderGrabComponent::FindAssistedInteractable(const FVector& Eyes, const FVector& AimPoint, AActor*& OutInteractable, FVector& OutPoint) const
+{
+	// a small object on the ground (a pistol on its flank) is hard to hit with a ray: the crosshair close to it is enough
+	if (InteractionAssistRadius <= 0.0f)
+	{
+		return false;
+	}
+	APawn* Pawn = Cast<APawn>(GetOwner());
+	TArray<FOverlapResult> Overlaps;
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(IslanderInteractAssist), false, GetOwner());
+	if (!GetWorld()->OverlapMultiByChannel(Overlaps, AimPoint, FQuat::Identity, ECC_Visibility, FCollisionShape::MakeSphere(InteractionAssistRadius), Params))
+	{
+		return false;
+	}
+	AActor* Best = nullptr;
+	FVector BestPoint = FVector::ZeroVector;
+	double BestDistance = TNumericLimits<double>::Max();
+	for (const FOverlapResult& Overlap : Overlaps)
+	{
+		AActor* Candidate = Overlap.GetActor();
+		const UPrimitiveComponent* Component = Overlap.GetComponent();
+		if (!Candidate || !Component || Candidate == Best || Cast<APawn>(Candidate) || !Candidate->Implements<UIslanderInteractable>())
+		{
+			continue;
+		}
+		const FVector Center = Component->Bounds.Origin;
+		const double Distance = FVector::DistSquared(Center, AimPoint);
+		if (Distance >= BestDistance || FVector::Dist(Eyes, Center) > GrabRange
+			|| !IIslanderInteractable::Execute_CanInteract(Candidate, Pawn))
+		{
+			continue;
+		}
+		// in sight from the eyes (the server checks the same line)
+		FHitResult Sight;
+		if (GetWorld()->LineTraceSingleByChannel(Sight, Eyes, Center + (Center - Eyes).GetSafeNormal() * 10.0f, ECC_Visibility, Params)
+			&& Sight.GetActor() != Candidate)
+		{
+			continue;
+		}
+		Best = Candidate;
+		BestPoint = Center;
+		BestDistance = Distance;
+	}
+	if (!Best)
+	{
+		return false;
+	}
+	OutInteractable = Best;
+	OutPoint = BestPoint;
+	return true;
+}
+
+void UIslanderGrabComponent::PressInteractKey()
+{
+	if (HeldComponent)
+	{
+		// F again lets go at once, or puts the object in the container aimed at (T-258)
+		bInteractKeyPending = false;
+		ReleaseOrStore();
+		return;
+	}
+	if (HoldToGrabSeconds <= 0.0f)
+	{
+		bInteractKeyPending = false;
+		RequestInteract();
+		return;
+	}
+	bInteractKeyPending = true;
+	GetWorld()->GetTimerManager().SetTimer(InteractHoldTimer, this, &UIslanderGrabComponent::HandleInteractHold, HoldToGrabSeconds, false);
+}
+
+void UIslanderGrabComponent::ReleaseInteractKey()
+{
+	GetWorld()->GetTimerManager().ClearTimer(InteractHoldTimer);
+	if (bInteractKeyPending)
+	{
+		// a tap: the interaction of the target in view (pick up an item, sit in the boat), else lift a plain prop
+		bInteractKeyPending = false;
+		RequestInteract();
+	}
+}
+
+void UIslanderGrabComponent::HandleInteractHold()
+{
+	if (!bInteractKeyPending)
+	{
+		return;
+	}
+	bInteractKeyPending = false;
+	FVector Point;
+	if (FindGrabTarget(Point))
+	{
+		// held: lift the physics object, even an item lying on the ground
+		RequestGrab();
+	}
+	else
+	{
+		// nothing to lift (the boat seat, a door): a long press still interacts
+		RequestInteract();
+	}
 }
 
 void UIslanderGrabComponent::RequestInteract()
 {
 	if (HeldComponent)
 	{
-		RequestRelease();
+		ReleaseOrStore();
 		return;
 	}
 
@@ -200,7 +321,7 @@ void UIslanderGrabComponent::RequestInteract()
 	{
 		if (GetOwner()->HasAuthority())
 		{
-			ServerInteract_Implementation(Interactable, Point);
+			InteractWith(Interactable, Point);
 		}
 		else
 		{
@@ -220,7 +341,38 @@ void UIslanderGrabComponent::RequestInteract()
 	}
 }
 
+// a reach is measured to the target itself, never to a point a client sends: a point in the air near the eyes passed for a
+// target across the map (security review T-269 C1, network review T-268 R-06)
+bool UIslanderGrabComponent::IsActorInReach(const UWorld* World, const AActor* Target, const AActor* Self, const AActor* AlsoIgnored,
+	const FVector& Eyes, float Reach)
+{
+	if (!World || !Target)
+	{
+		return false;
+	}
+	const FBox Bounds = Target->GetComponentsBoundingBox(true);
+	if (!Bounds.IsValid || Bounds.ComputeSquaredDistanceToPoint(Eyes) > FMath::Square(Reach))
+	{
+		return false;
+	}
+	FHitResult Hit;
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(IslanderReachCheck), false, Self);
+	if (AlsoIgnored)
+	{
+		Params.AddIgnoredActor(AlsoIgnored);
+	}
+	return !World->LineTraceSingleByChannel(Hit, Eyes, Bounds.GetCenter(), ECC_Visibility, Params) || Hit.GetActor() == Target;
+}
+
 void UIslanderGrabComponent::ServerInteract_Implementation(AActor* Target, FVector_NetQuantize Point)
+{
+	if (ConsumeRequest(TEXT("ServerInteract")))
+	{
+		InteractWith(Target, Point);
+	}
+}
+
+void UIslanderGrabComponent::InteractWith(AActor* Target, const FVector& Point)
 {
 	APawn* Pawn = Cast<APawn>(GetOwner());
 	if (!Target || !Pawn || !Target->Implements<UIslanderInteractable>() || !IIslanderInteractable::Execute_CanInteract(Target, Pawn))
@@ -235,21 +387,133 @@ void UIslanderGrabComponent::ServerInteract_Implementation(AActor* Target, FVect
 		return;
 	}
 
-	// server re-check (cahier §4): range from the eyes with a latency tolerance, and line of sight to the target
+	// server re-check (cahier §4): the target itself within reach of the eyes (latency tolerance) and in sight; the
+	// client's point only says where it looked (T-289)
 	FVector Eyes, Direction;
 	GetEyes(Eyes, Direction);
-	if (FVector::Dist(Eyes, Point) > GrabRange + 50.0f)
+	if (!IsActorInReach(GetWorld(), Target, GetOwner(), nullptr, Eyes, GrabRange + ServerReachTolerance))
 	{
-		return;
-	}
-	FHitResult Hit;
-	FCollisionQueryParams Params(SCENE_QUERY_STAT(IslanderInteractCheck), false, GetOwner());
-	if (GetWorld()->LineTraceSingleByChannel(Hit, Eyes, FVector(Point) + (FVector(Point) - Eyes).GetSafeNormal() * 10.0f, ECC_Visibility, Params)
-		&& Hit.GetActor() != Target)
-	{
+		UE_LOG(Logmonke_island, Verbose, TEXT("%s: interaction with %s refused (out of reach or out of sight)"), *GetNameSafe(GetOwner()), *GetNameSafe(Target));
 		return;
 	}
 	IIslanderInteractable::Execute_Interact(Target, Pawn);
+}
+
+bool UIslanderGrabComponent::FindStoreTarget(AActor*& OutContainer, FVector& OutPoint) const
+{
+	OutContainer = nullptr;
+	AActor* Item = HeldComponent ? HeldComponent->GetOwner() : nullptr;
+	const APawn* Pawn = Cast<APawn>(GetOwner());
+	if (!Item || !Pawn)
+	{
+		return false;
+	}
+
+	// along the active camera like the interaction (what the crosshair shows), through the object held in front
+	FVector Eyes, Direction;
+	GetEyes(Eyes, Direction);
+	FVector ViewLocation = Eyes;
+	FRotator ViewRotation = Direction.Rotation();
+	if (const APlayerController* PC = Cast<APlayerController>(Pawn->GetController()))
+	{
+		PC->GetPlayerViewPoint(ViewLocation, ViewRotation);
+	}
+	const float Length = static_cast<float>(FVector::Dist(ViewLocation, Eyes)) + GrabRange;
+	FHitResult Hit;
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(IslanderStore), false, GetOwner());
+	Params.AddIgnoredActor(Item);
+	if (!GetWorld()->LineTraceSingleByChannel(Hit, ViewLocation, ViewLocation + ViewRotation.Vector() * Length, ECC_Visibility, Params)
+		|| FVector::Dist(Eyes, Hit.ImpactPoint) > GrabRange)
+	{
+		return false;
+	}
+	const ILootContainer* Container = Cast<ILootContainer>(Hit.GetActor());
+	if (!Container || !Container->CanStoreItem(Pawn, Item))
+	{
+		return false;
+	}
+	OutContainer = Hit.GetActor();
+	OutPoint = Hit.ImpactPoint;
+	return true;
+}
+
+void UIslanderGrabComponent::ReleaseOrStore()
+{
+	AActor* Container = nullptr;
+	FVector Point;
+	if (!FindStoreTarget(Container, Point))
+	{
+		RequestRelease();
+		return;
+	}
+	if (GetOwner()->HasAuthority())
+	{
+		StoreHeld(Container, Point);
+	}
+	else
+	{
+		ServerStoreHeld(Container, Point);
+	}
+}
+
+void UIslanderGrabComponent::ServerStoreHeld_Implementation(AActor* Container, FVector_NetQuantize Point)
+{
+	if (ConsumeRequest(TEXT("ServerStoreHeld")))
+	{
+		StoreHeld(Container, Point);
+	}
+}
+
+void UIslanderGrabComponent::StoreHeld(AActor* Container, const FVector& Point)
+{
+	UPrimitiveComponent* Held = HeldComponent;
+	AActor* Item = Held ? Held->GetOwner() : nullptr;
+	APawn* Pawn = Cast<APawn>(GetOwner());
+	if (!Item || !Pawn)
+	{
+		return;
+	}
+
+	// server re-check (cahier §4): only what this player holds, into something else, within reach from the eyes (latency
+	// tolerance), the container in sight (the held object aside), and room for the object now
+	ILootContainer* Target = Cast<ILootContainer>(Container);
+	FVector Eyes, Direction;
+	GetEyes(Eyes, Direction);
+	// the container itself within reach and in sight, the held object aside; never the client's point alone (T-289)
+	const bool bValid = Target && Container != Item
+		&& IsActorInReach(GetWorld(), Container, GetOwner(), Item, Eyes, GrabRange + ServerReachTolerance)
+		&& Target->CanStoreItem(Pawn, Item);
+	if (!bValid)
+	{
+		// refused (out of reach, full since the client looked): F lets go, as without a container
+		Release(false);
+		return;
+	}
+
+	// out of every pair of hands first (shared grab), then inside
+	Release(false);
+	for (TActorIterator<ACharacter> It(GetWorld()); It; ++It)
+	{
+		UIslanderGrabComponent* Other = It->FindComponentByClass<UIslanderGrabComponent>();
+		if (Other && Other != this && Other->HeldComponent == Held)
+		{
+			Other->Release(false);
+		}
+	}
+	if (!Target->StoreItem(Pawn, Item))
+	{
+		UE_LOG(Logmonke_island, Log, TEXT("%s: %s refused %s"), *GetNameSafe(GetOwner()), *GetNameSafe(Container), *GetNameSafe(Item));
+	}
+}
+
+bool UIslanderGrabComponent::GrabFromInteraction(UPrimitiveComponent* Target, const FVector& GrabPoint)
+{
+	if (!GetOwner()->HasAuthority() || HeldComponent || !Target)
+	{
+		return false;
+	}
+	Grab(Target, GrabPoint);
+	return HeldComponent == Target;
 }
 
 void UIslanderGrabComponent::RequestGrab()
@@ -274,7 +538,10 @@ void UIslanderGrabComponent::RequestGrab()
 
 void UIslanderGrabComponent::ServerGrab_Implementation(UPrimitiveComponent* Target, FVector_NetQuantize GrabPoint)
 {
-	Grab(Target, GrabPoint);
+	if (ConsumeRequest(TEXT("ServerGrab")))
+	{
+		Grab(Target, GrabPoint);
+	}
 }
 
 void UIslanderGrabComponent::Grab(UPrimitiveComponent* Target, const FVector& GrabPoint)
@@ -291,10 +558,14 @@ void UIslanderGrabComponent::Grab(UPrimitiveComponent* Target, const FVector& Gr
 		return;
 	}
 
-	// server re-check (cahier §5): range with a small tolerance for latency, line of sight, mass, single carrier
+	// server re-check (cahier §5): range with a small tolerance for latency, line of sight, mass, single carrier; the
+	// grab point sent by a client must lie on the target, and the target itself within reach (T-289, review R-06)
 	FVector Eyes, Direction;
 	GetEyes(Eyes, Direction);
-	if (FVector::Dist(Eyes, GrabPoint) > GrabRange + 50.0f)
+	const FBox TargetBox = Target->Bounds.GetBox();
+	if (FVector::Dist(Eyes, GrabPoint) > GrabRange + ServerReachTolerance
+		|| TargetBox.ComputeSquaredDistanceToPoint(GrabPoint) > FMath::Square(ServerReachTolerance)
+		|| TargetBox.ComputeSquaredDistanceToPoint(Eyes) > FMath::Square(GrabRange + ServerReachTolerance))
 	{
 		return;
 	}
@@ -343,7 +614,10 @@ void UIslanderGrabComponent::RequestRelease()
 
 void UIslanderGrabComponent::ServerRelease_Implementation()
 {
-	Release(false);
+	if (ConsumeRequest(TEXT("ServerRelease")))
+	{
+		Release(false);
+	}
 }
 
 void UIslanderGrabComponent::RequestThrow()
@@ -364,7 +638,10 @@ void UIslanderGrabComponent::RequestThrow()
 
 void UIslanderGrabComponent::ServerThrow_Implementation()
 {
-	Release(true);
+	if (ConsumeRequest(TEXT("ServerThrow")))
+	{
+		Release(true);
+	}
 }
 
 void UIslanderGrabComponent::Release(bool bThrow)

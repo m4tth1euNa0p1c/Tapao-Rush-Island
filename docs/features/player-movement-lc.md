@@ -13,10 +13,10 @@
 ## Commandes
 | Action | Touche | Effet |
 |---|---|---|
-| Courir | Maj (maintenir) | 6 m/s ; coûte 15 d'endurance par seconde ; impossible accroupi, en garde ou épuisé ; relève le personnage s'il est accroupi |
+| Courir | Maj (maintenir) | 6 m/s ; coûte 15 d'endurance par seconde ; impossible accroupi, en garde ou épuisé ; relève le personnage s'il est accroupi sans tenir la touche d'accroupi ; chaque foulée au sol s'entend (furtivité, T-262) |
 | Sauter | Espace | coûte 10 d'endurance ; impossible avec moins de 10 ; double appui = vol (outil T-021) |
-| S'accroupir | C ou Ctrl (bascule) | 1,5 m/s, capsule de 120 cm ; le bean s'écrase (×1,12 en largeur, ×0,72 en hauteur) |
-| Nager | automatique dans l'eau | coûte 4 d'endurance par seconde (cahier §4) ; Espace maintenu pour remonter, C ou Ctrl maintenu pour plonger ; épuisé = nage ×0,6 |
+| S'accroupir | Ctrl gauche (ou C), **maintenir** (T-262, comme Counter-Strike) | 1,5 m/s, capsule de 120 cm ; le bean s'écrase (×1,12 en largeur, ×0,72 en hauteur) ; accroupi, les mobs et PNJ ne voient le joueur qu'au contact, même s'il porte un objet (`docs/features/furtivite.md`) ; relâcher la touche relève le personnage |
+| Nager | automatique dans l'eau | coûte 4 d'endurance par seconde (cahier §4) ; Espace maintenu pour remonter, Ctrl gauche (ou C) maintenu pour plonger ; épuisé = nage ×0,6 |
 | Frapper | clic gauche | préparation visible 0,25 s, puis coup ; 20 dégâts, recul 3,5 m/s ; cooldown 0,7 s ; coûte 10 d'endurance ; impossible en garde, en nage ou en vol |
 | Vue | R | bascule 3e / 1re personne : caméra aux yeux du bean (devant la visière), le corps suit le regard, tricorne caché pour soi, 3e personne forcée en ragdoll |
 | Garde | clic droit (maintenir) | marche ×0,5, pas de course ; un coup reçu de face (cône d'environ 78° de chaque côté) ne fait que 25 % des dégâts et coûte 15 d'endurance ; sans endurance, la garde casse |
@@ -37,6 +37,12 @@ Toutes les valeurs sont réglables dans les Blueprints (`EditDefaultsOnly`) ; el
 - **Décidé par le serveur** : coup de poing (cooldown et endurance revérifiés, balayage, dégâts, recul), santé, chute et mort.
 - **Endurance** : calculée à la fois par le client propriétaire et par le serveur, sans réplication. Un léger écart est possible près de l'épuisement ; le serveur corrige alors la vitesse.
 - **Vu par les autres joueurs** : chaque coup est rejoué via `PunchCount`, et la garde passe par `bReplicatedGuard`.
+- **KO, lancer et chute volontaire (T-287, revue T-268 R-22)** : le serveur seul met KO (`Knockout`, `ServerTumble`, crash en vol) et décide du relevé.
+  - L'état `KnockoutRep` est répliqué (OnRep) : actif ou mort, numéro, heure serveur, point et vitesse de départ, point et cap du relevé. Il remplace l'ancien multicast `MulticastTumble`, et un joueur qui arrive voit le corps à terre.
+  - Chaque machine joue son propre ragdoll. Un client le démarre au point de départ du serveur, avancé de l'âge du KO (au plus `RagdollCatchUpMaxSeconds`, 0,4 s) sur la trajectoire balistique.
+  - Pendant le KO, la capsule du serveur suit le bassin du ragdoll (`RagdollFollowInterval`, 0,1 s, sans collision). Les coups, les tirs et les mobs trouvent le corps là où il est. Le client propriétaire reçoit cette place par les corrections de mouvement, les autres par le mouvement répliqué. Le mesh quitte la capsule pendant le ragdoll : aucun déplacement de la capsule ne traîne les corps simulés.
+  - Relevé : le serveur se relève quand son corps est posé (ou au bout de 8 s), et chaque machine se relève au même point, avec le même cap. Un corps mort ne se relève jamais.
+  - Spec `monke_island.Player.Knockout` (règles pures).
 
 ## Recette
 - [x] Compilé (UBT, 0 erreur, 0 avertissement) ; 14/14 tests `monke_island.Player` verts (headless).

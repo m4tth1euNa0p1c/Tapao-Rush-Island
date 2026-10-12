@@ -1,0 +1,61 @@
+{
+  "task": "T-181",
+  "foot_error_max_cm": 2.968590706586838e-07,
+  "hand_vertical_motion_cm": 41.95212721824646,
+  "meshes": {
+    "SK_BeanMerchant": {
+      "object_count": 28,
+      "bounds_m": [
+        [
+          -0.3539999723434448,
+          0.3540000021457672
+        ],
+        [
+          -0.3658042252063751,
+          0.1889498233795166
+        ],
+        [
+          -3.288639405241156e-08,
+          1.0499998331069946
+        ]
+      ],
+      "materials": [
+        "M_Bean_Eye",
+        "M_Bean_Skin",
+        "M_Bean_Visor",
+        "M_Merchant_Brass",
+        "M_Merchant_Leather",
+        "M_Merchant_Linen",
+        "M_Merchant_Moustache"
+      ],
+      "triangles": 28052
+    },
+    "SM_MerchantStand": {
+      "object_count": 46,
+      "bounds_m": [
+        [
+          -0.9509999752044678,
+          0.9510001540184021
+        ],
+        [
+          -1.1210001707077026,
+          -0.41999995708465576
+        ],
+        [
+          0.0,
+          1.659999966621399
+        ]
+      ],
+      "materials": [
+        "M_Merchant_Brass",
+        "M_Merchant_Canvas",
+        "M_Merchant_Green",
+        "M_Merchant_Wood",
+        "M_Merchant_WoodLight"
+      ],
+      "triangles": 4968
+    }
+  },
+  "passed": true,
+  "finished_at": "2026-10-06T19:47:40.638823+00:00"
+}

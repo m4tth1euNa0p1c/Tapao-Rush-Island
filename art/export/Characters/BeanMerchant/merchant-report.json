@@ -1,0 +1,72 @@
+{
+  "task": "T-181",
+  "height_m": 1.05,
+  "belly_m": 0.18,
+  "materials": {
+    "M_Bean_Eye": {
+      "color": "141418",
+      "roughness": 0.12,
+      "metallic": 0.0
+    },
+    "M_Bean_Skin": {
+      "color": "D4B48D",
+      "roughness": 0.58,
+      "metallic": 0
+    },
+    "M_Bean_Visor": {
+      "color": "F5E7CD",
+      "roughness": 0.48,
+      "metallic": 0
+    },
+    "M_Merchant_Brass": {
+      "color": "C9A45B",
+      "roughness": 0.3,
+      "metallic": 0.8
+    },
+    "M_Merchant_Canvas": {
+      "color": "E8D6B0",
+      "roughness": 0.95,
+      "metallic": 0
+    },
+    "M_Merchant_Green": {
+      "color": "516854",
+      "roughness": 0.9,
+      "metallic": 0
+    },
+    "M_Merchant_Leather": {
+      "color": "50352A",
+      "roughness": 0.58,
+      "metallic": 0
+    },
+    "M_Merchant_Linen": {
+      "color": "DDC69F",
+      "roughness": 0.85,
+      "metallic": 0
+    },
+    "M_Merchant_Moustache": {
+      "color": "3A241D",
+      "roughness": 0.75,
+      "metallic": 0
+    },
+    "M_Merchant_Wood": {
+      "color": "755036",
+      "roughness": 0.76,
+      "metallic": 0
+    },
+    "M_Merchant_WoodLight": {
+      "color": "A17750",
+      "roughness": 0.73,
+      "metallic": 0
+    }
+  },
+  "animation": {
+    "name": "A_BeanMerchant_GreetIdle",
+    "seconds": 12,
+    "fps": 24,
+    "root_motion": false,
+    "feet_fixed": true
+  },
+  "body_objects": 28,
+  "stand_objects": 46,
+  "stand_collision": "Three simple boxes added in Blueprint: counter and two posts"
+}

@@ -15,6 +15,7 @@ class UIslandWaterSubsystem;
  *  Lethal Company style stamina: sprinting, swimming and jumping spend it, walking and standing still
  *  restore it; once empty the character is exhausted (no sprint, slower, slow swim) until it recovers.
  *  Sprint, guard and flight are network predicted (compressed move flags); crouching uses the engine flag.
+ *  Stealth (T-262): on the server, each stride of a sprint on the ground is a noise the mobs may hear.
  */
 UCLASS()
 class MONKE_ISLAND_API UIslanderMovementComponent : public UCharacterMovementComponent
@@ -109,9 +110,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Swimming", meta=(ClampMin="0", ClampMax="1"))
 	float WaterJumpMaxImmersion = 0.95f;
 
-	/** Buoyancy of a swimmer out of stamina: below 1 the body slowly sinks (ADR-003 B-04) */
+	/** Buoyancy of a swimmer out of stamina: 1.2 floats like any swimmer, no sinking (owner's choice 2026-10-03);
+	 *  below 1 the body would slowly sink (ADR-003 B-04) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Drowning", meta=(ClampMin="0"))
-	float DrowningBuoyancy = 0.85f;
+	float DrowningBuoyancy = 1.2f;
+
+	/** A swimmer whose stamina runs out dies at once (the corpse floats); false = drowning hurts over time
+	 *  after DrownGraceTime at DrownDamagePerSecond */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Drowning")
+	bool bExhaustionKillsInWater = true;
 
 	/** Seconds out of stamina in the water before drowning hurts */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Character Movement: Drowning", meta=(ClampMin="0", Units="s"))
@@ -163,6 +170,11 @@ public:
 	/** Sets whether the character wants to fly (applied by the movement update, predicted) */
 	void SetWantsToFly(bool bInWantsToFly) { bWantsToFly = bInWantsToFly; }
 
+	/** The double tap flight is a development cheat (T-291, security review M2): never in Shipping, else only while the
+	 *  console variable monke.AllowFlight is on (on in the editor, off by default in a packaged build). The server
+	 *  decides with its own value, whatever a client asks */
+	static bool IsFlightAllowed();
+
 	/** Returns true when flight is requested */
 	bool WantsToFly() const { return bWantsToFly; }
 
@@ -197,6 +209,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Character Movement: Stamina")
 	bool ConsumeStamina(float Amount);
 
+	/**
+	 *  Gives stamina back (trumpet call, T-333), up to MaxStamina; an exhausted character can sprint again once it is
+	 *  above ExhaustedRecoverFraction. Stamina is simulated on the server and on the owning client: call it on both,
+	 *  at the same moments of the same replicated state, so their movement predictions keep agreeing
+	 */
+	void RestoreStamina(float Amount);
+
 	/** Advances stamina by DeltaSeconds for the given activity (spends or restores) */
 	void UpdateStamina(float DeltaSeconds, bool bSprinting, bool bSwimming, bool bMoving);
 
@@ -207,6 +226,15 @@ public:
 	/** Weight currently carried (kg) */
 	UFUNCTION(BlueprintPure, Category="Character Movement: Weight")
 	float GetCarriedWeight() const { return CarriedWeight; }
+
+	/** Speed multipliers of the item in hand (the heavy machine gun, T-273): walking and running, 1 = none. The item sets
+	 *  them on every machine, so both sides of the movement prediction agree */
+	UFUNCTION(BlueprintCallable, Category="Character Movement: Weight")
+	void SetHeldItemSpeedFactors(float InWalkFactor, float InSprintFactor);
+
+	/** Speed multiplier of the item in hand, running or walking */
+	UFUNCTION(BlueprintPure, Category="Character Movement: Weight")
+	float GetHeldItemSpeedFactor(bool bSprinting) const { return bSprinting ? HeldItemSprintFactor : HeldItemWalkFactor; }
 
 	/** Returns the sea water depth above the bottom of the capsule (cm, 0 when dry) */
 	UFUNCTION(BlueprintPure, Category="Character Movement: Swimming")
@@ -266,6 +294,10 @@ private:
 	/** Weight carried (kg) */
 	float CarriedWeight = 0.0f;
 
+	/** Speed multipliers of the item in hand (SetHeldItemSpeedFactors) */
+	float HeldItemWalkFactor = 1.0f;
+	float HeldItemSprintFactor = 1.0f;
+
 	/** A jump out of the water is rising: do not fall back into swimming yet */
 	bool bWaterJumping = false;
 
@@ -277,6 +309,19 @@ private:
 
 	/** A flying crash was detected and the ragdoll starts next tick */
 	bool bCrashPending = false;
+
+	/** Ground run since the last noisy step (cm, server, T-262) */
+	float RunNoiseDistance = 0.0f;
+
+	/** Where the run was last measured from (server) */
+	FVector RunNoiseFrom = FVector::ZeroVector;
+
+	/** A run on the ground is being measured (server) */
+	bool bRunNoiseTracking = false;
+
+	/** Server: every stride of a sprint on the ground is a noise the mobs and villagers may hear (UStealthSubsystem,
+	 *  RunStrideCm and RunStepRadiusCm of DA_StealthRules, T-262); walking, crouching and swimming are silent */
+	void UpdateRunNoise();
 
 	/** Provides the sea level */
 	UPROPERTY(Transient)

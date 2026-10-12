@@ -1,9 +1,14 @@
 // monke_island
 
 #include "Player/IslanderHUD.h"
+#include "Ceremony/FlagCeremonyMath.h"
+#include "Ceremony/FlagCeremonyRules.h"
+#include "Ceremony/FlagCeremonySite.h"
 #include "UI/Tapao/TapaoUISubsystem.h"
 #include "Engine/GameInstance.h"
 #include "DayNight/DayNightCycleActor.h"
+#include "Expedition/Core/DayTransitionSubsystem.h"
+#include "Run/RunStateComponent.h"
 #include "Storm/WindStormActor.h"
 #include "CanvasItem.h"
 #include "Engine/Canvas.h"
@@ -14,6 +19,7 @@
 #include "Interaction/IslanderGrabComponent.h"
 #include "Interaction/IslanderInteractable.h"
 #include "Items/ValuableComponent.h"
+#include "Props/LootCrate/LootContainer.h"
 #include "Player/IslanderCharacter.h"
 #include "Player/IslanderCombatComponent.h"
 #include "Player/IslanderHealthComponent.h"
@@ -23,6 +29,7 @@
 #include "Weapons/IslanderInventoryComponent.h"
 #include "Weapons/MusketWeapon.h"
 #include "Weapons/CutlassWeapon.h"
+#include "Weapons/CutlassRules.h"
 
 float AIslanderHUD::DrawBar(float X, float Y, float Scale, float Fraction, const FLinearColor& Color, const FString& Label)
 {
@@ -53,6 +60,11 @@ void AIslanderHUD::DrawHUD()
 	{
 		return;
 	}
+	// nothing of the player's UI during the arrival and departure scenes (owner 2026-10-07)
+	if (const UDayTransitionSubsystem* Transition = UDayTransitionSubsystem::Get(this); Transition && Transition->IsScenePlaying())
+	{
+		return;
+	}
 
 	const float Scale = Canvas->ClipY / 1080.0f;
 	const float X = Margin.X * Scale;
@@ -74,15 +86,19 @@ void AIslanderHUD::DrawHUD()
 			Health->IsDead() ? TEXT("Santé - mort") : FString::Printf(TEXT("Santé %.0f"), Health->GetHealth()));
 	}
 
-	// stance line above the bars; the day and the wind first (T-067)
+	// stance line above the bars; the day and the wind first (T-067). The day of the cycle only without a campaign:
+	// the TAPAO HUD shows the campaign day (T-214) and two day counters would disagree. R-03: the host's run, as the game
+	// state carries it to every machine (a client's own run is never read)
 	TArray<FString> States;
-	if (const ADayNightCycleActor* Clock = ADayNightCycleActor::Get(this))
+	const ADayNightCycleActor* Clock = URunStateComponent::CampaignDayOf(this) <= 0 ? ADayNightCycleActor::Get(this) : nullptr;
+	if (Clock)
 	{
 		States.Add(FString::Printf(TEXT("Jour %d"), Clock->GetDayNumber()));
 	}
 	if (const AWindStormActor* Storm = AWindStormActor::Get(this))
 	{
-		if (Storm->IsDeadlineWind())
+		// the deadline wind, or the weather turned by an artifact of a temple (T-203)
+		if (Storm->IsStormy())
 		{
 			States.Add(TEXT("Tempête"));
 		}
@@ -136,7 +152,17 @@ void AIslanderHUD::DrawHUD()
 			{
 				const UValuableComponent* Valuable = Held->GetOwner() ? Held->GetOwner()->FindComponentByClass<UValuableComponent>() : nullptr;
 				Action = TEXT("Lâcher");
-				Details = Valuable ? FString::Printf(TEXT("%.0f kg · %d $"), Held->GetMass(), Valuable->GetValue()) : FString::Printf(TEXT("%.0f kg"), Held->GetMass());
+				// aimed at a container (the transport crate, T-258): F puts the object in
+				AActor* Container = nullptr;
+				FVector StorePoint;
+				if (Grab->FindStoreTarget(Container, StorePoint))
+				{
+					if (const ILootContainer* Target = Cast<ILootContainer>(Container))
+					{
+						Action = Target->GetStorePrompt(Islander, Held->GetOwner()).ToString();
+					}
+				}
+				Details = Valuable ? FString::Printf(TEXT("%.0f kg · %d c"), Held->GetMass(), Valuable->GetValue()) : FString::Printf(TEXT("%.0f kg"), Held->GetMass());
 				Secondary = TEXT("Clic gauche  lancer      Molette  distance");
 			}
 			else
@@ -154,7 +180,7 @@ void AIslanderHUD::DrawHUD()
 					{
 						const UValuableComponent* Valuable = Physics->GetOwner() ? Physics->GetOwner()->FindComponentByClass<UValuableComponent>() : nullptr;
 						Action = TEXT("Soulever");
-						Details = Valuable ? FString::Printf(TEXT("%.0f kg · %d $"), Physics->GetMass(), Valuable->GetValue()) : FString::Printf(TEXT("%.0f kg"), Physics->GetMass());
+						Details = Valuable ? FString::Printf(TEXT("%.0f kg · %d c"), Physics->GetMass(), Valuable->GetValue()) : FString::Printf(TEXT("%.0f kg"), Physics->GetMass());
 						if (Physics->GetMass() > Grab->LiftMassKg)
 						{
 							Details += TEXT("  (lourd : à plusieurs)");
@@ -162,6 +188,14 @@ void AIslanderHUD::DrawHUD()
 					}
 				}
 			}
+		}
+
+		// on a flag site the key raises the flag (IMC_FlagCeremony above the interaction): the prompt says so
+		if (const AFlagCeremonySite* Site = AFlagCeremonySite::FindAt(this, Islander->GetActorLocation()); Site && Site->CanStart(Islander) && Site->Rules)
+		{
+			Action = Site->Rules->PromptText.ToString();
+			Details.Reset();
+			Secondary.Reset();
 		}
 
 		// the dot grows and turns gold on a target
@@ -278,8 +312,14 @@ void AIslanderHUD::DrawHUD()
 		// cutlass: charge of the finisher, edge, damage numbers of the last blows (T-070)
 		if (const ACutlassWeapon* Cutlass = Cast<ACutlassWeapon>(Inventory->GetEquippedItem()))
 		{
-			FString Line = Cutlass->IsParrying() ? TEXT("Parade") : TEXT("Sabre");
-			Line += FString::Printf(TEXT(" · fil %.0f %%"), Cutlass->GetSharpness() * 100.0f);
+			// the name of the blade in hand (the sabre, or a weapon taken from a mob, T-161); the edge only for edged ones
+			const UInventoryItemDefinition* BladeItem = Cutlass->GetDefinition();
+			FString Line = Cutlass->IsParrying() ? TEXT("Parade")
+				: (BladeItem && !BladeItem->DisplayName.IsEmpty() ? BladeItem->DisplayName.ToString() : FString(TEXT("Sabre")));
+			if (!Cutlass->Rules || Cutlass->Rules->bEdged)
+			{
+				Line += FString::Printf(TEXT(" · fil %.0f %%"), Cutlass->GetSharpness() * 100.0f);
+			}
 			if (const UIslanderMovementComponent* CutlassMove = Cast<UIslanderMovementComponent>(Character->GetCharacterMovement());
 				CutlassMove && Cutlass->Rules && CutlassMove->GetStaminaFraction() < Cutlass->Rules->StaminaCostFraction)
 			{
@@ -323,11 +363,84 @@ void AIslanderHUD::DrawHUD()
 		}
 	}
 
+	DrawFlagCeremony(Character, Scale);
+
 	if (States.Num() > 0)
 	{
 		FCanvasTextItem Text(FVector2D(X, Y - 6.0f * Scale), FText::FromString(FString::Join(States, TEXT(" · "))), GEngine->GetSmallFont(), FLinearColor(1.0f, 1.0f, 1.0f, 0.85f));
 		Text.Scale = FVector2D(Scale, Scale);
 		Text.EnableShadow(FLinearColor::Black);
 		Canvas->DrawItem(Text);
+	}
+}
+
+void AIslanderHUD::DrawFlagCeremony(const APawn* Pawn, float Scale)
+{
+	const AFlagCeremonySite* Site = Pawn ? AFlagCeremonySite::FindNearest(this, Pawn->GetActorLocation(), 1.0e7f) : nullptr;
+	const UFlagCeremonyRules* Rules = Site ? Site->Rules.Get() : nullptr;
+	if (!Rules || FVector::Dist(Site->GetActorLocation(), Pawn->GetActorLocation()) > Rules->HudRadius)
+	{
+		return;
+	}
+	const float CentreX = Canvas->ClipX * 0.5f;
+	const float Top = 70.0f * Scale;
+	const FLinearColor Gold(1.0f, 0.82f, 0.25f, 0.95f);
+
+	if (Site->GetPhase() == EFlagCeremonyPhase::Raising)
+	{
+		// title, countdown, then the bar filling as the flag climbs
+		const FString Title = FString::Printf(TEXT("%s   %s"), *Rules->TitleText.ToString(), *FlagCeremonyMath::Countdown(Site->GetSecondsLeft()));
+		FCanvasTextItem TitleItem(FVector2D(CentreX, Top), FText::FromString(Title), GEngine->GetMediumFont(), Gold);
+		TitleItem.bCentreX = true;
+		TitleItem.Scale = FVector2D(Scale, Scale);
+		TitleItem.EnableShadow(FLinearColor::Black);
+		Canvas->DrawItem(TitleItem);
+
+		const FVector2D Size(420.0f * Scale, 10.0f * Scale);
+		const FVector2D Corner(CentreX - Size.X * 0.5f, Top + 30.0f * Scale);
+		FCanvasTileItem Back(Corner, Size, FLinearColor(0.0f, 0.0f, 0.0f, 0.5f));
+		Back.BlendMode = SE_BLEND_Translucent;
+		Canvas->DrawItem(Back);
+		FCanvasTileItem Fill(Corner, FVector2D(Size.X * Site->GetProgress(), Size.Y), Gold);
+		Fill.BlendMode = SE_BLEND_Translucent;
+		Canvas->DrawItem(Fill);
+		FCanvasBoxItem Frame(Corner, Size);
+		Frame.SetColor(FLinearColor(1.0f, 1.0f, 1.0f, 0.35f));
+		Canvas->DrawItem(Frame);
+
+		if (Site->GetOfficiant() == Pawn)
+		{
+			FCanvasTextItem Still(FVector2D(CentreX, Corner.Y + Size.Y + 8.0f * Scale), Rules->HoldStillText, GEngine->GetSmallFont(), FLinearColor(1.0f, 1.0f, 1.0f, 0.85f));
+			Still.bCentreX = true;
+			Still.Scale = FVector2D(Scale, Scale);
+			Still.EnableShadow(FLinearColor::Black);
+			Canvas->DrawItem(Still);
+		}
+		return;
+	}
+
+	EFlagCeremonyEnd End = EFlagCeremonyEnd::None;
+	float Age = 0.0f;
+	if (Site->GetLastEnd(End, Age) && Age <= Rules->MessageSeconds)
+	{
+		const bool bRaised = End == EFlagCeremonyEnd::Raised;
+		const FText& Message = bRaised ? Rules->DoneText : Rules->InterruptedText;
+		const float Alpha = FMath::Clamp((Rules->MessageSeconds - Age) / 0.6f, 0.0f, 1.0f);
+		FCanvasTextItem Item(FVector2D(CentreX, Top), Message, GEngine->GetMediumFont(),
+			bRaised ? FLinearColor(Gold.R, Gold.G, Gold.B, Alpha) : FLinearColor(1.0f, 0.45f, 0.35f, Alpha));
+		Item.bCentreX = true;
+		Item.Scale = FVector2D(Scale, Scale);
+		Item.EnableShadow(FLinearColor(0.0f, 0.0f, 0.0f, Alpha));
+		Canvas->DrawItem(Item);
+		// the reward of the claim under it
+		if (bRaised && Rules->ClaimReward > 0)
+		{
+			FCanvasTextItem Reward(FVector2D(CentreX, Top + 30.0f * Scale), FText::Format(Rules->RewardText, FText::AsNumber(Rules->ClaimReward)),
+				GEngine->GetMediumFont(), FLinearColor(Gold.R, Gold.G, Gold.B, Alpha));
+			Reward.bCentreX = true;
+			Reward.Scale = FVector2D(Scale, Scale);
+			Reward.EnableShadow(FLinearColor(0.0f, 0.0f, 0.0f, Alpha));
+			Canvas->DrawItem(Reward);
+		}
 	}
 }

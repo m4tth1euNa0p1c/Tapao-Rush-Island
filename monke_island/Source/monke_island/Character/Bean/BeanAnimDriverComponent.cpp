@@ -5,12 +5,14 @@
 #include "Character/Bean/BeanFirstPersonArmsComponent.h"
 #include "Character/Bean/BeanLibraryAnimInstance.h"
 #include "Character/Bean/BeanPuppetComponent.h"
+#include "Character/Bean/BeanSwimAnim.h"
 #include "Boats/BoatActor.h"
 #include "Boats/BoatRiderComponent.h"
 #include "Emotes/TrumpetEmoteComponent.h"
 #include "Interaction/IslanderGrabComponent.h"
 #include "Player/IslanderCharacter.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Player/IslanderMovementComponent.h"
 #include "Weapons/CutlassMath.h"
 #include "Weapons/CutlassWeapon.h"
 #include "Weapons/TorchItem.h"
@@ -18,6 +20,7 @@
 #include "monke_island.h"
 #include "Animation/AnimSequence.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Engine/SkeletalMesh.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 namespace
@@ -204,12 +207,25 @@ bool UBeanAnimDriverComponent::InitSource()
 	return AnimInstance != nullptr;
 }
 
-void UBeanAnimDriverComponent::PlayFullBody(UAnimSequence* Sequence)
+const FName UBeanAnimDriverComponent::BodyArmsInFirstPersonTag(TEXT("BodyArmsInFirstPerson"));
+
+void UBeanAnimDriverComponent::PlayFullBody(UAnimSequence* Sequence, float PlayRate, float StartTime)
 {
 	if (Sequence)
 	{
 		FullBodyClip = Sequence;
+		FullBodyRate = FMath::IsFinite(PlayRate) && PlayRate > KINDA_SMALL_NUMBER ? PlayRate : 1.0f;
+		FullBodyTime = FMath::IsFinite(StartTime) ? FMath::Max(StartTime, 0.0f) : 0.0f;
+	}
+}
+
+void UBeanAnimDriverComponent::StopFullBody(const UAnimSequence* Sequence)
+{
+	if (Sequence && FullBodyClip == Sequence)
+	{
+		FullBodyClip = nullptr;
 		FullBodyTime = 0.0f;
+		FullBodyRate = 1.0f;
 	}
 }
 
@@ -219,6 +235,35 @@ void UBeanAnimDriverComponent::HandleHealthChanged(float NewHealth, float Delta)
 	{
 		PlayFullBody(Library->HitReact);
 	}
+}
+
+bool UBeanAnimDriverComponent::HasSwimClips() const
+{
+	return Library && (Library->Swim || Library->TreadWater);
+}
+
+void UBeanAnimDriverComponent::UpdateWaterPose()
+{
+	const AIslanderCharacter* Islander = Cast<AIslanderCharacter>(GetOwner());
+	const UIslanderMovementComponent* Move = Islander ? Cast<UIslanderMovementComponent>(Islander->GetCharacterMovement()) : nullptr;
+	if (!Move)
+	{
+		bInWaterPose = false;
+		SwimSpeed = 0.0f;
+		return;
+	}
+	// computed from the replicated capsule on every machine: the depth at the feet, not the movement mode alone (the
+	// short bean capsule bobs between swimming and falling at its swim start depth)
+	const FVector Velocity = Islander->GetVelocity();
+	BeanSwimAnim::FWaterInput In;
+	In.bSwimming = Move->IsSwimming();
+	In.bFlying = Move->IsFlying();
+	In.DepthAtFeet = Move->GetWaterDepthAtFeet();
+	In.VerticalSpeed = static_cast<float>(Velocity.Z);
+	bInWaterPose = BeanSwimAnim::IsInWaterPose(In, bInWaterPose, Library->SwimPoseMinDepth, Library->SwimPoseExitHysteresis,
+		Library->SwimPoseMaxRiseSpeed);
+	// diving and climbing back up are strokes too
+	SwimSpeed = static_cast<float>(Velocity.Size());
 }
 
 UBeanAnimDriverComponent::EBodyState UBeanAnimDriverComponent::PickState(float DeltaTime)
@@ -237,6 +282,17 @@ UBeanAnimDriverComponent::EBodyState UBeanAnimDriverComponent::PickState(float D
 		const ABoatActor* Boat = Rider->GetSeatedBoat();
 		BoatSpeed = Boat && Boat->IsRower(Islander) ? Boat->GetVelocity().Size2D() : 0.0f;
 		return EBodyState::Boat;
+	}
+
+	// in the water: treading or swimming; no landing or pickup left pending when the bean comes out
+	const UIslanderGrabComponent* Grab = Islander ? Islander->GetGrabComponent() : nullptr;
+	const bool bHolding = Grab && Grab->IsHolding();
+	if (bInWaterPose && HasSwimClips())
+	{
+		bWasFalling = false;
+		AirTime = 0.0f;
+		bWasHolding = bHolding;
+		return EBodyState::Swim;
 	}
 
 	const bool bFalling = Move && Move->IsFalling();
@@ -260,8 +316,6 @@ UBeanAnimDriverComponent::EBodyState UBeanAnimDriverComponent::PickState(float D
 		return EBodyState::Land;
 	}
 
-	const UIslanderGrabComponent* Grab = Islander ? Islander->GetGrabComponent() : nullptr;
-	const bool bHolding = Grab && Grab->IsHolding();
 	if (bHolding && !bWasHolding)
 	{
 		PlayFullBody(Library->Pickup);
@@ -315,6 +369,16 @@ void UBeanAnimDriverComponent::StateSamples(EBodyState State, TArray<FBeanAnimSa
 	case EBodyState::Dead:
 		AddSample(Out, L.Death, Time, 1.0f, false);
 		break;
+	case EBodyState::Swim:
+	{
+		// treading water at rest, the breaststroke when it moves, cross faded by speed; one clip stands for both if the
+		// other is missing
+		const UAnimSequence* Tread = L.TreadWater ? L.TreadWater.Get() : L.Swim.Get();
+		const UAnimSequence* Stroke = L.Swim ? L.Swim.Get() : L.TreadWater.Get();
+		AddSample(Out, Tread, Tread == L.TreadWater.Get() ? TreadTime : SwimPhase * ClipLength(Tread), 1.0f - StrokeAlpha, true);
+		AddSample(Out, Stroke, Stroke == L.Swim.Get() ? SwimPhase * ClipLength(Stroke) : TreadTime, StrokeAlpha, true);
+		break;
+	}
 	default:
 		break;
 	}
@@ -334,8 +398,15 @@ float UBeanAnimDriverComponent::UpperSamples(TArray<FBeanAnimSample>& Out) const
 		{
 		case ETrumpetPhase::Equip:		Clip = L.TrumpetEquip; break;
 		case ETrumpetPhase::Fanfare:	Clip = L.TrumpetFanfare; break;
+		case ETrumpetPhase::Ritual:		Clip = L.TrumpetPlayLoop ? L.TrumpetPlayLoop.Get() : L.TrumpetFanfare.Get(); break;
 		case ETrumpetPhase::Unequip:	Clip = L.TrumpetUnequip; break;
 		default: break;
+		}
+		// the flag ceremony: the play loop at its own pace for as long as it lasts
+		if (Clip && Emote->IsRitualPlaying() && Elapsed < Duration && Clip == L.TrumpetPlayLoop)
+		{
+			AddSample(Out, Clip, FMath::Fmod(Elapsed, FMath::Max(ClipLength(Clip), 0.01f)), 1.0f, true);
+			return 1.0f;
 		}
 		if (Clip)
 		{
@@ -430,11 +501,16 @@ void UBeanAnimDriverComponent::UpdateFirstPersonArms()
 	bool bShow = false;
 	if (bBodyArmsInFirstPerson && bDriving && Islander && Islander->IsLocallyControlled() && Islander->IsFirstPerson())
 	{
-		// hands free or the sabre: the body arms; the musket keeps its first person arms
+		// hands free: the body arms; the musket keeps its first person arms, and so do the sabre since it has its own
+		// first person view (owner 2026-10-08: strikes, parry and run sway seen from the eyes) and the torch (T-330: held
+		// beside the head, the body's torch was out of the view of its own eyes)
 		const UIslanderInventoryComponent* Inventory = Islander->FindComponentByClass<UIslanderInventoryComponent>();
 		const AActor* InHand = Inventory ? Inventory->GetEquippedItem() : nullptr;
 		const UTrumpetEmoteComponent* Emote = Islander->FindComponentByClass<UTrumpetEmoteComponent>();
-		bShow = !InHand || InHand->IsA<ACutlassWeapon>() || InHand->IsA<ATorchItem>() || (Emote && Emote->IsPlaying());
+		const ACutlassWeapon* Cutlass = Cast<ACutlassWeapon>(InHand);
+		const ATorchItem* Torch = Cast<ATorchItem>(InHand);
+		bShow = !InHand || (Cutlass && !Cutlass->UsesFirstPersonViewModel()) || (Torch && !Torch->UsesFirstPersonViewModel()) || (Emote && Emote->IsPlaying())
+			|| InHand->ActorHasTag(BodyArmsInFirstPersonTag);
 	}
 	if (bShow == bBodyArmsShown)
 	{
@@ -472,8 +548,10 @@ void UBeanAnimDriverComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 
 	const AIslanderCharacter* Islander = Cast<AIslanderCharacter>(GetOwner());
 	const UCharacterMovementComponent* Move = Islander ? Islander->GetCharacterMovement() : nullptr;
-	// no clip for the ragdoll and the water: the mannequin retarget takes the body back
-	const bool bActive = Islander && !Islander->IsRagdoll() && !(Move && Move->IsSwimming());
+	UpdateWaterPose();
+	const bool bSwimClips = HasSwimClips();
+	// no clip for the ragdoll (nor for the water without swim clips): the mannequin retarget takes the body back
+	const bool bActive = Islander && !Islander->IsRagdoll() && (bSwimClips || !(Move && Move->IsSwimming()));
 	BodyAlpha = FMath::FInterpConstantTo(BodyAlpha, bActive ? 1.0f : 0.0f, DeltaTime, 1.0f / Library->StateBlendTime);
 
 	// whole body state, blended
@@ -483,7 +561,9 @@ void UBeanAnimDriverComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 		StateTimes[static_cast<int32>(State)] = State == EBodyState::Air ? AirTime : 0.0f;
 	}
 	LastState = State;
-	const float Step = DeltaTime / Library->StateBlendTime;
+	// into or out of the water every weight moves at the swim pace, so the body tips over and back in one blend
+	const bool bWaterBlend = State == EBodyState::Swim || StateWeights[static_cast<int32>(EBodyState::Swim)] > 0.0f;
+	const float Step = DeltaTime / (bWaterBlend ? FMath::Max(Library->SwimBlendTime, 0.01f) : Library->StateBlendTime);
 	for (int32 Index = 0; Index < static_cast<int32>(EBodyState::Count); ++Index)
 	{
 		StateWeights[Index] = FMath::Clamp(StateWeights[Index] + (Index == static_cast<int32>(State) ? Step : -Step), 0.0f, 1.0f);
@@ -500,6 +580,15 @@ void UBeanAnimDriverComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 	const float CyclesPerSecond = FMath::Lerp(WalkRate / ClipLength(L.Walk), RunRate / ClipLength(L.Run), RunAlpha);
 	GroundPhase = FMath::Fmod(GroundPhase + DeltaTime * CyclesPerSecond * (WalkAlpha > 0.0f ? 1.0f : 0.0f), 1.0f);
 	CarryTime += DeltaTime * FMath::Clamp(Speed / L.CarryNoSlideSpeed, L.MinPlayRate, L.MaxPlayRate);
+
+	// water: treading at its own pace, the stroke at the pace of the speed, the cross fade and the float lift eased
+	TreadTime = FMath::Fmod(TreadTime + DeltaTime, ClipLength(L.TreadWater));
+	const float StrokeRate = BeanSwimAnim::StrokePlayRate(SwimSpeed, L.SwimStrokeSpeed, L.SwimMinPlayRate, L.SwimMaxPlayRate);
+	SwimPhase = FMath::Fmod(SwimPhase + DeltaTime * StrokeRate / ClipLength(L.Swim), 1.0f);
+	StrokeAlpha = FMath::FInterpConstantTo(StrokeAlpha, BeanSwimAnim::StrokeWeight(SwimSpeed, L.TreadMaxSpeed, L.SwimFullSpeed),
+		DeltaTime, 1.0f / FMath::Max(L.SwimStrokeBlendTime, 0.01f));
+	WaterAlpha = FMath::FInterpConstantTo(WaterAlpha, State == EBodyState::Swim && bActive ? 1.0f : 0.0f, DeltaTime,
+		1.0f / FMath::Max(L.SwimBlendTime, 0.01f));
 
 	FBeanAnimFrame Frame;
 	float Total = 0.0f;
@@ -524,9 +613,9 @@ void UBeanAnimDriverComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 	// one shot of the whole body, with its blend in and out
 	if (FullBodyClip)
 	{
-		FullBodyTime += DeltaTime;
+		FullBodyTime += DeltaTime * FullBodyRate;
 		const float Length = ClipLength(FullBodyClip);
-		if (FullBodyTime >= Length || State == EBodyState::Dead || State == EBodyState::Boat)
+		if (FullBodyTime >= Length || State == EBodyState::Dead || State == EBodyState::Boat || State == EBodyState::Swim)
 		{
 			FullBodyClip = nullptr;
 		}
@@ -538,8 +627,14 @@ void UBeanAnimDriverComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 		}
 	}
 
-	// upper body: the sabre
-	const float UpperTarget = State == EBodyState::Dead || State == EBodyState::Boat ? 0.0f : UpperSamples(Frame.Upper);
+	// upper body: the sabre, the torch, the trumpet; in the water the layer fades out (its clips stay sampled meanwhile,
+	// no pop of the arms): the stroke needs the arms and the pelvis the layer would take
+	float UpperTarget = 0.0f;
+	if (State != EBodyState::Dead && State != EBodyState::Boat)
+	{
+		const float UpperClips = UpperSamples(Frame.Upper);
+		UpperTarget = State == EBodyState::Swim ? 0.0f : UpperClips;
+	}
 	UpperWeight = FMath::FInterpConstantTo(UpperWeight, UpperTarget, DeltaTime, 1.0f / L.OneShotBlendIn);
 	Frame.UpperWeight = Frame.Upper.IsEmpty() ? 0.0f : UpperWeight;
 	Frame.UpperBodyRoot = L.UpperBodyRootBone;
@@ -549,6 +644,11 @@ void UBeanAnimDriverComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 	if (Puppet.IsValid())
 	{
 		Puppet->SetBasePoseSource(bDriving ? AnimSource.Get() : nullptr, BodyAlpha);
+		if (bSwimClips)
+		{
+			// the bean floats at the water line its swim clips are made for: head and hat out of the water
+			Puppet->SetWaterStance(WaterAlpha, L.SwimRootDepth, L.SwimMaxLift);
+		}
 	}
 	UpdateFirstPersonArms();
 	UpdateRowing(State);
