@@ -1,0 +1,7 @@
+{
+  "dir": "nocannons",
+  "result": "export-result.json",
+  "ucx": 159,
+  "why": "Demande du propriétaire 2026-10-06 : sans canons ni pompes, porte de la cabine ouverte, poteaux de lanterne sans collision (escalier de la dunette)",
+  "script": "scripts/props/export_galleon_t149_nocannons.py"
+}

@@ -1,0 +1,629 @@
+{
+  "task": "T-149",
+  "captured_at": "2026-10-06T11:44:41.728180+00:00",
+  "files": [
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\exports\\SM_Galleon.fbx",
+      "file": "SM_Galleon.fbx",
+      "size": 9178972,
+      "mtime_ns": 1791281015000000000,
+      "sha256": "c1158c2fb22a40476165d5aa33ac1205b9409e608d13c2f6f899625e7761d185"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\exports\\SM_Galleon_Flag.fbx",
+      "file": "SM_Galleon_Flag.fbx",
+      "size": 50972,
+      "mtime_ns": 1791281021000000000,
+      "sha256": "ec5b3c8cb6d7df0b6b7c5f1930c019e0e5b3bbe229c0a5925ad2bb9131c5f12c"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\exports\\SM_Galleon_Pennants.fbx",
+      "file": "SM_Galleon_Pennants.fbx",
+      "size": 35436,
+      "mtime_ns": 1791281020000000000,
+      "sha256": "bb1df74c1324baf441ef08c197a02aea6003949860e1d05be718d2200316ef8e"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\exports\\SM_Galleon_Rigging.fbx",
+      "file": "SM_Galleon_Rigging.fbx",
+      "size": 1047212,
+      "mtime_ns": 1791281020000000000,
+      "sha256": "9f4c885dc87ac8797694b9959ee5a80f94a5c9bd45e3f9fd64264b5e6978c4ea"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\exports\\SM_Galleon_Rudder.fbx",
+      "file": "SM_Galleon_Rudder.fbx",
+      "size": 55484,
+      "mtime_ns": 1791281021000000000,
+      "sha256": "5b30110339c2cd8a07c98974055ac983fd1b9c7e7c831794481a009b66c06a4b"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\exports\\SM_Galleon_Sails.fbx",
+      "file": "SM_Galleon_Sails.fbx",
+      "size": 310540,
+      "mtime_ns": 1791281019000000000,
+      "sha256": "dc682926d14539e6190090fb77eb0643303a17b449cfe7032453efeeabe51323"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\exports\\SM_Galleon_Wheel.fbx",
+      "file": "SM_Galleon_Wheel.fbx",
+      "size": 74524,
+      "mtime_ns": 1791281021000000000,
+      "sha256": "6e823dbe99507dd5a4e98762893296597ff4f821a87e0101a865bffb8840f31b"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\galleon-report.json",
+      "file": "galleon-report.json",
+      "size": 29691,
+      "mtime_ns": 1791281021000000000,
+      "sha256": "5d0bbce522e66bdd593fee216fc2de2fe206cad5e29630eda5c4d770da3be6cf"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\build-report.json",
+      "file": "build-report.json",
+      "size": 64402,
+      "mtime_ns": 1791281046000000000,
+      "sha256": "5b9cf3aacb6ebb71a2efc549e7f05a3f98152185232ebe150567069bfdf14237"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\maquette.json",
+      "file": "maquette.json",
+      "size": 3980,
+      "mtime_ns": 1791281102000000000,
+      "sha256": "e8f715e08ed407552ea8e33ad600d013481a42c45700c9aac2551f5459a01443"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\ue\\GALLEON_UE.md",
+      "file": "GALLEON_UE.md",
+      "size": 8050,
+      "mtime_ns": 1791281005000000000,
+      "sha256": "7e9de707ef4e9c49c0c4d662005b5ecbf14e4878d7557bcd41eea55ced33675c"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\galleon\\materials.py",
+      "file": "materials.py",
+      "size": 36731,
+      "mtime_ns": 1791148745000000000,
+      "sha256": "3ce5975e78e91f4c85a15a2d47d25ad2cfe1f0093c597bc3249958a2a59be16a"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\galleon\\bow_lion.py",
+      "file": "bow_lion.py",
+      "size": 7076,
+      "mtime_ns": 1791147667000000000,
+      "sha256": "80a1841f6569308b6860dac89eec9d84a743997ce353b0cad5a3f534bd54e824"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\galleon\\sails.py",
+      "file": "sails.py",
+      "size": 14595,
+      "mtime_ns": 1791148857000000000,
+      "sha256": "43a7ed7c56f8a56c78b3580c5051e928ef84749a79241e8d0de5118fbe890329"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\SOURCES.md",
+      "file": "TEXTURE_SOURCES.md",
+      "size": 3757,
+      "mtime_ns": 1791073313000000000,
+      "sha256": "b8102dee06203c732f50dee0df09aec3946e719eef8050226ec6adc4779899d7"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\dark_wooden_planks\\dark_wooden_planks_diff_1k.jpg",
+      "file": "textures/dark_wooden_planks/dark_wooden_planks_diff_1k.jpg",
+      "size": 701221,
+      "mtime_ns": 1791073294000000000,
+      "sha256": "e8216baa6b2d701b5523fcb904d45570acf7b96d160ef815e96e2dbfa82bdd9b"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\dark_wooden_planks\\dark_wooden_planks_rough_1k.jpg",
+      "file": "textures/dark_wooden_planks/dark_wooden_planks_rough_1k.jpg",
+      "size": 673968,
+      "mtime_ns": 1791073295000000000,
+      "sha256": "a10ea0b52fe395a7ad205cacfd28bd1aea48ef8545d171209f528dcf58d0a8d3"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\dark_wooden_planks\\dark_wooden_planks_nor_gl_1k.jpg",
+      "file": "textures/dark_wooden_planks/dark_wooden_planks_nor_gl_1k.jpg",
+      "size": 658444,
+      "mtime_ns": 1791073295000000000,
+      "sha256": "87a7b26bc674477865d4589c6589200bfa649a6461422bf56f5600c05a470206"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\dark_wooden_planks\\dark_wooden_planks_ao_1k.jpg",
+      "file": "textures/dark_wooden_planks/dark_wooden_planks_ao_1k.jpg",
+      "size": 300758,
+      "mtime_ns": 1791073295000000000,
+      "sha256": "afa6cee23c80dacb65c0039ef61ae067699a27d4b86e736166055f44bf1800fd"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_planks_03\\brown_planks_03_diff_2k.jpg",
+      "file": "textures/brown_planks_03/brown_planks_03_diff_2k.jpg",
+      "size": 2411538,
+      "mtime_ns": 1791073284000000000,
+      "sha256": "1140ceac531c2dfe2e714357e34cd81cce62878ced24fa711b87c4ca24416058"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_planks_03\\brown_planks_03_rough_2k.jpg",
+      "file": "textures/brown_planks_03/brown_planks_03_rough_2k.jpg",
+      "size": 1015477,
+      "mtime_ns": 1791073285000000000,
+      "sha256": "cfb6bf6494d6487c56b2699a45d71966439bc2cc41b386b12a62451048f0172c"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_planks_03\\brown_planks_03_nor_gl_2k.jpg",
+      "file": "textures/brown_planks_03/brown_planks_03_nor_gl_2k.jpg",
+      "size": 2425492,
+      "mtime_ns": 1791073284000000000,
+      "sha256": "4aa94e511dda5ed998194debaf6049806f44a0afd3b750168efcd7a35bc0ff4a"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_planks_03\\brown_planks_03_ao_2k.jpg",
+      "file": "textures/brown_planks_03/brown_planks_03_ao_2k.jpg",
+      "size": 1607427,
+      "mtime_ns": 1791073285000000000,
+      "sha256": "277c6062a79d3feea329865efa1d755f5fa74143626345642d26565dea2869a9"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\blue_painted_planks\\blue_painted_planks_diff_1k.jpg",
+      "file": "textures/blue_painted_planks/blue_painted_planks_diff_1k.jpg",
+      "size": 553760,
+      "mtime_ns": 1791073295000000000,
+      "sha256": "31bab926cd4fb1f1df9e863af6bbf49e678a0e3b960cbc543e6a36000aaa6b13"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\blue_painted_planks\\blue_painted_planks_rough_1k.jpg",
+      "file": "textures/blue_painted_planks/blue_painted_planks_rough_1k.jpg",
+      "size": 225087,
+      "mtime_ns": 1791073296000000000,
+      "sha256": "0863461eb7921b30a514c5e89e2a3f2aaf5971e30bb94f21f70b419f45df74c9"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\blue_painted_planks\\blue_painted_planks_nor_gl_1k.jpg",
+      "file": "textures/blue_painted_planks/blue_painted_planks_nor_gl_1k.jpg",
+      "size": 667831,
+      "mtime_ns": 1791073295000000000,
+      "sha256": "f5649969385a67d9c0f89ab376fbb8c2e21d6ddc85ee906f645d574c5540e596"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\blue_painted_planks\\blue_painted_planks_ao_1k.jpg",
+      "file": "textures/blue_painted_planks/blue_painted_planks_ao_1k.jpg",
+      "size": 340533,
+      "mtime_ns": 1791073296000000000,
+      "sha256": "c75bb19baf50fc9c95adb13610885ae8a8a131c80acc652c9fe5db1d3cc42f5c"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\plank_flooring_03\\plank_flooring_03_diff_2k.jpg",
+      "file": "textures/plank_flooring_03/plank_flooring_03_diff_2k.jpg",
+      "size": 3382173,
+      "mtime_ns": 1791073287000000000,
+      "sha256": "6caa79dae12a0d56c50672a5ab8e31b83b9422148ef601f33e334e25ce39624c"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\plank_flooring_03\\plank_flooring_03_rough_2k.jpg",
+      "file": "textures/plank_flooring_03/plank_flooring_03_rough_2k.jpg",
+      "size": 1844250,
+      "mtime_ns": 1791073289000000000,
+      "sha256": "6c7d04c0ccb231b886827aa84c09b9d2d7a0e1af0ff5549b3e2dfb60ed9f334c"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\plank_flooring_03\\plank_flooring_03_nor_gl_2k.jpg",
+      "file": "textures/plank_flooring_03/plank_flooring_03_nor_gl_2k.jpg",
+      "size": 4002042,
+      "mtime_ns": 1791073287000000000,
+      "sha256": "919b680781784bd613deadf381613c55710df41322f9a288fcc244f3cd35acc5"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\plank_flooring_03\\plank_flooring_03_ao_2k.jpg",
+      "file": "textures/plank_flooring_03/plank_flooring_03_ao_2k.jpg",
+      "size": 1745017,
+      "mtime_ns": 1791073290000000000,
+      "sha256": "856d557266a718888e05824e86a91352c8ddf888ce7ade4f4ff39397624f6ae6"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wood_planks_grey\\wood_planks_grey_diff_2k.jpg",
+      "file": "textures/wood_planks_grey/wood_planks_grey_diff_2k.jpg",
+      "size": 998333,
+      "mtime_ns": 1791073285000000000,
+      "sha256": "31bdd475c6f1520fccc34a6823bfab8ba61ce5fd6dd97a3d1d868c21295e1000"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wood_planks_grey\\wood_planks_grey_rough_2k.jpg",
+      "file": "textures/wood_planks_grey/wood_planks_grey_rough_2k.jpg",
+      "size": 829157,
+      "mtime_ns": 1791073286000000000,
+      "sha256": "6df08068860c68dbdc1f5b37a69814bc981866ee9f60a9e3b9de67e498684039"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wood_planks_grey\\wood_planks_grey_nor_gl_2k.jpg",
+      "file": "textures/wood_planks_grey/wood_planks_grey_nor_gl_2k.jpg",
+      "size": 647815,
+      "mtime_ns": 1791073286000000000,
+      "sha256": "466b35df82e1af23ece3882bda9b272a25ab6b89876dbeb369faf2eb50b4cb3a"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wood_planks_grey\\wood_planks_grey_ao_2k.jpg",
+      "file": "textures/wood_planks_grey/wood_planks_grey_ao_2k.jpg",
+      "size": 181412,
+      "mtime_ns": 1791073286000000000,
+      "sha256": "96f02e8bd70581a485caeb118e7a00474babacffdea89de91940f09b9acccf99"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\fine_grained_wood\\fine_grained_wood_diff_1k.jpg",
+      "file": "textures/fine_grained_wood/fine_grained_wood_diff_1k.jpg",
+      "size": 336305,
+      "mtime_ns": 1791001388397962100,
+      "sha256": "d171f45ef01bc6e239b00dfaa4961bcd27f7d8e93e3962da3bd3d0ce703d802c"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\fine_grained_wood\\fine_grained_wood_rough_1k.jpg",
+      "file": "textures/fine_grained_wood/fine_grained_wood_rough_1k.jpg",
+      "size": 215155,
+      "mtime_ns": 1791001388407293000,
+      "sha256": "f281f682e62fe322303dfeaa13dac18b5cb9e113617fe0aca43605b49161d82b"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\fine_grained_wood\\fine_grained_wood_nor_gl_1k.jpg",
+      "file": "textures/fine_grained_wood/fine_grained_wood_nor_gl_1k.jpg",
+      "size": 193626,
+      "mtime_ns": 1791001388401963300,
+      "sha256": "ba95eadc009818e161d0f753191f1bacc3fc861e593be0bc6d82b437f9ec8044"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\fine_grained_wood\\fine_grained_wood_ao_1k.jpg",
+      "file": "textures/fine_grained_wood/fine_grained_wood_ao_1k.jpg",
+      "size": 601268,
+      "mtime_ns": 1791001388409802200,
+      "sha256": "c77f62fcb7b36f525b1143842d7be3e327a14b0b9d2616e3187aa961e3b1d9b4"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\rough_wood\\rough_wood_diff_1k.jpg",
+      "file": "textures/rough_wood/rough_wood_diff_1k.jpg",
+      "size": 567074,
+      "mtime_ns": 1791001388561292300,
+      "sha256": "abc46d8e3163d911220f4ec3a4043b68d2b0c6d750513f80871211acfefb2a98"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\rough_wood\\rough_wood_rough_1k.jpg",
+      "file": "textures/rough_wood/rough_wood_rough_1k.jpg",
+      "size": 195056,
+      "mtime_ns": 1791001388552632300,
+      "sha256": "4e9ea9962a7e8b69057937e6723c4b0134b949c1ee5cdb5f3687a54113027b09"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\rough_wood\\rough_wood_nor_gl_1k.jpg",
+      "file": "textures/rough_wood/rough_wood_nor_gl_1k.jpg",
+      "size": 790334,
+      "mtime_ns": 1791001388567420500,
+      "sha256": "3d1c6f098b66d93e52071b41834dd14a424d8cd2f7c4130c62dc062acfa65011"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\rough_wood\\rough_wood_ao_1k.jpg",
+      "file": "textures/rough_wood/rough_wood_ao_1k.jpg",
+      "size": 392089,
+      "mtime_ns": 1791001388558279100,
+      "sha256": "52c7b7fc1f9024f740598f4368520b933e674bee4187d1b37e67248935b9bb28"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\japanese_cedar_planks\\japanese_cedar_planks_diff_1k.jpg",
+      "file": "textures/japanese_cedar_planks/japanese_cedar_planks_diff_1k.jpg",
+      "size": 704030,
+      "mtime_ns": 1791001387004167400,
+      "sha256": "cce8e8c5e5e6ba7956a6edf9fa6121c57fa2bfab0ebd672951bede9e053cbec4"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\japanese_cedar_planks\\japanese_cedar_planks_rough_1k.jpg",
+      "file": "textures/japanese_cedar_planks/japanese_cedar_planks_rough_1k.jpg",
+      "size": 679485,
+      "mtime_ns": 1791001387010264900,
+      "sha256": "494826e6d014fd7098eed24ff8b342ea8b3c83281e290ac5c2eacef4c9f3a424"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\japanese_cedar_planks\\japanese_cedar_planks_nor_gl_1k.jpg",
+      "file": "textures/japanese_cedar_planks/japanese_cedar_planks_nor_gl_1k.jpg",
+      "size": 745514,
+      "mtime_ns": 1791001387006699800,
+      "sha256": "2537ec9d8589caf8a89ef4e733d015318030d9ee9e2c2fdfa1471154770ebbea"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\japanese_cedar_planks\\japanese_cedar_planks_ao_1k.jpg",
+      "file": "textures/japanese_cedar_planks/japanese_cedar_planks_ao_1k.jpg",
+      "size": 683790,
+      "mtime_ns": 1791001387012264500,
+      "sha256": "a3da30f5680720452333ffab3ef62d9f3c44e56f3fbaf96f2a5cc68dd3469b27"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\weathered_brown_planks\\weathered_brown_planks_diff_1k.jpg",
+      "file": "textures/weathered_brown_planks/weathered_brown_planks_diff_1k.jpg",
+      "size": 226049,
+      "mtime_ns": 1791001386977746400,
+      "sha256": "94833feda44e025a9139f7b5723ea84e4f0258d3b54939a79e1013c133085e29"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\weathered_brown_planks\\weathered_brown_planks_rough_1k.jpg",
+      "file": "textures/weathered_brown_planks/weathered_brown_planks_rough_1k.jpg",
+      "size": 234672,
+      "mtime_ns": 1791001386991113100,
+      "sha256": "b80c45969d8299ca5f21de969f0269138a5e3e78e51fc911af809683d99c5bc9"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\weathered_brown_planks\\weathered_brown_planks_nor_gl_1k.jpg",
+      "file": "textures/weathered_brown_planks/weathered_brown_planks_nor_gl_1k.jpg",
+      "size": 223250,
+      "mtime_ns": 1791001386980231900,
+      "sha256": "8d38f02f121c0e58eaedc19cd668faea21381ae3ff4d5332cd90de75e6683393"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\weathered_brown_planks\\weathered_brown_planks_ao_1k.jpg",
+      "file": "textures/weathered_brown_planks/weathered_brown_planks_ao_1k.jpg",
+      "size": 137846,
+      "mtime_ns": 1791001386999085400,
+      "sha256": "c7bb635f609726d19f180cfb2c9bc149b490847ac2823ffa59718cbdfc4779b7"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\hinoki_planks\\hinoki_planks_diff_2k.jpg",
+      "file": "textures/hinoki_planks/hinoki_planks_diff_2k.jpg",
+      "size": 2117798,
+      "mtime_ns": 1791001386941944900,
+      "sha256": "e21f0bd9a5fb1ecaf1d363a8a6e0fb36f4dfb2c43dda7be3a6c2a4cb5ccda587"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\hinoki_planks\\hinoki_planks_rough_2k.jpg",
+      "file": "textures/hinoki_planks/hinoki_planks_rough_2k.jpg",
+      "size": 666730,
+      "mtime_ns": 1791001386954021600,
+      "sha256": "cbbb654e748c6c28c45d6dc9d41e04da5e161a81ce2f146fd6c7f2d7acca8e97"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\hinoki_planks\\hinoki_planks_nor_gl_2k.jpg",
+      "file": "textures/hinoki_planks/hinoki_planks_nor_gl_2k.jpg",
+      "size": 2213410,
+      "mtime_ns": 1791001386946990800,
+      "sha256": "d068ba2c76222280bd54b12dd9bfae7e768ed1c353c184b04826ea844e553762"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\props\\minka\\hinoki_planks\\hinoki_planks_ao_2k.jpg",
+      "file": "textures/hinoki_planks/hinoki_planks_ao_2k.jpg",
+      "size": 2165313,
+      "mtime_ns": 1791001386974241300,
+      "sha256": "95ae9dc63140eafc7307ac616480258ea7c4a1aa3a2d715f6f96f5bda97ece41"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wooden_barrel\\wooden_barrel_diff_1k.jpg",
+      "file": "textures/wooden_barrel/wooden_barrel_diff_1k.jpg",
+      "size": 824633,
+      "mtime_ns": 1791073299000000000,
+      "sha256": "39104e195bd58c260379b96eec953720d978b7cd311b2a512ca17e21954e7267"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wooden_barrel\\wooden_barrel_rough_1k.jpg",
+      "file": "textures/wooden_barrel/wooden_barrel_rough_1k.jpg",
+      "size": 877393,
+      "mtime_ns": 1791073300000000000,
+      "sha256": "bf58503bcbf5fd51537d0a612c6eb7feb0149f216affa84713c04f095f9d03f2"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wooden_barrel\\wooden_barrel_nor_gl_1k.jpg",
+      "file": "textures/wooden_barrel/wooden_barrel_nor_gl_1k.jpg",
+      "size": 723504,
+      "mtime_ns": 1791073299000000000,
+      "sha256": "a9762aa17d3bd44dac96fc60b65b020e65fa0d4b302b7eb42e66539f1a65edbc"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wooden_barrel\\wooden_barrel_ao_1k.jpg",
+      "file": "textures/wooden_barrel/wooden_barrel_ao_1k.jpg",
+      "size": 408391,
+      "mtime_ns": 1791073300000000000,
+      "sha256": "fe1d294a8bb8f5ed788bd0bfe6b645484c8d4fb355b8a5e08feb1af7e994d9e9"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal048C\\Metal048C_diff_1k.jpg",
+      "file": "textures/Metal048C/Metal048C_diff_1k.jpg",
+      "size": 871864,
+      "mtime_ns": 1791073302000000000,
+      "sha256": "35ad052e3e29aa63523e63e2dd6b62e2466c56e8a77a5dbee4947199e459e58c"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal048C\\Metal048C_rough_1k.jpg",
+      "file": "textures/Metal048C/Metal048C_rough_1k.jpg",
+      "size": 539353,
+      "mtime_ns": 1791073302000000000,
+      "sha256": "f8e84de90c62ce0a7f5c59a3b1af4a3a1c23905ea4707a635646437639b1a21d"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal048C\\Metal048C_nor_gl_1k.jpg",
+      "file": "textures/Metal048C/Metal048C_nor_gl_1k.jpg",
+      "size": 545805,
+      "mtime_ns": 1791073302000000000,
+      "sha256": "300bb39b55aba9e60cfa1e991ebdfe5f4c0fb69c0f1a4defa4527fbb48a5a9ca"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal048C\\Metal048C_metal_1k.jpg",
+      "file": "textures/Metal048C/Metal048C_metal_1k.jpg",
+      "size": 250848,
+      "mtime_ns": 1791073302000000000,
+      "sha256": "6a6f8da6955ef1613bad489cc67bffd610aaec7bfccb77a4ded016b5925490c4"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal046B\\Metal046B_diff_1k.jpg",
+      "file": "textures/Metal046B/Metal046B_diff_1k.jpg",
+      "size": 706330,
+      "mtime_ns": 1791073301000000000,
+      "sha256": "7caf8ddbd06aa730e41db993ff344eb60d872ff698e5da117b3527f09ba1877e"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal046B\\Metal046B_rough_1k.jpg",
+      "file": "textures/Metal046B/Metal046B_rough_1k.jpg",
+      "size": 502726,
+      "mtime_ns": 1791073301000000000,
+      "sha256": "d74b89826875ce104064d71975e04361d312c0910d3a115269e2516352494547"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal046B\\Metal046B_nor_gl_1k.jpg",
+      "file": "textures/Metal046B/Metal046B_nor_gl_1k.jpg",
+      "size": 1272514,
+      "mtime_ns": 1791073301000000000,
+      "sha256": "7848f006f06e352cfa4fdcf53e1c47ac0a2ca32839b7bd9f1bf9a1b1113fe837"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal046B\\Metal046B_metal_1k.jpg",
+      "file": "textures/Metal046B/Metal046B_metal_1k.jpg",
+      "size": 968767,
+      "mtime_ns": 1791073301000000000,
+      "sha256": "8abc018e4013de769d41a1cf204049e54f0f39edac39fb3558eda31b532dc493"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\rusty_metal_04\\rusty_metal_04_diff_1k.jpg",
+      "file": "textures/rusty_metal_04/rusty_metal_04_diff_1k.jpg",
+      "size": 938338,
+      "mtime_ns": 1791073296000000000,
+      "sha256": "37c6757c5b6b2229f61423c7e5013f970e4dafb48070d35f53ed6d08958ed288"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\rusty_metal_04\\rusty_metal_04_rough_1k.jpg",
+      "file": "textures/rusty_metal_04/rusty_metal_04_rough_1k.jpg",
+      "size": 686008,
+      "mtime_ns": 1791073296000000000,
+      "sha256": "02c2fe5dfd5f4f7a692659261b8c99e103f33fb1a4c363c3e763542fae32d4fe"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\rusty_metal_04\\rusty_metal_04_nor_gl_1k.jpg",
+      "file": "textures/rusty_metal_04/rusty_metal_04_nor_gl_1k.jpg",
+      "size": 896980,
+      "mtime_ns": 1791073296000000000,
+      "sha256": "9c432bee334e65e73ff0b20676dd3f0efbed3f91d261a13dc03b9c8c1a4f4eec"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\rusty_metal_04\\rusty_metal_04_ao_1k.jpg",
+      "file": "textures/rusty_metal_04/rusty_metal_04_ao_1k.jpg",
+      "size": 346574,
+      "mtime_ns": 1791073297000000000,
+      "sha256": "af1733e6b00b89853a885a53dea36cc445f8a8b5d0364fb0da4fd11cf1006531"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_Color.jpg",
+      "file": "textures/Rope001/Rope001_1K-JPG_Color.jpg",
+      "size": 527156,
+      "mtime_ns": 1791001388178220600,
+      "sha256": "ce37f5da3b4762a2264d2d9a7f133f7caf8809f42f1216da506301e84f212e97"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_Roughness.jpg",
+      "file": "textures/Rope001/Rope001_1K-JPG_Roughness.jpg",
+      "size": 248515,
+      "mtime_ns": 1791001388171335700,
+      "sha256": "b7092a728f1ef9165d52afea65a6c96d9ce927ff1150073afd86263c43f92054"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_NormalGL.jpg",
+      "file": "textures/Rope001/Rope001_1K-JPG_NormalGL.jpg",
+      "size": 860675,
+      "mtime_ns": 1791001388169330300,
+      "sha256": "bf1e55638aa756bd2512b0f6ab9de2fb5ceb9fc5db159607cf6b872cca9bb7fc"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_Metalness.jpg",
+      "file": "textures/Rope001/Rope001_1K-JPG_Metalness.jpg",
+      "size": 2209,
+      "mtime_ns": 1791001388160317400,
+      "sha256": "2ecca5789f5263c440bacc93c04a8175ff3ec093d58c77e6593456b31e2dbcc7"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\terlenka\\terlenka_diff_2k.jpg",
+      "file": "textures/terlenka/terlenka_diff_2k.jpg",
+      "size": 3431365,
+      "mtime_ns": 1791073291000000000,
+      "sha256": "9528ce33df474c01f938b3afafe895b79a7b66f5706e4c735e8362e61b5bfb84"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\terlenka\\terlenka_rough_2k.jpg",
+      "file": "textures/terlenka/terlenka_rough_2k.jpg",
+      "size": 4073321,
+      "mtime_ns": 1791073292000000000,
+      "sha256": "1184d1715c1d57dc3eb2550cbf6e42bac67ee6b7a271eb7b83874b011392c036"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\terlenka\\terlenka_nor_gl_2k.jpg",
+      "file": "textures/terlenka/terlenka_nor_gl_2k.jpg",
+      "size": 4113359,
+      "mtime_ns": 1791073291000000000,
+      "sha256": "7fd916e6d897dfe003dac3400c81dd919e11e3441558bac04c26e07be380e6a0"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\terlenka\\terlenka_ao_2k.jpg",
+      "file": "textures/terlenka/terlenka_ao_2k.jpg",
+      "size": 3064184,
+      "mtime_ns": 1791073292000000000,
+      "sha256": "4b516a2da3e2897399e244636eb8f1eb69d29e0a499d15890e7569861c644515"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\terlenka\\terlenka_metal_2k.jpg",
+      "file": "textures/terlenka/terlenka_metal_2k.jpg",
+      "size": 1117403,
+      "mtime_ns": 1791073294000000000,
+      "sha256": "4cdec63115de544331b3b8cdd52f00cc9d3bfcf7c796bc8737c5850878c81399"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_leather\\brown_leather_diff_1k.jpg",
+      "file": "textures/brown_leather/brown_leather_diff_1k.jpg",
+      "size": 503348,
+      "mtime_ns": 1791073297000000000,
+      "sha256": "7e9e1d6566d1fd91d4ceb4966c4820361e85d53a7a828b6bab3b2a093a876cd1"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_leather\\brown_leather_rough_1k.jpg",
+      "file": "textures/brown_leather/brown_leather_rough_1k.jpg",
+      "size": 686142,
+      "mtime_ns": 1791073297000000000,
+      "sha256": "f9739ef2da2e3d17b9ec253f5042f61b10dc10f3ae28f6cf6491650d3d1b0ca3"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_leather\\brown_leather_nor_gl_1k.jpg",
+      "file": "textures/brown_leather/brown_leather_nor_gl_1k.jpg",
+      "size": 863280,
+      "mtime_ns": 1791073297000000000,
+      "sha256": "506a0b7650c2dea285e247f26ed2d0d6ec38fc10dd584359f0d203e9c082236d"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_leather\\brown_leather_ao_1k.jpg",
+      "file": "textures/brown_leather/brown_leather_ao_1k.jpg",
+      "size": 421319,
+      "mtime_ns": 1791073298000000000,
+      "sha256": "97492c06efca0ab7bdee4d948bcb8e440615065d0b71cd755958dc1e5c2f343c"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\velour_velvet\\velour_velvet_diff_1k.jpg",
+      "file": "textures/velour_velvet/velour_velvet_diff_1k.jpg",
+      "size": 735556,
+      "mtime_ns": 1791073298000000000,
+      "sha256": "e6e92d808b3456deb892ff17905f3b44717fcfbcbce9fcf03ad7abcabda799df"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\velour_velvet\\velour_velvet_rough_1k.jpg",
+      "file": "textures/velour_velvet/velour_velvet_rough_1k.jpg",
+      "size": 943960,
+      "mtime_ns": 1791073298000000000,
+      "sha256": "82b6f22e9a225af76dc8960dab3ed4a936ad8a8061e9272137c3367af2970952"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\velour_velvet\\velour_velvet_nor_gl_1k.jpg",
+      "file": "textures/velour_velvet/velour_velvet_nor_gl_1k.jpg",
+      "size": 695985,
+      "mtime_ns": 1791073298000000000,
+      "sha256": "046c92c48c1cb36656d394addf21dea9582f563479b73f2c0b16f356128e872b"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\velour_velvet\\velour_velvet_ao_1k.jpg",
+      "file": "textures/velour_velvet/velour_velvet_ao_1k.jpg",
+      "size": 717966,
+      "mtime_ns": 1791073299000000000,
+      "sha256": "6a87649c0cbbd7e3438450fad7991ee29a95209694def84719c62c24713ebe02"
+    },
+    {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\velour_velvet\\velour_velvet_metal_1k.jpg",
+      "file": "textures/velour_velvet/velour_velvet_metal_1k.jpg",
+      "size": 740745,
+      "mtime_ns": 1791073299000000000,
+      "sha256": "6d13c71d0f9a678ecf9eb6b146eb6b15def76f30157eef645a7d1bb5c11b05c0"
+    }
+  ]
+}

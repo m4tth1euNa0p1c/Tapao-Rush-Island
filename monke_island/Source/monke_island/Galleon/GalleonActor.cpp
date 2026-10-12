@@ -1,13 +1,17 @@
 // monke_island
 
 #include "Galleon/GalleonActor.h"
+#include "Galleon/GalleonDeparture.h"
+#include "Galleon/GalleonDepartureComponent.h"
 #include "Galleon/GalleonRules.h"
+#include "Shop/ShopkeeperActor.h"
 #include "Boats/BoatActor.h"
 #include "Boats/BoatRiderComponent.h"
 #include "Flood/FloodSimulationActor.h"
 #include "Interaction/IslanderGrabComponent.h"
 #include "Items/ValuableComponent.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Props/LootCrate/LootContainer.h"
 #include "Water/IslandWaterSubsystem.h"
 #include "monke_island.h"
 #include "Components/BoxComponent.h"
@@ -15,16 +19,123 @@
 #include "Components/PointLightComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/AssetManager.h"
 #include "Engine/CollisionProfile.h"
 #include "Engine/OverlapResult.h"
 #include "Engine/StaticMesh.h"
+#include "Engine/StreamableManager.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/Controller.h"
 #include "GameFramework/GameStateBase.h"
+#include "GameFramework/PlayerController.h"
+#include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
+#include "Sound/SoundBase.h"
+
+namespace
+{
+	/** Where the crew stands on the deck at the start, at the height of the socket: side by side across the deck from
+	 *  DeckSpawnSocket, DeckSpawnSpacing apart (PlaceOnDeck; 4 places) */
+	FVector DeckSpot(const UStaticMeshComponent* Hull, const UGalleonRules* Rules, int32 Index)
+	{
+		const FTransform& HullTransform = Hull->GetComponentTransform();
+		const FVector Base = Hull->DoesSocketExist(Rules->DeckSpawnSocket) ? Hull->GetSocketLocation(Rules->DeckSpawnSocket)
+			: HullTransform.TransformPosition(FVector(0.0, 160.0, 160.0));
+		const float Side = (static_cast<float>(Index % 4) - 1.5f) * Rules->DeckSpawnSpacing;
+		return Base + HullTransform.GetUnitAxis(EAxis::Y) * Side;
+	}
+
+	/**
+	 *  Server (T-258, owner 2026-10-09): the loot crate of the expedition, on the deck beside the merchant. It takes the first
+	 *  free place on rings around DeckSpawnSocket + LootCrateOffset (hull frame): the deck under it at the crew's level
+	 *  (not a castle), nothing it would stand in (bulwark, hatch coaming, merchant, mast), the crew's places clear. Put
+	 *  down a few centimetres above the deck, it settles there: a free physics object, its contents count with the cargo.
+	 */
+	AActor* SpawnDeckCrate(AGalleonActor* Galleon, const UStaticMeshComponent* Hull, const UGalleonRules* Rules)
+	{
+		if (Rules->LootCrateClass.IsNull())
+		{
+			return nullptr;
+		}
+		UClass* CrateClass = Rules->LootCrateClass.LoadSynchronous();
+		if (!CrateClass)
+		{
+			UE_LOG(Logmonke_island, Warning, TEXT("%s: loot crate class %s missing, no crate on the deck"), *Galleon->GetName(),
+				*Rules->LootCrateClass.ToString());
+			return nullptr;
+		}
+		UWorld* World = Galleon->GetWorld();
+		const FTransform& HullTransform = Hull->GetComponentTransform();
+		const FVector Base = Hull->DoesSocketExist(Rules->DeckSpawnSocket) ? Hull->GetSocketLocation(Rules->DeckSpawnSocket)
+			: HullTransform.TransformPosition(FVector(0.0, 160.0, 160.0));
+		const FRotator Rotation(0.0, Galleon->GetActorRotation().Yaw + Rules->LootCrateYaw, 0.0);
+		FActorSpawnParameters Spawn;
+		Spawn.Owner = Galleon;
+		Spawn.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		// above the deck first: its size is known once it exists, then it is moved to its place in the same frame
+		AActor* Crate = World->SpawnActor<AActor>(CrateClass, Base + FVector(0.0, 0.0, 600.0), Rotation, Spawn);
+		if (!Crate)
+		{
+			return nullptr;
+		}
+		const FBox Bounds = Crate->GetComponentsBoundingBox(false);
+		const FVector Origin = Crate->GetActorLocation();
+		const FVector HalfSize = Bounds.IsValid ? Bounds.GetExtent() : FVector(40.0, 40.0, 15.0);
+		const FVector CenterOffset = Bounds.IsValid ? Bounds.GetCenter() - Origin : FVector::ZeroVector;
+		const double Bottom = Bounds.IsValid ? Origin.Z - Bounds.Min.Z : HalfSize.Z;
+		const double Clearance = Rules->LootCrateClearanceCm;
+		const FCollisionShape Room = FCollisionShape::MakeBox(FVector(HalfSize.X + Clearance, HalfSize.Y + Clearance, HalfSize.Z));
+		const double KeepFromCrew = Rules->DeckSpawnSpacing * 0.5 + HalfSize.Size2D();
+		FCollisionQueryParams Query(SCENE_QUERY_STAT(GalleonDeckCrate), true, Crate);
+
+		const FVector AxisX = HullTransform.GetUnitAxis(EAxis::X);
+		const FVector AxisY = HullTransform.GetUnitAxis(EAxis::Y);
+		const FVector Wanted = Base + AxisX * Rules->LootCrateOffset.X + AxisY * Rules->LootCrateOffset.Y;
+		FVector Place = FVector(Wanted.X, Wanted.Y, Base.Z + Bottom + 20.0);
+		bool bFound = false;
+		for (int32 Ring = 0; Ring <= Rules->LootCrateSearchRings && !bFound; ++Ring)
+		{
+			const int32 Count = Ring == 0 ? 1 : 8 * Ring;
+			for (int32 Index = 0; Index < Count && !bFound; ++Index)
+			{
+				const double Angle = UE_TWO_PI * Index / Count;
+				const FVector Spot = Wanted + (AxisX * FMath::Cos(Angle) + AxisY * FMath::Sin(Angle)) * (Ring * Rules->LootCrateSearchStep);
+				// the deck of the crew under it
+				FHitResult Deck;
+				if (!World->LineTraceSingleByChannel(Deck, FVector(Spot.X, Spot.Y, Base.Z + 150.0), FVector(Spot.X, Spot.Y, Base.Z - 150.0),
+					ECC_Visibility, Query) || Deck.GetActor() != Galleon || FMath::Abs(Deck.ImpactPoint.Z - Base.Z) > Rules->LootCrateMaxDeckStep)
+				{
+					continue;
+				}
+				// the crew's places stay clear
+				bool bClear = true;
+				for (int32 Crew = 0; Crew < 4 && bClear; ++Crew)
+				{
+					bClear = FVector::Dist2D(Spot, DeckSpot(Hull, Rules, Crew)) >= KeepFromCrew;
+				}
+				const FVector Candidate(Spot.X, Spot.Y, Deck.ImpactPoint.Z + Bottom + Clearance);
+				// room for it, a little above the planks
+				if (bClear && !World->OverlapBlockingTestByChannel(Candidate + CenterOffset + FVector(0.0, 0.0, Clearance), FQuat::Identity,
+					ECC_PhysicsBody, Room, Query))
+				{
+					Place = Candidate;
+					bFound = true;
+				}
+			}
+		}
+		Crate->SetActorLocationAndRotation(Place, Rotation, false, nullptr, ETeleportType::TeleportPhysics);
+		if (UPrimitiveComponent* Root = Cast<UPrimitiveComponent>(Crate->GetRootComponent()); Root && Root->IsSimulatingPhysics())
+		{
+			Root->SetPhysicsLinearVelocity(FVector::ZeroVector);
+			Root->SetPhysicsAngularVelocityInRadians(FVector::ZeroVector);
+		}
+		UE_LOG(Logmonke_island, Log, TEXT("%s: loot crate %s on the deck at %s%s"), *Galleon->GetName(), *Crate->GetName(), *Place.ToCompactString(),
+			bFound ? TEXT("") : TEXT(" (no free place found around the wanted one: put there anyway)"));
+		return Crate;
+	}
+}
 
 AGalleonActor::AGalleonActor()
 {
@@ -37,16 +148,27 @@ AGalleonActor::AGalleonActor()
 	Anchor = CreateDefaultSubobject<USceneComponent>(TEXT("Anchor"));
 	RootComponent = Anchor;
 
+	// the decks the crew walks on: still on the anchor, never rendered (network review T-268 R-04, T-317)
 	Hull = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hull"));
 	Hull->SetupAttachment(Anchor);
 	Hull->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
 	Hull->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	Hull->SetCanEverAffectNavigation(false);
+	Hull->SetHiddenInGame(true);
+	Hull->SetCastShadow(false);
+	Hull->bAffectDistanceFieldLighting = false;
+
+	// what the players see: the same hull, swaying, through which nothing collides
+	HullVisual = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HullVisual"));
+	HullVisual->SetupAttachment(Anchor);
+	HullVisual->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	HullVisual->SetGenerateOverlapEvents(false);
+	HullVisual->SetCanEverAffectNavigation(false);
 
 	auto MakePart = [this](const TCHAR* Name)
 	{
 		UStaticMeshComponent* Part = CreateDefaultSubobject<UStaticMeshComponent>(Name);
-		Part->SetupAttachment(Hull);
+		Part->SetupAttachment(HullVisual);
 		Part->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		Part->SetCanEverAffectNavigation(false);
 		return Part;
@@ -93,6 +215,54 @@ void AGalleonActor::BeginPlay()
 	ApplyRules();
 }
 
+void AGalleonActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if (DepartureSoundsHandle.IsValid())
+	{
+		DepartureSoundsHandle->CancelHandle();
+		DepartureSoundsHandle.Reset();
+	}
+	Super::EndPlay(EndPlayReason);
+}
+
+void AGalleonActor::LoadDepartureSounds()
+{
+	if (!Rules || GetNetMode() == NM_DedicatedServer || DepartureSoundsHandle.IsValid())
+	{
+		return;
+	}
+	TArray<FSoftObjectPath> Sounds;
+	for (const TSoftObjectPtr<USoundBase>* Sound : { &Rules->DepartureBellSound, &Rules->DepartureHornSound, &Rules->DepartureTickSound })
+	{
+		if (!Sound->IsNull())
+		{
+			Sounds.Add(Sound->ToSoftObjectPath());
+		}
+	}
+	if (!Sounds.IsEmpty())
+	{
+		// asynchronous, kept by the handle until the galleon goes: the first bell rings without a hitch
+		DepartureSoundsHandle = UAssetManager::GetStreamableManager().RequestAsyncLoad(Sounds, FStreamableDelegate());
+	}
+}
+
+void AGalleonActor::PlayDepartureCue(EGalleonDepartureCue Cue) const
+{
+	if (!Rules || GetNetMode() == NM_DedicatedServer)
+	{
+		return;
+	}
+	const TSoftObjectPtr<USoundBase>& Soft = Cue == EGalleonDepartureCue::Bell ? Rules->DepartureBellSound
+		: (Cue == EGalleonDepartureCue::Horn ? Rules->DepartureHornSound : Rules->DepartureTickSound);
+	USoundBase* Sound = Soft.Get();
+	if (!Sound)
+	{
+		UE_LOG(Logmonke_island, Verbose, TEXT("%s: departure sound %s not loaded (yet), not played"), *GetName(), *Soft.ToString());
+		return;
+	}
+	UGameplayStatics::PlaySound2D(this, Sound, Cue == EGalleonDepartureCue::Tick ? Rules->DepartureTickVolume : Rules->DepartureSoundVolume);
+}
+
 void AGalleonActor::ApplyRules()
 {
 	if (bRulesApplied || !Rules)
@@ -101,6 +271,10 @@ void AGalleonActor::ApplyRules()
 	}
 	bRulesApplied = true;
 	Hull->SetStaticMesh(Rules->HullMesh);
+	HullVisual->SetStaticMesh(Rules->HullMesh);
+	// the visual hull turns around the crew's deck: the planks under the players barely move against the still collision
+	SwayPivot = Hull->DoesSocketExist(Rules->DeckSpawnSocket) ? Hull->GetSocketTransform(Rules->DeckSpawnSocket, RTS_Component).GetLocation()
+		: FVector::ZeroVector;
 	Sails->SetStaticMesh(Rules->SailsMesh);
 	Rigging->SetStaticMesh(Rules->RiggingMesh);
 	Flag->SetStaticMesh(Rules->FlagMesh);
@@ -113,6 +287,8 @@ void AGalleonActor::ApplyRules()
 	AboardVolume->SetBoxExtent(Rules->AboardExtent, false);
 	CargoVolume->SetRelativeLocation(Rules->CargoCentre);
 	CargoVolume->SetBoxExtent(Rules->CargoExtent, false);
+	// the bell, the foghorn and the ticks of the departure (T-286), ready before they ring
+	LoadDepartureSounds();
 	// lamp of the captain's cabin (it has no window worth the name)
 	if (Rules->CabinLightIntensity > 0.0f && Hull->DoesSocketExist(Rules->CabinLightSocket))
 	{
@@ -137,6 +313,55 @@ void AGalleonActor::ApplyRules()
 		Calm->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		Calm->SetCanEverAffectNavigation(false);
 		Calm->RegisterComponent();
+	}
+	// the merchant of the deck (server; replicated actor attached to the hull)
+	if (HasAuthority() && !Rules->ShopkeeperClass.IsNull())
+	{
+		if (UClass* ShopClass = Rules->ShopkeeperClass.LoadSynchronous())
+		{
+			const FTransform& HullTransform = Hull->GetComponentTransform();
+			const FVector Base = Hull->DoesSocketExist(Rules->DeckSpawnSocket) ? Hull->GetSocketLocation(Rules->DeckSpawnSocket)
+				: HullTransform.TransformPosition(FVector(0.0, 160.0, 160.0));
+			const FVector Location = Base + HullTransform.TransformVectorNoScale(FVector(Rules->ShopkeeperOffset.X, Rules->ShopkeeperOffset.Y, 0.0))
+				+ FVector(0.0, 0.0, Rules->ShopkeeperOffset.Z);
+			const FRotator Rotation(0.0, GetActorRotation().Yaw + Rules->ShopkeeperYaw, 0.0);
+			FActorSpawnParameters Params;
+			Params.Owner = this;
+			Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			if (AActor* Shopkeeper = GetWorld()->SpawnActor<AActor>(ShopClass, Location, Rotation, Params))
+			{
+				Shopkeeper->AttachToComponent(Hull, FAttachmentTransformRules::KeepWorldTransform);
+				// the merchant and its stand keep clear of the crew's places (the first player stood in the stand: the
+				// view went brown through its panel as the ship rocked): slid along the deck away from the places, half
+				// a spacing of room around each
+				const FVector Away = (Location - Base).GetSafeNormal2D();
+				const double Room = Rules->DeckSpawnSpacing * 0.5;
+				const double Step = FMath::Max(Rules->DeckSpawnSpacing / 9.0, 5.0);
+				double Slid = 0.0;
+				for (int32 Move = 0; Move < 60 && !Away.IsNearlyZero(); ++Move)
+				{
+					const FBox Stand = Shopkeeper->GetComponentsBoundingBox(true).ExpandBy(FVector(Room, Room, 0.0));
+					bool bClear = true;
+					for (int32 Index = 0; Index < 4 && bClear; ++Index)
+					{
+						bClear = !Stand.IsInsideXY(DeckSpot(Hull, Rules, Index));
+					}
+					if (bClear)
+					{
+						break;
+					}
+					Shopkeeper->AddActorWorldOffset(Away * Step);
+					Slid += Step;
+				}
+				UE_LOG(Logmonke_island, Log, TEXT("%s: merchant %s on the deck at %s (slid %.0f cm clear of the crew's places)"), *GetName(),
+					*Shopkeeper->GetName(), *Shopkeeper->GetActorLocation().ToCompactString(), Slid);
+			}
+		}
+	}
+	// the loot crate of the expedition beside the merchant (server, after it: the crate keeps clear of its stand)
+	if (HasAuthority())
+	{
+		SpawnDeckCrate(this, Hull, Rules);
 	}
 	UE_LOG(Logmonke_island, Log, TEXT("%s: galleon anchored at %s"), *GetName(), *GetActorLocation().ToCompactString());
 }
@@ -169,12 +394,24 @@ void AGalleonActor::Tick(float DeltaSeconds)
 		SetActorLocation(FVector(Location.X, Location.Y, Z));
 	}
 
-	// cosmetic sway on the server clock: the same pose on every machine; the bow is +Y, so the ship rolls around Y
+	// cosmetic sway on the server clock, the same pose on every machine, on the visual hull only: the collision hull, the
+	// base of the players aboard and of what lies on the deck, never rolls (R-04, T-317)
 	const AGameStateBase* GameState = GetWorld()->GetGameState();
 	const double Time = GameState ? GameState->GetServerWorldTimeSeconds() : GetWorld()->GetTimeSeconds();
-	auto Wave = [Time](double Period, double Phase) { return Period > 0.0 ? FMath::Sin(UE_TWO_PI * Time / Period + Phase) : 0.0; };
-	const FRotator Sway(Rules->RollDeg * Wave(Rules->SwayPeriods.X, 0.0), 0.0, Rules->PitchDeg * Wave(Rules->SwayPeriods.Y, 1.3));
-	Hull->SetRelativeLocationAndRotation(FVector(0.0, 0.0, Rules->HeaveCm * Wave(Rules->SwayPeriods.Z, 2.1)), Sway);
+	HullVisual->SetRelativeTransform(ComputeVisualSway(*Rules, Time, SwayPivot));
+}
+
+FTransform AGalleonActor::ComputeVisualSway(const UGalleonRules& InRules, double ServerTime, const FVector& Pivot)
+{
+	auto Wave = [ServerTime](double Period, double Phase)
+	{
+		return Period > 0.0 && FMath::IsFinite(ServerTime) ? FMath::Sin(UE_TWO_PI * ServerTime / Period + Phase) : 0.0;
+	};
+	// the bow is +Y: the ship rolls around Y (the rotator's pitch) and pitches around X (its roll)
+	const FQuat Rotation = FRotator(InRules.RollDeg * Wave(InRules.SwayPeriods.X, 0.0), 0.0, InRules.PitchDeg * Wave(InRules.SwayPeriods.Y, 1.3)).Quaternion();
+	const FVector Heave(0.0, 0.0, InRules.HeaveCm * Wave(InRules.SwayPeriods.Z, 2.1));
+	// turning around the pivot: the pivot itself only heaves
+	return FTransform(Rotation, Pivot - Rotation.RotateVector(Pivot) + Heave);
 }
 
 // ---------------------------------------------------------------- aboard
@@ -201,10 +438,15 @@ void AGalleonActor::GetCargoAboard(TArray<AActor*>& OutCargo) const
 		ObjectTypes, CargoVolume->GetCollisionShape(), Params);
 	for (const FOverlapResult& Overlap : Overlaps)
 	{
-		AActor* Actor = Overlap.GetActor();
-		if (Actor && Actor->FindComponentByClass<UValuableComponent>())
+		// a loot crate aboard brings what it holds (T-258: hidden inside, out of reach of the overlap)
+		TArray<AActor*> WithContents;
+		LootContainers::AppendWithContents(Overlap.GetActor(), WithContents);
+		for (AActor* Actor : WithContents)
 		{
-			OutCargo.AddUnique(Actor);
+			if (Actor->FindComponentByClass<UValuableComponent>())
+			{
+				OutCargo.AddUnique(Actor);
+			}
 		}
 	}
 }
@@ -272,9 +514,15 @@ void AGalleonActor::MoorBoat(ABoatActor* Boat)
 
 void AGalleonActor::TeleportCharacter(ACharacter* Character, const FVector& Location, float Yaw) const
 {
-	if (const UBoatRiderComponent* Rider = Character->FindComponentByClass<UBoatRiderComponent>(); Rider && Rider->IsSeated())
+	// off any barque first (T-182): the seat is freed, the capsule taken off a hull it may hang on (even without a seat),
+	// movement and collision given back; otherwise it would follow the barque wherever the barque goes (MoorBoat)
+	if (UBoatRiderComponent* Rider = Character->FindComponentByClass<UBoatRiderComponent>())
 	{
-		Rider->GetSeatedBoat()->StandCharacter(Character);
+		Rider->LeaveBoat();
+	}
+	else if (Cast<ABoatActor>(Character->GetAttachParentActor()))
+	{
+		Character->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	}
 	const FRotator Rotation(0.0f, Yaw, 0.0f);
 	Character->SetActorLocationAndRotation(Location, Rotation, false, nullptr, ETeleportType::TeleportPhysics);
@@ -285,6 +533,11 @@ void AGalleonActor::TeleportCharacter(ACharacter* Character, const FVector& Loca
 	if (AController* Controller = Character->GetController())
 	{
 		Controller->SetControlRotation(Rotation);
+		// the owner's view too: the control rotation of a remote client is its own (network review T-268 R-11)
+		if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+		{
+			PlayerController->ClientSetRotation(Rotation, true);
+		}
 	}
 	// what the player carries comes along (it would be dragged through the hull)
 	const UIslanderGrabComponent* Grab = Character->FindComponentByClass<UIslanderGrabComponent>();
@@ -301,13 +554,9 @@ void AGalleonActor::PlaceOnDeck(ACharacter* Character, int32 Index)
 	{
 		return;
 	}
-	const FTransform& HullTransform = Hull->GetComponentTransform();
-	const FVector Base = Hull->DoesSocketExist(Rules->DeckSpawnSocket) ? Hull->GetSocketLocation(Rules->DeckSpawnSocket)
-		: HullTransform.TransformPosition(FVector(0.0, 160.0, 160.0));
 	// side by side across the deck, looking at the island (the ladder side, -X)
-	const float Side = (static_cast<float>(Index % 4) - 1.5f) * Rules->DeckSpawnSpacing;
 	const float HalfHeight = Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
-	const FVector Location = Base + HullTransform.GetUnitAxis(EAxis::Y) * Side + FVector(0.0, 0.0, HalfHeight + 10.0);
+	const FVector Location = DeckSpot(Hull, Rules, Index) + FVector(0.0, 0.0, HalfHeight + 10.0);
 	TeleportCharacter(Character, Location, GetActorRotation().Yaw + 180.0f);
 	UE_LOG(Logmonke_island, Log, TEXT("%s: %s on the deck"), *GetName(), *Character->GetName());
 }
@@ -334,8 +583,36 @@ AGalleonActor::ELadderMove AGalleonActor::GetLadderMove(const APawn* User) const
 	return FVector::Dist2D(Location, Foot) <= Rules->LadderReach ? ELadderMove::Board : ELadderMove::None;
 }
 
+bool AGalleonActor::IsAtHelm(const APawn* User) const
+{
+	if (!User || !Rules || !IsActorAboard(User))
+	{
+		return false;
+	}
+	if (const UIslanderHealthComponent* Health = User->FindComponentByClass<UIslanderHealthComponent>(); Health && Health->IsDead())
+	{
+		return false;
+	}
+	// in the frame of the still collision hull, never of the swaying wheel: the server and the clients agree on the reach
+	const FVector Helm = Hull->DoesSocketExist(Rules->HelmSocket) ? Hull->GetSocketLocation(Rules->HelmSocket)
+		: Hull->GetComponentTransform().TransformPosition(Rules->WheelPivot);
+	return FVector::Dist2D(User->GetActorLocation(), Helm) <= Rules->HelmReach;
+}
+
+bool AGalleonActor::IsHelmUsableBy(const APawn* User) const
+{
+	const UGalleonDepartureComponent* Departure = UGalleonDepartureComponent::Get(this);
+	return Departure && Departure->IsHelmUsable() && IsAtHelm(User);
+}
+
 FText AGalleonActor::GetInteractionPrompt_Implementation(APawn* User) const
 {
+	// the wheel (T-286): held to raise the anchor, pressed to cancel a vote or a notice (UGalleonCrewComponent)
+	if (IsHelmUsableBy(User))
+	{
+		const UGalleonDepartureComponent* Departure = UGalleonDepartureComponent::Get(this);
+		return Departure && Departure->GetStage() != EGalleonDepartureStage::None ? Rules->HelmCancelPrompt : Rules->HelmPrompt;
+	}
 	switch (GetLadderMove(User))
 	{
 	case ELadderMove::Board:	return Rules->BoardPrompt;
@@ -346,7 +623,7 @@ FText AGalleonActor::GetInteractionPrompt_Implementation(APawn* User) const
 
 bool AGalleonActor::CanInteract_Implementation(APawn* User) const
 {
-	return GetLadderMove(User) != ELadderMove::None;
+	return IsHelmUsableBy(User) || GetLadderMove(User) != ELadderMove::None;
 }
 
 void AGalleonActor::Interact_Implementation(APawn* User)
@@ -354,6 +631,13 @@ void AGalleonActor::Interact_Implementation(APawn* User)
 	ACharacter* Character = Cast<ACharacter>(User);
 	if (!HasAuthority() || !Character)
 	{
+		return;
+	}
+	// at the wheel the key belongs to the departure (UGalleonCrewComponent: held 2 s, checked by the server): a tap that
+	// reaches the interaction raises nothing, ends nothing (network review T-268 R-01: one press no longer ends the day)
+	if (IsHelmUsableBy(User))
+	{
+		UE_LOG(Logmonke_island, Verbose, TEXT("%s: %s tapped the wheel: the anchor is raised by holding its key"), *GetName(), *GetNameSafe(User));
 		return;
 	}
 	const float HalfHeight = Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();

@@ -1,0 +1,617 @@
+{
+  "M_Galleon_Tar": {
+    "kind": "pbr",
+    "asset": "dark_wooden_planks",
+    "tile": 1.6,
+    "tint": [
+      0.4,
+      0.37,
+      0.34
+    ],
+    "sat": 0.55,
+    "rough_add": 0.1,
+    "grain": "u",
+    "rot": false,
+    "tones": true,
+    "tone_mul": [
+      0.85,
+      0.93,
+      1.0,
+      1.35,
+      1.6
+    ],
+    "role": "fond goudronné (œuvres vives, de la quille à z≈0,15) ; t3/t4 nettement plus clairs = bande de flottaison",
+    "maps": {
+      "diff": "textures/dark_wooden_planks/dark_wooden_planks_diff_1k.jpg",
+      "rough": "textures/dark_wooden_planks/dark_wooden_planks_rough_1k.jpg",
+      "normal": "textures/dark_wooden_planks/dark_wooden_planks_nor_gl_1k.jpg",
+      "ao": "textures/dark_wooden_planks/dark_wooden_planks_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_Hull": {
+    "kind": "pbr",
+    "asset": "brown_planks_03",
+    "tile": 2.4,
+    "tint": [
+      2.3,
+      1.3,
+      0.7
+    ],
+    "sat": 1.2,
+    "rough_add": 0.0,
+    "ao": 0.4,
+    "grain": "u",
+    "rot": true,
+    "tones": true,
+    "role": "bordé chêne brun (ceinture des sabords, z 0,15..1,45)",
+    "maps": {
+      "diff": "textures/brown_planks_03/brown_planks_03_diff_2k.jpg",
+      "rough": "textures/brown_planks_03/brown_planks_03_rough_2k.jpg",
+      "normal": "textures/brown_planks_03/brown_planks_03_nor_gl_2k.jpg",
+      "ao": "textures/brown_planks_03/brown_planks_03_ao_2k.jpg"
+    }
+  },
+  "M_Galleon_Blue": {
+    "kind": "pbr",
+    "asset": "blue_painted_planks",
+    "tile": 1.6,
+    "tint": [
+      0.48,
+      0.58,
+      0.92
+    ],
+    "sat": 0.75,
+    "rough_add": 0.1,
+    "mix": [
+      "384859",
+      0.5
+    ],
+    "grain": "u",
+    "rot": false,
+    "tones": true,
+    "role": "œuvres mortes bleu nuit (pavois, châteaux, face intérieure du pavois) ; écailles atténuées par mix navy",
+    "maps": {
+      "diff": "textures/blue_painted_planks/blue_painted_planks_diff_1k.jpg",
+      "rough": "textures/blue_painted_planks/blue_painted_planks_rough_1k.jpg",
+      "normal": "textures/blue_painted_planks/blue_painted_planks_nor_gl_1k.jpg",
+      "ao": "textures/blue_painted_planks/blue_painted_planks_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_Wale": {
+    "kind": "pbr",
+    "asset": "dark_wooden_planks",
+    "tile": 1.2,
+    "tint": [
+      0.32,
+      0.29,
+      0.27
+    ],
+    "sat": 0.5,
+    "rough_add": 0.15,
+    "grain": "u",
+    "rot": false,
+    "tones": true,
+    "role": "préceintes goudronnées, quille, étrave, étambot (plus noires que tar)",
+    "maps": {
+      "diff": "textures/dark_wooden_planks/dark_wooden_planks_diff_1k.jpg",
+      "rough": "textures/dark_wooden_planks/dark_wooden_planks_rough_1k.jpg",
+      "normal": "textures/dark_wooden_planks/dark_wooden_planks_nor_gl_1k.jpg",
+      "ao": "textures/dark_wooden_planks/dark_wooden_planks_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_Deck": {
+    "kind": "pbr",
+    "asset": "plank_flooring_03",
+    "tile": 2.2,
+    "tint": [
+      1.35,
+      1.18,
+      0.95
+    ],
+    "sat": 0.9,
+    "rough_add": 0.05,
+    "grain": "u",
+    "rot": false,
+    "tones": true,
+    "role": "lattes de pont (embelle, cabine : chêne miel lessivé)",
+    "maps": {
+      "diff": "textures/plank_flooring_03/plank_flooring_03_diff_2k.jpg",
+      "rough": "textures/plank_flooring_03/plank_flooring_03_rough_2k.jpg",
+      "normal": "textures/plank_flooring_03/plank_flooring_03_nor_gl_2k.jpg",
+      "ao": "textures/plank_flooring_03/plank_flooring_03_ao_2k.jpg"
+    }
+  },
+  "M_Galleon_Deck2": {
+    "kind": "pbr",
+    "asset": "wood_planks_grey",
+    "tile": 2.0,
+    "tint": [
+      1.55,
+      1.4,
+      1.15
+    ],
+    "sat": 0.8,
+    "rough_add": 0.05,
+    "grain": "u",
+    "rot": true,
+    "tones": true,
+    "role": "lattes de pont des châteaux (gaillards, dunette, hunes : plus grises)",
+    "maps": {
+      "diff": "textures/wood_planks_grey/wood_planks_grey_diff_2k.jpg",
+      "rough": "textures/wood_planks_grey/wood_planks_grey_rough_2k.jpg",
+      "normal": "textures/wood_planks_grey/wood_planks_grey_nor_gl_2k.jpg",
+      "ao": "textures/wood_planks_grey/wood_planks_grey_ao_2k.jpg"
+    }
+  },
+  "M_Galleon_Oak": {
+    "kind": "pbr",
+    "asset": "fine_grained_wood",
+    "tile": 0.9,
+    "tint": [
+      4.0,
+      3.5,
+      3.2
+    ],
+    "sat": 0.9,
+    "rough_add": -0.1,
+    "mix": [
+      "8E6240",
+      0.35
+    ],
+    "grain": "u",
+    "rot": false,
+    "tones": true,
+    "role": "chêne moyen ciré (≈ #855D3C) : cloisons, bittes, hiloires, meubles, montants",
+    "maps": {
+      "diff": "textures/fine_grained_wood/fine_grained_wood_diff_1k.jpg",
+      "rough": "textures/fine_grained_wood/fine_grained_wood_rough_1k.jpg",
+      "normal": "textures/fine_grained_wood/fine_grained_wood_nor_gl_1k.jpg",
+      "ao": "textures/fine_grained_wood/fine_grained_wood_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_OakLight": {
+    "kind": "pbr",
+    "asset": "rough_wood",
+    "tile": 0.7,
+    "tint": [
+      1.55,
+      1.3,
+      0.98
+    ],
+    "sat": 0.8,
+    "rough_add": 0.0,
+    "grain": "u",
+    "rot": true,
+    "tones": true,
+    "role": "chêne clair : lisses de pavois, balustres, affûts, caillebotis, roue",
+    "maps": {
+      "diff": "textures/rough_wood/rough_wood_diff_1k.jpg",
+      "rough": "textures/rough_wood/rough_wood_rough_1k.jpg",
+      "normal": "textures/rough_wood/rough_wood_nor_gl_1k.jpg",
+      "ao": "textures/rough_wood/rough_wood_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_OakDark": {
+    "kind": "pbr",
+    "asset": "fine_grained_wood",
+    "tile": 0.8,
+    "tint": [
+      1.05,
+      0.92,
+      0.8
+    ],
+    "sat": 0.9,
+    "rough_add": 0.05,
+    "grain": "u",
+    "rot": false,
+    "tones": true,
+    "role": "chêne sombre : hunes, chouquets, potence de cloche, coffres, lit",
+    "maps": {
+      "diff": "textures/fine_grained_wood/fine_grained_wood_diff_1k.jpg",
+      "rough": "textures/fine_grained_wood/fine_grained_wood_rough_1k.jpg",
+      "normal": "textures/fine_grained_wood/fine_grained_wood_nor_gl_1k.jpg",
+      "ao": "textures/fine_grained_wood/fine_grained_wood_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_Spar": {
+    "kind": "pbr",
+    "asset": "rough_wood",
+    "tile": 1.4,
+    "tint": [
+      1.3,
+      1.02,
+      0.76
+    ],
+    "sat": 0.9,
+    "rough_add": 0.05,
+    "grain": "v",
+    "rot": false,
+    "tones": false,
+    "role": "mâts, vergues, beaupré, espars (Batch.tube : fil le long de V)",
+    "maps": {
+      "diff": "textures/rough_wood/rough_wood_diff_1k.jpg",
+      "rough": "textures/rough_wood/rough_wood_rough_1k.jpg",
+      "normal": "textures/rough_wood/rough_wood_nor_gl_1k.jpg",
+      "ao": "textures/rough_wood/rough_wood_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_Cedar": {
+    "kind": "pbr",
+    "asset": "japanese_cedar_planks",
+    "tile": 1.2,
+    "tint": [
+      0.37,
+      0.29,
+      0.21
+    ],
+    "sat": 0.7,
+    "rough_add": 0.2,
+    "grain": "u",
+    "rot": true,
+    "tones": true,
+    "role": "portes, mantelets de sabord, panneaux de porte (bois sombre rougeâtre ≈ #604029)",
+    "maps": {
+      "diff": "textures/japanese_cedar_planks/japanese_cedar_planks_diff_1k.jpg",
+      "rough": "textures/japanese_cedar_planks/japanese_cedar_planks_rough_1k.jpg",
+      "normal": "textures/japanese_cedar_planks/japanese_cedar_planks_nor_gl_1k.jpg",
+      "ao": "textures/japanese_cedar_planks/japanese_cedar_planks_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_CabinWall": {
+    "kind": "pbr",
+    "asset": "weathered_brown_planks",
+    "tile": 2.6,
+    "tint": [
+      2.3,
+      1.7,
+      1.1
+    ],
+    "sat": 0.95,
+    "rough_add": 0.05,
+    "grain": "u",
+    "rot": false,
+    "tones": true,
+    "role": "lambris de la cabine (chêne à panneaux ≈ #90643B)",
+    "maps": {
+      "diff": "textures/weathered_brown_planks/weathered_brown_planks_diff_1k.jpg",
+      "rough": "textures/weathered_brown_planks/weathered_brown_planks_rough_1k.jpg",
+      "normal": "textures/weathered_brown_planks/weathered_brown_planks_nor_gl_1k.jpg",
+      "ao": "textures/weathered_brown_planks/weathered_brown_planks_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_CabinFloor": {
+    "kind": "pbr",
+    "asset": "hinoki_planks",
+    "tile": 2.0,
+    "tint": [
+      1.05,
+      0.9,
+      0.7
+    ],
+    "sat": 1.0,
+    "rough_add": 0.05,
+    "grain": "u",
+    "rot": false,
+    "tones": true,
+    "role": "plancher de la cabine (14 lattes par tuile : pas 0,143 m)",
+    "maps": {
+      "diff": "textures/hinoki_planks/hinoki_planks_diff_2k.jpg",
+      "rough": "textures/hinoki_planks/hinoki_planks_rough_2k.jpg",
+      "normal": "textures/hinoki_planks/hinoki_planks_nor_gl_2k.jpg",
+      "ao": "textures/hinoki_planks/hinoki_planks_ao_2k.jpg"
+    }
+  },
+  "M_Galleon_Barrel": {
+    "kind": "pbr",
+    "asset": "wooden_barrel",
+    "tile": 1.0,
+    "tint": [
+      1.0,
+      0.95,
+      0.9
+    ],
+    "sat": 1.0,
+    "rough_add": 0.0,
+    "grain": "u",
+    "rot": false,
+    "tones": true,
+    "role": "tonneaux (douves + cercles intégrés ; UV : u = tour, v = hauteur)",
+    "maps": {
+      "diff": "textures/wooden_barrel/wooden_barrel_diff_1k.jpg",
+      "rough": "textures/wooden_barrel/wooden_barrel_rough_1k.jpg",
+      "normal": "textures/wooden_barrel/wooden_barrel_nor_gl_1k.jpg",
+      "ao": "textures/wooden_barrel/wooden_barrel_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_Gold": {
+    "kind": "gold",
+    "asset": "Metal048C",
+    "tones": false,
+    "role": "dorures : moulures, lion, rinceaux, cadres, médaillon, pommes",
+    "maps": {
+      "diff": "textures/Metal048C/Metal048C_diff_1k.jpg",
+      "rough": "textures/Metal048C/Metal048C_rough_1k.jpg",
+      "normal": "textures/Metal048C/Metal048C_nor_gl_1k.jpg",
+      "metal": "textures/Metal048C/Metal048C_metal_1k.jpg"
+    }
+  },
+  "M_Galleon_Brass": {
+    "kind": "pbr",
+    "asset": "Metal048C",
+    "tile": 0.5,
+    "tint": [
+      0.95,
+      0.76,
+      0.45
+    ],
+    "sat": 0.9,
+    "rough_add": 0.12,
+    "metallic": 1.0,
+    "grain": "u",
+    "rot": false,
+    "tones": false,
+    "role": "laiton : cloche, moyeu de roue, montures de lanternes, compas",
+    "maps": {
+      "diff": "textures/Metal048C/Metal048C_diff_1k.jpg",
+      "rough": "textures/Metal048C/Metal048C_rough_1k.jpg",
+      "normal": "textures/Metal048C/Metal048C_nor_gl_1k.jpg",
+      "metal": "textures/Metal048C/Metal048C_metal_1k.jpg"
+    }
+  },
+  "M_Galleon_Iron": {
+    "kind": "pbr",
+    "asset": "Metal046B",
+    "tile": 0.8,
+    "tint": [
+      0.75,
+      0.78,
+      0.86
+    ],
+    "sat": 0.8,
+    "rough_add": 0.08,
+    "metallic": 0.9,
+    "grain": "u",
+    "rot": false,
+    "tones": false,
+    "role": "fonte noire bleutée : tubes de canon, boulets, tourillons",
+    "maps": {
+      "diff": "textures/Metal046B/Metal046B_diff_1k.jpg",
+      "rough": "textures/Metal046B/Metal046B_rough_1k.jpg",
+      "normal": "textures/Metal046B/Metal046B_nor_gl_1k.jpg",
+      "metal": "textures/Metal046B/Metal046B_metal_1k.jpg"
+    }
+  },
+  "M_Galleon_IronRust": {
+    "kind": "pbr",
+    "asset": "rusty_metal_04",
+    "tile": 0.6,
+    "tint": [
+      0.95,
+      0.9,
+      0.82
+    ],
+    "sat": 0.5,
+    "rough_add": 0.2,
+    "metallic": 0.3,
+    "mix": [
+      "2B2623",
+      0.6
+    ],
+    "grain": "u",
+    "rot": false,
+    "tones": false,
+    "role": "fer forgé gris-noir mat : ancres, ferrures, cercles, cadènes, pentures",
+    "maps": {
+      "diff": "textures/rusty_metal_04/rusty_metal_04_diff_1k.jpg",
+      "rough": "textures/rusty_metal_04/rusty_metal_04_rough_1k.jpg",
+      "normal": "textures/rusty_metal_04/rusty_metal_04_nor_gl_1k.jpg",
+      "ao": "textures/rusty_metal_04/rusty_metal_04_ao_1k.jpg",
+      "metal": "textures/rusty_metal_04/rusty_metal_04_rough_1k.jpg"
+    }
+  },
+  "M_Galleon_Glass": {
+    "kind": "glass",
+    "tones": false,
+    "role": "vitrage sombre réfléchissant (fenêtres de poupe, cabine, lanternes éteintes)",
+    "maps": {}
+  },
+  "M_Galleon_Lamp": {
+    "kind": "lamp",
+    "tones": false,
+    "role": "verre de lanterne émissif ambre (lumières UE sur les sockets lantern_*)",
+    "maps": {}
+  },
+  "M_Galleon_Rope": {
+    "kind": "pbr",
+    "asset": "Rope001",
+    "tile": 0.12,
+    "tint": [
+      1.0,
+      0.9,
+      0.68
+    ],
+    "sat": 0.9,
+    "rough_add": 0.1,
+    "grain": "v",
+    "rot": false,
+    "tones": false,
+    "role": "cordage de chanvre clair : manœuvres, glènes, brague, liures",
+    "maps": {
+      "diff": "textures/Rope001/Rope001_1K-JPG_Color.jpg",
+      "rough": "textures/Rope001/Rope001_1K-JPG_Roughness.jpg",
+      "normal": "textures/Rope001/Rope001_1K-JPG_NormalGL.jpg",
+      "metal": "textures/Rope001/Rope001_1K-JPG_Metalness.jpg"
+    }
+  },
+  "M_Galleon_RopeTar": {
+    "kind": "pbr",
+    "asset": "Rope001",
+    "tile": 0.12,
+    "tint": [
+      0.4,
+      0.34,
+      0.28
+    ],
+    "sat": 0.6,
+    "rough_add": 0.15,
+    "grain": "v",
+    "rot": false,
+    "tones": false,
+    "role": "cordage goudronné : haubans, étais, gammoning (gros diamètres)",
+    "maps": {
+      "diff": "textures/Rope001/Rope001_1K-JPG_Color.jpg",
+      "rough": "textures/Rope001/Rope001_1K-JPG_Roughness.jpg",
+      "normal": "textures/Rope001/Rope001_1K-JPG_NormalGL.jpg",
+      "metal": "textures/Rope001/Rope001_1K-JPG_Metalness.jpg"
+    }
+  },
+  "M_Galleon_Rigging": {
+    "kind": "flat",
+    "color": "2E2A28",
+    "rough": 0.85,
+    "tones": false,
+    "role": "lignes fines (enfléchures, bras, drisses) : pas d'UV requis",
+    "maps": {}
+  },
+  "M_Galleon_Canvas": {
+    "kind": "canvas",
+    "asset": "terlenka",
+    "tones": false,
+    "role": "toile de voile écrue à laizes (UV en mètres)",
+    "maps": {
+      "diff": "textures/terlenka/terlenka_diff_2k.jpg",
+      "rough": "textures/terlenka/terlenka_rough_2k.jpg",
+      "normal": "textures/terlenka/terlenka_nor_gl_2k.jpg",
+      "ao": "textures/terlenka/terlenka_ao_2k.jpg",
+      "metal": "textures/terlenka/terlenka_metal_2k.jpg"
+    }
+  },
+  "M_Galleon_Flag": {
+    "kind": "flag",
+    "tones": false,
+    "role": "pavillon de Saint-Georges (UV 0..1)",
+    "maps": {}
+  },
+  "M_Galleon_Pitch": {
+    "kind": "flat",
+    "color": "1C1713",
+    "rough": 0.55,
+    "tones": false,
+    "role": "calfatage (joints de bordé et de pont) ; intérieur des sabords",
+    "maps": {}
+  },
+  "M_Galleon_DarkRecess": {
+    "kind": "flat",
+    "color": "0E0D0C",
+    "rough": 0.95,
+    "tones": false,
+    "role": "fond noir (faux entrepont derrière les sabords)",
+    "maps": {}
+  },
+  "M_Galleon_Navy": {
+    "kind": "flat",
+    "color": "2F3D5C",
+    "rough": 0.55,
+    "tones": false,
+    "role": "bleu nuit peint uni (piédestal de barre, petits panneaux)",
+    "maps": {}
+  },
+  "M_Galleon_Ochre": {
+    "kind": "pbr",
+    "asset": "rough_wood",
+    "tile": 0.7,
+    "tint": [
+      2.6,
+      1.8,
+      1.15
+    ],
+    "sat": 0.7,
+    "rough_add": 0.1,
+    "ao": 0.3,
+    "grain": "u",
+    "rot": true,
+    "tones": true,
+    "role": "bois clair ocre (≈ #C8A070 éclairé, albédo ≈ #A88562) : cadres de sabords, linteaux, filets",
+    "maps": {
+      "diff": "textures/rough_wood/rough_wood_diff_1k.jpg",
+      "rough": "textures/rough_wood/rough_wood_rough_1k.jpg",
+      "normal": "textures/rough_wood/rough_wood_nor_gl_1k.jpg",
+      "ao": "textures/rough_wood/rough_wood_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_Leather": {
+    "kind": "pbr",
+    "asset": "brown_leather",
+    "tile": 0.6,
+    "tint": [
+      1.0,
+      0.95,
+      0.9
+    ],
+    "sat": 1.0,
+    "rough_add": 0.0,
+    "grain": "u",
+    "rot": false,
+    "tones": false,
+    "role": "cuir : coffres, reliures, sangles",
+    "maps": {
+      "diff": "textures/brown_leather/brown_leather_diff_1k.jpg",
+      "rough": "textures/brown_leather/brown_leather_rough_1k.jpg",
+      "normal": "textures/brown_leather/brown_leather_nor_gl_1k.jpg",
+      "ao": "textures/brown_leather/brown_leather_ao_1k.jpg"
+    }
+  },
+  "M_Galleon_Velvet": {
+    "kind": "pbr",
+    "asset": "velour_velvet",
+    "tile": 0.8,
+    "tint": [
+      0.085,
+      0.135,
+      0.31
+    ],
+    "sat": 0.0,
+    "rough_add": 0.1,
+    "grain": "u",
+    "rot": false,
+    "tones": false,
+    "role": "velours bleu nuit (≈ #2F3D5C) : tapis, couverture, assise de chaise",
+    "maps": {
+      "diff": "textures/velour_velvet/velour_velvet_diff_1k.jpg",
+      "rough": "textures/velour_velvet/velour_velvet_rough_1k.jpg",
+      "normal": "textures/velour_velvet/velour_velvet_nor_gl_1k.jpg",
+      "ao": "textures/velour_velvet/velour_velvet_ao_1k.jpg",
+      "metal": "textures/velour_velvet/velour_velvet_metal_1k.jpg"
+    }
+  },
+  "M_Galleon_Linen": {
+    "kind": "flat",
+    "color": "E1CFBE",
+    "rough": 0.9,
+    "tones": false,
+    "role": "drap, oreiller",
+    "maps": {}
+  },
+  "M_Galleon_Paper": {
+    "kind": "flat",
+    "color": "EFD4AD",
+    "rough": 0.8,
+    "tones": false,
+    "role": "carte marine (parchemin)",
+    "maps": {}
+  },
+  "M_Galleon_CanvasPatch": {
+    "kind": "canvas",
+    "asset": "terlenka",
+    "tones": false,
+    "role": "toile de voile écrue à laizes (UV en mètres)",
+    "patch": true,
+    "maps": {
+      "diff": "textures/terlenka/terlenka_diff_2k.jpg",
+      "rough": "textures/terlenka/terlenka_rough_2k.jpg",
+      "normal": "textures/terlenka/terlenka_nor_gl_2k.jpg",
+      "ao": "textures/terlenka/terlenka_ao_2k.jpg",
+      "metal": "textures/terlenka/terlenka_metal_2k.jpg"
+    }
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "$schema": "../../factory/schema/maquette.schema.json",
+  "format": "maquette/1",
+  "id": "galion-anglais",
+  "title": "Galion anglais à l'échelle de Bean (flottant, pour Unreal)",
+  "description": "Galion anglais d'après les planches de référence (extérieur + pont & équipements), à l'échelle de Bean (1,05 m) : coque de 22 m bordée (fond goudronné, bois, œuvres mortes bleues, préceintes dorées), 14 sabords avec canons, figure de proue en lion doré, beaupré, 3 mâts avec hunes, voiles carrées et latine, haubans et enfléchures, pavillon de Saint-Georges ; voiles, flammes et pavillon animés par le vent (modificateur Vent dans Blender, canaux UV pour un World Position Offset dans Unreal) ; château avant, gaillard d'arrière, dunette, escaliers, balustrades, cabine du capitaine meublée (table et carte, chaise, lit, coffres, tapis, lanternes) ; barre à roue, cabestan, cloche, lanternes, ancres, gouvernail, caillebotis, canons de pont, tonneaux, caisses ; échelle d'abordage et bossoirs pour la barque. Origine sur la flottaison ; collisions UCX (coque en tranches, ponts marchables), sockets (barre, échelle, barque, cale, cabine...) et pontons de flottaison pour le Water plugin d'Unreal.",
+  "brief": "Galion qui permet à Bean de se déplacer pour ramener les objets de la barque ; modéliser la maquette du galion en 3D à la taille de Bean ; il devra flotter sur Unreal Engine ; ouvrir Blender à la fin.",
+  "version": "0.2.0",
+  "status": "built",
+  "tags": [
+    "galion",
+    "navire",
+    "bateau",
+    "flottaison",
+    "unreal"
+  ],
+  "units": {
+    "system": "METRIC",
+    "length": "METERS",
+    "scale_length": 1.0
+  },
+  "objects": [],
+  "scripts": [
+    "scripts/galleon.py"
+  ],
+  "camera": {
+    "location": [
+      24.0,
+      -26.0,
+      12.0
+    ],
+    "look_at": [
+      0.0,
+      0.5,
+      5.5
+    ],
+    "lens": 30
+  },
+  "lights": [
+    {
+      "name": "soleil",
+      "type": "SUN",
+      "energy": 3.4,
+      "color": [
+        1.0,
+        0.96,
+        0.9
+      ],
+      "rotation_deg": [
+        48,
+        0,
+        -35
+      ]
+    },
+    {
+      "name": "remplissage",
+      "type": "SUN",
+      "energy": 1.0,
+      "color": [
+        0.85,
+        0.9,
+        1.0
+      ],
+      "rotation_deg": [
+        62,
+        0,
+        140
+      ]
+    },
+    {
+      "name": "contre",
+      "type": "SUN",
+      "energy": 1.4,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "rotation_deg": [
+        70,
+        0,
+        210
+      ]
+    }
+  ],
+  "world": {
+    "color": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "strength": 0.9,
+    "hdri": "art/hdri/secluded_beach_4k.hdr",
+    "hdri_rotation_deg": 40,
+    "background_color": [
+      0.93,
+      0.93,
+      0.92,
+      1.0
+    ]
+  },
+  "render": {
+    "engine": "EEVEE",
+    "resolution": [
+      1600,
+      900
+    ],
+    "samples": 32
+  },
+  "outputs": {
+    "blend": true,
+    "exports": [],
+    "preview": true
+  },
+  "gameplay": {
+    "role": "Navire du joueur : Bean y circule à pied (ponts, escaliers, cabine) et y ramène le butin rapporté par la barque.",
+    "usage": "Monter à bord par l'échelle d'abordage (tribord) ou depuis la barque amarrée au socket barque_dock ; déposer les objets à la cale (socket cargo_hatch) ; barre à roue (socket helm) pour naviguer ; la barque se hisse aux bossoirs (barque_davit).",
+    "physics": {
+      "buoyancy": "BuoyancyComponent du Water plugin, pontons dans galleon-report.json",
+      "origin": "flottaison (z = 0)",
+      "mass_kg": 42000
+    }
+  },
+  "history": [
+    {
+      "version": "0.1.0",
+      "date": "2026-10-04",
+      "author": "factory",
+      "notes": "Création du galion"
+    },
+    {
+      "version": "0.2.0",
+      "date": "2026-10-06",
+      "author": "factory",
+      "notes": "Vent : voiles, flammes (SM_Galleon_Pennants séparé) et pavillon animés (GN Vent + UV WPO pour UE) ; inclut les retouches du kit du 4 octobre au soir"
+    }
+  ]
+}

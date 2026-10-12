@@ -12,6 +12,7 @@ class UBoatRules;
 class UBoxComponent;
 class UMaterialInterface;
 class UStaticMeshComponent;
+class UAudioComponent;
 class UIslandWaterSubsystem;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBoatSunkSignature, ABoatActor*, Boat);
@@ -68,9 +69,14 @@ public:
 	UFUNCTION(BlueprintPure, Category="Boat")
 	UStaticMeshComponent* GetHull() const { return Hull; }
 
-	/** Load aboard: players + objects (kg) */
+	/** Load aboard: players + objects (kg); a loot crate weighs with what it holds (T-258) */
 	UFUNCTION(BlueprintPure, Category="Boat")
 	float GetLoadKg() const { return LoadKg; }
+
+	/** Objects lying in the barque (stowed or settling, not held by a player), with what lies inside a loot crate aboard
+	 *  (T-258, LootContainers::AppendWithContents): the cargo counted at the shore and the bilan */
+	UFUNCTION(BlueprintCallable, Category="Boat")
+	void GetCargoAboard(TArray<AActor*>& OutCargo) const;
 
 	/** Load above which the boat floods (kg) */
 	UFUNCTION(BlueprintPure, Category="Boat")
@@ -199,14 +205,20 @@ private:
 		FTransform Local;
 		float RestTime = 0.0f;
 		bool bStowed = false;
+		/** Stowed by its network rest (UNetRestComponent): glued to the hull on every machine, nothing replicated (T-295) */
+		bool bGlued = false;
 	};
 
 	/** Loose objects lying aboard (server, DA bContainLooseCargo) */
 	TMap<TWeakObjectPtr<UPrimitiveComponent>, FLooseCargo> LooseCargo;
 
 	/** Server: stows the objects resting aboard and carries them with the hull, whatever its speed or the wind,
-	 *  until a player takes them (no collision added, the objects keep simulating) */
+	 *  until a player takes them (no collision added, the objects keep simulating). An object with a network rest is
+	 *  glued to the hull on every machine (T-295); the others are carried by the server alone */
 	void KeepCargoAboard(float DeltaSeconds);
+
+	/** Server: frees the cargo glued to the hull (the barque sank, or stows nothing any more) */
+	void ReleaseGluedCargo();
 
 	/** Occupant of each seat (nullptr when free) */
 	UPROPERTY(Replicated)
@@ -256,8 +268,9 @@ private:
 	/** The hull is worked off the sand (pushed or freed): its keel is partly lifted, so it skids */
 	bool bSkidding = false;
 
-	/** Elapsed time for the swell */
-	float SwellTime = 0.0f;
+	/** Time of the swell (s): the server clock, the same on every machine (T-295, review R-05: it was the time since
+	 *  the BeginPlay of each machine, so each hull rolled out of phase and was pulled back by the corrections) */
+	double GetSwellTime() const;
 
 	/** Time accumulated since the last load update (s) */
 	float LoadUpdateTimer = 0.0f;
@@ -265,4 +278,18 @@ private:
 	/** Provides the sea level */
 	UPROPERTY(Transient)
 	TObjectPtr<UIslandWaterSubsystem> WaterSubsystem;
+
+	/** Every machine but a dedicated server: the oars bite the water (splash) and leave it (drip), the water along the
+	 *  hull follows the speed (WakeSound) */
+	void UpdateSounds(float DeltaSeconds);
+
+	/** Looped water along the hull */
+	UPROPERTY(Transient)
+	TObjectPtr<UAudioComponent> WakeAudio;
+
+	/** Level of the wake, 0 to 1 */
+	float WakeLevel = 0.0f;
+
+	/** Each blade (port, starboard) was in the water at the last update */
+	bool bBladeWasIn[2] = { false, false };
 };

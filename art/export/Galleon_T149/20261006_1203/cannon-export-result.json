@@ -1,0 +1,21 @@
+{
+  "fbx": "exports/SM_Galleon_Cannons.fbx",
+  "glb": "exports/SM_Galleon_Cannons.glb",
+  "tris": 35008,
+  "materials": 7,
+  "material_names": [
+    "M_Galleon_Iron",
+    "M_Galleon_DarkRecess",
+    "M_Galleon_OakLight",
+    "M_Galleon_OakDark",
+    "M_Galleon_IronRust",
+    "M_Galleon_Pitch",
+    "M_Galleon_Rope"
+  ],
+  "ucx": 0,
+  "sockets": [],
+  "tone_attribute": "Tone (vertex color lineaire, RGB = ton / 1,2 ; UE : BaseColor x VertexColor x 1,2)",
+  "source_blend": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\galion-anglais\\galion-anglais.blend",
+  "generated_triangles": 35008,
+  "fbx_sha256": "0dbaba4d3f4878ca9259de3b897af0e99de0657534baea9fa7300a8dfd6be303"
+}

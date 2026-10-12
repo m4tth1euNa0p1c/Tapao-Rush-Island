@@ -3,10 +3,13 @@
 #include "Boats/BoatSubsystem.h"
 #include "Boats/BoatActor.h"
 #include "Boats/BoatRiderComponent.h"
+#include "Boats/BoatSeat.h"
 #include "Boats/BoatStartSubsystem.h"
+#include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "HAL/IConsoleManager.h"
 #include "TimerManager.h"
@@ -148,5 +151,48 @@ static FAutoConsoleCommandWithWorld GSpawnBoatCommand(
 		{
 			Boats->SpawnBoatNearPlayer();
 		}
+	}));
+
+/** T-182 check: puts the local player in the state the bug left it in (hanging on a barque, movement off, no seat);
+ *  the seat guard of UBoatRiderComponent must free it at its next tick and say so in LogMonkeBoat */
+static FAutoConsoleCommandWithWorld GBoatSeatGuardCheckCommand(
+	TEXT("monke.BoatSeatGuardCheck"),
+	TEXT("T-182: hangs the local player, standing, on the nearest boat with its movement off and no seat; the seat guard must free it at once (server / host)."),
+	FConsoleCommandWithWorldDelegate::CreateLambda([](UWorld* World)
+	{
+		if (!World || World->GetNetMode() == NM_Client)
+		{
+			UE_LOG(LogMonkeBoat, Warning, TEXT("monke.BoatSeatGuardCheck: server only (host)"));
+			return;
+		}
+		const APlayerController* PC = World->GetFirstPlayerController();
+		ACharacter* Character = PC ? Cast<ACharacter>(PC->GetPawn()) : nullptr;
+		const UBoatRiderComponent* Rider = Character ? Character->FindComponentByClass<UBoatRiderComponent>() : nullptr;
+		if (!Character || !Rider || Rider->IsSeated())
+		{
+			UE_LOG(LogMonkeBoat, Warning, TEXT("monke.BoatSeatGuardCheck: needs a local player standing (not seated), with its boat rider"));
+			return;
+		}
+		ABoatActor* Nearest = nullptr;
+		double BestDistSq = TNumericLimits<double>::Max();
+		for (TActorIterator<ABoatActor> It(World); It; ++It)
+		{
+			const double DistSq = FVector::DistSquared(It->GetActorLocation(), Character->GetActorLocation());
+			if (!It->IsSunk() && DistSq < BestDistSq)
+			{
+				BestDistSq = DistSq;
+				Nearest = *It;
+			}
+		}
+		if (!Nearest)
+		{
+			UE_LOG(LogMonkeBoat, Warning, TEXT("monke.BoatSeatGuardCheck: no boat in this world (monke.SpawnBoat)"));
+			return;
+		}
+		// the state of the bug: carried by the hull, movement off, seated nowhere
+		Character->GetCharacterMovement()->DisableMovement();
+		Character->AttachToComponent(Nearest->GetHull(), FAttachmentTransformRules::KeepWorldTransform);
+		UE_LOG(LogMonkeBoat, Warning, TEXT("monke.BoatSeatGuardCheck: %s left hanging on %s, movement off, no seat: the seat guard must free it now"),
+			*Character->GetName(), *Nearest->GetName());
 	}));
 #endif

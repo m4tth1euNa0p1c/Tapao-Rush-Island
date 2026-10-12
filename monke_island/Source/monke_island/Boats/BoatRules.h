@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "Engine/EngineTypes.h"
 #include "BoatRules.generated.h"
 
 class UMaterialInterface;
@@ -67,6 +68,11 @@ public:
 	/** Fraction of the buoyancy left once sunk */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Load|Flooding", meta=(ClampMin="0", ClampMax="1"))
 	float SunkBuoyancyFactor = 0.2f;
+
+	/** Upward speed the seated players are thrown off a sinking boat with (cm/s); a client launches its own pawn the
+	 *  same way, so it is not corrected (review R-12) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Load|Flooding", meta=(ClampMin="0", Units="cm/s"))
+	float SinkEjectUpSpeed = 300.0f;
 
 	/** Buoyancy of the fully immersed hull, keel to gunwale, expressed as the mass it can hold up (kg) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Buoyancy", meta=(ClampMin="1"))
@@ -165,6 +171,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats")
 	float SeatedCapsuleOffsetCm = 60.0f;
 
+	/** A rider standing up from its seat (F, galleon deck, sinking) is lifted this much above where it sat, so its capsule
+	 *  clears the seat before it falls back on the floor, free (cm, T-182) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats", meta=(ClampMin="0", Units="cm"))
+	float StandUpLiftCm = 35.0f;
+
 	/** Only the rower sits (owner request 2026-10-03): F takes the oars when nobody rows; the other players stand
 	 *  and ride on the boat physically, they cannot sit */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Seats")
@@ -214,6 +225,26 @@ public:
 	/** Middle of the oar blade from the pivot, along the oar (cm, SM_Barque_Oar mesh space) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash")
 	float OarBladeCenterCm = 135.0f;
+
+	/** Water along the hull while the boat moves on the water, looped; its volume and pitch follow the speed (owner
+	 *  2026-10-07: "ajoute son de barque quand elle navigue sur l'eau"); silent on the sand */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound")
+	TObjectPtr<USoundBase> WakeSound;
+
+	/** Speed of the full wake (cm/s) and its volume then */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound", meta=(ClampMin="1", Units="cm/s"))
+	float WakeFullSpeed = 350.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound", meta=(ClampMin="0"))
+	float WakeVolume = 0.7f;
+
+	/** Pitch of the wake at rest (X) and at full speed (Y) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound")
+	FVector2D WakePitch = FVector2D(0.85, 1.15);
+
+	/** The wake comes and goes over this time (s) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Sound", meta=(ClampMin="0.05", Units="s"))
+	float WakeFadeSeconds = 0.4f;
 
 	/** Droplets thrown when a blade enters the water */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Oars|Splash", meta=(ClampMin="0", ClampMax="60"))
@@ -309,7 +340,9 @@ public:
 	float TrailLifeSpan = 90.0f;
 
 	/** Objects put in the barque are stowed (owner request 2026-10-04): once an object rests in the cargo volume it
-	 *  rides with the hull, whatever the speed, the swell or the storm, until a player takes it (no collision added) */
+	 *  rides with the hull, whatever the speed, the swell or the storm, until a player takes it (no collision added).
+	 *  An object with a UNetRestComponent (props, corpses) is glued to the hull on every machine, its movement no longer
+	 *  replicated meanwhile (T-295, review R-05); the others are carried by the server alone, as before */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Cargo")
 	bool bContainLooseCargo = true;
 
@@ -328,4 +361,15 @@ public:
 	/** Size of one trail decal: projection depth, width, length (cm) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beaching|Trail")
 	FVector TrailDecalSize = FVector(30.0f, 14.0f, 22.0f);
+
+	/** How a client follows the hull the server simulates (T-295, ADR-003 B-07, review R-05). PredictiveInterpolation:
+	 *  the client's hull is driven by velocity toward the server's state carried ahead by the ping, the same forces
+	 *  applied in between (swell on the server clock, rowing, load). Default: the engine's older correction, kept as a
+	 *  fallback if the PIE trial at 150 ms says so */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Network")
+	EPhysicsReplicationMode PhysicsReplicationMode = EPhysicsReplicationMode::PredictiveInterpolation;
+
+	/** Network updates per second of the barque (the engine default is 100; review R-05: 30 to 60) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Network", meta=(ClampMin="5", ClampMax="100"))
+	float NetUpdateFrequency = 30.0f;
 };
