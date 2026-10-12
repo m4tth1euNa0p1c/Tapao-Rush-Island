@@ -30,6 +30,12 @@ void AMaraeSite::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifeti
 	DOREPLIFETIME_CONDITION(AMaraeSite, Rules, COND_InitialOnly);
 }
 
+void AMaraeSite::DealArtifacts(const TArray<TSubclassOf<AActor>>& Artifacts)
+{
+	DealtArtifacts = Artifacts;
+	bArtifactsDealt = true;
+}
+
 void AMaraeSite::BeginPlay()
 {
 	Super::BeginPlay();
@@ -41,7 +47,8 @@ void AMaraeSite::BeginPlay()
 	QuietZone->SetSphereRadius(Rules->QuietRadius);
 	Clearing.Clear(this, GetActorLocation(), Rules->ClearRadius);
 	Build();
-	UE_LOG(Logmonke_island, Log, TEXT("%s: marae of %d pieces, %d actors, %d vegetation instances cleared"), *GetName(), Pieces.Num(), Spawned.Num(), Clearing.Num());
+	UE_LOG(Logmonke_island, Log, TEXT("%s: marae of %d pieces, %d actors, %d vegetation instances cleared%s"), *GetName(), Pieces.Num(), Spawned.Num(),
+		Clearing.Num(), bArtifactsDealt ? *FString::Printf(TEXT(", %d artifacts dealt by the campaign"), DealtArtifacts.Num()) : TEXT(""));
 }
 
 void AMaraeSite::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -101,6 +108,11 @@ void AMaraeSite::SpawnActors(const FVector& Ground)
 		const AActor* Default = Spot.ActorClass ? Spot.ActorClass->GetDefaultObject<AActor>() : nullptr;
 		// replicated actors (the sacred objects worth money) come from the server; the torches are built everywhere
 		if (!Default || (Default->GetIsReplicated() && !HasAuthority()))
+		{
+			continue;
+		}
+		// the pedestal of an artifact the campaign did not deal to this site stays empty
+		if (bArtifactsDealt && Rules->ArtifactPool.Contains(Spot.ActorClass) && !DealtArtifacts.Contains(Spot.ActorClass))
 		{
 			continue;
 		}

@@ -98,4 +98,36 @@ public:
 	/** No other marae closer than this to the players at the start (cm): they are found by exploring */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0"))
 	float MinDistanceFromPlayers = 8000.0f;
+
+	/** Placed on the free spot nearest to the middle of the fragment's land rather than by the near and far draw:
+	 *  the reliquary temple stands in the heart of the island, between the marae and the villages (T-180) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn")
+	bool bCentral = false;
+
+	/** No marae or temple already placed in the fragment closer than this (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0", Units="cm"))
+	float MinDistanceFromSites = 0.0f;
+
+	/** Ground looked at under the spot and around it at this distance before building (cm): it must be land above
+	 *  the beach and level enough; 0 = not looked at */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0", Units="cm"))
+	float GroundCheckRadius = 0.0f;
+
+	/** Largest height difference of the ground within GroundCheckRadius (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0", Units="cm"))
+	float MaxGroundDelta = 120.0f;
+
+	/** Ground less than this above the sea is the beach the sea covers: not for a site (cm) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn", meta=(ClampMin="0", Units="cm"))
+	float MinGroundAboveSea = 80.0f;
+
+	/** The site turns its front (local +Y, the gate of the temple) towards the players at the start */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn")
+	bool bFacePlayers = false;
+
+	/** Artifacts the campaign deals to the sites (owner request 2026-10-07: one of the six on the first temple on day 3,
+	 *  the others from day 7; DA_RunRules.Campaign). Each one keeps its own pedestal: the actor spot of its class, left
+	 *  empty when it was not dealt to the site. Without a run (test maps) every spot is filled */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Campaign")
+	TArray<TSubclassOf<AActor>> ArtifactPool;
 };

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "SM_Fort_TerrainNear",
+    "source": "derived/SM_Fort_TerrainNear.fbx",
+    "materials": [
+      "MAT-Site_Ground"
+    ],
+    "color_attributes": [
+      "MaskA"
+    ],
+    "uv_layers": [
+      "UVMap",
+      "MaskB_RG",
+      "MaskB_BA"
+    ]
+  },
+  {
+    "name": "SM_Fort_TerrainFar",
+    "source": "derived/SM_Fort_TerrainFar.fbx",
+    "materials": [
+      "MAT-Site_Ground"
+    ],
+    "color_attributes": [
+      "MaskA"
+    ],
+    "uv_layers": [
+      "UVMap",
+      "MaskB_RG",
+      "MaskB_BA"
+    ]
+  },
+  {
+    "name": "SM_Fort_Lagoon",
+    "source": "derived/SM_Fort_Lagoon.fbx",
+    "materials": [
+      "MAT-Site_Lagoon"
+    ],
+    "color_attributes": [
+      "Depth"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ]
+  },
+  {
+    "name": "SM_Fort_CourtPaths",
+    "source": "derived/SM_Fort_CourtPaths.fbx",
+    "materials": [
+      "MAT-Fort_CoralAshlar"
+    ],
+    "color_attributes": [
+      "Blend"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ]
+  }
+]

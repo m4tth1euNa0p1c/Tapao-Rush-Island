@@ -1,0 +1,57 @@
+{
+  "pole": {
+    "height": 4.2,
+    "r_foot": 0.04,
+    "r_top": 0.028,
+    "ball": 0.055,
+    "halyard_r": 0.004,
+    "halyard_x": 0.05
+  },
+  "flag": {
+    "width": 1.2,
+    "height": 0.6,
+    "hoist_gap": 0.045,
+    "layer": 0.0007,
+    "wave": 0.045,
+    "wavelength": 0.75,
+    "slices": 48
+  },
+  "flag_layers": 11,
+  "materials": {
+    "M_Flag_Blue": [
+      "012169",
+      0.85
+    ],
+    "M_Flag_White": [
+      "F4F4F0",
+      0.85
+    ],
+    "M_Flag_Red": [
+      "C8102E",
+      0.85
+    ],
+    "M_FlagPole_Wood": [
+      "6B4A2E",
+      0.7
+    ],
+    "M_FlagPole_Gold": [
+      "C99A3E",
+      0.3
+    ],
+    "M_FlagPole_Rope": [
+      "D8C9A3",
+      0.9
+    ]
+  },
+  "pivots": {
+    "pole": "foot, on its axis",
+    "flag": "bottom of the hoist, on the pole axis; fly along +X"
+  },
+  "unreal": {
+    "pole_height_cm": 420.0,
+    "flag_size_cm": [
+      120.0,
+      60.0
+    ]
+  }
+}

@@ -1,0 +1,1695 @@
+{
+  "task": "T-193",
+  "meshes": {
+    "SM_Fort_CourtPaths": {
+      "source": "derived/SM_Fort_CourtPaths.fbx",
+      "size_cm": [
+        2549.9492,
+        2226.3288,
+        8.2644
+      ],
+      "triangles": 13200,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 7800
+      },
+      "ucx_count": 0,
+      "render_name": "SM_Fort_CourtPaths",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": []
+    },
+    "SM_Fort_Lagoon": {
+      "source": "derived/SM_Fort_Lagoon.fbx",
+      "size_cm": [
+        35600.0031,
+        30400.0031,
+        0.0
+      ],
+      "triangles": 43344,
+      "faces_by_material": {
+        "MAT-Site_Lagoon": 21672
+      },
+      "ucx_count": 0,
+      "render_name": "SM_Fort_Lagoon",
+      "color_layers": [
+        "Depth"
+      ],
+      "sockets": []
+    },
+    "SM_Fort_TerrainFar": {
+      "source": "derived/SM_Fort_TerrainFar.fbx",
+      "size_cm": [
+        35600.0031,
+        30400.0031,
+        1940.0
+      ],
+      "triangles": 10002,
+      "faces_by_material": {
+        "MAT-Site_Ground": 5001
+      },
+      "ucx_count": 0,
+      "render_name": "SM_Fort_TerrainFar",
+      "color_layers": [
+        "MaskA"
+      ],
+      "sockets": []
+    },
+    "SM_Fort_TerrainNear": {
+      "source": "derived/SM_Fort_TerrainNear.fbx",
+      "size_cm": [
+        16400.0015,
+        17200.0015,
+        969.8353
+      ],
+      "triangles": 56218,
+      "faces_by_material": {
+        "MAT-Site_Ground": 28109
+      },
+      "ucx_count": 0,
+      "render_name": "SM_Fort_TerrainNear",
+      "color_layers": [
+        "MaskA"
+      ],
+      "sockets": []
+    },
+    "SM_Fort_Barracks": {
+      "source": "exports/SM_Fort_Barracks.fbx",
+      "size_cm": [
+        1729.9999,
+        680.0002,
+        524.3857
+      ],
+      "triangles": 32732,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 12148,
+        "MAT-Fort_CoralRubble": 184,
+        "MAT-Fort_WoodTamanu": 6211,
+        "MAT-Fort_RoofTiles": 22,
+        "MAT-Fort_Jute": 520
+      },
+      "ucx_count": 15,
+      "render_name": "SM_Fort_Barracks",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Door_1",
+        "SOCKET_Door_2",
+        "SOCKET_WeaponRack"
+      ]
+    },
+    "SM_Fort_Barrel": {
+      "source": "exports/SM_Fort_Barrel.fbx",
+      "size_cm": [
+        44.4274,
+        44.4274,
+        60.0
+      ],
+      "triangles": 1152,
+      "faces_by_material": {
+        "MAT-Fort_BarrelStaves": 528,
+        "MAT-Fort_IronRust": 96
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_Barrel",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Fort_Bastion": {
+      "source": "exports/SM_Fort_Bastion.fbx",
+      "size_cm": [
+        1540.4994,
+        1540.4995,
+        566.0
+      ],
+      "triangles": 14236,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 268,
+        "MAT-Fort_CoralAshlar": 7575
+      },
+      "ucx_count": 29,
+      "render_name": "SM_Fort_Bastion",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Echauguette",
+        "SOCKET_Flag",
+        "SOCKET_Gun_FaceA_1",
+        "SOCKET_Gun_FaceA_2",
+        "SOCKET_Gun_FaceB_1",
+        "SOCKET_Gun_FaceB_2",
+        "SOCKET_Gun_FlankA",
+        "SOCKET_Gun_FlankB",
+        "SOCKET_ShotPile_1",
+        "SOCKET_ShotPile_2",
+        "SOCKET_Tower"
+      ]
+    },
+    "SM_Fort_Bastion_Vault": {
+      "source": "exports/SM_Fort_Bastion_Vault.fbx",
+      "size_cm": [
+        1540.4994,
+        1540.4995,
+        566.0
+      ],
+      "triangles": 14238,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 268,
+        "MAT-Fort_CoralAshlar": 7578
+      },
+      "ucx_count": 37,
+      "render_name": "SM_Fort_Bastion_Vault",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Echauguette",
+        "SOCKET_Flag",
+        "SOCKET_Gun_FaceA_1",
+        "SOCKET_Gun_FaceA_2",
+        "SOCKET_Gun_FaceB_1",
+        "SOCKET_Gun_FaceB_2",
+        "SOCKET_Gun_FlankA",
+        "SOCKET_Gun_FlankB",
+        "SOCKET_ShotPile_1",
+        "SOCKET_ShotPile_2",
+        "SOCKET_Tower"
+      ]
+    },
+    "SM_Fort_BridgeFixed": {
+      "source": "exports/SM_Fort_BridgeFixed.fbx",
+      "size_cm": [
+        324.0,
+        445.5,
+        204.0
+      ],
+      "triangles": 1828,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 12,
+        "MAT-Fort_CoralAshlar": 26,
+        "MAT-Fort_WoodOak": 1040
+      },
+      "ucx_count": 4,
+      "render_name": "SM_Fort_BridgeFixed",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Counterscarp",
+        "SOCKET_DrawbridgeEnd"
+      ]
+    },
+    "SM_Fort_Cage_Ground": {
+      "source": "exports/SM_Fort_Cage_Ground.fbx",
+      "size_cm": [
+        175.0,
+        205.0,
+        160.0
+      ],
+      "triangles": 2688,
+      "faces_by_material": {
+        "MAT-Fort_WoodTamanu": 650,
+        "MAT-Fort_IronRust": 661
+      },
+      "ucx_count": 6,
+      "render_name": "SM_Fort_Cage_Ground",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Door",
+        "SOCKET_Prisoner"
+      ]
+    },
+    "SM_Fort_Cage_Hanging": {
+      "source": "exports/SM_Fort_Cage_Hanging.fbx",
+      "size_cm": [
+        86.8,
+        88.4,
+        156.8965
+      ],
+      "triangles": 1464,
+      "faces_by_material": {
+        "MAT-Fort_IronRust": 722
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_Cage_Hanging",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Hang",
+        "SOCKET_Prisoner"
+      ]
+    },
+    "SM_Fort_Cannon": {
+      "source": "exports/SM_Fort_Cannon.fbx",
+      "size_cm": [
+        54.0,
+        221.0,
+        50.3917
+      ],
+      "triangles": 2920,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 566,
+        "MAT-Fort_IronRust": 388,
+        "MAT-Fort_Iron": 624
+      },
+      "ucx_count": 2,
+      "render_name": "SM_Fort_Cannon",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Breech",
+        "SOCKET_Muzzle",
+        "SOCKET_Trunnion"
+      ]
+    },
+    "SM_Fort_CellDoor": {
+      "source": "exports/SM_Fort_CellDoor.fbx",
+      "size_cm": [
+        108.0,
+        10.0,
+        180.0
+      ],
+      "triangles": 364,
+      "faces_by_material": {
+        "MAT-Fort_IronRust": 164
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_CellDoor",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Lock"
+      ]
+    },
+    "SM_Fort_Chapel": {
+      "source": "exports/SM_Fort_Chapel.fbx",
+      "size_cm": [
+        570.0,
+        912.0001,
+        775.641
+      ],
+      "triangles": 14614,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 7229,
+        "MAT-Fort_CoralRubble": 242,
+        "MAT-Fort_WoodTamanu": 844,
+        "MAT-Fort_RoofTiles": 22,
+        "MAT-Fort_Copper": 136
+      },
+      "ucx_count": 15,
+      "render_name": "SM_Fort_Chapel",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Bell",
+        "SOCKET_Door"
+      ]
+    },
+    "SM_Fort_Chest_Closed": {
+      "source": "exports/SM_Fort_Chest_Closed.fbx",
+      "size_cm": [
+        82.3315,
+        46.233,
+        46.2
+      ],
+      "triangles": 1244,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 340,
+        "MAT-Fort_IronRust": 350
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_Chest_Closed",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Grab_L",
+        "SOCKET_Grab_R",
+        "SOCKET_Lock"
+      ]
+    },
+    "SM_Fort_Chest_Open": {
+      "source": "exports/SM_Fort_Chest_Open.fbx",
+      "size_cm": [
+        82.3315,
+        66.7589,
+        70.7308
+      ],
+      "triangles": 3324,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 586,
+        "MAT-Fort_IronRust": 544,
+        "MAT_Gold_CoinHeap": 1458,
+        "MAT_Gem_Ruby": 90,
+        "MAT_Pearl_White": 646
+      },
+      "ucx_count": 2,
+      "render_name": "SM_Fort_Chest_Open",
+      "color_layers": [
+        "OrnMask",
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Loot"
+      ]
+    },
+    "SM_Fort_Cistern": {
+      "source": "exports/SM_Fort_Cistern.fbx",
+      "size_cm": [
+        299.1252,
+        255.1063,
+        323.0
+      ],
+      "triangles": 1550,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 504,
+        "MAT-Fort_WoodTamanu": 114,
+        "MAT-Fort_IronRust": 216,
+        "MAT-Fort_Rope": 19
+      },
+      "ucx_count": 2,
+      "render_name": "SM_Fort_Cistern",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Bucket",
+        "SOCKET_Interact"
+      ]
+    },
+    "SM_Fort_Crate_A": {
+      "source": "exports/SM_Fort_Crate_A.fbx",
+      "size_cm": [
+        59.7692,
+        44.1119,
+        44.1119
+      ],
+      "triangles": 474,
+      "faces_by_material": {
+        "MAT-Fort_WoodWeathered": 240,
+        "MAT-Fort_Rope": 234
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_Crate_A",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Fort_Crate_B": {
+      "source": "exports/SM_Fort_Crate_B.fbx",
+      "size_cm": [
+        131.9021,
+        38.4393,
+        30.0
+      ],
+      "triangles": 474,
+      "faces_by_material": {
+        "MAT-Fort_WoodWeathered": 382,
+        "MAT-Fort_Rope": 92
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_Crate_B",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Fort_Curtain_4m": {
+      "source": "exports/SM_Fort_Curtain_4m.fbx",
+      "size_cm": [
+        403.6925,
+        550.0,
+        566.0
+      ],
+      "triangles": 2076,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 68,
+        "MAT-Fort_CoralAshlar": 1077
+      },
+      "ucx_count": 7,
+      "render_name": "SM_Fort_Curtain_4m",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Crenel_1",
+        "SOCKET_Crenel_2",
+        "SOCKET_Lantern",
+        "SOCKET_Snap_L",
+        "SOCKET_Snap_R",
+        "SOCKET_Walk"
+      ]
+    },
+    "SM_Fort_Curtain_4m_Access": {
+      "source": "exports/SM_Fort_Curtain_4m_Access.fbx",
+      "size_cm": [
+        402.76,
+        525.7,
+        566.0
+      ],
+      "triangles": 2440,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 74,
+        "MAT-Fort_CoralAshlar": 1285
+      },
+      "ucx_count": 8,
+      "render_name": "SM_Fort_Curtain_4m_Access",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Crenel_1",
+        "SOCKET_Crenel_2",
+        "SOCKET_Lantern",
+        "SOCKET_Snap_L",
+        "SOCKET_Snap_R",
+        "SOCKET_Walk"
+      ]
+    },
+    "SM_Fort_Curtain_4m_Embrasure": {
+      "source": "exports/SM_Fort_Curtain_4m_Embrasure.fbx",
+      "size_cm": [
+        400.8884,
+        550.0,
+        566.0
+      ],
+      "triangles": 2208,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 50,
+        "MAT-Fort_CoralAshlar": 719,
+        "MAT-Fort_WoodOak": 260,
+        "MAT-Fort_IronRust": 164
+      },
+      "ucx_count": 5,
+      "render_name": "SM_Fort_Curtain_4m_Embrasure",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Embrasure",
+        "SOCKET_Gun",
+        "SOCKET_Lantern",
+        "SOCKET_ShotPile",
+        "SOCKET_Snap_L",
+        "SOCKET_Snap_R",
+        "SOCKET_Walk"
+      ]
+    },
+    "SM_Fort_Curtain_Corner": {
+      "source": "exports/SM_Fort_Curtain_Corner.fbx",
+      "size_cm": [
+        496.0,
+        496.0,
+        566.0
+      ],
+      "triangles": 2648,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 76,
+        "MAT-Fort_CoralAshlar": 1355
+      },
+      "ucx_count": 7,
+      "render_name": "SM_Fort_Curtain_Corner",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Echauguette",
+        "SOCKET_Snap_X",
+        "SOCKET_Snap_Y"
+      ]
+    },
+    "SM_Fort_Ditch": {
+      "source": "exports/SM_Fort_Ditch.fbx",
+      "size_cm": [
+        8005.8174,
+        7175.9087,
+        140.1698
+      ],
+      "triangles": 21108,
+      "faces_by_material": {
+        "MAT-Fort_CoralGravel": 2400,
+        "MAT-Fort_CoralRubble": 1156,
+        "MAT-Fort_CoralAshlar": 8294,
+        "MAT-Fort_Puddle": 14
+      },
+      "ucx_count": 80,
+      "render_name": "SM_Fort_Ditch",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Bridge_Counterscarp"
+      ]
+    },
+    "SM_Fort_Drawbridge": {
+      "source": "exports/SM_Fort_Drawbridge.fbx",
+      "size_cm": [
+        300.0,
+        415.0,
+        334.0
+      ],
+      "triangles": 3128,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 494,
+        "MAT-Fort_IronRust": 1146
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_Drawbridge",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_DeckEnd",
+        "SOCKET_Hinge"
+      ]
+    },
+    "SM_Fort_Echauguette": {
+      "source": "exports/SM_Fort_Echauguette.fbx",
+      "size_cm": [
+        200.0,
+        200.0,
+        467.0
+      ],
+      "triangles": 1758,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 1004
+      },
+      "ucx_count": 2,
+      "render_name": "SM_Fort_Echauguette",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Inside",
+        "SOCKET_Lantern"
+      ]
+    },
+    "SM_Fort_Flag": {
+      "source": "exports/SM_Fort_Flag.fbx",
+      "size_cm": [
+        240.0,
+        32.3928,
+        166.0
+      ],
+      "triangles": 1696,
+      "faces_by_material": {
+        "MAT-Fort_Flag": 848
+      },
+      "ucx_count": 0,
+      "render_name": "SM_Fort_Flag",
+      "color_layers": [],
+      "sockets": [
+        "SOCKET_Hoist_Bottom",
+        "SOCKET_Hoist_Top"
+      ]
+    },
+    "SM_Fort_GateDoor_L": {
+      "source": "exports/SM_Fort_GateDoor_L.fbx",
+      "size_cm": [
+        112.8,
+        23.1,
+        260.998
+      ],
+      "triangles": 938,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 152,
+        "MAT-Fort_IronRust": 463
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_GateDoor_L",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Bar"
+      ]
+    },
+    "SM_Fort_GateDoor_R": {
+      "source": "repaired/SM_Fort_GateDoor_R.fbx",
+      "size_cm": [
+        112.1,
+        15.0,
+        260.998
+      ],
+      "triangles": 1254,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 210,
+        "MAT-Fort_IronRust": 537
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_GateDoor_R",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Wicket_Hinge"
+      ]
+    },
+    "SM_Fort_GateHouse": {
+      "source": "exports/SM_Fort_GateHouse.fbx",
+      "size_cm": [
+        1200.0,
+        555.0,
+        722.0
+      ],
+      "triangles": 13046,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 127,
+        "MAT-Fort_CoralAshlar": 7014,
+        "MAT-Fort_IronRust": 96
+      },
+      "ucx_count": 15,
+      "render_name": "SM_Fort_GateHouse",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Door_L",
+        "SOCKET_Door_R",
+        "SOCKET_Drawbridge_Hinge",
+        "SOCKET_Lantern_L",
+        "SOCKET_Lantern_R",
+        "SOCKET_Portcullis",
+        "SOCKET_Sentry_L",
+        "SOCKET_Sentry_R",
+        "SOCKET_Threshold",
+        "SOCKET_Walk"
+      ]
+    },
+    "SM_Fort_Gibbet": {
+      "source": "exports/SM_Fort_Gibbet.fbx",
+      "size_cm": [
+        218.7694,
+        117.5389,
+        360.0
+      ],
+      "triangles": 688,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 26,
+        "MAT-Fort_WoodTamanu": 182,
+        "MAT-Fort_IronRust": 168
+      },
+      "ucx_count": 2,
+      "render_name": "SM_Fort_Gibbet",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_CageRing",
+        "SOCKET_Hang"
+      ]
+    },
+    "SM_Fort_GovernorHouse": {
+      "source": "repaired/SM_Fort_GovernorHouse.fbx",
+      "size_cm": [
+        1499.3843,
+        1034.6922,
+        955.5935
+      ],
+      "triangles": 129569,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 24415,
+        "MAT-Fort_CoralRubble": 2834,
+        "MAT-Fort_WoodTamanu": 23126,
+        "MAT-Fort_Brick": 228,
+        "MAT-Fort_RoofTiles": 1212
+      },
+      "ucx_count": 22,
+      "render_name": "SM_Fort_GovernorHouse",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Balcony",
+        "SOCKET_Desk",
+        "SOCKET_Door",
+        "SOCKET_Lantern_L",
+        "SOCKET_Lantern_R",
+        "SOCKET_Strongbox"
+      ]
+    },
+    "SM_Fort_GuardHouse": {
+      "source": "exports/SM_Fort_GuardHouse.fbx",
+      "size_cm": [
+        789.3842,
+        589.3842,
+        468.5529
+      ],
+      "triangles": 14468,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 6582,
+        "MAT-Fort_CoralRubble": 90,
+        "MAT-Fort_WoodTamanu": 1390,
+        "MAT-Fort_IronRust": 232,
+        "MAT-Fort_RoofTiles": 72
+      },
+      "ucx_count": 11,
+      "render_name": "SM_Fort_GuardHouse",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Door",
+        "SOCKET_Lantern",
+        "SOCKET_MusketRack"
+      ]
+    },
+    "SM_Fort_Kitchen": {
+      "source": "exports/SM_Fort_Kitchen.fbx",
+      "size_cm": [
+        720.0,
+        520.0,
+        557.0
+      ],
+      "triangles": 6970,
+      "faces_by_material": {
+        "MAT-Fort_Brick": 3234,
+        "MAT-Fort_CoralRubble": 82,
+        "MAT-Fort_WoodTamanu": 494,
+        "MAT-Fort_IronRust": 169,
+        "MAT-Fort_RoofTiles": 22
+      },
+      "ucx_count": 10,
+      "render_name": "SM_Fort_Kitchen",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Door",
+        "SOCKET_Fire",
+        "SOCKET_Smoke"
+      ]
+    },
+    "SM_Fort_Lantern": {
+      "source": "exports/SM_Fort_Lantern.fbx",
+      "size_cm": [
+        24.2,
+        56.1,
+        49.8
+      ],
+      "triangles": 272,
+      "faces_by_material": {
+        "MAT-Fort_LanternHorn": 10,
+        "MAT-Fort_IronRust": 111
+      },
+      "ucx_count": 0,
+      "render_name": "SM_Fort_Lantern",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Light"
+      ]
+    },
+    "SM_Fort_Lantern_Hanging": {
+      "source": "exports/SM_Fort_Lantern_Hanging.fbx",
+      "size_cm": [
+        24.2,
+        24.2,
+        81.35
+      ],
+      "triangles": 472,
+      "faces_by_material": {
+        "MAT-Fort_LanternHorn": 10,
+        "MAT-Fort_IronRust": 218
+      },
+      "ucx_count": 0,
+      "render_name": "SM_Fort_Lantern_Hanging",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Hang",
+        "SOCKET_Light"
+      ]
+    },
+    "SM_Fort_Pallet": {
+      "source": "exports/SM_Fort_Pallet.fbx",
+      "size_cm": [
+        101.4541,
+        60.0,
+        12.0
+      ],
+      "triangles": 352,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 208
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_Pallet",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Fort_Portcullis": {
+      "source": "exports/SM_Fort_Portcullis.fbx",
+      "size_cm": [
+        247.0,
+        11.5,
+        285.0
+      ],
+      "triangles": 1714,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 910,
+        "MAT-Fort_IronRust": 121
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_Portcullis",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Lift"
+      ]
+    },
+    "SM_Fort_PowderBarrel": {
+      "source": "exports/SM_Fort_PowderBarrel.fbx",
+      "size_cm": [
+        34.5391,
+        34.5391,
+        42.0
+      ],
+      "triangles": 1040,
+      "faces_by_material": {
+        "MAT-Fort_BarrelStaves": 440,
+        "MAT-Fort_Copper": 40,
+        "MAT-Fort_WoodOak": 80
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_PowderBarrel",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Fort_PowderMagazine": {
+      "source": "repaired/SM_Fort_PowderMagazine.fbx",
+      "size_cm": [
+        806.0001,
+        708.0001,
+        400.7353
+      ],
+      "triangles": 8732,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 195,
+        "MAT-Fort_CoralAshlar": 4396,
+        "MAT-Fort_Copper": 266,
+        "MAT-Fort_WoodTamanu": 312
+      },
+      "ucx_count": 15,
+      "render_name": "SM_Fort_PowderMagazine",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Door",
+        "SOCKET_EnclosureGate",
+        "SOCKET_Kegs"
+      ]
+    },
+    "SM_Fort_Prison": {
+      "source": "exports/SM_Fort_Prison.fbx",
+      "size_cm": [
+        622.0,
+        711.0001,
+        336.0
+      ],
+      "triangles": 20754,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 10614,
+        "MAT-Fort_CoralRubble": 126,
+        "MAT-Fort_IronRust": 635,
+        "MAT-Fort_WoodTamanu": 324,
+        "MAT-Fort_Jute": 294
+      },
+      "ucx_count": 21,
+      "render_name": "SM_Fort_Prison",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Cell_1",
+        "SOCKET_Cell_2",
+        "SOCKET_Cell_3",
+        "SOCKET_CellDoor_1",
+        "SOCKET_CellDoor_2",
+        "SOCKET_CellDoor_3",
+        "SOCKET_CellDoorHinge_1",
+        "SOCKET_CellDoorHinge_2",
+        "SOCKET_CellDoorHinge_3",
+        "SOCKET_Door",
+        "SOCKET_DoorHinge",
+        "SOCKET_KeyHook",
+        "SOCKET_Lantern",
+        "SOCKET_Prisoner_1",
+        "SOCKET_Prisoner_2",
+        "SOCKET_Prisoner_3",
+        "SOCKET_Shackles_1",
+        "SOCKET_Shackles_2",
+        "SOCKET_Shackles_3"
+      ]
+    },
+    "SM_Fort_Ramp": {
+      "source": "exports/SM_Fort_Ramp.fbx",
+      "size_cm": [
+        235.0001,
+        1687.9999,
+        358.5
+      ],
+      "triangles": 320,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 31,
+        "MAT-Fort_CoralAshlar": 96,
+        "MAT-Fort_WoodOak": 52
+      },
+      "ucx_count": 5,
+      "render_name": "SM_Fort_Ramp",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Foot",
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Fort_ShotPile": {
+      "source": "exports/SM_Fort_ShotPile.fbx",
+      "size_cm": [
+        32.0,
+        32.0,
+        22.637
+      ],
+      "triangles": 2850,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 188,
+        "MAT-Fort_Iron": 2662
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_ShotPile",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Fort_SignalTower": {
+      "source": "repaired/SM_Fort_SignalTower.fbx",
+      "size_cm": [
+        533.9927,
+        520.0001,
+        1158.9815
+      ],
+      "triangles": 37776,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 9282,
+        "MAT-Fort_CoralRubble": 1366,
+        "MAT-Fort_WoodOak": 4168,
+        "MAT-Fort_IronRust": 380,
+        "MAT-Fort_Rope": 10
+      },
+      "ucx_count": 39,
+      "render_name": "SM_Fort_SignalTower",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Door",
+        "SOCKET_Fanal",
+        "SOCKET_FanalFire",
+        "SOCKET_Flag",
+        "SOCKET_FlagTop",
+        "SOCKET_Level1",
+        "SOCKET_Lookout",
+        "SOCKET_Terrace"
+      ]
+    },
+    "SM_Fort_Stair": {
+      "source": "exports/SM_Fort_Stair.fbx",
+      "size_cm": [
+        120.0001,
+        690.6066,
+        364.6856
+      ],
+      "triangles": 1188,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 40,
+        "MAT-Fort_CoralAshlar": 468,
+        "MAT-Fort_IronRust": 106
+      },
+      "ucx_count": 4,
+      "render_name": "SM_Fort_Stair",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Foot",
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Fort_StuddedDoor": {
+      "source": "exports/SM_Fort_StuddedDoor.fbx",
+      "size_cm": [
+        102.2,
+        14.0,
+        180.0
+      ],
+      "triangles": 772,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 156,
+        "MAT-Fort_IronRust": 355
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_StuddedDoor",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Bolt"
+      ]
+    },
+    "SM_Fort_TreasureVault": {
+      "source": "exports/SM_Fort_TreasureVault.fbx",
+      "size_cm": [
+        1060.0,
+        852.5001,
+        445.0
+      ],
+      "triangles": 9304,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 204,
+        "MAT-Fort_CoralAshlar": 3857,
+        "MAT-Fort_IronRust": 286,
+        "MAT-Fort_Brick": 426,
+        "MAT-Fort_WoodTamanu": 532
+      },
+      "ucx_count": 22,
+      "render_name": "SM_Fort_TreasureVault",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_CourtDoorHinge",
+        "SOCKET_Door",
+        "SOCKET_GrilleCenter",
+        "SOCKET_Lantern_1",
+        "SOCKET_Lantern_2",
+        "SOCKET_Lantern_3",
+        "SOCKET_Loot_Chest_1",
+        "SOCKET_Loot_Chest_2",
+        "SOCKET_Loot_Chest_3",
+        "SOCKET_Loot_Chest_4",
+        "SOCKET_Loot_Chest_5",
+        "SOCKET_Loot_Coins_1",
+        "SOCKET_Loot_Coins_2",
+        "SOCKET_Loot_Gems_1",
+        "SOCKET_Loot_Gems_2",
+        "SOCKET_Loot_Gems_3",
+        "SOCKET_Loot_GoldBar_Loose",
+        "SOCKET_Loot_GoldStack_1",
+        "SOCKET_Loot_GoldStack_2",
+        "SOCKET_Loot_GoldStack_3",
+        "SOCKET_Loot_PearlSack_1",
+        "SOCKET_Loot_PearlSack_2",
+        "SOCKET_Loot_PearlSack_3",
+        "SOCKET_Loot_Scale",
+        "SOCKET_Pallet_1",
+        "SOCKET_Pallet_2",
+        "SOCKET_Pallet_3",
+        "SOCKET_Pallet_4",
+        "SOCKET_VaultDoorHinge"
+      ]
+    },
+    "SM_Fort_VaultDoor": {
+      "source": "exports/SM_Fort_VaultDoor.fbx",
+      "size_cm": [
+        102.75,
+        20.9511,
+        180.0
+      ],
+      "triangles": 1200,
+      "faces_by_material": {
+        "MAT-Fort_WoodOak": 130,
+        "MAT-Fort_IronRust": 608,
+        "MAT-Fort_Iron": 6
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Fort_VaultDoor",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Lock"
+      ]
+    },
+    "SM_Fort_VaultGrille": {
+      "source": "exports/SM_Fort_VaultGrille.fbx",
+      "size_cm": [
+        120.0,
+        9.0,
+        231.0
+      ],
+      "triangles": 676,
+      "faces_by_material": {
+        "MAT-Fort_IronRust": 316
+      },
+      "ucx_count": 2,
+      "render_name": "SM_Fort_VaultGrille",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_DoorHinge",
+        "SOCKET_Lock"
+      ]
+    },
+    "SM_Fort_WallShackles": {
+      "source": "exports/SM_Fort_WallShackles.fbx",
+      "size_cm": [
+        52.8847,
+        15.1807,
+        117.2
+      ],
+      "triangles": 1192,
+      "faces_by_material": {
+        "MAT-Fort_IronRust": 600
+      },
+      "ucx_count": 0,
+      "render_name": "SM_Fort_WallShackles",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Wall"
+      ]
+    },
+    "SM_Loot_Coin": {
+      "source": "exports/SM_Loot_Coin.fbx",
+      "size_cm": [
+        2.0,
+        2.0,
+        0.205
+      ],
+      "triangles": 114,
+      "faces_by_material": {
+        "MAT_Gold_Aged": 114
+      },
+      "ucx_count": 0,
+      "render_name": "SM_Loot_Coin",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Loot_CoinPile": {
+      "source": "exports/SM_Loot_CoinPile.fbx",
+      "size_cm": [
+        45.6635,
+        32.0,
+        12.5224
+      ],
+      "triangles": 5700,
+      "faces_by_material": {
+        "MAT_Gold_CoinHeap": 194,
+        "MAT_Gold_Aged": 5506
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_CoinPile",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Loot_Gem_Amethyst": {
+      "source": "exports/SM_Loot_Gem_Amethyst.fbx",
+      "size_cm": [
+        1.646,
+        1.719,
+        0.88
+      ],
+      "triangles": 58,
+      "faces_by_material": {
+        "MAT_Gem_Amethyst": 58
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_Gem_Amethyst",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab.003"
+      ]
+    },
+    "SM_Loot_Gem_Emerald": {
+      "source": "exports/SM_Loot_Gem_Emerald.fbx",
+      "size_cm": [
+        2.0513,
+        1.4254,
+        1.26
+      ],
+      "triangles": 46,
+      "faces_by_material": {
+        "MAT_Gem_Emerald": 46
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_Gem_Emerald",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab.002"
+      ]
+    },
+    "SM_Loot_Gem_Ruby": {
+      "source": "exports/SM_Loot_Gem_Ruby.fbx",
+      "size_cm": [
+        1.5987,
+        1.4158,
+        1.8
+      ],
+      "triangles": 78,
+      "faces_by_material": {
+        "MAT_Gem_Ruby": 78
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_Gem_Ruby",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Loot_Gem_Sapphire": {
+      "source": "exports/SM_Loot_Gem_Sapphire.fbx",
+      "size_cm": [
+        1.8088,
+        1.3894,
+        1.4
+      ],
+      "triangles": 46,
+      "faces_by_material": {
+        "MAT_Gem_Sapphire": 46
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_Gem_Sapphire",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab.001"
+      ]
+    },
+    "SM_Loot_Gem_Topaz": {
+      "source": "exports/SM_Loot_Gem_Topaz.fbx",
+      "size_cm": [
+        1.5371,
+        1.2261,
+        0.826
+      ],
+      "triangles": 284,
+      "faces_by_material": {
+        "MAT_Gem_Topaz": 284
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_Gem_Topaz",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab.004"
+      ]
+    },
+    "SM_Loot_GemBowl": {
+      "source": "exports/SM_Loot_GemBowl.fbx",
+      "size_cm": [
+        21.9558,
+        21.9688,
+        7.6818
+      ],
+      "triangles": 3816,
+      "faces_by_material": {
+        "MAT-Fort_Copper": 252,
+        "MAT_Gem_Sapphire": 874,
+        "MAT_Gem_Ruby": 1482,
+        "MAT_Gem_Emerald": 1012
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_GemBowl",
+      "color_layers": [
+        "Blend",
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Loot_GoldBar": {
+      "source": "exports/SM_Loot_GoldBar.fbx",
+      "size_cm": [
+        17.305,
+        5.8403,
+        3.1989
+      ],
+      "triangles": 124,
+      "faces_by_material": {
+        "MAT_Gold_Aged": 62
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_GoldBar",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Loot_GoldStack_L": {
+      "source": "exports/SM_Loot_GoldStack_L.fbx",
+      "size_cm": [
+        35.7915,
+        35.8122,
+        25.6103
+      ],
+      "triangles": 7192,
+      "faces_by_material": {
+        "MAT_Gold_Aged": 3596
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_GoldStack_L",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Loot_GoldStack_M": {
+      "source": "exports/SM_Loot_GoldStack_M.fbx",
+      "size_cm": [
+        35.7768,
+        35.8338,
+        22.4458
+      ],
+      "triangles": 3844,
+      "faces_by_material": {
+        "MAT_Gold_Aged": 1922
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_GoldStack_M",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Loot_GoldStack_S": {
+      "source": "exports/SM_Loot_GoldStack_S.fbx",
+      "size_cm": [
+        35.6043,
+        35.7454,
+        12.9257
+      ],
+      "triangles": 1612,
+      "faces_by_material": {
+        "MAT_Gold_Aged": 806
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_GoldStack_S",
+      "color_layers": [
+        "OrnMask"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Loot_PearlSack_Closed": {
+      "source": "exports/SM_Loot_PearlSack_Closed.fbx",
+      "size_cm": [
+        25.5101,
+        22.4076,
+        36.4211
+      ],
+      "triangles": 858,
+      "faces_by_material": {
+        "MAT-Fort_Jute": 360,
+        "MAT-Fort_Rope": 72,
+        "MAT-Fort_IronRust": 40
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_PearlSack_Closed",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Loot_PearlSack_Open": {
+      "source": "exports/SM_Loot_PearlSack_Open.fbx",
+      "size_cm": [
+        42.3976,
+        34.422,
+        33.8785
+      ],
+      "triangles": 6650,
+      "faces_by_material": {
+        "MAT-Fort_Jute": 552,
+        "MAT-Fort_Rope": 166,
+        "MAT_Pearl_Black": 2242,
+        "MAT_Pearl_White": 3690
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Loot_PearlSack_Open",
+      "color_layers": [
+        "OrnMask",
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Grab"
+      ]
+    },
+    "SM_Port_Bollard": {
+      "source": "exports/SM_Port_Bollard.fbx",
+      "size_cm": [
+        24.2,
+        23.8323,
+        58.5
+      ],
+      "triangles": 450,
+      "faces_by_material": {
+        "MAT-Fort_Iron": 234
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Port_Bollard",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Rope"
+      ]
+    },
+    "SM_Port_Crane": {
+      "source": "repaired/SM_Port_Crane.fbx",
+      "size_cm": [
+        160.0,
+        484.0627,
+        492.0
+      ],
+      "triangles": 2428,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 26,
+        "MAT-Fort_IronRust": 96,
+        "MAT-Fort_WoodTamanu": 380,
+        "MAT-Fort_Rope": 724
+      },
+      "ucx_count": 3,
+      "render_name": "SM_Port_Crane",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Hook",
+        "SOCKET_Winch"
+      ]
+    },
+    "SM_Port_Jetty_6m": {
+      "source": "exports/SM_Port_Jetty_6m.fbx",
+      "size_cm": [
+        472.0001,
+        600.8128,
+        264.6766
+      ],
+      "triangles": 3080,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 6,
+        "MAT-Fort_CoralAshlar": 1638,
+        "MAT-Fort_IronRust": 140
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Port_Jetty_6m",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Bollard_L",
+        "SOCKET_Bollard_R",
+        "SOCKET_Snap_N",
+        "SOCKET_Snap_S"
+      ]
+    },
+    "SM_Port_Pier_6m": {
+      "source": "exports/SM_Port_Pier_6m.fbx",
+      "size_cm": [
+        280.0,
+        600.0,
+        367.4661
+      ],
+      "triangles": 2996,
+      "faces_by_material": {
+        "MAT-Fort_Coconut": 198,
+        "MAT-Fort_WoodTamanu": 416,
+        "MAT-Fort_WoodWeathered": 702,
+        "MAT-Fort_Rope": 300
+      },
+      "ucx_count": 10,
+      "render_name": "SM_Port_Pier_6m",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Bollard",
+        "SOCKET_Snap_N",
+        "SOCKET_Snap_S"
+      ]
+    },
+    "SM_Port_PierHead": {
+      "source": "exports/SM_Port_PierHead.fbx",
+      "size_cm": [
+        830.0,
+        631.2795,
+        689.141
+      ],
+      "triangles": 4490,
+      "faces_by_material": {
+        "MAT-Fort_Coconut": 374,
+        "MAT-Fort_WoodTamanu": 676,
+        "MAT-Fort_WoodWeathered": 1144,
+        "MAT-Fort_Rope": 226
+      },
+      "ucx_count": 3,
+      "render_name": "SM_Port_PierHead",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_BoatDock",
+        "SOCKET_Bollard_E",
+        "SOCKET_Bollard_W",
+        "SOCKET_Lantern",
+        "SOCKET_LanternMount"
+      ]
+    },
+    "SM_Port_Quay_6m": {
+      "source": "exports/SM_Port_Quay_6m.fbx",
+      "size_cm": [
+        600.9225,
+        328.3369,
+        264.824
+      ],
+      "triangles": 2508,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 6,
+        "MAT-Fort_CoralAshlar": 1300,
+        "MAT-Fort_IronRust": 140
+      },
+      "ucx_count": 1,
+      "render_name": "SM_Port_Quay_6m",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Bollard",
+        "SOCKET_Ring_L",
+        "SOCKET_Ring_R",
+        "SOCKET_Snap_L",
+        "SOCKET_Snap_R"
+      ]
+    },
+    "SM_Port_QuayStairs": {
+      "source": "exports/SM_Port_QuayStairs.fbx",
+      "size_cm": [
+        405.5926,
+        326.4,
+        264.4846
+      ],
+      "triangles": 1424,
+      "faces_by_material": {
+        "MAT-Fort_CoralRubble": 66,
+        "MAT-Fort_CoralAshlar": 676,
+        "MAT-Fort_IronRust": 70
+      },
+      "ucx_count": 3,
+      "render_name": "SM_Port_QuayStairs",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_BoatDock",
+        "SOCKET_Top"
+      ]
+    },
+    "SM_Port_Warehouse": {
+      "source": "exports/SM_Port_Warehouse.fbx",
+      "size_cm": [
+        1130.0001,
+        700.0,
+        541.7299
+      ],
+      "triangles": 10660,
+      "faces_by_material": {
+        "MAT-Fort_CoralAshlar": 3334,
+        "MAT-Fort_WoodTamanu": 2330,
+        "MAT-Fort_CoralRubble": 117,
+        "MAT-Fort_Shingles": 74,
+        "MAT-Fort_Jute": 427
+      },
+      "ucx_count": 11,
+      "render_name": "SM_Port_Warehouse",
+      "color_layers": [
+        "Blend"
+      ],
+      "sockets": [
+        "SOCKET_Door",
+        "SOCKET_Hoist"
+      ]
+    }
+  },
+  "finished_at": "2026-10-06T23:38:32.368654+00:00"
+}

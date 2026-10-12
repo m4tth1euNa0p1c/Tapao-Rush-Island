@@ -1,0 +1,431 @@
+{
+  "MAT-Fort_Brick": {
+    "images": {
+      "red_brick_03_diff_2k.jpg": "textures/factory/assets/textures/fort/red_brick_03/red_brick_03_diff_2k.jpg",
+      "red_brick_03_rough_2k.jpg": "textures/factory/assets/textures/fort/red_brick_03/red_brick_03_rough_2k.jpg",
+      "red_brick_03_nor_gl_2k.jpg": "textures/factory/assets/textures/fort/red_brick_03/red_brick_03_nor_gl_2k.jpg",
+      "red_brick_03_disp_2k.jpg": "textures/factory/assets/textures/fort/red_brick_03/red_brick_03_disp_2k.jpg"
+    },
+    "color": [
+      0.44999998807907104,
+      0.20000000298023224,
+      0.15000000596046448,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_RedBrick03 (tile 0,6 m) x #F2D9CC + MF_FortWeathering."
+  },
+  "MAT-Fort_CoralAshlar": {
+    "images": {
+      "coral_fort_wall_01_diff_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_01/coral_fort_wall_01_diff_2k.jpg",
+      "coral_fort_wall_01_rough_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_01/coral_fort_wall_01_rough_2k.jpg",
+      "coral_fort_wall_01_nor_gl_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_01/coral_fort_wall_01_nor_gl_2k.jpg",
+      "coral_fort_wall_01_disp_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_01/coral_fort_wall_01_disp_2k.jpg",
+      "coral_ground_02_diff_2k.jpg": "textures/art/textures/ground/coral_ground_02/coral_ground_02_diff_2k.jpg",
+      "coral_ground_02_rough_2k.jpg": "textures/art/textures/ground/coral_ground_02/coral_ground_02_rough_2k.jpg",
+      "coral_ground_02_nor_gl_2k.jpg": "textures/art/textures/ground/coral_ground_02/coral_ground_02_nor_gl_2k.jpg",
+      "coral_ground_02_disp_2k.jpg": "textures/art/textures/ground/coral_ground_02/coral_ground_02_disp_2k.jpg"
+    },
+    "color": [
+      0.800000011920929,
+      0.7699999809265137,
+      0.699999988079071,
+      1.0
+    ],
+    "ue_recipe": "Default Lit. Base T_CoralFortWall01 eclaircie, B (VertexColor) -> T_CoralGround02 (beachrock). MF_FortWeathering. Flip Green."
+  },
+  "MAT-Fort_CoralRubble": {
+    "images": {
+      "coral_fort_wall_02_diff_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_02/coral_fort_wall_02_diff_2k.jpg",
+      "coral_fort_wall_02_rough_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_02/coral_fort_wall_02_rough_2k.jpg",
+      "coral_fort_wall_02_nor_gl_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_02/coral_fort_wall_02_nor_gl_2k.jpg",
+      "coral_fort_wall_02_disp_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_02/coral_fort_wall_02_disp_2k.jpg",
+      "coral_fort_wall_03_diff_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_03/coral_fort_wall_03_diff_2k.jpg",
+      "coral_fort_wall_03_rough_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_03/coral_fort_wall_03_rough_2k.jpg",
+      "coral_fort_wall_03_nor_gl_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_03/coral_fort_wall_03_nor_gl_2k.jpg",
+      "coral_fort_wall_03_disp_2k.jpg": "textures/factory/assets/textures/artifacts/coral_fort_wall_03/coral_fort_wall_03_disp_2k.jpg",
+      "white_plaster_02_diff_2k.jpg": "textures/factory/assets/textures/fort/white_plaster_02/white_plaster_02_diff_2k.jpg",
+      "white_plaster_02_rough_2k.jpg": "textures/factory/assets/textures/fort/white_plaster_02/white_plaster_02_rough_2k.jpg",
+      "white_plaster_02_nor_gl_2k.jpg": "textures/factory/assets/textures/fort/white_plaster_02/white_plaster_02_nor_gl_2k.jpg",
+      "white_plaster_02_disp_2k.jpg": "textures/factory/assets/textures/fort/white_plaster_02/white_plaster_02_disp_2k.jpg"
+    },
+    "color": [
+      0.7200000286102295,
+      0.6600000262260437,
+      0.5600000023841858,
+      1.0
+    ],
+    "ue_recipe": "Default Lit. 3 couches par VertexColor (Blend) : base T_CoralFortWall02 (moellons), R -> T_CoralFortWall03 (lest), G -> T_WhitePlaster02 x #E6E0D2 avec masque de trous (bruit monde) laissant voir la base. Usure : MF_FortWeathering (WorldPosition.z - niveau de sol -> salissure brun-noir + mousse 0..0,55 m ; coulures = bruit etire en Z ; sel = Voronoi clair ; lichen = VertexNormalWS.y > 0,4). Normales OpenGL : Flip Green."
+  },
+  "MAT-Fort_IronRust": {
+    "images": {
+      "rusty_metal_04_diff_1k.jpg": "textures/factory/assets/textures/ship/rusty_metal_04/rusty_metal_04_diff_1k.jpg",
+      "rusty_metal_04_rough_1k.jpg": "textures/factory/assets/textures/ship/rusty_metal_04/rusty_metal_04_rough_1k.jpg",
+      "rusty_metal_04_nor_gl_1k.jpg": "textures/factory/assets/textures/ship/rusty_metal_04/rusty_metal_04_nor_gl_1k.jpg",
+      "rusty_metal_04_ao_1k.jpg": "textures/factory/assets/textures/ship/rusty_metal_04/rusty_metal_04_ao_1k.jpg"
+    },
+    "color": [
+      0.11999999731779099,
+      0.10000000149011612,
+      0.09000000357627869,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_RustyMetal04 x Lerp(#1A1513, 0.55) + taches orange (bruit) ; Metallic 0.35 ; Roughness T_Rough + 0.15."
+  },
+  "MAT-Fort_Jute": {
+    "images": {
+      "hessian_230_diff_1k.jpg": "textures/art/textures/characters/hessian_230/hessian_230_diff_1k.jpg",
+      "hessian_230_rough_1k.jpg": "textures/art/textures/characters/hessian_230/hessian_230_rough_1k.jpg",
+      "hessian_230_nor_gl_1k.jpg": "textures/art/textures/characters/hessian_230/hessian_230_nor_gl_1k.jpg"
+    },
+    "color": [
+      0.550000011920929,
+      0.44999998807907104,
+      0.30000001192092896,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_Hessian230 (sacs)."
+  },
+  "MAT-Fort_RoofTiles": {
+    "images": {
+      "clay_roof_tiles_02_diff_2k.jpg": "textures/factory/assets/textures/fort/clay_roof_tiles_02/clay_roof_tiles_02_diff_2k.jpg",
+      "clay_roof_tiles_02_rough_2k.jpg": "textures/factory/assets/textures/fort/clay_roof_tiles_02/clay_roof_tiles_02_rough_2k.jpg",
+      "clay_roof_tiles_02_nor_gl_2k.jpg": "textures/factory/assets/textures/fort/clay_roof_tiles_02/clay_roof_tiles_02_nor_gl_2k.jpg",
+      "clay_roof_tiles_02_disp_2k.jpg": "textures/factory/assets/textures/fort/clay_roof_tiles_02/clay_roof_tiles_02_disp_2k.jpg"
+    },
+    "color": [
+      0.5,
+      0.30000001192092896,
+      0.20000000298023224,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_ClayRoofTiles02 (canal le long de V, tile 1,45 m) ; variation par tuile (bruit UV) ; plaques sombres, lichens gris-blanc (Voronoi), coulures de mousse."
+  },
+  "MAT-Fort_Rope": {
+    "images": {
+      "Rope001_1K-JPG_Color.jpg": "textures/art/textures/characters/Rope001/Rope001_1K-JPG_Color.jpg",
+      "Rope001_1K-JPG_Roughness.jpg": "textures/art/textures/characters/Rope001/Rope001_1K-JPG_Roughness.jpg",
+      "Rope001_1K-JPG_NormalGL.jpg": "textures/art/textures/characters/Rope001/Rope001_1K-JPG_NormalGL.jpg",
+      "Rope001_1K-JPG_Metalness.jpg": "textures/art/textures/characters/Rope001/Rope001_1K-JPG_Metalness.jpg"
+    },
+    "color": [
+      0.550000011920929,
+      0.44999998807907104,
+      0.30000001192092896,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_Rope001 (fil le long de V)."
+  },
+  "MAT-Fort_WoodTamanu": {
+    "images": {
+      "brown_planks_03_diff_2k.jpg": "textures/factory/assets/textures/ship/brown_planks_03/brown_planks_03_diff_2k.jpg",
+      "brown_planks_03_rough_2k.jpg": "textures/factory/assets/textures/ship/brown_planks_03/brown_planks_03_rough_2k.jpg",
+      "brown_planks_03_nor_gl_2k.jpg": "textures/factory/assets/textures/ship/brown_planks_03/brown_planks_03_nor_gl_2k.jpg"
+    },
+    "color": [
+      0.3499999940395355,
+      0.18000000715255737,
+      0.10000000149011612,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_BrownPlanks03 teinte rouge-brun (tamanu)."
+  },
+  "MAT-Fort_BarrelStaves": {
+    "images": {
+      "wooden_barrel_diff_1k.jpg": "textures/factory/assets/textures/ship/wooden_barrel/wooden_barrel_diff_1k.jpg",
+      "wooden_barrel_rough_1k.jpg": "textures/factory/assets/textures/ship/wooden_barrel/wooden_barrel_rough_1k.jpg",
+      "wooden_barrel_nor_gl_1k.jpg": "textures/factory/assets/textures/ship/wooden_barrel/wooden_barrel_nor_gl_1k.jpg"
+    },
+    "color": [
+      0.4000000059604645,
+      0.2800000011920929,
+      0.18000000715255737,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_WoodenBarrel (douves, u = tour, v = hauteur)."
+  },
+  "MAT-Fort_Copper": {
+    "images": {
+      "Metal048C_diff_1k.jpg": "textures/factory/assets/textures/ship/Metal048C/Metal048C_diff_1k.jpg",
+      "Metal048C_rough_1k.jpg": "textures/factory/assets/textures/ship/Metal048C/Metal048C_rough_1k.jpg",
+      "Metal048C_nor_gl_1k.jpg": "textures/factory/assets/textures/ship/Metal048C/Metal048C_nor_gl_1k.jpg",
+      "Metal048C_metal_1k.jpg": "textures/factory/assets/textures/ship/Metal048C/Metal048C_metal_1k.jpg"
+    },
+    "color": [
+      0.6000000238418579,
+      0.3499999940395355,
+      0.2199999988079071,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : Metal048C teinte cuivre #C07850, vert-de-gris #4F7A66 (Metallic 0) en taches."
+  },
+  "MAT-Fort_Iron": {
+    "images": {
+      "Metal046B_diff_1k.jpg": "textures/factory/assets/textures/ship/Metal046B/Metal046B_diff_1k.jpg",
+      "Metal046B_rough_1k.jpg": "textures/factory/assets/textures/ship/Metal046B/Metal046B_rough_1k.jpg",
+      "Metal046B_nor_gl_1k.jpg": "textures/factory/assets/textures/ship/Metal046B/Metal046B_nor_gl_1k.jpg",
+      "Metal046B_metal_1k.jpg": "textures/factory/assets/textures/ship/Metal046B/Metal046B_metal_1k.jpg"
+    },
+    "color": [
+      0.11999999731779099,
+      0.11999999731779099,
+      0.12999999523162842,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : Metal046B fonte noire (Metallic 0.85, Roughness +0.15)."
+  },
+  "MAT-Fort_WoodOak": {
+    "images": {
+      "dark_wooden_planks_diff_1k.jpg": "textures/factory/assets/textures/ship/dark_wooden_planks/dark_wooden_planks_diff_1k.jpg",
+      "dark_wooden_planks_rough_1k.jpg": "textures/factory/assets/textures/ship/dark_wooden_planks/dark_wooden_planks_rough_1k.jpg",
+      "dark_wooden_planks_nor_gl_1k.jpg": "textures/factory/assets/textures/ship/dark_wooden_planks/dark_wooden_planks_nor_gl_1k.jpg"
+    },
+    "color": [
+      0.2199999988079071,
+      0.17000000178813934,
+      0.12999999523162842,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_DarkWoodenPlanks (fil le long de U) chene goudronne."
+  },
+  "MAT-Fort_WoodWeathered": {
+    "images": {
+      "weathered_planks_diff_1k.jpg": "textures/art/textures/characters/weathered_planks/weathered_planks_diff_1k.jpg",
+      "weathered_planks_rough_1k.jpg": "textures/art/textures/characters/weathered_planks/weathered_planks_rough_1k.jpg",
+      "weathered_planks_nor_gl_1k.jpg": "textures/art/textures/characters/weathered_planks/weathered_planks_nor_gl_1k.jpg"
+    },
+    "color": [
+      0.4000000059604645,
+      0.3499999940395355,
+      0.30000001192092896,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_WeatheredPlanks gris argente (planches usees au sel)."
+  },
+  "MAT-Fort_Coconut": {
+    "images": {
+      "palm_tree_bark_diff_2k.jpg": "textures/art/textures/palm/palm_tree_bark/palm_tree_bark_diff_2k.jpg",
+      "palm_tree_bark_rough_2k.jpg": "textures/art/textures/palm/palm_tree_bark/palm_tree_bark_rough_2k.jpg",
+      "palm_tree_bark_nor_gl_2k.jpg": "textures/art/textures/palm/palm_tree_bark/palm_tree_bark_nor_gl_2k.jpg"
+    },
+    "color": [
+      0.3499999940395355,
+      0.30000001192092896,
+      0.25,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_PalmTreeBark (pieux de cocotier)."
+  },
+  "MAT-Fort_Shingles": {
+    "images": {
+      "weathered_planks_diff_1k.jpg": "textures/art/textures/characters/weathered_planks/weathered_planks_diff_1k.jpg",
+      "weathered_planks_rough_1k.jpg": "textures/art/textures/characters/weathered_planks/weathered_planks_rough_1k.jpg",
+      "weathered_planks_nor_gl_1k.jpg": "textures/art/textures/characters/weathered_planks/weathered_planks_nor_gl_1k.jpg"
+    },
+    "color": [
+      0.44999998807907104,
+      0.4399999976158142,
+      0.41999998688697815,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_WeatheredPlanks a petite echelle (essentes gris argent)."
+  },
+  "MAT-Fort_CoralGravel": {
+    "images": {
+      "coral_gravel_diff_2k.jpg": "textures/art/textures/ground/coral_gravel/coral_gravel_diff_2k.jpg",
+      "coral_gravel_rough_2k.jpg": "textures/art/textures/ground/coral_gravel/coral_gravel_rough_2k.jpg",
+      "coral_gravel_nor_gl_2k.jpg": "textures/art/textures/ground/coral_gravel/coral_gravel_nor_gl_2k.jpg",
+      "coral_gravel_disp_2k.jpg": "textures/art/textures/ground/coral_gravel/coral_gravel_disp_2k.jpg"
+    },
+    "color": [
+      0.699999988079071,
+      0.6600000262260437,
+      0.5799999833106995,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : T_CoralGravel (sable corallien + gravats)."
+  },
+  "MAT-Fort_Puddle": {
+    "images": {
+      "T_Water_N.png": "textures/art/textures/water/T_Water_N.png"
+    },
+    "color": [
+      0.03999999910593033,
+      0.05000000074505806,
+      0.03999999910593033,
+      1.0
+    ],
+    "ue_recipe": "Default Lit : #090B09, Roughness 0.04, normale T_Water_N x0.25 (panner lent)."
+  },
+  "MAT-Site_Ground": {
+    "images": {
+      "sand_wet_ch.png": "textures/art/textures/terrain_layers/sand_wet_ch.png",
+      "sand_wet_n.png": "textures/art/textures/terrain_layers/sand_wet_n.png",
+      "sand_dry_ch.png": "textures/art/textures/terrain_layers/sand_dry_ch.png",
+      "sand_dry_n.png": "textures/art/textures/terrain_layers/sand_dry_n.png",
+      "rubble_ch.png": "textures/art/textures/terrain_layers/rubble_ch.png",
+      "rubble_n.png": "textures/art/textures/terrain_layers/rubble_n.png",
+      "feo_ch.png": "textures/art/textures/terrain_layers/feo_ch.png",
+      "feo_n.png": "textures/art/textures/terrain_layers/feo_n.png",
+      "soil_ch.png": "textures/art/textures/terrain_layers/soil_ch.png",
+      "soil_n.png": "textures/art/textures/terrain_layers/soil_n.png",
+      "litter_ch.png": "textures/art/textures/terrain_layers/litter_ch.png",
+      "litter_n.png": "textures/art/textures/terrain_layers/litter_n.png",
+      "wrack_ch.png": "textures/art/textures/terrain_layers/wrack_ch.png",
+      "wrack_n.png": "textures/art/textures/terrain_layers/wrack_n.png"
+    },
+    "color": [
+      0.75,
+      0.699999988079071,
+      0.6000000238418579,
+      1.0
+    ],
+    "ue_recipe": "Landscape M_Terrain_Atoll : couches sand_dry / sand_wet / rubble / feo / soil / litter / wrack (height-blend) ; teinte sous l'eau par profondeur (WorldPosition.z < -1,65)."
+  },
+  "MAT-Site_Lagoon": {
+    "images": {
+      "T_Water_N.png": "textures/art/textures/water/T_Water_N.png"
+    },
+    "color": [
+      0.10000000149011612,
+      0.5,
+      0.550000011920929,
+      1.0
+    ],
+    "ue_recipe": "Water plugin (Lake / Ocean) : absorption turquoise #38C9C1 -> #0E6F8A -> #0B2E5A ; ecume par distance au rivage."
+  },
+  "MAT-Fort_Flag": {
+    "images": {
+      "Fabric019_1K-JPG_Color.jpg": "textures/art/textures/characters/Fabric019/Fabric019_1K-JPG_Color.jpg",
+      "Fabric019_1K-JPG_Roughness.jpg": "textures/art/textures/characters/Fabric019/Fabric019_1K-JPG_Roughness.jpg",
+      "Fabric019_1K-JPG_NormalGL.jpg": "textures/art/textures/characters/Fabric019/Fabric019_1K-JPG_NormalGL.jpg",
+      "monk-island": "textures/derived/T_FleurDeLys.png"
+    },
+    "color": [
+      0.8999999761581421,
+      0.8799999952316284,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "Default Lit Two Sided : T_Fabric019 x #EEE9DC ; T_FleurDeLys (masque, quinconce 5 x 4) -> #C8A24A ; WPO de vent par UV1.x."
+  },
+  "MAT-Fort_LanternHorn": {
+    "images": {},
+    "color": [
+      0.8500000238418579,
+      0.6200000047683716,
+      0.3499999940395355,
+      1.0
+    ],
+    "ue_recipe": "Unlit/Emissive : couleur (1.0, 0.55, 0.22) x 6.0."
+  },
+  "MAT_Gem_Amethyst": {
+    "images": {
+      "T_Gold_Scratches.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Scratches.jpg"
+    },
+    "color": [
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "Gemmes (rubis, saphir, emeraude, amethyste) - option A opaque (budget faible) : Default Lit opaque, BaseColor = couleur de corps sombre (Rubis #5A0710, Saphir #0A1A55, Saphir nuit #050A24, Emeraude #08401E, Amethyste #3A1450) x (0.6 + 0.4 x Fresnel(Exponent 3)), Specular 0.9 (IOR 1.76 corindon / 1.57 emeraude), Roughness 0.04 + 0.4 x OrnMask.G (givre / brut), Emissive = couleur de feu x 0.6 x CubemapReflection masquee par une texture d'eclats (voronoi) decalee par BumpOffset (HeightRatio 0.03, ReferencePlane 0.5) -> fausse refraction / feux internes ; facettes en lissage plat (normales par face). Option B (si budget) : Translucent + Surface Forward Shading, Refraction Method 'Index of Refraction' (1.76), Opacity 0.85, Absorption (Thin Translucent ou Substrate Slab MFP = couleur de corps, 3 mm). OrnMask.A = ton (0 clair -> 1 tres sombre)."
+  },
+  "MAT_Gem_Emerald": {
+    "images": {
+      "T_Gold_Scratches.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Scratches.jpg"
+    },
+    "color": [
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "Gemmes (rubis, saphir, emeraude, amethyste) - option A opaque (budget faible) : Default Lit opaque, BaseColor = couleur de corps sombre (Rubis #5A0710, Saphir #0A1A55, Saphir nuit #050A24, Emeraude #08401E, Amethyste #3A1450) x (0.6 + 0.4 x Fresnel(Exponent 3)), Specular 0.9 (IOR 1.76 corindon / 1.57 emeraude), Roughness 0.04 + 0.4 x OrnMask.G (givre / brut), Emissive = couleur de feu x 0.6 x CubemapReflection masquee par une texture d'eclats (voronoi) decalee par BumpOffset (HeightRatio 0.03, ReferencePlane 0.5) -> fausse refraction / feux internes ; facettes en lissage plat (normales par face). Option B (si budget) : Translucent + Surface Forward Shading, Refraction Method 'Index of Refraction' (1.76), Opacity 0.85, Absorption (Thin Translucent ou Substrate Slab MFP = couleur de corps, 3 mm). OrnMask.A = ton (0 clair -> 1 tres sombre)."
+  },
+  "MAT_Gem_Ruby": {
+    "images": {
+      "T_Gold_Scratches.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Scratches.jpg"
+    },
+    "color": [
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "Gemmes (rubis, saphir, emeraude, amethyste) - option A opaque (budget faible) : Default Lit opaque, BaseColor = couleur de corps sombre (Rubis #5A0710, Saphir #0A1A55, Saphir nuit #050A24, Emeraude #08401E, Amethyste #3A1450) x (0.6 + 0.4 x Fresnel(Exponent 3)), Specular 0.9 (IOR 1.76 corindon / 1.57 emeraude), Roughness 0.04 + 0.4 x OrnMask.G (givre / brut), Emissive = couleur de feu x 0.6 x CubemapReflection masquee par une texture d'eclats (voronoi) decalee par BumpOffset (HeightRatio 0.03, ReferencePlane 0.5) -> fausse refraction / feux internes ; facettes en lissage plat (normales par face). Option B (si budget) : Translucent + Surface Forward Shading, Refraction Method 'Index of Refraction' (1.76), Opacity 0.85, Absorption (Thin Translucent ou Substrate Slab MFP = couleur de corps, 3 mm). OrnMask.A = ton (0 clair -> 1 tres sombre)."
+  },
+  "MAT_Gem_Sapphire": {
+    "images": {
+      "T_Gold_Scratches.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Scratches.jpg"
+    },
+    "color": [
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "Gemmes (rubis, saphir, emeraude, amethyste) - option A opaque (budget faible) : Default Lit opaque, BaseColor = couleur de corps sombre (Rubis #5A0710, Saphir #0A1A55, Saphir nuit #050A24, Emeraude #08401E, Amethyste #3A1450) x (0.6 + 0.4 x Fresnel(Exponent 3)), Specular 0.9 (IOR 1.76 corindon / 1.57 emeraude), Roughness 0.04 + 0.4 x OrnMask.G (givre / brut), Emissive = couleur de feu x 0.6 x CubemapReflection masquee par une texture d'eclats (voronoi) decalee par BumpOffset (HeightRatio 0.03, ReferencePlane 0.5) -> fausse refraction / feux internes ; facettes en lissage plat (normales par face). Option B (si budget) : Translucent + Surface Forward Shading, Refraction Method 'Index of Refraction' (1.76), Opacity 0.85, Absorption (Thin Translucent ou Substrate Slab MFP = couleur de corps, 3 mm). OrnMask.A = ton (0 clair -> 1 tres sombre)."
+  },
+  "MAT_Gem_Topaz": {
+    "images": {
+      "T_Gold_Scratches.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Scratches.jpg"
+    },
+    "color": [
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "Gemmes (rubis, saphir, emeraude, amethyste) - option A opaque (budget faible) : Default Lit opaque, BaseColor = couleur de corps sombre (Rubis #5A0710, Saphir #0A1A55, Saphir nuit #050A24, Emeraude #08401E, Amethyste #3A1450) x (0.6 + 0.4 x Fresnel(Exponent 3)), Specular 0.9 (IOR 1.76 corindon / 1.57 emeraude), Roughness 0.04 + 0.4 x OrnMask.G (givre / brut), Emissive = couleur de feu x 0.6 x CubemapReflection masquee par une texture d'eclats (voronoi) decalee par BumpOffset (HeightRatio 0.03, ReferencePlane 0.5) -> fausse refraction / feux internes ; facettes en lissage plat (normales par face). Option B (si budget) : Translucent + Surface Forward Shading, Refraction Method 'Index of Refraction' (1.76), Opacity 0.85, Absorption (Thin Translucent ou Substrate Slab MFP = couleur de corps, 3 mm). OrnMask.A = ton (0 clair -> 1 tres sombre)."
+  },
+  "MAT_Gold_Aged": {
+    "images": {
+      "T_Gold_Aged_Color.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Aged_Color.jpg",
+      "T_Gold_Aged_Roughness.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Aged_Roughness.jpg",
+      "T_Gold_Scratches.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Scratches.jpg",
+      "T_Gold_Aged_Normal.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Aged_Normal.jpg"
+    },
+    "color": [
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "Or patine 18-22 ct (Unreal, Default Lit opaque) : Metallic 1 ; BaseColor = Lerp(or #E7C07A x (0.85 + 0.3 x T_Gold_Aged_Color.lum), brun-noir #3A2A18, OrnMask.R x 0.85) ; Lerp vers or poli #F3D58E par OrnMask.G ; vert-de-gris #4E6B55 (Metallic 0, Roughness 0.9) = OrnMask.B x (bruit tuile > 0.5). Roughness = 0.24 + 0.30 x (T_Gold_Aged_Roughness - 0.3) + 0.18 x T_Gold_Scratches + 0.35 x OrnMask.R - 0.10 x OrnMask.G. Normal = BlendAngleCorrected(T_Gold_Aged_Normal x0.5, T_Gold_Scratches_Normal x0.35). Metallic = 1 - 0.55 x OrnMask.R(tarnish) - verdigris. UV : UVMap (1 = 3 cm)."
+  },
+  "MAT_Gold_CoinHeap": {
+    "images": {
+      "T_Gold_Aged_Color.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Aged_Color.jpg",
+      "T_Gold_Aged_Roughness.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Aged_Roughness.jpg",
+      "T_Gold_Scratches.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Scratches.jpg",
+      "T_Gold_Aged_Normal.jpg": "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Aged_Normal.jpg"
+    },
+    "color": [
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "MAT_Gold_Aged + relief de pieces : Voronoi (62/m, coordonnees objet) -> disques (Distance 0,42..0,30) + listel ; joints assombris #1F140A ; a reproduire par une normal map de pieces tuilees dans Unreal."
+  },
+  "MAT_Pearl_Black": {
+    "images": {},
+    "color": [
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "Perles fines (Unreal) : Default Lit opaque (ou Substrate Slab) ; BaseColor blanc nacre #CFC8BA / noir de Tahiti #0E1113 ; Roughness 0.22 (0.55 si OrnMask.G : perle morte) ; ClearCoat 0.6, ClearCoatRoughness 0.08 ; orient : Specular Color = Lerp(rose, vert, OrnMask.A) x Fresnel ; Substrate : Thin Film 420 nm IOR 1.6, Fuzz 0.3 (blanches)."
+  },
+  "MAT_Pearl_White": {
+    "images": {},
+    "color": [
+      0.800000011920929,
+      0.800000011920929,
+      0.800000011920929,
+      1.0
+    ],
+    "ue_recipe": "Perles fines (Unreal) : Default Lit opaque (ou Substrate Slab) ; BaseColor blanc nacre #CFC8BA / noir de Tahiti #0E1113 ; Roughness 0.22 (0.55 si OrnMask.G : perle morte) ; ClearCoat 0.6, ClearCoatRoughness 0.08 ; orient : Specular Color = Lerp(rose, vert, OrnMask.A) x Fresnel ; Substrate : Thin Film 420 nm IOR 1.6, Fuzz 0.3 (blanches)."
+  }
+}

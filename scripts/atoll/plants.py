@@ -9,13 +9,14 @@ import math
 import numpy as np
 
 from .geo import (GOLDEN, UP, MeshBuilder, Noise, add_strips, add_tube, align_z, icosphere, integrate_path,
-                  leaf_profile, norm, perp_basis, rot_axis, spline, stamp, uv_sphere)
+                  leaf_profile, norm, perp_basis, rot_axis, spline, stamp, uv_sphere, wind_phase)
 
 BARK, LEAF, EXTRA = 0, 1, 2
 _BERRY = uv_sphere(8, 6)
 
 
-def leaves(mb, bases, dirs, normals, lengths, half_w, shape, S=4, droop=0.1, fold=-0.12, cols=None, mat=LEAF):
+def leaves(mb, bases, dirs, normals, lengths, half_w, shape, S=4, droop=0.1, fold=-0.12, cols=None, mat=LEAF,
+           wind=None):
     """Batch of simple leaves (strips) with a width profile, gravity droop and a V fold."""
     N = len(bases)
     if N == 0:
@@ -25,7 +26,7 @@ def leaves(mb, bases, dirs, normals, lengths, half_w, shape, S=4, droop=0.1, fol
     C = (bases[:, None, :] + dirs[:, None, :] * (x[None, :] * lengths[:, None])[..., None]
          - UP * (droop * lengths)[:, None, None] * (x ** 2)[None, :, None])
     W = half_w[:, None] * leaf_profile(shape, x)[None, :]
-    add_strips(mb, C, np.broadcast_to(normals[:, None, :], C.shape), W, W * fold, cols, mat)
+    add_strips(mb, C, np.broadcast_to(normals[:, None, :], C.shape), W, W * fold, cols, mat, wind=wind)
 
 
 def face_up(dirs, fallback):
@@ -132,7 +133,7 @@ def shrub(kind, seed):
         tpts = _wiggle(rng, [[0, 0, 0], [0.05, 0.02, th_ * 0.5], [0.1, -0.03, th_]], p["twist"])
         add_tube(mb, spline(tpts, 8), np.linspace(r0 * 1.15, r0 * 0.85, 8), 10, BARK, bcol, 1.0, 1.0)
         fork = tpts[-1]
-    all_b, all_d, all_n, all_l, all_w, all_dr = [], [], [], [], [], []
+    all_b, all_d, all_n, all_l, all_w, all_dr, all_wind = [], [], [], [], [], [], []
     cards = []
     crown_c = np.array([0.0, 0.0, H * 0.3])
     for ai in range(k):
@@ -159,15 +160,21 @@ def shrub(kind, seed):
                 continue
             node = A * 0.45 + g.mean(0) * 0.55 + rng.normal(0, 0.03 * H, 3)
             spts = _wiggle(rng, [A, (A + node) / 2 + UP * 0.03 * H, node], p["twist"])
+            # wind: a secondary branch sways from its fork, its twigs and leaves with it (one phase per twig)
+            mb.wind_group = (A, 2.5 * np.linalg.norm(node - A) + 0.3, wind_phase(*node))
             add_tube(mb, spline(spts, 6), np.linspace(rr * 0.55, rr * 0.35, 6), 6, BARK, bcol, 0.4, 1.0)
             for tip in g:
                 seg = np.linalg.norm(tip - node)
                 tw = _wiggle(rng, [node, node + (tip - node) * 0.5 + UP * 0.12 * seg, tip], p["twist"])
                 C = spline(tw, 5)
+                twig_wind = (node, seg + 0.35, wind_phase(*tip))
+                mb.wind_group = twig_wind
                 add_tube(mb, C, np.linspace(max(r1, rr * 0.3), r1 * 0.7, 5), 4, BARK, bcol, 0.2, 1.0)
                 D = norm(C[-1] - C[-2])
                 if p.get("cards"):
-                    cards.append(_cards(rng, tip, D, crown_c, int(rng.integers(*p["cards"])), p["card_size"]))
+                    cards.append(_cards(rng, tip, D, crown_c, int(rng.integers(*p["cards"])), p["card_size"])
+                                 + (twig_wind,))
+                    mb.wind_group = None
                     continue
                 n_l = int(rng.integers(*p["leaves"]))
                 if p.get("cluster"):
@@ -176,6 +183,8 @@ def shrub(kind, seed):
                     b, d, nrm, ln, hw, dr = rosette(rng, tip, D, n_l, rng.uniform(*p["leaf_len"]), p["ratio"],
                                                     p["tilt"], p["spread"] * (H / 2), p["up_bias"],
                                                     p["droop"])
+                all_wind.append((np.repeat(node[None], len(b), 0), np.full(len(b), seg + 0.35),
+                                 np.full(len(b), twig_wind[2])))
                 all_b.append(b)
                 all_d.append(d)
                 all_n.append(nrm)
@@ -184,16 +193,21 @@ def shrub(kind, seed):
                 all_dr.append(dr)
                 if p["flowers"] and rng.random() < p["flowers"]:
                     _flowers(mb, rng, kind, tip, D)
+                mb.wind_group = None
     if cards:
         C = np.concatenate([c[0] for c in cards])
         W = np.concatenate([c[2] for c in cards])
         tint = 1 + p["var"] * rng.normal(0, 1, (len(C), 1)) * np.ones((1, 3))
         cols = np.concatenate([tint, np.zeros((len(C), 1))], 1).astype(np.float32)
-        add_strips(mb, C, np.concatenate([c[1] for c in cards]), W, 0.06 * W, cols, LEAF)
+        wind = (np.concatenate([np.repeat(c[3][0][None], len(c[0]), 0) for c in cards]),
+                np.concatenate([np.full(len(c[0]), c[3][1]) for c in cards]),
+                np.concatenate([np.full(len(c[0]), c[3][2]) for c in cards]))
+        add_strips(mb, C, np.concatenate([c[1] for c in cards]), W, 0.06 * W, cols, LEAF, wind=wind)
         return mb
     B = np.concatenate(all_b)
     leaves(mb, B, np.concatenate(all_d), np.concatenate(all_n), np.concatenate(all_l), np.concatenate(all_w),
-           p["shape"], p["leaf_S"], np.concatenate(all_dr), p["fold"], leaf_colors(rng, len(B), p["var"], p["yellow"]))
+           p["shape"], p["leaf_S"], np.concatenate(all_dr), p["fold"], leaf_colors(rng, len(B), p["var"], p["yellow"]),
+           wind=tuple(np.concatenate([w[k] for w in all_wind]) for k in range(3)))
     return mb
 
 
@@ -287,9 +301,10 @@ def pandanus(seed, young=False):
     branch(C[-1], norm(C[-1] - C[-3]), 0, r_tr * 0.8)
     Sx = 10
     x = np.linspace(0, 1, Sx + 1)
-    Cs, Us, Ws, cols = [], [], [], []
+    Cs, Us, Ws, cols, winds = [], [], [], [], []
     for P, D in tufts:
         n = int(rng.integers(44, 64))
+        winds.append((np.repeat(np.asarray(P)[None], n, 0), np.full(n, 1.6), np.full(n, wind_phase(*P))))
         E1, E2 = perp_basis(D)
         j = np.arange(n)
         a = j / (n - 1)
@@ -327,7 +342,8 @@ def pandanus(seed, young=False):
                   np.array([*colf, 0.2], np.float32), EXTRA)
     Ccat = np.concatenate(Cs)
     W = np.concatenate(Ws)
-    add_strips(mb, Ccat, np.concatenate(Us), W, -0.35 * W, np.concatenate(cols).astype(np.float32), LEAF)
+    add_strips(mb, Ccat, np.concatenate(Us), W, -0.35 * W, np.concatenate(cols).astype(np.float32), LEAF,
+               wind=tuple(np.concatenate([w[k] for w in winds]) for k in range(3)))
     return mb
 
 
@@ -443,4 +459,33 @@ def ipomoea(seed):
     B = np.array(B)
     leaves(mb, B, np.array(Dd), norm(np.array(Nn)), np.array(Ll), np.array(Hw), "round", 4, 0.05, -0.45,
            leaf_colors(rng, len(B), 0.07, 0.05))
+    return mb
+
+
+# ---------------------------------------------------------------- leaves carried by the wind
+
+WIND_LEAVES = {
+    # name: (shape, length m, half width ratio, curl, tint rgb, dryness)
+    "PalmLeaflet": ("leaflet", 0.30, 0.09, 0.10, (1.12, 1.06, 0.80), 0.25),
+    "Naupaka": ("spatulate", 0.16, 0.24, 0.18, (1.0, 1.0, 1.0), 0.0),
+    "Dry": ("obovate", 0.13, 0.30, 0.35, (1.0, 1.0, 1.0), 0.9),
+}
+
+
+def wind_leaf(kind):
+    """One loose leaf for the flying-leaves effect (AWindLeavesActor), centred on its middle, a little curled.
+
+    No wind channels: the effect moves the whole leaf, the foliage wind must not shake it again.
+    """
+    shape, length, ratio, curl, tint, dry = WIND_LEAVES[kind]
+    mb = MeshBuilder()
+    S = 6
+    x = np.linspace(0, 1, S + 1)
+    C = np.zeros((1, S + 1, 3))
+    C[0, :, 0] = (x - 0.5) * length
+    C[0, :, 2] = curl * length * (x - 0.5) ** 2  # curled up at both ends
+    W = (length * ratio) * leaf_profile(shape, x)[None, :]
+    col = np.array([[*tint, dry]], np.float32)
+    add_strips(mb, C, np.broadcast_to(UP, C.shape), W, -0.18 * W, col, LEAF)
+    mb.wind = [np.zeros_like(w) for w in mb.wind]
     return mb

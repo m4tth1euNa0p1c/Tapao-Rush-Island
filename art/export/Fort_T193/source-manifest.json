@@ -1,0 +1,1117 @@
+{
+  "task": "T-193",
+  "version": "0.2.0",
+  "staged_at": "2026-10-06T22:39:29.418453+00:00",
+  "files": {
+    "exports/SM_Fort_Barracks.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Barracks.fbx",
+      "bytes": 869340,
+      "mtime_ns": 1791324626000000000,
+      "sha256": "df5749f7e57d42f46657ed691fdba9f605b371214431880f1d7daba56a064539"
+    },
+    "exports/SM_Fort_Barrel.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Barrel.fbx",
+      "bytes": 46876,
+      "mtime_ns": 1791324759000000000,
+      "sha256": "55c5b769eb03c66345ca7dc500c35d454bb5d47ce987f02b27723b0bf55d54a3"
+    },
+    "exports/SM_Fort_Bastion.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Bastion.fbx",
+      "bytes": 538028,
+      "mtime_ns": 1791324537000000000,
+      "sha256": "d28525759f206c6d2354ffe4fcde8f4b7f4aa197e7fee3b25db371f51d8ebaa8"
+    },
+    "exports/SM_Fort_Bastion_Vault.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Bastion_Vault.fbx",
+      "bytes": 553836,
+      "mtime_ns": 1791324543000000000,
+      "sha256": "1dee4c2017ac9b3424da3cfd6c84f15c8afa0ccc65a2e124d2dd45b466bb4b41"
+    },
+    "exports/SM_Fort_BridgeFixed.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_BridgeFixed.fbx",
+      "bytes": 64812,
+      "mtime_ns": 1791324582000000000,
+      "sha256": "0e238b7b101b4af2ca1930fc1bc2fc52a1aa693724f064fdd71c30d2ff60f3b9"
+    },
+    "exports/SM_Fort_Cage_Ground.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Cage_Ground.fbx",
+      "bytes": 70908,
+      "mtime_ns": 1791324680000000000,
+      "sha256": "1b6c6e6355fc3e93f963ddbfc7b03d4f382d504184feb50efb68f55014feb70c"
+    },
+    "exports/SM_Fort_Cage_Hanging.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Cage_Hanging.fbx",
+      "bytes": 54108,
+      "mtime_ns": 1791324681000000000,
+      "sha256": "fcb32e50afbcd3a34ece523ad917bb7c751620642c78fac924c37d9f9644017d"
+    },
+    "exports/SM_Fort_Cannon.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Cannon.fbx",
+      "bytes": 90860,
+      "mtime_ns": 1791324757000000000,
+      "sha256": "8e7cf5a70db03f45d1847e52ff1a2b7d30418d6300e10bf4214ac6a3255f3cc5"
+    },
+    "exports/SM_Fort_CellDoor.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_CellDoor.fbx",
+      "bytes": 28700,
+      "mtime_ns": 1791324679000000000,
+      "sha256": "605253bbdc61be9383ecba14fe2da08b66d7986ca38e031e94e689ffc899336e"
+    },
+    "exports/SM_Fort_Chapel.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Chapel.fbx",
+      "bytes": 420700,
+      "mtime_ns": 1791324658000000000,
+      "sha256": "e56e96e9dad3de88513d079834beccda295099f3d4eec905cdadca16e92e82d5"
+    },
+    "exports/SM_Fort_Chest_Closed.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Chest_Closed.fbx",
+      "bytes": 51948,
+      "mtime_ns": 1791324700000000000,
+      "sha256": "6db8fd9856b70dbe82e94429f1ad962fc5f7225cc1ccd01ee49b469933fca6c1"
+    },
+    "exports/SM_Fort_Chest_Open.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Chest_Open.fbx",
+      "bytes": 177420,
+      "mtime_ns": 1791324702000000000,
+      "sha256": "cb2a7ea26c5d6b2bfd55aa19f5417875c6d96d894f31c8d84f62592a1505e5c2"
+    },
+    "exports/SM_Fort_Cistern.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Cistern.fbx",
+      "bytes": 73244,
+      "mtime_ns": 1791324641000000000,
+      "sha256": "c5f4dcc4d88abab8752da609fb96fd0b5392c11ae538625ae2417a30827b6ecd"
+    },
+    "exports/SM_Fort_Crate_A.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Crate_A.fbx",
+      "bytes": 44780,
+      "mtime_ns": 1791324758000000000,
+      "sha256": "5616b70d709d2905ded5b6a3a33e618c6aeb3b4ac75d82fb17b27d0f5f2537df"
+    },
+    "exports/SM_Fort_Crate_B.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Crate_B.fbx",
+      "bytes": 43436,
+      "mtime_ns": 1791324759000000000,
+      "sha256": "8d2bfd938c7d9d2bf93aec03c6794066ea5b1cf2f9ed7eb9eb5a735856e11fb4"
+    },
+    "exports/SM_Fort_Curtain_4m.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Curtain_4m.fbx",
+      "bytes": 91372,
+      "mtime_ns": 1791324513000000000,
+      "sha256": "a83fde54fbcf5675a79b93121a47d82d0b2d540ce00720eddc9ffe1ab32893c1"
+    },
+    "exports/SM_Fort_Curtain_4m_Access.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Curtain_4m_Access.fbx",
+      "bytes": 108396,
+      "mtime_ns": 1791324526000000000,
+      "sha256": "ead5209abf7088fa2aa60a553d89428c80365de491d25a4d3552fef322475725"
+    },
+    "exports/SM_Fort_Curtain_4m_Embrasure.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Curtain_4m_Embrasure.fbx",
+      "bytes": 89068,
+      "mtime_ns": 1791324521000000000,
+      "sha256": "920b01b549e3b09b77acb70f0d409c8dde8b959c37dd03550625b08281368a53"
+    },
+    "exports/SM_Fort_Curtain_Corner.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Curtain_Corner.fbx",
+      "bytes": 106364,
+      "mtime_ns": 1791324532000000000,
+      "sha256": "544ab13ebdf37820c957062c8babe2e9978de5c13d3c55685fa6ac571ab2cd9f"
+    },
+    "exports/SM_Fort_Ditch.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Ditch.fbx",
+      "bytes": 702844,
+      "mtime_ns": 1791324492000000000,
+      "sha256": "e6eb4cb4f24028c165f50adc94cedfc1ed3e78094edb22537dff477eeced5f84"
+    },
+    "exports/SM_Fort_Drawbridge.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Drawbridge.fbx",
+      "bytes": 78300,
+      "mtime_ns": 1791324582000000000,
+      "sha256": "8a967ccc74a34004c375ae585e3802cb71f572825498d8cea141d19605f34cba"
+    },
+    "exports/SM_Fort_Echauguette.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Echauguette.fbx",
+      "bytes": 57884,
+      "mtime_ns": 1791324558000000000,
+      "sha256": "fcc45b57d6a5d78476c336b8dcecba5c294354dbc6b8319ab440364f77140510"
+    },
+    "exports/SM_Fort_Flag.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Flag.fbx",
+      "bytes": 57916,
+      "mtime_ns": 1791324608000000000,
+      "sha256": "ee99a645bd5c95ebc053a8c94be1455f2563825fb443b8ab3ea9ea1d29cf963a"
+    },
+    "exports/SM_Fort_GateDoor_L.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_GateDoor_L.fbx",
+      "bytes": 43036,
+      "mtime_ns": 1791324580000000000,
+      "sha256": "26c77dd1feb1aceceff9221c5f49858f4948756612ad4e2d6e87895b9f7e374a"
+    },
+    "exports/SM_Fort_GateDoor_R.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_GateDoor_R.fbx",
+      "bytes": 52796,
+      "mtime_ns": 1791324581000000000,
+      "sha256": "5dfb7f1de5536a2471dcbeb8d0797e66ff1aef8bbc7cef08adbd64de962ea7c5"
+    },
+    "exports/SM_Fort_GateHouse.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_GateHouse.fbx",
+      "bytes": 423788,
+      "mtime_ns": 1791324574000000000,
+      "sha256": "a38465904504a3956d16ff164112adef625d21aed1814d6b263bf729740b37f5"
+    },
+    "exports/SM_Fort_Gibbet.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Gibbet.fbx",
+      "bytes": 42028,
+      "mtime_ns": 1791324681000000000,
+      "sha256": "dc7928010d16d8eb4b4de1ba5f32eabc128a7dd82be30c05d91fef8b40d0ffbd"
+    },
+    "exports/SM_Fort_GovernorHouse.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_GovernorHouse.fbx",
+      "bytes": 1072236,
+      "mtime_ns": 1791324616000000000,
+      "sha256": "553f874f1e500f9737d5a20603fe714f2cbc642261891bf6029e68b58effcbb4"
+    },
+    "exports/SM_Fort_GuardHouse.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_GuardHouse.fbx",
+      "bytes": 414412,
+      "mtime_ns": 1791324588000000000,
+      "sha256": "766aceae749a29e6bb04246238d314a9e8f882e7b41f06ce0fe00d6a0fada3ca"
+    },
+    "exports/SM_Fort_Kitchen.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Kitchen.fbx",
+      "bytes": 184988,
+      "mtime_ns": 1791324634000000000,
+      "sha256": "c5cedda3307d180ed3b496080d69897810c2198d28e659a8c9ef5b1ee5ecb9ad"
+    },
+    "exports/SM_Fort_Lantern.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Lantern.fbx",
+      "bytes": 27388,
+      "mtime_ns": 1791324608000000000,
+      "sha256": "9d4b270f5bccd3809607790ef399d38de0c547dff7c75e5b7b2e76d28d5fec53"
+    },
+    "exports/SM_Fort_Lantern_Hanging.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Lantern_Hanging.fbx",
+      "bytes": 31916,
+      "mtime_ns": 1791324608000000000,
+      "sha256": "746d76e2c62613eb500518148dc617b174ca2e345bf651a571e9b8cd9e88d09c"
+    },
+    "exports/SM_Fort_Pallet.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Pallet.fbx",
+      "bytes": 28124,
+      "mtime_ns": 1791324703000000000,
+      "sha256": "11551503005f9e8d641bc4eca4ccf83300876566cd20d925458fff6ab89f44ad"
+    },
+    "exports/SM_Fort_Portcullis.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Portcullis.fbx",
+      "bytes": 52284,
+      "mtime_ns": 1791324581000000000,
+      "sha256": "86b63abf7648631fca970f59bd8a4450b1db76ca92f8ea8e04a08815c3fe94af"
+    },
+    "exports/SM_Fort_PowderBarrel.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_PowderBarrel.fbx",
+      "bytes": 47164,
+      "mtime_ns": 1791324760000000000,
+      "sha256": "ac8acc30110e07e5bff34483a88f25cbfd8dbf55a4831bf66b43748944a9159c"
+    },
+    "exports/SM_Fort_PowderMagazine.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_PowderMagazine.fbx",
+      "bytes": 229836,
+      "mtime_ns": 1791324650000000000,
+      "sha256": "cefffb0087b280f39c7aa9c25bccdad326c51f979afe1b7a22cee25d8122d3df"
+    },
+    "exports/SM_Fort_Prison.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Prison.fbx",
+      "bytes": 642188,
+      "mtime_ns": 1791324671000000000,
+      "sha256": "d66a7da6432e054e1489aa1121041d4cc67d850b21acb26511045167aacaa767"
+    },
+    "exports/SM_Fort_Ramp.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Ramp.fbx",
+      "bytes": 39532,
+      "mtime_ns": 1791324548000000000,
+      "sha256": "03c00c2691cba07ff69f8f135cb13cdd2a33b98e8995039c69d55ada2f511782"
+    },
+    "exports/SM_Fort_ShotPile.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_ShotPile.fbx",
+      "bytes": 100188,
+      "mtime_ns": 1791324758000000000,
+      "sha256": "8b637ad673de73e24f5ea02d72ccb590ee50890c48502c54c25a2e18d871504a"
+    },
+    "exports/SM_Fort_SignalTower.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_SignalTower.fbx",
+      "bytes": 467436,
+      "mtime_ns": 1791324601000000000,
+      "sha256": "2c4a7b1b0116b36df47361b92b57ed745101e487eb00eb52c286a9f9c0c20d34"
+    },
+    "exports/SM_Fort_Stair.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_Stair.fbx",
+      "bytes": 59100,
+      "mtime_ns": 1791324553000000000,
+      "sha256": "c4b580c56c3ea5930a5780b1723871ec7bd6297c7878ced1223e304fe1dad713"
+    },
+    "exports/SM_Fort_StuddedDoor.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_StuddedDoor.fbx",
+      "bytes": 39308,
+      "mtime_ns": 1791324679000000000,
+      "sha256": "91a73485ef1458324d99aa0a0f132fdf9c0cd47e6003b08a125732bf2150f4c2"
+    },
+    "exports/SM_Fort_TreasureVault.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_TreasureVault.fbx",
+      "bytes": 343628,
+      "mtime_ns": 1791324690000000000,
+      "sha256": "479a64c4e2541143e8b28024e713a5a2c0222f1124682f291fdff32ee78bfb9f"
+    },
+    "exports/SM_Fort_VaultDoor.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_VaultDoor.fbx",
+      "bytes": 50684,
+      "mtime_ns": 1791324699000000000,
+      "sha256": "040cf5e94d5851e9d948db6ef11ef34013145dfcfe4f44a7893be93775355827"
+    },
+    "exports/SM_Fort_VaultGrille.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_VaultGrille.fbx",
+      "bytes": 34380,
+      "mtime_ns": 1791324700000000000,
+      "sha256": "2a8732a4c01891a4b80c7c4d6f432c89cfb71294b78811b6010a920c649e0121"
+    },
+    "exports/SM_Fort_WallShackles.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Fort_WallShackles.fbx",
+      "bytes": 52476,
+      "mtime_ns": 1791324684000000000,
+      "sha256": "f425051278e69576337d0bc88d99f32b18fe8f9bf0861c7413f8d6ada6af43bf"
+    },
+    "exports/SM_Loot_Coin.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_Coin.fbx",
+      "bytes": 20780,
+      "mtime_ns": 1791324709000000000,
+      "sha256": "109e5034e901e4d2173e3be190529b1d4e0f95e11d0b6a1d47c613103ee0b42f"
+    },
+    "exports/SM_Loot_CoinPile.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_CoinPile.fbx",
+      "bytes": 233084,
+      "mtime_ns": 1791324710000000000,
+      "sha256": "db35addd01efe8398a32cad43ca30f2f7159ceb8c849adc339708656bb15f742"
+    },
+    "exports/SM_Loot_GemBowl.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_GemBowl.fbx",
+      "bytes": 181996,
+      "mtime_ns": 1791324707000000000,
+      "sha256": "ba7bc77db1315bf34a8a9b73ed5da1ac7d5eaa3e4c8f55761df5ab3397d9bd57"
+    },
+    "exports/SM_Loot_Gem_Amethyst.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_Gem_Amethyst.fbx",
+      "bytes": 21212,
+      "mtime_ns": 1791324706000000000,
+      "sha256": "fb1f6991e172d8e33b295464460b4bd830aff4114f2f653289cc95094288bb5c"
+    },
+    "exports/SM_Loot_Gem_Emerald.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_Gem_Emerald.fbx",
+      "bytes": 20908,
+      "mtime_ns": 1791324706000000000,
+      "sha256": "34fbd6fd862aed46ae6b34be82e2d00f0d754c9cd12ae7c50ba650f775d82829"
+    },
+    "exports/SM_Loot_Gem_Ruby.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_Gem_Ruby.fbx",
+      "bytes": 22268,
+      "mtime_ns": 1791324706000000000,
+      "sha256": "413efba6b6b6860ec95c247da8744710719ad1b7cfaae0a447f8cb894ec1c7ef"
+    },
+    "exports/SM_Loot_Gem_Sapphire.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_Gem_Sapphire.fbx",
+      "bytes": 20908,
+      "mtime_ns": 1791324706000000000,
+      "sha256": "4b09b3eda729f01dabc175d1a5e90b0cd20c0d7771cfeecc8a042891b93de93b"
+    },
+    "exports/SM_Loot_Gem_Topaz.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_Gem_Topaz.fbx",
+      "bytes": 30252,
+      "mtime_ns": 1791324706000000000,
+      "sha256": "a41ca8ab7dfe0c89584294e2571c2440091351067f849e6d2e31d3ed0e01b2ec"
+    },
+    "exports/SM_Loot_GoldBar.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_GoldBar.fbx",
+      "bytes": 23100,
+      "mtime_ns": 1791324703000000000,
+      "sha256": "ee8b59a647ec1a6a5fb5147e70885c64bfc01c0d1d20de1606404d46c8c915b7"
+    },
+    "exports/SM_Loot_GoldStack_L.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_GoldStack_L.fbx",
+      "bytes": 234572,
+      "mtime_ns": 1791324705000000000,
+      "sha256": "b7ce5865e71f523339490679772f0ea218d44346c4f2986e316150540a683cf2"
+    },
+    "exports/SM_Loot_GoldStack_M.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_GoldStack_M.fbx",
+      "bytes": 133228,
+      "mtime_ns": 1791324704000000000,
+      "sha256": "8aa75e51d281534e1d5c07c7da762bd038353f6f8706ef7008374a8e20a6cfc8"
+    },
+    "exports/SM_Loot_GoldStack_S.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_GoldStack_S.fbx",
+      "bytes": 67420,
+      "mtime_ns": 1791324704000000000,
+      "sha256": "4537c749a7db689a02a2dc8e052501ba5cb713e81a3fff27522e58d33804a04b"
+    },
+    "exports/SM_Loot_PearlSack_Closed.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_PearlSack_Closed.fbx",
+      "bytes": 48348,
+      "mtime_ns": 1791324709000000000,
+      "sha256": "75beb0a2b21c2aac74527ac9201f1dc9c686029bfc66680e2fee2f9b20e6a57f"
+    },
+    "exports/SM_Loot_PearlSack_Open.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Loot_PearlSack_Open.fbx",
+      "bytes": 239324,
+      "mtime_ns": 1791324708000000000,
+      "sha256": "77d7c59accd443622681cff03ef9aedb75cc7f441755118dfb7e42faf451989d"
+    },
+    "exports/SM_Port_Bollard.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Port_Bollard.fbx",
+      "bytes": 31852,
+      "mtime_ns": 1791324740000000000,
+      "sha256": "480b35d7cf0d805cee27aca8274771345260728ffdbd8e03c0b50edbcd667d3b"
+    },
+    "exports/SM_Port_Crane.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Port_Crane.fbx",
+      "bytes": 82956,
+      "mtime_ns": 1791324740000000000,
+      "sha256": "5ad06b8d51dca9db09e9613b869ffb76f87ca701f628cae4e7c1572472d022be"
+    },
+    "exports/SM_Port_Jetty_6m.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Port_Jetty_6m.fbx",
+      "bytes": 120268,
+      "mtime_ns": 1791324728000000000,
+      "sha256": "8e3f48610ea65b78c3e82ceb520a4642a68d975e327889811785b4b949912463"
+    },
+    "exports/SM_Port_PierHead.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Port_PierHead.fbx",
+      "bytes": 138300,
+      "mtime_ns": 1791324737000000000,
+      "sha256": "c5e6bc476a34f65c54fbfe751262813ef5d6eefa36db158e6edaa1bf31144025"
+    },
+    "exports/SM_Port_Pier_6m.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Port_Pier_6m.fbx",
+      "bytes": 122348,
+      "mtime_ns": 1791324733000000000,
+      "sha256": "5b7616de7bc3f14ab71a4274c0a5e095dda217d05772d4d80b650c0070308956"
+    },
+    "exports/SM_Port_QuayStairs.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Port_QuayStairs.fbx",
+      "bytes": 64652,
+      "mtime_ns": 1791324722000000000,
+      "sha256": "0ac6799b0406e470ab1589e76be2f48f3b4b3488c5440be78d0c09ff95b4ca1f"
+    },
+    "exports/SM_Port_Quay_6m.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Port_Quay_6m.fbx",
+      "bytes": 102444,
+      "mtime_ns": 1791324716000000000,
+      "sha256": "2feb322302b754fbc804ad1346256a3470f7de916970c2c621a952ea1bc54733"
+    },
+    "exports/SM_Port_Warehouse.fbx": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\exports\\SM_Port_Warehouse.fbx",
+      "bytes": 259820,
+      "mtime_ns": 1791324744000000000,
+      "sha256": "a1ff5a92f4a20b0cbc4c154998270e847e05e416059f462a02d16c0e70d860c9"
+    },
+    "build-report.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\build-report.json",
+      "bytes": 197231,
+      "mtime_ns": 1791325284000000000,
+      "sha256": "08dd40b1c937d7bdff446965e42612e97aab06c3f00931e064437b8d91a2636c"
+    },
+    "fort-report.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\fort-report.json",
+      "bytes": 171454,
+      "mtime_ns": 1791324776000000000,
+      "sha256": "92db67642c268e3d7927291a9c9dc53e643c7ac82a9c7ad330bc473f7349c50f"
+    },
+    "maquette.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\maquette.json",
+      "bytes": 116409,
+      "mtime_ns": 1791325308000000000,
+      "sha256": "d9d0fac938cbdb25cdca68651b04104c9ae714562e2da304d4329b7e9f43740a"
+    },
+    "modules/batiments.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\batiments.json",
+      "bytes": 10362,
+      "mtime_ns": 1791324645000000000,
+      "sha256": "b66c53b7838bcbb4a407d06f5ed38bf6cbdd464b5199d71decb8e05fc749b9a8"
+    },
+    "modules/habillage.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\habillage.json",
+      "bytes": 8385,
+      "mtime_ns": 1791324761000000000,
+      "sha256": "9ba2ceff8ac4393ee7121f562a6532d7b4d2c5987e82c3f18c45c723626ed57e"
+    },
+    "modules/port.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\port.json",
+      "bytes": 15197,
+      "mtime_ns": 1791324751000000000,
+      "sha256": "92e2377aa197e8fc30e136ed01e3bbefdfeaf2585e892ce0a8c402ae600fc636"
+    },
+    "modules/porte.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\porte.json",
+      "bytes": 13494,
+      "mtime_ns": 1791324595000000000,
+      "sha256": "dde7cc476908af481cee40a5d5a5846c6b1ec41ab245a00684aa9f9e4a71adb4"
+    },
+    "modules/poudriere_chapelle.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\poudriere_chapelle.json",
+      "bytes": 5505,
+      "mtime_ns": 1791324665000000000,
+      "sha256": "019a77e6e49d6037038de3d00a24d0569cb452e40f0d7bc403823932edf1345f"
+    },
+    "modules/prison.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\prison.json",
+      "bytes": 14713,
+      "mtime_ns": 1791324685000000000,
+      "sha256": "1586dd184414fded29de7b292b95fa570faa1a87e876e71a00bd8965109151f5"
+    },
+    "modules/rempart.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\rempart.json",
+      "bytes": 24217,
+      "mtime_ns": 1791324561000000000,
+      "sha256": "b598c1ee52a933fc9af00387c6748cd2cc5d2bc71e88b0517832c31267b252bd"
+    },
+    "modules/site.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\site.json",
+      "bytes": 6237,
+      "mtime_ns": 1791324508000000000,
+      "sha256": "b994e5f654fc917268507f05cad3a23b46444ad45b9cadc00011916b5ded26c4"
+    },
+    "modules/tour.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\tour.json",
+      "bytes": 9710,
+      "mtime_ns": 1791324608000000000,
+      "sha256": "5616c3f2bf15be875025bbc2786a3681cce122c80380f68b31ae6ca80f7de0da"
+    },
+    "modules/tresor.json": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\modules\\tresor.json",
+      "bytes": 32534,
+      "mtime_ns": 1791324711000000000,
+      "sha256": "c42517e8ebccfb3d193bd0413174733db5c6d927cf7440b44de22745d4fedc2c"
+    },
+    "BRIEF.md": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\BRIEF.md",
+      "bytes": 6353,
+      "mtime_ns": 1791315908000000000,
+      "sha256": "bfa4ac27b5f071830af21192de462a5fcbf3f80bc13c28d9802f877a7c6203f2"
+    },
+    "SourceReferences/fort_bldg.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_bldg.py",
+      "bytes": 18420,
+      "mtime_ns": 1791318568000000000,
+      "sha256": "9cf27856d36790108d12bd13fd131634e18a54de7d485604fc0770d176c1baf1"
+    },
+    "SourceReferences/fort_build.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_build.py",
+      "bytes": 32475,
+      "mtime_ns": 1791321492000000000,
+      "sha256": "9f8008298e32e487e1cb50d2ad7334e79c66b0414aec4784b911cc5228d40fc4"
+    },
+    "SourceReferences/fort_gate.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_gate.py",
+      "bytes": 27859,
+      "mtime_ns": 1791322775000000000,
+      "sha256": "5e0eacbe2d7eaa3f620eae5493f11be2d43e33bfe93fcc8b736ea1c03b893d31"
+    },
+    "SourceReferences/fort_geo.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_geo.py",
+      "bytes": 24850,
+      "mtime_ns": 1791319538000000000,
+      "sha256": "c7175649e4e92bbd256ceb03a86a999a53f0bbfba82eec048a6c345d8c33493e"
+    },
+    "SourceReferences/fort_kit.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_kit.py",
+      "bytes": 8794,
+      "mtime_ns": 1791320072000000000,
+      "sha256": "bc02ac98b5a20c2e2b89c105f6cb5d014e727b36e7844f6b271c7cecaf6e1ff2"
+    },
+    "SourceReferences/fort_loot.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_loot.py",
+      "bytes": 47655,
+      "mtime_ns": 1791322775000000000,
+      "sha256": "500abf949bf34fe581b2e0d78ff5c1779bbd9efa51f81e5af6d7acaf7c13cd5a"
+    },
+    "SourceReferences/fort_lot.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_lot.py",
+      "bytes": 14641,
+      "mtime_ns": 1791323566000000000,
+      "sha256": "21017c57ce6362b91aa6d2aeeb9049c8e2eed3e454772ba6cf02f3391de85cd4"
+    },
+    "SourceReferences/fort_mat.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_mat.py",
+      "bytes": 33672,
+      "mtime_ns": 1791322734000000000,
+      "sha256": "30f8294a9fada7df9cac1588ff00c4f7569e29bd300c605282dc9738179d1491"
+    },
+    "SourceReferences/fort_port.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_port.py",
+      "bytes": 23411,
+      "mtime_ns": 1791319824000000000,
+      "sha256": "2aca8f050b22a2e08556ec8f4a6a55e615896c685a3baaf32b806db4b37e08df"
+    },
+    "SourceReferences/fort_prison.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_prison.py",
+      "bytes": 17899,
+      "mtime_ns": 1791319032000000000,
+      "sha256": "9735467f411fe2e1ae34e87b91c6ac08ead5f480d3faf372c503ef9cf3348270"
+    },
+    "SourceReferences/fort_props.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_props.py",
+      "bytes": 9247,
+      "mtime_ns": 1791319068000000000,
+      "sha256": "c4a012c6739a26e02556ded163a70c59bc3f3afc17ac39dfbdb704b49428b3ba"
+    },
+    "SourceReferences/fort_rampart.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_rampart.py",
+      "bytes": 36545,
+      "mtime_ns": 1791319538000000000,
+      "sha256": "49720f51426912d740dbbf7cb42ea719c2238273fd8b6c4af7a507a53fd8407b"
+    },
+    "SourceReferences/fort_scene.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_scene.py",
+      "bytes": 30898,
+      "mtime_ns": 1791321492000000000,
+      "sha256": "c8c6250540c146b2fbf359693a31cb30d6c831d0872210fa39c33fd77fcd03e2"
+    },
+    "SourceReferences/fort_site.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_site.py",
+      "bytes": 27238,
+      "mtime_ns": 1791324480000000000,
+      "sha256": "1c9f7404da2ff68dd98a836ca2f7120b5d0fce6f24c89a7824c1c6b0161421c6"
+    },
+    "SourceReferences/fort_tower.py": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\kits\\fort_tower.py",
+      "bytes": 15063,
+      "mtime_ns": 1791324480000000000,
+      "sha256": "5bd2eb8b0b2e91ed982db48722f0221545cbdfd8b286f93478b1c54274ac372b"
+    },
+    "textures/factory/assets/textures/fort/red_brick_03/red_brick_03_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\red_brick_03\\red_brick_03_diff_2k.jpg",
+      "bytes": 2969950,
+      "mtime_ns": 1791316421000000000,
+      "sha256": "c37ef11bb94a533d1c758c5c7d7199264e90f19b23946766c7c59aa189c11ff6"
+    },
+    "textures/factory/assets/textures/fort/red_brick_03/red_brick_03_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\red_brick_03\\red_brick_03_rough_2k.jpg",
+      "bytes": 1329161,
+      "mtime_ns": 1791316422000000000,
+      "sha256": "54cbcc8acdbdfbc0a38407509ef72058ef5847b5713e689fa37ce9cc504c41c1"
+    },
+    "textures/factory/assets/textures/fort/red_brick_03/red_brick_03_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\red_brick_03\\red_brick_03_nor_gl_2k.jpg",
+      "bytes": 3684630,
+      "mtime_ns": 1791316422000000000,
+      "sha256": "3bcb8714c450369915a9608a9e5318433a5e5df932184519bdbfd993dec16a9f"
+    },
+    "textures/factory/assets/textures/fort/red_brick_03/red_brick_03_disp_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\red_brick_03\\red_brick_03_disp_2k.jpg",
+      "bytes": 595929,
+      "mtime_ns": 1791316423000000000,
+      "sha256": "f48b733ec52e43ef35fd9285a9fd4592356cf25ec86e29d711a0ad33ef3dfc7a"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_01/coral_fort_wall_01_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_01\\coral_fort_wall_01_diff_2k.jpg",
+      "bytes": 3840085,
+      "mtime_ns": 1791288014000000000,
+      "sha256": "a18964b0c55d26098012c1281609b7759a5fbd8dc9e1751618c2ab7f995ac0ea"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_01/coral_fort_wall_01_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_01\\coral_fort_wall_01_rough_2k.jpg",
+      "bytes": 2877978,
+      "mtime_ns": 1791288015000000000,
+      "sha256": "4c8912b2f375250f35f67b4b049ff7c5db5c3c593d03b825609820616ce8e439"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_01/coral_fort_wall_01_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_01\\coral_fort_wall_01_nor_gl_2k.jpg",
+      "bytes": 5204171,
+      "mtime_ns": 1791288016000000000,
+      "sha256": "c8efca5579526fd2e023cc6618fa3b66c36a600d94b23863a7273305ef094b12"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_01/coral_fort_wall_01_disp_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_01\\coral_fort_wall_01_disp_2k.jpg",
+      "bytes": 1081881,
+      "mtime_ns": 1791288016000000000,
+      "sha256": "7679aa8498bdc287a17375fdacc3993b933a07e08a38b21a5cedb9c4025b8821"
+    },
+    "textures/art/textures/ground/coral_ground_02/coral_ground_02_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_ground_02\\coral_ground_02_diff_2k.jpg",
+      "bytes": 2728909,
+      "mtime_ns": 1791001385861610000,
+      "sha256": "2905e2711da7e5945bd0e92d22277102c30d58388f9dd3719611c80646e03797"
+    },
+    "textures/art/textures/ground/coral_ground_02/coral_ground_02_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_ground_02\\coral_ground_02_rough_2k.jpg",
+      "bytes": 2127529,
+      "mtime_ns": 1791001386002043600,
+      "sha256": "1d648b8051d29238c92083710d0ede686113bbe98470054c477c42cd4649dea9"
+    },
+    "textures/art/textures/ground/coral_ground_02/coral_ground_02_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_ground_02\\coral_ground_02_nor_gl_2k.jpg",
+      "bytes": 4453312,
+      "mtime_ns": 1791001385920456900,
+      "sha256": "9d97d761d7bae874cbda178c8d3d8ed22c8ac88b03754c58b3519e4ec8373e34"
+    },
+    "textures/art/textures/ground/coral_ground_02/coral_ground_02_disp_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_ground_02\\coral_ground_02_disp_2k.jpg",
+      "bytes": 646624,
+      "mtime_ns": 1791001386018337000,
+      "sha256": "4e2525d789cf88ace0279fac8dd386cc67851dcd8643ebfb32323640e0431e3a"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_02/coral_fort_wall_02_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_02\\coral_fort_wall_02_diff_2k.jpg",
+      "bytes": 4253825,
+      "mtime_ns": 1791288017000000000,
+      "sha256": "60a92594267b52e1b959411e277495d4720647b56703d9badc6c294842cc058d"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_02/coral_fort_wall_02_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_02\\coral_fort_wall_02_rough_2k.jpg",
+      "bytes": 1902873,
+      "mtime_ns": 1791288017000000000,
+      "sha256": "615a1fa072f368790c8beaf1cc84dd9472bd6781b8083203b7927354fd19a8dd"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_02/coral_fort_wall_02_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_02\\coral_fort_wall_02_nor_gl_2k.jpg",
+      "bytes": 5022514,
+      "mtime_ns": 1791288018000000000,
+      "sha256": "72c11da0bd0a7156d4764a5eca1874bd4db76dc32d061b9c7230b9326f4a8ea8"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_02/coral_fort_wall_02_disp_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_02\\coral_fort_wall_02_disp_2k.jpg",
+      "bytes": 941447,
+      "mtime_ns": 1791288018000000000,
+      "sha256": "7ef7f8c5e5c823478748b2836f90299c66b4bef189a549468356bb0abdd8bf65"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_03/coral_fort_wall_03_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_03\\coral_fort_wall_03_diff_2k.jpg",
+      "bytes": 4229429,
+      "mtime_ns": 1791288020000000000,
+      "sha256": "0cce55921843477cf582812e8376d1d145e1f7be81fc20c22a5b50b8fc810ad7"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_03/coral_fort_wall_03_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_03\\coral_fort_wall_03_rough_2k.jpg",
+      "bytes": 2763430,
+      "mtime_ns": 1791288020000000000,
+      "sha256": "b3426e246cffcc40549e5670f76dca3fe540c05bc839af93a60412c5f01e1e0e"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_03/coral_fort_wall_03_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_03\\coral_fort_wall_03_nor_gl_2k.jpg",
+      "bytes": 5128860,
+      "mtime_ns": 1791288021000000000,
+      "sha256": "b5f807effb19f1dcd1ebed4a5446879e7a58492173032137125d65f4c599f258"
+    },
+    "textures/factory/assets/textures/artifacts/coral_fort_wall_03/coral_fort_wall_03_disp_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\artifacts\\coral_fort_wall_03\\coral_fort_wall_03_disp_2k.jpg",
+      "bytes": 948342,
+      "mtime_ns": 1791288021000000000,
+      "sha256": "23c714e32dabe9c68816870e9ba5abf13f1f1a06d1e482023aff55e64ca83be5"
+    },
+    "textures/factory/assets/textures/fort/white_plaster_02/white_plaster_02_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\white_plaster_02\\white_plaster_02_diff_2k.jpg",
+      "bytes": 2568315,
+      "mtime_ns": 1791316425000000000,
+      "sha256": "0ca5245ba70777d3e41ff4566c9f8d363855461891802c55cb7dc0f6f85f084e"
+    },
+    "textures/factory/assets/textures/fort/white_plaster_02/white_plaster_02_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\white_plaster_02\\white_plaster_02_rough_2k.jpg",
+      "bytes": 1604444,
+      "mtime_ns": 1791316426000000000,
+      "sha256": "a3dc1911f6e25d88fdb0031fe0cfb602eec5496084c508774c60691bed087417"
+    },
+    "textures/factory/assets/textures/fort/white_plaster_02/white_plaster_02_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\white_plaster_02\\white_plaster_02_nor_gl_2k.jpg",
+      "bytes": 3379814,
+      "mtime_ns": 1791316426000000000,
+      "sha256": "083579b03a8f31ec1886512e5972f3b893610bf26a2098f97910e0f46745cdc9"
+    },
+    "textures/factory/assets/textures/fort/white_plaster_02/white_plaster_02_disp_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\white_plaster_02\\white_plaster_02_disp_2k.jpg",
+      "bytes": 1007108,
+      "mtime_ns": 1791316427000000000,
+      "sha256": "7a477010377e267bbf3c650037f0659c9b5b0c7860f8056e0145600145ef66fc"
+    },
+    "textures/factory/assets/textures/ship/rusty_metal_04/rusty_metal_04_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\rusty_metal_04\\rusty_metal_04_diff_1k.jpg",
+      "bytes": 938338,
+      "mtime_ns": 1791073296000000000,
+      "sha256": "37c6757c5b6b2229f61423c7e5013f970e4dafb48070d35f53ed6d08958ed288"
+    },
+    "textures/factory/assets/textures/ship/rusty_metal_04/rusty_metal_04_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\rusty_metal_04\\rusty_metal_04_rough_1k.jpg",
+      "bytes": 686008,
+      "mtime_ns": 1791073296000000000,
+      "sha256": "02c2fe5dfd5f4f7a692659261b8c99e103f33fb1a4c363c3e763542fae32d4fe"
+    },
+    "textures/factory/assets/textures/ship/rusty_metal_04/rusty_metal_04_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\rusty_metal_04\\rusty_metal_04_nor_gl_1k.jpg",
+      "bytes": 896980,
+      "mtime_ns": 1791073296000000000,
+      "sha256": "9c432bee334e65e73ff0b20676dd3f0efbed3f91d261a13dc03b9c8c1a4f4eec"
+    },
+    "textures/factory/assets/textures/ship/rusty_metal_04/rusty_metal_04_ao_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\rusty_metal_04\\rusty_metal_04_ao_1k.jpg",
+      "bytes": 346574,
+      "mtime_ns": 1791073297000000000,
+      "sha256": "af1733e6b00b89853a885a53dea36cc445f8a8b5d0364fb0da4fd11cf1006531"
+    },
+    "textures/art/textures/characters/hessian_230/hessian_230_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\hessian_230\\hessian_230_diff_1k.jpg",
+      "bytes": 1062404,
+      "mtime_ns": 1791001388475984500,
+      "sha256": "ef9ac1a0129b6d0f44b6d5beb68db7be7a0adf11e09fe52fd2cdc9370b27d4ba"
+    },
+    "textures/art/textures/characters/hessian_230/hessian_230_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\hessian_230\\hessian_230_rough_1k.jpg",
+      "bytes": 923890,
+      "mtime_ns": 1791001388467826300,
+      "sha256": "469ea3c219147ba83d7a650d7769cc43f25b5e3d8ea8ae4e5e89e7226a32658a"
+    },
+    "textures/art/textures/characters/hessian_230/hessian_230_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\hessian_230\\hessian_230_nor_gl_1k.jpg",
+      "bytes": 1030521,
+      "mtime_ns": 1791001388480091000,
+      "sha256": "6d5a6d23c880dbaae98477ed33dbd5d7c0eeda910a39319aec2d0014892974aa"
+    },
+    "textures/factory/assets/textures/fort/clay_roof_tiles_02/clay_roof_tiles_02_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\clay_roof_tiles_02\\clay_roof_tiles_02_diff_2k.jpg",
+      "bytes": 3459427,
+      "mtime_ns": 1791316423000000000,
+      "sha256": "570e1878985993bf81433d785b4fa2d4ab9f6d32447706193089b11ff0851731"
+    },
+    "textures/factory/assets/textures/fort/clay_roof_tiles_02/clay_roof_tiles_02_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\clay_roof_tiles_02\\clay_roof_tiles_02_rough_2k.jpg",
+      "bytes": 1392056,
+      "mtime_ns": 1791316424000000000,
+      "sha256": "a70d571203b80f763a6bcd4463330d8e2a5480ee6e29b559d1a05f1a61d5a81e"
+    },
+    "textures/factory/assets/textures/fort/clay_roof_tiles_02/clay_roof_tiles_02_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\clay_roof_tiles_02\\clay_roof_tiles_02_nor_gl_2k.jpg",
+      "bytes": 3526539,
+      "mtime_ns": 1791316424000000000,
+      "sha256": "762e2f18ba063fe3c587955be9f8a0a6e8e75cee4057e188970d1ec70a880194"
+    },
+    "textures/factory/assets/textures/fort/clay_roof_tiles_02/clay_roof_tiles_02_disp_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\fort\\clay_roof_tiles_02\\clay_roof_tiles_02_disp_2k.jpg",
+      "bytes": 1011709,
+      "mtime_ns": 1791316425000000000,
+      "sha256": "9e289eef96763ea7f7034cb3d1997adf7f84c692dd76edbaf9512aaf35fce3b0"
+    },
+    "textures/art/textures/characters/Rope001/Rope001_1K-JPG_Color.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_Color.jpg",
+      "bytes": 527156,
+      "mtime_ns": 1791001388178220600,
+      "sha256": "ce37f5da3b4762a2264d2d9a7f133f7caf8809f42f1216da506301e84f212e97"
+    },
+    "textures/art/textures/characters/Rope001/Rope001_1K-JPG_Roughness.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_Roughness.jpg",
+      "bytes": 248515,
+      "mtime_ns": 1791001388171335700,
+      "sha256": "b7092a728f1ef9165d52afea65a6c96d9ce927ff1150073afd86263c43f92054"
+    },
+    "textures/art/textures/characters/Rope001/Rope001_1K-JPG_NormalGL.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_NormalGL.jpg",
+      "bytes": 860675,
+      "mtime_ns": 1791001388169330300,
+      "sha256": "bf1e55638aa756bd2512b0f6ab9de2fb5ceb9fc5db159607cf6b872cca9bb7fc"
+    },
+    "textures/art/textures/characters/Rope001/Rope001_1K-JPG_Metalness.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Rope001\\Rope001_1K-JPG_Metalness.jpg",
+      "bytes": 2209,
+      "mtime_ns": 1791001388160317400,
+      "sha256": "2ecca5789f5263c440bacc93c04a8175ff3ec093d58c77e6593456b31e2dbcc7"
+    },
+    "textures/factory/assets/textures/ship/brown_planks_03/brown_planks_03_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_planks_03\\brown_planks_03_diff_2k.jpg",
+      "bytes": 2411538,
+      "mtime_ns": 1791073284000000000,
+      "sha256": "1140ceac531c2dfe2e714357e34cd81cce62878ced24fa711b87c4ca24416058"
+    },
+    "textures/factory/assets/textures/ship/brown_planks_03/brown_planks_03_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_planks_03\\brown_planks_03_rough_2k.jpg",
+      "bytes": 1015477,
+      "mtime_ns": 1791073285000000000,
+      "sha256": "cfb6bf6494d6487c56b2699a45d71966439bc2cc41b386b12a62451048f0172c"
+    },
+    "textures/factory/assets/textures/ship/brown_planks_03/brown_planks_03_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\brown_planks_03\\brown_planks_03_nor_gl_2k.jpg",
+      "bytes": 2425492,
+      "mtime_ns": 1791073284000000000,
+      "sha256": "4aa94e511dda5ed998194debaf6049806f44a0afd3b750168efcd7a35bc0ff4a"
+    },
+    "textures/factory/assets/textures/ship/wooden_barrel/wooden_barrel_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wooden_barrel\\wooden_barrel_diff_1k.jpg",
+      "bytes": 824633,
+      "mtime_ns": 1791073299000000000,
+      "sha256": "39104e195bd58c260379b96eec953720d978b7cd311b2a512ca17e21954e7267"
+    },
+    "textures/factory/assets/textures/ship/wooden_barrel/wooden_barrel_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wooden_barrel\\wooden_barrel_rough_1k.jpg",
+      "bytes": 877393,
+      "mtime_ns": 1791073300000000000,
+      "sha256": "bf58503bcbf5fd51537d0a612c6eb7feb0149f216affa84713c04f095f9d03f2"
+    },
+    "textures/factory/assets/textures/ship/wooden_barrel/wooden_barrel_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\wooden_barrel\\wooden_barrel_nor_gl_1k.jpg",
+      "bytes": 723504,
+      "mtime_ns": 1791073299000000000,
+      "sha256": "a9762aa17d3bd44dac96fc60b65b020e65fa0d4b302b7eb42e66539f1a65edbc"
+    },
+    "textures/factory/assets/textures/ship/Metal048C/Metal048C_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal048C\\Metal048C_diff_1k.jpg",
+      "bytes": 871864,
+      "mtime_ns": 1791073302000000000,
+      "sha256": "35ad052e3e29aa63523e63e2dd6b62e2466c56e8a77a5dbee4947199e459e58c"
+    },
+    "textures/factory/assets/textures/ship/Metal048C/Metal048C_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal048C\\Metal048C_rough_1k.jpg",
+      "bytes": 539353,
+      "mtime_ns": 1791073302000000000,
+      "sha256": "f8e84de90c62ce0a7f5c59a3b1af4a3a1c23905ea4707a635646437639b1a21d"
+    },
+    "textures/factory/assets/textures/ship/Metal048C/Metal048C_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal048C\\Metal048C_nor_gl_1k.jpg",
+      "bytes": 545805,
+      "mtime_ns": 1791073302000000000,
+      "sha256": "300bb39b55aba9e60cfa1e991ebdfe5f4c0fb69c0f1a4defa4527fbb48a5a9ca"
+    },
+    "textures/factory/assets/textures/ship/Metal048C/Metal048C_metal_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal048C\\Metal048C_metal_1k.jpg",
+      "bytes": 250848,
+      "mtime_ns": 1791073302000000000,
+      "sha256": "6a6f8da6955ef1613bad489cc67bffd610aaec7bfccb77a4ded016b5925490c4"
+    },
+    "textures/factory/assets/textures/ship/Metal046B/Metal046B_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal046B\\Metal046B_diff_1k.jpg",
+      "bytes": 706330,
+      "mtime_ns": 1791073301000000000,
+      "sha256": "7caf8ddbd06aa730e41db993ff344eb60d872ff698e5da117b3527f09ba1877e"
+    },
+    "textures/factory/assets/textures/ship/Metal046B/Metal046B_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal046B\\Metal046B_rough_1k.jpg",
+      "bytes": 502726,
+      "mtime_ns": 1791073301000000000,
+      "sha256": "d74b89826875ce104064d71975e04361d312c0910d3a115269e2516352494547"
+    },
+    "textures/factory/assets/textures/ship/Metal046B/Metal046B_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal046B\\Metal046B_nor_gl_1k.jpg",
+      "bytes": 1272514,
+      "mtime_ns": 1791073301000000000,
+      "sha256": "7848f006f06e352cfa4fdcf53e1c47ac0a2ca32839b7bd9f1bf9a1b1113fe837"
+    },
+    "textures/factory/assets/textures/ship/Metal046B/Metal046B_metal_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\Metal046B\\Metal046B_metal_1k.jpg",
+      "bytes": 968767,
+      "mtime_ns": 1791073301000000000,
+      "sha256": "8abc018e4013de769d41a1cf204049e54f0f39edac39fb3558eda31b532dc493"
+    },
+    "textures/factory/assets/textures/ship/dark_wooden_planks/dark_wooden_planks_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\dark_wooden_planks\\dark_wooden_planks_diff_1k.jpg",
+      "bytes": 701221,
+      "mtime_ns": 1791073294000000000,
+      "sha256": "e8216baa6b2d701b5523fcb904d45570acf7b96d160ef815e96e2dbfa82bdd9b"
+    },
+    "textures/factory/assets/textures/ship/dark_wooden_planks/dark_wooden_planks_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\dark_wooden_planks\\dark_wooden_planks_rough_1k.jpg",
+      "bytes": 673968,
+      "mtime_ns": 1791073295000000000,
+      "sha256": "a10ea0b52fe395a7ad205cacfd28bd1aea48ef8545d171209f528dcf58d0a8d3"
+    },
+    "textures/factory/assets/textures/ship/dark_wooden_planks/dark_wooden_planks_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\factory\\assets\\textures\\ship\\dark_wooden_planks\\dark_wooden_planks_nor_gl_1k.jpg",
+      "bytes": 658444,
+      "mtime_ns": 1791073295000000000,
+      "sha256": "87a7b26bc674477865d4589c6589200bfa649a6461422bf56f5600c05a470206"
+    },
+    "textures/art/textures/characters/weathered_planks/weathered_planks_diff_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\weathered_planks\\weathered_planks_diff_1k.jpg",
+      "bytes": 599581,
+      "mtime_ns": 1791001388413685300,
+      "sha256": "01c9a372cfd7a7bf471b59c2458ed3ccecc93448aebf7ba0cc5b3b5b6ed24349"
+    },
+    "textures/art/textures/characters/weathered_planks/weathered_planks_rough_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\weathered_planks\\weathered_planks_rough_1k.jpg",
+      "bytes": 218802,
+      "mtime_ns": 1791001388424860600,
+      "sha256": "a017728183597417a350d1846a5a46db9702ee6d472a21c5da2f23015d606aa3"
+    },
+    "textures/art/textures/characters/weathered_planks/weathered_planks_nor_gl_1k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\weathered_planks\\weathered_planks_nor_gl_1k.jpg",
+      "bytes": 681552,
+      "mtime_ns": 1791001388421737500,
+      "sha256": "381d298f3194ec4961b04b4912b9b6efea4b2ff7b914dac57e24c8b6b0be6a25"
+    },
+    "textures/art/textures/palm/palm_tree_bark/palm_tree_bark_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\palm\\palm_tree_bark\\palm_tree_bark_diff_2k.jpg",
+      "bytes": 7622678,
+      "mtime_ns": 1791001385272664600,
+      "sha256": "808b70b2b1f94d292b689e71ca761b99e2c1593706883495c041b6bf36b6bab4"
+    },
+    "textures/art/textures/palm/palm_tree_bark/palm_tree_bark_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\palm\\palm_tree_bark\\palm_tree_bark_rough_2k.jpg",
+      "bytes": 5158632,
+      "mtime_ns": 1791001385324032600,
+      "sha256": "25b7b82a0218df0a3b778004855cf217665fc8b4e6874800819c296907fe7b23"
+    },
+    "textures/art/textures/palm/palm_tree_bark/palm_tree_bark_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\palm\\palm_tree_bark\\palm_tree_bark_nor_gl_2k.jpg",
+      "bytes": 6847879,
+      "mtime_ns": 1791001385283813600,
+      "sha256": "b22e8b4498d7a6db6593a4f93aee33811120f0aaf61313ee3b71897526678d21"
+    },
+    "textures/art/textures/ground/coral_gravel/coral_gravel_diff_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_gravel\\coral_gravel_diff_2k.jpg",
+      "bytes": 3228843,
+      "mtime_ns": 1791001385795280300,
+      "sha256": "f1cef85165af97b22fe9d992bdcda08f0c24889d41aa54b918a7cb88b1bc4cf2"
+    },
+    "textures/art/textures/ground/coral_gravel/coral_gravel_rough_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_gravel\\coral_gravel_rough_2k.jpg",
+      "bytes": 2106597,
+      "mtime_ns": 1791001385831182900,
+      "sha256": "257ed8646a51f7b0ebd57f96bff23fab420e4992da075ccf4403082ff9a2f4f5"
+    },
+    "textures/art/textures/ground/coral_gravel/coral_gravel_nor_gl_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_gravel\\coral_gravel_nor_gl_2k.jpg",
+      "bytes": 5157744,
+      "mtime_ns": 1791001385810466800,
+      "sha256": "7e1100f5dade34c07001ba82a28f13f3bbd1411d0fe1c7210a60c64900cd20d9"
+    },
+    "textures/art/textures/ground/coral_gravel/coral_gravel_disp_2k.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\ground\\coral_gravel\\coral_gravel_disp_2k.jpg",
+      "bytes": 880248,
+      "mtime_ns": 1791001385835192200,
+      "sha256": "6d60b83cfe890b0156df5dd27d9a2445245a31357e125c50287171f8731a6a66"
+    },
+    "textures/art/textures/water/T_Water_N.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\water\\T_Water_N.png",
+      "bytes": 5428382,
+      "mtime_ns": 1791001386679143700,
+      "sha256": "7432cebc6da005a15c87ebad52a71d84839a7268cf708ccad85ddd3346fb45bf"
+    },
+    "textures/art/textures/terrain_layers/sand_wet_ch.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\sand_wet_ch.png",
+      "bytes": 6293063,
+      "mtime_ns": 1791001387825119600,
+      "sha256": "ed2e6e71b0009b1d72ae7860f2ca8591c6b880f007a2d567ef1e1d36ddcb544f"
+    },
+    "textures/art/textures/terrain_layers/sand_wet_n.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\sand_wet_n.png",
+      "bytes": 6477605,
+      "mtime_ns": 1791001387698674200,
+      "sha256": "fd0e0c2b52750f4e269f260df59214de67fa2d68a6462e5dc87df4e92329fc6b"
+    },
+    "textures/art/textures/terrain_layers/sand_dry_ch.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\sand_dry_ch.png",
+      "bytes": 10014869,
+      "mtime_ns": 1791001387953992400,
+      "sha256": "9ce7a384b4a28d7411e7acfdae34aaa9ea1421b4c88810f8a644c1bd66689206"
+    },
+    "textures/art/textures/terrain_layers/sand_dry_n.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\sand_dry_n.png",
+      "bytes": 8040138,
+      "mtime_ns": 1791001388072485500,
+      "sha256": "6b7f106acf73851b70f49a104d3cc8f7622a8e72302a95dbd22c178c3be714d6"
+    },
+    "textures/art/textures/terrain_layers/rubble_ch.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\rubble_ch.png",
+      "bytes": 11852829,
+      "mtime_ns": 1791001387756976100,
+      "sha256": "bfa971132b1efac378a0d3e1d1647cabf67c7b2f73fafd98385e44d78eee5599"
+    },
+    "textures/art/textures/terrain_layers/rubble_n.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\rubble_n.png",
+      "bytes": 9811559,
+      "mtime_ns": 1791001387807844000,
+      "sha256": "a08498650001f17c5a755c1df6569ff40575b4651bd7418741acf0a506dce9e3"
+    },
+    "textures/art/textures/terrain_layers/feo_ch.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\feo_ch.png",
+      "bytes": 9552291,
+      "mtime_ns": 1791001387533539300,
+      "sha256": "06a1f18b40d196403078d03b6268b7cd8509cc605741e1e136bc9134e71c2661"
+    },
+    "textures/art/textures/terrain_layers/feo_n.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\feo_n.png",
+      "bytes": 9156571,
+      "mtime_ns": 1791001388017919700,
+      "sha256": "d6165b03846b78bd606124350af7f994553e98aa09b4f26fecf35df76734320a"
+    },
+    "textures/art/textures/terrain_layers/soil_ch.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\soil_ch.png",
+      "bytes": 11862647,
+      "mtime_ns": 1791001387690118900,
+      "sha256": "87b015a5086c844e7e26fa9db820102b0418c1f8259e713da3086860d1dbe801"
+    },
+    "textures/art/textures/terrain_layers/soil_n.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\soil_n.png",
+      "bytes": 9178768,
+      "mtime_ns": 1791001387902852500,
+      "sha256": "fc23cfd88d02069167ce822f8b9e16684fba0c270c67aeddc0eda8e2b639a52f"
+    },
+    "textures/art/textures/terrain_layers/litter_ch.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\litter_ch.png",
+      "bytes": 11443811,
+      "mtime_ns": 1791001387572994200,
+      "sha256": "d910e40875f5a63990226eeebc3bdf3fa568c5cd1a4a8e6aafc16f435b379a53"
+    },
+    "textures/art/textures/terrain_layers/litter_n.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\litter_n.png",
+      "bytes": 9901517,
+      "mtime_ns": 1791001387619504000,
+      "sha256": "7b63662e846084578840813e9974eb7a805de82f3fb9bd58be52eab11f3115a7"
+    },
+    "textures/art/textures/terrain_layers/wrack_ch.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\wrack_ch.png",
+      "bytes": 11674077,
+      "mtime_ns": 1791001387862820600,
+      "sha256": "af9714813110e3448f365b0aba58966d8b1658c99b2b1a7e276e677ba4e388bf"
+    },
+    "textures/art/textures/terrain_layers/wrack_n.png": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\terrain_layers\\wrack_n.png",
+      "bytes": 9658458,
+      "mtime_ns": 1791001387719251200,
+      "sha256": "b613e741d6f661b050aa65e5f538133cc5ab5a86c94c6d9c9f76a4c270efe89a"
+    },
+    "textures/art/textures/characters/Fabric019/Fabric019_1K-JPG_Color.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Fabric019\\Fabric019_1K-JPG_Color.jpg",
+      "bytes": 576993,
+      "mtime_ns": 1791001388457730100,
+      "sha256": "aa6dfd091735228f85545906014ad0755c03e67ce2d53eea8523f620b6d22146"
+    },
+    "textures/art/textures/characters/Fabric019/Fabric019_1K-JPG_Roughness.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Fabric019\\Fabric019_1K-JPG_Roughness.jpg",
+      "bytes": 438520,
+      "mtime_ns": 1791001388444899500,
+      "sha256": "dd0240cdc492fb104bca2f7ec1386da9bf7b6d837b1ecfcca1f349381a7edc53"
+    },
+    "textures/art/textures/characters/Fabric019/Fabric019_1K-JPG_NormalGL.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\art\\textures\\characters\\Fabric019\\Fabric019_1K-JPG_NormalGL.jpg",
+      "bytes": 2177428,
+      "mtime_ns": 1791001388440249500,
+      "sha256": "ae72fff5f8c645d1749604c1775b22e10d4b9a1b458cb51780dd92e00c5eaab3"
+    },
+    "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Scratches.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\textures\\loot_1k\\T_Gold_Scratches.jpg",
+      "bytes": 199921,
+      "mtime_ns": 1791324706000000000,
+      "sha256": "b488bce7e07f62e78d7c9421b2ced1767b01092aa250036e8d67da491bb7ae2b"
+    },
+    "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Aged_Color.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\textures\\loot_1k\\T_Gold_Aged_Color.jpg",
+      "bytes": 140504,
+      "mtime_ns": 1791324701000000000,
+      "sha256": "bffc0d2739fdf0fc7c7b8c7a6758e8be73775b1e98b2dcf79aa47459d31a8eaa"
+    },
+    "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Aged_Roughness.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\textures\\loot_1k\\T_Gold_Aged_Roughness.jpg",
+      "bytes": 186547,
+      "mtime_ns": 1791324702000000000,
+      "sha256": "03d38e62a80f6842c1ccaff2d9fa8b72101797718818c79cb47ddd00cd71c6b6"
+    },
+    "textures/maquettes/fort-francais/textures/loot_1k/T_Gold_Aged_Normal.jpg": {
+      "source": "C:\\Users\\matth\\OneDrive\\maquette-blender\\maquettes\\fort-francais\\textures\\loot_1k\\T_Gold_Aged_Normal.jpg",
+      "bytes": 42121,
+      "mtime_ns": 1791324702000000000,
+      "sha256": "0bd23f2c311b8877d37932ca8169fae4222ca76b3c82d956536fd39d3285e19d"
+    }
+  }
+}

@@ -1,0 +1,435 @@
+{
+  "lot": "tour",
+  "blender": "5.2.2 LTS",
+  "modules": {
+    "SM_Fort_SignalTower": {
+      "key": "signal_tower",
+      "export": "SM_Fort_SignalTower",
+      "collection": "SM_Fort_SignalTower",
+      "dims_m": [
+        5.34,
+        5.2,
+        11.59
+      ],
+      "bbox": {
+        "min": [
+          -2.6,
+          -2.6,
+          -0.18
+        ],
+        "max": [
+          2.74,
+          2.6,
+          11.41
+        ]
+      },
+      "height_vs_bean": 11.04,
+      "tris": 16404,
+      "tris_raw": 16404,
+      "budget": 35000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_Rope"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_SignalTower_00",
+        "UCX_SM_Fort_SignalTower_01",
+        "UCX_SM_Fort_SignalTower_02",
+        "UCX_SM_Fort_SignalTower_03",
+        "UCX_SM_Fort_SignalTower_04",
+        "UCX_SM_Fort_SignalTower_05",
+        "UCX_SM_Fort_SignalTower_06",
+        "UCX_SM_Fort_SignalTower_07",
+        "UCX_SM_Fort_SignalTower_08",
+        "UCX_SM_Fort_SignalTower_09",
+        "UCX_SM_Fort_SignalTower_10",
+        "UCX_SM_Fort_SignalTower_11",
+        "UCX_SM_Fort_SignalTower_12",
+        "UCX_SM_Fort_SignalTower_13",
+        "UCX_SM_Fort_SignalTower_14",
+        "UCX_SM_Fort_SignalTower_15",
+        "UCX_SM_Fort_SignalTower_16",
+        "UCX_SM_Fort_SignalTower_17",
+        "UCX_SM_Fort_SignalTower_18",
+        "UCX_SM_Fort_SignalTower_19",
+        "UCX_SM_Fort_SignalTower_20",
+        "UCX_SM_Fort_SignalTower_21",
+        "UCX_SM_Fort_SignalTower_22",
+        "UCX_SM_Fort_SignalTower_23",
+        "UCX_SM_Fort_SignalTower_24",
+        "UCX_SM_Fort_SignalTower_25",
+        "UCX_SM_Fort_SignalTower_26",
+        "UCX_SM_Fort_SignalTower_27",
+        "UCX_SM_Fort_SignalTower_28",
+        "UCX_SM_Fort_SignalTower_29",
+        "UCX_SM_Fort_SignalTower_30",
+        "UCX_SM_Fort_SignalTower_31",
+        "UCX_SM_Fort_SignalTower_32",
+        "UCX_SM_Fort_SignalTower_33",
+        "UCX_SM_Fort_SignalTower_34",
+        "UCX_SM_Fort_SignalTower_35",
+        "UCX_SM_Fort_SignalTower_36",
+        "UCX_SM_Fort_SignalTower_37",
+        "UCX_SM_Fort_SignalTower_38"
+      ],
+      "children": [],
+      "sockets": {
+        "Door": {
+          "pos": [
+            0.0,
+            -2.6,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Level1": {
+          "pos": [
+            0.0,
+            0.0,
+            2.64
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Terrace": {
+          "pos": [
+            0.0,
+            0.0,
+            5.28
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Flag": {
+          "pos": [
+            1.6,
+            1.6,
+            5.28
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Fanal": {
+          "pos": [
+            -1.6,
+            1.6,
+            5.28
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Lookout": {
+          "pos": [
+            0.0,
+            1.5,
+            5.28
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "FlagTop": {
+          "pos": [
+            1.6,
+            1.6,
+            11.2
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "FanalFire": {
+          "pos": [
+            -0.98,
+            1.6,
+            6.93
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "terrace_z_local": 5.28,
+        "mast_top_z_local": 11.280000000000001,
+        "stairs": "2 x (8 + palier + 8) marches 16,5 / 25"
+      },
+      "files": [
+        "SM_Fort_SignalTower.fbx",
+        "SM_Fort_SignalTower.glb"
+      ],
+      "build_s": 7.86
+    },
+    "SM_Fort_Flag": {
+      "key": "flag",
+      "export": "SM_Fort_Flag",
+      "collection": "SM_Fort_Flag",
+      "dims_m": [
+        2.4,
+        0.324,
+        1.66
+      ],
+      "bbox": {
+        "min": [
+          0.0,
+          -0.125,
+          -1.66
+        ],
+        "max": [
+          2.4,
+          0.199,
+          0.0
+        ]
+      },
+      "height_vs_bean": 1.58,
+      "tris": 1696,
+      "tris_raw": 1696,
+      "budget": 2000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_Flag"
+      ],
+      "ucx": [],
+      "children": [],
+      "sockets": {
+        "Hoist_Top": {
+          "pos": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Hoist_Bottom": {
+          "pos": [
+            0.0,
+            0.0,
+            -1.6
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "variant": "fleurdelise",
+        "wind_uv": "UV1.x"
+      },
+      "files": [
+        "SM_Fort_Flag.fbx",
+        "SM_Fort_Flag.glb"
+      ],
+      "build_s": 0.41
+    },
+    "SM_Fort_Lantern": {
+      "key": "lantern",
+      "export": "SM_Fort_Lantern",
+      "collection": "SM_Fort_Lantern",
+      "dims_m": [
+        0.242,
+        0.561,
+        0.498
+      ],
+      "bbox": {
+        "min": [
+          -0.121,
+          0.01,
+          -0.348
+        ],
+        "max": [
+          0.121,
+          0.571,
+          0.15
+        ]
+      },
+      "height_vs_bean": 0.47,
+      "tris": 272,
+      "tris_raw": 272,
+      "budget": 1200,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_LanternHorn",
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [],
+      "children": [],
+      "sockets": {
+        "Light": {
+          "pos": [
+            0.0,
+            0.45,
+            -0.18
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "light": {
+          "type": "POINT",
+          "energy_W": 35,
+          "color": [
+            1.0,
+            0.62,
+            0.32
+          ],
+          "scene_only": true
+        }
+      },
+      "files": [
+        "SM_Fort_Lantern.fbx",
+        "SM_Fort_Lantern.glb"
+      ],
+      "build_s": 0.12
+    },
+    "SM_Fort_Lantern_Hanging": {
+      "key": "lantern_hanging",
+      "export": "SM_Fort_Lantern_Hanging",
+      "collection": "SM_Fort_Lantern_Hanging",
+      "dims_m": [
+        0.242,
+        0.242,
+        0.813
+      ],
+      "bbox": {
+        "min": [
+          -0.121,
+          -0.121,
+          -0.806
+        ],
+        "max": [
+          0.121,
+          0.121,
+          0.007
+        ]
+      },
+      "height_vs_bean": 0.77,
+      "tris": 472,
+      "tris_raw": 472,
+      "budget": 1200,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_LanternHorn",
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [],
+      "children": [],
+      "sockets": {
+        "Light": {
+          "pos": [
+            0.0,
+            0.0,
+            -0.65
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Hang": {
+          "pos": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "light": {
+          "type": "POINT",
+          "energy_W": 35,
+          "color": [
+            1.0,
+            0.62,
+            0.32
+          ],
+          "scene_only": true
+        }
+      },
+      "files": [
+        "SM_Fort_Lantern_Hanging.fbx",
+        "SM_Fort_Lantern_Hanging.glb"
+      ],
+      "build_s": 0.12
+    }
+  },
+  "errors": {},
+  "build_s": 9.1,
+  "images": [
+    "Fabric019_1K-JPG_Color.jpg",
+    "Fabric019_1K-JPG_NormalGL.jpg",
+    "Fabric019_1K-JPG_Roughness.jpg",
+    "Rope001_1K-JPG_Color.jpg",
+    "Rope001_1K-JPG_Metalness.jpg",
+    "Rope001_1K-JPG_NormalGL.jpg",
+    "Rope001_1K-JPG_Roughness.jpg",
+    "coral_fort_wall_01_diff_2k.jpg",
+    "coral_fort_wall_01_disp_2k.jpg",
+    "coral_fort_wall_01_nor_gl_2k.jpg",
+    "coral_fort_wall_01_rough_2k.jpg",
+    "coral_fort_wall_02_diff_2k.jpg",
+    "coral_fort_wall_02_disp_2k.jpg",
+    "coral_fort_wall_02_nor_gl_2k.jpg",
+    "coral_fort_wall_02_rough_2k.jpg",
+    "coral_fort_wall_03_diff_2k.jpg",
+    "coral_fort_wall_03_disp_2k.jpg",
+    "coral_fort_wall_03_nor_gl_2k.jpg",
+    "coral_fort_wall_03_rough_2k.jpg",
+    "coral_ground_02_diff_2k.jpg",
+    "coral_ground_02_disp_2k.jpg",
+    "coral_ground_02_nor_gl_2k.jpg",
+    "coral_ground_02_rough_2k.jpg",
+    "dark_wooden_planks_diff_1k.jpg",
+    "dark_wooden_planks_nor_gl_1k.jpg",
+    "dark_wooden_planks_rough_1k.jpg",
+    "rusty_metal_04_ao_1k.jpg",
+    "rusty_metal_04_diff_1k.jpg",
+    "rusty_metal_04_nor_gl_1k.jpg",
+    "rusty_metal_04_rough_1k.jpg",
+    "white_plaster_02_diff_2k.jpg",
+    "white_plaster_02_disp_2k.jpg",
+    "white_plaster_02_nor_gl_2k.jpg",
+    "white_plaster_02_rough_2k.jpg"
+  ]
+}

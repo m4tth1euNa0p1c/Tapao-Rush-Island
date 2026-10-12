@@ -1,0 +1,726 @@
+{
+  "lot": "prison",
+  "blender": "5.2.2 LTS",
+  "modules": {
+    "SM_Fort_Prison": {
+      "key": "prison",
+      "export": "SM_Fort_Prison",
+      "collection": "SM_Fort_Prison",
+      "dims_m": [
+        6.22,
+        7.11,
+        3.36
+      ],
+      "bbox": {
+        "min": [
+          -3.11,
+          -3.58,
+          -0.07
+        ],
+        "max": [
+          3.11,
+          3.53,
+          3.29
+        ]
+      },
+      "height_vs_bean": 3.2,
+      "tris": 20754,
+      "tris_raw": 20754,
+      "budget": 30000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_CoralRubble",
+        "MAT-Fort_IronRust",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_Jute"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Prison_00",
+        "UCX_SM_Fort_Prison_01",
+        "UCX_SM_Fort_Prison_02",
+        "UCX_SM_Fort_Prison_03",
+        "UCX_SM_Fort_Prison_04",
+        "UCX_SM_Fort_Prison_05",
+        "UCX_SM_Fort_Prison_06",
+        "UCX_SM_Fort_Prison_07",
+        "UCX_SM_Fort_Prison_08",
+        "UCX_SM_Fort_Prison_09",
+        "UCX_SM_Fort_Prison_10",
+        "UCX_SM_Fort_Prison_11",
+        "UCX_SM_Fort_Prison_12",
+        "UCX_SM_Fort_Prison_13",
+        "UCX_SM_Fort_Prison_14",
+        "UCX_SM_Fort_Prison_15",
+        "UCX_SM_Fort_Prison_16",
+        "UCX_SM_Fort_Prison_17",
+        "UCX_SM_Fort_Prison_18",
+        "UCX_SM_Fort_Prison_19",
+        "UCX_SM_Fort_Prison_20"
+      ],
+      "children": [],
+      "sockets": {
+        "Door": {
+          "pos": [
+            -1.8,
+            -3.5,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Cell_1": {
+          "pos": [
+            0.7,
+            -1.9,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Cell_2": {
+          "pos": [
+            0.7,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Cell_3": {
+          "pos": [
+            0.7,
+            1.9,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "CellDoor_1": {
+          "pos": [
+            -1.0,
+            -1.9,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "CellDoor_2": {
+          "pos": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "CellDoor_3": {
+          "pos": [
+            -1.0,
+            1.9,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Prisoner_1": {
+          "pos": [
+            1.6,
+            -1.9,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Prisoner_2": {
+          "pos": [
+            1.6,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Prisoner_3": {
+          "pos": [
+            1.6,
+            1.9,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Lantern": {
+          "pos": [
+            -1.8,
+            0.0,
+            2.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "KeyHook": {
+          "pos": [
+            -2.35,
+            -2.6,
+            1.2
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "CellDoorHinge_1": {
+          "pos": [
+            -1.0,
+            -2.4,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            90.0
+          ]
+        },
+        "Shackles_1": {
+          "pos": [
+            2.4,
+            -1.35,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            90.0
+          ]
+        },
+        "CellDoorHinge_2": {
+          "pos": [
+            -1.0,
+            -0.5,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            90.0
+          ]
+        },
+        "Shackles_2": {
+          "pos": [
+            2.4,
+            0.55,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            90.0
+          ]
+        },
+        "CellDoorHinge_3": {
+          "pos": [
+            -1.0,
+            1.4,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            90.0
+          ]
+        },
+        "Shackles_3": {
+          "pos": [
+            2.4,
+            2.45,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            90.0
+          ]
+        },
+        "DoorHinge": {
+          "pos": [
+            -2.3,
+            -3.38,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "cells": 3,
+        "corridor_m": 1.2,
+        "clear_m": 2.31
+      },
+      "files": [
+        "SM_Fort_Prison.fbx",
+        "SM_Fort_Prison.glb"
+      ],
+      "build_s": 8.8
+    },
+    "SM_Fort_CellDoor": {
+      "key": "cell_door",
+      "export": "SM_Fort_CellDoor",
+      "collection": "SM_Fort_CellDoor",
+      "dims_m": [
+        1.08,
+        0.1,
+        1.8
+      ],
+      "bbox": {
+        "min": [
+          -0.025,
+          -0.075,
+          0.0
+        ],
+        "max": [
+          1.055,
+          0.025,
+          1.8
+        ]
+      },
+      "height_vs_bean": 1.71,
+      "tris": 364,
+      "tris_raw": 364,
+      "budget": 1500,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_CellDoor_00"
+      ],
+      "children": [],
+      "sockets": {
+        "Lock": {
+          "pos": [
+            1.0,
+            -0.05,
+            1.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "anim": "rotation Z 0 -> 95 deg"
+      },
+      "files": [
+        "SM_Fort_CellDoor.fbx",
+        "SM_Fort_CellDoor.glb"
+      ],
+      "build_s": 0.12
+    },
+    "SM_Fort_StuddedDoor": {
+      "key": "studded_door",
+      "export": "SM_Fort_StuddedDoor",
+      "collection": "SM_Fort_StuddedDoor",
+      "dims_m": [
+        1.022,
+        0.14,
+        1.8
+      ],
+      "bbox": {
+        "min": [
+          -0.025,
+          -0.09,
+          0.0
+        ],
+        "max": [
+          0.997,
+          0.05,
+          1.8
+        ]
+      },
+      "height_vs_bean": 1.71,
+      "tris": 772,
+      "tris_raw": 772,
+      "budget": 2000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_WoodOak",
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_StuddedDoor_00"
+      ],
+      "children": [],
+      "sockets": {
+        "Bolt": {
+          "pos": [
+            0.82,
+            -0.08,
+            1.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "anim": "rotation Z 0 -> -100 deg"
+      },
+      "files": [
+        "SM_Fort_StuddedDoor.fbx",
+        "SM_Fort_StuddedDoor.glb"
+      ],
+      "build_s": 0.53
+    },
+    "SM_Fort_Cage_Ground": {
+      "key": "cage_ground",
+      "export": "SM_Fort_Cage_Ground",
+      "collection": "SM_Fort_Cage_Ground",
+      "dims_m": [
+        1.75,
+        2.05,
+        1.6
+      ],
+      "bbox": {
+        "min": [
+          -0.875,
+          -1.025,
+          0.0
+        ],
+        "max": [
+          0.875,
+          1.025,
+          1.6
+        ]
+      },
+      "height_vs_bean": 1.52,
+      "tris": 2688,
+      "tris_raw": 2688,
+      "budget": 3000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Cage_Ground_00",
+        "UCX_SM_Fort_Cage_Ground_01",
+        "UCX_SM_Fort_Cage_Ground_02",
+        "UCX_SM_Fort_Cage_Ground_03",
+        "UCX_SM_Fort_Cage_Ground_04",
+        "UCX_SM_Fort_Cage_Ground_05"
+      ],
+      "children": [],
+      "sockets": {
+        "Prisoner": {
+          "pos": [
+            0.0,
+            0.0,
+            0.12
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Door": {
+          "pos": [
+            0.0,
+            -0.9,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "clear_m": [
+          1.55,
+          1.55,
+          1.3599999999999999
+        ]
+      },
+      "files": [
+        "SM_Fort_Cage_Ground.fbx",
+        "SM_Fort_Cage_Ground.glb"
+      ],
+      "build_s": 1.32
+    },
+    "SM_Fort_Cage_Hanging": {
+      "key": "cage_hanging",
+      "export": "SM_Fort_Cage_Hanging",
+      "collection": "SM_Fort_Cage_Hanging",
+      "dims_m": [
+        0.868,
+        0.884,
+        1.569
+      ],
+      "bbox": {
+        "min": [
+          -0.434,
+          -0.45,
+          -1.55
+        ],
+        "max": [
+          0.434,
+          0.434,
+          0.019
+        ]
+      },
+      "height_vs_bean": 1.49,
+      "tris": 1464,
+      "tris_raw": 1464,
+      "budget": 3000,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Cage_Hanging_00"
+      ],
+      "children": [],
+      "sockets": {
+        "Hang": {
+          "pos": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "Prisoner": {
+          "pos": [
+            0.0,
+            0.0,
+            -1.45
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "inner_m": [
+          0.8,
+          1.32
+        ]
+      },
+      "files": [
+        "SM_Fort_Cage_Hanging.fbx",
+        "SM_Fort_Cage_Hanging.glb"
+      ],
+      "build_s": 0.12
+    },
+    "SM_Fort_Gibbet": {
+      "key": "gibbet",
+      "export": "SM_Fort_Gibbet",
+      "collection": "SM_Fort_Gibbet",
+      "dims_m": [
+        2.188,
+        1.175,
+        3.6
+      ],
+      "bbox": {
+        "min": [
+          -0.588,
+          -0.588,
+          0.0
+        ],
+        "max": [
+          1.6,
+          0.588,
+          3.6
+        ]
+      },
+      "height_vs_bean": 3.43,
+      "tris": 688,
+      "tris_raw": 688,
+      "budget": 2500,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_CoralAshlar",
+        "MAT-Fort_WoodTamanu",
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [
+        "UCX_SM_Fort_Gibbet_00",
+        "UCX_SM_Fort_Gibbet_01"
+      ],
+      "children": [],
+      "sockets": {
+        "Hang": {
+          "pos": [
+            1.4,
+            0.0,
+            3.45
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "CageRing": {
+          "pos": [
+            1.4,
+            0.0,
+            2.55
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {
+        "cage_ring_z": 2.55
+      },
+      "files": [
+        "SM_Fort_Gibbet.fbx",
+        "SM_Fort_Gibbet.glb"
+      ],
+      "build_s": 3.36
+    },
+    "SM_Fort_WallShackles": {
+      "key": "wall_shackles",
+      "export": "SM_Fort_WallShackles",
+      "collection": "SM_Fort_WallShackles",
+      "dims_m": [
+        0.529,
+        0.152,
+        1.172
+      ],
+      "bbox": {
+        "min": [
+          -0.271,
+          -0.152,
+          0.038
+        ],
+        "max": [
+          0.258,
+          0.0,
+          1.21
+        ]
+      },
+      "height_vs_bean": 1.12,
+      "tris": 1192,
+      "tris_raw": 1192,
+      "budget": 1500,
+      "within_budget": true,
+      "materials": [
+        "MAT-Fort_IronRust"
+      ],
+      "ucx": [],
+      "children": [],
+      "sockets": {
+        "Wall": {
+          "pos": [
+            0.0,
+            0.0,
+            1.08
+          ],
+          "rot": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "info": {},
+      "files": [
+        "SM_Fort_WallShackles.fbx",
+        "SM_Fort_WallShackles.glb"
+      ],
+      "build_s": 0.12
+    }
+  },
+  "errors": {},
+  "build_s": 15.1,
+  "images": [
+    "brown_planks_03_diff_2k.jpg",
+    "brown_planks_03_nor_gl_2k.jpg",
+    "brown_planks_03_rough_2k.jpg",
+    "coral_fort_wall_01_diff_2k.jpg",
+    "coral_fort_wall_01_disp_2k.jpg",
+    "coral_fort_wall_01_nor_gl_2k.jpg",
+    "coral_fort_wall_01_rough_2k.jpg",
+    "coral_fort_wall_02_diff_2k.jpg",
+    "coral_fort_wall_02_disp_2k.jpg",
+    "coral_fort_wall_02_nor_gl_2k.jpg",
+    "coral_fort_wall_02_rough_2k.jpg",
+    "coral_fort_wall_03_diff_2k.jpg",
+    "coral_fort_wall_03_disp_2k.jpg",
+    "coral_fort_wall_03_nor_gl_2k.jpg",
+    "coral_fort_wall_03_rough_2k.jpg",
+    "coral_ground_02_diff_2k.jpg",
+    "coral_ground_02_disp_2k.jpg",
+    "coral_ground_02_nor_gl_2k.jpg",
+    "coral_ground_02_rough_2k.jpg",
+    "dark_wooden_planks_diff_1k.jpg",
+    "dark_wooden_planks_nor_gl_1k.jpg",
+    "dark_wooden_planks_rough_1k.jpg",
+    "hessian_230_diff_1k.jpg",
+    "hessian_230_nor_gl_1k.jpg",
+    "hessian_230_rough_1k.jpg",
+    "rusty_metal_04_ao_1k.jpg",
+    "rusty_metal_04_diff_1k.jpg",
+    "rusty_metal_04_nor_gl_1k.jpg",
+    "rusty_metal_04_rough_1k.jpg",
+    "white_plaster_02_diff_2k.jpg",
+    "white_plaster_02_disp_2k.jpg",
+    "white_plaster_02_nor_gl_2k.jpg",
+    "white_plaster_02_rough_2k.jpg"
+  ]
+}

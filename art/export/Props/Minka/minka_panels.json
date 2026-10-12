@@ -1,0 +1,437 @@
+{
+ "origin": "front-left corner of the main body, ground",
+ "panels": [
+  {
+   "name": "Minka_Itado_Entrance",
+   "mesh": "SM_Minka_Itado_102x198",
+   "type": "itado",
+   "closed_cm": [
+    70.0,
+    -11.0,
+    0.0
+   ],
+   "travel_cm": [
+    -96.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.65
+  },
+  {
+   "name": "Minka_Shoji_X00_190_1",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    190.0,
+    -1.8,
+    45.0
+   ],
+   "travel_cm": [
+    78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_X00_190_2",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    268.0,
+    1.8,
+    45.0
+   ],
+   "travel_cm": [
+    -78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_X00_370_1",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    370.0,
+    -1.8,
+    45.0
+   ],
+   "travel_cm": [
+    78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_X00_370_2",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    448.0,
+    1.8,
+    45.0
+   ],
+   "travel_cm": [
+    -78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_X00_550_1",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    550.0,
+    -1.8,
+    45.0
+   ],
+   "travel_cm": [
+    78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 1.0
+  },
+  {
+   "name": "Minka_Shoji_X00_550_2",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    628.0,
+    1.8,
+    45.0
+   ],
+   "travel_cm": [
+    -78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_X00_730_1",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    730.0,
+    -1.8,
+    45.0
+   ],
+   "travel_cm": [
+    78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 1.0
+  },
+  {
+   "name": "Minka_Shoji_X00_730_2",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    808.0,
+    1.8,
+    45.0
+   ],
+   "travel_cm": [
+    -78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_Y90_010_1",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    901.8,
+    10.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 1.0
+  },
+  {
+   "name": "Minka_Shoji_Y90_010_2",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    898.2,
+    88.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    -78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_Y90_190_1",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    901.8,
+    190.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_Y90_190_2",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    898.2,
+    268.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    -78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_Y90_370_1",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    901.8,
+    370.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Shoji_Y90_370_2",
+   "mesh": "SM_Minka_Shoji_82x210",
+   "type": "shoji",
+   "closed_cm": [
+    898.2,
+    448.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    -78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Itado_Step_Y18_190_1",
+   "mesh": "SM_Minka_Itado_82x210",
+   "type": "itado",
+   "closed_cm": [
+    181.9,
+    190.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Itado_Step_Y18_190_2",
+   "mesh": "SM_Minka_Itado_82x210",
+   "type": "itado",
+   "closed_cm": [
+    178.1,
+    268.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    -78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Fusuma_Y54_190_1",
+   "mesh": "SM_Minka_Fusuma_82x210",
+   "type": "fusuma",
+   "closed_cm": [
+    541.4,
+    190.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Fusuma_Y54_190_2",
+   "mesh": "SM_Minka_Fusuma_82x210",
+   "type": "fusuma",
+   "closed_cm": [
+    538.6,
+    268.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    -78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Fusuma_Y54_370_1",
+   "mesh": "SM_Minka_Fusuma_82x210",
+   "type": "fusuma",
+   "closed_cm": [
+    541.4,
+    370.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Fusuma_Y54_370_2",
+   "mesh": "SM_Minka_Fusuma_82x210",
+   "type": "fusuma",
+   "closed_cm": [
+    538.6,
+    448.0,
+    45.0
+   ],
+   "travel_cm": [
+    0.0,
+    -78.0
+   ],
+   "yaw_deg": 90.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Fusuma_X36_370_1",
+   "mesh": "SM_Minka_Fusuma_82x210",
+   "type": "fusuma",
+   "closed_cm": [
+    370.0,
+    358.6,
+    45.0
+   ],
+   "travel_cm": [
+    78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Fusuma_X36_370_2",
+   "mesh": "SM_Minka_Fusuma_82x210",
+   "type": "fusuma",
+   "closed_cm": [
+    448.0,
+    361.4,
+    45.0
+   ],
+   "travel_cm": [
+    -78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Fusuma_X36_550_1",
+   "mesh": "SM_Minka_Fusuma_82x210",
+   "type": "fusuma",
+   "closed_cm": [
+    550.0,
+    358.6,
+    45.0
+   ],
+   "travel_cm": [
+    78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Fusuma_X36_550_2",
+   "mesh": "SM_Minka_Fusuma_82x210",
+   "type": "fusuma",
+   "closed_cm": [
+    628.0,
+    361.4,
+    45.0
+   ],
+   "travel_cm": [
+    -78.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 1.0
+  },
+  {
+   "name": "Minka_Fusuma_X63_724_1",
+   "mesh": "SM_Minka_Fusuma_85x210",
+   "type": "fusuma",
+   "closed_cm": [
+    724.0,
+    628.6,
+    45.0
+   ],
+   "travel_cm": [
+    81.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  },
+  {
+   "name": "Minka_Fusuma_X63_724_2",
+   "mesh": "SM_Minka_Fusuma_85x210",
+   "type": "fusuma",
+   "closed_cm": [
+    805.0,
+    631.4,
+    45.0
+   ],
+   "travel_cm": [
+    -81.0,
+    0.0
+   ],
+   "yaw_deg": 0.0,
+   "open": 0.0
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+{
+  "task": "T-198",
+  "currency": "couronnes",
+  "pricing_basis": "Game economy, not real-world bullion quote; configurable design values",
+  "gold_bar": {
+    "mass_kg": 5.5,
+    "value": 500
+  },
+  "stacks": {
+    "SM_Loot_GoldStack_S": 6,
+    "SM_Loot_GoldStack_M": 12,
+    "SM_Loot_GoldStack_L": 24
+  },
+  "items": {
+    "SM_Loot_Gem_Amethyst": 220,
+    "SM_Loot_Gem_Emerald": 450,
+    "SM_Loot_Gem_Ruby": 550,
+    "SM_Loot_Gem_Sapphire": 500,
+    "SM_Loot_Gem_Topaz": 250,
+    "SM_Loot_GemBowl": 1800,
+    "SM_Loot_Coin": 8,
+    "SM_Loot_CoinPile": 400,
+    "SM_Loot_PearlSack_Open": 1400,
+    "SM_Loot_PearlSack_Closed": 1200,
+    "SM_Fort_Chest_Open": 2200,
+    "SM_Fort_Chest_Closed": 1800
+  }
+}

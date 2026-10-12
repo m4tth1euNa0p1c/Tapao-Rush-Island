@@ -1,0 +1,6809 @@
+{
+  "lots": {
+    "site": "built",
+    "rempart": "built",
+    "porte": "built",
+    "tour": "built",
+    "batiments": "built",
+    "poudriere_chapelle": "built",
+    "prison": "built",
+    "tresor": "built",
+    "port": "built",
+    "habillage": "built"
+  },
+  "modules": {
+    "site": {
+      "lot": "site",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Fort_Ditch": {
+          "key": "ditch",
+          "export": "SM_Fort_Ditch",
+          "collection": "SM_Fort_Ditch",
+          "dims_m": [
+            80.058,
+            71.759,
+            1.402
+          ],
+          "bbox": {
+            "min": [
+              -40.029,
+              -35.88,
+              -1.402
+            ],
+            "max": [
+              40.029,
+              35.88,
+              0.0
+            ]
+          },
+          "height_vs_bean": 1.33,
+          "tris": 21108,
+          "tris_raw": 21108,
+          "budget": 25000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralGravel",
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_Puddle"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Ditch_00",
+            "UCX_SM_Fort_Ditch_01",
+            "UCX_SM_Fort_Ditch_02",
+            "UCX_SM_Fort_Ditch_03",
+            "UCX_SM_Fort_Ditch_04",
+            "UCX_SM_Fort_Ditch_05",
+            "UCX_SM_Fort_Ditch_06",
+            "UCX_SM_Fort_Ditch_07",
+            "UCX_SM_Fort_Ditch_08",
+            "UCX_SM_Fort_Ditch_09",
+            "UCX_SM_Fort_Ditch_10",
+            "UCX_SM_Fort_Ditch_11",
+            "UCX_SM_Fort_Ditch_12",
+            "UCX_SM_Fort_Ditch_13",
+            "UCX_SM_Fort_Ditch_14",
+            "UCX_SM_Fort_Ditch_15",
+            "UCX_SM_Fort_Ditch_16",
+            "UCX_SM_Fort_Ditch_17",
+            "UCX_SM_Fort_Ditch_18",
+            "UCX_SM_Fort_Ditch_19",
+            "UCX_SM_Fort_Ditch_20",
+            "UCX_SM_Fort_Ditch_21",
+            "UCX_SM_Fort_Ditch_22",
+            "UCX_SM_Fort_Ditch_23",
+            "UCX_SM_Fort_Ditch_24",
+            "UCX_SM_Fort_Ditch_25",
+            "UCX_SM_Fort_Ditch_26",
+            "UCX_SM_Fort_Ditch_27",
+            "UCX_SM_Fort_Ditch_28",
+            "UCX_SM_Fort_Ditch_29",
+            "UCX_SM_Fort_Ditch_30",
+            "UCX_SM_Fort_Ditch_31",
+            "UCX_SM_Fort_Ditch_32",
+            "UCX_SM_Fort_Ditch_33",
+            "UCX_SM_Fort_Ditch_34",
+            "UCX_SM_Fort_Ditch_35",
+            "UCX_SM_Fort_Ditch_36",
+            "UCX_SM_Fort_Ditch_37",
+            "UCX_SM_Fort_Ditch_38",
+            "UCX_SM_Fort_Ditch_39",
+            "UCX_SM_Fort_Ditch_40",
+            "UCX_SM_Fort_Ditch_41",
+            "UCX_SM_Fort_Ditch_42",
+            "UCX_SM_Fort_Ditch_43",
+            "UCX_SM_Fort_Ditch_44",
+            "UCX_SM_Fort_Ditch_45",
+            "UCX_SM_Fort_Ditch_46",
+            "UCX_SM_Fort_Ditch_47",
+            "UCX_SM_Fort_Ditch_48",
+            "UCX_SM_Fort_Ditch_49",
+            "UCX_SM_Fort_Ditch_50",
+            "UCX_SM_Fort_Ditch_51",
+            "UCX_SM_Fort_Ditch_52",
+            "UCX_SM_Fort_Ditch_53",
+            "UCX_SM_Fort_Ditch_54",
+            "UCX_SM_Fort_Ditch_55",
+            "UCX_SM_Fort_Ditch_56",
+            "UCX_SM_Fort_Ditch_57",
+            "UCX_SM_Fort_Ditch_58",
+            "UCX_SM_Fort_Ditch_59",
+            "UCX_SM_Fort_Ditch_60",
+            "UCX_SM_Fort_Ditch_61",
+            "UCX_SM_Fort_Ditch_62",
+            "UCX_SM_Fort_Ditch_63",
+            "UCX_SM_Fort_Ditch_64",
+            "UCX_SM_Fort_Ditch_65",
+            "UCX_SM_Fort_Ditch_66",
+            "UCX_SM_Fort_Ditch_67",
+            "UCX_SM_Fort_Ditch_68",
+            "UCX_SM_Fort_Ditch_69",
+            "UCX_SM_Fort_Ditch_70",
+            "UCX_SM_Fort_Ditch_71",
+            "UCX_SM_Fort_Ditch_72",
+            "UCX_SM_Fort_Ditch_73",
+            "UCX_SM_Fort_Ditch_74",
+            "UCX_SM_Fort_Ditch_75",
+            "UCX_SM_Fort_Ditch_76",
+            "UCX_SM_Fort_Ditch_77",
+            "UCX_SM_Fort_Ditch_78",
+            "UCX_SM_Fort_Ditch_79"
+          ],
+          "children": [],
+          "sockets": {
+            "Bridge_Counterscarp": {
+              "pos": [
+                0.0,
+                -26.915,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "counterscarp_points": 480,
+            "width_bottom_m": 6.0
+          },
+          "files": [
+            "SM_Fort_Ditch.fbx",
+            "SM_Fort_Ditch.glb"
+          ],
+          "build_s": 10.71
+        },
+        "REF-site_terrain": {
+          "key": "site_terrain",
+          "export": "REF-site_terrain",
+          "collection": "REF-site_terrain",
+          "dims_m": [
+            5000.0,
+            5000.0,
+            19.4
+          ],
+          "bbox": {
+            "min": [
+              -2500.0,
+              -2500.0,
+              -18.0
+            ],
+            "max": [
+              2500.0,
+              2500.0,
+              1.4
+            ]
+          },
+          "height_vs_bean": 18.48,
+          "tris": 122772,
+          "tris_raw": null,
+          "budget": null,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Site_Ground",
+            "MAT-Site_Lagoon"
+          ],
+          "ucx": [],
+          "children": [
+            "REF-Site_Terrain_Far",
+            "REF-Lagoon",
+            "REF-Ocean",
+            "REF-Court_Paths"
+          ],
+          "sockets": {},
+          "info": {
+            "near_m": [
+              164.0,
+              172.0
+            ],
+            "far_m": [
+              356,
+              304
+            ]
+          },
+          "files": [],
+          "build_s": 8.07
+        }
+      },
+      "errors": {},
+      "build_s": 19.5,
+      "images": [
+        "T_Water_N.png",
+        "coral_fort_wall_01_diff_2k.jpg",
+        "coral_fort_wall_01_disp_2k.jpg",
+        "coral_fort_wall_01_nor_gl_2k.jpg",
+        "coral_fort_wall_01_rough_2k.jpg",
+        "coral_fort_wall_02_diff_2k.jpg",
+        "coral_fort_wall_02_disp_2k.jpg",
+        "coral_fort_wall_02_nor_gl_2k.jpg",
+        "coral_fort_wall_02_rough_2k.jpg",
+        "coral_fort_wall_03_diff_2k.jpg",
+        "coral_fort_wall_03_disp_2k.jpg",
+        "coral_fort_wall_03_nor_gl_2k.jpg",
+        "coral_fort_wall_03_rough_2k.jpg",
+        "coral_gravel_diff_2k.jpg",
+        "coral_gravel_disp_2k.jpg",
+        "coral_gravel_nor_gl_2k.jpg",
+        "coral_gravel_rough_2k.jpg",
+        "coral_ground_02_diff_2k.jpg",
+        "coral_ground_02_disp_2k.jpg",
+        "coral_ground_02_nor_gl_2k.jpg",
+        "coral_ground_02_rough_2k.jpg",
+        "feo_ch.png",
+        "feo_n.png",
+        "litter_ch.png",
+        "litter_n.png",
+        "rubble_ch.png",
+        "rubble_n.png",
+        "sand_dry_ch.png",
+        "sand_dry_n.png",
+        "sand_wet_ch.png",
+        "sand_wet_n.png",
+        "soil_ch.png",
+        "soil_n.png",
+        "white_plaster_02_diff_2k.jpg",
+        "white_plaster_02_disp_2k.jpg",
+        "white_plaster_02_nor_gl_2k.jpg",
+        "white_plaster_02_rough_2k.jpg",
+        "wrack_ch.png",
+        "wrack_n.png"
+      ]
+    },
+    "rempart": {
+      "lot": "rempart",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Fort_Curtain_4m": {
+          "key": "curtain_4m",
+          "export": "SM_Fort_Curtain_4m",
+          "collection": "SM_Fort_Curtain_4m",
+          "dims_m": [
+            4.037,
+            5.5,
+            5.66
+          ],
+          "bbox": {
+            "min": [
+              -2.037,
+              -0.76,
+              -1.37
+            ],
+            "max": [
+              2.0,
+              4.74,
+              4.29
+            ]
+          },
+          "height_vs_bean": 5.39,
+          "tris": 2076,
+          "tris_raw": 2076,
+          "budget": 5000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Curtain_4m_00",
+            "UCX_SM_Fort_Curtain_4m_01",
+            "UCX_SM_Fort_Curtain_4m_02",
+            "UCX_SM_Fort_Curtain_4m_03",
+            "UCX_SM_Fort_Curtain_4m_04",
+            "UCX_SM_Fort_Curtain_4m_05",
+            "UCX_SM_Fort_Curtain_4m_06"
+          ],
+          "children": [],
+          "sockets": {
+            "Snap_L": {
+              "pos": [
+                -2.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_R": {
+              "pos": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Walk": {
+              "pos": [
+                0.0,
+                2.7,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Crenel_1": {
+              "pos": [
+                -1.0,
+                1.0,
+                3.63
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Crenel_2": {
+              "pos": [
+                1.0,
+                1.0,
+                3.63
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern": {
+              "pos": [
+                0.0,
+                4.25,
+                2.37
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "variant": "plain"
+          },
+          "files": [
+            "SM_Fort_Curtain_4m.fbx",
+            "SM_Fort_Curtain_4m.glb"
+          ],
+          "build_s": 7.95
+        },
+        "SM_Fort_Curtain_4m_Embrasure": {
+          "key": "curtain_4m_embrasure",
+          "export": "SM_Fort_Curtain_4m_Embrasure",
+          "collection": "SM_Fort_Curtain_4m_Embrasure",
+          "dims_m": [
+            4.009,
+            5.5,
+            5.66
+          ],
+          "bbox": {
+            "min": [
+              -2.009,
+              -0.76,
+              -1.37
+            ],
+            "max": [
+              2.0,
+              4.74,
+              4.29
+            ]
+          },
+          "height_vs_bean": 5.39,
+          "tris": 2208,
+          "tris_raw": 2208,
+          "budget": 6500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Curtain_4m_Embrasure_00",
+            "UCX_SM_Fort_Curtain_4m_Embrasure_01",
+            "UCX_SM_Fort_Curtain_4m_Embrasure_02",
+            "UCX_SM_Fort_Curtain_4m_Embrasure_03",
+            "UCX_SM_Fort_Curtain_4m_Embrasure_04"
+          ],
+          "children": [],
+          "sockets": {
+            "Snap_L": {
+              "pos": [
+                -2.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_R": {
+              "pos": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Walk": {
+              "pos": [
+                0.0,
+                2.7,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern": {
+              "pos": [
+                0.0,
+                4.25,
+                2.37
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Gun": {
+              "pos": [
+                0.0,
+                2.35,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ShotPile": {
+              "pos": [
+                1.4,
+                3.6,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Embrasure": {
+              "pos": [
+                0.0,
+                1.0,
+                3.25
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "variant": "emb",
+            "gun_platform_m": [
+              2.4,
+              2.6
+            ]
+          },
+          "files": [
+            "SM_Fort_Curtain_4m_Embrasure.fbx",
+            "SM_Fort_Curtain_4m_Embrasure.glb"
+          ],
+          "build_s": 5.73
+        },
+        "SM_Fort_Curtain_4m_Access": {
+          "key": "curtain_4m_access",
+          "export": "SM_Fort_Curtain_4m_Access",
+          "collection": "SM_Fort_Curtain_4m_Access",
+          "dims_m": [
+            4.028,
+            5.257,
+            5.66
+          ],
+          "bbox": {
+            "min": [
+              -2.028,
+              -0.76,
+              -1.37
+            ],
+            "max": [
+              2.0,
+              4.497,
+              4.29
+            ]
+          },
+          "height_vs_bean": 5.39,
+          "tris": 2440,
+          "tris_raw": 2440,
+          "budget": 5000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Curtain_4m_Access_00",
+            "UCX_SM_Fort_Curtain_4m_Access_01",
+            "UCX_SM_Fort_Curtain_4m_Access_02",
+            "UCX_SM_Fort_Curtain_4m_Access_03",
+            "UCX_SM_Fort_Curtain_4m_Access_04",
+            "UCX_SM_Fort_Curtain_4m_Access_05",
+            "UCX_SM_Fort_Curtain_4m_Access_06",
+            "UCX_SM_Fort_Curtain_4m_Access_07"
+          ],
+          "children": [],
+          "sockets": {
+            "Snap_L": {
+              "pos": [
+                -2.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_R": {
+              "pos": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Walk": {
+              "pos": [
+                0.0,
+                2.7,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Crenel_1": {
+              "pos": [
+                -1.0,
+                1.0,
+                3.63
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Crenel_2": {
+              "pos": [
+                1.0,
+                1.0,
+                3.63
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern": {
+              "pos": [
+                0.0,
+                4.25,
+                2.37
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "variant": "access"
+          },
+          "files": [
+            "SM_Fort_Curtain_4m_Access.fbx",
+            "SM_Fort_Curtain_4m_Access.glb"
+          ],
+          "build_s": 5.19
+        },
+        "SM_Fort_Curtain_Corner": {
+          "key": "curtain_corner",
+          "export": "SM_Fort_Curtain_Corner",
+          "collection": "SM_Fort_Curtain_Corner",
+          "dims_m": [
+            4.96,
+            4.96,
+            5.66
+          ],
+          "bbox": {
+            "min": [
+              -0.76,
+              -0.76,
+              -1.37
+            ],
+            "max": [
+              4.2,
+              4.2,
+              4.29
+            ]
+          },
+          "height_vs_bean": 5.39,
+          "tris": 2648,
+          "tris_raw": 2648,
+          "budget": 5000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Curtain_Corner_00",
+            "UCX_SM_Fort_Curtain_Corner_01",
+            "UCX_SM_Fort_Curtain_Corner_02",
+            "UCX_SM_Fort_Curtain_Corner_03",
+            "UCX_SM_Fort_Curtain_Corner_04",
+            "UCX_SM_Fort_Curtain_Corner_05",
+            "UCX_SM_Fort_Curtain_Corner_06"
+          ],
+          "children": [],
+          "sockets": {
+            "Snap_X": {
+              "pos": [
+                4.2,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_Y": {
+              "pos": [
+                0.0,
+                4.2,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Echauguette": {
+              "pos": [
+                -0.35,
+                -0.35,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                225.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_Curtain_Corner.fbx",
+            "SM_Fort_Curtain_Corner.glb"
+          ],
+          "build_s": 5.15
+        },
+        "SM_Fort_Bastion": {
+          "key": "bastion",
+          "export": "SM_Fort_Bastion",
+          "collection": "SM_Fort_Bastion",
+          "dims_m": [
+            15.405,
+            15.405,
+            5.66
+          ],
+          "bbox": {
+            "min": [
+              -6.96,
+              -6.96,
+              -1.37
+            ],
+            "max": [
+              8.445,
+              8.445,
+              4.29
+            ]
+          },
+          "height_vs_bean": 5.39,
+          "tris": 14236,
+          "tris_raw": 14236,
+          "budget": 45000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Bastion_00",
+            "UCX_SM_Fort_Bastion_01",
+            "UCX_SM_Fort_Bastion_02",
+            "UCX_SM_Fort_Bastion_03",
+            "UCX_SM_Fort_Bastion_04",
+            "UCX_SM_Fort_Bastion_05",
+            "UCX_SM_Fort_Bastion_06",
+            "UCX_SM_Fort_Bastion_07",
+            "UCX_SM_Fort_Bastion_08",
+            "UCX_SM_Fort_Bastion_09",
+            "UCX_SM_Fort_Bastion_10",
+            "UCX_SM_Fort_Bastion_11",
+            "UCX_SM_Fort_Bastion_12",
+            "UCX_SM_Fort_Bastion_13",
+            "UCX_SM_Fort_Bastion_14",
+            "UCX_SM_Fort_Bastion_15",
+            "UCX_SM_Fort_Bastion_16",
+            "UCX_SM_Fort_Bastion_17",
+            "UCX_SM_Fort_Bastion_18",
+            "UCX_SM_Fort_Bastion_19",
+            "UCX_SM_Fort_Bastion_20",
+            "UCX_SM_Fort_Bastion_21",
+            "UCX_SM_Fort_Bastion_22",
+            "UCX_SM_Fort_Bastion_23",
+            "UCX_SM_Fort_Bastion_24",
+            "UCX_SM_Fort_Bastion_25",
+            "UCX_SM_Fort_Bastion_26",
+            "UCX_SM_Fort_Bastion_27",
+            "UCX_SM_Fort_Bastion_28"
+          ],
+          "children": [],
+          "sockets": {
+            "Gun_FlankB": {
+              "pos": [
+                2.5,
+                -3.85,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                -180.0
+              ]
+            },
+            "Gun_FaceB_1": {
+              "pos": [
+                3.5132,
+                -1.2571,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                -100.342
+              ]
+            },
+            "Gun_FaceB_2": {
+              "pos": [
+                4.3632,
+                3.4009,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                -100.342
+              ]
+            },
+            "Gun_FaceA_1": {
+              "pos": [
+                3.4009,
+                4.3632,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                10.342
+              ]
+            },
+            "Gun_FaceA_2": {
+              "pos": [
+                -1.2571,
+                3.5132,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                10.342
+              ]
+            },
+            "Gun_FlankA": {
+              "pos": [
+                -3.85,
+                2.5,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                -270.0
+              ]
+            },
+            "Echauguette": {
+              "pos": [
+                7.85,
+                7.85,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                135.0
+              ]
+            },
+            "Tower": {
+              "pos": [
+                1.2,
+                1.2,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Flag": {
+              "pos": [
+                -2.5,
+                -2.5,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ShotPile_1": {
+              "pos": [
+                -1.0,
+                2.0,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ShotPile_2": {
+              "pos": [
+                2.0,
+                -1.0,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "face_m": 13.926,
+            "flank_m": 5.0,
+            "embrasures": 6,
+            "salient_deg": 69.3
+          },
+          "files": [
+            "SM_Fort_Bastion.fbx",
+            "SM_Fort_Bastion.glb"
+          ],
+          "build_s": 5.64
+        },
+        "SM_Fort_Bastion_Vault": {
+          "key": "bastion_vault",
+          "export": "SM_Fort_Bastion_Vault",
+          "collection": "SM_Fort_Bastion_Vault",
+          "dims_m": [
+            15.405,
+            15.405,
+            5.66
+          ],
+          "bbox": {
+            "min": [
+              -6.96,
+              -6.96,
+              -1.37
+            ],
+            "max": [
+              8.445,
+              8.445,
+              4.29
+            ]
+          },
+          "height_vs_bean": 5.39,
+          "tris": 14238,
+          "tris_raw": 14238,
+          "budget": 45000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Bastion_Vault_00",
+            "UCX_SM_Fort_Bastion_Vault_01",
+            "UCX_SM_Fort_Bastion_Vault_02",
+            "UCX_SM_Fort_Bastion_Vault_03",
+            "UCX_SM_Fort_Bastion_Vault_04",
+            "UCX_SM_Fort_Bastion_Vault_05",
+            "UCX_SM_Fort_Bastion_Vault_06",
+            "UCX_SM_Fort_Bastion_Vault_07",
+            "UCX_SM_Fort_Bastion_Vault_08",
+            "UCX_SM_Fort_Bastion_Vault_09",
+            "UCX_SM_Fort_Bastion_Vault_10",
+            "UCX_SM_Fort_Bastion_Vault_11",
+            "UCX_SM_Fort_Bastion_Vault_12",
+            "UCX_SM_Fort_Bastion_Vault_13",
+            "UCX_SM_Fort_Bastion_Vault_14",
+            "UCX_SM_Fort_Bastion_Vault_15",
+            "UCX_SM_Fort_Bastion_Vault_16",
+            "UCX_SM_Fort_Bastion_Vault_17",
+            "UCX_SM_Fort_Bastion_Vault_18",
+            "UCX_SM_Fort_Bastion_Vault_19",
+            "UCX_SM_Fort_Bastion_Vault_20",
+            "UCX_SM_Fort_Bastion_Vault_21",
+            "UCX_SM_Fort_Bastion_Vault_22",
+            "UCX_SM_Fort_Bastion_Vault_23",
+            "UCX_SM_Fort_Bastion_Vault_24",
+            "UCX_SM_Fort_Bastion_Vault_25",
+            "UCX_SM_Fort_Bastion_Vault_26",
+            "UCX_SM_Fort_Bastion_Vault_27",
+            "UCX_SM_Fort_Bastion_Vault_28",
+            "UCX_SM_Fort_Bastion_Vault_29",
+            "UCX_SM_Fort_Bastion_Vault_30",
+            "UCX_SM_Fort_Bastion_Vault_31",
+            "UCX_SM_Fort_Bastion_Vault_32",
+            "UCX_SM_Fort_Bastion_Vault_33",
+            "UCX_SM_Fort_Bastion_Vault_34",
+            "UCX_SM_Fort_Bastion_Vault_35",
+            "UCX_SM_Fort_Bastion_Vault_36"
+          ],
+          "children": [],
+          "sockets": {
+            "Gun_FlankB": {
+              "pos": [
+                2.5,
+                -3.85,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                -180.0
+              ]
+            },
+            "Gun_FaceB_1": {
+              "pos": [
+                3.5132,
+                -1.2571,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                -100.342
+              ]
+            },
+            "Gun_FaceB_2": {
+              "pos": [
+                4.3632,
+                3.4009,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                -100.342
+              ]
+            },
+            "Gun_FaceA_1": {
+              "pos": [
+                3.4009,
+                4.3632,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                10.342
+              ]
+            },
+            "Gun_FaceA_2": {
+              "pos": [
+                -1.2571,
+                3.5132,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                10.342
+              ]
+            },
+            "Gun_FlankA": {
+              "pos": [
+                -3.85,
+                2.5,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                -270.0
+              ]
+            },
+            "Echauguette": {
+              "pos": [
+                7.85,
+                7.85,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                135.0
+              ]
+            },
+            "Tower": {
+              "pos": [
+                1.2,
+                1.2,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Flag": {
+              "pos": [
+                -2.5,
+                -2.5,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ShotPile_1": {
+              "pos": [
+                -1.0,
+                2.0,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "ShotPile_2": {
+              "pos": [
+                2.0,
+                -1.0,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "face_m": 13.926,
+            "flank_m": 5.0,
+            "embrasures": 6,
+            "salient_deg": 69.3
+          },
+          "files": [
+            "SM_Fort_Bastion_Vault.fbx",
+            "SM_Fort_Bastion_Vault.glb"
+          ],
+          "build_s": 5.81
+        },
+        "SM_Fort_Ramp": {
+          "key": "ramp",
+          "export": "SM_Fort_Ramp",
+          "collection": "SM_Fort_Ramp",
+          "dims_m": [
+            2.35,
+            16.88,
+            3.585
+          ],
+          "bbox": {
+            "min": [
+              -1.02,
+              0.0,
+              -0.06
+            ],
+            "max": [
+              1.33,
+              16.88,
+              3.525
+            ]
+          },
+          "height_vs_bean": 3.41,
+          "tris": 320,
+          "tris_raw": 320,
+          "budget": 3000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_WoodOak"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Ramp_00",
+            "UCX_SM_Fort_Ramp_01",
+            "UCX_SM_Fort_Ramp_02",
+            "UCX_SM_Fort_Ramp_03",
+            "UCX_SM_Fort_Ramp_04"
+          ],
+          "children": [],
+          "sockets": {
+            "Foot": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Top": {
+              "pos": [
+                0.0,
+                15.85,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "slope_deg": 11.31
+          },
+          "files": [
+            "SM_Fort_Ramp.fbx",
+            "SM_Fort_Ramp.glb"
+          ],
+          "build_s": 5.15
+        },
+        "SM_Fort_Stair": {
+          "key": "stair",
+          "export": "SM_Fort_Stair",
+          "collection": "SM_Fort_Stair",
+          "dims_m": [
+            1.2,
+            6.906,
+            3.647
+          ],
+          "bbox": {
+            "min": [
+              -0.6,
+              -0.026,
+              0.0
+            ],
+            "max": [
+              0.6,
+              6.88,
+              3.647
+            ]
+          },
+          "height_vs_bean": 3.47,
+          "tris": 1188,
+          "tris_raw": 1188,
+          "budget": 4000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Stair_00",
+            "UCX_SM_Fort_Stair_01",
+            "UCX_SM_Fort_Stair_02",
+            "UCX_SM_Fort_Stair_03"
+          ],
+          "children": [],
+          "sockets": {
+            "Foot": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Top": {
+              "pos": [
+                0.0,
+                5.98,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "run_m": 5.68,
+            "top_landing_m": 1.2
+          },
+          "files": [
+            "SM_Fort_Stair.fbx",
+            "SM_Fort_Stair.glb"
+          ],
+          "build_s": 5.1
+        },
+        "SM_Fort_Echauguette": {
+          "key": "echauguette",
+          "export": "SM_Fort_Echauguette",
+          "collection": "SM_Fort_Echauguette",
+          "dims_m": [
+            2.0,
+            2.0,
+            4.67
+          ],
+          "bbox": {
+            "min": [
+              -1.0,
+              -1.0,
+              -1.37
+            ],
+            "max": [
+              1.0,
+              1.0,
+              3.3
+            ]
+          },
+          "height_vs_bean": 4.45,
+          "tris": 1758,
+          "tris_raw": 1758,
+          "budget": 6000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Echauguette_00",
+            "UCX_SM_Fort_Echauguette_01"
+          ],
+          "children": [],
+          "sockets": {
+            "Inside": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern": {
+              "pos": [
+                0.0,
+                0.45,
+                1.6
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "door_m": [
+              1.0,
+              1.65
+            ],
+            "clear_m": 2.31
+          },
+          "files": [
+            "SM_Fort_Echauguette.fbx",
+            "SM_Fort_Echauguette.glb"
+          ],
+          "build_s": 2.04
+        }
+      },
+      "errors": {},
+      "build_s": 48.5,
+      "images": [
+        "coral_fort_wall_01_diff_2k.jpg",
+        "coral_fort_wall_01_disp_2k.jpg",
+        "coral_fort_wall_01_nor_gl_2k.jpg",
+        "coral_fort_wall_01_rough_2k.jpg",
+        "coral_fort_wall_02_diff_2k.jpg",
+        "coral_fort_wall_02_disp_2k.jpg",
+        "coral_fort_wall_02_nor_gl_2k.jpg",
+        "coral_fort_wall_02_rough_2k.jpg",
+        "coral_fort_wall_03_diff_2k.jpg",
+        "coral_fort_wall_03_disp_2k.jpg",
+        "coral_fort_wall_03_nor_gl_2k.jpg",
+        "coral_fort_wall_03_rough_2k.jpg",
+        "coral_ground_02_diff_2k.jpg",
+        "coral_ground_02_disp_2k.jpg",
+        "coral_ground_02_nor_gl_2k.jpg",
+        "coral_ground_02_rough_2k.jpg",
+        "dark_wooden_planks_diff_1k.jpg",
+        "dark_wooden_planks_nor_gl_1k.jpg",
+        "dark_wooden_planks_rough_1k.jpg",
+        "rusty_metal_04_ao_1k.jpg",
+        "rusty_metal_04_diff_1k.jpg",
+        "rusty_metal_04_nor_gl_1k.jpg",
+        "rusty_metal_04_rough_1k.jpg",
+        "white_plaster_02_diff_2k.jpg",
+        "white_plaster_02_disp_2k.jpg",
+        "white_plaster_02_nor_gl_2k.jpg",
+        "white_plaster_02_rough_2k.jpg"
+      ]
+    },
+    "porte": {
+      "lot": "porte",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Fort_GateHouse": {
+          "key": "gatehouse",
+          "export": "SM_Fort_GateHouse",
+          "collection": "SM_Fort_GateHouse",
+          "dims_m": [
+            12.0,
+            5.55,
+            7.22
+          ],
+          "bbox": {
+            "min": [
+              -6.0,
+              -0.81,
+              -1.37
+            ],
+            "max": [
+              6.0,
+              4.74,
+              5.85
+            ]
+          },
+          "height_vs_bean": 6.88,
+          "tris": 13046,
+          "tris_raw": 13046,
+          "budget": 30000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_GateHouse_00",
+            "UCX_SM_Fort_GateHouse_01",
+            "UCX_SM_Fort_GateHouse_02",
+            "UCX_SM_Fort_GateHouse_03",
+            "UCX_SM_Fort_GateHouse_04",
+            "UCX_SM_Fort_GateHouse_05",
+            "UCX_SM_Fort_GateHouse_06",
+            "UCX_SM_Fort_GateHouse_07",
+            "UCX_SM_Fort_GateHouse_08",
+            "UCX_SM_Fort_GateHouse_09",
+            "UCX_SM_Fort_GateHouse_10",
+            "UCX_SM_Fort_GateHouse_11",
+            "UCX_SM_Fort_GateHouse_12",
+            "UCX_SM_Fort_GateHouse_13",
+            "UCX_SM_Fort_GateHouse_14"
+          ],
+          "children": [],
+          "sockets": {
+            "Threshold": {
+              "pos": [
+                0.0,
+                -0.2,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Door_L": {
+              "pos": [
+                -1.1,
+                1.4,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Door_R": {
+              "pos": [
+                1.1,
+                1.4,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Portcullis": {
+              "pos": [
+                0.0,
+                0.6,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Drawbridge_Hinge": {
+              "pos": [
+                0.0,
+                -0.4,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern_L": {
+              "pos": [
+                -1.6,
+                -0.45,
+                2.4
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern_R": {
+              "pos": [
+                1.6,
+                -0.45,
+                2.4
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Sentry_L": {
+              "pos": [
+                -1.9,
+                -1.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Sentry_R": {
+              "pos": [
+                1.9,
+                -1.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Walk": {
+              "pos": [
+                0.0,
+                2.7,
+                2.97
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "passage_m": [
+              2.2,
+              2.64
+            ],
+            "frontispice_top_z": 5.49
+          },
+          "files": [
+            "SM_Fort_GateHouse.fbx",
+            "SM_Fort_GateHouse.glb"
+          ],
+          "build_s": 7.11
+        },
+        "SM_Fort_GateDoor_L": {
+          "key": "gate_door_l",
+          "export": "SM_Fort_GateDoor_L",
+          "collection": "SM_Fort_GateDoor_L",
+          "dims_m": [
+            1.128,
+            0.231,
+            2.61
+          ],
+          "bbox": {
+            "min": [
+              -0.028,
+              -0.086,
+              0.0
+            ],
+            "max": [
+              1.1,
+              0.145,
+              2.61
+            ]
+          },
+          "height_vs_bean": 2.49,
+          "tris": 938,
+          "tris_raw": 938,
+          "budget": 3000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_GateDoor_L_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Bar": {
+              "pos": [
+                0.9,
+                0.08,
+                1.1
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "anim": "rotation Z 0 -> -100 deg"
+          },
+          "files": [
+            "SM_Fort_GateDoor_L.fbx",
+            "SM_Fort_GateDoor_L.glb"
+          ],
+          "build_s": 0.56
+        },
+        "SM_Fort_GateDoor_R": {
+          "key": "gate_door_r",
+          "export": "SM_Fort_GateDoor_R",
+          "collection": "SM_Fort_GateDoor_R",
+          "dims_m": [
+            1.121,
+            0.15,
+            2.61
+          ],
+          "bbox": {
+            "min": [
+              -1.093,
+              -0.1,
+              0.0
+            ],
+            "max": [
+              0.028,
+              0.05,
+              2.61
+            ]
+          },
+          "height_vs_bean": 2.49,
+          "tris": 1254,
+          "tris_raw": 654,
+          "budget": 3500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_GateDoor_R_00"
+          ],
+          "children": [
+            "SM_Fort_GateDoor_R_Wicket"
+          ],
+          "sockets": {
+            "Wicket_Hinge": {
+              "pos": [
+                -0.15,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "anim": "rotation Z 0 -> +100 deg ; guichet : objet enfant SM_Fort_GateDoor_R_Wicket pivote sur ses gonds"
+          },
+          "files": [
+            "SM_Fort_GateDoor_R.fbx",
+            "SM_Fort_GateDoor_R.glb"
+          ],
+          "build_s": 0.43
+        },
+        "SM_Fort_Portcullis": {
+          "key": "portcullis",
+          "export": "SM_Fort_Portcullis",
+          "collection": "SM_Fort_Portcullis",
+          "dims_m": [
+            2.47,
+            0.115,
+            2.85
+          ],
+          "bbox": {
+            "min": [
+              -1.235,
+              -0.05,
+              -0.05
+            ],
+            "max": [
+              1.235,
+              0.065,
+              2.8
+            ]
+          },
+          "height_vs_bean": 2.71,
+          "tris": 1714,
+          "tris_raw": 1714,
+          "budget": 2500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Portcullis_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Lift": {
+              "pos": [
+                0.0,
+                0.0,
+                2.8
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "mesh_m": 0.15
+          },
+          "files": [
+            "SM_Fort_Portcullis.fbx",
+            "SM_Fort_Portcullis.glb"
+          ],
+          "build_s": 0.39
+        },
+        "SM_Fort_Drawbridge": {
+          "key": "drawbridge",
+          "export": "SM_Fort_Drawbridge",
+          "collection": "SM_Fort_Drawbridge",
+          "dims_m": [
+            3.0,
+            4.15,
+            3.34
+          ],
+          "bbox": {
+            "min": [
+              -1.5,
+              -2.8,
+              -0.14
+            ],
+            "max": [
+              1.5,
+              1.35,
+              3.2
+            ]
+          },
+          "height_vs_bean": 3.18,
+          "tris": 3128,
+          "tris_raw": 3128,
+          "budget": 4000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Drawbridge_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Hinge": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "DeckEnd": {
+              "pos": [
+                0.0,
+                -2.8,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "arms_m": 4.0
+          },
+          "files": [
+            "SM_Fort_Drawbridge.fbx",
+            "SM_Fort_Drawbridge.glb"
+          ],
+          "build_s": 0.41
+        },
+        "SM_Fort_BridgeFixed": {
+          "key": "bridge_fixed",
+          "export": "SM_Fort_BridgeFixed",
+          "collection": "SM_Fort_BridgeFixed",
+          "dims_m": [
+            3.24,
+            4.455,
+            2.04
+          ],
+          "bbox": {
+            "min": [
+              -1.62,
+              -3.815,
+              -1.32
+            ],
+            "max": [
+              1.62,
+              0.64,
+              0.72
+            ]
+          },
+          "height_vs_bean": 1.94,
+          "tris": 1828,
+          "tris_raw": 1828,
+          "budget": 5000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_WoodOak"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_BridgeFixed_00",
+            "UCX_SM_Fort_BridgeFixed_01",
+            "UCX_SM_Fort_BridgeFixed_02",
+            "UCX_SM_Fort_BridgeFixed_03"
+          ],
+          "children": [],
+          "sockets": {
+            "DrawbridgeEnd": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Counterscarp": {
+              "pos": [
+                0.0,
+                -3.515,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_BridgeFixed.fbx",
+            "SM_Fort_BridgeFixed.glb"
+          ],
+          "build_s": 5.34
+        },
+        "SM_Fort_GuardHouse": {
+          "key": "guardhouse",
+          "export": "SM_Fort_GuardHouse",
+          "collection": "SM_Fort_GuardHouse",
+          "dims_m": [
+            7.894,
+            5.894,
+            4.686
+          ],
+          "bbox": {
+            "min": [
+              -3.947,
+              -2.947,
+              0.0
+            ],
+            "max": [
+              3.947,
+              2.947,
+              4.686
+            ]
+          },
+          "height_vs_bean": 4.46,
+          "tris": 14468,
+          "tris_raw": 14468,
+          "budget": 20000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_IronRust",
+            "MAT-Fort_RoofTiles"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_GuardHouse_00",
+            "UCX_SM_Fort_GuardHouse_01",
+            "UCX_SM_Fort_GuardHouse_02",
+            "UCX_SM_Fort_GuardHouse_03",
+            "UCX_SM_Fort_GuardHouse_04",
+            "UCX_SM_Fort_GuardHouse_05",
+            "UCX_SM_Fort_GuardHouse_06",
+            "UCX_SM_Fort_GuardHouse_07",
+            "UCX_SM_Fort_GuardHouse_08",
+            "UCX_SM_Fort_GuardHouse_09",
+            "UCX_SM_Fort_GuardHouse_10"
+          ],
+          "children": [],
+          "sockets": {
+            "Door": {
+              "pos": [
+                0.0,
+                -2.6,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "MusketRack": {
+              "pos": [
+                -2.8,
+                1.8,
+                1.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern": {
+              "pos": [
+                0.0,
+                0.0,
+                2.3
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "interior_m": [
+              6.0,
+              4.0
+            ],
+            "ridge_z": 4.591
+          },
+          "files": [
+            "SM_Fort_GuardHouse.fbx",
+            "SM_Fort_GuardHouse.glb"
+          ],
+          "build_s": 7.84
+        }
+      },
+      "errors": {},
+      "build_s": 24.4,
+      "images": [
+        "brown_planks_03_diff_2k.jpg",
+        "brown_planks_03_nor_gl_2k.jpg",
+        "brown_planks_03_rough_2k.jpg",
+        "clay_roof_tiles_02_diff_2k.jpg",
+        "clay_roof_tiles_02_disp_2k.jpg",
+        "clay_roof_tiles_02_nor_gl_2k.jpg",
+        "clay_roof_tiles_02_rough_2k.jpg",
+        "coral_fort_wall_01_diff_2k.jpg",
+        "coral_fort_wall_01_disp_2k.jpg",
+        "coral_fort_wall_01_nor_gl_2k.jpg",
+        "coral_fort_wall_01_rough_2k.jpg",
+        "coral_fort_wall_02_diff_2k.jpg",
+        "coral_fort_wall_02_disp_2k.jpg",
+        "coral_fort_wall_02_nor_gl_2k.jpg",
+        "coral_fort_wall_02_rough_2k.jpg",
+        "coral_fort_wall_03_diff_2k.jpg",
+        "coral_fort_wall_03_disp_2k.jpg",
+        "coral_fort_wall_03_nor_gl_2k.jpg",
+        "coral_fort_wall_03_rough_2k.jpg",
+        "coral_ground_02_diff_2k.jpg",
+        "coral_ground_02_disp_2k.jpg",
+        "coral_ground_02_nor_gl_2k.jpg",
+        "coral_ground_02_rough_2k.jpg",
+        "dark_wooden_planks_diff_1k.jpg",
+        "dark_wooden_planks_nor_gl_1k.jpg",
+        "dark_wooden_planks_rough_1k.jpg",
+        "rusty_metal_04_ao_1k.jpg",
+        "rusty_metal_04_diff_1k.jpg",
+        "rusty_metal_04_nor_gl_1k.jpg",
+        "rusty_metal_04_rough_1k.jpg",
+        "white_plaster_02_diff_2k.jpg",
+        "white_plaster_02_disp_2k.jpg",
+        "white_plaster_02_nor_gl_2k.jpg",
+        "white_plaster_02_rough_2k.jpg"
+      ]
+    },
+    "tour": {
+      "lot": "tour",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Fort_SignalTower": {
+          "key": "signal_tower",
+          "export": "SM_Fort_SignalTower",
+          "collection": "SM_Fort_SignalTower",
+          "dims_m": [
+            5.34,
+            5.2,
+            11.59
+          ],
+          "bbox": {
+            "min": [
+              -2.6,
+              -2.6,
+              -0.18
+            ],
+            "max": [
+              2.74,
+              2.6,
+              11.41
+            ]
+          },
+          "height_vs_bean": 11.04,
+          "tris": 16404,
+          "tris_raw": 16404,
+          "budget": 35000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust",
+            "MAT-Fort_Rope"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_SignalTower_00",
+            "UCX_SM_Fort_SignalTower_01",
+            "UCX_SM_Fort_SignalTower_02",
+            "UCX_SM_Fort_SignalTower_03",
+            "UCX_SM_Fort_SignalTower_04",
+            "UCX_SM_Fort_SignalTower_05",
+            "UCX_SM_Fort_SignalTower_06",
+            "UCX_SM_Fort_SignalTower_07",
+            "UCX_SM_Fort_SignalTower_08",
+            "UCX_SM_Fort_SignalTower_09",
+            "UCX_SM_Fort_SignalTower_10",
+            "UCX_SM_Fort_SignalTower_11",
+            "UCX_SM_Fort_SignalTower_12",
+            "UCX_SM_Fort_SignalTower_13",
+            "UCX_SM_Fort_SignalTower_14",
+            "UCX_SM_Fort_SignalTower_15",
+            "UCX_SM_Fort_SignalTower_16",
+            "UCX_SM_Fort_SignalTower_17",
+            "UCX_SM_Fort_SignalTower_18",
+            "UCX_SM_Fort_SignalTower_19",
+            "UCX_SM_Fort_SignalTower_20",
+            "UCX_SM_Fort_SignalTower_21",
+            "UCX_SM_Fort_SignalTower_22",
+            "UCX_SM_Fort_SignalTower_23",
+            "UCX_SM_Fort_SignalTower_24",
+            "UCX_SM_Fort_SignalTower_25",
+            "UCX_SM_Fort_SignalTower_26",
+            "UCX_SM_Fort_SignalTower_27",
+            "UCX_SM_Fort_SignalTower_28",
+            "UCX_SM_Fort_SignalTower_29",
+            "UCX_SM_Fort_SignalTower_30",
+            "UCX_SM_Fort_SignalTower_31",
+            "UCX_SM_Fort_SignalTower_32",
+            "UCX_SM_Fort_SignalTower_33",
+            "UCX_SM_Fort_SignalTower_34",
+            "UCX_SM_Fort_SignalTower_35",
+            "UCX_SM_Fort_SignalTower_36",
+            "UCX_SM_Fort_SignalTower_37",
+            "UCX_SM_Fort_SignalTower_38"
+          ],
+          "children": [],
+          "sockets": {
+            "Door": {
+              "pos": [
+                0.0,
+                -2.6,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Level1": {
+              "pos": [
+                0.0,
+                0.0,
+                2.64
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Terrace": {
+              "pos": [
+                0.0,
+                0.0,
+                5.28
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Flag": {
+              "pos": [
+                1.6,
+                1.6,
+                5.28
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Fanal": {
+              "pos": [
+                -1.6,
+                1.6,
+                5.28
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lookout": {
+              "pos": [
+                0.0,
+                1.5,
+                5.28
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "FlagTop": {
+              "pos": [
+                1.6,
+                1.6,
+                11.2
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "FanalFire": {
+              "pos": [
+                -0.98,
+                1.6,
+                6.93
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "terrace_z_local": 5.28,
+            "mast_top_z_local": 11.280000000000001,
+            "stairs": "2 x (8 + palier + 8) marches 16,5 / 25"
+          },
+          "files": [
+            "SM_Fort_SignalTower.fbx",
+            "SM_Fort_SignalTower.glb"
+          ],
+          "build_s": 7.86
+        },
+        "SM_Fort_Flag": {
+          "key": "flag",
+          "export": "SM_Fort_Flag",
+          "collection": "SM_Fort_Flag",
+          "dims_m": [
+            2.4,
+            0.324,
+            1.66
+          ],
+          "bbox": {
+            "min": [
+              0.0,
+              -0.125,
+              -1.66
+            ],
+            "max": [
+              2.4,
+              0.199,
+              0.0
+            ]
+          },
+          "height_vs_bean": 1.58,
+          "tris": 1696,
+          "tris_raw": 1696,
+          "budget": 2000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_Flag"
+          ],
+          "ucx": [],
+          "children": [],
+          "sockets": {
+            "Hoist_Top": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Hoist_Bottom": {
+              "pos": [
+                0.0,
+                0.0,
+                -1.6
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "variant": "fleurdelise",
+            "wind_uv": "UV1.x"
+          },
+          "files": [
+            "SM_Fort_Flag.fbx",
+            "SM_Fort_Flag.glb"
+          ],
+          "build_s": 0.41
+        },
+        "SM_Fort_Lantern": {
+          "key": "lantern",
+          "export": "SM_Fort_Lantern",
+          "collection": "SM_Fort_Lantern",
+          "dims_m": [
+            0.242,
+            0.561,
+            0.498
+          ],
+          "bbox": {
+            "min": [
+              -0.121,
+              0.01,
+              -0.348
+            ],
+            "max": [
+              0.121,
+              0.571,
+              0.15
+            ]
+          },
+          "height_vs_bean": 0.47,
+          "tris": 272,
+          "tris_raw": 272,
+          "budget": 1200,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_LanternHorn",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [],
+          "children": [],
+          "sockets": {
+            "Light": {
+              "pos": [
+                0.0,
+                0.45,
+                -0.18
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "light": {
+              "type": "POINT",
+              "energy_W": 35,
+              "color": [
+                1.0,
+                0.62,
+                0.32
+              ],
+              "scene_only": true
+            }
+          },
+          "files": [
+            "SM_Fort_Lantern.fbx",
+            "SM_Fort_Lantern.glb"
+          ],
+          "build_s": 0.12
+        },
+        "SM_Fort_Lantern_Hanging": {
+          "key": "lantern_hanging",
+          "export": "SM_Fort_Lantern_Hanging",
+          "collection": "SM_Fort_Lantern_Hanging",
+          "dims_m": [
+            0.242,
+            0.242,
+            0.813
+          ],
+          "bbox": {
+            "min": [
+              -0.121,
+              -0.121,
+              -0.806
+            ],
+            "max": [
+              0.121,
+              0.121,
+              0.007
+            ]
+          },
+          "height_vs_bean": 0.77,
+          "tris": 472,
+          "tris_raw": 472,
+          "budget": 1200,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_LanternHorn",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [],
+          "children": [],
+          "sockets": {
+            "Light": {
+              "pos": [
+                0.0,
+                0.0,
+                -0.65
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Hang": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "light": {
+              "type": "POINT",
+              "energy_W": 35,
+              "color": [
+                1.0,
+                0.62,
+                0.32
+              ],
+              "scene_only": true
+            }
+          },
+          "files": [
+            "SM_Fort_Lantern_Hanging.fbx",
+            "SM_Fort_Lantern_Hanging.glb"
+          ],
+          "build_s": 0.12
+        }
+      },
+      "errors": {},
+      "build_s": 9.1,
+      "images": [
+        "Fabric019_1K-JPG_Color.jpg",
+        "Fabric019_1K-JPG_NormalGL.jpg",
+        "Fabric019_1K-JPG_Roughness.jpg",
+        "Rope001_1K-JPG_Color.jpg",
+        "Rope001_1K-JPG_Metalness.jpg",
+        "Rope001_1K-JPG_NormalGL.jpg",
+        "Rope001_1K-JPG_Roughness.jpg",
+        "coral_fort_wall_01_diff_2k.jpg",
+        "coral_fort_wall_01_disp_2k.jpg",
+        "coral_fort_wall_01_nor_gl_2k.jpg",
+        "coral_fort_wall_01_rough_2k.jpg",
+        "coral_fort_wall_02_diff_2k.jpg",
+        "coral_fort_wall_02_disp_2k.jpg",
+        "coral_fort_wall_02_nor_gl_2k.jpg",
+        "coral_fort_wall_02_rough_2k.jpg",
+        "coral_fort_wall_03_diff_2k.jpg",
+        "coral_fort_wall_03_disp_2k.jpg",
+        "coral_fort_wall_03_nor_gl_2k.jpg",
+        "coral_fort_wall_03_rough_2k.jpg",
+        "coral_ground_02_diff_2k.jpg",
+        "coral_ground_02_disp_2k.jpg",
+        "coral_ground_02_nor_gl_2k.jpg",
+        "coral_ground_02_rough_2k.jpg",
+        "dark_wooden_planks_diff_1k.jpg",
+        "dark_wooden_planks_nor_gl_1k.jpg",
+        "dark_wooden_planks_rough_1k.jpg",
+        "rusty_metal_04_ao_1k.jpg",
+        "rusty_metal_04_diff_1k.jpg",
+        "rusty_metal_04_nor_gl_1k.jpg",
+        "rusty_metal_04_rough_1k.jpg",
+        "white_plaster_02_diff_2k.jpg",
+        "white_plaster_02_disp_2k.jpg",
+        "white_plaster_02_nor_gl_2k.jpg",
+        "white_plaster_02_rough_2k.jpg"
+      ]
+    },
+    "batiments": {
+      "lot": "batiments",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Fort_GovernorHouse": {
+          "key": "governor_house",
+          "export": "SM_Fort_GovernorHouse",
+          "collection": "SM_Fort_GovernorHouse",
+          "dims_m": [
+            14.994,
+            10.347,
+            9.556
+          ],
+          "bbox": {
+            "min": [
+              -7.497,
+              -6.35,
+              -0.01
+            ],
+            "max": [
+              7.497,
+              3.997,
+              9.546
+            ]
+          },
+          "height_vs_bean": 9.1,
+          "tris": 49364,
+          "tris_raw": 49364,
+          "budget": 60000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_Brick",
+            "MAT-Fort_RoofTiles"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_GovernorHouse_00",
+            "UCX_SM_Fort_GovernorHouse_01",
+            "UCX_SM_Fort_GovernorHouse_02",
+            "UCX_SM_Fort_GovernorHouse_03",
+            "UCX_SM_Fort_GovernorHouse_04",
+            "UCX_SM_Fort_GovernorHouse_05",
+            "UCX_SM_Fort_GovernorHouse_06",
+            "UCX_SM_Fort_GovernorHouse_07",
+            "UCX_SM_Fort_GovernorHouse_08",
+            "UCX_SM_Fort_GovernorHouse_09",
+            "UCX_SM_Fort_GovernorHouse_10",
+            "UCX_SM_Fort_GovernorHouse_11",
+            "UCX_SM_Fort_GovernorHouse_12",
+            "UCX_SM_Fort_GovernorHouse_13",
+            "UCX_SM_Fort_GovernorHouse_14",
+            "UCX_SM_Fort_GovernorHouse_15",
+            "UCX_SM_Fort_GovernorHouse_16",
+            "UCX_SM_Fort_GovernorHouse_17",
+            "UCX_SM_Fort_GovernorHouse_18",
+            "UCX_SM_Fort_GovernorHouse_19",
+            "UCX_SM_Fort_GovernorHouse_20",
+            "UCX_SM_Fort_GovernorHouse_21"
+          ],
+          "children": [],
+          "sockets": {
+            "Door": {
+              "pos": [
+                0.0,
+                -5.6,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Desk": {
+              "pos": [
+                4.5,
+                1.5,
+                0.495
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Strongbox": {
+              "pos": [
+                5.8,
+                2.6,
+                0.495
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Balcony": {
+              "pos": [
+                0.0,
+                -4.5,
+                3.135
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern_L": {
+              "pos": [
+                -3.0,
+                -3.6,
+                2.5
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern_R": {
+              "pos": [
+                3.0,
+                -3.6,
+                2.5
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "ridge_z": 8.926,
+            "clear_height_m": 2.59
+          },
+          "files": [
+            "SM_Fort_GovernorHouse.fbx",
+            "SM_Fort_GovernorHouse.glb"
+          ],
+          "build_s": 11.85
+        },
+        "SM_Fort_Barracks": {
+          "key": "barracks",
+          "export": "SM_Fort_Barracks",
+          "collection": "SM_Fort_Barracks",
+          "dims_m": [
+            17.3,
+            6.8,
+            5.244
+          ],
+          "bbox": {
+            "min": [
+              -8.65,
+              -3.4,
+              0.0
+            ],
+            "max": [
+              8.65,
+              3.4,
+              5.244
+            ]
+          },
+          "height_vs_bean": 4.99,
+          "tris": 32732,
+          "tris_raw": 32732,
+          "budget": 40000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_RoofTiles",
+            "MAT-Fort_Jute"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Barracks_00",
+            "UCX_SM_Fort_Barracks_01",
+            "UCX_SM_Fort_Barracks_02",
+            "UCX_SM_Fort_Barracks_03",
+            "UCX_SM_Fort_Barracks_04",
+            "UCX_SM_Fort_Barracks_05",
+            "UCX_SM_Fort_Barracks_06",
+            "UCX_SM_Fort_Barracks_07",
+            "UCX_SM_Fort_Barracks_08",
+            "UCX_SM_Fort_Barracks_09",
+            "UCX_SM_Fort_Barracks_10",
+            "UCX_SM_Fort_Barracks_11",
+            "UCX_SM_Fort_Barracks_12",
+            "UCX_SM_Fort_Barracks_13",
+            "UCX_SM_Fort_Barracks_14"
+          ],
+          "children": [],
+          "sockets": {
+            "Door_1": {
+              "pos": [
+                -4.0,
+                -3.1,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Door_2": {
+              "pos": [
+                4.0,
+                -3.1,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "WeaponRack": {
+              "pos": [
+                0.0,
+                2.7,
+                1.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "ridge_z": 5.149,
+            "bunks": 20
+          },
+          "files": [
+            "SM_Fort_Barracks.fbx",
+            "SM_Fort_Barracks.glb"
+          ],
+          "build_s": 9.08
+        },
+        "SM_Fort_Kitchen": {
+          "key": "kitchen",
+          "export": "SM_Fort_Kitchen",
+          "collection": "SM_Fort_Kitchen",
+          "dims_m": [
+            7.2,
+            5.2,
+            5.57
+          ],
+          "bbox": {
+            "min": [
+              -3.6,
+              -2.6,
+              0.0
+            ],
+            "max": [
+              3.6,
+              2.6,
+              5.57
+            ]
+          },
+          "height_vs_bean": 5.3,
+          "tris": 6970,
+          "tris_raw": 6970,
+          "budget": 20000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_Brick",
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_IronRust",
+            "MAT-Fort_RoofTiles"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Kitchen_00",
+            "UCX_SM_Fort_Kitchen_01",
+            "UCX_SM_Fort_Kitchen_02",
+            "UCX_SM_Fort_Kitchen_03",
+            "UCX_SM_Fort_Kitchen_04",
+            "UCX_SM_Fort_Kitchen_05",
+            "UCX_SM_Fort_Kitchen_06",
+            "UCX_SM_Fort_Kitchen_07",
+            "UCX_SM_Fort_Kitchen_08",
+            "UCX_SM_Fort_Kitchen_09"
+          ],
+          "children": [],
+          "sockets": {
+            "Door": {
+              "pos": [
+                0.0,
+                -2.35,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Fire": {
+              "pos": [
+                -1.6,
+                1.7,
+                0.2
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Smoke": {
+              "pos": [
+                -1.6,
+                2.0,
+                5.6
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "ridge_z": 4.38
+          },
+          "files": [
+            "SM_Fort_Kitchen.fbx",
+            "SM_Fort_Kitchen.glb"
+          ],
+          "build_s": 6.93
+        },
+        "SM_Fort_Cistern": {
+          "key": "cistern",
+          "export": "SM_Fort_Cistern",
+          "collection": "SM_Fort_Cistern",
+          "dims_m": [
+            2.991,
+            2.551,
+            3.23
+          ],
+          "bbox": {
+            "min": [
+              -1.539,
+              -1.47,
+              -0.6
+            ],
+            "max": [
+              1.452,
+              1.081,
+              2.63
+            ]
+          },
+          "height_vs_bean": 3.08,
+          "tris": 1550,
+          "tris_raw": 1550,
+          "budget": 5000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_IronRust",
+            "MAT-Fort_Rope"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Cistern_00",
+            "UCX_SM_Fort_Cistern_01"
+          ],
+          "children": [],
+          "sockets": {
+            "Interact": {
+              "pos": [
+                0.0,
+                -1.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Bucket": {
+              "pos": [
+                0.0,
+                0.0,
+                1.6
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "curb_m": 0.66
+          },
+          "files": [
+            "SM_Fort_Cistern.fbx",
+            "SM_Fort_Cistern.glb"
+          ],
+          "build_s": 3.46
+        }
+      },
+      "errors": {},
+      "build_s": 32.1,
+      "images": [
+        "Rope001_1K-JPG_Color.jpg",
+        "Rope001_1K-JPG_Metalness.jpg",
+        "Rope001_1K-JPG_NormalGL.jpg",
+        "Rope001_1K-JPG_Roughness.jpg",
+        "brown_planks_03_diff_2k.jpg",
+        "brown_planks_03_nor_gl_2k.jpg",
+        "brown_planks_03_rough_2k.jpg",
+        "clay_roof_tiles_02_diff_2k.jpg",
+        "clay_roof_tiles_02_disp_2k.jpg",
+        "clay_roof_tiles_02_nor_gl_2k.jpg",
+        "clay_roof_tiles_02_rough_2k.jpg",
+        "coral_fort_wall_01_diff_2k.jpg",
+        "coral_fort_wall_01_disp_2k.jpg",
+        "coral_fort_wall_01_nor_gl_2k.jpg",
+        "coral_fort_wall_01_rough_2k.jpg",
+        "coral_fort_wall_02_diff_2k.jpg",
+        "coral_fort_wall_02_disp_2k.jpg",
+        "coral_fort_wall_02_nor_gl_2k.jpg",
+        "coral_fort_wall_02_rough_2k.jpg",
+        "coral_fort_wall_03_diff_2k.jpg",
+        "coral_fort_wall_03_disp_2k.jpg",
+        "coral_fort_wall_03_nor_gl_2k.jpg",
+        "coral_fort_wall_03_rough_2k.jpg",
+        "coral_ground_02_diff_2k.jpg",
+        "coral_ground_02_disp_2k.jpg",
+        "coral_ground_02_nor_gl_2k.jpg",
+        "coral_ground_02_rough_2k.jpg",
+        "hessian_230_diff_1k.jpg",
+        "hessian_230_nor_gl_1k.jpg",
+        "hessian_230_rough_1k.jpg",
+        "red_brick_03_diff_2k.jpg",
+        "red_brick_03_disp_2k.jpg",
+        "red_brick_03_nor_gl_2k.jpg",
+        "red_brick_03_rough_2k.jpg",
+        "rusty_metal_04_ao_1k.jpg",
+        "rusty_metal_04_diff_1k.jpg",
+        "rusty_metal_04_nor_gl_1k.jpg",
+        "rusty_metal_04_rough_1k.jpg",
+        "white_plaster_02_diff_2k.jpg",
+        "white_plaster_02_disp_2k.jpg",
+        "white_plaster_02_nor_gl_2k.jpg",
+        "white_plaster_02_rough_2k.jpg"
+      ]
+    },
+    "poudriere_chapelle": {
+      "lot": "poudriere_chapelle",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Fort_PowderMagazine": {
+          "key": "powder_magazine",
+          "export": "SM_Fort_PowderMagazine",
+          "collection": "SM_Fort_PowderMagazine",
+          "dims_m": [
+            8.06,
+            7.08,
+            4.007
+          ],
+          "bbox": {
+            "min": [
+              -4.03,
+              -3.55,
+              -0.07
+            ],
+            "max": [
+              4.03,
+              3.53,
+              3.937
+            ]
+          },
+          "height_vs_bean": 3.82,
+          "tris": 8732,
+          "tris_raw": 8732,
+          "budget": 20000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_Copper",
+            "MAT-Fort_WoodTamanu"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_PowderMagazine_00",
+            "UCX_SM_Fort_PowderMagazine_01",
+            "UCX_SM_Fort_PowderMagazine_02",
+            "UCX_SM_Fort_PowderMagazine_03",
+            "UCX_SM_Fort_PowderMagazine_04",
+            "UCX_SM_Fort_PowderMagazine_05",
+            "UCX_SM_Fort_PowderMagazine_06",
+            "UCX_SM_Fort_PowderMagazine_07",
+            "UCX_SM_Fort_PowderMagazine_08",
+            "UCX_SM_Fort_PowderMagazine_09",
+            "UCX_SM_Fort_PowderMagazine_10",
+            "UCX_SM_Fort_PowderMagazine_11",
+            "UCX_SM_Fort_PowderMagazine_12",
+            "UCX_SM_Fort_PowderMagazine_13",
+            "UCX_SM_Fort_PowderMagazine_14"
+          ],
+          "children": [],
+          "sockets": {
+            "Door": {
+              "pos": [
+                0.0,
+                -2.75,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Kegs": {
+              "pos": [
+                0.0,
+                0.3,
+                0.1
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "EnclosureGate": {
+              "pos": [
+                0.0,
+                -3.5,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "vault": [
+              1.32,
+              2.31
+            ],
+            "ridge_z": 4.0
+          },
+          "files": [
+            "SM_Fort_PowderMagazine.fbx",
+            "SM_Fort_PowderMagazine.glb"
+          ],
+          "build_s": 8.18
+        },
+        "SM_Fort_Chapel": {
+          "key": "chapel",
+          "export": "SM_Fort_Chapel",
+          "collection": "SM_Fort_Chapel",
+          "dims_m": [
+            5.7,
+            9.12,
+            7.756
+          ],
+          "bbox": {
+            "min": [
+              -2.85,
+              -4.57,
+              0.0
+            ],
+            "max": [
+              2.85,
+              4.55,
+              7.756
+            ]
+          },
+          "height_vs_bean": 7.39,
+          "tris": 14614,
+          "tris_raw": 14614,
+          "budget": 25000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_RoofTiles",
+            "MAT-Fort_Copper"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Chapel_00",
+            "UCX_SM_Fort_Chapel_01",
+            "UCX_SM_Fort_Chapel_02",
+            "UCX_SM_Fort_Chapel_03",
+            "UCX_SM_Fort_Chapel_04",
+            "UCX_SM_Fort_Chapel_05",
+            "UCX_SM_Fort_Chapel_06",
+            "UCX_SM_Fort_Chapel_07",
+            "UCX_SM_Fort_Chapel_08",
+            "UCX_SM_Fort_Chapel_09",
+            "UCX_SM_Fort_Chapel_10",
+            "UCX_SM_Fort_Chapel_11",
+            "UCX_SM_Fort_Chapel_12",
+            "UCX_SM_Fort_Chapel_13",
+            "UCX_SM_Fort_Chapel_14"
+          ],
+          "children": [],
+          "sockets": {
+            "Door": {
+              "pos": [
+                0.0,
+                -4.1,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Bell": {
+              "pos": [
+                0.0,
+                -4.0,
+                7.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "ridge_z": 5.398,
+            "bellcote_top": 7.4
+          },
+          "files": [
+            "SM_Fort_Chapel.fbx",
+            "SM_Fort_Chapel.glb"
+          ],
+          "build_s": 7.91
+        }
+      },
+      "errors": {},
+      "build_s": 16.8,
+      "images": [
+        "Metal048C_diff_1k.jpg",
+        "Metal048C_metal_1k.jpg",
+        "Metal048C_nor_gl_1k.jpg",
+        "Metal048C_rough_1k.jpg",
+        "brown_planks_03_diff_2k.jpg",
+        "brown_planks_03_nor_gl_2k.jpg",
+        "brown_planks_03_rough_2k.jpg",
+        "clay_roof_tiles_02_diff_2k.jpg",
+        "clay_roof_tiles_02_disp_2k.jpg",
+        "clay_roof_tiles_02_nor_gl_2k.jpg",
+        "clay_roof_tiles_02_rough_2k.jpg",
+        "coral_fort_wall_01_diff_2k.jpg",
+        "coral_fort_wall_01_disp_2k.jpg",
+        "coral_fort_wall_01_nor_gl_2k.jpg",
+        "coral_fort_wall_01_rough_2k.jpg",
+        "coral_fort_wall_02_diff_2k.jpg",
+        "coral_fort_wall_02_disp_2k.jpg",
+        "coral_fort_wall_02_nor_gl_2k.jpg",
+        "coral_fort_wall_02_rough_2k.jpg",
+        "coral_fort_wall_03_diff_2k.jpg",
+        "coral_fort_wall_03_disp_2k.jpg",
+        "coral_fort_wall_03_nor_gl_2k.jpg",
+        "coral_fort_wall_03_rough_2k.jpg",
+        "coral_ground_02_diff_2k.jpg",
+        "coral_ground_02_disp_2k.jpg",
+        "coral_ground_02_nor_gl_2k.jpg",
+        "coral_ground_02_rough_2k.jpg",
+        "white_plaster_02_diff_2k.jpg",
+        "white_plaster_02_disp_2k.jpg",
+        "white_plaster_02_nor_gl_2k.jpg",
+        "white_plaster_02_rough_2k.jpg"
+      ]
+    },
+    "prison": {
+      "lot": "prison",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Fort_Prison": {
+          "key": "prison",
+          "export": "SM_Fort_Prison",
+          "collection": "SM_Fort_Prison",
+          "dims_m": [
+            6.22,
+            7.11,
+            3.36
+          ],
+          "bbox": {
+            "min": [
+              -3.11,
+              -3.58,
+              -0.07
+            ],
+            "max": [
+              3.11,
+              3.53,
+              3.29
+            ]
+          },
+          "height_vs_bean": 3.2,
+          "tris": 20754,
+          "tris_raw": 20754,
+          "budget": 30000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_IronRust",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_Jute"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Prison_00",
+            "UCX_SM_Fort_Prison_01",
+            "UCX_SM_Fort_Prison_02",
+            "UCX_SM_Fort_Prison_03",
+            "UCX_SM_Fort_Prison_04",
+            "UCX_SM_Fort_Prison_05",
+            "UCX_SM_Fort_Prison_06",
+            "UCX_SM_Fort_Prison_07",
+            "UCX_SM_Fort_Prison_08",
+            "UCX_SM_Fort_Prison_09",
+            "UCX_SM_Fort_Prison_10",
+            "UCX_SM_Fort_Prison_11",
+            "UCX_SM_Fort_Prison_12",
+            "UCX_SM_Fort_Prison_13",
+            "UCX_SM_Fort_Prison_14",
+            "UCX_SM_Fort_Prison_15",
+            "UCX_SM_Fort_Prison_16",
+            "UCX_SM_Fort_Prison_17",
+            "UCX_SM_Fort_Prison_18",
+            "UCX_SM_Fort_Prison_19",
+            "UCX_SM_Fort_Prison_20"
+          ],
+          "children": [],
+          "sockets": {
+            "Door": {
+              "pos": [
+                -1.8,
+                -3.5,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Cell_1": {
+              "pos": [
+                0.7,
+                -1.9,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Cell_2": {
+              "pos": [
+                0.7,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Cell_3": {
+              "pos": [
+                0.7,
+                1.9,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "CellDoor_1": {
+              "pos": [
+                -1.0,
+                -1.9,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "CellDoor_2": {
+              "pos": [
+                -1.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "CellDoor_3": {
+              "pos": [
+                -1.0,
+                1.9,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Prisoner_1": {
+              "pos": [
+                1.6,
+                -1.9,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Prisoner_2": {
+              "pos": [
+                1.6,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Prisoner_3": {
+              "pos": [
+                1.6,
+                1.9,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern": {
+              "pos": [
+                -1.8,
+                0.0,
+                2.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "KeyHook": {
+              "pos": [
+                -2.35,
+                -2.6,
+                1.2
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "CellDoorHinge_1": {
+              "pos": [
+                -1.0,
+                -2.4,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "Shackles_1": {
+              "pos": [
+                2.4,
+                -1.35,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "CellDoorHinge_2": {
+              "pos": [
+                -1.0,
+                -0.5,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "Shackles_2": {
+              "pos": [
+                2.4,
+                0.55,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "CellDoorHinge_3": {
+              "pos": [
+                -1.0,
+                1.4,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "Shackles_3": {
+              "pos": [
+                2.4,
+                2.45,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "DoorHinge": {
+              "pos": [
+                -2.3,
+                -3.38,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "cells": 3,
+            "corridor_m": 1.2,
+            "clear_m": 2.31
+          },
+          "files": [
+            "SM_Fort_Prison.fbx",
+            "SM_Fort_Prison.glb"
+          ],
+          "build_s": 8.8
+        },
+        "SM_Fort_CellDoor": {
+          "key": "cell_door",
+          "export": "SM_Fort_CellDoor",
+          "collection": "SM_Fort_CellDoor",
+          "dims_m": [
+            1.08,
+            0.1,
+            1.8
+          ],
+          "bbox": {
+            "min": [
+              -0.025,
+              -0.075,
+              0.0
+            ],
+            "max": [
+              1.055,
+              0.025,
+              1.8
+            ]
+          },
+          "height_vs_bean": 1.71,
+          "tris": 364,
+          "tris_raw": 364,
+          "budget": 1500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_CellDoor_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Lock": {
+              "pos": [
+                1.0,
+                -0.05,
+                1.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "anim": "rotation Z 0 -> 95 deg"
+          },
+          "files": [
+            "SM_Fort_CellDoor.fbx",
+            "SM_Fort_CellDoor.glb"
+          ],
+          "build_s": 0.12
+        },
+        "SM_Fort_StuddedDoor": {
+          "key": "studded_door",
+          "export": "SM_Fort_StuddedDoor",
+          "collection": "SM_Fort_StuddedDoor",
+          "dims_m": [
+            1.022,
+            0.14,
+            1.8
+          ],
+          "bbox": {
+            "min": [
+              -0.025,
+              -0.09,
+              0.0
+            ],
+            "max": [
+              0.997,
+              0.05,
+              1.8
+            ]
+          },
+          "height_vs_bean": 1.71,
+          "tris": 772,
+          "tris_raw": 772,
+          "budget": 2000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_StuddedDoor_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Bolt": {
+              "pos": [
+                0.82,
+                -0.08,
+                1.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "anim": "rotation Z 0 -> -100 deg"
+          },
+          "files": [
+            "SM_Fort_StuddedDoor.fbx",
+            "SM_Fort_StuddedDoor.glb"
+          ],
+          "build_s": 0.53
+        },
+        "SM_Fort_Cage_Ground": {
+          "key": "cage_ground",
+          "export": "SM_Fort_Cage_Ground",
+          "collection": "SM_Fort_Cage_Ground",
+          "dims_m": [
+            1.75,
+            2.05,
+            1.6
+          ],
+          "bbox": {
+            "min": [
+              -0.875,
+              -1.025,
+              0.0
+            ],
+            "max": [
+              0.875,
+              1.025,
+              1.6
+            ]
+          },
+          "height_vs_bean": 1.52,
+          "tris": 2688,
+          "tris_raw": 2688,
+          "budget": 3000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Cage_Ground_00",
+            "UCX_SM_Fort_Cage_Ground_01",
+            "UCX_SM_Fort_Cage_Ground_02",
+            "UCX_SM_Fort_Cage_Ground_03",
+            "UCX_SM_Fort_Cage_Ground_04",
+            "UCX_SM_Fort_Cage_Ground_05"
+          ],
+          "children": [],
+          "sockets": {
+            "Prisoner": {
+              "pos": [
+                0.0,
+                0.0,
+                0.12
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Door": {
+              "pos": [
+                0.0,
+                -0.9,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "clear_m": [
+              1.55,
+              1.55,
+              1.3599999999999999
+            ]
+          },
+          "files": [
+            "SM_Fort_Cage_Ground.fbx",
+            "SM_Fort_Cage_Ground.glb"
+          ],
+          "build_s": 1.32
+        },
+        "SM_Fort_Cage_Hanging": {
+          "key": "cage_hanging",
+          "export": "SM_Fort_Cage_Hanging",
+          "collection": "SM_Fort_Cage_Hanging",
+          "dims_m": [
+            0.868,
+            0.884,
+            1.569
+          ],
+          "bbox": {
+            "min": [
+              -0.434,
+              -0.45,
+              -1.55
+            ],
+            "max": [
+              0.434,
+              0.434,
+              0.019
+            ]
+          },
+          "height_vs_bean": 1.49,
+          "tris": 1464,
+          "tris_raw": 1464,
+          "budget": 3000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Cage_Hanging_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Hang": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Prisoner": {
+              "pos": [
+                0.0,
+                0.0,
+                -1.45
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "inner_m": [
+              0.8,
+              1.32
+            ]
+          },
+          "files": [
+            "SM_Fort_Cage_Hanging.fbx",
+            "SM_Fort_Cage_Hanging.glb"
+          ],
+          "build_s": 0.12
+        },
+        "SM_Fort_Gibbet": {
+          "key": "gibbet",
+          "export": "SM_Fort_Gibbet",
+          "collection": "SM_Fort_Gibbet",
+          "dims_m": [
+            2.188,
+            1.175,
+            3.6
+          ],
+          "bbox": {
+            "min": [
+              -0.588,
+              -0.588,
+              0.0
+            ],
+            "max": [
+              1.6,
+              0.588,
+              3.6
+            ]
+          },
+          "height_vs_bean": 3.43,
+          "tris": 688,
+          "tris_raw": 688,
+          "budget": 2500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Gibbet_00",
+            "UCX_SM_Fort_Gibbet_01"
+          ],
+          "children": [],
+          "sockets": {
+            "Hang": {
+              "pos": [
+                1.4,
+                0.0,
+                3.45
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "CageRing": {
+              "pos": [
+                1.4,
+                0.0,
+                2.55
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "cage_ring_z": 2.55
+          },
+          "files": [
+            "SM_Fort_Gibbet.fbx",
+            "SM_Fort_Gibbet.glb"
+          ],
+          "build_s": 3.36
+        },
+        "SM_Fort_WallShackles": {
+          "key": "wall_shackles",
+          "export": "SM_Fort_WallShackles",
+          "collection": "SM_Fort_WallShackles",
+          "dims_m": [
+            0.529,
+            0.152,
+            1.172
+          ],
+          "bbox": {
+            "min": [
+              -0.271,
+              -0.152,
+              0.038
+            ],
+            "max": [
+              0.258,
+              0.0,
+              1.21
+            ]
+          },
+          "height_vs_bean": 1.12,
+          "tris": 1192,
+          "tris_raw": 1192,
+          "budget": 1500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [],
+          "children": [],
+          "sockets": {
+            "Wall": {
+              "pos": [
+                0.0,
+                0.0,
+                1.08
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_WallShackles.fbx",
+            "SM_Fort_WallShackles.glb"
+          ],
+          "build_s": 0.12
+        }
+      },
+      "errors": {},
+      "build_s": 15.1,
+      "images": [
+        "brown_planks_03_diff_2k.jpg",
+        "brown_planks_03_nor_gl_2k.jpg",
+        "brown_planks_03_rough_2k.jpg",
+        "coral_fort_wall_01_diff_2k.jpg",
+        "coral_fort_wall_01_disp_2k.jpg",
+        "coral_fort_wall_01_nor_gl_2k.jpg",
+        "coral_fort_wall_01_rough_2k.jpg",
+        "coral_fort_wall_02_diff_2k.jpg",
+        "coral_fort_wall_02_disp_2k.jpg",
+        "coral_fort_wall_02_nor_gl_2k.jpg",
+        "coral_fort_wall_02_rough_2k.jpg",
+        "coral_fort_wall_03_diff_2k.jpg",
+        "coral_fort_wall_03_disp_2k.jpg",
+        "coral_fort_wall_03_nor_gl_2k.jpg",
+        "coral_fort_wall_03_rough_2k.jpg",
+        "coral_ground_02_diff_2k.jpg",
+        "coral_ground_02_disp_2k.jpg",
+        "coral_ground_02_nor_gl_2k.jpg",
+        "coral_ground_02_rough_2k.jpg",
+        "dark_wooden_planks_diff_1k.jpg",
+        "dark_wooden_planks_nor_gl_1k.jpg",
+        "dark_wooden_planks_rough_1k.jpg",
+        "hessian_230_diff_1k.jpg",
+        "hessian_230_nor_gl_1k.jpg",
+        "hessian_230_rough_1k.jpg",
+        "rusty_metal_04_ao_1k.jpg",
+        "rusty_metal_04_diff_1k.jpg",
+        "rusty_metal_04_nor_gl_1k.jpg",
+        "rusty_metal_04_rough_1k.jpg",
+        "white_plaster_02_diff_2k.jpg",
+        "white_plaster_02_disp_2k.jpg",
+        "white_plaster_02_nor_gl_2k.jpg",
+        "white_plaster_02_rough_2k.jpg"
+      ]
+    },
+    "tresor": {
+      "lot": "tresor",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Fort_TreasureVault": {
+          "key": "treasure_vault",
+          "export": "SM_Fort_TreasureVault",
+          "collection": "SM_Fort_TreasureVault",
+          "dims_m": [
+            10.6,
+            8.525,
+            4.45
+          ],
+          "bbox": {
+            "min": [
+              -3.5,
+              -3.1,
+              -0.45
+            ],
+            "max": [
+              7.1,
+              5.425,
+              4.0
+            ]
+          },
+          "height_vs_bean": 4.24,
+          "tris": 9304,
+          "tris_raw": 9304,
+          "budget": 35000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_IronRust",
+            "MAT-Fort_Brick",
+            "MAT-Fort_WoodTamanu"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_TreasureVault_00",
+            "UCX_SM_Fort_TreasureVault_01",
+            "UCX_SM_Fort_TreasureVault_02",
+            "UCX_SM_Fort_TreasureVault_03",
+            "UCX_SM_Fort_TreasureVault_04",
+            "UCX_SM_Fort_TreasureVault_05",
+            "UCX_SM_Fort_TreasureVault_06",
+            "UCX_SM_Fort_TreasureVault_07",
+            "UCX_SM_Fort_TreasureVault_08",
+            "UCX_SM_Fort_TreasureVault_09",
+            "UCX_SM_Fort_TreasureVault_10",
+            "UCX_SM_Fort_TreasureVault_11",
+            "UCX_SM_Fort_TreasureVault_12",
+            "UCX_SM_Fort_TreasureVault_13",
+            "UCX_SM_Fort_TreasureVault_14",
+            "UCX_SM_Fort_TreasureVault_15",
+            "UCX_SM_Fort_TreasureVault_16",
+            "UCX_SM_Fort_TreasureVault_17",
+            "UCX_SM_Fort_TreasureVault_18",
+            "UCX_SM_Fort_TreasureVault_19",
+            "UCX_SM_Fort_TreasureVault_20",
+            "UCX_SM_Fort_TreasureVault_21"
+          ],
+          "children": [],
+          "sockets": {
+            "Door": {
+              "pos": [
+                2.0,
+                2.1,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_GoldStack_1": {
+              "pos": [
+                -2.0,
+                1.2,
+                0.12
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_GoldStack_2": {
+              "pos": [
+                -2.0,
+                0.1,
+                0.12
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_GoldStack_3": {
+              "pos": [
+                -2.0,
+                -1.0,
+                0.12
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_GoldBar_Loose": {
+              "pos": [
+                -1.2,
+                -1.0,
+                0.12
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Chest_1": {
+              "pos": [
+                -1.4,
+                -1.75,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Chest_2": {
+              "pos": [
+                -0.4,
+                -1.75,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Chest_3": {
+              "pos": [
+                0.6,
+                -1.75,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Chest_4": {
+              "pos": [
+                1.6,
+                -1.75,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Chest_5": {
+              "pos": [
+                2.2,
+                -0.6,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "Loot_Gems_1": {
+              "pos": [
+                0.2,
+                0.15,
+                0.66
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Gems_2": {
+              "pos": [
+                0.6,
+                0.15,
+                0.66
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Gems_3": {
+              "pos": [
+                -0.2,
+                0.15,
+                0.66
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Scale": {
+              "pos": [
+                0.5,
+                -0.1,
+                0.66
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_PearlSack_1": {
+              "pos": [
+                -1.0,
+                1.85,
+                0.33
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_PearlSack_2": {
+              "pos": [
+                -0.6,
+                1.85,
+                0.33
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_PearlSack_3": {
+              "pos": [
+                -0.2,
+                1.85,
+                0.33
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Coins_1": {
+              "pos": [
+                1.5,
+                0.6,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Loot_Coins_2": {
+              "pos": [
+                -0.4,
+                -1.75,
+                0.45
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern_1": {
+              "pos": [
+                0.0,
+                0.0,
+                1.9
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern_2": {
+              "pos": [
+                -2.3,
+                1.9,
+                1.5
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern_3": {
+              "pos": [
+                2.3,
+                -1.9,
+                1.5
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "CourtDoorHinge": {
+              "pos": [
+                6.5,
+                5.15,
+                0.99
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                180.0
+              ]
+            },
+            "GrilleCenter": {
+              "pos": [
+                5.3,
+                3.8,
+                0.99
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "VaultDoorHinge": {
+              "pos": [
+                2.5,
+                2.62,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                180.0
+              ]
+            },
+            "Pallet_1": {
+              "pos": [
+                -2.0,
+                1.2,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "Pallet_2": {
+              "pos": [
+                -2.0,
+                0.1,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "Pallet_3": {
+              "pos": [
+                -2.0,
+                -1.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            },
+            "Pallet_4": {
+              "pos": [
+                -1.2,
+                -1.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                90.0
+              ]
+            }
+          },
+          "info": {
+            "chamber_m": [
+              5.0,
+              4.2
+            ],
+            "vault_z": [
+              1.98,
+              2.64
+            ],
+            "corridor_clear_m": 2.31,
+            "steps": 6
+          },
+          "files": [
+            "SM_Fort_TreasureVault.fbx",
+            "SM_Fort_TreasureVault.glb"
+          ],
+          "build_s": 9.61
+        },
+        "SM_Fort_VaultDoor": {
+          "key": "vault_door",
+          "export": "SM_Fort_VaultDoor",
+          "collection": "SM_Fort_VaultDoor",
+          "dims_m": [
+            1.027,
+            0.21,
+            1.8
+          ],
+          "bbox": {
+            "min": [
+              -0.03,
+              -0.14,
+              0.0
+            ],
+            "max": [
+              0.997,
+              0.07,
+              1.8
+            ]
+          },
+          "height_vs_bean": 1.71,
+          "tris": 1200,
+          "tris_raw": 1200,
+          "budget": 3000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust",
+            "MAT-Fort_Iron"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_VaultDoor_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Lock": {
+              "pos": [
+                0.85,
+                -0.08,
+                1.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "anim": "rotation Z 0 -> -95 deg"
+          },
+          "files": [
+            "SM_Fort_VaultDoor.fbx",
+            "SM_Fort_VaultDoor.glb"
+          ],
+          "build_s": 0.79
+        },
+        "SM_Fort_VaultGrille": {
+          "key": "vault_grille",
+          "export": "SM_Fort_VaultGrille",
+          "collection": "SM_Fort_VaultGrille",
+          "dims_m": [
+            1.2,
+            0.09,
+            2.31
+          ],
+          "bbox": {
+            "min": [
+              -0.6,
+              -0.065,
+              0.0
+            ],
+            "max": [
+              0.6,
+              0.025,
+              2.31
+            ]
+          },
+          "height_vs_bean": 2.2,
+          "tris": 676,
+          "tris_raw": 676,
+          "budget": 2000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_VaultGrille_00",
+            "UCX_SM_Fort_VaultGrille_01"
+          ],
+          "children": [],
+          "sockets": {
+            "DoorHinge": {
+              "pos": [
+                -0.5,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lock": {
+              "pos": [
+                0.5,
+                -0.05,
+                1.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_VaultGrille.fbx",
+            "SM_Fort_VaultGrille.glb"
+          ],
+          "build_s": 0.12
+        },
+        "SM_Fort_Chest_Closed": {
+          "key": "chest_closed",
+          "export": "SM_Fort_Chest_Closed",
+          "collection": "SM_Fort_Chest_Closed",
+          "dims_m": [
+            0.823,
+            0.462,
+            0.462
+          ],
+          "bbox": {
+            "min": [
+              -0.412,
+              -0.243,
+              -0.002
+            ],
+            "max": [
+              0.412,
+              0.22,
+              0.46
+            ]
+          },
+          "height_vs_bean": 0.44,
+          "tris": 1244,
+          "tris_raw": 1244,
+          "budget": 3000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Chest_Closed_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab_L": {
+              "pos": [
+                -0.38,
+                0.0,
+                0.3
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Grab_R": {
+              "pos": [
+                0.38,
+                0.0,
+                0.3
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lock": {
+              "pos": [
+                0.0,
+                -0.22,
+                0.32
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_Chest_Closed.fbx",
+            "SM_Fort_Chest_Closed.glb"
+          ],
+          "build_s": 0.44
+        },
+        "SM_Fort_Chest_Open": {
+          "key": "chest_open",
+          "export": "SM_Fort_Chest_Open",
+          "collection": "SM_Fort_Chest_Open",
+          "dims_m": [
+            0.823,
+            0.668,
+            0.707
+          ],
+          "bbox": {
+            "min": [
+              -0.412,
+              -0.22,
+              -0.002
+            ],
+            "max": [
+              0.412,
+              0.448,
+              0.705
+            ]
+          },
+          "height_vs_bean": 0.67,
+          "tris": 3324,
+          "tris_raw": 7546,
+          "budget": 3500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust",
+            "MAT_Gold_CoinHeap",
+            "MAT_Gem_Ruby",
+            "MAT_Pearl_White"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Chest_Open_00",
+            "UCX_SM_Fort_Chest_Open_01"
+          ],
+          "children": [],
+          "sockets": {
+            "Loot": {
+              "pos": [
+                0.0,
+                0.0,
+                0.42
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "coins": 40,
+            "gems": 3,
+            "pearls": 19
+          },
+          "files": [
+            "SM_Fort_Chest_Open.fbx",
+            "SM_Fort_Chest_Open.glb"
+          ],
+          "build_s": 2.7
+        },
+        "SM_Fort_Pallet": {
+          "key": "pallet",
+          "export": "SM_Fort_Pallet",
+          "collection": "SM_Fort_Pallet",
+          "dims_m": [
+            1.015,
+            0.6,
+            0.12
+          ],
+          "bbox": {
+            "min": [
+              -0.505,
+              -0.3,
+              0.0
+            ],
+            "max": [
+              0.51,
+              0.3,
+              0.12
+            ]
+          },
+          "height_vs_bean": 0.11,
+          "tris": 352,
+          "tris_raw": 352,
+          "budget": 800,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Pallet_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Top": {
+              "pos": [
+                0.0,
+                0.0,
+                0.12
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_Pallet.fbx",
+            "SM_Fort_Pallet.glb"
+          ],
+          "build_s": 0.31
+        },
+        "SM_Loot_GoldBar": {
+          "key": "gold_bar",
+          "export": "SM_Loot_GoldBar",
+          "collection": "SM_Loot_GoldBar",
+          "dims_m": [
+            0.173,
+            0.058,
+            0.032
+          ],
+          "bbox": {
+            "min": [
+              -0.087,
+              -0.029,
+              0.0
+            ],
+            "max": [
+              0.087,
+              0.029,
+              0.032
+            ]
+          },
+          "height_vs_bean": 0.03,
+          "tris": 124,
+          "tris_raw": 124,
+          "budget": 200,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gold_Aged"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_GoldBar_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.016
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "mass_kg_game": 5.5
+          },
+          "files": [
+            "SM_Loot_GoldBar.fbx",
+            "SM_Loot_GoldBar.glb"
+          ],
+          "build_s": 0.24
+        },
+        "SM_Loot_GoldStack_S": {
+          "key": "gold_stack_s",
+          "export": "SM_Loot_GoldStack_S",
+          "collection": "SM_Loot_GoldStack_S",
+          "dims_m": [
+            0.356,
+            0.357,
+            0.129
+          ],
+          "bbox": {
+            "min": [
+              -0.176,
+              -0.179,
+              0.0
+            ],
+            "max": [
+              0.18,
+              0.178,
+              0.129
+            ]
+          },
+          "height_vs_bean": 0.12,
+          "tris": 1612,
+          "tris_raw": 1612,
+          "budget": 3000,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gold_Aged"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_GoldStack_S_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.128
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "bars": 13,
+            "height_m": 0.128
+          },
+          "files": [
+            "SM_Loot_GoldStack_S.fbx",
+            "SM_Loot_GoldStack_S.glb"
+          ],
+          "build_s": 0.37
+        },
+        "SM_Loot_GoldStack_M": {
+          "key": "gold_stack_m",
+          "export": "SM_Loot_GoldStack_M",
+          "collection": "SM_Loot_GoldStack_M",
+          "dims_m": [
+            0.358,
+            0.358,
+            0.224
+          ],
+          "bbox": {
+            "min": [
+              -0.178,
+              -0.179,
+              0.0
+            ],
+            "max": [
+              0.18,
+              0.18,
+              0.224
+            ]
+          },
+          "height_vs_bean": 0.21,
+          "tris": 3844,
+          "tris_raw": 3844,
+          "budget": 7000,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gold_Aged"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_GoldStack_M_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.192
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "bars": 31,
+            "height_m": 0.192
+          },
+          "files": [
+            "SM_Loot_GoldStack_M.fbx",
+            "SM_Loot_GoldStack_M.glb"
+          ],
+          "build_s": 0.61
+        },
+        "SM_Loot_GoldStack_L": {
+          "key": "gold_stack_l",
+          "export": "SM_Loot_GoldStack_L",
+          "collection": "SM_Loot_GoldStack_L",
+          "dims_m": [
+            0.358,
+            0.358,
+            0.256
+          ],
+          "bbox": {
+            "min": [
+              -0.179,
+              -0.179,
+              0.0
+            ],
+            "max": [
+              0.179,
+              0.179,
+              0.256
+            ]
+          },
+          "height_vs_bean": 0.24,
+          "tris": 7192,
+          "tris_raw": 7192,
+          "budget": 13000,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gold_Aged"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_GoldStack_L_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.224
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "bars": 58,
+            "height_m": 0.224
+          },
+          "files": [
+            "SM_Loot_GoldStack_L.fbx",
+            "SM_Loot_GoldStack_L.glb"
+          ],
+          "build_s": 0.97
+        },
+        "SM_Loot_Gem_Ruby": {
+          "key": "gems",
+          "export": "SM_Loot_Gem_Ruby",
+          "collection": "SM_Loot_Gem_Ruby",
+          "dims_m": [
+            0.016,
+            0.014,
+            0.018
+          ],
+          "bbox": {
+            "min": [
+              -0.008,
+              -0.007,
+              -0.0
+            ],
+            "max": [
+              0.008,
+              0.007,
+              0.018
+            ]
+          },
+          "height_vs_bean": 0.02,
+          "tris": 78,
+          "tris_raw": 78,
+          "budget": 300,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gem_Ruby"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_Gem_Ruby_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.009
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "cut": "cushion",
+            "size_m": [
+              0.016,
+              0.014,
+              0.008
+            ]
+          },
+          "files": [
+            "SM_Loot_Gem_Ruby.fbx",
+            "SM_Loot_Gem_Ruby.glb"
+          ],
+          "build_s": 0.43
+        },
+        "SM_Loot_Gem_Sapphire": {
+          "key": "gems",
+          "export": "SM_Loot_Gem_Sapphire",
+          "collection": "SM_Loot_Gem_Sapphire",
+          "dims_m": [
+            0.018,
+            0.014,
+            0.014
+          ],
+          "bbox": {
+            "min": [
+              -0.009,
+              -0.007,
+              0.0
+            ],
+            "max": [
+              0.009,
+              0.007,
+              0.014
+            ]
+          },
+          "height_vs_bean": 0.01,
+          "tris": 46,
+          "tris_raw": 46,
+          "budget": 300,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gem_Sapphire"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_Gem_Sapphire_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab.001": {
+              "pos": [
+                0.0,
+                0.0,
+                0.007
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "cut": "table",
+            "size_m": [
+              0.018,
+              0.014,
+              0.007
+            ]
+          },
+          "files": [
+            "SM_Loot_Gem_Sapphire.fbx",
+            "SM_Loot_Gem_Sapphire.glb"
+          ],
+          "build_s": 0.53
+        },
+        "SM_Loot_Gem_Emerald": {
+          "key": "gems",
+          "export": "SM_Loot_Gem_Emerald",
+          "collection": "SM_Loot_Gem_Emerald",
+          "dims_m": [
+            0.021,
+            0.014,
+            0.013
+          ],
+          "bbox": {
+            "min": [
+              -0.011,
+              -0.007,
+              -0.0
+            ],
+            "max": [
+              0.01,
+              0.007,
+              0.013
+            ]
+          },
+          "height_vs_bean": 0.01,
+          "tris": 46,
+          "tris_raw": 46,
+          "budget": 300,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gem_Emerald"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_Gem_Emerald_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab.002": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0063
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "cut": "emerald",
+            "size_m": [
+              0.02,
+              0.014,
+              0.007
+            ]
+          },
+          "files": [
+            "SM_Loot_Gem_Emerald.fbx",
+            "SM_Loot_Gem_Emerald.glb"
+          ],
+          "build_s": 0.63
+        },
+        "SM_Loot_Gem_Amethyst": {
+          "key": "gems",
+          "export": "SM_Loot_Gem_Amethyst",
+          "collection": "SM_Loot_Gem_Amethyst",
+          "dims_m": [
+            0.016,
+            0.017,
+            0.009
+          ],
+          "bbox": {
+            "min": [
+              -0.008,
+              -0.009,
+              -0.0
+            ],
+            "max": [
+              0.008,
+              0.009,
+              0.009
+            ]
+          },
+          "height_vs_bean": 0.01,
+          "tris": 58,
+          "tris_raw": 58,
+          "budget": 300,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gem_Amethyst"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_Gem_Amethyst_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab.003": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0044
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "cut": "rose",
+            "size_m": [
+              0.017,
+              0.017,
+              0.008
+            ]
+          },
+          "files": [
+            "SM_Loot_Gem_Amethyst.fbx",
+            "SM_Loot_Gem_Amethyst.glb"
+          ],
+          "build_s": 0.73
+        },
+        "SM_Loot_Gem_Topaz": {
+          "key": "gems",
+          "export": "SM_Loot_Gem_Topaz",
+          "collection": "SM_Loot_Gem_Topaz",
+          "dims_m": [
+            0.015,
+            0.012,
+            0.008
+          ],
+          "bbox": {
+            "min": [
+              -0.008,
+              -0.006,
+              0.0
+            ],
+            "max": [
+              0.007,
+              0.006,
+              0.008
+            ]
+          },
+          "height_vs_bean": 0.01,
+          "tris": 284,
+          "tris_raw": 512,
+          "budget": 300,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gem_Topaz"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_Gem_Topaz_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab.004": {
+              "pos": [
+                0.0,
+                0.0,
+                0.0041
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "cut": "cabochon",
+            "size_m": [
+              0.015,
+              0.012,
+              0.007
+            ]
+          },
+          "files": [
+            "SM_Loot_Gem_Topaz.fbx",
+            "SM_Loot_Gem_Topaz.glb"
+          ],
+          "build_s": 0.82
+        },
+        "SM_Loot_GemBowl": {
+          "key": "gem_bowl",
+          "export": "SM_Loot_GemBowl",
+          "collection": "SM_Loot_GemBowl",
+          "dims_m": [
+            0.22,
+            0.22,
+            0.077
+          ],
+          "bbox": {
+            "min": [
+              -0.11,
+              -0.11,
+              0.004
+            ],
+            "max": [
+              0.109,
+              0.11,
+              0.081
+            ]
+          },
+          "height_vs_bean": 0.07,
+          "tris": 3816,
+          "tris_raw": 3816,
+          "budget": 8000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_Copper",
+            "MAT_Gem_Sapphire",
+            "MAT_Gem_Ruby",
+            "MAT_Gem_Emerald"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_GemBowl_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.05
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "gems": 60
+          },
+          "files": [
+            "SM_Loot_GemBowl.fbx",
+            "SM_Loot_GemBowl.glb"
+          ],
+          "build_s": 0.96
+        },
+        "SM_Loot_PearlSack_Open": {
+          "key": "pearl_sack_open",
+          "export": "SM_Loot_PearlSack_Open",
+          "collection": "SM_Loot_PearlSack_Open",
+          "dims_m": [
+            0.424,
+            0.344,
+            0.339
+          ],
+          "bbox": {
+            "min": [
+              -0.142,
+              -0.218,
+              -0.001
+            ],
+            "max": [
+              0.282,
+              0.126,
+              0.338
+            ]
+          },
+          "height_vs_bean": 0.32,
+          "tris": 6650,
+          "tris_raw": 7258,
+          "budget": 7000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_Jute",
+            "MAT-Fort_Rope",
+            "MAT_Pearl_Black",
+            "MAT_Pearl_White"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_PearlSack_Open_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.3
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "pearls": 180
+          },
+          "files": [
+            "SM_Loot_PearlSack_Open.fbx",
+            "SM_Loot_PearlSack_Open.glb"
+          ],
+          "build_s": 1.43
+        },
+        "SM_Loot_PearlSack_Closed": {
+          "key": "pearl_sack_closed",
+          "export": "SM_Loot_PearlSack_Closed",
+          "collection": "SM_Loot_PearlSack_Closed",
+          "dims_m": [
+            0.255,
+            0.224,
+            0.364
+          ],
+          "bbox": {
+            "min": [
+              -0.125,
+              -0.112,
+              0.0
+            ],
+            "max": [
+              0.13,
+              0.112,
+              0.364
+            ]
+          },
+          "height_vs_bean": 0.35,
+          "tris": 858,
+          "tris_raw": 858,
+          "budget": 2500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_Jute",
+            "MAT-Fort_Rope",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_PearlSack_Closed_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.34
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Loot_PearlSack_Closed.fbx",
+            "SM_Loot_PearlSack_Closed.glb"
+          ],
+          "build_s": 0.26
+        },
+        "SM_Loot_Coin": {
+          "key": "coin",
+          "export": "SM_Loot_Coin",
+          "collection": "SM_Loot_Coin",
+          "dims_m": [
+            0.02,
+            0.02,
+            0.002
+          ],
+          "bbox": {
+            "min": [
+              -0.01,
+              -0.01,
+              -0.0
+            ],
+            "max": [
+              0.01,
+              0.01,
+              0.002
+            ]
+          },
+          "height_vs_bean": 0.0,
+          "tris": 114,
+          "tris_raw": 192,
+          "budget": 120,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gold_Aged"
+          ],
+          "ucx": [],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.001
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Loot_Coin.fbx",
+            "SM_Loot_Coin.glb"
+          ],
+          "build_s": 0.24
+        },
+        "SM_Loot_CoinPile": {
+          "key": "coin_pile",
+          "export": "SM_Loot_CoinPile",
+          "collection": "SM_Loot_CoinPile",
+          "dims_m": [
+            0.457,
+            0.32,
+            0.125
+          ],
+          "bbox": {
+            "min": [
+              -0.236,
+              -0.16,
+              -0.001
+            ],
+            "max": [
+              0.221,
+              0.16,
+              0.124
+            ]
+          },
+          "height_vs_bean": 0.12,
+          "tris": 5700,
+          "tris_raw": 12264,
+          "budget": 6000,
+          "within_budget": true,
+          "materials": [
+            "MAT_Gold_CoinHeap",
+            "MAT_Gold_Aged"
+          ],
+          "ucx": [
+            "UCX_SM_Loot_CoinPile_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Grab": {
+              "pos": [
+                0.0,
+                0.0,
+                0.1
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "coins": 93
+          },
+          "files": [
+            "SM_Loot_CoinPile.fbx",
+            "SM_Loot_CoinPile.glb"
+          ],
+          "build_s": 1.74
+        }
+      },
+      "errors": {},
+      "build_s": 22.4,
+      "images": [
+        "Metal046B_diff_1k.jpg",
+        "Metal046B_metal_1k.jpg",
+        "Metal046B_nor_gl_1k.jpg",
+        "Metal046B_rough_1k.jpg",
+        "Metal048C_diff_1k.jpg",
+        "Metal048C_metal_1k.jpg",
+        "Metal048C_nor_gl_1k.jpg",
+        "Metal048C_rough_1k.jpg",
+        "Rope001_1K-JPG_Color.jpg",
+        "Rope001_1K-JPG_Metalness.jpg",
+        "Rope001_1K-JPG_NormalGL.jpg",
+        "Rope001_1K-JPG_Roughness.jpg",
+        "T_Gold_Aged_Color.jpg",
+        "T_Gold_Aged_Normal.jpg",
+        "T_Gold_Aged_Roughness.jpg",
+        "T_Gold_Scratches.jpg",
+        "brown_planks_03_diff_2k.jpg",
+        "brown_planks_03_nor_gl_2k.jpg",
+        "brown_planks_03_rough_2k.jpg",
+        "coral_fort_wall_01_diff_2k.jpg",
+        "coral_fort_wall_01_disp_2k.jpg",
+        "coral_fort_wall_01_nor_gl_2k.jpg",
+        "coral_fort_wall_01_rough_2k.jpg",
+        "coral_fort_wall_02_diff_2k.jpg",
+        "coral_fort_wall_02_disp_2k.jpg",
+        "coral_fort_wall_02_nor_gl_2k.jpg",
+        "coral_fort_wall_02_rough_2k.jpg",
+        "coral_fort_wall_03_diff_2k.jpg",
+        "coral_fort_wall_03_disp_2k.jpg",
+        "coral_fort_wall_03_nor_gl_2k.jpg",
+        "coral_fort_wall_03_rough_2k.jpg",
+        "coral_ground_02_diff_2k.jpg",
+        "coral_ground_02_disp_2k.jpg",
+        "coral_ground_02_nor_gl_2k.jpg",
+        "coral_ground_02_rough_2k.jpg",
+        "dark_wooden_planks_diff_1k.jpg",
+        "dark_wooden_planks_nor_gl_1k.jpg",
+        "dark_wooden_planks_rough_1k.jpg",
+        "hessian_230_diff_1k.jpg",
+        "hessian_230_nor_gl_1k.jpg",
+        "hessian_230_rough_1k.jpg",
+        "red_brick_03_diff_2k.jpg",
+        "red_brick_03_disp_2k.jpg",
+        "red_brick_03_nor_gl_2k.jpg",
+        "red_brick_03_rough_2k.jpg",
+        "rusty_metal_04_ao_1k.jpg",
+        "rusty_metal_04_diff_1k.jpg",
+        "rusty_metal_04_nor_gl_1k.jpg",
+        "rusty_metal_04_rough_1k.jpg",
+        "white_plaster_02_diff_2k.jpg",
+        "white_plaster_02_disp_2k.jpg",
+        "white_plaster_02_nor_gl_2k.jpg",
+        "white_plaster_02_rough_2k.jpg"
+      ]
+    },
+    "port": {
+      "lot": "port",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Port_Quay_6m": {
+          "key": "quay_6m",
+          "export": "SM_Port_Quay_6m",
+          "collection": "SM_Port_Quay_6m",
+          "dims_m": [
+            6.009,
+            3.283,
+            2.648
+          ],
+          "bbox": {
+            "min": [
+              -3.0,
+              -0.264,
+              -2.64
+            ],
+            "max": [
+              3.009,
+              3.019,
+              0.008
+            ]
+          },
+          "height_vs_bean": 2.52,
+          "tris": 2508,
+          "tris_raw": 2508,
+          "budget": 5000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Port_Quay_6m_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Bollard": {
+              "pos": [
+                0.0,
+                0.6,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Ring_L": {
+              "pos": [
+                -1.5,
+                -0.05,
+                -0.4
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Ring_R": {
+              "pos": [
+                1.5,
+                -0.05,
+                -0.4
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_L": {
+              "pos": [
+                -3.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_R": {
+              "pos": [
+                3.0,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Port_Quay_6m.fbx",
+            "SM_Port_Quay_6m.glb"
+          ],
+          "build_s": 6.79
+        },
+        "SM_Port_QuayStairs": {
+          "key": "quay_stairs",
+          "export": "SM_Port_QuayStairs",
+          "collection": "SM_Port_QuayStairs",
+          "dims_m": [
+            4.056,
+            3.264,
+            2.645
+          ],
+          "bbox": {
+            "min": [
+              -2.025,
+              -0.264,
+              -2.64
+            ],
+            "max": [
+              2.031,
+              3.0,
+              0.005
+            ]
+          },
+          "height_vs_bean": 2.52,
+          "tris": 1424,
+          "tris_raw": 1424,
+          "budget": 4000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Port_QuayStairs_00",
+            "UCX_SM_Port_QuayStairs_01",
+            "UCX_SM_Port_QuayStairs_02"
+          ],
+          "children": [],
+          "sockets": {
+            "BoatDock": {
+              "pos": [
+                0.0,
+                -1.3,
+                -1.485
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Top": {
+              "pos": [
+                0.0,
+                0.3,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "bottom_z_local": -1.485
+          },
+          "files": [
+            "SM_Port_QuayStairs.fbx",
+            "SM_Port_QuayStairs.glb"
+          ],
+          "build_s": 5.45
+        },
+        "SM_Port_Jetty_6m": {
+          "key": "jetty_6m",
+          "export": "SM_Port_Jetty_6m",
+          "collection": "SM_Port_Jetty_6m",
+          "dims_m": [
+            4.72,
+            6.008,
+            2.647
+          ],
+          "bbox": {
+            "min": [
+              -2.36,
+              -3.008,
+              -2.64
+            ],
+            "max": [
+              2.36,
+              3.0,
+              0.007
+            ]
+          },
+          "height_vs_bean": 2.52,
+          "tris": 3080,
+          "tris_raw": 3080,
+          "budget": 6000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Port_Jetty_6m_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Bollard_L": {
+              "pos": [
+                -1.6,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Bollard_R": {
+              "pos": [
+                1.6,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_N": {
+              "pos": [
+                0.0,
+                3.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_S": {
+              "pos": [
+                0.0,
+                -3.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Port_Jetty_6m.fbx",
+            "SM_Port_Jetty_6m.glb"
+          ],
+          "build_s": 5.24
+        },
+        "SM_Port_Pier_6m": {
+          "key": "pier_6m",
+          "export": "SM_Port_Pier_6m",
+          "collection": "SM_Port_Pier_6m",
+          "dims_m": [
+            2.8,
+            6.0,
+            3.675
+          ],
+          "bbox": {
+            "min": [
+              -1.4,
+              -3.0,
+              -3.671
+            ],
+            "max": [
+              1.4,
+              3.0,
+              0.003
+            ]
+          },
+          "height_vs_bean": 3.5,
+          "tris": 2996,
+          "tris_raw": 2996,
+          "budget": 5000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_Coconut",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_WoodWeathered",
+            "MAT-Fort_Rope"
+          ],
+          "ucx": [
+            "UCX_SM_Port_Pier_6m_00",
+            "UCX_SM_Port_Pier_6m_01",
+            "UCX_SM_Port_Pier_6m_02",
+            "UCX_SM_Port_Pier_6m_03",
+            "UCX_SM_Port_Pier_6m_04",
+            "UCX_SM_Port_Pier_6m_05",
+            "UCX_SM_Port_Pier_6m_06",
+            "UCX_SM_Port_Pier_6m_07",
+            "UCX_SM_Port_Pier_6m_08",
+            "UCX_SM_Port_Pier_6m_09"
+          ],
+          "children": [],
+          "sockets": {
+            "Bollard": {
+              "pos": [
+                1.05,
+                0.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_N": {
+              "pos": [
+                0.0,
+                3.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Snap_S": {
+              "pos": [
+                0.0,
+                -3.0,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Port_Pier_6m.fbx",
+            "SM_Port_Pier_6m.glb"
+          ],
+          "build_s": 3.96
+        },
+        "SM_Port_PierHead": {
+          "key": "pier_head",
+          "export": "SM_Port_PierHead",
+          "collection": "SM_Port_PierHead",
+          "dims_m": [
+            8.3,
+            6.313,
+            6.891
+          ],
+          "bbox": {
+            "min": [
+              -4.15,
+              -4.293,
+              -4.291
+            ],
+            "max": [
+              4.15,
+              2.019,
+              2.6
+            ]
+          },
+          "height_vs_bean": 6.56,
+          "tris": 4490,
+          "tris_raw": 4490,
+          "budget": 8000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_Coconut",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_WoodWeathered",
+            "MAT-Fort_Rope"
+          ],
+          "ucx": [
+            "UCX_SM_Port_PierHead_00",
+            "UCX_SM_Port_PierHead_01",
+            "UCX_SM_Port_PierHead_02"
+          ],
+          "children": [],
+          "sockets": {
+            "BoatDock": {
+              "pos": [
+                3.2,
+                -2.6,
+                -1.32
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Bollard_E": {
+              "pos": [
+                3.6,
+                1.6,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Bollard_W": {
+              "pos": [
+                -3.6,
+                1.6,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Lantern": {
+              "pos": [
+                0.0,
+                -1.8,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "LanternMount": {
+              "pos": [
+                0.0,
+                -1.88,
+                2.05
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                180.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Port_PierHead.fbx",
+            "SM_Port_PierHead.glb"
+          ],
+          "build_s": 3.29
+        },
+        "SM_Port_Bollard": {
+          "key": "bollard",
+          "export": "SM_Port_Bollard",
+          "collection": "SM_Port_Bollard",
+          "dims_m": [
+            0.242,
+            0.238,
+            0.585
+          ],
+          "bbox": {
+            "min": [
+              -0.121,
+              -0.119,
+              -0.1
+            ],
+            "max": [
+              0.121,
+              0.119,
+              0.485
+            ]
+          },
+          "height_vs_bean": 0.56,
+          "tris": 450,
+          "tris_raw": 450,
+          "budget": 800,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_Iron"
+          ],
+          "ucx": [
+            "UCX_SM_Port_Bollard_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Rope": {
+              "pos": [
+                0.0,
+                0.0,
+                0.252
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "variant": "cannon"
+          },
+          "files": [
+            "SM_Port_Bollard.fbx",
+            "SM_Port_Bollard.glb"
+          ],
+          "build_s": 0.2
+        },
+        "SM_Port_Crane": {
+          "key": "crane",
+          "export": "SM_Port_Crane",
+          "collection": "SM_Port_Crane",
+          "dims_m": [
+            1.6,
+            4.841,
+            4.92
+          ],
+          "bbox": {
+            "min": [
+              -0.8,
+              -3.628,
+              0.0
+            ],
+            "max": [
+              0.8,
+              1.213,
+              4.92
+            ]
+          },
+          "height_vs_bean": 4.69,
+          "tris": 2428,
+          "tris_raw": 280,
+          "budget": 12000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_IronRust",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_Rope"
+          ],
+          "ucx": [
+            "UCX_SM_Port_Crane_00",
+            "UCX_SM_Port_Crane_01",
+            "UCX_SM_Port_Crane_02"
+          ],
+          "children": [
+            "SM_Port_Crane_Jib"
+          ],
+          "sockets": {
+            "Hook": {
+              "pos": [
+                0.0,
+                -3.3,
+                3.6
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Winch": {
+              "pos": [
+                0.0,
+                0.9,
+                0.7
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "anim": "rotation Z de la partie haute (objet enfant SM_Port_Crane_Jib) ; crochet = socket"
+          },
+          "files": [
+            "SM_Port_Crane.fbx",
+            "SM_Port_Crane.glb"
+          ],
+          "build_s": 3.34
+        },
+        "SM_Port_Warehouse": {
+          "key": "warehouse",
+          "export": "SM_Port_Warehouse",
+          "collection": "SM_Port_Warehouse",
+          "dims_m": [
+            11.3,
+            7.0,
+            5.417
+          ],
+          "bbox": {
+            "min": [
+              -5.65,
+              -3.6,
+              0.0
+            ],
+            "max": [
+              5.65,
+              3.4,
+              5.417
+            ]
+          },
+          "height_vs_bean": 5.16,
+          "tris": 10660,
+          "tris_raw": 10660,
+          "budget": 30000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_CoralAshlar",
+            "MAT-Fort_WoodTamanu",
+            "MAT-Fort_CoralRubble",
+            "MAT-Fort_Shingles",
+            "MAT-Fort_Jute"
+          ],
+          "ucx": [
+            "UCX_SM_Port_Warehouse_00",
+            "UCX_SM_Port_Warehouse_01",
+            "UCX_SM_Port_Warehouse_02",
+            "UCX_SM_Port_Warehouse_03",
+            "UCX_SM_Port_Warehouse_04",
+            "UCX_SM_Port_Warehouse_05",
+            "UCX_SM_Port_Warehouse_06",
+            "UCX_SM_Port_Warehouse_07",
+            "UCX_SM_Port_Warehouse_08",
+            "UCX_SM_Port_Warehouse_09",
+            "UCX_SM_Port_Warehouse_10"
+          ],
+          "children": [],
+          "sockets": {
+            "Door": {
+              "pos": [
+                0.0,
+                -3.1,
+                0.0
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Hoist": {
+              "pos": [
+                0.0,
+                -3.3,
+                4.2
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "ridge_z": 5.322
+          },
+          "files": [
+            "SM_Port_Warehouse.fbx",
+            "SM_Port_Warehouse.glb"
+          ],
+          "build_s": 7.33
+        }
+      },
+      "errors": {},
+      "build_s": 36.3,
+      "images": [
+        "Metal046B_diff_1k.jpg",
+        "Metal046B_metal_1k.jpg",
+        "Metal046B_nor_gl_1k.jpg",
+        "Metal046B_rough_1k.jpg",
+        "Rope001_1K-JPG_Color.jpg",
+        "Rope001_1K-JPG_Metalness.jpg",
+        "Rope001_1K-JPG_NormalGL.jpg",
+        "Rope001_1K-JPG_Roughness.jpg",
+        "brown_planks_03_diff_2k.jpg",
+        "brown_planks_03_nor_gl_2k.jpg",
+        "brown_planks_03_rough_2k.jpg",
+        "coral_fort_wall_01_diff_2k.jpg",
+        "coral_fort_wall_01_disp_2k.jpg",
+        "coral_fort_wall_01_nor_gl_2k.jpg",
+        "coral_fort_wall_01_rough_2k.jpg",
+        "coral_fort_wall_02_diff_2k.jpg",
+        "coral_fort_wall_02_disp_2k.jpg",
+        "coral_fort_wall_02_nor_gl_2k.jpg",
+        "coral_fort_wall_02_rough_2k.jpg",
+        "coral_fort_wall_03_diff_2k.jpg",
+        "coral_fort_wall_03_disp_2k.jpg",
+        "coral_fort_wall_03_nor_gl_2k.jpg",
+        "coral_fort_wall_03_rough_2k.jpg",
+        "coral_ground_02_diff_2k.jpg",
+        "coral_ground_02_disp_2k.jpg",
+        "coral_ground_02_nor_gl_2k.jpg",
+        "coral_ground_02_rough_2k.jpg",
+        "hessian_230_diff_1k.jpg",
+        "hessian_230_nor_gl_1k.jpg",
+        "hessian_230_rough_1k.jpg",
+        "palm_tree_bark_diff_2k.jpg",
+        "palm_tree_bark_nor_gl_2k.jpg",
+        "palm_tree_bark_rough_2k.jpg",
+        "rusty_metal_04_ao_1k.jpg",
+        "rusty_metal_04_diff_1k.jpg",
+        "rusty_metal_04_nor_gl_1k.jpg",
+        "rusty_metal_04_rough_1k.jpg",
+        "weathered_planks_diff_1k.jpg",
+        "weathered_planks_nor_gl_1k.jpg",
+        "weathered_planks_rough_1k.jpg",
+        "white_plaster_02_diff_2k.jpg",
+        "white_plaster_02_disp_2k.jpg",
+        "white_plaster_02_nor_gl_2k.jpg",
+        "white_plaster_02_rough_2k.jpg"
+      ]
+    },
+    "habillage": {
+      "lot": "habillage",
+      "blender": "5.2.2 LTS",
+      "modules": {
+        "SM_Fort_Cannon": {
+          "key": "cannon",
+          "export": "SM_Fort_Cannon",
+          "collection": "SM_Fort_Cannon",
+          "dims_m": [
+            0.54,
+            2.21,
+            0.504
+          ],
+          "bbox": {
+            "min": [
+              -0.27,
+              -1.05,
+              0.001
+            ],
+            "max": [
+              0.27,
+              1.16,
+              0.505
+            ]
+          },
+          "height_vs_bean": 0.48,
+          "tris": 2920,
+          "tris_raw": 2920,
+          "budget": 6000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_IronRust",
+            "MAT-Fort_Iron"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Cannon_00",
+            "UCX_SM_Fort_Cannon_01"
+          ],
+          "children": [],
+          "sockets": {
+            "Muzzle": {
+              "pos": [
+                0.0,
+                1.16,
+                0.3996
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Breech": {
+              "pos": [
+                0.0,
+                -0.98,
+                0.3996
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Trunnion": {
+              "pos": [
+                0.0,
+                0.0,
+                0.3996
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "trunnion_z": 0.4,
+            "muzzle": [
+              0.0,
+              1.16,
+              0.4
+            ]
+          },
+          "files": [
+            "SM_Fort_Cannon.fbx",
+            "SM_Fort_Cannon.glb"
+          ],
+          "build_s": 1.69
+        },
+        "SM_Fort_ShotPile": {
+          "key": "shot_pile",
+          "export": "SM_Fort_ShotPile",
+          "collection": "SM_Fort_ShotPile",
+          "dims_m": [
+            0.32,
+            0.32,
+            0.226
+          ],
+          "bbox": {
+            "min": [
+              -0.16,
+              -0.16,
+              0.0
+            ],
+            "max": [
+              0.16,
+              0.16,
+              0.226
+            ]
+          },
+          "height_vs_bean": 0.22,
+          "tris": 2850,
+          "tris_raw": 3220,
+          "budget": 3000,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodOak",
+            "MAT-Fort_Iron"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_ShotPile_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Top": {
+              "pos": [
+                0.0,
+                0.0,
+                0.227
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {
+            "balls": 30
+          },
+          "files": [
+            "SM_Fort_ShotPile.fbx",
+            "SM_Fort_ShotPile.glb"
+          ],
+          "build_s": 0.47
+        },
+        "SM_Fort_Crate_A": {
+          "key": "crate_a",
+          "export": "SM_Fort_Crate_A",
+          "collection": "SM_Fort_Crate_A",
+          "dims_m": [
+            0.598,
+            0.441,
+            0.441
+          ],
+          "bbox": {
+            "min": [
+              -0.299,
+              -0.221,
+              -0.021
+            ],
+            "max": [
+              0.299,
+              0.221,
+              0.421
+            ]
+          },
+          "height_vs_bean": 0.42,
+          "tris": 474,
+          "tris_raw": 1200,
+          "budget": 500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodWeathered",
+            "MAT-Fort_Rope"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Crate_A_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Top": {
+              "pos": [
+                0.0,
+                0.0,
+                0.4
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_Crate_A.fbx",
+            "SM_Fort_Crate_A.glb"
+          ],
+          "build_s": 0.59
+        },
+        "SM_Fort_Crate_B": {
+          "key": "crate_b",
+          "export": "SM_Fort_Crate_B",
+          "collection": "SM_Fort_Crate_B",
+          "dims_m": [
+            1.319,
+            0.384,
+            0.3
+          ],
+          "bbox": {
+            "min": [
+              -0.66,
+              -0.192,
+              0.0
+            ],
+            "max": [
+              0.66,
+              0.192,
+              0.3
+            ]
+          },
+          "height_vs_bean": 0.29,
+          "tris": 474,
+          "tris_raw": 1012,
+          "budget": 500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_WoodWeathered",
+            "MAT-Fort_Rope"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Crate_B_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Top": {
+              "pos": [
+                0.0,
+                0.0,
+                0.3
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_Crate_B.fbx",
+            "SM_Fort_Crate_B.glb"
+          ],
+          "build_s": 0.33
+        },
+        "SM_Fort_Barrel": {
+          "key": "barrel",
+          "export": "SM_Fort_Barrel",
+          "collection": "SM_Fort_Barrel",
+          "dims_m": [
+            0.444,
+            0.444,
+            0.6
+          ],
+          "bbox": {
+            "min": [
+              -0.222,
+              -0.222,
+              0.0
+            ],
+            "max": [
+              0.222,
+              0.222,
+              0.6
+            ]
+          },
+          "height_vs_bean": 0.57,
+          "tris": 1152,
+          "tris_raw": 1152,
+          "budget": 1500,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_BarrelStaves",
+            "MAT-Fort_IronRust"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_Barrel_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Top": {
+              "pos": [
+                0.0,
+                0.0,
+                0.6
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_Barrel.fbx",
+            "SM_Fort_Barrel.glb"
+          ],
+          "build_s": 0.56
+        },
+        "SM_Fort_PowderBarrel": {
+          "key": "powder_barrel",
+          "export": "SM_Fort_PowderBarrel",
+          "collection": "SM_Fort_PowderBarrel",
+          "dims_m": [
+            0.345,
+            0.345,
+            0.42
+          ],
+          "bbox": {
+            "min": [
+              -0.173,
+              -0.173,
+              0.0
+            ],
+            "max": [
+              0.173,
+              0.173,
+              0.42
+            ]
+          },
+          "height_vs_bean": 0.4,
+          "tris": 1040,
+          "tris_raw": 1040,
+          "budget": 1200,
+          "within_budget": true,
+          "materials": [
+            "MAT-Fort_BarrelStaves",
+            "MAT-Fort_Copper",
+            "MAT-Fort_WoodOak"
+          ],
+          "ucx": [
+            "UCX_SM_Fort_PowderBarrel_00"
+          ],
+          "children": [],
+          "sockets": {
+            "Top": {
+              "pos": [
+                0.0,
+                0.0,
+                0.42
+              ],
+              "rot": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "info": {},
+          "files": [
+            "SM_Fort_PowderBarrel.fbx",
+            "SM_Fort_PowderBarrel.glb"
+          ],
+          "build_s": 0.71
+        }
+      },
+      "errors": {},
+      "build_s": 5.1,
+      "images": [
+        "Metal046B_diff_1k.jpg",
+        "Metal046B_metal_1k.jpg",
+        "Metal046B_nor_gl_1k.jpg",
+        "Metal046B_rough_1k.jpg",
+        "Metal048C_diff_1k.jpg",
+        "Metal048C_metal_1k.jpg",
+        "Metal048C_nor_gl_1k.jpg",
+        "Metal048C_rough_1k.jpg",
+        "Rope001_1K-JPG_Color.jpg",
+        "Rope001_1K-JPG_Metalness.jpg",
+        "Rope001_1K-JPG_NormalGL.jpg",
+        "Rope001_1K-JPG_Roughness.jpg",
+        "dark_wooden_planks_diff_1k.jpg",
+        "dark_wooden_planks_nor_gl_1k.jpg",
+        "dark_wooden_planks_rough_1k.jpg",
+        "fine_grained_wood_ao_1k.jpg",
+        "fine_grained_wood_diff_1k.jpg",
+        "fine_grained_wood_nor_gl_1k.jpg",
+        "fine_grained_wood_rough_1k.jpg",
+        "rough_wood_ao_1k.jpg",
+        "rough_wood_diff_1k.jpg",
+        "rough_wood_nor_gl_1k.jpg",
+        "rough_wood_rough_1k.jpg",
+        "rusty_metal_04_ao_1k.jpg",
+        "rusty_metal_04_diff_1k.jpg",
+        "rusty_metal_04_nor_gl_1k.jpg",
+        "rusty_metal_04_rough_1k.jpg",
+        "weathered_planks_diff_1k.jpg",
+        "weathered_planks_nor_gl_1k.jpg",
+        "weathered_planks_rough_1k.jpg",
+        "wooden_barrel_diff_1k.jpg",
+        "wooden_barrel_nor_gl_1k.jpg",
+        "wooden_barrel_rough_1k.jpg"
+      ]
+    }
+  },
+  "scene": {
+    "rss_gb": {
+      "start": 0.19,
+      "linked": 0.3,
+      "modules": 0.3,
+      "vegetation": 0.43,
+      "before_ships": 0.65,
+      "end": 0.85
+    },
+    "vegetation": {
+      "instances": 391,
+      "library": [
+        "SM_CoconutFrond_Dry_A",
+        "SM_CoconutFrond_Dry_B",
+        "SM_CoconutPalm_Juvenile_A",
+        "SM_CoconutPalm_Leaning_A",
+        "SM_CoconutPalm_Leaning_B",
+        "SM_CoconutPalm_SCurve_A",
+        "SM_CoconutPalm_Sabre_A",
+        "SM_CoconutPalm_Straight_A",
+        "SM_CoconutPalm_Straight_B",
+        "SM_CoconutPalm_Young_A",
+        "SM_CoconutPalm_Young_B",
+        "SM_Coconut_Brown",
+        "SM_Coconut_Green",
+        "SM_CoralBlock_A",
+        "SM_CoralBlock_B",
+        "SM_CoralBlock_C",
+        "SM_CoralRubble_A",
+        "SM_CoralRubble_B",
+        "SM_CoralRubble_D",
+        "SM_CoralRubble_F",
+        "SM_Driftwood_A",
+        "SM_Driftwood_B",
+        "SM_Fern_A",
+        "SM_Fern_B",
+        "SM_Grass_Dry",
+        "SM_Grass_Short",
+        "SM_Grass_Tuft",
+        "SM_Ipomoea_A",
+        "SM_Ipomoea_B",
+        "SM_LambisShell",
+        "SM_MikiMiki_A",
+        "SM_MikiMiki_B",
+        "SM_Naupaka_A",
+        "SM_Naupaka_B",
+        "SM_Naupaka_C",
+        "SM_Pandanus_A",
+        "SM_Pandanus_B",
+        "SM_Pandanus_Young",
+        "SM_Tahinu_A",
+        "SM_Tahinu_B"
+      ]
+    },
+    "bean": [
+      "REF-Bean_Gate",
+      "REF-Bean_Walk"
+    ],
+    "ships": {
+      "galleon": [
+        "SM_Galleon.glb",
+        "SM_Galleon_Sails.glb",
+        "SM_Galleon_Flag.glb",
+        "SM_Galleon_Pennants.glb",
+        "SM_Galleon_Rudder.glb",
+        "SM_Galleon_Wheel.glb",
+        "SM_Galleon_Rigging.glb"
+      ],
+      "boat": "barque.glb"
+    },
+    "instances": {
+      "REF-site_terrain": 1,
+      "SM_Fort_Barracks": 1,
+      "SM_Fort_Barrel": 6,
+      "SM_Fort_Bastion": 3,
+      "SM_Fort_Bastion_Vault": 1,
+      "SM_Fort_BridgeFixed": 1,
+      "SM_Fort_Cage_Ground": 2,
+      "SM_Fort_Cage_Hanging": 1,
+      "SM_Fort_Cannon": 30,
+      "SM_Fort_CellDoor": 3,
+      "SM_Fort_Chapel": 1,
+      "SM_Fort_Chest_Closed": 3,
+      "SM_Fort_Chest_Open": 2,
+      "SM_Fort_Cistern": 1,
+      "SM_Fort_Crate_A": 3,
+      "SM_Fort_Crate_B": 1,
+      "SM_Fort_Curtain_4m": 18,
+      "SM_Fort_Curtain_4m_Access": 3,
+      "SM_Fort_Curtain_4m_Embrasure": 8,
+      "SM_Fort_Ditch": 1,
+      "SM_Fort_Drawbridge": 1,
+      "SM_Fort_Echauguette": 4,
+      "SM_Fort_Flag": 1,
+      "SM_Fort_GateDoor_L": 1,
+      "SM_Fort_GateDoor_R": 1,
+      "SM_Fort_GateHouse": 1,
+      "SM_Fort_Gibbet": 1,
+      "SM_Fort_GovernorHouse": 1,
+      "SM_Fort_GuardHouse": 1,
+      "SM_Fort_Kitchen": 1,
+      "SM_Fort_Lantern": 14,
+      "SM_Fort_Lantern_Hanging": 3,
+      "SM_Fort_Pallet": 4,
+      "SM_Fort_Portcullis": 1,
+      "SM_Fort_PowderBarrel": 14,
+      "SM_Fort_PowderMagazine": 1,
+      "SM_Fort_Prison": 1,
+      "SM_Fort_Ramp": 2,
+      "SM_Fort_ShotPile": 14,
+      "SM_Fort_SignalTower": 1,
+      "SM_Fort_Stair": 1,
+      "SM_Fort_StuddedDoor": 2,
+      "SM_Fort_TreasureVault": 1,
+      "SM_Fort_VaultDoor": 1,
+      "SM_Fort_VaultGrille": 1,
+      "SM_Fort_WallShackles": 3,
+      "SM_Loot_CoinPile": 2,
+      "SM_Loot_GemBowl": 2,
+      "SM_Loot_Gem_Amethyst": 1,
+      "SM_Loot_Gem_Emerald": 1,
+      "SM_Loot_Gem_Ruby": 1,
+      "SM_Loot_Gem_Sapphire": 1,
+      "SM_Loot_Gem_Topaz": 1,
+      "SM_Loot_GoldBar": 3,
+      "SM_Loot_GoldStack_L": 1,
+      "SM_Loot_GoldStack_M": 2,
+      "SM_Loot_PearlSack_Closed": 1,
+      "SM_Loot_PearlSack_Open": 2,
+      "SM_Port_Bollard": 16,
+      "SM_Port_Crane": 1,
+      "SM_Port_Jetty_6m": 3,
+      "SM_Port_PierHead": 1,
+      "SM_Port_Pier_6m": 2,
+      "SM_Port_QuayStairs": 2,
+      "SM_Port_Quay_6m": 6,
+      "SM_Port_Warehouse": 1
+    },
+    "instances_total": 217,
+    "cannons": 30,
+    "lights": 24,
+    "dedupe": {
+      "images": 275,
+      "materials": 48
+    },
+    "warnings": []
+  }
+}

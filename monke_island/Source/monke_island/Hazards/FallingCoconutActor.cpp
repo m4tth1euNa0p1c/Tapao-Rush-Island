@@ -6,6 +6,7 @@
 #include "Player/IslanderHealthComponent.h"
 #include "monke_island.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/World.h"
 #include "Engine/StaticMesh.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"

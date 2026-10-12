@@ -1,0 +1,583 @@
+{
+  "task": "T-198",
+  "scope": "Mesh vertical headroom rays, separate from CharacterMovement PIE",
+  "checks": [
+    {
+      "name": "tower_flight3_0",
+      "x": 1.175,
+      "y": -1.45,
+      "floor": 2.805,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_0",
+      "x": 1.175,
+      "y": -1.2,
+      "floor": 2.805,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_0",
+      "x": 1.175,
+      "y": -0.95,
+      "floor": 2.805,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_0",
+      "x": -1.45,
+      "y": -0.575,
+      "floor": 4.125,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_0",
+      "x": -1.2,
+      "y": -0.575,
+      "floor": 4.125,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_0",
+      "x": -0.95,
+      "y": -0.575,
+      "floor": 4.125,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_1",
+      "x": 0.925,
+      "y": -1.45,
+      "floor": 2.97,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_1",
+      "x": 0.925,
+      "y": -1.2,
+      "floor": 2.97,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_1",
+      "x": 0.925,
+      "y": -0.95,
+      "floor": 2.97,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_1",
+      "x": -1.45,
+      "y": -0.32499999999999996,
+      "floor": 4.29,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_1",
+      "x": -1.2,
+      "y": -0.32499999999999996,
+      "floor": 4.29,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_1",
+      "x": -0.95,
+      "y": -0.32499999999999996,
+      "floor": 4.29,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_2",
+      "x": 0.675,
+      "y": -1.45,
+      "floor": 3.1350000000000002,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_2",
+      "x": 0.675,
+      "y": -1.2,
+      "floor": 3.1350000000000002,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_2",
+      "x": 0.675,
+      "y": -0.95,
+      "floor": 3.1350000000000002,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_2",
+      "x": -1.45,
+      "y": -0.07499999999999996,
+      "floor": 4.455,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_2",
+      "x": -1.2,
+      "y": -0.07499999999999996,
+      "floor": 4.455,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_2",
+      "x": -0.95,
+      "y": -0.07499999999999996,
+      "floor": 4.455,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_3",
+      "x": 0.42500000000000004,
+      "y": -1.45,
+      "floor": 3.3000000000000003,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_3",
+      "x": 0.42500000000000004,
+      "y": -1.2,
+      "floor": 3.3000000000000003,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_3",
+      "x": 0.42500000000000004,
+      "y": -0.95,
+      "floor": 3.3000000000000003,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_3",
+      "x": -1.45,
+      "y": 0.17500000000000004,
+      "floor": 4.62,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_3",
+      "x": -1.2,
+      "y": 0.17500000000000004,
+      "floor": 4.62,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_3",
+      "x": -0.95,
+      "y": 0.17500000000000004,
+      "floor": 4.62,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_4",
+      "x": 0.17500000000000004,
+      "y": -1.45,
+      "floor": 3.4650000000000003,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_4",
+      "x": 0.17500000000000004,
+      "y": -1.2,
+      "floor": 3.4650000000000003,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_4",
+      "x": 0.17500000000000004,
+      "y": -0.95,
+      "floor": 3.4650000000000003,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_4",
+      "x": -1.45,
+      "y": 0.42500000000000004,
+      "floor": 4.785,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_4",
+      "x": -1.2,
+      "y": 0.42500000000000004,
+      "floor": 4.785,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_4",
+      "x": -0.95,
+      "y": 0.42500000000000004,
+      "floor": 4.785,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_5",
+      "x": -0.07499999999999996,
+      "y": -1.45,
+      "floor": 3.63,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_5",
+      "x": -0.07499999999999996,
+      "y": -1.2,
+      "floor": 3.63,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_5",
+      "x": -0.07499999999999996,
+      "y": -0.95,
+      "floor": 3.63,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_5",
+      "x": -1.45,
+      "y": 0.675,
+      "floor": 4.95,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_5",
+      "x": -1.2,
+      "y": 0.675,
+      "floor": 4.95,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_5",
+      "x": -0.95,
+      "y": 0.675,
+      "floor": 4.95,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_6",
+      "x": -0.32499999999999996,
+      "y": -1.45,
+      "floor": 3.795,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_6",
+      "x": -0.32499999999999996,
+      "y": -1.2,
+      "floor": 3.795,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_6",
+      "x": -0.32499999999999996,
+      "y": -0.95,
+      "floor": 3.795,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_6",
+      "x": -1.45,
+      "y": 0.925,
+      "floor": 5.115,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_6",
+      "x": -1.2,
+      "y": 0.925,
+      "floor": 5.115,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_6",
+      "x": -0.95,
+      "y": 0.925,
+      "floor": 5.115,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_7",
+      "x": -0.575,
+      "y": -1.45,
+      "floor": 3.96,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_7",
+      "x": -0.575,
+      "y": -1.2,
+      "floor": 3.96,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight3_7",
+      "x": -0.575,
+      "y": -0.95,
+      "floor": 3.96,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_7",
+      "x": -1.45,
+      "y": 1.175,
+      "floor": 5.28,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_7",
+      "x": -1.2,
+      "y": 1.175,
+      "floor": 5.28,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "tower_flight4_7",
+      "x": -0.95,
+      "y": 1.175,
+      "floor": 5.28,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "warehouse_step_0",
+      "x": -0.25,
+      "y": -3.8,
+      "floor": -0.165,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "warehouse_step_0",
+      "x": 0,
+      "y": -3.8,
+      "floor": -0.165,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "warehouse_step_0",
+      "x": 0.25,
+      "y": -3.8,
+      "floor": -0.165,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "warehouse_step_1",
+      "x": -0.25,
+      "y": -3.5,
+      "floor": 0.0,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "warehouse_step_1",
+      "x": 0,
+      "y": -3.5,
+      "floor": 0.0,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "warehouse_step_1",
+      "x": 0.25,
+      "y": -3.5,
+      "floor": 0.0,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "warehouse_step_2",
+      "x": -0.25,
+      "y": -3.1999999999999997,
+      "floor": 0.165,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "warehouse_step_2",
+      "x": 0,
+      "y": -3.1999999999999997,
+      "floor": 0.165,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "warehouse_step_2",
+      "x": 0.25,
+      "y": -3.1999999999999997,
+      "floor": 0.165,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_0",
+      "x": 0.44999999999999996,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_0",
+      "x": 0.7,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_0",
+      "x": 0.95,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_1",
+      "x": 0.8999999999999999,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_1",
+      "x": 1.15,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_1",
+      "x": 1.4,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_2",
+      "x": 1.35,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_2",
+      "x": 1.6,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_2",
+      "x": 1.85,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_3",
+      "x": 1.7999999999999998,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_3",
+      "x": 2.05,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_3",
+      "x": 2.3,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_4",
+      "x": 2.25,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_4",
+      "x": 2.5,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    },
+    {
+      "name": "office_rear_access_4",
+      "x": 2.75,
+      "y": 2.3,
+      "floor": 0.515,
+      "clear": true,
+      "hit": null
+    }
+  ],
+  "passed": true
+}

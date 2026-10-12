@@ -2,8 +2,10 @@
 
 #include "Storm/WindStormActor.h"
 #include "Components/SphereComponent.h"
+#include "Storm/WeatherSubsystem.h"
 #include "Storm/WindMath.h"
 #include "Storm/WindRules.h"
+#include "Net/UnrealNetwork.h"
 #include "DayNight/DayNightCycleActor.h"
 #include "Expedition/Core/ExpeditionGameState.h"
 #include "monke_island.h"
@@ -48,6 +50,13 @@ AWindStormActor::AWindStormActor()
 	EngineWind->Strength = 0.0f;
 }
 
+void AWindStormActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	// a wind placed in a map has its rules on every machine already; one spawned during play (T-203) needs them sent
+	DOREPLIFETIME_CONDITION(AWindStormActor, Rules, COND_InitialOnly);
+}
+
 void AWindStormActor::BeginPlay()
 {
 	Super::BeginPlay();
@@ -74,9 +83,9 @@ AWindStormActor* AWindStormActor::Get(const UObject* WorldContextObject)
 	return nullptr;
 }
 
-FVector AWindStormActor::WindAt(const UWindRules& InRules, double Elapsed, double DeadlineStartElapsed)
+FVector AWindStormActor::WindAt(const UWindRules& InRules, double Elapsed, double DeadlineStartElapsed, float MeanFloor)
 {
-	const float Mean = WindMath::MeanStrengthAt(InRules, Elapsed, DeadlineStartElapsed);
+	const float Mean = FMath::Max(WindMath::MeanStrengthAt(InRules, Elapsed, DeadlineStartElapsed), MeanFloor);
 	const float Phase = static_cast<float>(Elapsed * InRules.GustFrequency);
 	// two octaves of noise inside the gust: long surges and short bursts, never below a third of the mean
 	const float Turbulence = 0.65f * FMath::PerlinNoise1D(Phase) + 0.35f * FMath::PerlinNoise1D(Phase * 3.1f + 17.0f);
@@ -288,7 +297,12 @@ void AWindStormActor::Tick(float DeltaSeconds)
 		}
 	}
 	bDeadline = bDeadlineNow;
-	Wind = WindAt(*Rules, Elapsed, DeadlineStart);
+	// the turned weather (a seized temple artifact, T-203): same eased floor on every machine, from the server clock
+	const UWeatherSubsystem* Weather = UWeatherSubsystem::Get(this);
+	const float WeatherFloor = Weather ? Weather->GetWindFloor() : 0.0f;
+	const float WeatherSky = Weather ? Weather->GetSkyFactor() : 0.0f;
+	bWeatherStorm = Weather && Weather->GetTurnWeight() >= 0.5f;
+	Wind = WindAt(*Rules, Elapsed, DeadlineStart, WeatherFloor);
 	const float Strength = static_cast<float>(Wind.Size());
 
 	EngineWind->SetWorldRotation(Wind.IsNearlyZero() ? FRotator::ZeroRotator : Wind.Rotation());
@@ -305,8 +319,9 @@ void AWindStormActor::Tick(float DeltaSeconds)
 
 	if (Clock)
 	{
-		// the sky darkens with the gusts, fully from a full storm (strength 1) on
-		Clock->SetStormFactor(Rules->StormSkyFactor * FMath::Clamp((Strength - Rules->ForceThreshold) / (1.0f - Rules->ForceThreshold), 0.0f, 1.0f));
+		// the sky darkens with the gusts, fully from a full storm (strength 1) on; the turned weather keeps it dark steadily
+		const float GustSky = Rules->StormSkyFactor * FMath::Clamp((Strength - Rules->ForceThreshold) / (1.0f - Rules->ForceThreshold), 0.0f, 1.0f);
+		Clock->SetStormFactor(FMath::Max(GustSky, WeatherSky));
 	}
 
 	if (Strength >= Rules->ForceThreshold)

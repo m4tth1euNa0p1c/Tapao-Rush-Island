@@ -1,8 +1,15 @@
 // monke_island
 
 #include "Village/VillageSpawner.h"
+#include "Ceremony/FlagCeremonySite.h"
 #include "Village/VillageAmbienceActor.h"
+#include "Village/VillageDoorMath.h"
+#include "Village/VillageDoorsComponent.h"
+#include "Village/VillageHouseKit.h"
+#include "Village/VillageHouseNav.h"
 #include "Village/VillageMath.h"
+#include "Items/LootMath.h"
+#include "Items/LootRules.h"
 #include "Boats/BoatStartSubsystem.h"
 #include "Expedition/Islands/ExpeditionIslandValidation.h"
 #include "monke_island.h"
@@ -29,6 +36,8 @@ AVillageSpawner::AVillageSpawner()
 	UBillboardComponent* Sprite = CreateDefaultSubobject<UBillboardComponent>(TEXT("Sprite"));
 	Sprite->SetMobility(EComponentMobility::Static);
 	RootComponent = Sprite;
+
+	Doors = CreateDefaultSubobject<UVillageDoorsComponent>(TEXT("Doors"));
 }
 
 AVillageSpawner* AVillageSpawner::Find(const UObject* WorldContextObject)
@@ -103,6 +112,7 @@ void AVillageSpawner::BeginPlay()
 void AVillageSpawner::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	GetWorldTimerManager().ClearTimer(ResolveTimer);
+	GetWorldTimerManager().ClearTimer(ContentTimer);
 	for (AActor* Ambience : AmbienceActors)
 	{
 		if (IsValid(Ambience))
@@ -204,20 +214,46 @@ void AVillageSpawner::Build(FName FragmentId)
 
 	// the vegetation first: the tiki read the bushes as soon as the villages stand
 	const int32 Cleared = ClearVegetation(Set->Villages);
+	// one draw of the house contents for the fragment: the seed of a kit, otherwise a new one every game
+	int32 ContentSeed = 0;
+	for (const UVillageHouseKit* Kit : Rules->HouseKits)
+	{
+		if (Kit)
+		{
+			ContentBatch = Kit->ContentSpawnBatch;
+			if (Kit->ContentSeed != 0)
+			{
+				ContentSeed = Kit->ContentSeed;
+				break;
+			}
+		}
+	}
+	FRandomStream ContentStream(ContentSeed != 0 ? ContentSeed : FMath::Rand());
 	int32 Instances = 0;
 	int32 Lights = 0;
-	for (const FVillageLayout& Village : Set->Villages)
+	for (int32 VillageIndex = 0; VillageIndex < Set->Villages.Num(); ++VillageIndex)
 	{
-		Instances += BuildMeshes(Village);
+		const FVillageLayout& Village = Set->Villages[VillageIndex];
+		Instances += BuildMeshes(Village, VillageIndex, ContentStream);
 		// nobody looks at a dedicated server
 		if (GetNetMode() != NM_DedicatedServer)
 		{
 			Lights += BuildLights(Village);
 		}
 	}
+	Doors->FinishBuild(Rules->bHousesBlockCamera);
 	bBuilt = true;
-	UE_LOG(Logmonke_island, Log, TEXT("%s: fragment %s, %d villages, %d instances, %d lights, %d vegetation instances cleared (%.0f ms)"),
-		*GetName(), *FragmentId.ToString(), Set->Villages.Num(), Instances, Lights, Cleared, (FPlatformTime::Seconds() - StartTime) * 1000.0);
+	if (HasAuthority() && GetNetMode() != NM_Client)
+	{
+		SpawnFlagSites();
+	}
+	UE_LOG(Logmonke_island, Log, TEXT("%s: fragment %s, %d villages, %d instances, %d lights, %d vegetation instances cleared, %d houses with %d doorways (%d sliding panels), %d relics and %d objects to put in them (%.0f ms)"),
+		*GetName(), *FragmentId.ToString(), Set->Villages.Num(), Instances, Lights, Cleared, Doors->GetHouseCount(), Doors->GetDoorwayCount(),
+		Doors->GetPanelCount(), RelicsQueued, PendingContents.Num() - RelicsQueued, (FPlatformTime::Seconds() - StartTime) * 1000.0);
+	if (!PendingContents.IsEmpty())
+	{
+		GetWorldTimerManager().SetTimer(ContentTimer, this, &AVillageSpawner::SpawnContentBatch, 0.05f, true, 0.0f);
+	}
 	OnVillagesBuilt.Broadcast(this);
 }
 
@@ -309,8 +345,10 @@ int32 AVillageSpawner::ClearVegetation(const TArray<FVillageLayout>& Villages) c
 	return Moved;
 }
 
-int32 AVillageSpawner::BuildMeshes(const FVillageLayout& Village)
+int32 AVillageSpawner::BuildMeshes(const FVillageLayout& Village, int32 VillageIndex, FRandomStream& ContentStream)
 {
+	// the server alone puts the objects in the houses: they replicate
+	const bool bContents = HasAuthority() && GetNetMode() != NM_Client;
 	int32 Count = 0;
 	for (const FVillageMeshGroup& Group : Village.Meshes)
 	{
@@ -318,10 +356,12 @@ int32 AVillageSpawner::BuildMeshes(const FVillageLayout& Village)
 		{
 			continue;
 		}
+		// a house with a kit is built as its shell; its doors and its contents follow
+		UVillageHouseKit* Kit = Rules->FindHouseKit(Group.Mesh);
 		UInstancedStaticMeshComponent* Component = NewObject<UInstancedStaticMeshComponent>(this, NAME_None, RF_Transient);
 		Component->SetupAttachment(RootComponent);
 		Component->SetMobility(EComponentMobility::Static);
-		Component->SetStaticMesh(Group.Mesh);
+		Component->SetStaticMesh(Kit ? Kit->ShellMesh.Get() : Group.Mesh.Get());
 		// the collision of the mesh (UCX) blocking everything, like the villages of the level
 		Component->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
 		if (!Rules->bHousesBlockCamera)
@@ -336,7 +376,16 @@ int32 AVillageSpawner::BuildMeshes(const FVillageLayout& Village)
 		for (int32 Index = 0; Index < Group.Locations.Num(); ++Index)
 		{
 			const float Yaw = Group.Yaws.IsValidIndex(Index) ? Group.Yaws[Index] : 0.0f;
-			Transforms.Emplace(FRotator(0.0f, Yaw, 0.0f), Group.Locations[Index]);
+			const FTransform& House = Transforms.Emplace_GetRef(FRotator(0.0f, Yaw, 0.0f), Group.Locations[Index]);
+			if (Kit)
+			{
+				const int32 HouseIndex = AddHouseInfo(*Kit, House, Village, VillageIndex);
+				Doors->AddHouse(Kit, House, VillageIndex);
+				if (bContents)
+				{
+					QueueHouseContents(*Kit, House, HouseIndex, ContentStream);
+				}
+			}
 		}
 		Component->AddInstances(Transforms, false, true, false);
 		MeshComponents.Add(Component);
@@ -386,4 +435,233 @@ int32 AVillageSpawner::BuildLights(const FVillageLayout& Village)
 		++Count;
 	}
 	return Count;
+}
+
+void AVillageSpawner::QueueHouseContents(const UVillageHouseKit& Kit, const FTransform& House, int32 HouseIndex, FRandomStream& Stream)
+{
+	TArray<TSubclassOf<AActor>> Relics;
+	for (const TSubclassOf<AActor>& Variant : Kit.RelicVariants)
+	{
+		if (Variant)
+		{
+			Relics.Add(Variant);
+		}
+	}
+	if (Relics.IsEmpty() && Kit.RelicClass)
+	{
+		Relics.Add(Kit.RelicClass);
+	}
+	if (!Relics.IsEmpty() && !Kit.RelicSlots.IsEmpty())
+	{
+		const TSubclassOf<AActor> Relic = Relics[Stream.RandRange(0, Relics.Num() - 1)];
+		const FVillageHouseSlot& Slot = Kit.RelicSlots[Stream.RandRange(0, Kit.RelicSlots.Num() - 1)];
+		const FTransform Home = FTransform(FRotator(0.0f, Slot.Yaw, 0.0f), Slot.Location) * House;
+		PendingContents.Add({ Relic, Home, Kit.RestClearance, HouseIndex, true });
+		if (Houses.IsValidIndex(HouseIndex))
+		{
+			Houses[HouseIndex].RelicHome = Home;
+		}
+		++RelicsQueued;
+	}
+	const ULootRules* Table = Kit.ItemTable;
+	if (!Table || Kit.ItemSlots.IsEmpty())
+	{
+		return;
+	}
+	TArray<float> Weights;
+	Weights.Reserve(Table->Items.Num());
+	for (const FLootEntry& Entry : Table->Items)
+	{
+		Weights.Add(Entry.ItemClass ? Entry.Weight : 0.0f);
+	}
+	const int32 Count = Stream.RandRange(FMath::Min(Kit.MinItemsPerHouse, Kit.MaxItemsPerHouse), FMath::Max(Kit.MinItemsPerHouse, Kit.MaxItemsPerHouse));
+	for (const int32 SlotIndex : VillageDoorMath::PickDistinct(Kit.ItemSlots.Num(), Count, Stream))
+	{
+		const int32 Kind = LootMath::PickWeighted(Weights, Stream.FRand());
+		if (Kind == INDEX_NONE)
+		{
+			return;
+		}
+		const FVillageHouseSlot& Slot = Kit.ItemSlots[SlotIndex];
+		const float Yaw = Slot.Yaw + Stream.FRandRange(-Kit.ItemYawJitter, Kit.ItemYawJitter);
+		PendingContents.Add({ Table->Items[Kind].ItemClass, FTransform(FRotator(0.0f, Yaw, 0.0f), Slot.Location) * House, Kit.RestClearance, HouseIndex, false });
+	}
+}
+
+void AVillageSpawner::SpawnContentBatch()
+{
+	const int32 Batch = FMath::Min(FMath::Max(ContentBatch, 1), PendingContents.Num());
+	for (int32 Index = 0; Index < Batch; ++Index)
+	{
+		const FHouseContent Content = PendingContents.Pop(EAllowShrinking::No);
+		AActor* Item = GetWorld()->SpawnActorDeferred<AActor>(Content.Class, Content.Transform, nullptr, nullptr,
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		if (!Item)
+		{
+			continue;
+		}
+		Item->FinishSpawning(Content.Transform);
+		if (!IsValid(Item))
+		{
+			continue;
+		}
+		// the pivot of a prop may be at its centre: the bottom of its collision rests on the slot, never mid-air
+		const FBox Box = Item->GetComponentsBoundingBox(false);
+		if (Box.IsValid)
+		{
+			Item->SetActorLocation(VillageDoorMath::RestOnSurface(Item->GetActorLocation(), Box.Min.Z, Content.Transform.GetLocation().Z, Content.Clearance),
+				false, nullptr, ETeleportType::TeleportPhysics);
+		}
+		// asleep until someone touches it: houses full of objects cost the physics nothing
+		TInlineComponentArray<UPrimitiveComponent*> Bodies(Item);
+		for (UPrimitiveComponent* Body : Bodies)
+		{
+			if (Body->IsSimulatingPhysics())
+			{
+				Body->SetPhysicsLinearVelocity(FVector::ZeroVector);
+				Body->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
+				Body->PutAllRigidBodiesToSleep();
+			}
+		}
+		HouseContents.Add(Item);
+		// the house knows what is its own: its villager watches it and brings its relic to the flag ceremony
+		if (Houses.IsValidIndex(Content.House))
+		{
+			FVillageHouseInfo& Home = Houses[Content.House];
+			if (Content.bRelic)
+			{
+				Home.Relic = Item;
+				Home.RelicHome = Item->GetActorTransform();
+			}
+			else
+			{
+				Home.Items.Add(Item);
+			}
+		}
+	}
+	if (PendingContents.IsEmpty())
+	{
+		GetWorldTimerManager().ClearTimer(ContentTimer);
+		UE_LOG(Logmonke_island, Log, TEXT("%s: %d objects put in the houses (%d relics)"), *GetName(), HouseContents.Num(), RelicsQueued);
+	}
+}
+
+int32 AVillageSpawner::AddHouseInfo(const UVillageHouseKit& Kit, const FTransform& House, const FVillageLayout& Village, int32 VillageIndex)
+{
+	FVillageHouseInfo& Info = Houses.AddDefaulted_GetRef();
+	Info.Kit = &Kit;
+	Info.Transform = House;
+	Info.Village = VillageIndex;
+	const FVector Outside = House.TransformPosition(Kit.OutsideLocation);
+	Info.Door = Outside;
+	Info.Gate = Outside;
+	// the door point of the layout in front of this house: its villagers go round by the gate of its plot
+	double Best = FMath::Square(400.0);
+	for (const FVillageDoorPoint& Point : Village.Doors)
+	{
+		const double Distance = FVector::DistSquared2D(Point.Location, Outside);
+		if (Distance < Best)
+		{
+			Best = Distance;
+			Info.Door = Point.Location;
+			Info.Gate = VillageMath::GateOf(Point.Location, Point.Yaw, Point.GateDistance);
+		}
+	}
+	return Houses.Num() - 1;
+}
+
+int32 AVillageSpawner::FindHouseAt(const FVector& Location, float Margin) const
+{
+	for (int32 Index = 0; Index < Houses.Num(); ++Index)
+	{
+		const FVillageHouseInfo& House = Houses[Index];
+		if (House.Kit && VillageHouseNav::IsInside(House.Kit->Interior, House.Transform.InverseTransformPosition(Location), Margin))
+		{
+			return Index;
+		}
+	}
+	return INDEX_NONE;
+}
+
+void AVillageSpawner::ForgetHouseContent(int32 House, const AActor* Content)
+{
+	if (!Houses.IsValidIndex(House) || !Content)
+	{
+		return;
+	}
+	FVillageHouseInfo& Info = Houses[House];
+	if (Info.Relic.Get() == Content)
+	{
+		Info.Relic.Reset();
+	}
+	Info.Items.RemoveAll([Content](const TWeakObjectPtr<AActor>& Item) { return Item.Get() == Content; });
+}
+
+void AVillageSpawner::RestoreHouseRelic(int32 House, AActor* Relic)
+{
+	if (Houses.IsValidIndex(House) && Relic)
+	{
+		Houses[House].Relic = Relic;
+	}
+}
+
+void AVillageSpawner::OpenSealedHouses(int32 Village)
+{
+	Doors->UnsealVillage(Village);
+}
+
+void AVillageSpawner::SpawnFlagSites()
+{
+	if (!Rules || !Rules->FlagSiteClass || !Rules->FlagCeremonyRules || !ActiveSet)
+	{
+		return;
+	}
+	int32 Spawned = 0;
+	int32 Placed = 0;
+	int32 Hamlets = 0;
+	const TArray<FVillageLayout>& Villages = ActiveSet->Villages;
+	for (int32 Index = 0; Index < Villages.Num(); ++Index)
+	{
+		const FVillageLayout& Village = Villages[Index];
+		// the zones, and the hamlets between them when the rules say so (no guardian there: bZone stays false)
+		if (!Village.bZone && !Rules->bFlagSitesInHamlets)
+		{
+			continue;
+		}
+		// a site placed in the level near the square stands for this village
+		bool bPlaced = false;
+		for (TActorIterator<AFlagCeremonySite> It(GetWorld()); It; ++It)
+		{
+			if (FVector::Dist2D(It->GetActorLocation(), Village.Center) <= Rules->FlagSiteMatchRadius)
+			{
+				It->VillageIndex = Index;
+				if (It->ZoneId.IsNone())
+				{
+					It->ZoneId = Village.Id;
+				}
+				bPlaced = true;
+			}
+		}
+		if (bPlaced)
+		{
+			++Placed;
+			continue;
+		}
+		const FTransform Transform(FRotator::ZeroRotator, Village.Center);
+		AFlagCeremonySite* Site = GetWorld()->SpawnActorDeferred<AFlagCeremonySite>(Rules->FlagSiteClass, Transform, this, nullptr,
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		if (!Site)
+		{
+			continue;
+		}
+		Site->Rules = Rules->FlagCeremonyRules;
+		Site->ZoneId = Village.Id;
+		Site->VillageIndex = Index;
+		Site->FinishSpawning(Transform);
+		FlagSites.Add(Site);
+		++Spawned;
+		Hamlets += Village.bZone ? 0 : 1;
+	}
+	UE_LOG(Logmonke_island, Log, TEXT("%s: %d flag sites on the squares of %s, %d of them in hamlets (%d already in the level)"), *GetName(), Spawned,
+		*ActiveFragment.ToString(), Hamlets, Placed);
 }

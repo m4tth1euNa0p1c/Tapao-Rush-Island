@@ -29,6 +29,10 @@ public:
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category="Marae")
 	TObjectPtr<UMaraeRules> Rules;
 
+	/** Server, before the site finishes spawning: the campaign dealt these artifacts of Rules->ArtifactPool to the site;
+	 *  the pedestals of the others stay empty (not called: every pedestal is filled) */
+	void DealArtifacts(const TArray<TSubclassOf<AActor>>& Artifacts);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 protected:
@@ -54,6 +58,13 @@ private:
 
 	/** Actors spawned by this marae */
 	TArray<TWeakObjectPtr<AActor>> Spawned;
+
+	/** Artifacts of the pool dealt to the site (server, DealArtifacts) */
+	UPROPERTY(Transient)
+	TArray<TSubclassOf<AActor>> DealtArtifacts;
+
+	/** DealArtifacts was called: a pedestal whose artifact was not dealt stays empty */
+	bool bArtifactsDealt = false;
 
 	FSiteClearing Clearing;
 };
