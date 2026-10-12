@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
+#include "monke_islandGameMode.h"
 #include "Expedition/Islands/ExpeditionIslandTypes.h"
 #include "ExpeditionBootGameMode.generated.h"
 
@@ -15,9 +15,12 @@ class UWorld;
  *  (never the previous one twice in a row) and travels to <map>?Island=<id>, where the boat of T-093 starts with
  *  the team seated. No pawn on the boot map. When no island can be drawn, travels to FallbackMap so the player is
  *  never stuck on an empty map.
+ *  Session (T-315): the boot map is the lobby, at the start and between two islands (it stands for the galleon at the
+ *  safe zone, cahier §24.2): anyone may join within MaxPlayers (bOpenToNewPlayers); its travel to an island launches
+ *  the expedition, whose maps then take only the crew present here (Amonke_islandGameMode, UCrewSessionSubsystem).
  */
 UCLASS()
-class MONKE_ISLAND_API AExpeditionBootGameMode : public AGameModeBase
+class MONKE_ISLAND_API AExpeditionBootGameMode : public Amonke_islandGameMode
 {
 	GENERATED_BODY()
 

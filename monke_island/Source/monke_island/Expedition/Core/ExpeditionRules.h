@@ -32,6 +32,16 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock", meta=(ClampMin="0"))
 	int32 ZonesCount = 3;
 
+	/** The clock waits for the players still loading the island at most this long (s; cahier §16, §24.5: 60 s); a
+	 *  player who comes later is put on the deck (network review T-268 R-02, T-292) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock", meta=(ClampMin="0", Units="s"))
+	float CrewLoadTimeoutSeconds = 60.0f;
+
+	/** Listen server with nobody announced by a travel (a map opened directly, PIE): the clock waits this long for the
+	 *  clients still joining (s); solo never waits */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Clock", meta=(ClampMin="0", Units="s"))
+	float CrewJoinGraceSeconds = 3.0f;
+
 	/** Duration of the final rise of the water, from the flood deadline to the resolution (s) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Flood", meta=(ClampMin="0", Units="s"))
 	float SubmersionDuration = 60.0f;
@@ -67,11 +77,16 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over", meta=(ClampMin="0", Units="s"))
 	float DayEndTravelDelay = 10.0f;
 
-	/** Time between the death of the last player and the return to the restart map (s) */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over", meta=(ClampMin="0", Units="s"))
+	/**
+	 *  "JOUR PERDU" (T-173, ADR-007 §14): time between the death of the last player and the travel to the next island,
+	 *  the day lost, the campaign going on (s); the greed question adds its own time, the host may send the galleon on
+	 *  sooner. Name kept from the game over it replaced (T-104), so the assets keep their value
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over", meta=(ClampMin="0", Units="s", DisplayName="Lost Day Travel Delay"))
 	float GameOverRestartDelay = 8.0f;
 
-	/** Map opened after a game over; empty = GameDefaultMap of the project (L_Boot: new island draw, start in the boat) */
+	/** Map opened to travel to the next island, after a day survived or lost; empty = GameDefaultMap of the project
+	 *  (L_Boot: new island draw, start in the boat) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game over", meta=(AllowedClasses="/Script/Engine.World"))
 	FSoftObjectPath RestartMap;
 };

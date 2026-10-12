@@ -1,25 +1,52 @@
 // monke_island
 
 #include "Expedition/Core/ExpeditionGameState.h"
+#include "Expedition/Core/ExpeditionDayEnd.h"
 #include "Expedition/Core/ExpeditionRules.h"
 #include "Expedition/Islands/ExpeditionIslandSubsystem.h"
+#include "Execution/ExecutionScene.h"
 #include "Boats/BoatStartSubsystem.h"
 #include "Engine/Engine.h"
+#include "Engine/NetConnection.h"
+#include "Engine/NetDriver.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "Galleon/GalleonActor.h"
+#include "Galleon/GalleonDepartureComponent.h"
 #include "GameFramework/GameModeBase.h"
+#include "GameFramework/PlayerController.h"
 #include "GameFramework/PlayerState.h"
+#include "HAL/IConsoleManager.h"
 #include "Misc/ConfigCacheIni.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/IslanderCharacter.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Run/RunStateComponent.h"
+#include "Run/RunSubsystem.h"
 #include "TimerManager.h"
 #include "monke_island.h"
+
+namespace
+{
+	/** The wait for the crew is checked this often (s): a server poll of a few controllers, no gameplay value */
+	constexpr float CrewLoadPollSeconds = 0.25f;
+
+	/** The waits of the end of a day (T-173): DA_ExpeditionRules for the travel, DA_RunRules for the greed question */
+	FDayEndDelays DayEndDelaysOf(const UExpeditionRules* Rules, const URunSubsystem* Run)
+	{
+		FDayEndDelays Delays;
+		Delays.SurvivedTravelDelay = Rules ? Rules->DayEndTravelDelay : 0.0f;
+		Delays.LostTravelDelay = Rules ? Rules->GameOverRestartDelay : 0.0f;
+		Delays.GreedChoiceSeconds = Run ? Run->GetGreedChoiceSeconds() : 0.0f;
+		return Delays;
+	}
+}
 
 AExpeditionGameState::AExpeditionGameState()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	RunState = CreateDefaultSubobject<URunStateComponent>(TEXT("RunState"));
+	Departure = CreateDefaultSubobject<UGalleonDepartureComponent>(TEXT("Departure"));
 }
 
 AExpeditionGameState* AExpeditionGameState::Get(const UObject* WorldContextObject)
@@ -39,6 +66,11 @@ void AExpeditionGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AExpeditionGameState, Resolution);
 	DOREPLIFETIME(AExpeditionGameState, TeamWipedTime);
 	DOREPLIFETIME(AExpeditionGameState, DayEndedTime);
+	DOREPLIFETIME(AExpeditionGameState, DayEndTravelWait);
+	DOREPLIFETIME(AExpeditionGameState, bExecution);
+	DOREPLIFETIME(AExpeditionGameState, CrewWaitEndTime);
+	DOREPLIFETIME(AExpeditionGameState, CrewLoaded);
+	DOREPLIFETIME(AExpeditionGameState, CrewExpected);
 }
 
 void AExpeditionGameState::BeginPlay()
@@ -77,9 +109,34 @@ void AExpeditionGameState::BeginPlay()
 		LogoutHandle = FGameModeEvents::GameModeLogoutEvent.AddUObject(this, &AExpeditionGameState::HandleLogout);
 	}
 
+	if (HasAuthority())
+	{
+		// ADR-007: a new island is a new day of the run kept by the game instance
+		if (URunSubsystem* Run = URunSubsystem::Get(this))
+		{
+			Run->BeginDay(GetWorld());
+		}
+	}
+
 	if (HasAuthority() && bStartOnBeginPlay)
 	{
 		StartExpedition();
+	}
+	else if (HasAuthority() && bStartWhenCrewLoaded)
+	{
+		// network review T-268 R-02 (T-292): the clock waits for the players of the previous map to load this one
+		if (UExpeditionIslandSubsystem* Islands = UExpeditionIslandSubsystem::Get(this))
+		{
+			ExpectedCrew = Islands->TakeTravelPlayerCount();
+		}
+		CrewWaitStartTime = GetWorld()->GetTimeSeconds();
+		TryStartWhenCrewLoaded();
+		if (!ClockState.bStarted)
+		{
+			UE_LOG(Logmonke_island, Log, TEXT("Expedition: the clock waits for the crew (%d player(s) expected, %.0f s at most)"),
+				ExpectedCrew, Rules ? Rules->CrewLoadTimeoutSeconds : 0.0f);
+			GetWorldTimerManager().SetTimer(CrewLoadTimer, this, &AExpeditionGameState::TryStartWhenCrewLoaded, CrewLoadPollSeconds, true);
+		}
 	}
 }
 
@@ -90,6 +147,7 @@ void AExpeditionGameState::EndPlay(const EEndPlayReason::Type EndPlayReason)
 		World->GetTimerManager().ClearTimer(PhaseTimer);
 		World->GetTimerManager().ClearTimer(RestartTimer);
 		World->GetTimerManager().ClearTimer(DayEndTimer);
+		World->GetTimerManager().ClearTimer(CrewLoadTimer);
 		World->RemoveOnActorSpawnedHandler(ActorSpawnedHandle);
 	}
 
@@ -136,13 +194,21 @@ bool AExpeditionGameState::StartExpedition()
 		return false;
 	}
 
-	const FExpeditionClockParams Params = GetParams();
+	FExpeditionClockParams Params = GetParams();
+	// ADR-007 §11: the further the zone, the earlier the deluge (clients read the replicated deadline)
+	if (const URunSubsystem* Run = URunSubsystem::Get(this))
+	{
+		Params.InitialFloodDelay *= Run->GetFloodDelayScale();
+	}
 	const double Now = GetServerWorldTimeSeconds();
 	const double PreviousFloodStartTime = ClockState.FloodStartTime;
 
 	ExpeditionId = FGuid::NewGuid();
 	ClockState = ExpeditionClock::Start(Now, Params);
 	Resolution = EExpeditionResolution::None;
+	// the wait for the crew is over, whoever started the clock
+	GetWorldTimerManager().ClearTimer(CrewLoadTimer);
+	CrewWaitEndTime = -1.0;
 
 	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: started at %.2f s, flood at %.2f s"),
 		*ExpeditionId.ToString(), ClockState.StartTime, ClockState.FloodStartTime);
@@ -150,6 +216,95 @@ bool AExpeditionGameState::StartExpedition()
 	OnFloodDeadlineChanged.Broadcast(ClockState.FloodStartTime, PreviousFloodStartTime);
 	RefreshPhase();
 	return true;
+}
+
+bool AExpeditionGameState::ShouldStartClock(bool bSolo, int32 Loaded, int32 Loading, int32 Expected, double Waited, double JoinGrace, double Timeout)
+{
+	if (bSolo || Waited >= Timeout)
+	{
+		return true;
+	}
+	if (Loaded <= 0 || Loading > 0)
+	{
+		return false;
+	}
+	return Expected > 0 ? Loaded >= Expected : Waited >= JoinGrace;
+}
+
+void AExpeditionGameState::CountCrewLoad(int32& OutLoaded, int32& OutLoading) const
+{
+	OutLoaded = 0;
+	OutLoading = 0;
+	const UWorld* World = GetWorld();
+	if (!World)
+	{
+		return;
+	}
+	for (FConstPlayerControllerIterator It = World->GetPlayerControllerIterator(); It; ++It)
+	{
+		APlayerController* Controller = It->Get();
+		if (!Controller || !Controller->PlayerState || Controller->PlayerState->IsOnlyASpectator())
+		{
+			continue;
+		}
+		// a client has loaded this map once its connection says so (the host and a solo player always have)
+		if (Controller->GetPawn() && Controller->HasClientLoadedCurrentWorld())
+		{
+			++OutLoaded;
+		}
+		else
+		{
+			++OutLoading;
+		}
+	}
+	// clients connected to this map but not logged in yet: loading it after a non seamless travel
+	if (const UNetDriver* Driver = World->GetNetDriver())
+	{
+		for (const UNetConnection* Connection : Driver->ClientConnections)
+		{
+			if (Connection && Connection->GetConnectionState() == USOCK_Open && !Connection->PlayerController)
+			{
+				++OutLoading;
+			}
+		}
+	}
+}
+
+void AExpeditionGameState::TryStartWhenCrewLoaded()
+{
+	if (!HasAuthority() || ClockState.bStarted || IsExpeditionOver())
+	{
+		GetWorldTimerManager().ClearTimer(CrewLoadTimer);
+		CrewWaitEndTime = -1.0;
+		return;
+	}
+	int32 Loaded = 0;
+	int32 Loading = 0;
+	CountCrewLoad(Loaded, Loading);
+	const double Waited = GetWorld()->GetTimeSeconds() - CrewWaitStartTime;
+	const double Timeout = Rules ? Rules->CrewLoadTimeoutSeconds : 0.0;
+	const double JoinGrace = Rules ? Rules->CrewJoinGraceSeconds : 0.0;
+	const bool bSolo = GetNetMode() == NM_Standalone;
+	CrewLoaded = static_cast<uint8>(FMath::Clamp(Loaded, 0, 255));
+	CrewExpected = static_cast<uint8>(FMath::Clamp(FMath::Max(ExpectedCrew, Loaded + Loading), 0, 255));
+	if (!ShouldStartClock(bSolo, Loaded, Loading, ExpectedCrew, Waited, JoinGrace, Timeout))
+	{
+		// the HUD tells the crew who it waits for and until when
+		CrewWaitEndTime = GetServerWorldTimeSeconds() + FMath::Max(0.0, Timeout - Waited);
+		return;
+	}
+	GetWorldTimerManager().ClearTimer(CrewLoadTimer);
+	CrewWaitEndTime = -1.0;
+	if (!bSolo && (Loading > 0 || Loaded < ExpectedCrew))
+	{
+		UE_LOG(Logmonke_island, Warning, TEXT("Expedition: %d of %d player(s) loaded after %.0f s (%d still on their way): the clock starts without them, they will be put on the deck"),
+			Loaded, FMath::Max(ExpectedCrew, Loaded + Loading), Waited, Loading);
+	}
+	else
+	{
+		UE_LOG(Logmonke_island, Log, TEXT("Expedition: the crew is in (%d player(s) loaded after %.1f s): the clock starts"), Loaded, Waited);
+	}
+	StartExpedition();
 }
 
 EZoneBonusResult AExpeditionGameState::AddZoneBonus(FName ZoneId)
@@ -320,7 +475,8 @@ void AExpeditionGameState::OnRep_Phase(EExpeditionPhase PreviousPhase)
 
 double AExpeditionGameState::GetRestartTime() const
 {
-	return IsTeamWiped() ? TeamWipedTime + (Rules ? Rules->GameOverRestartDelay : 0.0f) : -1.0;
+	// the day lost (T-173): the travel to the next island, none when the campaign is lost with it
+	return IsTeamWiped() ? GetNextTravelTime() : -1.0;
 }
 
 void AExpeditionGameState::WatchPlayerCharacter(AActor* Actor)
@@ -426,11 +582,31 @@ void AExpeditionGameState::CheckTeamWiped()
 
 	GetWorldTimerManager().ClearTimer(DayEndTimer);
 	TeamWipedTime = GetServerWorldTimeSeconds();
-	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: every player is dead at %.2f s, game over, restart in %.1f s"),
-		*ExpeditionId.ToString(), TeamWipedTime, Rules->GameOverRestartDelay);
+	// ADR-007 §14 (T-173): the whole crew dead loses the day, not the game. The run counts it (nothing brought back, the
+	// loot left on the island, the day spent, a fee per death) and the galleon sails on to the next island; only a
+	// contract failed on its milestone day ends the campaign (execution rule: nobody is left to execute, no scene)
+	URunSubsystem* Run = URunSubsystem::Get(this);
+	const FRunDayReport Report = Run ? Run->EndDay(GetWorld(), 0, Dead, true) : FRunDayReport();
+	const FDayEndPlan Plan = ExpeditionDayEnd::Plan(true, Report.Verdict, DayEndDelaysOf(Rules, Run));
+	DayEndTravelWait = Plan.TravelWait;
+	bExecution = Plan.IsCampaignLost();
+	if (bExecution)
+	{
+		UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: every player is dead at %.2f s on the last day of the contract, quota missed: the campaign is lost (nobody left to execute, no travel)"),
+			*ExpeditionId.ToString(), TeamWipedTime);
+	}
+	else
+	{
+		UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: every player is dead at %.2f s: the day is lost, next island in %.1f s"),
+			*ExpeditionId.ToString(), TeamWipedTime, Plan.TravelWait);
+	}
+	ForceNetUpdate();
 	OnTeamWiped.Broadcast();
-	GetWorldTimerManager().SetTimer(RestartTimer, this, &AExpeditionGameState::RestartFromBoot,
-		FMath::Max(Rules->GameOverRestartDelay, UE_KINDA_SMALL_NUMBER), false);
+	if (!bExecution)
+	{
+		GetWorldTimerManager().SetTimer(RestartTimer, this, &AExpeditionGameState::RestartFromBoot,
+			FMath::Max(Plan.TravelWait, UE_KINDA_SMALL_NUMBER), false);
+	}
 }
 
 void AExpeditionGameState::ResolveDelugeEnd()
@@ -468,7 +644,8 @@ void AExpeditionGameState::ResolveDelugeEnd()
 			bAboard ? TEXT("aboard the galleon: survives") : TEXT("not aboard the galleon: dies"));
 		if (!bAboard)
 		{
-			Health->ApplyHealthDamage(1.0e6f, this);
+			// "Emporté par le déluge" on the death screen (T-135)
+			Health->ApplyHealthDamage(1.0e6f, this, EDeathCause::Flood);
 		}
 	}
 	EndDay();
@@ -492,11 +669,112 @@ void AExpeditionGameState::EndDay()
 	}
 
 	DayEndedTime = GetServerWorldTimeSeconds();
-	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: the day ends at %.2f s with %d survivor(s) and %d dead, next island in %.1f s"),
-		*ExpeditionId.ToString(), DayEndedTime, Alive + Pending, Dead, Rules->DayEndTravelDelay);
+	// ADR-007: what is aboard the galleon is what the day brought back; the greed question gives the crew more time; the
+	// quota missed on the last day of the contract (owner 2026-10-07): the crew is put on a plank and shot (T-173: the
+	// same pure plan as a lost day, ExpeditionDayEnd)
+	URunSubsystem* Run = URunSubsystem::Get(this);
+	const FRunDayReport Report = Run ? Run->EndDay(GetWorld(), ComputeDayValue(), Dead, false) : FRunDayReport();
+	const FDayEndPlan Plan = ExpeditionDayEnd::Plan(false, Report.Verdict, DayEndDelaysOf(Rules, Run));
+	DayEndTravelWait = Plan.TravelWait;
+	bExecution = Plan.FollowUp == EDayEndFollowUp::Execution;
+	const FString FollowUp = bExecution ? FString(TEXT("contract failed: execution of the crew"))
+		: FString::Printf(TEXT("next island in %.1f s"), Plan.TravelWait);
+	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: the day ends at %.2f s with %d survivor(s) and %d dead, %s"),
+		*ExpeditionId.ToString(), DayEndedTime, Alive + Pending, Dead, *FollowUp);
 	OnDaySurvived.Broadcast();
+	if (bExecution)
+	{
+		BeginExecution();
+		return;
+	}
 	GetWorldTimerManager().SetTimer(RestartTimer, this, &AExpeditionGameState::RestartFromBoot,
-		FMath::Max(Rules->DayEndTravelDelay, UE_KINDA_SMALL_NUMBER), false);
+		FMath::Max(DayEndTravelWait, UE_KINDA_SMALL_NUMBER), false);
+}
+
+bool AExpeditionGameState::CanDepartFromHelm() const
+{
+	// the clock runs: not while the crew is still loading the island (T-292), not once the day is over
+	return Rules && ClockState.bStarted && (Phase == EExpeditionPhase::Exploring || Phase == EExpeditionPhase::Submerging) && !IsExpeditionOver();
+}
+
+bool AExpeditionGameState::SailFromHelm()
+{
+	if (!HasAuthority() || !Rules || IsExpeditionOver())
+	{
+		return false;
+	}
+	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: the galleon sails from the wheel at %.2f s (whoever is ashore is left behind)"),
+		*ExpeditionId.ToString(), GetServerWorldTimeSeconds());
+	ResolveDelugeEnd();
+	return IsExpeditionOver();
+}
+
+void AExpeditionGameState::BeginExecution()
+{
+	// no travel: the end screen of the lost campaign follows the scene (UTapaoUISubsystem), the host starts again
+	GetWorldTimerManager().ClearTimer(RestartTimer);
+	ForceNetUpdate();
+	AExecutionScene::Begin(GetWorld(), AGalleonActor::Get(this));
+}
+
+void AExpeditionGameState::DebugExecute()
+{
+	if (!HasAuthority() || IsExpeditionOver())
+	{
+		return;
+	}
+	GetWorldTimerManager().ClearTimer(DayEndTimer);
+	DayEndedTime = GetServerWorldTimeSeconds();
+	DayEndTravelWait = 0.0f;
+	bExecution = true;
+	UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: execution of the crew (test)"), *ExpeditionId.ToString());
+	OnDaySurvived.Broadcast();
+	BeginExecution();
+}
+
+#if !UE_BUILD_SHIPPING
+// monke.EndDayAtHelm (the notice of a departure from the wheel) lives with the departure: Galleon/GalleonDepartureComponent.cpp
+static FAutoConsoleCommandWithWorld GExecutionCommand(
+	TEXT("monke.Execution.Start"),
+	TEXT("Ends the day now with the execution of the crew (server, tests): plank, French squad, end screen"),
+	FConsoleCommandWithWorldDelegate::CreateLambda([](UWorld* World)
+	{
+		if (AExpeditionGameState* GameState = AExpeditionGameState::Get(World))
+		{
+			GameState->DebugExecute();
+		}
+	}));
+
+static FAutoConsoleCommandWithWorld GEndDelugeCommand(
+	TEXT("monke.EndDeluge"),
+	TEXT("Ends the deluge now (server, tests): whoever is aboard the galleon survives the day, the others die"),
+	FConsoleCommandWithWorldDelegate::CreateLambda([](UWorld* World)
+	{
+		if (AExpeditionGameState* GameState = AExpeditionGameState::Get(World))
+		{
+			GameState->DebugEndDeluge();
+		}
+	}));
+#endif
+
+void AExpeditionGameState::HurryTravel(float Seconds)
+{
+	// the day over, survived or lost (T-173: the host sends the galleon on after a lost day too), a travel to come
+	if (!HasAuthority() || !IsExpeditionOver() || bExecution)
+	{
+		return;
+	}
+	FTimerManager& Timers = GetWorldTimerManager();
+	const float Left = Timers.GetTimerRemaining(RestartTimer);
+	if (Left > Seconds)
+	{
+		const float Wait = FMath::Max(Seconds, UE_KINDA_SMALL_NUMBER);
+		Timers.SetTimer(RestartTimer, this, &AExpeditionGameState::RestartFromBoot, Wait, false);
+		const double DayOverTime = IsTeamWiped() ? TeamWipedTime : DayEndedTime;
+		DayEndTravelWait = static_cast<float>(GetServerWorldTimeSeconds() - DayOverTime) + Wait;
+		ForceNetUpdate();
+		UE_LOG(Logmonke_island, Log, TEXT("Expedition %s: the travel to the next island is hurried, it leaves in %.1f s"), *ExpeditionId.ToString(), Wait);
+	}
 }
 
 void AExpeditionGameState::OnRep_DayEndedTime()
@@ -509,11 +787,16 @@ void AExpeditionGameState::OnRep_DayEndedTime()
 
 double AExpeditionGameState::GetNextTravelTime() const
 {
-	if (IsTeamWiped())
+	if (bExecution || !IsExpeditionOver())
 	{
-		return GetRestartTime();
+		// no travel: the expedition runs, or the campaign is lost (an execution, or a crew wiped on its milestone day)
+		return -1.0;
 	}
-	return IsDaySurvived() ? DayEndedTime + (Rules ? Rules->DayEndTravelDelay : 0.0f) : -1.0;
+	// a day survived or lost (T-173): the galleon sails on to the next island
+	const bool bLost = IsTeamWiped();
+	const float Default = Rules ? (bLost ? Rules->GameOverRestartDelay : Rules->DayEndTravelDelay) : 0.0f;
+	const float Wait = DayEndTravelWait >= 0.0f ? DayEndTravelWait : Default;
+	return (bLost ? TeamWipedTime : DayEndedTime) + Wait;
 }
 
 void AExpeditionGameState::OnRep_TeamWipedTime()
@@ -524,8 +807,27 @@ void AExpeditionGameState::OnRep_TeamWipedTime()
 	}
 }
 
+int32 AExpeditionGameState::ComputeDayValue() const
+{
+	int32 Value = 0;
+	for (TActorIterator<AGalleonActor> It(GetWorld()); It; ++It)
+	{
+		Value += FMath::Max(0, It->GetCargoValue());
+	}
+	return Value;
+}
+
 void AExpeditionGameState::RestartFromBoot()
 {
+	// ADR-007: what was bought or picked up after the end of the day (greed window) travels too
+	if (IsDaySurvived() && !IsTeamWiped())
+	{
+		if (URunSubsystem* Run = URunSubsystem::Get(this))
+		{
+			Run->StoreLoadouts(GetWorld(), false);
+			Run->SaveRun();
+		}
+	}
 	FString Map = Rules ? Rules->RestartMap.GetLongPackageName() : FString();
 	if (Map.IsEmpty() && GConfig)
 	{
@@ -537,6 +839,7 @@ void AExpeditionGameState::RestartFromBoot()
 	const EFragmentError Error = Islands ? Islands->TravelToMapURL(Map) : EFragmentError::TravelFailed;
 	if (Error != EFragmentError::None)
 	{
-		UE_LOG(Logmonke_island, Error, TEXT("Expedition %s: game over but no restart (map '%s'): the players stay dead on this map"), *ExpeditionId.ToString(), *Map);
+		UE_LOG(Logmonke_island, Error, TEXT("Expedition %s: the day is over but the travel to the next island failed (map '%s'): the players stay on this map"),
+			*ExpeditionId.ToString(), *Map);
 	}
 }

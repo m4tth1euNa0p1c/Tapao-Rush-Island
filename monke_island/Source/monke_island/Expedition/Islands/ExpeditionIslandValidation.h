@@ -46,6 +46,16 @@ namespace ExpeditionIslands
 	/** Fragment drawn among FragmentIds from Seed, never PreviousFragmentId twice in a row unless it is the only one */
 	[[nodiscard]] MONKE_ISLAND_API TValueOrError<FName, EFragmentError> PickFragmentId(TConstArrayView<FName> FragmentIds, int32 Seed, FName PreviousFragmentId);
 
+	/**
+	 *  Index drawn from Seed with a chance proportional to its weight (same seed, same draw); weights <= 0 are never
+	 *  drawn; never ExcludedIndex while another drawable one exists. INDEX_NONE when nothing is drawable.
+	 */
+	[[nodiscard]] MONKE_ISLAND_API int32 PickWeightedIndex(TConstArrayView<float> Weights, int32 Seed, int32 ExcludedIndex);
+
+	/** PickFragmentId with a weight per fragment (the fort island weighs more, T-205); Weights as long as FragmentIds */
+	[[nodiscard]] MONKE_ISLAND_API TValueOrError<FName, EFragmentError> PickWeightedFragmentId(TConstArrayView<FName> FragmentIds,
+		TConstArrayView<float> Weights, int32 Seed, FName PreviousFragmentId);
+
 	/** Fragment id carried by the options of a travel URL (Island=...), None when absent or malformed */
 	[[nodiscard]] MONKE_ISLAND_API FName ParseFragmentOption(const TCHAR* OptionValue);
 }

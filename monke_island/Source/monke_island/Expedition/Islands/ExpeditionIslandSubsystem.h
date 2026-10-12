@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TimerManager.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "Expedition/Islands/ExpeditionIslandTypes.h"
 #include "ExpeditionIslandSubsystem.generated.h"

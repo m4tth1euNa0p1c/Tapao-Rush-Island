@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 #include "Expedition/Islands/ExpeditionIslandTypes.h"
+#include "Run/RunCampaign.h"
 #include "ExpeditionIslandDefinition.generated.h"
 
 class UTexture2D;
@@ -57,6 +58,18 @@ public:
 	/** Anchorages of the boat (cahier §6.4) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Gameplay")
 	TArray<FExpeditionAnchorage> Anchorages;
+
+	/** The daily draw offers this island only once the campaign opened Unlock (the fort island: Forts, from day 6, T-205) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Draw")
+	bool bNeedsUnlock = false;
+
+	/** See bNeedsUnlock */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Draw", meta=(EditCondition="bNeedsUnlock"))
+	ERunUnlock Unlock = ERunUnlock::Forts;
+
+	/** Weight of the island in the daily draw, the others weighing 1 each (0: never drawn at random) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Draw", meta=(ClampMin="0"))
+	float DrawWeight = 1.0f;
 
 	/** Land area of the fragment (ha) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Description", meta=(ClampMin="0"))

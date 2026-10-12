@@ -6,6 +6,7 @@
 #include "Expedition/Islands/ExpeditionIslandValidation.h"
 #include "Expedition/Islands/FragmentRules.h"
 #include "Expedition/Islands/IslandCatalog.h"
+#include "UObject/Package.h"
 #include "UObject/StrongObjectPtr.h"
 
 #if WITH_AUTOMATION_TESTS
@@ -313,6 +314,46 @@ void FFragmentsSpec::Define()
 		It("ignores a previous fragment that left the catalog", [this, Ids]()
 		{
 			TestTrue(TEXT("value"), ExpeditionIslands::PickFragmentId(Ids, 3, TEXT("FRG_Gone_09")).HasValue());
+		});
+
+		// T-205: the fort island weighs more in the draw than an atoll fragment (DrawWeight), from the day it opens
+		It("draws in proportion to the weights, the same seed giving the same island", [this, Ids]()
+		{
+			const TArray<float> Weights = { 1.0f, 1.0f, 1.0f, 7.0f };
+			int32 Heavy = 0;
+			for (int32 Seed = 0; Seed < 1000; ++Seed)
+			{
+				const TValueOrError<FName, EFragmentError> A = ExpeditionIslands::PickWeightedFragmentId(Ids, Weights, Seed, NAME_None);
+				const TValueOrError<FName, EFragmentError> B = ExpeditionIslands::PickWeightedFragmentId(Ids, Weights, Seed, NAME_None);
+				if (!TestTrue(TEXT("value"), A.HasValue() && B.HasValue()) || !TestEqual(TEXT("same seed"), A.GetValue(), B.GetValue()))
+				{
+					return;
+				}
+				Heavy += A.GetValue() == Ids[3] ? 1 : 0;
+			}
+			// 7 / 10 of the draws, give or take
+			TestTrue(*FString::Printf(TEXT("heavy island drawn %d times out of 1000"), Heavy), Heavy > 630 && Heavy < 770);
+		});
+
+		It("never draws a weightless island, nor the previous one twice in a row", [this, Ids]()
+		{
+			const TArray<float> Weights = { 1.0f, 0.0f, 1.0f, 3.0f };
+			FName Previous = NAME_None;
+			for (int32 Seed = 0; Seed < 300; ++Seed)
+			{
+				const FName Drawn = ExpeditionIslands::PickWeightedFragmentId(Ids, Weights, Seed, Previous).GetValue();
+				if (!TestNotEqual(TEXT("weightless"), Drawn, Ids[1]) || !TestNotEqual(TEXT("twice"), Drawn, Previous))
+				{
+					return;
+				}
+				Previous = Drawn;
+			}
+			const TArray<float> OnlyOne = { 0.0f, 0.0f, 2.0f, 0.0f };
+			TestEqual(TEXT("the only drawable one, even after itself"),
+				ExpeditionIslands::PickWeightedFragmentId(Ids, OnlyOne, 5, Ids[2]).GetValue(), Ids[2]);
+			const TArray<float> None = { 0.0f, 0.0f, 0.0f, 0.0f };
+			TestTrue(TEXT("nothing drawable"), ExpeditionIslands::PickWeightedFragmentId(Ids, None, 5, NAME_None).HasError());
+			TestTrue(TEXT("weights of another length"), ExpeditionIslands::PickWeightedFragmentId(Ids, MakeArrayView(OnlyOne.GetData(), 2), 5, NAME_None).HasError());
 		});
 	});
 
