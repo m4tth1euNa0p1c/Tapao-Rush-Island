@@ -1,0 +1,50 @@
+T-233 / T-234 — Texte de prises originales à enregistrer (aucun fichier vocal livré)
+
+Format de livraison : WAV mono 48 kHz / 24 bits, sans réverbération ni musique,
+trois prises par phrase, 0,5 s de marge. Documenter les droits de l'interprète.
+Jeu léger pour les beans ; les habitants sont des personnages fictifs.
+
+PNJ / habitants
+NPC_Greet_01 : Bonjour, voyageur !
+NPC_Greet_02 : Belle journée pour prendre la mer.
+NPC_Theft_01 : Hé ! Cet objet ne vous appartient pas !
+NPC_Theft_02 : Reposez ça !
+NPC_Flee_01 : À l'aide !
+NPC_Flee_02 : Vite, mettez-vous à l'abri !
+
+Marchand
+Merchant_Greet_01 : Approchez ! On regarde, on marchande, on achète !
+Merchant_Greet_02 : Alors, qu'est-ce que la marée vous a rapporté ?
+Merchant_Joke_01 : Mes prix flottent… mais ils ne coulent jamais !
+Merchant_Joke_02 : Garanti jusqu'au prochain naufrage.
+Merchant_Bought_01 : Marché conclu !
+Merchant_Sold_01 : Ça, je vous le prends.
+Merchant_DeniedMoney_01 : Il manque quelques pièces, capitaine.
+Merchant_DeniedSpace_01 : Faites un peu de place dans vos poches.
+Merchant_Rare_01 : Oh ! Voilà une trouvaille qui mérite qu'on en parle.
+Merchant_Worthless_01 : Joli caillou. Toujours un caillou.
+Merchant_QuotaMissing_01 : Le compte n'y est pas encore.
+
+Soldats français
+Soldier_Patrol_01 : Gardez l'œil ouvert.
+Soldier_Detect_01 : Vous, là-bas ! Arrêtez-vous !
+Soldier_Alert_01 : Alerte ! Un intrus !
+Soldier_Chase_01 : Ne le laissez pas s'échapper !
+Soldier_Load_01 : Rechargez !
+Soldier_Fire_01 : Feu !
+Soldier_Search_01 : Il était par ici…
+Soldier_Search_02 : Fouillez les alentours !
+Soldier_Lost_01 : Plus aucune trace. Reprenez la patrouille.
+
+Prises non verbales, séparées des phrases
+Player_BreathCalm : respiration calme, boucle de 12 à 20 s.
+Player_BreathTired : souffle court après un effort, boucle de 12 à 20 s.
+Player_Jump : effort bref ; 4 variations.
+Player_Hurt : douleur brève ; 5 variations d'intensité.
+Player_Death : expiration / cri de chute ; 3 variations sans boucle.
+NPC_Fear : sursaut et cri court ; 4 variations.
+Merchant_Laugh : rire bref, chaleureux ; 3 variations.
+Soldier_Hurt / Soldier_Death : 4 / 3 variations.
+
+Ces textes sont originaux. Ils ne remplacent ni l'enregistrement ni les
+raccordements serveur/client et les règles anti-répétition listés dans le catalogue.

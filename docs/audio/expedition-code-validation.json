@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-08T20:38:08.650434+00:00",
+  "task": "T-234",
+  "target": "monke_island Win64 Development",
+  "command": "python scripts/worktree.py build T-234",
+  "success": true,
+  "worktree": ".worktrees/T-234",
+  "main_head": "2cf959838827272341b8b994f1e9f6812f598701",
+  "source_baseline": "monke_island/Saved/T234/source-baseline.json",
+  "files": [
+    {
+      "path": "monke_island/Source/monke_island/Audio/ExpeditionAudioMath.h",
+      "sha256": "7cbe04a800effe2c1f66806f776c7875b53f580eaa0c973239a80b4394786212"
+    },
+    {
+      "path": "monke_island/Source/monke_island/Audio/ExpeditionAudioRules.h",
+      "sha256": "b0918ba252ebfefe2aca02bffdb99f7afd7ce926810cb2e516b4c664d7c31bba"
+    },
+    {
+      "path": "monke_island/Source/monke_island/Audio/ExpeditionAudioSubsystem.cpp",
+      "sha256": "b793b943068c79e0588280dad20ceda221aa6058eb97665994afa1225e306968"
+    },
+    {
+      "path": "monke_island/Source/monke_island/Audio/ExpeditionAudioSubsystem.h",
+      "sha256": "25dbb0f24e8408ac3111f4d7d7dca1c57493d608d4804d29f9256ca73f4ffe80"
+    },
+    {
+      "path": "monke_island/Source/monke_island/Audio/Tests/ExpeditionAudioSpec.cpp",
+      "sha256": "74ec367ae6a1746716508568ce5dfa9cf02f1b0ad06ce717c4068e5e8f995cb2"
+    }
+  ],
+  "automation_executed": false,
+  "editor_target_compiled": false,
+  "imported": false,
+  "pie_listened": false,
+  "main_tree": {
+    "at": "2026-10-10T00:09:40.250434+00:00",
+    "note": "2026-10-10: the five Audio/ files copied alone into the main tree (no other Source file of the worktree); ReadRound reads the campaign verdict on any game state (URunStateComponent::Get)",
+    "files": [
+      {
+        "path": "monke_island/Source/monke_island/Audio/ExpeditionAudioMath.h",
+        "sha256": "7cbe04a800effe2c1f66806f776c7875b53f580eaa0c973239a80b4394786212"
+      },
+      {
+        "path": "monke_island/Source/monke_island/Audio/ExpeditionAudioRules.h",
+        "sha256": "b0918ba252ebfefe2aca02bffdb99f7afd7ce926810cb2e516b4c664d7c31bba"
+      },
+      {
+        "path": "monke_island/Source/monke_island/Audio/ExpeditionAudioSubsystem.cpp",
+        "sha256": "19a0e2106176868abb8fb9009b2cbc69660fdab659af405875fde2832ba3d617"
+      },
+      {
+        "path": "monke_island/Source/monke_island/Audio/ExpeditionAudioSubsystem.h",
+        "sha256": "25dbb0f24e8408ac3111f4d7d7dca1c57493d608d4804d29f9256ca73f4ffe80"
+      },
+      {
+        "path": "monke_island/Source/monke_island/Audio/Tests/ExpeditionAudioSpec.cpp",
+        "sha256": "74ec367ae6a1746716508568ce5dfa9cf02f1b0ad06ce717c4068e5e8f995cb2"
+      }
+    ],
+    "editor_singlefile_compiled": [
+      {
+        "file": "Audio/ExpeditionAudioSubsystem.cpp",
+        "result": "Succeeded",
+        "log": "monke_island/Saved/T234/ubt-singlefile-subsystem.log"
+      },
+      {
+        "file": "Audio/Tests/ExpeditionAudioSpec.cpp",
+        "result": "Succeeded",
+        "log": "monke_island/Saved/T234/ubt-singlefile-spec.log"
+      }
+    ],
+    "command": "UnrealBuildTool monke_islandEditor Win64 Development -SingleFile=<cpp> -WaitMutex -NoHotReloadFromIDE (Live Coding session active: output to a temporary location, no DLL produced)"
+  },
+  "editor_target_note": "single-file compilation only; the full editor build that loads the new classes is the lead's"
+}

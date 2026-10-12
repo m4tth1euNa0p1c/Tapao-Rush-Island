@@ -9,6 +9,7 @@
 #include "Engine/StreamableManager.h"
 #include "Engine/Texture2D.h"
 #include "Engine/World.h"
+#include "Expedition/Core/DayTransitionSubsystem.h"
 #include "Expedition/Core/ExpeditionGameState.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
@@ -197,7 +198,14 @@ FText UFloodTimerWidget::ReadDayText() const
 #if MONKE_FLOOD_TIMER_HAS_RUN
 	if (const URunStateComponent* Run = URunStateComponent::Get(this))
 	{
-		return FloodTimerMath::FormatDay(Run->GetDayIndex(), Run->GetDaysPerPeriod());
+		// ADR-007: the day of the contract, then the value brought back against the quota
+		const FText Day = FloodTimerMath::FormatDay(Run->GetDayIndex(), Run->GetDaysPerPeriod());
+		if (Run->GetQuota() <= 0)
+		{
+			return Day;
+		}
+		return FText::Format(NSLOCTEXT("FloodTimer", "DayQuota", "{0} · Quota {1} / {2}{3}"), Day, FText::AsNumber(Run->GetHoldValue()),
+			FText::AsNumber(Run->GetQuota()), Run->IsGreedDay() ? NSLOCTEXT("FloodTimer", "Greed", " · jour de cupidité") : FText::GetEmpty());
 	}
 #endif
 	return FText::GetEmpty();
@@ -220,16 +228,21 @@ void UFloodTimerWidget::Refresh()
 
 	Snapshot = FloodTimerMath::Evaluate(Source.Read());
 	const FFloodTimerEvents Events = Presenter.Update(Snapshot);
-	// the day of the run before the clock ("Jour 2/5 · 1:45", ADR-006), read from the replicated state at each refresh
-	DayText = ReadDayText();
-	ClockText = Snapshot.Mode == EFloodTimerMode::Hidden ? MakeClockText(Snapshot) : FloodTimerMath::ComposeClockLine(DayText, MakeClockText(Snapshot));
-
 	const UHudTimerRules& R = GetRules();
+	// the day of the contract and the quota (ADR-007), read from the replicated state at each refresh; written before the
+	// clock only when the rules ask: by default the timer is the clock alone (T-283), the TAPAO HUD shows the day top left
+	DayText = ReadDayText();
+	const FText Clock = MakeClockText(Snapshot);
+	ClockText = Snapshot.Mode == EFloodTimerMode::Hidden || !R.bShowRunDayInClock ? Clock : FloodTimerMath::ComposeClockLine(DayText, Clock);
+
 	const bool bUrgent = Snapshot.Mode == EFloodTimerMode::Countdown && Snapshot.SecondsLeft <= R.UrgentSeconds;
 	if (View.IsValid())
 	{
 		View->SetClock(Snapshot.Mode, ClockText, bUrgent);
 	}
+	// no clock during the arrival and departure scenes (owner 2026-10-07: no player UI in a scene)
+	const UDayTransitionSubsystem* Transition = UDayTransitionSubsystem::Get(this);
+	SetVisibility(Transition && Transition->IsScenePlaying() ? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
 
 	if (Events.bModeChanged)
 	{

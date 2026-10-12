@@ -1,0 +1,79 @@
+[
+ {
+  "name": "Capture_Cage",
+  "glb": [
+   "SM_Capture_Cage.glb",
+   "SM_Capture_Cage_Door.glb"
+  ],
+  "turn_deg": [
+   24,
+   0,
+   -38
+  ],
+  "raw": "art/ui/icons/capture/_raw/T_Icon_Capture_Cage.png",
+  "png": "art/ui/icons/capture/T_Icon_Capture_Cage.png",
+  "meshes": 2,
+  "extent_m": 2.4,
+  "coverage_px": [
+   447,
+   468
+  ]
+ },
+ {
+  "name": "Capture_Cage_Folded",
+  "glb": [
+   "SM_Capture_Cage_Folded.glb"
+  ],
+  "turn_deg": [
+   24,
+   0,
+   -32
+  ],
+  "raw": "art/ui/icons/capture/_raw/T_Icon_Capture_Cage_Folded.png",
+  "png": "art/ui/icons/capture/T_Icon_Capture_Cage_Folded.png",
+  "meshes": 1,
+  "extent_m": 0.517,
+  "coverage_px": [
+   468,
+   254
+  ]
+ },
+ {
+  "name": "Steel_Handcuffs",
+  "glb": [
+   "SM_Steel_Handcuffs.glb"
+  ],
+  "turn_deg": [
+   58,
+   0,
+   8
+  ],
+  "raw": "art/ui/icons/capture/_raw/T_Icon_Steel_Handcuffs.png",
+  "png": "art/ui/icons/capture/T_Icon_Steel_Handcuffs.png",
+  "meshes": 1,
+  "extent_m": 0.32,
+  "coverage_px": [
+   468,
+   132
+  ]
+ },
+ {
+  "name": "Steel_Handcuffs_Open",
+  "glb": [
+   "SM_Steel_Handcuffs_Open.glb"
+  ],
+  "turn_deg": [
+   10,
+   0,
+   -18
+  ],
+  "raw": "art/ui/icons/capture/_raw/T_Icon_Steel_Handcuffs_Open.png",
+  "png": "art/ui/icons/capture/T_Icon_Steel_Handcuffs_Open.png",
+  "meshes": 1,
+  "extent_m": 0.335,
+  "coverage_px": [
+   468,
+   370
+  ]
+ }
+]

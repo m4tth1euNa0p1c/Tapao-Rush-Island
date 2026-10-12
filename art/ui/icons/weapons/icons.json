@@ -1,0 +1,392 @@
+[
+ {
+  "name": "Pistol",
+  "glb": "bean-pirate-pistol/exports/Static/SM_Bean_PiratePistol.glb",
+  "pose": "pistol",
+  "png": "art/ui/icons/weapons/T_Icon_Pistol.png",
+  "meshes": 5,
+  "extent_m": 0.332,
+  "textures": [
+   "T_PiratePistol_BaseColor",
+   "T_PiratePistol_Normal",
+   "T_PiratePistol_ORM"
+  ]
+ },
+ {
+  "name": "Rifle",
+  "glb": "bean-rifle-anim/exports/Static/SM_Bean_PirateRifle.glb",
+  "pose": "long",
+  "png": "art/ui/icons/weapons/T_Icon_Rifle.png",
+  "meshes": 1,
+  "extent_m": 0.911,
+  "textures": [
+   "T_Bean_PirateRifle_D",
+   "T_Bean_PirateRifle_N",
+   "T_Bean_PirateRifle_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_ShotBag",
+  "glb": "bean-blunderbuss-anim/exports/Static/SM_Ammo_ShotBag.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_ShotBag.png",
+  "meshes": 1,
+  "extent_m": 0.063,
+  "textures": [
+   "T_Ammo_ShotBag_D",
+   "T_Ammo_ShotBag_N",
+   "T_Ammo_ShotBag_ORM"
+  ]
+ },
+ {
+  "name": "Musket",
+  "glb": "bean-musket-anim/exports/Static/SM_Bean_PirateMusket.glb",
+  "pose": "long",
+  "png": "art/ui/icons/weapons/T_Icon_Musket.png",
+  "meshes": 1,
+  "extent_m": 0.716,
+  "textures": [
+   "T_Musket_Brass_D",
+   "T_Musket_Brass_N",
+   "T_Musket_Brass_ORM",
+   "T_Musket_Iron_D",
+   "T_Musket_Iron_N",
+   "T_Musket_Iron_ORM",
+   "T_Musket_Leather_D",
+   "T_Musket_Leather_N"
+  ]
+ },
+ {
+  "name": "DoublePistol",
+  "glb": "bean-pirate-pistol-double/exports/Static/SM_Bean_PirateDoublePistol.glb",
+  "pose": "pistol_top",
+  "png": "art/ui/icons/weapons/T_Icon_DoublePistol.png",
+  "meshes": 7,
+  "extent_m": 0.314,
+  "textures": [
+   "T_PirateDoublePistol_BaseColor",
+   "T_PirateDoublePistol_Normal",
+   "T_PirateDoublePistol_ORM"
+  ]
+ },
+ {
+  "name": "Shotgun",
+  "glb": "bean-pirate-shotgun/exports/Static/SM_Bean_PirateShotgun.glb",
+  "pose": "long",
+  "png": "art/ui/icons/weapons/T_Icon_Shotgun.png",
+  "meshes": 1,
+  "extent_m": 0.578,
+  "textures": [
+   "T_Shotgun_BaseColor",
+   "T_Shotgun_Normal",
+   "T_Shotgun_ORM"
+  ]
+ },
+ {
+  "name": "Blunderbuss",
+  "glb": "bean-blunderbuss-anim/exports/Static/SM_Bean_PirateBlunderbuss.glb",
+  "pose": "long",
+  "png": "art/ui/icons/weapons/T_Icon_Blunderbuss.png",
+  "meshes": 1,
+  "extent_m": 0.6,
+  "textures": [
+   "T_Bean_PirateBlunderbuss_D",
+   "T_Bean_PirateBlunderbuss_N",
+   "T_Bean_PirateBlunderbuss_ORM"
+  ]
+ },
+ {
+  "name": "Grenade",
+  "glb": "bean-grenade/exports/Static/SM_Bean_PirateGrenade.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_Grenade.png",
+  "meshes": 1,
+  "extent_m": 0.134,
+  "textures": [
+   "T_PirateGrenade_D",
+   "T_PirateGrenade_N",
+   "T_PirateGrenade_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_CrateMixed",
+  "glb": "ammo/exports/SM_Ammo_CrateMixed.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_CrateMixed.png",
+  "meshes": 1,
+  "extent_m": 0.313,
+  "textures": [
+   "T_Ammo_CrateMixed_D",
+   "T_Ammo_CrateMixed_N",
+   "T_Ammo_CrateMixed_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_GrenadeBag",
+  "glb": "ammo/exports/SM_Ammo_GrenadeBag.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_GrenadeBag.png",
+  "meshes": 1,
+  "extent_m": 0.215,
+  "textures": [
+   "T_Ammo_GrenadeBag_D",
+   "T_Ammo_GrenadeBag_N",
+   "T_Ammo_GrenadeBag_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_PowderKeg",
+  "glb": "ammo/exports/SM_Ammo_PowderKeg.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_PowderKeg.png",
+  "meshes": 1,
+  "extent_m": 0.286,
+  "textures": [
+   "T_Ammo_PowderKeg_D",
+   "T_Ammo_PowderKeg_N",
+   "T_Ammo_PowderKeg_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_CartridgeBox",
+  "glb": "bean-musket-anim/exports/Static/SM_Ammo_CartridgeBox.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_CartridgeBox.png",
+  "meshes": 1,
+  "extent_m": 0.186,
+  "textures": [
+   "T_Ammo_CartridgeBox_D",
+   "T_Ammo_CartridgeBox_N",
+   "T_Ammo_CartridgeBox_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_LeadBall",
+  "glb": "bean-musket-anim/exports/Static/SM_Ammo_LeadBall.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_LeadBall.png",
+  "meshes": 1,
+  "extent_m": 0.017,
+  "textures": [
+   "T_Ammo_LeadBall_D",
+   "T_Ammo_LeadBall_N",
+   "T_Ammo_LeadBall_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_MusketCartridge",
+  "glb": "bean-musket-anim/exports/Static/SM_Ammo_MusketCartridge.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_MusketCartridge.png",
+  "meshes": 1,
+  "extent_m": 0.053,
+  "textures": [
+   "T_Ammo_Cartridge_D",
+   "T_Ammo_Cartridge_N",
+   "T_Ammo_Cartridge_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_PowderHorn",
+  "glb": "bean-musket-anim/exports/Static/SM_Ammo_PowderHorn.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_PowderHorn.png",
+  "meshes": 1,
+  "extent_m": 0.145,
+  "textures": [
+   "T_Ammo_PowderHorn_D",
+   "T_Ammo_PowderHorn_N",
+   "T_Ammo_PowderHorn_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_BallPouch",
+  "glb": "bean-pirate-pistol/exports/Static/SM_Ammo_BallPouch.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_BallPouch.png",
+  "meshes": 1,
+  "extent_m": 0.091,
+  "textures": [
+   "T_Ammo_Pistol_BaseColor",
+   "T_Ammo_Pistol_Normal",
+   "T_Ammo_Pistol_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_PistolCartridge",
+  "glb": "bean-pirate-pistol/exports/Static/SM_Ammo_PistolCartridge.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_PistolCartridge.png",
+  "meshes": 1,
+  "extent_m": 0.049,
+  "textures": [
+   "T_Ammo_Pistol_BaseColor",
+   "T_Ammo_Pistol_Normal",
+   "T_Ammo_Pistol_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_Shell",
+  "glb": "bean-pirate-shotgun/exports/Static/SM_Ammo_Shell.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_Shell.png",
+  "meshes": 1,
+  "extent_m": 0.045,
+  "textures": [
+   "T_Ammo_Shell_BaseColor",
+   "T_Ammo_Shell_Normal",
+   "T_Ammo_Shell_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_ShellBox",
+  "glb": "bean-pirate-shotgun/exports/Static/SM_Ammo_ShellBox.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_ShellBox.png",
+  "meshes": 1,
+  "extent_m": 0.134,
+  "textures": [
+   "T_Ammo_ShellBox_BaseColor",
+   "T_Ammo_ShellBox_Normal",
+   "T_Ammo_ShellBox_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_RifleCartridge",
+  "glb": "bean-rifle-anim/exports/Static/SM_Ammo_RifleCartridge.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_RifleCartridge.png",
+  "meshes": 1,
+  "extent_m": 0.058,
+  "textures": [
+   "T_Ammo_RifleCartridge_D",
+   "T_Ammo_RifleCartridge_N",
+   "T_Ammo_RifleCartridge_ORM"
+  ]
+ },
+ {
+  "name": "MachineGun",
+  "glb": "bean-machinegun/exports/Static/SM_Bean_MachineGun.glb",
+  "pose": "long",
+  "png": "art/ui/icons/weapons/T_Icon_MachineGun.png",
+  "meshes": 1,
+  "extent_m": 0.957,
+  "textures": [
+   "T_MG_Belt_D",
+   "T_MG_Belt_N",
+   "T_MG_Belt_ORM",
+   "T_MG_Body_D",
+   "T_MG_Body_N",
+   "T_MG_Body_ORM",
+   "T_MG_Box_D",
+   "T_MG_Box_N"
+  ]
+ },
+ {
+  "name": "SM_Ammo_MGBox",
+  "glb": "bean-machinegun/exports/Static/SM_Ammo_MGBox.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_MGBox.png",
+  "meshes": 1,
+  "extent_m": 0.246,
+  "textures": [
+   "T_MG_Box_D",
+   "T_MG_Box_N",
+   "T_MG_Box_ORM"
+  ]
+ },
+ {
+  "name": "BoltRifle",
+  "glb": "art/export/Weapons/BoltRifle/exports/Static/SM_Bean_BoltRifle.glb",
+  "pose": "long",
+  "png": "art/ui/icons/weapons/T_Icon_BoltRifle.png",
+  "meshes": 1,
+  "extent_m": 0.854,
+  "textures": [
+   "T_BoltRifle_Metal_D",
+   "T_BoltRifle_Metal_N",
+   "T_BoltRifle_Metal_ORM",
+   "T_BoltRifle_Wood_D",
+   "T_BoltRifle_Wood_N",
+   "T_BoltRifle_Wood_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_RifleClipBox",
+  "glb": "art/export/Weapons/BoltRifle/exports/Static/SM_Ammo_RifleClipBox.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_RifleClipBox.png",
+  "meshes": 1,
+  "extent_m": 0.177,
+  "textures": [
+   "T_Ammo_RifleClipBox_D",
+   "T_Ammo_RifleClipBox_N",
+   "T_Ammo_RifleClipBox_ORM",
+   "T_BoltRifle_Ammo_D",
+   "T_BoltRifle_Ammo_N",
+   "T_BoltRifle_Ammo_ORM"
+  ]
+ },
+ {
+  "name": "SM_Ammo_StripperClip",
+  "glb": "art/export/Weapons/BoltRifle/exports/Static/SM_Ammo_StripperClip.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_StripperClip.png",
+  "meshes": 1,
+  "extent_m": 0.082,
+  "textures": [
+   "T_BoltRifle_Ammo_D",
+   "T_BoltRifle_Ammo_N",
+   "T_BoltRifle_Ammo_ORM"
+  ]
+ },
+ {
+  "name": "Mitraillette",
+  "glb": "art/export/Weapons/Mitraillette/exports/Static/SM_Bean_Mitraillette.glb",
+  "pose": "long",
+  "png": "art/ui/icons/weapons/T_Icon_Mitraillette.png",
+  "meshes": 1,
+  "extent_m": 0.636,
+  "textures": [
+   "T_Mitraillette_Drum_D",
+   "T_Mitraillette_Drum_N",
+   "T_Mitraillette_Drum_ORM",
+   "T_Mitraillette_Metal_D",
+   "T_Mitraillette_Metal_N",
+   "T_Mitraillette_Metal_ORM",
+   "T_Mitraillette_Wood_D",
+   "T_Mitraillette_Wood_N"
+  ]
+ },
+ {
+  "name": "SM_Ammo_MitrailletteDrum",
+  "glb": "art/export/Weapons/Mitraillette/exports/Static/SM_Ammo_MitrailletteDrum.glb",
+  "pose": "object",
+  "png": "art/ui/icons/weapons/T_Icon_SM_Ammo_MitrailletteDrum.png",
+  "meshes": 1,
+  "extent_m": 0.114,
+  "textures": [
+   "T_Mitraillette_Drum_D",
+   "T_Mitraillette_Drum_N",
+   "T_Mitraillette_Drum_ORM"
+  ]
+ },
+ {
+  "name": "BayonetMusket",
+  "glb": "art/export/Weapons/BayonetMusket/exports/Static/SM_Bean_BayonetMusket.glb",
+  "pose": "long",
+  "png": "art/ui/icons/weapons/T_Icon_BayonetMusket.png",
+  "meshes": 1,
+  "extent_m": 0.941,
+  "textures": [
+   "T_BayonetMusket_Brass_D",
+   "T_BayonetMusket_Brass_N",
+   "T_BayonetMusket_Brass_ORM",
+   "T_BayonetMusket_Iron_D",
+   "T_BayonetMusket_Iron_N",
+   "T_BayonetMusket_Iron_ORM",
+   "T_BayonetMusket_Leather_D",
+   "T_BayonetMusket_Leather_N"
+  ]
+ }
+]

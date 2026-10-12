@@ -48,7 +48,8 @@ public:
 	UFUNCTION(BlueprintPure, Category="HUD|Flood Timer")
 	FText GetClockText() const { return ClockText; }
 
-	/** "Jour N/5" shown before the clock (ADR-006), empty without a run in progress */
+	/** The day of the contract and the quota ("Jour 2/3 · Quota 9 648 / 5 500", ADR-007), empty without a run; written
+	 *  before the clock only with DA_HudTimerRules.bShowRunDayInClock (off by default, T-283) */
 	UFUNCTION(BlueprintPure, Category="HUD|Flood Timer")
 	FText GetDayText() const { return DayText; }
 
@@ -145,7 +146,7 @@ private:
 	/** Last clock line */
 	FText ClockText;
 
-	/** Last day line ("Jour N/5"), empty without a run */
+	/** Last day line ("Jour 2/3 · Quota …"), empty without a run */
 	FText DayText;
 
 	/** Day of the run read from the game state (URunStateComponent), empty when there is none */

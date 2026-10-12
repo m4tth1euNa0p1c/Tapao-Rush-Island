@@ -116,9 +116,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Flow")
 	TSoftObjectPtr<UWorld> PlayMap;
 
-	/** Options added to the play URL (listen server) */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Flow")
-	FString PlayOptions = TEXT("listen");
+	/**
+	 *  Places of a hosted game, the host included (cahier §16: lobby of 4 places), sent as ?MaxPlayers with "listen".
+	 *  A game alone (SOLO, and CONTINUER / RECOMMENCER after it) never listens (T-297, M4)
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Flow", meta=(ClampMin="1", ClampMax="16"))
+	int32 MaxPlayers = 4;
 
 	/** Shortest time the loading screen stays (s) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Flow", meta=(ClampMin="0", Units="s"))

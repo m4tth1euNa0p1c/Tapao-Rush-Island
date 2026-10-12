@@ -1,0 +1,379 @@
+{
+  "format": "giant-crab-sounds/1",
+  "version": 1,
+  "rate": 48000,
+  "generator": "scripts/audio/crab_sounds.py",
+  "license": "original work of the project (synthesised, no external source)",
+  "sounds": [
+    {
+      "id": "SW_GiantCrab_Step_01",
+      "family": "Step",
+      "cue": "step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Step_01.wav",
+      "seconds": 0.24,
+      "peak_dbfs": -8.0,
+      "seed": 2610000,
+      "sha256": "9331e35b92b14d5b86ad2580622b66d2af8922c3c5dae1dc6f31bc41bf7bd1cc"
+    },
+    {
+      "id": "SW_GiantCrab_Step_02",
+      "family": "Step",
+      "cue": "step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Step_02.wav",
+      "seconds": 0.24,
+      "peak_dbfs": -8.0,
+      "seed": 2610001,
+      "sha256": "fbe90e644c5aea021d26f1ee9bdc2cfe141db0b2f07045efc649b5cdc7f9d44e"
+    },
+    {
+      "id": "SW_GiantCrab_Step_03",
+      "family": "Step",
+      "cue": "step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Step_03.wav",
+      "seconds": 0.24,
+      "peak_dbfs": -8.0,
+      "seed": 2610002,
+      "sha256": "22ae1f4db09b3d4664b760b5d122054e256ac076bd54f282a88159016e753405"
+    },
+    {
+      "id": "SW_GiantCrab_Step_04",
+      "family": "Step",
+      "cue": "step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Step_04.wav",
+      "seconds": 0.24,
+      "peak_dbfs": -8.0,
+      "seed": 2610003,
+      "sha256": "69084ca5e295018490428eeeb1ad9012d5c102138d3bc7bc07bd9b119a82142b"
+    },
+    {
+      "id": "SW_GiantCrab_Step_05",
+      "family": "Step",
+      "cue": "step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Step_05.wav",
+      "seconds": 0.24,
+      "peak_dbfs": -8.0,
+      "seed": 2610004,
+      "sha256": "a7aefdf362c08e1d64395b8d0f5a2a2f87610206bc49076b171241a5684e4ebb"
+    },
+    {
+      "id": "SW_GiantCrab_Step_06",
+      "family": "Step",
+      "cue": "step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Step_06.wav",
+      "seconds": 0.24,
+      "peak_dbfs": -8.0,
+      "seed": 2610005,
+      "sha256": "b721abb08b5813a1feac0f59e129f1854fa4e97c4423c78a69835307a346d56e"
+    },
+    {
+      "id": "SW_GiantCrab_StepHeavy_01",
+      "family": "StepHeavy",
+      "cue": "heavy_step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_StepHeavy_01.wav",
+      "seconds": 0.42,
+      "peak_dbfs": -4.0,
+      "seed": 2610100,
+      "sha256": "32f7bd0b63d587664be668b02ee70be4c90655f57df41db4c4acda1535442ea9"
+    },
+    {
+      "id": "SW_GiantCrab_StepHeavy_02",
+      "family": "StepHeavy",
+      "cue": "heavy_step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_StepHeavy_02.wav",
+      "seconds": 0.42,
+      "peak_dbfs": -4.0,
+      "seed": 2610101,
+      "sha256": "842567a1ff56452dfba6446efbe44569fdc3e8541d596b808c7f8747ac005719"
+    },
+    {
+      "id": "SW_GiantCrab_StepHeavy_03",
+      "family": "StepHeavy",
+      "cue": "heavy_step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_StepHeavy_03.wav",
+      "seconds": 0.42,
+      "peak_dbfs": -4.0,
+      "seed": 2610102,
+      "sha256": "43a8bd543f98539fcb68b59b9953e9eb191e9063a2291300bf48aee018ad5489"
+    },
+    {
+      "id": "SW_GiantCrab_StepHeavy_04",
+      "family": "StepHeavy",
+      "cue": "heavy_step_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_StepHeavy_04.wav",
+      "seconds": 0.42,
+      "peak_dbfs": -4.0,
+      "seed": 2610103,
+      "sha256": "8386534e6578ceccc05be6f1b447ce87ef4e6f7fa717adcdae79eafdc1002b00"
+    },
+    {
+      "id": "SW_GiantCrab_Clack_01",
+      "family": "Clack",
+      "cue": "clack_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Clack_01.wav",
+      "seconds": 0.36,
+      "peak_dbfs": -3.0,
+      "seed": 2610200,
+      "sha256": "579b5fd237a3b26ea9d1c4c057c56581c7881060e38d4a878c4b1da0da1a216f"
+    },
+    {
+      "id": "SW_GiantCrab_Clack_02",
+      "family": "Clack",
+      "cue": "clack_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Clack_02.wav",
+      "seconds": 0.36,
+      "peak_dbfs": -3.0,
+      "seed": 2610201,
+      "sha256": "aa45c225019ad46b5889645113895e138e88d1397bf1c31ff9310ff90b982926"
+    },
+    {
+      "id": "SW_GiantCrab_Clack_03",
+      "family": "Clack",
+      "cue": "clack_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Clack_03.wav",
+      "seconds": 0.36,
+      "peak_dbfs": -3.0,
+      "seed": 2610202,
+      "sha256": "683dc8eb3894c7e591c73567f21cfd3111f67edfcd877669f8928a230fa50826"
+    },
+    {
+      "id": "SW_GiantCrab_Hit_01",
+      "family": "Hit",
+      "cue": "hit_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Hit_01.wav",
+      "seconds": 0.45,
+      "peak_dbfs": -2.0,
+      "seed": 2610300,
+      "sha256": "b2bef36050ab2942b8ac065ee8b693a500fa5964d9bfff2752ec3b33fcb61e4b"
+    },
+    {
+      "id": "SW_GiantCrab_Hit_02",
+      "family": "Hit",
+      "cue": "hit_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Hit_02.wav",
+      "seconds": 0.45,
+      "peak_dbfs": -2.0,
+      "seed": 2610301,
+      "sha256": "6444332eb3982e8d1360b0bce83e16693965c384ad26a767c3bb97ab296e4a89"
+    },
+    {
+      "id": "SW_GiantCrab_Hit_03",
+      "family": "Hit",
+      "cue": "hit_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Hit_03.wav",
+      "seconds": 0.45,
+      "peak_dbfs": -2.0,
+      "seed": 2610302,
+      "sha256": "1befd9a6a3dcc942652cd19128ce74b74c5aab980e766e2048e7d987ece032ba"
+    },
+    {
+      "id": "SW_GiantCrab_Slam_01",
+      "family": "Slam",
+      "cue": "slam_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Slam_01.wav",
+      "seconds": 1.3,
+      "peak_dbfs": -1.0,
+      "seed": 2610400,
+      "sha256": "d2316c995ecbf6310fe5c45a2eb13333a884805d40ea0d06da5a993ae71b1597"
+    },
+    {
+      "id": "SW_GiantCrab_Slam_02",
+      "family": "Slam",
+      "cue": "slam_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Slam_02.wav",
+      "seconds": 1.3,
+      "peak_dbfs": -1.0,
+      "seed": 2610401,
+      "sha256": "8ff5a3af2197cd3f22637a20cf18822bac02fd2192f3924ce482d28db5f42ee4"
+    },
+    {
+      "id": "SW_GiantCrab_Stomp_01",
+      "family": "Stomp",
+      "cue": "stomp_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Stomp_01.wav",
+      "seconds": 0.8,
+      "peak_dbfs": -2.0,
+      "seed": 2610500,
+      "sha256": "077c3e052e43b4bf743177caa9dafd3fcb2659188161540f2be7a4e52b7dd06b"
+    },
+    {
+      "id": "SW_GiantCrab_Stomp_02",
+      "family": "Stomp",
+      "cue": "stomp_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Stomp_02.wav",
+      "seconds": 0.8,
+      "peak_dbfs": -2.0,
+      "seed": 2610501,
+      "sha256": "2fbb8a1472c2e63b58acfe6f4ec96d562e5d0b24966a72115e7981ac7147ac7a"
+    },
+    {
+      "id": "SW_GiantCrab_Stomp_03",
+      "family": "Stomp",
+      "cue": "stomp_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Stomp_03.wav",
+      "seconds": 0.8,
+      "peak_dbfs": -2.0,
+      "seed": 2610502,
+      "sha256": "aed5607180f5c0c8ffecb47d8734780478537f48848d868083a2c9b281916287"
+    },
+    {
+      "id": "SW_GiantCrab_BellySlam_01",
+      "family": "BellySlam",
+      "cue": "belly_slam_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_BellySlam_01.wav",
+      "seconds": 1.9,
+      "peak_dbfs": -0.5,
+      "seed": 2610600,
+      "sha256": "86bfad7b98c19e3a1188dcc83bdca0ca14d6e8f5f1c2c1bfd48db276d194e392"
+    },
+    {
+      "id": "SW_GiantCrab_BellySlam_02",
+      "family": "BellySlam",
+      "cue": "belly_slam_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_BellySlam_02.wav",
+      "seconds": 1.9,
+      "peak_dbfs": -0.5,
+      "seed": 2610601,
+      "sha256": "432e2ee0c32023a253d24578eaa23a28769300ec1f43ab023143a32f0e82db0e"
+    },
+    {
+      "id": "SW_GiantCrab_BodyFall_01",
+      "family": "BodyFall",
+      "cue": "body_fall_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_BodyFall_01.wav",
+      "seconds": 1.0,
+      "peak_dbfs": -2.0,
+      "seed": 2610700,
+      "sha256": "19208848cf4d537f6e5f7a17bf63285beec6e895fda0f19f4afcff24f01426a0"
+    },
+    {
+      "id": "SW_GiantCrab_BodyFall_02",
+      "family": "BodyFall",
+      "cue": "body_fall_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_BodyFall_02.wav",
+      "seconds": 1.0,
+      "peak_dbfs": -2.0,
+      "seed": 2610701,
+      "sha256": "6263a8c2515d438d76c983443cb53e77f90eb0825256db5e99d1ba8f38ffe0fc"
+    },
+    {
+      "id": "SW_GiantCrab_Wave_01",
+      "family": "Wave",
+      "cue": "roar_wave_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Wave_01.wav",
+      "seconds": 1.3,
+      "peak_dbfs": -1.0,
+      "seed": 2610800,
+      "sha256": "86c6745a430e9d592b72f090266a6cbd0f7c70b965db9b7291315a597f55c768"
+    },
+    {
+      "id": "SW_GiantCrab_Roar_01",
+      "family": "Roar",
+      "cue": "roar_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Roar_01.wav",
+      "seconds": 2.9516,
+      "peak_dbfs": -1.0,
+      "seed": 2610900,
+      "sha256": "e50d3258e5431162319c12ad2a31f6a9de22927c18260eba0c9a8ef9ef080fdf"
+    },
+    {
+      "id": "SW_GiantCrab_Roar_02",
+      "family": "Roar",
+      "cue": "roar_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Roar_02.wav",
+      "seconds": 2.9473,
+      "peak_dbfs": -1.0,
+      "seed": 2610901,
+      "sha256": "001adfbfab8bee7bd90e822eefc1bda00ad1f85f9ff449584263c896683e5d93"
+    },
+    {
+      "id": "SW_GiantCrab_Charge_01",
+      "family": "Charge",
+      "cue": "charge_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Charge_01.wav",
+      "seconds": 1.4427,
+      "peak_dbfs": -1.0,
+      "seed": 2611000,
+      "sha256": "ab2873189f14d5bca7681a4a43ff973d038f8699e9aa4b8fb4be1b55512662eb"
+    },
+    {
+      "id": "SW_GiantCrab_Charge_02",
+      "family": "Charge",
+      "cue": "charge_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Charge_02.wav",
+      "seconds": 1.3382,
+      "peak_dbfs": -1.0,
+      "seed": 2611001,
+      "sha256": "9a1d79980a85d8df696d3b2532b3b833991dc2e7bb581d36f44169126c261a83"
+    },
+    {
+      "id": "SW_GiantCrab_Death_01",
+      "family": "Death",
+      "cue": "death_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Death_01.wav",
+      "seconds": 3.8,
+      "peak_dbfs": -1.0,
+      "seed": 2611100,
+      "sha256": "740f41fcbf5d01c893810f80bd111a33aa3719456c2598a7a706e10f9229b897"
+    },
+    {
+      "id": "SW_GiantCrab_Hiss_01",
+      "family": "Hiss",
+      "cue": "hiss_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Hiss_01.wav",
+      "seconds": 1.2653,
+      "peak_dbfs": -4.0,
+      "seed": 2611200,
+      "sha256": "57ae1b49276f1c7f3d3ac41f3db1eb909ecbe66887cf4e09f90f1d12a414286d"
+    },
+    {
+      "id": "SW_GiantCrab_Hiss_02",
+      "family": "Hiss",
+      "cue": "hiss_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Hiss_02.wav",
+      "seconds": 1.4334,
+      "peak_dbfs": -4.0,
+      "seed": 2611201,
+      "sha256": "1a01fdea0f32345d58869d1f25d917de40ee7894987cee8217b43a55db8f004f"
+    },
+    {
+      "id": "SW_GiantCrab_Hiss_03",
+      "family": "Hiss",
+      "cue": "hiss_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Hiss_03.wav",
+      "seconds": 1.528,
+      "peak_dbfs": -4.0,
+      "seed": 2611202,
+      "sha256": "3cb3eb715a35b762bb93024fe18321e5cb1217b31f4d6217f9019c6ab82b2aee"
+    },
+    {
+      "id": "SW_GiantCrab_Growl_01",
+      "family": "Growl",
+      "cue": "growl_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Growl_01.wav",
+      "seconds": 2.3992,
+      "peak_dbfs": -4.0,
+      "seed": 2611300,
+      "sha256": "09d75ef05c684bc504a0770ed4bb2677a3cdec92af1e4a9a561f51c52e3364d8"
+    },
+    {
+      "id": "SW_GiantCrab_Growl_02",
+      "family": "Growl",
+      "cue": "growl_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Growl_02.wav",
+      "seconds": 2.1933,
+      "peak_dbfs": -4.0,
+      "seed": 2611301,
+      "sha256": "6f4fffa0fac9f9dcd89a5f1d88c3188cf8e6d082391b637577d8effa60b55975"
+    },
+    {
+      "id": "SW_GiantCrab_Growl_03",
+      "family": "Growl",
+      "cue": "growl_cue",
+      "file": "art/audio/creatures/giant_crab/SW_GiantCrab_Growl_03.wav",
+      "seconds": 2.1993,
+      "peak_dbfs": -4.0,
+      "seed": 2611302,
+      "sha256": "180d2a1ef94e0655a3f7048e14e2de00a621442b0789b88b278efc09f9a45cc2"
+    }
+  ]
+}

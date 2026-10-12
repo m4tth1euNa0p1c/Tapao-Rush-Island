@@ -1,0 +1,302 @@
+{
+  "schema": 1,
+  "task": "T-259",
+  "generated_at": "2026-10-09T14:55:56.156269+00:00",
+  "decoder": "Blender aud",
+  "licence": "fichiers du propriétaire (OneDrive), provenance et licence à confirmer par le propriétaire avant toute publication",
+  "validation": "decoded WAV data only; Unreal import by scripts/audio/owner_sounds_setup_ue.py, listening in PIE by the owner",
+  "sounds": [
+    {
+      "asset": "SW_Cutlass_Owner_Swing",
+      "file": "art/audio/owner/SW_Cutlass_Owner_Swing.wav",
+      "unreal": "/Game/MonkeIsland/Weapons/Cutlass/Audio/SW_Cutlass_Owner_Swing",
+      "role": "DA_CutlassRules.SwingSound",
+      "source_file": "OneDrive/maquette-blender/audio/epe_slash_1_song.mp3",
+      "source_sha256": "471bc1be9527a1ea133ec221cfa93ef0457af19013350f49f1f89c84ea0c52b1",
+      "source_bytes": 35748,
+      "decoded_wav": "art/audio_src/owner/epe_slash_1_song.wav",
+      "decoded_sha256": "aca3dfa990a2c7c4d5f25ee3560441bdd7f2976709a88c8cdf49bd9c3d0b2ce0",
+      "sha256": "ec351d5e726f31cfd056b38bf016f452625897d556f5ba502634b6ced798cc69",
+      "seconds": 0.54,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -3.0,
+      "loudest_100ms_db": -13.67,
+      "loudness_lufs": -20.44,
+      "centroid_hz": 1403.0,
+      "ends_silent": true,
+      "loop": false,
+      "processing": {
+        "head_cut_s": 0.185,
+        "source_peak_s": 0.385,
+        "peak_at_s": 0.2,
+        "peak_dbfs": -3.0
+      },
+      "note": ""
+    },
+    {
+      "asset": "SW_Cutlass_Owner_FinisherSwing",
+      "file": "art/audio/owner/SW_Cutlass_Owner_FinisherSwing.wav",
+      "unreal": "/Game/MonkeIsland/Weapons/Cutlass/Audio/SW_Cutlass_Owner_FinisherSwing",
+      "role": "DA_CutlassRules.FinisherSwingSound",
+      "source_file": "OneDrive/maquette-blender/audio/epe_slash_2_song.mp3",
+      "source_sha256": "0fb0a12bc292b6a56ed03b37d9c18e2686d7eba1026fc6f4c2c58d1549078a03",
+      "source_bytes": 39588,
+      "decoded_wav": "art/audio_src/owner/epe_slash_2_song.wav",
+      "decoded_sha256": "f823aca15294c06db5e947117c3764f90e861c6ad450e24fa8ac29662f3bcc41",
+      "sha256": "8c42a7aca0a3eb77d339dea040babca8fdb3154cc4770065eaf9563c7244c2d7",
+      "seconds": 0.915,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -2.5,
+      "loudest_100ms_db": -14.44,
+      "loudness_lufs": -21.04,
+      "centroid_hz": 1943.0,
+      "ends_silent": true,
+      "loop": false,
+      "processing": {
+        "silence_added_s": 0.195,
+        "source_peak_s": 0.335,
+        "peak_at_s": 0.53,
+        "peak_dbfs": -2.5
+      },
+      "note": ""
+    },
+    {
+      "asset": "SW_Cutlass_Owner_Hit",
+      "file": "art/audio/owner/SW_Cutlass_Owner_Hit.wav",
+      "unreal": "/Game/MonkeIsland/Weapons/Cutlass/Audio/SW_Cutlass_Owner_Hit",
+      "role": "DA_CutlassRules.HitSound and KillSound",
+      "source_file": "OneDrive/maquette-blender/audio/epe_enemie_toucher.mp3",
+      "source_sha256": "e049589508d4a4c97f65b5eb20b8faf505cad33bd1274532d6115e2900e2b114",
+      "source_bytes": 70217,
+      "decoded_wav": "art/audio_src/owner/epe_enemie_toucher.wav",
+      "decoded_sha256": "d75c45a7b939fcbca258ffc7a512c8c8b1292809fab7a71e814bad718ca7ce0e",
+      "sha256": "ff7608c661beb7daeaf8bcd1ab047063c491fa69b3d13b1243963d169199523f",
+      "seconds": 0.85,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.5,
+      "loudest_100ms_db": -12.51,
+      "loudness_lufs": -17.11,
+      "centroid_hz": 6237.0,
+      "ends_silent": true,
+      "loop": false,
+      "processing": {
+        "impact_s": 0.19,
+        "head_cut_s": 0.165,
+        "tail_threshold_db": -45.0,
+        "peak_dbfs": -1.5
+      },
+      "note": "KillSound reprend ce son (aucun son de mise à mort fourni) ; l'ancien SW_Cutlass_Kill reste dans le projet."
+    },
+    {
+      "asset": "SW_Music_Galleon",
+      "file": "art/audio/owner/SW_Music_Galleon.wav",
+      "unreal": "/Game/MonkeIsland/Audio/Music/SW_Music_Galleon",
+      "role": "DA_MusicRules.Galleon (à bord du galion)",
+      "source_file": "OneDrive/maquette-blender/audio/galion_song.mp3",
+      "source_sha256": "5d55a16ade56fbd04e9a80dc00799b9e1f4eb170f390b4c09c96c86d1c96176b",
+      "source_bytes": 202754,
+      "decoded_wav": "art/audio_src/owner/galion_song.wav",
+      "decoded_sha256": "7a79ef3ef027875f06df8d0c57495a15c3d696ff6b91df8206ee6603f1afffa2",
+      "sha256": "4203da4e9456704f06879c55d8e7d2a4bdf4c3e05d652bff144712864d91826e",
+      "seconds": 64.88,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -11.65,
+      "loudness_lufs": -23.05,
+      "centroid_hz": 1037.0,
+      "loop_seam_delta": 0.001984,
+      "loop_seam_ok": true,
+      "loop": true,
+      "processing": {
+        "pieces": 34,
+        "piece_ranges_s": [
+          [
+            0.765,
+            3.255
+          ],
+          [
+            3.315,
+            4.745
+          ],
+          [
+            1.845,
+            4.475
+          ],
+          [
+            0.155,
+            2.135
+          ],
+          [
+            2.115,
+            4.255
+          ],
+          [
+            2.895,
+            4.305
+          ],
+          [
+            1.325,
+            4.005
+          ],
+          [
+            2.695,
+            4.305
+          ],
+          [
+            1.385,
+            3.265
+          ],
+          [
+            2.765,
+            4.405
+          ],
+          [
+            0.545,
+            2.005
+          ],
+          [
+            1.445,
+            4.245
+          ],
+          [
+            2.295,
+            4.235
+          ],
+          [
+            0.165,
+            2.025
+          ],
+          [
+            1.745,
+            3.945
+          ],
+          [
+            0.195,
+            3.195
+          ],
+          [
+            1.205,
+            3.905
+          ],
+          [
+            2.185,
+            3.895
+          ],
+          [
+            1.415,
+            4.005
+          ],
+          [
+            0.305,
+            2.105
+          ],
+          [
+            3.215,
+            4.915
+          ],
+          [
+            1.415,
+            3.325
+          ],
+          [
+            0.495,
+            2.895
+          ],
+          [
+            3.355,
+            4.905
+          ],
+          [
+            1.765,
+            3.235
+          ],
+          [
+            0.585,
+            2.875
+          ],
+          [
+            2.005,
+            4.315
+          ],
+          [
+            1.315,
+            2.845
+          ],
+          [
+            2.295,
+            4.405
+          ],
+          [
+            0.685,
+            3.175
+          ],
+          [
+            2.185,
+            4.245
+          ],
+          [
+            0.185,
+            2.235
+          ],
+          [
+            2.245,
+            4.835
+          ],
+          [
+            0.725,
+            2.295
+          ]
+        ],
+        "crossfade_s": 0.15,
+        "quiet_points": 284,
+        "gain_db": 0.28,
+        "target_lufs": -20.0,
+        "seed": 259
+      },
+      "note": "Ambiance de navire (craquements, coups sourds, grondement) ; classe SC_Ambience."
+    },
+    {
+      "asset": "SW_Music_Boat",
+      "file": "art/audio/owner/SW_Music_Boat.wav",
+      "unreal": "/Game/MonkeIsland/Audio/Music/SW_Music_Boat",
+      "role": "DA_MusicRules.Boat (assis dans la barque)",
+      "source_file": "OneDrive/maquette-blender/audio/barque_song.mp3",
+      "source_sha256": "9197a7224c04d1b8333b4ebdbb686264afab0debecc69d0d76370798a5c8f131",
+      "source_bytes": 1971108,
+      "decoded_wav": "art/audio_src/owner/barque_song.wav",
+      "decoded_sha256": "0f5841238e52e8ee9d77144c9991365ba63d1bff646da9fa997914af92ca92d3",
+      "sha256": "e67c9fe92dc4bfb37e00ab49c13428743acdb57ab58dc6f9df1b8a8eb6b51c3d",
+      "seconds": 42.1,
+      "rate": 48000,
+      "channels": 1,
+      "peak_dbfs": -1.0,
+      "loudest_100ms_db": -14.65,
+      "loudness_lufs": -22.38,
+      "centroid_hz": 3087.0,
+      "loop_seam_delta": 0.000732,
+      "loop_seam_ok": true,
+      "loop": true,
+      "processing": {
+        "gaps": 17,
+        "stroke_period_s": 2.485,
+        "gap_spacing_range_s": [
+          2.29,
+          4.87
+        ],
+        "cut_s": [
+          1.88,
+          44.18
+        ],
+        "seam_gap_s": 0.42,
+        "crossfade_s": 0.2,
+        "gain_db": -1.0,
+        "target_lufs": -20.0
+      },
+      "note": "Coups de rame dans l'eau, un toutes les 2,45 s ; classe SC_Ambience."
+    }
+  ]
+}

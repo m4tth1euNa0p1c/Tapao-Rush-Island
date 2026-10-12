@@ -8,7 +8,9 @@
 
 /**
  *  Campaign save of the player (menu CONTINUER / NOUVELLE PARTIE): what the expeditions already gave. Written by
- *  UTapaoUISubsystem when an island starts and when the main menu shows the game; one slot per machine.
+ *  UTapaoUISubsystem when an island starts and when the main menu shows the game, through MonkeSaveSlot (envelope,
+ *  checksum, transaction, last valid copy, damaged file put aside); one slot per machine, never written by a client
+ *  playing on a host (the campaign is the host's, cahier §16).
  */
 UCLASS()
 class MONKE_ISLAND_API UTapaoSaveGame : public USaveGame
@@ -17,9 +19,22 @@ class MONKE_ISLAND_API UTapaoSaveGame : public USaveGame
 
 public:
 
+	/** Format written now: the schema version of the envelope and Version (a newer one is refused, never converted) */
+	static constexpr int32 CurrentVersion = 1;
+
+	/** Bounds of a file, not tuning (security.md §3: values bounded after loading) */
+	static constexpr int32 MaxCount = 1000000000;
+	static constexpr int32 MaxIslandNameChars = 128;
+
+	/**
+	 *  Checks what was read from disk: counters and time clamped into their ranges, an island name too long cleared, a
+	 *  date out of range reset (OutFixes counts the changes). False when the file is of a newer format.
+	 */
+	bool SanitizeLoaded(int32& OutFixes);
+
 	/** Format of the save (migration) */
 	UPROPERTY()
-	int32 Version = 1;
+	int32 Version = CurrentVersion;
 
 	/** Expeditions started */
 	UPROPERTY()

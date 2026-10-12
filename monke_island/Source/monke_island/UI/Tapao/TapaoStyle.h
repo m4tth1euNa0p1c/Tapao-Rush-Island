@@ -44,6 +44,12 @@ public:
 	/** Font of a role at a size (1920 x 1080 reference) */
 	FSlateFontInfo Font(ETapaoFont Role, int32 Size, int32 OutlinePx = 0) const;
 
+	/** Scroll bar of the kit's lists (owner request 2026-10-11, shop): a gold thumb on a dark track, 10 px */
+	const FScrollBarStyle& ScrollBar() const;
+
+	/** Scroll box of the kit's lists: no edge shadows (the scroll bar shows where the list is) */
+	const FScrollBoxStyle& ScrollBox() const;
+
 	UTapaoUISkin* GetSkin() const { return Skin; }
 
 	virtual void AddReferencedObjects(FReferenceCollector& Collector) override;
@@ -59,6 +65,10 @@ private:
 	mutable TMap<const UTexture2D*, TSharedRef<FSlateBrush>> TextureBrushes;
 	mutable TMap<FName, TSharedRef<FButtonStyle>> Buttons;
 	FSlateBrush Empty;
+
+	/** Built on first use; scroll bars keep pointers to their brushes, which stay put in these */
+	mutable TSharedPtr<FScrollBarStyle> ScrollBarStyle;
+	mutable TSharedPtr<FScrollBoxStyle> ScrollBoxStyle;
 
 	/** Composite fonts built from the font faces of the skin */
 	mutable TMap<const UObject*, TSharedPtr<const struct FCompositeFont>> Composites;

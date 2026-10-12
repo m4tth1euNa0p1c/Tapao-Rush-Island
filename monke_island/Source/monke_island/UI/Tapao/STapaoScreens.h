@@ -150,6 +150,8 @@ public:
 	SLATE_BEGIN_ARGS(STapaoEndScreen) {}
 		SLATE_ARGUMENT(TSharedPtr<FTapaoStyle>, Style)
 		SLATE_ARGUMENT(FName, Ribbon)
+		/** Written over the ribbon (a blank ribbon), none when empty */
+		SLATE_ARGUMENT(FText, RibbonText)
 		SLATE_ARGUMENT(TArray<FText>, Lines)
 		SLATE_ARGUMENT(FName, FirstButton)
 		SLATE_ATTRIBUTE(bool, FirstEnabled)

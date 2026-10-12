@@ -1,0 +1,355 @@
+{
+  "format": "tiki-tactics-sounds/1",
+  "version": 1,
+  "rate": 48000,
+  "generator": "scripts/audio/tiki_tactics_sounds.py",
+  "license": "original work of the project (synthesised, no external source)",
+  "far": [
+    "Ash_Howl"
+  ],
+  "two_d": [
+    "Ash_Veil"
+  ],
+  "sounds": [
+    {
+      "id": "SW_Tiki_Coco_Stalk_01",
+      "family": "Coco_Stalk",
+      "target": "stalker.sounds.stalk",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Stalk_01.wav",
+      "seconds": 2.1486,
+      "peak_dbfs": -9.0,
+      "seed": 2750000,
+      "sha256": "5dba704fbe9426313fb347bc4f07b2b0113dccd6035354316719d368e18f1ecb"
+    },
+    {
+      "id": "SW_Tiki_Coco_Stalk_02",
+      "family": "Coco_Stalk",
+      "target": "stalker.sounds.stalk",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Stalk_02.wav",
+      "seconds": 2.4916,
+      "peak_dbfs": -9.0,
+      "seed": 2750001,
+      "sha256": "53ae1ee466f5d84b9c29c663aba3649971e72b2e1b49665f1ea424419335fb31"
+    },
+    {
+      "id": "SW_Tiki_Coco_Stalk_03",
+      "family": "Coco_Stalk",
+      "target": "stalker.sounds.stalk",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Stalk_03.wav",
+      "seconds": 1.8722,
+      "peak_dbfs": -9.0,
+      "seed": 2750002,
+      "sha256": "19b4287a74ce7dad7b224f9ddbda1f10d53f4f83631152faa75727b9e0bf2653"
+    },
+    {
+      "id": "SW_Tiki_Coco_Stalk_04",
+      "family": "Coco_Stalk",
+      "target": "stalker.sounds.stalk",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Stalk_04.wav",
+      "seconds": 2.3681,
+      "peak_dbfs": -9.0,
+      "seed": 2750003,
+      "sha256": "661df1eb569df33627b98e3d4ec070bb7ac1d3795a76d177a6506434a8f3d383"
+    },
+    {
+      "id": "SW_Tiki_Coco_Alert_01",
+      "family": "Coco_Alert",
+      "target": "stalker.sounds.alert",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Alert_01.wav",
+      "seconds": 0.9,
+      "peak_dbfs": -3.0,
+      "seed": 2750100,
+      "sha256": "fe1bfa0a4e8501f60aafe2ce5f649da7397a05a50bd07a9ce8cf7557baeb4f21"
+    },
+    {
+      "id": "SW_Tiki_Coco_Alert_02",
+      "family": "Coco_Alert",
+      "target": "stalker.sounds.alert",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Alert_02.wav",
+      "seconds": 0.9,
+      "peak_dbfs": -3.0,
+      "seed": 2750101,
+      "sha256": "97159b27961106f533e1580e080e9eb99cf804baaa9b7a2a43ed0b16a1bf4584"
+    },
+    {
+      "id": "SW_Tiki_Coco_Feint_01",
+      "family": "Coco_Feint",
+      "target": "stalker.sounds.feint",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Feint_01.wav",
+      "seconds": 0.55,
+      "peak_dbfs": -2.0,
+      "seed": 2750200,
+      "sha256": "4772c73d86a431992ef8ad9a0dc13b04fd620ff469025b53ae77577a009dc085"
+    },
+    {
+      "id": "SW_Tiki_Coco_Feint_02",
+      "family": "Coco_Feint",
+      "target": "stalker.sounds.feint",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Feint_02.wav",
+      "seconds": 0.55,
+      "peak_dbfs": -2.0,
+      "seed": 2750201,
+      "sha256": "1e04e2badcc69221aab39cf43b630fa80b23d936e3e3eb601f9b8ba9879fe5a5"
+    },
+    {
+      "id": "SW_Tiki_Coco_Windup_01",
+      "family": "Coco_Windup",
+      "target": "stalker.sounds.windup",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Windup_01.wav",
+      "seconds": 1.0,
+      "peak_dbfs": -1.5,
+      "seed": 2750300,
+      "sha256": "f01592bf1df32a51b762b3df6bfe297644169eaa4337f72f7e3b4bb159c53935"
+    },
+    {
+      "id": "SW_Tiki_Coco_Windup_02",
+      "family": "Coco_Windup",
+      "target": "stalker.sounds.windup",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Windup_02.wav",
+      "seconds": 1.0,
+      "peak_dbfs": -1.5,
+      "seed": 2750301,
+      "sha256": "e266ca96ef059cf9c018e958a97ba9b7f06659de60095f3ae926e2e2e135e12b"
+    },
+    {
+      "id": "SW_Tiki_Coco_Flee_01",
+      "family": "Coco_Flee",
+      "target": "stalker.sounds.flee",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Flee_01.wav",
+      "seconds": 0.95,
+      "peak_dbfs": -2.0,
+      "seed": 2750400,
+      "sha256": "b9cd16c8f959f7a532fe9f27550c752f2ebf5b4a4b6767a44aca88dc73ad03b0"
+    },
+    {
+      "id": "SW_Tiki_Coco_Flee_02",
+      "family": "Coco_Flee",
+      "target": "stalker.sounds.flee",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Coco_Flee_02.wav",
+      "seconds": 0.95,
+      "peak_dbfs": -2.0,
+      "seed": 2750401,
+      "sha256": "a56d8dd1777ee2c9ad00b988d828c711a040d672b33349b155d9d8963221b532"
+    },
+    {
+      "id": "SW_Tiki_Crab_Alert_01",
+      "family": "Crab_Alert",
+      "target": "bulwark.sounds.alert",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Alert_01.wav",
+      "seconds": 0.95,
+      "peak_dbfs": -2.0,
+      "seed": 2750500,
+      "sha256": "967cad8b58f0dddcb80b7c4974cbe4f52b6649e6b79e23105ed32ae0a3d5a56b"
+    },
+    {
+      "id": "SW_Tiki_Crab_Alert_02",
+      "family": "Crab_Alert",
+      "target": "bulwark.sounds.alert",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Alert_02.wav",
+      "seconds": 0.95,
+      "peak_dbfs": -2.0,
+      "seed": 2750501,
+      "sha256": "f1b5436e11f0cc1aee053aba4856ba37676bd220112d14207ba28bc0ddc0fa03"
+    },
+    {
+      "id": "SW_Tiki_Crab_Windup_01",
+      "family": "Crab_Windup",
+      "target": "bulwark.sounds.windup",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Windup_01.wav",
+      "seconds": 0.9,
+      "peak_dbfs": -2.0,
+      "seed": 2750600,
+      "sha256": "cde3890f983c1813e85f817cfd6e34cb22fa06fb61549dc94b169875213753b5"
+    },
+    {
+      "id": "SW_Tiki_Crab_Windup_02",
+      "family": "Crab_Windup",
+      "target": "bulwark.sounds.windup",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Windup_02.wav",
+      "seconds": 0.9,
+      "peak_dbfs": -2.0,
+      "seed": 2750601,
+      "sha256": "d6fdcbf500f63b7215a5542e759f2232f39c737a38bc5b8a8f11f95ed19faeef"
+    },
+    {
+      "id": "SW_Tiki_Crab_Block_01",
+      "family": "Crab_Block",
+      "target": "bulwark.sounds.block",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Block_01.wav",
+      "seconds": 0.45,
+      "peak_dbfs": -1.0,
+      "seed": 2750700,
+      "sha256": "43d5bae73b3876d0f13138fca6436e8c37fc5f850ceac567c4fa424011756302"
+    },
+    {
+      "id": "SW_Tiki_Crab_Block_02",
+      "family": "Crab_Block",
+      "target": "bulwark.sounds.block",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Block_02.wav",
+      "seconds": 0.45,
+      "peak_dbfs": -1.0,
+      "seed": 2750701,
+      "sha256": "a516990c38c1023026b0a385516ed4e63b162d89417e7df0cc9bf5d2cdabafb4"
+    },
+    {
+      "id": "SW_Tiki_Crab_Block_03",
+      "family": "Crab_Block",
+      "target": "bulwark.sounds.block",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Block_03.wav",
+      "seconds": 0.45,
+      "peak_dbfs": -1.0,
+      "seed": 2750702,
+      "sha256": "ff5143c15f3d8c084f7fc25f1c84f7640ca227bcca778943cd9587ef9578ffd3"
+    },
+    {
+      "id": "SW_Tiki_Crab_Block_04",
+      "family": "Crab_Block",
+      "target": "bulwark.sounds.block",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Block_04.wav",
+      "seconds": 0.45,
+      "peak_dbfs": -1.0,
+      "seed": 2750703,
+      "sha256": "79cb9105e21d1d66d526fab25158d4b1a33b60da210309bb1e36201172df2f80"
+    },
+    {
+      "id": "SW_Tiki_Crab_Break_01",
+      "family": "Crab_Break",
+      "target": "bulwark.sounds.guard_break",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Break_01.wav",
+      "seconds": 0.9,
+      "peak_dbfs": -1.0,
+      "seed": 2750800,
+      "sha256": "2548b92e1f8ee6705cd91affad12373155abd7cc14e14a74bffffbd83923eaf6"
+    },
+    {
+      "id": "SW_Tiki_Crab_Break_02",
+      "family": "Crab_Break",
+      "target": "bulwark.sounds.guard_break",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Break_02.wav",
+      "seconds": 0.9,
+      "peak_dbfs": -1.0,
+      "seed": 2750801,
+      "sha256": "ceb6882e6d4501a032a86a755ed33f4920b84648ba658c4491e9f2ba8acedd9c"
+    },
+    {
+      "id": "SW_Tiki_Crab_Seize_01",
+      "family": "Crab_Seize",
+      "target": "bulwark.sounds.seize",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Seize_01.wav",
+      "seconds": 0.55,
+      "peak_dbfs": -1.5,
+      "seed": 2750900,
+      "sha256": "4df9c8159ed91cb63bc4ee9d4dd3bc388ed4bcc0dd4d4b907d912ab290c3cd1b"
+    },
+    {
+      "id": "SW_Tiki_Crab_Seize_02",
+      "family": "Crab_Seize",
+      "target": "bulwark.sounds.seize",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Crab_Seize_02.wav",
+      "seconds": 0.55,
+      "peak_dbfs": -1.5,
+      "seed": 2750901,
+      "sha256": "a2c8c5ee68b89bdc3ef482aeeaaccec776f1d05be3daeef0377860476b10b6e3"
+    },
+    {
+      "id": "SW_Tiki_Ash_Howl_01",
+      "family": "Ash_Howl",
+      "target": "watcher.sounds.howl",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_Howl_01.wav",
+      "seconds": 4.202,
+      "peak_dbfs": -0.5,
+      "seed": 2751000,
+      "sha256": "964caed7e7137687e787f500de2280b3db34c46aa613fc8665bf588a6bb7eb1a"
+    },
+    {
+      "id": "SW_Tiki_Ash_Howl_02",
+      "family": "Ash_Howl",
+      "target": "watcher.sounds.howl",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_Howl_02.wav",
+      "seconds": 4.154,
+      "peak_dbfs": -0.5,
+      "seed": 2751001,
+      "sha256": "e5cf98579238928dcefff825a780c9b26f1767112ef167633e0b4f62c53b025c"
+    },
+    {
+      "id": "SW_Tiki_Ash_Windup_01",
+      "family": "Ash_Windup",
+      "target": "watcher.sounds.windup",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_Windup_01.wav",
+      "seconds": 1.0,
+      "peak_dbfs": -1.5,
+      "seed": 2751100,
+      "sha256": "39038e2b899b1ed7620cf632e0ed007dbe9be51afbb797a4711b091b88d87da5"
+    },
+    {
+      "id": "SW_Tiki_Ash_Windup_02",
+      "family": "Ash_Windup",
+      "target": "watcher.sounds.windup",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_Windup_02.wav",
+      "seconds": 1.0,
+      "peak_dbfs": -1.5,
+      "seed": 2751101,
+      "sha256": "f460d87e8bd997d16c6b7b50729f225be8f4af11d8f209279db1c1edbfc4275b"
+    },
+    {
+      "id": "SW_Tiki_Ash_Alert_01",
+      "family": "Ash_Alert",
+      "target": "watcher.sounds.alert",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_Alert_01.wav",
+      "seconds": 0.85,
+      "peak_dbfs": -2.0,
+      "seed": 2751200,
+      "sha256": "ff0adaa89f3a69923cb229742986220ef6118673dcab4a3b95e8847f3294d579"
+    },
+    {
+      "id": "SW_Tiki_Ash_CloudBurst_01",
+      "family": "Ash_CloudBurst",
+      "target": "watcher.ash.burst_sound",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_CloudBurst_01.wav",
+      "seconds": 1.3,
+      "peak_dbfs": -2.0,
+      "seed": 2751300,
+      "sha256": "025c85ff858beddeda62331032715ea319583d1b48c2c6f3141253f9bef69198"
+    },
+    {
+      "id": "SW_Tiki_Ash_CloudBurst_02",
+      "family": "Ash_CloudBurst",
+      "target": "watcher.ash.burst_sound",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_CloudBurst_02.wav",
+      "seconds": 1.3,
+      "peak_dbfs": -2.0,
+      "seed": 2751301,
+      "sha256": "04ce8666dccaf1fac920a5e8db2cc5eeaa800e1fafdb60db1ec67c9a83602012"
+    },
+    {
+      "id": "SW_Tiki_Ash_Embers_01",
+      "family": "Ash_Embers",
+      "target": "watcher.ash.ember_sound",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_Embers_01.wav",
+      "seconds": 5.0,
+      "peak_dbfs": -5.0,
+      "seed": 2751400,
+      "sha256": "5a553de5e9492bcc50079c1e242a19376d6884df7ef043a9f8c4b1fc86de346a"
+    },
+    {
+      "id": "SW_Tiki_Ash_Embers_02",
+      "family": "Ash_Embers",
+      "target": "watcher.ash.ember_sound",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_Embers_02.wav",
+      "seconds": 5.0,
+      "peak_dbfs": -5.0,
+      "seed": 2751401,
+      "sha256": "f657e1de78f9b2597913f91bc11b4aa69b790c1bf7611d693a57fa6eee750847"
+    },
+    {
+      "id": "SW_Tiki_Ash_Veil_01",
+      "family": "Ash_Veil",
+      "target": "watcher.ash.veil_sound",
+      "file": "art/audio/creatures/tiki_tactics/SW_Tiki_Ash_Veil_01.wav",
+      "seconds": 2.6,
+      "peak_dbfs": -8.0,
+      "seed": 2751500,
+      "sha256": "f516c92d579bfe38e1ee7158a7a9b3dca47126e55402090835f8984636b5ea27"
+    }
+  ]
+}

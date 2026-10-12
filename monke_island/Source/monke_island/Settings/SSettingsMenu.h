@@ -10,8 +10,9 @@ class USettingsSubsystem;
 class SWidgetSwitcher;
 
 /**
- *  Settings menu (cahier §18), drawn over the game by USettingsSubsystem: tabs Audio, Display, Mouse and Comfort,
- *  footer Restore this tab / Cancel / Apply / Close. Edits a pending copy of the values; audio is heard live.
+ *  Settings menu (cahier §18), drawn over the game by USettingsSubsystem: tabs Audio, Display, Mouse, Comfort and
+ *  Voice (T-263: microphone mode, voice activation threshold, the voices' volume, microphone test), footer Restore this
+ *  tab / Cancel / Apply / Close. Edits a pending copy of the values; audio is heard live.
  */
 class MONKE_ISLAND_API SSettingsMenu : public SCompoundWidget
 {
@@ -29,13 +30,17 @@ public:
 private:
 
 	/** Tabs of the menu */
-	enum class ETab : int32 { Audio, Display, Mouse, Comfort, Count };
+	enum class ETab : int32 { Audio, Display, Mouse, Comfort, Voice, Count };
 
 	TSharedRef<SWidget> MakeTabButton(ETab Tab, const FText& Label);
 	TSharedRef<SWidget> MakeAudioTab();
 	TSharedRef<SWidget> MakeDisplayTab();
 	TSharedRef<SWidget> MakeMouseTab();
 	TSharedRef<SWidget> MakeComfortTab();
+	TSharedRef<SWidget> MakeVoiceTab();
+
+	/** Starts or stops the microphone test */
+	FReply OnToggleMicTest();
 
 	/** A labelled row */
 	TSharedRef<SWidget> MakeRow(const FText& Label, TSharedRef<SWidget> Control);

@@ -1,0 +1,23 @@
+[
+  {
+    "source": "hawaiian_song.mp3",
+    "wav": "MUS_Hawaiian.wav",
+    "source_minutes": 74.3,
+    "kept_seconds": 480.0,
+    "bytes": 84675662
+  },
+  {
+    "source": "night_song.mp3",
+    "wav": "MUS_Night.wav",
+    "source_minutes": 60.6,
+    "kept_seconds": 240.0,
+    "bytes": 42339918
+  },
+  {
+    "source": "uk_song.mp3",
+    "wav": "MUS_Crown.wav",
+    "source_minutes": 1.3,
+    "kept_seconds": 75.8,
+    "bytes": 13369414
+  }
+]

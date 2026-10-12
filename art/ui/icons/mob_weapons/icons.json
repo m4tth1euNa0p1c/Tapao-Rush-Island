@@ -1,0 +1,50 @@
+[
+ {
+  "name": "Spear",
+  "fbx": "art/export/Characters/CocoWarrior/Horror/SM_CocoWarrior_Spear.fbx",
+  "raw": "art/ui/icons/mob_weapons/_raw/T_Icon_Spear.png",
+  "png": "art/ui/icons/mob_weapons/T_Icon_Spear.png",
+  "meshes": 1,
+  "extent_m": 1.091,
+  "materials": [
+   "M_CocoWarrior_Weapon"
+  ],
+  "painted": [],
+  "coverage_px": [
+   459,
+   392
+  ]
+ },
+ {
+  "name": "ObsidianClub",
+  "fbx": "art/export/Characters/AshWatcher/Horror/SM_AshWatcher_ObsidianClub.fbx",
+  "raw": "art/ui/icons/mob_weapons/_raw/T_Icon_ObsidianClub.png",
+  "png": "art/ui/icons/mob_weapons/T_Icon_ObsidianClub.png",
+  "meshes": 1,
+  "extent_m": 0.819,
+  "materials": [
+   "M_AshWatcher_Weapon"
+  ],
+  "painted": [],
+  "coverage_px": [
+   459,
+   414
+  ]
+ },
+ {
+  "name": "ShellHammer",
+  "fbx": "art/export/Characters/CrabGuardian/Horror/SM_CrabGuardian_ShellHammer.fbx",
+  "raw": "art/ui/icons/mob_weapons/_raw/T_Icon_ShellHammer.png",
+  "png": "art/ui/icons/mob_weapons/T_Icon_ShellHammer.png",
+  "meshes": 1,
+  "extent_m": 0.72,
+  "materials": [
+   "M_CrabGuardian_Weapon"
+  ],
+  "painted": [],
+  "coverage_px": [
+   460,
+   416
+  ]
+ }
+]

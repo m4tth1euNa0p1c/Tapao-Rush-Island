@@ -11,7 +11,13 @@
 struct FMonkeSettingsValues
 {
 	/** Volume of each channel, 0..1 */
-	float Volumes[static_cast<int32>(ESettingsVolume::Count)] = { 0.8f, 0.5f, 0.8f, 0.8f, 0.8f, 0.8f };
+	float Volumes[static_cast<int32>(ESettingsVolume::Count)] = { 0.8f, 0.5f, 0.8f, 0.8f, 0.8f, 0.8f, 0.8f };
+
+	/** When the microphone transmits in the voice chat (T-263) */
+	EVoiceMicMode MicMode = EVoiceMicMode::PushToTalk;
+
+	/** Voice activation threshold: microphone level (0..1) under which nothing goes out */
+	float MicThreshold = 0.08f;
 
 	/** Mouse sensitivity multiplier */
 	float Sensitivity = 1.0f;
@@ -46,10 +52,16 @@ struct FMonkeSettingsValues
 		return WindowMode != Other.WindowMode || Resolution != Other.Resolution || bVSync != Other.bVSync
 			|| FrameRateLimit != Other.FrameRateLimit || Quality != Other.Quality;
 	}
+
+	/** Whether the microphone part differs (mode or threshold; the voices' volume is a volume channel) */
+	bool VoiceDiffers(const FMonkeSettingsValues& Other) const
+	{
+		return MicMode != Other.MicMode || !FMath::IsNearlyEqual(MicThreshold, Other.MicThreshold);
+	}
 };
 
 /**
- *  Player settings the engine does not keep itself (volumes, mouse, field of view), saved in the user's
+ *  Player settings the engine does not keep itself (volumes, mouse, field of view, microphone), saved in the user's
  *  GameUserSettings.ini; the display settings live in UGameUserSettings.
  */
 UCLASS(config=GameUserSettings)
@@ -78,4 +90,12 @@ public:
 	/** Field of view of the first person camera (degrees) */
 	UPROPERTY(config)
 	float FieldOfView = 90.0f;
+
+	/** When the microphone transmits in the voice chat (T-263) */
+	UPROPERTY(config)
+	EVoiceMicMode MicMode = EVoiceMicMode::PushToTalk;
+
+	/** Voice activation threshold (microphone level 0..1) */
+	UPROPERTY(config)
+	float MicThreshold = 0.08f;
 };

@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "checked_at": "2026-10-08",
+  "sources": [
+    {"id":"battle","title":"Battle at sea","author":"Thimras","license":"CC0-1.0","page":"https://opengameart.org/content/battle-at-sea"},
+    {"id":"water","title":"40 CC0 water / splash / slime SFX","author":"rubberduck","license":"CC0-1.0","page":"https://opengameart.org/content/40-cc0-water-splash-slime-sfx"},
+    {"id":"wood_metal","title":"100 CC0 metal and wood SFX","author":"rubberduck","license":"CC0-1.0","page":"https://opengameart.org/content/100-cc0-metal-and-wood-sfx"},
+    {"id":"rpg","title":"80 CC0 RPG SFX","author":"rubberduck","license":"CC0-1.0","page":"https://opengameart.org/content/80-cc0-rpg-sfx"},
+    {"id":"foley","title":"100 CC0 SFX","author":"rubberduck","license":"CC0-1.0","page":"https://opengameart.org/node/85570"},
+    {"id":"foley2","title":"100 CC0 SFX #2","author":"rubberduck","license":"CC0-1.0","page":"https://opengameart.org/content/100-cc0-sfx-2"},
+    {"id":"waves","title":"Water Waves","author":"transitking; edited by qubodup","license":"CC0-1.0","page":"https://opengameart.org/content/water-waves"},
+    {"id":"sand","title":"Water Splash and sand footsteps","author":"Peludo","license":"CC0-1.0","page":"https://opengameart.org/content/water-splash-and-sand-footsteps"},
+    {"id":"pirate_music","title":"Pirate Ship Theme Loop","author":"beardalaxy","license":"CC0-1.0","page":"https://opengameart.org/content/pirate-ship-theme-loop"},
+    {"id":"jingles","title":"Music Jingles","author":"Kenney","license":"CC0-1.0","page":"https://kenney.nl/assets/music-jingles"},
+    {"id":"fighter","title":"Voiceover Pack (Fighter)","author":"Kenney","license":"CC0-1.0","page":"https://kenney.nl/assets/voiceover-pack-fighter"},
+    {"id":"wind","title":"wind1","author":"Luke.RUSTLTD (PureData; Andy Farnell tutorial)","license":"CC0-1.0","page":"https://opengameart.org/content/wind1"},
+    {"id":"crickets","title":"Crickets Ambient Noise - loopable","author":"Wolfgang_ / Ted Kerr","license":"CC0-1.0","page":"https://opengameart.org/content/crickets-ambient-noise-loopable"},
+    {"id":"fire","title":"Fire Crackling","author":"AntumDeluge","license":"CC0-1.0","page":"https://opengameart.org/content/fire-crackling"}
+  ]
+}
