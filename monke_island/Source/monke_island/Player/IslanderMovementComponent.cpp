@@ -3,9 +3,12 @@
 #include "Player/IslanderMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/World.h"
+#include "HAL/IConsoleManager.h"
 #include "GameFramework/Character.h"
 #include "Player/IslanderCharacter.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Stealth/StealthRules.h"
+#include "Stealth/StealthSubsystem.h"
 #include "TimerManager.h"
 #include "Water/IslandWaterSubsystem.h"
 
@@ -110,9 +113,12 @@ UIslanderMovementComponent::UIslanderMovementComponent()
 	NavAgentProps.bCanCrouch = true;
 	SetCrouchedHalfHeight(60.0f);
 	bCanWalkOffLedgesWhenCrouching = true;
-	MaxAcceleration = 1200.0f;
-	BrakingDecelerationWalking = 1600.0f;
-	GroundFriction = 8.0f;
+	// a person reaches a jog in about 0.4 s and stops in about 0.3 s, with a little slide: momentum, not a snap
+	MaxAcceleration = 900.0f;
+	BrakingDecelerationWalking = 1300.0f;
+	GroundFriction = 6.0f;
+	bUseSeparateBrakingFriction = true;
+	BrakingFriction = 4.0f;
 	MaxStepHeight = 40.0f;
 	SetWalkableFloorAngle(45.0f);
 
@@ -122,7 +128,8 @@ UIslanderMovementComponent::UIslanderMovementComponent()
 
 	// third person: the body turns toward where it walks
 	bOrientRotationToMovement = true;
-	RotationRate = FRotator(0.0f, 540.0f, 0.0f);
+	// turns at a human pace (a half turn in about half a second), the puppet leans into them
+	RotationRate = FRotator(0.0f, 380.0f, 0.0f);
 
 	// swimming at ~1.2 m/s, slightly positive buoyancy keeps the head above water
 	MaxSwimSpeed = 120.0f;
@@ -165,6 +172,23 @@ FNetworkPredictionData_Client* UIslanderMovementComponent::GetPredictionData_Cli
 	return ClientPredictionData;
 }
 
+#if !UE_BUILD_SHIPPING
+static TAutoConsoleVariable<int32> CVarMonkeAllowFlight(
+	TEXT("monke.AllowFlight"),
+	WITH_EDITOR ? 1 : 0,
+	TEXT("Double tap on jump toggles flight (development cheat, T-291): 1 allowed, 0 refused. The server decides with its own value; never in Shipping."),
+	ECVF_Cheat);
+#endif
+
+bool UIslanderMovementComponent::IsFlightAllowed()
+{
+#if UE_BUILD_SHIPPING
+	return false;
+#else
+	return CVarMonkeAllowFlight.GetValueOnGameThread() != 0;
+#endif
+}
+
 void UIslanderMovementComponent::UpdateFromCompressedFlags(uint8 Flags)
 {
 	Super::UpdateFromCompressedFlags(Flags);
@@ -194,14 +218,55 @@ void UIslanderMovementComponent::TickComponent(float DeltaTime, ELevelTick TickT
 		// out of stamina in the water: the body sinks, then drowning hurts (ADR-003 B-04)
 		const bool bDrowning = IsDrowning();
 		Buoyancy = bDrowning ? DrowningBuoyancy : DefaultBuoyancy;
-		const float Damage = UpdateDrowning(DeltaTime, bDrowning);
+		float Damage = UpdateDrowning(DeltaTime, bDrowning);
+		if (bDrowning && bExhaustionKillsInWater)
+		{
+			// no stamina left to keep the head up: dead at once, the body floats (AIslanderCharacter ragdoll buoyancy)
+			if (const UIslanderHealthComponent* Health = CharacterOwner->FindComponentByClass<UIslanderHealthComponent>())
+			{
+				Damage = FMath::Max(Damage, Health->GetHealth() + 1.0f);
+			}
+		}
 		if (Damage > 0.0f && CharacterOwner->HasAuthority())
 		{
 			if (UIslanderHealthComponent* Health = CharacterOwner->FindComponentByClass<UIslanderHealthComponent>())
 			{
-				Health->ApplyHealthDamage(Damage, nullptr);
+				// the cause the death screen tells (T-135)
+				Health->ApplyHealthDamage(Damage, nullptr, EDeathCause::Drowning);
 			}
 		}
+	}
+
+	// the running steps the mobs hear are the server's (T-262)
+	if (CharacterOwner && CharacterOwner->HasAuthority())
+	{
+		UpdateRunNoise();
+	}
+}
+
+void UIslanderMovementComponent::UpdateRunNoise()
+{
+	UStealthSubsystem* Stealth = UStealthSubsystem::Get(this);
+	if (!Stealth || !UpdatedComponent || !IsSprinting() || !IsMovingOnGround())
+	{
+		bRunNoiseTracking = false;
+		RunNoiseDistance = 0.0f;
+		return;
+	}
+	const FVector Here = UpdatedComponent->GetComponentLocation();
+	if (!bRunNoiseTracking)
+	{
+		bRunNoiseTracking = true;
+		RunNoiseFrom = Here;
+	}
+	RunNoiseDistance += static_cast<float>(FVector::Dist2D(Here, RunNoiseFrom));
+	RunNoiseFrom = Here;
+	const float Stride = FMath::Max(Stealth->GetRules().Hearing.RunStrideCm, 20.0f);
+	if (RunNoiseDistance >= Stride)
+	{
+		RunNoiseDistance = FMath::Fmod(RunNoiseDistance, Stride);
+		const FVector Feet = Here - FVector(0.0f, 0.0f, CharacterOwner->GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
+		Stealth->ReportNoiseOfKind(CharacterOwner, Feet, EStealthNoise::Footstep);
 	}
 }
 
@@ -250,6 +315,19 @@ bool UIslanderMovementComponent::ConsumeStamina(float Amount)
 	return true;
 }
 
+void UIslanderMovementComponent::RestoreStamina(float Amount)
+{
+	if (Amount <= 0.0f)
+	{
+		return;
+	}
+	Stamina = FMath::Min(MaxStamina, Stamina + Amount);
+	if (bExhausted && Stamina >= MaxStamina * ExhaustedRecoverFraction)
+	{
+		bExhausted = false;
+	}
+}
+
 void UIslanderMovementComponent::UpdateStamina(float DeltaSeconds, bool bSprinting, bool bSwimming, bool bMoving)
 {
 	const float SwimCost = bMoving ? SwimStaminaCost : SwimIdleStaminaCost;
@@ -286,6 +364,12 @@ void UIslanderMovementComponent::UpdateStamina(float DeltaSeconds, bool bSprinti
 float UIslanderMovementComponent::GetWeightSpeedFactor() const
 {
 	return FMath::Max(MinWeightSpeedFactor, 1.0f - CarriedWeight * SpeedLossPerKg);
+}
+
+void UIslanderMovementComponent::SetHeldItemSpeedFactors(float InWalkFactor, float InSprintFactor)
+{
+	HeldItemWalkFactor = FMath::Clamp(InWalkFactor, 0.05f, 1.0f);
+	HeldItemSprintFactor = FMath::Clamp(InSprintFactor, 0.05f, 1.0f);
 }
 
 bool UIslanderMovementComponent::CanAttemptJump() const
@@ -362,7 +446,8 @@ float UIslanderMovementComponent::GetMaxSpeed() const
 	case MOVE_Walking:
 	case MOVE_NavWalking:
 		{
-			if (bWantsToSprint && !bExhausted && Stamina > 0.0f && !IsCrouching() && !bWantsToGuard)
+			const bool bSprintSpeed = bWantsToSprint && !bExhausted && Stamina > 0.0f && !IsCrouching() && !bWantsToGuard;
+			if (bSprintSpeed)
 			{
 				Speed = MaxSprintSpeed;
 			}
@@ -375,6 +460,8 @@ float UIslanderMovementComponent::GetMaxSpeed() const
 				Speed *= GuardSpeedFactor;
 			}
 			Speed *= GetWeightSpeedFactor();
+			// a heavy item in hand (the machine gun) slows the walk and the run
+			Speed *= GetHeldItemSpeedFactor(bSprintSpeed);
 
 			// wading: the water drags the legs, more and more until the character swims
 			const float Depth = GetWaterDepthAtFeet();
@@ -443,6 +530,11 @@ void UIslanderMovementComponent::UpdateCharacterStateBeforeMovement(float DeltaS
 	// predicted flight request (double tap on jump): applied identically on the owning client and the server
 	if (CharacterOwner && MovementMode != MOVE_None)
 	{
+		// a development cheat: refused here, on the server too, whatever the client's flags say (T-291)
+		if (bWantsToFly && !IsFlightAllowed())
+		{
+			bWantsToFly = false;
+		}
 		if (bWantsToFly && IsSwimming())
 		{
 			bWantsToFly = false;

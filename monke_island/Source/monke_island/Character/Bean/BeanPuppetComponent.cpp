@@ -1,17 +1,24 @@
 // monke_island
 
 #include "Character/Bean/BeanPuppetComponent.h"
+#include "Character/Bean/BeanDroppedHat.h"
+#include "Character/Bean/BeanSwimAnim.h"
+#include "CoreGlobals.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/StaticMesh.h"
+#include "Engine/World.h"
+#include "Materials/MaterialInterface.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Interaction/IslanderGrabComponent.h"
+#include "Net/UnrealNetwork.h"
 #include "Player/IslanderCharacter.h"
 #include "Player/IslanderCombatComponent.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Water/IslandWaterSubsystem.h"
 #include "monke_island.h"
 
 namespace BeanPuppet
@@ -51,6 +58,7 @@ UBeanPuppetComponent::UBeanPuppetComponent(const FObjectInitializer& ObjectIniti
 	PrimaryComponentTick.TickGroup = TG_PostUpdateWork;
 	SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SetGenerateOverlapEvents(false);
+	SetIsReplicatedByDefault(true);
 
 	using BeanPuppet::Map;
 	BoneMappings = {
@@ -77,6 +85,8 @@ UBeanPuppetComponent::UBeanPuppetComponent(const FObjectInitializer& ObjectIniti
 void UBeanPuppetComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	// Existing Blueprint components may have serialized the old non-replicated default.
+	SetIsReplicated(true);
 
 	SpawnSkinParts();
 	bReady = InitPuppet();
@@ -89,6 +99,14 @@ void UBeanPuppetComponent::BeginPlay()
 
 void UBeanPuppetComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	if (GetOwner()->HasAuthority() && IsValid(DroppedHat))
+	{
+		DroppedHat->Destroy();
+	}
+	if (UIslanderHealthComponent* Health = GetOwner()->FindComponentByClass<UIslanderHealthComponent>())
+	{
+		Health->OnHealthChanged.RemoveDynamic(this, &UBeanPuppetComponent::HandleOwnerHealthChanged);
+	}
 	if (SourceMesh && bHideSourceMesh)
 	{
 		SourceMesh->SetHiddenInGame(false);
@@ -212,6 +230,7 @@ void UBeanPuppetComponent::SpawnSkinParts()
 			HatComponent->SetRelativeTransform(HatRest.GetRelativeTransform(RefCS[HatBoneIndex]));
 			HatRelativeTransform = HatComponent->GetRelativeTransform();
 		}
+		HatComponent->SetHiddenInGame(bHatDropped);
 	}
 }
 
@@ -331,11 +350,18 @@ void UBeanPuppetComponent::UpdateStance(float DeltaTime)
 	CrouchAlpha = FMath::FInterpTo(CrouchAlpha, CrouchTarget, DeltaTime, BlendSpeed * 0.6f);
 	SwimAlpha = FMath::FInterpTo(SwimAlpha, SwimTarget, DeltaTime, BlendSpeed * 0.25f);
 
-	// Fall Guys squash while crouched; lifted in the water (the capsule floats at an adult's height)
+	// Fall Guys squash while crouched; lifted in the water (the capsule floats at an adult's height). The bean's own
+	// swim clips float it at the water surface they are authored for (SetWaterStance, given every frame by
+	// UBeanAnimDriverComponent); without them, SwimLift while swimming
+	float Lift = SwimLift * SwimAlpha;
+	if (WaterStanceFrame != 0 && GFrameCounter <= WaterStanceFrame + 1)
+	{
+		Lift = WaterStanceAlpha > KINDA_SMALL_NUMBER ? WaterStanceAlpha * WaterStanceLift() : 0.f;
+	}
 	SetRelativeScale3D(BaseRelativeScale * FMath::Lerp(FVector::OneVector, CrouchScale, CrouchAlpha));
-	SetRelativeLocation(BaseRelativeLocation + FVector(0.0, 0.0, SwimLift * SwimAlpha));
+	SetRelativeLocation(BaseRelativeLocation + FVector(0.0, 0.0, Lift));
 
-	// knocked out: the hat flies off; standing near it again puts it back on
+	// Knocked out: the server drops the hat. Recovery, proximity and time never equip it.
 	if (const AIslanderCharacter* Knocked = Cast<AIslanderCharacter>(Character))
 	{
 		const bool bRagdoll = Knocked->IsRagdoll();
@@ -344,25 +370,6 @@ void UBeanPuppetComponent::UpdateStance(float DeltaTime)
 			DropHat(Knocked->GetVelocity());
 		}
 		bWasRagdoll = bRagdoll;
-
-		const UIslanderHealthComponent* Health = Knocked->GetHealthComponent();
-		const bool bAlive = !Health || !Health->IsDead();
-		const double SinceDrop = GetWorld()->GetTimeSeconds() - HatDropTime;
-		if (bHatDropped && !bRagdoll && bAlive && SinceDrop >= HatPickupDelay)
-		{
-			const FVector Feet = Knocked->GetActorLocation() - FVector(0.0, 0.0, Knocked->GetSimpleCollisionHalfHeight());
-			const bool bHatValid = IsValid(HatComponent);
-			const FVector HatLocation = bHatValid ? HatComponent->GetComponentLocation() : Feet;
-			const bool bTouching = bHatValid && FVector::Dist2D(HatLocation, Feet) <= HatPickupRadius
-				&& FMath::Abs(HatLocation.Z - Feet.Z) <= 2.0 * HatPickupRadius;
-			// the hat comes back by itself after a while, or at once if it was lost (destroyed, washed away, far off)
-			const bool bLost = !bHatValid || FVector::Dist(HatLocation, Feet) > HatLostDistance;
-			const bool bReturn = HatReturnDelay > 0.f && SinceDrop >= HatReturnDelay;
-			if (bTouching || bLost || bReturn)
-			{
-				PickUpHat();
-			}
-		}
 	}
 
 	// the hat pops back on the head (scale 0 -> 1)
@@ -381,6 +388,17 @@ void UBeanPuppetComponent::UpdateStance(float DeltaTime)
 		if (HatComponent->bOwnerNoSee != bHideHat)
 		{
 			HatComponent->SetOwnerNoSee(bHideHat);
+		}
+	}
+
+	// first person: the hair and the moustache ride the head bone in front of the camera; the owner's machine alone
+	// makes them see-through, the other players still see them
+	{
+		const AIslanderCharacter* Viewer = Cast<AIslanderCharacter>(Character);
+		const bool bHideHead = Viewer && Viewer->IsLocallyControlled() && Viewer->IsFirstPerson() && !Viewer->IsRagdoll();
+		if (bHideHead != bHeadSlotsHidden)
+		{
+			SetHeadSlotsHidden(bHideHead);
 		}
 	}
 
@@ -568,6 +586,31 @@ void UBeanPuppetComponent::SetBasePoseSource(USkeletalMeshComponent* Source, flo
 	}
 }
 
+void UBeanPuppetComponent::SetWaterStance(float Alpha, float RootDepthCm, float MaxLiftCm)
+{
+	WaterStanceAlpha = FMath::Clamp(Alpha, 0.f, 1.f);
+	WaterStanceRootDepth = RootDepthCm;
+	WaterStanceMaxLift = MaxLiftCm;
+	WaterStanceFrame = GFrameCounter;
+}
+
+float UBeanPuppetComponent::WaterStanceLift() const
+{
+	const UIslandWaterSubsystem* Water = UIslandWaterSubsystem::Get(this);
+	if (!Water)
+	{
+		return 0.f;
+	}
+	// dry placement of the root (the capsule's feet), then the sea surface right there, waves and flood included
+	const USceneComponent* Parent = GetAttachParent();
+	const FVector DryRoot = Parent ? Parent->GetComponentTransform().TransformPosition(BaseRelativeLocation) : BaseRelativeLocation;
+	const float WorldLift = BeanSwimAnim::FloatLift(Water->GetWaterSurfaceAt(DryRoot), static_cast<float>(DryRoot.Z),
+		WaterStanceRootDepth, WaterStanceMaxLift);
+	// the character stays upright: the parent's Z is the world's, only its scale may differ
+	const float ParentScale = Parent ? static_cast<float>(Parent->GetComponentScale().Z) : 1.f;
+	return WorldLift / FMath::Max(ParentScale, KINDA_SMALL_NUMBER);
+}
+
 void UBeanPuppetComponent::ApplyBasePoseSource()
 {
 	USkeletalMeshComponent* Source = BasePoseSource.Get();
@@ -647,43 +690,88 @@ void UBeanPuppetComponent::HandleOwnerHealthChanged(float NewHealth, float Delta
 
 void UBeanPuppetComponent::DropHat(FVector Velocity)
 {
-	if (!bHatFallsOff || bHatDropped || !HatComponent || !HatComponent->GetStaticMesh())
+	if (!GetOwner()->HasAuthority() || !bHatFallsOff || bHatDropped || !IsValid(HatComponent) || !HatComponent->GetStaticMesh())
 	{
 		return;
 	}
 
+	FActorSpawnParameters Params;
+	Params.Owner = GetOwner();
+	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	FTransform DropTransform = HatComponent->GetComponentTransform();
+	// A second hit during the equip pop still drops a full-size hat.
+	DropTransform.SetScale3D(HatRelativeTransform.GetScale3D() * GetSocketTransform(HatBone).GetScale3D());
+	DroppedHat = GetWorld()->SpawnActor<ABeanDroppedHat>(ABeanDroppedHat::StaticClass(), DropTransform, Params);
+	if (!DroppedHat)
+	{
+		UE_LOG(Logmonke_island, Warning, TEXT("Could not drop the hat for %s"), *GetNameSafe(GetOwner()));
+		return;
+	}
+	DroppedHat->Initialize(HatComponent->GetStaticMesh(), Velocity, HatDropKick);
 	bHatDropped = true;
-	HatDropTime = GetWorld()->GetTimeSeconds();
-	HatComponent->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-	HatComponent->SetOwnerNoSee(false);
-
-	// a light physics body that rolls on the ground; the players walk through it and pick it up by touching it
-	HatComponent->SetCollisionProfileName(UCollisionProfile::PhysicsActor_ProfileName);
-	HatComponent->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
-	HatComponent->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
-	HatComponent->SetSimulatePhysics(true);
-	HatComponent->SetMassOverrideInKg(NAME_None, 0.3f, true);
-	const FVector Spin(FMath::FRandRange(-360.f, 360.f), FMath::FRandRange(-360.f, 360.f), FMath::FRandRange(-180.f, 180.f));
-	HatComponent->SetPhysicsLinearVelocity(Velocity + FVector(FMath::FRandRange(-60.f, 60.f), FMath::FRandRange(-60.f, 60.f), HatDropKick));
-	HatComponent->SetPhysicsAngularVelocityInDegrees(Spin);
+	OnRep_HatDropped();
+	GetOwner()->ForceNetUpdate();
 }
 
-void UBeanPuppetComponent::PickUpHat()
+bool UBeanPuppetComponent::TryPickUpHat(ABeanDroppedHat* Hat, APawn* User)
 {
-	// lost for good (destroyed with the world, garbage collected): make a new one
-	if (!IsValid(HatComponent))
+	if (!GetOwner()->HasAuthority() || !bHatDropped || !IsValid(Hat) || Hat != DroppedHat
+		|| !IsValid(HatComponent) || !Hat->CanInteract_Implementation(User))
 	{
-		HatComponent = nullptr;
-		SpawnSkinParts();
-		bHatDropped = false;
-		HatPopAlpha = 0.f;
-		return;
+		return false;
 	}
 
-	HatComponent->SetSimulatePhysics(false);
-	HatComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	HatComponent->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform, HatBone);
-	HatComponent->SetRelativeTransform(HatRelativeTransform);
 	bHatDropped = false;
-	HatPopAlpha = 0.f;
+	OnRep_HatDropped();
+	Hat->Destroy();
+	DroppedHat = nullptr;
+	GetOwner()->ForceNetUpdate();
+	return true;
+}
+
+void UBeanPuppetComponent::OnRep_HatDropped()
+{
+	if (IsValid(HatComponent))
+	{
+		HatComponent->SetHiddenInGame(bHatDropped);
+		HatComponent->SetRelativeTransform(HatRelativeTransform);
+		HatPopAlpha = bHatDropped ? 1.f : 0.f;
+	}
+}
+
+void UBeanPuppetComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(UBeanPuppetComponent, bHatDropped);
+}
+
+void UBeanPuppetComponent::SetHeadSlotsHidden(bool bHide)
+{
+	bHeadSlotsHidden = bHide;
+	if (bHide)
+	{
+		UMaterialInterface* Hidden = FirstPersonHiddenMaterial.LoadSynchronous();
+		if (!Hidden)
+		{
+			UE_LOG(Logmonke_island, Warning, TEXT("%s: no see-through material (%s), the hair stays in the first person view"),
+				*GetNameSafe(GetOwner()), *FirstPersonHiddenMaterial.ToString());
+			return;
+		}
+		HeadSlotMaterials.Reset();
+		for (const FName Slot : FirstPersonHiddenSlots)
+		{
+			const int32 Index = GetMaterialIndex(Slot);
+			if (Index != INDEX_NONE)
+			{
+				HeadSlotMaterials.Add(Index, OverrideMaterials.IsValidIndex(Index) ? OverrideMaterials[Index].Get() : nullptr);
+				SetMaterial(Index, Hidden);
+			}
+		}
+		return;
+	}
+	for (const TPair<int32, TObjectPtr<UMaterialInterface>>& Saved : HeadSlotMaterials)
+	{
+		SetMaterial(Saved.Key, Saved.Value);
+	}
+	HeadSlotMaterials.Reset();
 }

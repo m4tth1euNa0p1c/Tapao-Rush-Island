@@ -1,6 +1,7 @@
 // monke_island
 
 #include "Character/Bean/BeanLibraryAnimInstance.h"
+#include "Creatures/PoseRoot.h"
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimNodeBase.h"
 #include "Animation/AnimationPoseData.h"
@@ -109,6 +110,8 @@ bool FBeanLibraryAnimInstanceProxy::Evaluate(FPoseContext& Output)
 			}
 		}
 	}
+	// the root keeps the scale of the mesh: the GoreBox clips carry a root at 1 (owner 2026-10-08)
+	PoseRoot::KeepReferenceScale(Output.Pose);
 	Output.Pose.NormalizeRotations();
 	return true;
 }

@@ -44,7 +44,7 @@ Un personnage à la troisième personne, aux proportions et à la physique d'un 
 | # | Tâche | Agent | Statut |
 |---|-------|-------|--------|
 | T-016 | Personnage, mouvement, niveau de la mer, BP, GameMode | ue-gameplay-programmer | fait |
-| — | Animation de nage (le blendspace du template joue la marche en nageant) | ue-ai-programmer / anim | à faire |
+| T-017 | Animation de nage du bean : `A_Bean_Swim` / `A_Bean_TreadWater`, flottaison à la surface (fiche `character-bean-soldier.md` §7) | ue-character-rigger | review (compilé, import et PIE à faire par le lead) |
 | — | Navigation : désactiver `bCanEverAffectNavigation` sur les tuiles de terrain (export de 280 k triangles par tuile) | ue-performance-engineer | à faire |
 
 ## 6. Tests
@@ -55,3 +55,15 @@ Un personnage à la troisième personne, aux proportions et à la physique d'un 
 ## 7. Journal
 - 2026-10-02 : classes C++, build UBT OK (toolchain MSVC remise à jour), Blueprints, GameMode ; flottabilité validée en PIE (−60 cm) ; correctif du mode de nage compilé en Live Coding, test PIE en attente (éditeur partagé avec la session de végétation).
 - 2026-10-03 : correctif validé en PIE (lagon : Swimming stable à −60 cm ; plage : Walking) ; IMC AZERTY ajouté.
+
+## Mouvement plus fluide et inclinaison du corps (2026-10-03, demande de l'utilisateur)
+- **Mouvement :**
+  - `MaxAcceleration` 900 : un trot atteint en environ 0,4 s ;
+  - freinage 1300, frottement au sol 6, frottement de freinage séparé 4 : petite glissade à l'arrêt ;
+  - `RotationRate` 380°/s : un demi-tour en environ 0,5 s.
+- **Inclinaison du pantin (`UBeanPuppetComponent::UpdateLean`) :**
+  - le corps penche dans l'accélération mesurée (démarrage, freinage, virage) ;
+  - angle `LeanFactor` × atan(a / g), au plus `MaxLeanDegrees` (14°) ;
+  - ressort amorti (`LeanStiffness` 90, `LeanDamping` 13), légère oscillation à l'arrêt ;
+  - au sol seulement ; jamais en 1re personne pour son propriétaire, car la caméra suit le pantin.
+- **Preuve :** compilé (build éditeur), valeurs vérifiées sur `BP_IslanderBean` par MCP. Non testé en PIE.

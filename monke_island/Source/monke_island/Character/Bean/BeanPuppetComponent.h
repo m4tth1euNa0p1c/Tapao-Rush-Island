@@ -6,9 +6,13 @@
 #include "Components/PoseableMeshComponent.h"
 #include "BeanPuppetComponent.generated.h"
 
+class UMaterialInterface;
+
 class USkeletalMeshComponent;
 class UStaticMesh;
 class UStaticMeshComponent;
+class ABeanDroppedHat;
+class APawn;
 
 /** One source bone driving one bean bone */
 USTRUCT(BlueprintType)
@@ -132,6 +136,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Camera")
 	bool bHideArmsForOwnerInFirstPerson = true;
 
+	/** Slots of the body hidden from its owner in first person: the hair and the moustache ride the head bone and
+	 *  came in front of the camera when the head moved (lifting an object, owner report 2026-10-07); on the owner's
+	 *  machine only they take FirstPersonHiddenMaterial, the other players still see them */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Camera")
+	TArray<FName> FirstPersonHiddenSlots = { TEXT("M_Bean_Hair"), TEXT("M_Bean_Moustache") };
+
+	/** Fully see-through material for those slots (masked, opacity 0) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Camera")
+	TSoftObjectPtr<UMaterialInterface> FirstPersonHiddenMaterial = TSoftObjectPtr<UMaterialInterface>(FSoftObjectPath(TEXT("/Game/MonkeIsland/Characters/Bean/Materials/M_Bean_Hidden.M_Bean_Hidden")));
+
 	/** The hat falls off when the bean is knocked out (ragdoll) or takes damage (punch, fall) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat")
 	bool bHatFallsOff = true;
@@ -140,7 +154,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0"))
 	float HatDropKick = 280.0f;
 
-	/** The bean picks its hat back up when its feet come this close (cm) */
+	/** Maximum distance from the feet for the explicit hat interaction (F), in cm */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0"))
 	float HatPickupRadius = 90.0f;
 
@@ -148,21 +162,24 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0", Units="s"))
 	float HatPickupDelay = 1.0f;
 
-	/** The hat comes back on the head by itself this long after falling, once the bean is up (s); 0 = only by touching it */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0", Units="s"))
+	/** Legacy serialized setting, ignored: a dropped hat only returns through interaction */
+	UPROPERTY(meta=(DeprecatedProperty, DeprecationMessage="Use F to pick up the hat; automatic return is disabled."))
 	float HatReturnDelay = 5.0f;
 
-	/** A dropped hat farther than this from the bean is considered lost and comes back at once (cm) */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0"))
+	/** Legacy serialized setting, ignored: distance never respawns the hat */
+	UPROPERTY(meta=(DeprecatedProperty, DeprecationMessage="Dropped hats stay in the world until picked up."))
 	float HatLostDistance = 3000.0f;
 
 	/** Duration of the pop when the hat comes back on the head (s) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Bean|Hat", meta=(ClampMin="0", Units="s"))
 	float HatPopTime = 0.25f;
 
-	/** Drops the hat now (every machine plays it locally, the hat is cosmetic) */
-	UFUNCTION(BlueprintCallable, Category="Bean|Hat")
+	/** Drops one replicated physical hat (server only) */
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly, Category="Bean|Hat")
 	void DropHat(FVector Velocity);
+
+	/** Equips this component's dropped hat after the server validates an explicit interaction */
+	bool TryPickUpHat(ABeanDroppedHat* Hat, APawn* User);
 
 	/** True while the hat lies on the ground */
 	UFUNCTION(BlueprintPure, Category="Bean|Hat")
@@ -212,6 +229,12 @@ public:
 	 *  folding, the lean and the hat still apply on top. Null Source or Alpha 0 = mannequin retarget. */
 	void SetBasePoseSource(USkeletalMeshComponent* Source, float Alpha);
 
+	/** Water stance of this frame, given by the bean's own animations (UBeanAnimDriverComponent, T-017): the bean floats
+	 *  with its root RootDepthCm under the water surface (waves included), at most MaxLiftCm above its dry placement,
+	 *  blended by Alpha. Call every frame; without a call this frame or the last, the bean is raised by SwimLift while
+	 *  swimming. */
+	void SetWaterStance(float Alpha, float RootDepthCm, float MaxLiftCm);
+
 	/** Returns the outfit component, if any */
 	UFUNCTION(BlueprintPure, Category="Bean|Skin")
 	USkeletalMeshComponent* GetOutfitComponent() const { return OutfitComponent; }
@@ -225,6 +248,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 private:
 
@@ -240,8 +264,9 @@ private:
 	/** Blends the stance (crouch squash, swim lift) and the punch / guard arm overrides */
 	void UpdateStance(float DeltaTime);
 
-	/** Puts the hat back on the head */
-	void PickUpHat();
+	/** Shows the worn hat only while equipped, including for late joining clients */
+	UFUNCTION()
+	void OnRep_HatDropped();
 
 	/** Hat drop on damage (bound to the owner's health) */
 	UFUNCTION()
@@ -294,6 +319,16 @@ private:
 	/** Weight of the base pose source */
 	float BasePoseAlpha = 0.f;
 
+	/** Water stance of the bean's animations (see SetWaterStance) and the frame it was given on (0: never) */
+	float WaterStanceAlpha = 0.f;
+	float WaterStanceRootDepth = 0.f;
+	float WaterStanceMaxLift = 0.f;
+	uint64 WaterStanceFrame = 0;
+
+	/** Lift of the water stance this frame (cm, in the parent's space): the root floats WaterStanceRootDepth under the
+	 *  water surface */
+	float WaterStanceLift() const;
+
 	/** Animated component driving some bones (see SetBoneOverrideSource) */
 	TWeakObjectPtr<USkeletalMeshComponent> BoneOverrideSource;
 
@@ -311,13 +346,30 @@ private:
 	TArray<float> OverrideAlpha;
 
 	int32 HatIndex = INDEX_NONE;
+
+	/** Equipment state is authoritative even if the dropped actor becomes irrelevant or is destroyed */
+	UPROPERTY(ReplicatedUsing=OnRep_HatDropped)
 	bool bHatDropped = false;
+
+	/** The only hat this component may equip, owned and checked by the server */
+	UPROPERTY(Transient)
+	TObjectPtr<ABeanDroppedHat> DroppedHat;
+
 	bool bWasRagdoll = false;
-	double HatDropTime = 0.0;
 	float HatPopAlpha = 1.f;
 	FTransform HatRelativeTransform = FTransform::Identity;
 	float GrabAlpha = 0.f;
 	bool bBodyHiddenForOwner = false;
+
+	/** The hair and moustache slots are see-through on this machine (owner in first person) */
+	bool bHeadSlotsHidden = false;
+
+	/** Materials those slots had before (nullptr: the mesh's own), put back when the view changes */
+	UPROPERTY(Transient)
+	TMap<int32, TObjectPtr<UMaterialInterface>> HeadSlotMaterials;
+
+	/** Swaps the hair and moustache slots for the see-through material, or puts their materials back */
+	void SetHeadSlotsHidden(bool bHide);
 	int32 UpperArmL = INDEX_NONE;
 	int32 LowerArmL = INDEX_NONE;
 	int32 UpperArmR = INDEX_NONE;

@@ -52,7 +52,9 @@ private:
  *  component decides its pose every frame from the character state and hands it to the puppet as base pose
  *  (UBeanPuppetComponent::SetBasePoseSource): locomotion by speed, jump, carry, boat, death, hit and pickup one
  *  shots, and the sabre on the upper body. The puppet keeps its procedural layers on top (musket override, punch,
- *  lean, hat). Ragdoll and swimming give the body back to the mannequin retarget (no clip for them).
+ *  lean, hat). In the water (T-017) the bean treads water or swims the breaststroke and the puppet floats it at the
+ *  surface the clips are made for (UBeanPuppetComponent::SetWaterStance); without swim clips, and in ragdoll, the body
+ *  goes back to the mannequin retarget.
  *  Cosmetic: every machine computes it from replicated state.
  */
 UCLASS(ClassGroup=(Bean), meta=(BlueprintSpawnableComponent))
@@ -81,8 +83,16 @@ public:
 	UFUNCTION(BlueprintPure, Category="Bean|Anim")
 	bool ShowsBodyArmsInFirstPerson() const { return bBodyArmsShown; }
 
-	/** Plays a one shot of the whole body (pickup, emote...) on this machine */
-	void PlayFullBody(UAnimSequence* Sequence);
+	/** Plays a one shot of the whole body (pickup, emote...) on this machine, at PlayRate from StartTime (s of the clip;
+	 *  the capture gestures of T-336 stretch their clip over the gesture and start a late one where the server is) */
+	void PlayFullBody(UAnimSequence* Sequence, float PlayRate = 1.0f, float StartTime = 0.0f);
+
+	/** Stops the one shot of the whole body if it is Sequence (a gesture cut short, T-336); nothing otherwise */
+	void StopFullBody(const UAnimSequence* Sequence);
+
+	/** An item in hand with this actor tag lets its carrier see the body's own arms in first person, as bare hands (the
+	 *  capture items of T-336: the gestures of the body are seen) */
+	static const FName BodyArmsInFirstPersonTag;
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -94,10 +104,16 @@ protected:
 private:
 
 	/** Whole body states, blended by weight */
-	enum class EBodyState : uint8 { Ground, Carry, Air, Land, Boat, Dead, Count };
+	enum class EBodyState : uint8 { Ground, Carry, Air, Land, Boat, Dead, Swim, Count };
 
 	/** Creates the hidden animated mesh once the puppet is found */
 	bool InitSource();
+
+	/** The library has a swim clip (A_Bean_Swim or A_Bean_TreadWater) */
+	bool HasSwimClips() const;
+
+	/** Water pose of this frame (BeanSwimAnim::IsInWaterPose) and the swimming speed */
+	void UpdateWaterPose();
 
 	/** Picks the body state of this frame */
 	EBodyState PickState(float DeltaTime);
@@ -145,15 +161,30 @@ private:
 	bool bWasHolding = false;
 	float BoatSpeed = 0.0f;
 
-	/** One shot of the whole body */
+	/** In the water this frame (swimming, or deep water at the feet), and the speed through the water (cm/s) */
+	bool bInWaterPose = false;
+	float SwimSpeed = 0.0f;
+
+	/** Clocks of the water clips: treading water in seconds, the stroke as a normalised phase */
+	float TreadTime = 0.0f;
+	float SwimPhase = 0.0f;
+
+	/** Smoothed weight of the stroke against treading water */
+	float StrokeAlpha = 0.0f;
+
+	/** Smoothed weight of the float lift given to the puppet */
+	float WaterAlpha = 0.0f;
+
+	/** One shot of the whole body, its time in the clip and its play rate */
 	UPROPERTY(Transient)
 	TObjectPtr<UAnimSequence> FullBodyClip;
 	float FullBodyTime = 0.0f;
+	float FullBodyRate = 1.0f;
 
 	/** Smoothed weight of the upper body layer */
 	float UpperWeight = 0.0f;
 
-	/** Weight given to the puppet (0 in ragdoll and in the water) */
+	/** Weight given to the puppet (0 in ragdoll, and in the water when the library has no swim clip) */
 	float BodyAlpha = 0.0f;
 
 	bool bDriving = false;

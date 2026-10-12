@@ -11,7 +11,7 @@ class UAnimSequence;
 /**
  *  Clips of the Bean animation library (maquette bean-anim-library of the second PC: 30 clips on SK_Bean_Body,
  *  24 fps, no root motion) and how UBeanAnimDriverComponent plays them (T-078). Filled by
- *  scripts/character/import_bean_library.py.
+ *  scripts/character/import_bean_library.py; the swim clips (T-017, 30 fps) by scripts/character/bean_swim_import_ue.py.
  */
 UCLASS(BlueprintType)
 class MONKE_ISLAND_API UBeanAnimLibrary : public UDataAsset
@@ -61,6 +61,14 @@ public:
 	/** Clip BoatRow of the library (A_Bean_*) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Boat")
 	TObjectPtr<UAnimSequence> BoatRow;
+
+	/** Breaststroke loop, head and hat out of the water (A_Bean_Swim, 1.2 s, scripts/character/bean_swim_clips.py, T-017) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim")
+	TObjectPtr<UAnimSequence> Swim;
+
+	/** Treading water in place: legs pedalling, hands sculling (A_Bean_TreadWater, 1.6 s, T-017) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim")
+	TObjectPtr<UAnimSequence> TreadWater;
 
 	// ------------------------------------------------------------------ one shots
 
@@ -190,6 +198,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Trumpet")
 	TObjectPtr<UAnimSequence> TrumpetUnequip;
 
+	// ------------------------------------------------------------------ capture (T-336, clips of T-337)
+
+	/** Sets the folded cage down in front and opens it (A_Bean_Cage_Place, 1.5 s, event CagePlaced at 0.95 s): a one shot
+	 *  of the whole body, played by ACageItem at the pace of DA_CaptureRules.PlaceGestureSeconds */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Capture")
+	TObjectPtr<UAnimSequence> CagePlace;
+
+	/** Closes the handcuffs on the wrists of the target in front (A_Bean_Cuff, 1.2 s, event CuffsClosed at 0.7 s): a one
+	 *  shot of the whole body, stretched by AHandcuffsItem over the hold of the key */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Capture")
+	TObjectPtr<UAnimSequence> Cuff;
+
 	// ------------------------------------------------------------------ tuning
 
 	/** Ground speed at which the walk clip is fully played (cm/s) */
@@ -266,4 +286,60 @@ public:
 	/** Time in the air before the landing clip is played on touchdown (s): small hops land without it */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Tuning", meta=(ClampMin="0", Units="s"))
 	float LandMinAirTime = 0.3f;
+
+	// ------------------------------------------------------------------ swimming (T-017)
+
+	/** Swimming speed at which the stroke clip plays at its own pace (cm/s, the movement's MaxSwimSpeed): the play rate is
+	 *  the speed over it */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="1"))
+	float SwimStrokeSpeed = 120.0f;
+
+	/** Limits of the stroke play rate */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0.1"))
+	float SwimMinPlayRate = 0.7f;
+
+	/** See SwimMinPlayRate */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0.1"))
+	float SwimMaxPlayRate = 1.6f;
+
+	/** Up to this swimming speed the bean only treads water (cm/s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0"))
+	float TreadMaxSpeed = 20.0f;
+
+	/** From this swimming speed the stroke is fully played; treading water and the stroke cross fade in between (cm/s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0"))
+	float SwimFullSpeed = 70.0f;
+
+	/** Time the whole body takes to blend into or out of the water clips, and the float lift to come or go (s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0.01", Units="s"))
+	float SwimBlendTime = 0.35f;
+
+	/** Time the cross fade between treading water and the stroke takes to follow the speed (s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0.01", Units="s"))
+	float SwimStrokeBlendTime = 0.3f;
+
+	/** Water depth at the bottom of the capsule from which the bean takes the water pose even when it is not swimming
+	 *  (walking or falling, cm): a 1.05 m bean floats before the movement swims (SwimStartDepth is an adult's 120 cm),
+	 *  and its capsule bobs at that depth between swimming and falling. Above SwimRootDepth so the floating bean clears
+	 *  the bottom */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0"))
+	float SwimPoseMinDepth = 75.0f;
+
+	/** Depth margin below SwimPoseMinDepth before the bean leaves the water pose (cm): no flicker in the waves */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0"))
+	float SwimPoseExitHysteresis = 10.0f;
+
+	/** Rising faster than this (a jump out of the water, 620 cm/s) leaves the water pose at once (cm/s) */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0"))
+	float SwimPoseMaxRiseSpeed = 300.0f;
+
+	/** Depth of the bean root under the water surface while it floats (cm): the swim clips are authored for this water
+	 *  line (water_line_cm of art/export/Characters/Bean/Anims/bean_swim_clips.json), eyes, moustache and hat above it */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0"))
+	float SwimRootDepth = 60.0f;
+
+	/** Highest the bean is raised above its dry placement to float at SwimRootDepth (cm): a diving capsule takes it down
+	 *  beyond. The bean capsule (55 cm half height) swims about 120 cm deep at its feet: a 60 cm lift */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Swim", meta=(ClampMin="0"))
+	float SwimMaxLift = 75.0f;
 };

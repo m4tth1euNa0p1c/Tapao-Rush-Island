@@ -1,0 +1,70 @@
+{
+ "format": "bean-swim-clips/1",
+ "task": "T-017",
+ "fps": 30,
+ "water_line_cm": 60.0,
+ "skeleton": "SKEL_Bean (art/blender/characters/bean_soldier.blend) -> SK_Bean_Body_Skeleton",
+ "root_motion": false,
+ "clips": {
+  "A_Bean_Swim": {
+   "frames": [
+    1,
+    37
+   ],
+   "keys": 37,
+   "seconds": 1.2,
+   "arm_reach_max": 0.916
+  },
+  "A_Bean_TreadWater": {
+   "frames": [
+    61,
+    109
+   ],
+   "keys": 49,
+   "seconds": 1.6,
+   "arm_reach_max": 0.916
+  }
+ },
+ "check": {
+  "A_Bean_Swim": {
+   "water_line_m": 0.6,
+   "eyes_above_water_min_m": 0.095,
+   "moustache_above_water_min_m": 0.081,
+   "hat_above_water_min_m": 0.294,
+   "hand_points_inside_body_max": 0,
+   "fp_camera_frames_inside_head": 0,
+   "fp_camera_gap_to_face_min_m": 0.053,
+   "worst_frames": {
+    "eyes": 27,
+    "hat": 26
+   },
+   "loop_mismatch_deg": 0.0,
+   "loop_mismatch_m": 0.0,
+   "passed": true
+  },
+  "A_Bean_TreadWater": {
+   "water_line_m": 0.6,
+   "eyes_above_water_min_m": 0.118,
+   "moustache_above_water_min_m": 0.097,
+   "hat_above_water_min_m": 0.322,
+   "hand_points_inside_body_max": 0,
+   "fp_camera_frames_inside_head": 0,
+   "fp_camera_gap_to_face_min_m": 0.04,
+   "worst_frames": {
+    "eyes": 81,
+    "hat": 81
+   },
+   "loop_mismatch_deg": 0.0,
+   "loop_mismatch_m": 0.0,
+   "passed": true
+  }
+ },
+ "files": {
+  "A_Bean_Swim": "art/export/Characters/Bean/Anims/A_Bean_Swim.fbx",
+  "A_Bean_TreadWater": "art/export/Characters/Bean/Anims/A_Bean_TreadWater.fbx"
+ },
+ "previews": [
+  "art/_previews/bean_swim_brasse.png",
+  "art/_previews/bean_swim_surplace.png"
+ ]
+}

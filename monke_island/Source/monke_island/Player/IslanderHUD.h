@@ -7,7 +7,8 @@
 #include "IslanderHUD.generated.h"
 
 /**
- *  Provisional canvas HUD: health and stamina bars with the current stance (exhausted, crouched, guard).
+ *  Provisional canvas HUD: health and stamina bars with the current stance (exhausted, crouched, guard), the
+ *  crosshair and its prompt, the flag ceremony (countdown, progress bar, end message: cahier §6.2).
  *  Stands in for WBP_HUD (cahier §19) until the UI lot.
  */
 UCLASS()
@@ -43,4 +44,7 @@ private:
 
 	/** Draws one bar with its label; returns the y of the next line */
 	float DrawBar(float X, float Y, float Scale, float Fraction, const FLinearColor& Color, const FString& Label);
+
+	/** Flag ceremony near the player: the countdown and the bar at the top while the flag rises, then how it ended */
+	void DrawFlagCeremony(const APawn* Pawn, float Scale);
 };

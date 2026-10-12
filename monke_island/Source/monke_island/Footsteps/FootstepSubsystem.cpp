@@ -142,7 +142,8 @@ void UFootstepSubsystem::Tick(float DeltaTime)
 	for (TActorIterator<ACharacter> It(World); It; ++It)
 	{
 		const ACharacter* Character = *It;
-		if (FVector::DistSquared(Character->GetActorLocation(), Listener) > MaxDistanceSq)
+		// a creature that plays its own steps (the giant crab's legs, T-261) gets no generic ones
+		if (Character->Tags.Contains(TEXT("NoGenericFootsteps")) || FVector::DistSquared(Character->GetActorLocation(), Listener) > MaxDistanceSq)
 		{
 			continue;
 		}
