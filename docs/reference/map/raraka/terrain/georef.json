@@ -51,6 +51,13 @@
         "max_height_m": 3.12
       },
       {
+        "name": "SM_Raraka_Terrain_5_0",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_5_0.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -18.15
+      },
+      {
         "name": "SM_Raraka_Terrain_0_1",
         "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_0_1.obj",
         "vertices": 141553,
@@ -111,7 +118,7 @@
         "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_1_2.obj",
         "vertices": 141553,
         "triangles": 281600,
-        "max_height_m": -6.89
+        "max_height_m": -2.84
       },
       {
         "name": "SM_Raraka_Terrain_2_2",
@@ -216,7 +223,7 @@
         "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_0_4.obj",
         "vertices": 141553,
         "triangles": 281600,
-        "max_height_m": -0.46
+        "max_height_m": -0.4
       },
       {
         "name": "SM_Raraka_Terrain_1_4",
@@ -258,7 +265,7 @@
         "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_6_4.obj",
         "vertices": 141553,
         "triangles": 281600,
-        "max_height_m": -1.12
+        "max_height_m": -0.68
       },
       {
         "name": "SM_Raraka_Terrain_7_4",
@@ -315,6 +322,13 @@
         "vertices": 141200,
         "triangles": 280896,
         "max_height_m": 2.04
+      },
+      {
+        "name": "SM_Raraka_Terrain_1_6",
+        "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_1_6.obj",
+        "vertices": 141553,
+        "triangles": 281600,
+        "max_height_m": -72.7
       },
       {
         "name": "SM_Raraka_Terrain_2_6",
@@ -377,7 +391,7 @@
         "file": "docs/reference/map/raw/raraka_terrain/SM_Raraka_Terrain_6_7.obj",
         "vertices": 141152,
         "triangles": 280800,
-        "max_height_m": -24.73
+        "max_height_m": -5.2
       }
     ],
     "water": "SM_Raraka_Water"
@@ -406,6 +420,7 @@
     "pass": -14.0,
     "pinnacle": -1.2,
     "ocean_min": -300.0,
+    "max_shore_slope_deg": 7.0,
     "note": "estimations (pas de bathymetrie mesuree) : a remplacer si un releve SHOM/IRD est obtenu"
   },
   "heightmap_16": {

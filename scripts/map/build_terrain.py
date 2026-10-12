@@ -53,6 +53,10 @@ LAGOON_EDGE_DEPTH, LAGOON_MAX_DEPTH = -8.0, -30.0
 PASS_DEPTH = -14.0
 PINNACLE_DEPTH = -1.2
 OCEAN_MIN_DEPTH = -300.0
+# Pente maximale du fond depuis le rivage et le platier (plage de sable blanc peu profonde, demande du 2026-10-03) ;
+# les passes gardent leur chenal profond (ouvertures de l'atoll)
+MAX_SHORE_SLOPE_DEG = 7.0
+PASS_KEEP_M, PASS_BLEND_M = 25.0, 90.0
 
 
 def smoothstep(e0, e1, x):
@@ -247,6 +251,20 @@ def main():
     print(f"hauts-fonds detectes : {(shallow > 0.3).sum() * m_px * m_px / 1e6:.2f} km2 ; "
           f"pixels nuageux rejetes : {(cloud & zone).sum() * m_px * m_px / 1e6:.2f} km2")
 
+    # --- Pente douce vers le fond (plage) : le fond ne descend jamais plus vite que MAX_SHORE_SLOPE_DEG depuis la
+    # terre ou le platier, sauf dans les passes (et en fondu autour) qui restent des chenaux ouverts
+    shore = land | (cls == REEF_FLAT)
+    d_shore = ndi.distance_transform_edt(~shore) * m_px
+    floor_limit = REEF_FLAT_DEPTH - math.tan(math.radians(MAX_SHORE_SLOPE_DEG)) * d_shore
+    d_pass = ndi.distance_transform_edt(cls != PASS) * m_px
+    gentle = smoothstep(PASS_KEEP_M, PASS_BLEND_M, d_pass)
+    h_water = np.where(water, h_water + gentle * np.maximum(floor_limit - h_water, 0.0), h_water).astype(np.float32)
+    tan_max = math.tan(math.radians(MAX_SHORE_SLOPE_DEG))
+    gy_w, gx_w = np.gradient(np.where(water, h_water, 0.0), m_px)
+    steep = water & (np.hypot(gx_w, gy_w) > tan_max * 1.3) & (d_pass > PASS_BLEND_M) & (d_shore < 2000) & (cls != PINNACLE)
+    print(f"pente du fond limitee a {MAX_SHORE_SLOPE_DEG} deg depuis le rivage ; pixels encore plus raides hors passes "
+          f"et pinacles : {steep.sum()} ({steep.sum() * m_px * m_px / 1e6:.3f} km2)")
+
     h = np.where(land, np.maximum(h_land, 0.3), np.minimum(h_water, -0.15)).astype(np.float32)
 
     # --- Masques materiau (R vegetation, G sable, B recif/corail, A humide) -------------------
@@ -346,6 +364,7 @@ def main():
         "heights_m": {"land": [LAND_BASE, LAND_BASE + LAND_BEACH_RISE + LAND_INLAND_RISE], "reef_flat": REEF_FLAT_DEPTH,
                       "inner_slope_max": INNER_SLOPE_MAX_DEPTH, "lagoon": [LAGOON_EDGE_DEPTH, LAGOON_MAX_DEPTH],
                       "pass": PASS_DEPTH, "pinnacle": PINNACLE_DEPTH, "ocean_min": OCEAN_MIN_DEPTH,
+                      "max_shore_slope_deg": MAX_SHORE_SLOPE_DEG,
                       "note": "estimations (pas de bathymetrie mesuree) : a remplacer si un releve SHOM/IRD est obtenu"},
         "heightmap_16": {"file": "heightmap_16.png", "min_m": hmin, "max_m": hmax},
         "class_areas_km2": areas,
