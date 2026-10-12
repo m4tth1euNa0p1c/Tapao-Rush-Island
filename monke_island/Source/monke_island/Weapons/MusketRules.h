@@ -10,6 +10,7 @@
 
 class UAnimSequence;
 class UMaterialInterface;
+class UNiagaraSystem;
 class USkeletalMesh;
 class USoundAttenuation;
 class USoundBase;
@@ -142,6 +143,10 @@ public:
 	/** Field of view while aiming in first person (deg) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Aim", meta=(ClampMin="20", ClampMax="120", Units="deg"))
 	float AimFieldOfView = 65.0f;
+
+	/** The right click shoulders the musket. Off (owner 2026-10-09, "comme dans Counter-Strike"): hip fire only */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Aim")
+	bool bAllowAiming = false;
 
 	/** Musket mesh (SK_Bean_Musket: hammer, frizzen, trigger and ramrod bones) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Visuals")
@@ -295,6 +300,10 @@ public:
 	/** See FlashLightIntensity (cm) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Visuals|Effects", meta=(ClampMin="0", Units="cm"))
 	float FlashLightRadius = 600.0f;
+
+	/** Black powder smoke as a particle system (local +X along the barrel): when set, it replaces the puff meshes below */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Visuals|Effects")
+	TObjectPtr<UNiagaraSystem> SmokeSystem;
 
 	/** Black powder smoke: puff mesh (a sphere) and its translucent material (scalar parameter SmokeOpacityParameter) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Visuals|Effects")

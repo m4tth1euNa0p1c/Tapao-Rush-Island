@@ -1,0 +1,292 @@
+{
+  "camera_location_m": [
+    0.0,
+    0.0,
+    0.800000011920929
+  ],
+  "horizontal_fov_deg": 90.0,
+  "hip_grip_location_cm": [
+    31.0,
+    14.0,
+    -19.0
+  ],
+  "hip_rotation_pyr_deg": [
+    6.0,
+    -6.0,
+    -12.0
+  ],
+  "aim_muzzle_location_cm": [
+    95.0,
+    0.0,
+    -2.15
+  ],
+  "aim_rotation_pyr_deg": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "aim_field_of_view_deg": 65.0,
+  "sight_line": {
+    "rear_notch_m": [
+      0.08,
+      0.0,
+      0.0665
+    ],
+    "front_sight_m": [
+      0.58,
+      0.0,
+      0.0665
+    ],
+    "height_above_bore_m": 0.0215,
+    "eye_to_rear_notch_cm": 40.4,
+    "eye_to_front_sight_cm": 90.4
+  },
+  "gestures": {
+    "Idle": {
+      "gesture": "Idle (hip, frame 0 = base pose, every non reload clip)",
+      "grip_in_view_cm": [
+        31.0,
+        14.0,
+        -19.0
+      ],
+      "muzzle_in_view_cm": [
+        92.34,
+        6.57,
+        -7.88
+      ],
+      "rotation_pyr_deg": [
+        6.0,
+        -6.0,
+        -12.0
+      ],
+      "eye_in_weapon_m": [
+        -0.2722,
+        0.1222,
+        0.2485
+      ]
+    },
+    "Sprint": {
+      "gesture": "Sprint",
+      "grip_in_view_cm": [
+        30.0,
+        15.0,
+        -17.0
+      ],
+      "muzzle_in_view_cm": [
+        80.56,
+        -20.3,
+        -28.76
+      ],
+      "rotation_pyr_deg": [
+        -14.0,
+        -32.0,
+        -42.0
+      ],
+      "eye_in_weapon_m": [
+        -0.2109,
+        0.1306,
+        0.2806
+      ]
+    },
+    "GroundReload@20": {
+      "gesture": "GroundReload frame 20 (prime)",
+      "grip_in_view_cm": [
+        30.07,
+        6.41,
+        -11.69
+      ],
+      "muzzle_in_view_cm": [
+        80.13,
+        -27.45,
+        5.31
+      ],
+      "rotation_pyr_deg": [
+        14.0,
+        -30.0,
+        -66.0
+      ],
+      "eye_in_weapon_m": [
+        -0.1933,
+        -0.0704,
+        0.2547
+      ]
+    },
+    "GroundReload@60": {
+      "gesture": "GroundReload frame 60 (load)",
+      "grip_in_view_cm": [
+        21.1,
+        -4.15,
+        -42.51
+      ],
+      "muzzle_in_view_cm": [
+        52.0,
+        -8.0,
+        12.0
+      ],
+      "rotation_pyr_deg": [
+        56.0,
+        -8.0,
+        6.0
+      ],
+      "eye_in_weapon_m": [
+        0.2323,
+        0.0318,
+        0.4127
+      ]
+    },
+    "GroundReload@100": {
+      "gesture": "GroundReload frame 100 (ramrod stroke)",
+      "grip_in_view_cm": [
+        21.1,
+        -4.15,
+        -42.96
+      ],
+      "muzzle_in_view_cm": [
+        52.0,
+        -8.0,
+        11.55
+      ],
+      "rotation_pyr_deg": [
+        56.0,
+        -8.0,
+        6.0
+      ],
+      "eye_in_weapon_m": [
+        0.2361,
+        0.032,
+        0.4152
+      ]
+    },
+    "Inspect@30": {
+      "gesture": "Inspect frame 30 (lock)",
+      "grip_in_view_cm": [
+        23.6,
+        3.96,
+        -10.07
+      ],
+      "muzzle_in_view_cm": [
+        80.95,
+        -17.15,
+        4.29
+      ],
+      "rotation_pyr_deg": [
+        12.0,
+        -16.0,
+        -73.0
+      ],
+      "eye_in_weapon_m": [
+        -0.1903,
+        -0.107,
+        0.1386
+      ]
+    },
+    "Inspect@70": {
+      "gesture": "Inspect frame 70 (barrel)",
+      "grip_in_view_cm": [
+        4.55,
+        7.09,
+        -32.38
+      ],
+      "muzzle_in_view_cm": [
+        53.51,
+        0.79,
+        6.39
+      ],
+      "rotation_pyr_deg": [
+        36.0,
+        -12.0,
+        58.664
+      ],
+      "eye_in_weapon_m": [
+        0.1663,
+        0.2797,
+        0.076
+      ]
+    },
+    "Discard@14": {
+      "gesture": "Discard frame 14 (shake)",
+      "grip_in_view_cm": [
+        24.29,
+        6.05,
+        -10.49
+      ],
+      "muzzle_in_view_cm": [
+        81.78,
+        -15.3,
+        2.91
+      ],
+      "rotation_pyr_deg": [
+        12.0,
+        -16.0,
+        -85.2
+      ],
+      "eye_in_weapon_m": [
+        -0.1903,
+        -0.1367,
+        0.1351
+      ]
+    },
+    "Discard@22": {
+      "gesture": "Discard frame 22 (Release)",
+      "grip_in_view_cm": [
+        36.0,
+        14.0,
+        -12.0
+      ],
+      "muzzle_in_view_cm": [
+        66.81,
+        68.52,
+        -16.34
+      ],
+      "rotation_pyr_deg": [
+        -8.0,
+        62.0,
+        -20.0
+      ],
+      "eye_in_weapon_m": [
+        -0.3065,
+        -0.2636,
+        -0.0148
+      ]
+    },
+    "AimIdle": {
+      "gesture": "AimIdle / AimIn / AimOut / Fire aimed (game aim framing, not an authored pose)",
+      "grip_in_view_cm": [
+        32.4,
+        0.0,
+        -6.85
+      ],
+      "muzzle_in_view_cm": [
+        95.0,
+        0.0,
+        -2.15
+      ],
+      "rotation_pyr_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "eye_in_weapon_m": [
+        -0.324,
+        0.0,
+        0.0665
+      ]
+    }
+  },
+  "note": "HipGripLocation / HipRotation reproduce this camera exactly (Idle frame 0 = FP base pose). AimMuzzleLocation / AimRotation (aim_*) put the sight line (rear notch -> front sight, parallel to the bore, height_above_bore_m above it) exactly on the camera axis, weapon centred, with the muzzle socket AIM_MUZZLE_CM ahead: AimIdle keeps the base pose (the game aligns Idle and AimIdle frame 0), so the single Fire clip plays aimed without a jump. setup_pirate_weapons.py writes the hip values only: copy aim_* into DA_PirateMusketRules by hand (AimMuzzleLocation, AimRotation).",
+  "align_bone": "root",
+  "grip_socket": "socket_grip_r",
+  "bayonet": {
+    "BayonetStab": [
+      132.7,
+      -3.25,
+      -7.57
+    ],
+    "BayonetCharge": [
+      138.12,
+      -3.19,
+      -6.99
+    ]
+  },
+  "bayonet_note": "bayonet point in the view (cm) at StabHit / ChargeHit with the pack camera (hip framing of the game = this camera)"
+}

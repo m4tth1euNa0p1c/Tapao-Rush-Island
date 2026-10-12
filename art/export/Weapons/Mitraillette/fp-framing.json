@@ -1,0 +1,33 @@
+{
+  "camera_location_m": [
+    0.0,
+    0.0,
+    0.800000011920929
+  ],
+  "horizontal_fov_deg": 90.0,
+  "grip_socket": "socket_grip_r",
+  "align_bone": "root",
+  "muzzle_socket": "socket_muzzle",
+  "hip_grip_location_cm": [
+    30.0,
+    14.0,
+    -21.0
+  ],
+  "hip_rotation_pyr_deg": [
+    6.895,
+    -6.946,
+    15.68
+  ],
+  "muzzle_in_view_cm": [
+    76.99,
+    9.96,
+    -9.29
+  ],
+  "fore_grip_in_view_cm": [
+    55.87,
+    10.69,
+    -18.43
+  ],
+  "aim": "none: the sub-machine gun is fired from the hip (no AimIdle clip; bAimPoseValid stays false)",
+  "note": "HipGripLocation / HipRotation reproduce this camera exactly (Idle frame 0 = hip pose, socket_grip_r = the pistol grip)."
+}

@@ -2,6 +2,7 @@
 
 #include "Weapons/MusketWeapon.h"
 #include "Weapons/MusketMath.h"
+#include "Weapons/FirearmDamage.h"
 #include "monke_island.h"
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimSingleNodeInstance.h"
@@ -13,6 +14,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "EnhancedInputComponent.h"
 #include "Engine/DamageEvents.h"
+#include "Engine/SkeletalMesh.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -22,9 +24,11 @@
 #include "Interaction/IslanderGrabComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Materials/MaterialInstanceDynamic.h"
+#include "NiagaraFunctionLibrary.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/IslanderCharacter.h"
 #include "Player/IslanderHealthComponent.h"
+#include "Stealth/StealthSubsystem.h"
 #include "TimerManager.h"
 
 namespace
@@ -208,37 +212,60 @@ void AMusketWeapon::BindInput()
 	// the bindings stay; the mapping context decides when the keys reach them
 	if (FireAction)
 	{
-		Input->BindAction(FireAction, ETriggerEvent::Started, this, &AMusketWeapon::HandleFire);
+		KeepInputBinding(Input, Input->BindAction(FireAction, ETriggerEvent::Started, this, &AMusketWeapon::HandleFire).GetHandle());
 	}
 	if (AimAction)
 	{
-		Input->BindAction(AimAction, ETriggerEvent::Started, this, &AMusketWeapon::HandleAimStarted);
-		Input->BindAction(AimAction, ETriggerEvent::Completed, this, &AMusketWeapon::HandleAimCompleted);
+		KeepInputBinding(Input, Input->BindAction(AimAction, ETriggerEvent::Started, this, &AMusketWeapon::HandleAimStarted).GetHandle());
+		KeepInputBinding(Input, Input->BindAction(AimAction, ETriggerEvent::Completed, this, &AMusketWeapon::HandleAimCompleted).GetHandle());
 	}
 	if (ReloadAction)
 	{
-		Input->BindAction(ReloadAction, ETriggerEvent::Started, this, &AMusketWeapon::HandleReload);
+		KeepInputBinding(Input, Input->BindAction(ReloadAction, ETriggerEvent::Started, this, &AMusketWeapon::HandleReload).GetHandle());
 	}
 	bInputBound = true;
 }
 
+void AMusketWeapon::OnInputBindingsRemoved()
+{
+	Super::OnInputBindingsRemoved();
+	bInputBound = false;
+}
+
 void AMusketWeapon::HandleFire()
 {
+	// keys of a former carrier never drive the item someone else now holds (T-288, network review R-37)
+	if (!IsCarrierLocallyControlled())
+	{
+		return;
+	}
 	RequestFire();
 }
 
 void AMusketWeapon::HandleAimStarted()
 {
+	if (!IsCarrierLocallyControlled())
+	{
+		return;
+	}
 	SetAiming(true);
 }
 
 void AMusketWeapon::HandleAimCompleted()
 {
+	if (!IsCarrierLocallyControlled())
+	{
+		return;
+	}
 	SetAiming(false);
 }
 
 void AMusketWeapon::HandleReload()
 {
+	if (!IsCarrierLocallyControlled())
+	{
+		return;
+	}
 	RequestReload();
 }
 
@@ -306,6 +333,8 @@ void AMusketWeapon::TraceShot()
 	// from the carrier's eyes along the replicated view: the client only says "fire"
 	const UCameraComponent* Camera = Carrier->GetFirstPersonCamera();
 	const FVector Origin = Camera ? Camera->GetComponentLocation() : Carrier->GetPawnViewLocation();
+	// the shot is heard by the mobs and the villagers around (server, T-262)
+	UStealthSubsystem::Report(this, Carrier, Origin, EStealthNoise::Gunshot);
 	const FVector Aim = Carrier->GetControlRotation().Vector();
 	const FVector Direction = MusketMath::SpreadDirection(Aim, bAiming ? Rules->AimSpreadDegrees : Rules->HipSpreadDegrees, SpreadStream);
 	const FVector End = Origin + Direction * Rules->RangeCm;
@@ -313,7 +342,9 @@ void AMusketWeapon::TraceShot()
 	FCollisionQueryParams Params(SCENE_QUERY_STAT(MusketShot), true, Carrier);
 	Params.AddIgnoredActor(this);
 	FHitResult Hit;
-	if (!GetWorld()->LineTraceSingleByChannel(Hit, Origin, End, Rules->TraceChannel, Params))
+	const bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Origin, End, Rules->TraceChannel, Params);
+	// the giant crab's legs and claws do not block the trace channel (the camera's): a second look finds them (T-261)
+	if (!FirearmDamage::TraceHitBodies(GetWorld(), Origin, End, Params, Hit, bHit))
 	{
 		return;
 	}
@@ -397,8 +428,9 @@ void AMusketWeapon::CancelReload()
 
 void AMusketWeapon::SetAiming(bool bInAiming)
 {
-	// the carrier shoulders at once; the server keeps it for the spread and the other players
-	bAiming = bInAiming && IsUsable() && !bReloading;
+	// the carrier shoulders at once; the server keeps it for the spread and the other players (never when the rules
+	// forbid aiming, owner 2026-10-09)
+	bAiming = bInAiming && Rules && Rules->bAllowAiming && IsUsable() && !bReloading;
 	if (!HasAuthority())
 	{
 		ServerSetAiming(bAiming);
@@ -407,7 +439,7 @@ void AMusketWeapon::SetAiming(bool bInAiming)
 
 void AMusketWeapon::ServerSetAiming_Implementation(bool bInAiming)
 {
-	bAiming = bInAiming && IsUsable() && !bReloading;
+	bAiming = bInAiming && Rules && Rules->bAllowAiming && IsUsable() && !bReloading;
 }
 
 void AMusketWeapon::OnEquippedChanged()
@@ -541,8 +573,14 @@ void AMusketWeapon::SpawnShotEffects()
 	}
 	FlashEndTime = GetWorld()->GetTimeSeconds() + Rules->FlashSeconds;
 
-	// black powder smoke: a jet from the muzzle, a puff from the pan
-	if (Rules->SmokeMesh && Rules->SmokePuffs > 0)
+	// black powder smoke: the particle system when there is one (billowing, lit puffs), else the puff meshes
+	if (Rules->SmokeSystem)
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, Rules->SmokeSystem, MuzzleLocation + Forward * 3.0f, Forward.Rotation(),
+			FVector::OneVector, true, true, ENCPoolMethod::AutoRelease);
+	}
+	// a jet from the muzzle, a puff from the pan
+	else if (Rules->SmokeMesh && Rules->SmokePuffs > 0)
 	{
 		while (SmokeComponents.Num() < Rules->SmokePuffs)
 		{

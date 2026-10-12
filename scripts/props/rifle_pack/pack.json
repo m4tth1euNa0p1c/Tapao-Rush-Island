@@ -1,0 +1,14 @@
+{
+  "id": "bean-rifle-anim",
+  "version": "0.1.0-local",
+  "title": "Bean - maniement de la carabine rayée (TP/FP), construite dans le dépôt (T-250)",
+  "based_on": "scripts/props/musket_pack (T-212) : solveurs, caméra FP, export ; chorégraphie paramétrée par scripts/props/longarm_common",
+  "params": {},
+  "notes": [
+    "Carabine type Baker : canon bruni à culasse octogonale, hausse et guidon, barrette de sabre-baïonnette, crosse en noyer à joue, garnitures en laiton, boîte à calepins dans la crosse, 1,15 m ; rechargement 7 s (168 images à 24 i/s).",
+    "Rechargement : cartouche de papier (poudre), puis la carabine remontée (pose box), couvercle de la boîte ouvert (os patchbox_lid), calepin graissé et balle (os patch) posés sur la bouche et enfoncés au pouce (BallAndPatch), baguette longue tirée en trois fois, deux coups appuyés.",
+    "Visée : hausse et guidon (socket_sight_rear -> socket_sight_front) sur l'axe de la caméra FP (AimIn/AimIdle/AimFire/AimOut).",
+    "Gestes ajoutés au mousquet : AimFire, Inspect, Discard (Empty image 2, Release image 20 ; l'arme continue sa chute jusqu'au sol).",
+    "Textures PBR cuites (Cycles, 2048) : T_Bean_PirateRifle_D (sRGB), _N (DirectX), _ORM (linéaire) ; munition SM_Ammo_RifleCartridge (1024)."
+  ]
+}

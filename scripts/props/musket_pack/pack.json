@@ -1,0 +1,7 @@
+{
+  "id": "bean-musket-anim",
+  "version": "0.4.0-local-v2",
+  "title": "Bean - maniement du mousquet pirate (TP/FP), refait dans le dépôt (T-212), v2 réaliste + munitions + clips CoD (T-246)",
+  "based_on": "OneDrive maquettes/bean-musket-anim v0.2 et bean-musket v0.2 (second PC, lecture seule)",
+  "musket_params": {}
+}

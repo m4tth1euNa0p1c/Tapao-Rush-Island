@@ -1,0 +1,9 @@
+{
+  "id": "bean-grenade",
+  "version": "0.1.0-local",
+  "title": "Bean - grenado de pirate (sphère de fonte, bouchon de bois, mèche) et ses 14 gestes TP/FP (T-253)",
+  "based_on": "format bean-pirate-pistol/1 du 2e PC (OneDrive maquettes, lecture seule) et pack mousquet local (T-212)",
+  "fps": 30,
+  "clips": ["Equip", "Idle", "Walk", "Sprint", "AimIn", "AimIdle", "AimOut", "Fire", "AimFire", "Reload", "DryFire", "Inspect", "Holster", "Discard"],
+  "proposed_rules": {"fuse_seconds": 3.0, "blast_radius_m": 4.0, "damage_centre": 90, "grenades_per_bag": 3}
+}

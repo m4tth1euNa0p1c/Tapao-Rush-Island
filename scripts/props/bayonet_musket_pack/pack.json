@@ -1,0 +1,8 @@
+{
+  "id": "bean-bayonet-musket",
+  "version": "0.1.0-local",
+  "title": "Bean - mousquet pirate à baïonnette à douille (TP/FP) : clips du mousquet + BayonetStab, BayonetCharge (T-334)",
+  "based_on": "scripts/props/musket_pack v0.4.0-local-v2 (modèle, matériaux, animation.py) importé tel quel ; baïonnette et deux gestes ajoutés ici",
+  "fps": 24,
+  "musket_params": {}
+}

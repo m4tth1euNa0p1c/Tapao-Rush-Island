@@ -1,0 +1,62 @@
+{
+  "camera_location_m": [
+    0.0,
+    0.0,
+    0.800000011920929
+  ],
+  "horizontal_fov_deg": 90.0,
+  "grip_socket": "socket_grip_r",
+  "align_bone": "root",
+  "muzzle_socket": "socket_muzzle",
+  "hip_grip_location_cm": [
+    31.0,
+    15.0,
+    -19.0
+  ],
+  "hip_rotation_pyr_deg": [
+    6.615,
+    -6.659,
+    11.035
+  ],
+  "aim_muzzle_location_cm": [
+    80.6,
+    2.6,
+    -3.6
+  ],
+  "aim_rotation_pyr_deg": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "aim_field_of_view_deg": 55.0,
+  "scope": {
+    "eye_socket": "socket_scope_eye",
+    "eye_in_view_cm": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "eyepiece_in_view_cm": [
+      8.0,
+      0.0,
+      0.0
+    ],
+    "objective_in_view_cm": [
+      39.0,
+      0.0,
+      0.0
+    ],
+    "eye_relief_cm": 8.0,
+    "eyepiece_radius_cm": 1.2,
+    "eyepiece_half_angle_deg": 8.53,
+    "near_clip_cm": 5.0,
+    "lens_material": "M_BoltRifle_Lens",
+    "note": "AimIdle frame 0 has the eye (socket_scope_eye) exactly on the camera and the scope axis along the view: the eyepiece is centred on the crosshair 8 cm ahead (beyond the 5 cm near plane). AimFieldOfView 55 is a proposal (the eyepiece fills half the view); a narrower one (zoom) needs a scope overlay or a render material on M_BoltRifle_Lens, otherwise the dark lens fills the screen."
+  },
+  "muzzle_in_view_hip_cm": [
+    104.23,
+    7.26,
+    -6.31
+  ],
+  "note": "HipGripLocation / HipRotation reproduce this camera exactly (Idle frame 0 = hip pose). AimMuzzleLocation / AimRotation (aim_*) reproduce the authored aim (AimIdle frame 0): eye on the scope axis. Copy them into DA_BoltRifleRules (and bAllowAiming true for the scope)."
+}

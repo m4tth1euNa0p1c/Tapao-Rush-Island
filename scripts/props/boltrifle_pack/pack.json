@@ -1,0 +1,8 @@
+{
+  "id": "bean-boltrifle",
+  "version": "0.1.0-local",
+  "title": "Bean - fusil de tireur d'élite à verrou à lunette (TP/FP), construit dans le dépôt (T-334)",
+  "based_on": "solveurs et caméra FP de scripts/props/musket_pack, cuisson PBR de scripts/props/longarm_common, format des packs d'armes (bean-musket-anim/1)",
+  "fps": 30,
+  "textures": {"wood": 2048, "metal": 2048, "ammo": 1024}
+}

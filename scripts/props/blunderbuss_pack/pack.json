@@ -1,0 +1,14 @@
+{
+  "id": "bean-blunderbuss-anim",
+  "version": "0.1.0-local",
+  "title": "Bean - maniement du tromblon (TP/FP), construit dans le dépôt (T-250)",
+  "based_on": "scripts/props/musket_pack (T-212) : solveurs, caméra FP, export ; chorégraphie paramétrée par scripts/props/longarm_common",
+  "params": {},
+  "notes": [
+    "Tromblon naval : canon en laiton à bouche évasée, crosse en noyer, platine à silex, 0,75 m ; rechargement 5 s (120 images à 24 i/s).",
+    "La cartouche (os cartridge) est une cartouche à plombs : tube de papier (poudre) terminé par un sachet de toile ; versée dans la bouche (ShotPour), papier bourré (BallAndPatch).",
+    "Visée : le dessus du canon (socket_sight_rear -> socket_sight_front) sur l'axe de la caméra FP (AimIn/AimIdle/AimFire/AimOut).",
+    "Gestes ajoutés au mousquet : AimFire, Inspect, Discard (Empty image 2, Release image 20 ; l'arme continue sa chute jusqu'au sol).",
+    "Textures PBR cuites (Cycles, 2048) : T_Bean_PirateBlunderbuss_D (sRGB), _N (DirectX), _ORM (linéaire) ; munition SM_Ammo_ShotBag (1024)."
+  ]
+}
