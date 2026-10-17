@@ -68,6 +68,15 @@ namespace TikiTactics
 		return ActiveOthers < FMath::Max(MaxAttackers, 1);
 	}
 
+	/** Immediate charge only for a confirmed visible, reachable foe. Pure so tests cover night/LOS handling
+	 * (the vision system provides bSeesFoe), water protection, and the handoff back to close-range tactics. */
+	inline bool ShouldRushOnSight(bool bEnabled, bool bSeesFoe, bool bOutOfReachInWater,
+		float Distance, float AttackRange, float RushStopDistance)
+	{
+		return bEnabled && bSeesFoe && !bOutOfReachInWater
+			&& Distance > FMath::Max(AttackRange, RushStopDistance);
+	}
+
 	/** True when a wounded warrior with no ally near runs away */
 	inline bool ShouldFlee(float HealthFraction, float FleeFraction, int32 AlliesNear)
 	{
