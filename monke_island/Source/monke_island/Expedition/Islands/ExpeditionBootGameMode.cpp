@@ -118,9 +118,18 @@ void AExpeditionBootGameMode::ScheduleTravel()
 	FTimerManager& Timers = GetWorldTimerManager();
 	Timers.ClearTimer(TravelTimer);
 	const int32 NumPlayers = GetNumPlayers();
-	const float Delay = ComputeTravelDelay(GetNetMode() == NM_ListenServer, ListenJoinGraceSeconds, MaxJoinWaitSeconds,
+	// A dedicated server must stay in the boot lobby until someone joins. Without this,
+	// its first empty-world tick immediately leaves L_Boot and closes the join window.
+	const ENetMode Mode = GetNetMode();
+	if (Mode == NM_DedicatedServer && NumPlayers == 0)
+	{
+		UE_LOG(LogMonkeIslands, Log, TEXT("Boot: dedicated server waiting for first crew member"));
+		return;
+	}
+	const bool bNetworkHost = Mode == NM_ListenServer || Mode == NM_DedicatedServer;
+	const float Delay = ComputeTravelDelay(bNetworkHost, ListenJoinGraceSeconds, MaxJoinWaitSeconds,
 		static_cast<float>(GetWorld()->GetTimeSeconds() - DrawTime), NumPlayers, ExpectedPlayers);
-	if (GetNetMode() == NM_ListenServer)
+	if (bNetworkHost)
 	{
 		UE_LOG(LogMonkeIslands, Log, TEXT("Boot: listen server, travel in %.1f s (%d of %d expected player(s) logged in)"), Delay, NumPlayers, ExpectedPlayers);
 	}
@@ -136,9 +145,18 @@ void AExpeditionBootGameMode::GenericPlayerInitialization(AController* NewPlayer
 {
 	Super::GenericPlayerInitialization(NewPlayer);
 	// A player joined (login or seamless travel) while the host waits: restart the grace so it travels too
-	if (bTravelRequested && TravelTimer.IsValid())
+	if (bTravelRequested)
 	{
-		ScheduleTravel();
+		// The first player on a dedicated host starts the full lobby grace period:
+		// the clock must not start while the server is sitting alone in L_Boot.
+		if (GetNetMode() == NM_DedicatedServer && !TravelTimer.IsValid())
+		{
+			DrawTime = GetWorld()->GetTimeSeconds();
+		}
+		if (TravelTimer.IsValid() || GetNetMode() == NM_DedicatedServer)
+		{
+			ScheduleTravel();
+		}
 	}
 }
 
@@ -146,7 +164,8 @@ void AExpeditionBootGameMode::TravelToIsland()
 {
 	// T-088: a client already connected but still loading the boot map (a slower machine coming back from the island)
 	// would be dropped by the travel, its connection closing with this world: it gets one more join wait, then the host goes
-	const int32 Loading = GetNetMode() == NM_ListenServer ? CountClientsStillLoading(GetWorld()) : 0;
+	const ENetMode Mode = GetNetMode();
+	const int32 Loading = (Mode == NM_ListenServer || Mode == NM_DedicatedServer) ? CountClientsStillLoading(GetWorld()) : 0;
 	const float Elapsed = static_cast<float>(GetWorld()->GetTimeSeconds() - DrawTime);
 	if (Loading > 0 && Elapsed < 2.0f * MaxJoinWaitSeconds)
 	{
