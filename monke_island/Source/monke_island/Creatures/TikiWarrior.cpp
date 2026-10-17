@@ -840,7 +840,12 @@ void ATikiWarrior::ServerThink(float DeltaSeconds)
 			if (Now - LastRoarTime >= Rules->AggroVoiceCooldown)
 			{
 				LastRoarTime = Now;
-				PlayAction(ETikiAction::Alert);
+				// The alert one-shot locks the warrior in place on its following ticks. In rush mode
+				// skip it so movement begins on this exact server think. Attack windups still telegraph.
+				if (!Rules->bRushOnSight)
+				{
+					PlayAction(ETikiAction::Alert);
+				}
 			}
 		}
 	}
@@ -937,6 +942,16 @@ void ATikiWarrior::ServerThink(float DeltaSeconds)
 	{
 		// the arm holding the musket is gone: the musket with it
 		MusketMesh->SetVisibility(false);
+	}
+	// Aggressive opening: visible foes are rushed on the server instead of watched or orbited.
+	// Musket shots above still take precedence, and close-range role tactics below are preserved.
+	// Keep LOS and water rules intact: never chase a hidden foe via its live position.
+	if (TikiTactics::ShouldRushOnSight(Rules->bRushOnSight, bSeesTarget,
+		IsOutOfReachInWater(Victim), Distance, Rules->AttackRange, Rules->RushStopDistance))
+	{
+		SetTacticRep(FTikiTacticRep());
+		MoveToward(Victim->GetActorLocation(), Rules->WarriorRunSpeed);
+		return;
 	}
 	// the tactics of its role fight the foe (T-275); a Brawler keeps the classic melee below
 	if (Tactics && Tactics->ThinkEngaged(Victim, Distance, Now, DeltaSeconds))

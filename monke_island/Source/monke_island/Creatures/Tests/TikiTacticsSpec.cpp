@@ -270,6 +270,21 @@ void FTikiTacticsSpec::Define()
 		});
 	});
 
+	Describe("Rush on sight", [this]()
+	{
+		It("charges immediately only when its enemy is actually visible and reachable", [this]()
+		{
+			const UTikiRules* Rules = GetDefault<UTikiRules>();
+			TestTrue(TEXT("aggressive by default"), Rules->bRushOnSight);
+			TestTrue(TEXT("visible at distance"), TikiTactics::ShouldRushOnSight(true, true, false, 1800.0f, 160.0f, 230.0f));
+			TestFalse(TEXT("no ESP through obstacles or stealth"), TikiTactics::ShouldRushOnSight(true, false, false, 1800.0f, 160.0f, 230.0f));
+			TestFalse(TEXT("no chase into unsafe water"), TikiTactics::ShouldRushOnSight(true, true, true, 1800.0f, 160.0f, 230.0f));
+			TestFalse(TEXT("already close: role tactics take over"), TikiTactics::ShouldRushOnSight(true, true, false, 220.0f, 160.0f, 230.0f));
+			TestFalse(TEXT("disabled via rules"), TikiTactics::ShouldRushOnSight(false, true, false, 1800.0f, 160.0f, 230.0f));
+			TestFalse(TEXT("never overrides longer attack reach"), TikiTactics::ShouldRushOnSight(true, true, false, 290.0f, 320.0f, 230.0f));
+		});
+	});
+
 	Describe("Fairness", [this]()
 	{
 		It("announces every heavy move long enough to step aside", [this]()
