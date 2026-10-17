@@ -265,6 +265,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Warrior", meta=(ClampMin="0"))
 	float AggroRadius = 2500.0f;
 
+	/** Once a warrior actually sees a foe, sprint straight at it rather than spending seconds stalking or circling.
+	 * The stealth subsystem still determines visibility. A lost or unreachable target is never attacked blindly. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Warrior")
+	bool bRushOnSight = true;
+
+	/** Hand over to the mob's signature fighting tactics once near enough (cm). At least AttackRange is enforced. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Warrior", meta=(ClampMin="0", Units="cm"))
+	float RushStopDistance = 230.0f;
+
 	/** A warrior gives up a target farther than this (cm) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Warrior", meta=(ClampMin="0"))
 	float LoseRadius = 5000.0f;
