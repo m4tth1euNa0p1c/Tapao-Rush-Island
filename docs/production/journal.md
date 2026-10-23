@@ -1413,3 +1413,4 @@ Une ligne par changement de statut (append-only).
 - 2026-10-23 18:40 · T-347 · tidemark-terrain-programmer · review · TM-07 — env=rec — non compilé (session cloud) ; tmk.py testé (11 tests OK) : FTidemarkGrid, UTidemarkTerrainAsset, Tidemark::Format Save/LoadTmk (SHA-256 propre), Tools/tmk.py + tests, Docs/TMK.md, specs Tidemark.Grid.* (14 cas) et Tidemark.Format.* (7 cas) ; CI check_no_game_dependency / check_no_unseeded_random / check_credits OK
 - 2026-10-23 18:41 · T-348 · tidemark-terrain-programmer · en-cours · 
 - 2026-10-23 18:41 · T-349 · tidemark-terrain-programmer · en-cours · 
+- 2026-10-23 18:49 · T-349 · tidemark-terrain-programmer · review · TM-09 — env=rec — non compilé (session cloud) : FTidemarkCollisionHeightSource (prefetch par lots), commande tidemark.BakeCollision, spec Tidemark.Import.Collision.* ; recette L_Frag_Raraka_01 à faire sur le PC
