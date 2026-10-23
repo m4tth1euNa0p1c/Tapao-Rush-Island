@@ -134,6 +134,10 @@
 		{
 			"Name": "OnlineSubsystemUtils",
 			"Enabled": true
+		},
+		{
+			"Name": "Tidemark",
+			"Enabled": true
 		}
 	]
 }
