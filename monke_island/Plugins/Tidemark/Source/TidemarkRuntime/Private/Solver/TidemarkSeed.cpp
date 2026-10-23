@@ -43,7 +43,7 @@ FRandomStream FTidemarkSeed::ToRandomStream() const
 uint64 FTidemarkRng::NextU64()
 {
 	State += 0x9E3779B97F4A7C15ULL;
-	// Mix adds the increment again before scrambling: harmless, still a bijection of the state.
+	// Scrambler of SplitMix64 applied to the advanced state (the increment is already in State, so Mix() is not reused).
 	uint64 Z = State;
 	Z = (Z ^ (Z >> 30)) * 0xBF58476D1CE4E5B9ULL;
 	Z = (Z ^ (Z >> 27)) * 0x94D049BB133111EBULL;

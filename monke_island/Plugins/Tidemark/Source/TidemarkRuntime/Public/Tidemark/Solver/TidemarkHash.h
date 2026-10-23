@@ -15,23 +15,23 @@ struct TIDEMARKRUNTIME_API FTidemarkStateHash
 	GENERATED_BODY()
 
 	/** FNV-1a 64 of StepIndex followed by every block hash, in fixed order. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tidemark|Hash")
+	UPROPERTY(VisibleAnywhere, Category = "Tidemark|Hash")
 	uint64 Combined = 0;
 
 	/** Simulation step the state was hashed at. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tidemark|Hash")
+	UPROPERTY(VisibleAnywhere, Category = "Tidemark|Hash")
 	uint32 StepIndex = 0;
 
 	/** One FNV-1a 64 per block, row-major. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tidemark|Hash")
+	UPROPERTY(VisibleAnywhere, Category = "Tidemark|Hash")
 	TArray<uint64> Blocks;
 
 	/** Number of blocks along X (ceil(SizeX / BlockSize)). */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tidemark|Hash")
+	UPROPERTY(VisibleAnywhere, Category = "Tidemark|Hash")
 	int32 BlocksX = 0;
 
 	/** Number of blocks along Y (ceil(SizeY / BlockSize)). */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tidemark|Hash")
+	UPROPERTY(VisibleAnywhere, Category = "Tidemark|Hash")
 	int32 BlocksY = 0;
 };
 

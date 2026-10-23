@@ -9,8 +9,8 @@
 /**
  * Single 64-bit seed of a Tidemark scenario and its named sub-streams.
  *
- * Every random choice of the simulation derives from this value, never from FMath::Rand*, FDateTime or
- * FPlatformTime (CONVENTIONS.md §4). Derivation is SplitMix64, so the same (seed, stream name) pair yields the
+ * Every random choice of the simulation derives from this value, never from the engine's unseeded random,
+ * the clock or the CPU cycle counter (CONVENTIONS.md §4). Derivation is SplitMix64, so the same (seed, stream name) pair yields the
  * same sub-seed on every machine and every engine version.
  *
  * FromName hashes the UTF-8 bytes of the name with FNV-1a 64 (identical to ANSI for ASCII names): unlike
@@ -22,7 +22,7 @@ struct TIDEMARKRUNTIME_API FTidemarkSeed
 	GENERATED_BODY()
 
 	/** Raw 64-bit seed. Zero is a valid seed. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Tidemark|Seed")
+	UPROPERTY(EditAnywhere, Category = "Tidemark|Seed")
 	uint64 Value = 0;
 
 	FTidemarkSeed() = default;
@@ -58,7 +58,7 @@ struct TIDEMARKRUNTIME_API FTidemarkRng
 	GENERATED_BODY()
 
 	/** Current SplitMix64 state. Advances by the golden-ratio increment at every draw. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Tidemark|Seed")
+	UPROPERTY(VisibleAnywhere, Category = "Tidemark|Seed")
 	uint64 State = 0;
 
 	FTidemarkRng() = default;
