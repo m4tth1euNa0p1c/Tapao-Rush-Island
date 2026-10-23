@@ -1392,3 +1392,6 @@ Une ligne par changement de statut (append-only).
 - 2026-10-23 18:12 · T-341 · tidemark-lead · en-cours · TM-01 — vague 1 lancée 2026-10-23 (session cloud, pas de build UE : preuve à compléter sur le PC)
 - 2026-10-23 18:12 · T-346 · tidemark-release-engineer · en-cours · 
 - 2026-10-23 18:13 · T-341 · tidemark-lead · review · TM-01 — env=rec — non compilé (session cloud) : squelette écrit, greps OK, build à lancer sur le PC — fichiers : Plugins/Tidemark/{Tidemark.uplugin, PROVENANCE.json, Source/TidemarkRuntime/{TidemarkRuntime.Build.cs, Public/Tidemark/TidemarkModule.h, Private/TidemarkModule.cpp, Private/Tests/}, Source/TidemarkEditor/{TidemarkEditor.Build.cs, Public/TidemarkEditor/TidemarkEditorModule.h, Private/TidemarkEditorModule.cpp, Private/Tests/}, Content/, Docs/{README.md, CHANGELOG.md, LICENSES/}, Tools/} ; monke_island.uproject (entrée Tidemark ajoutée)
+- 2026-10-23 18:14 · T-342 · tidemark-solver-programmer · en-cours · 
+- 2026-10-23 18:14 · T-343 · tidemark-solver-programmer · en-cours · 
+- 2026-10-23 18:14 · T-345 · tidemark-qa · en-cours · 
