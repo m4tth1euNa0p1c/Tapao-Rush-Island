@@ -1395,3 +1395,4 @@ Une ligne par changement de statut (append-only).
 - 2026-10-23 18:14 · T-342 · tidemark-solver-programmer · en-cours · 
 - 2026-10-23 18:14 · T-343 · tidemark-solver-programmer · en-cours · 
 - 2026-10-23 18:14 · T-345 · tidemark-qa · en-cours · 
+- 2026-10-23 18:16 · T-346 · tidemark-release-engineer · review · TM-06 — env=rec — sourcé : 5 produits, 27 URL — benchmark.md
