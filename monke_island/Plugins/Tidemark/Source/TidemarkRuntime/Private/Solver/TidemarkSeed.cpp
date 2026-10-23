@@ -37,7 +37,7 @@ FTidemarkSeed FTidemarkSeed::Derive(FName Stream) const
 FRandomStream FTidemarkSeed::ToRandomStream() const
 {
 	const uint32 Upper = static_cast<uint32>(Mix(Value) >> 32);
-	return FRandomStream(static_cast<int32>(Upper));
+	return FRandomStream(static_cast<int32>(Upper)); // tidemark-allow-random: single seeded construction point, seed derived by SplitMix64 from FTidemarkSeed
 }
 
 uint64 FTidemarkRng::NextU64()
