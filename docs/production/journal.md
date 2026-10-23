@@ -1415,3 +1415,5 @@ Une ligne par changement de statut (append-only).
 - 2026-10-23 18:41 · T-349 · tidemark-terrain-programmer · en-cours · 
 - 2026-10-23 18:49 · T-349 · tidemark-terrain-programmer · review · TM-09 — env=rec — non compilé (session cloud) : FTidemarkCollisionHeightSource (prefetch par lots), commande tidemark.BakeCollision, spec Tidemark.Import.Collision.* ; recette L_Frag_Raraka_01 à faire sur le PC
 - 2026-10-23 18:52 · T-348 · tidemark-terrain-programmer · review · TM-08 — env=rec — non compilé (session cloud) : ITidemarkHeightSource, baker, sources texture et Landscape, bibliothèque d'import, specs Tidemark.Import.Bake.* (16 cas) ; temps d'import à mesurer sur le PC
+- 2026-10-23 18:54 · T-351 · tidemark-qa · en-cours · 
+- 2026-10-23 18:54 · T-352 · tidemark-lead · en-cours · 
