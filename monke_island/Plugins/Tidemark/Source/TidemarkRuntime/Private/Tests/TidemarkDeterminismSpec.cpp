@@ -1,6 +1,7 @@
 // Tidemark plugin
 
 #include "Misc/AutomationTest.h"
+#include "Tidemark/Rules/TidemarkRules.h"
 #include "Tidemark/Solver/TidemarkHash.h"
 #include "Tidemark/Solver/TidemarkSeed.h"
 #include "Tidemark/Solver/TidemarkSolver.h"
@@ -18,7 +19,7 @@
  * and rises linearly from 0 to +3 m over the run: 600 s at Dt = 0.05 s = 12 000 steps per run.
  *
  * Cost: 4 096 cells x 12 000 steps = 49 M cell-steps per run (two ParallelFor passes each). SameSeedSameHash
- * runs 10 seeds x 2 runs = 20 runs, the other cases 4 more. A float32 port of the solver in numpy takes
+ * runs 10 seeds x 2 runs = 20 runs, the other cases 6 more (IndependentOfWorkerCount runs one of them single-threaded). A float32 port of the solver in numpy takes
  * ~2.8 s per run; the C++ should be well under that. The wall time per run is logged (LogTidemark) so that
  * the size can be revisited in UTidemarkRules (TM-10) if the suite becomes too slow for the editor.
  *
@@ -39,8 +40,11 @@ namespace TidemarkDeterminismSpecScenario
 	/** Intermediate hashes compared between two runs, to locate when a divergence starts. */
 	constexpr int32 CheckpointCount = 10;
 	constexpr int32 SeedCount = 10;
-	/** Volume tolerance of the closed basin: 1 litre. */
-	constexpr double VolumeToleranceM3 = 0.001;
+	/**
+	 * Volume tolerance of the closed basin, relative to its volume: UTidemarkRules::VolumeToleranceRelative (D-1, 1e-5 by
+	 * default, 23 L for 2 304 m3). float32 drifts about 4e-6 over 12 000 steps, under one hash quantum of one cell (36 L).
+	 */
+	constexpr double VolumeToleranceRelative = Tidemark::Rules::DefaultVolumeToleranceRelative;
 	constexpr int32 HillCount = 12;
 }
 
@@ -306,33 +310,39 @@ void FTidemarkDeterminismSpec::Define()
 		}
 	});
 
-#if 0
-	// TODO(TM-13): FTidemarkSolver::Step exposes no way to force ParallelFor single-threaded. Requested to
-	// tidemark-solver-programmer: a trailing parameter `bool bForceSingleThread = false` on Step, mapped to
-	// EParallelForFlags::ForceSingleThread on both passes (or an equivalent on UTidemarkSubsystem). Until then the
-	// worker-count independence rests on the audit of TidemarkSolver.cpp (no reduction, fixed operand order).
 	It("IndependentOfWorkerCount", [this]()
 	{
+		// D-2 (TM-10): the same run with the two ParallelFor passes on the task graph and forced on the calling thread
+		// (EParallelForFlags::ForceSingleThread) ends on the same hash at every checkpoint. Gravity and damping are the
+		// UTidemarkRules defaults, the only values the subsystem will pass.
 		FTidemarkSolver Multi;
 		FTidemarkSolver Single;
 		BuildTerrain(Multi, SeedFor(0), true);
 		SetupOpenSea(Multi);
 		BuildTerrain(Single, SeedFor(0), true);
 		SetupOpenSea(Single);
+		const int32 CheckpointEvery = StepCount / CheckpointCount;
 		for (int32 Step = 1; Step <= StepCount; ++Step)
 		{
-			Multi.Step(Dt, SeaLevelAt(Step), 9.81f, 0.995f, /*bForceSingleThread*/ false);
-			Single.Step(Dt, SeaLevelAt(Step), 9.81f, 0.995f, /*bForceSingleThread*/ true);
+			Multi.Step(Dt, SeaLevelAt(Step), Tidemark::Rules::DefaultGravity, Tidemark::Rules::DefaultFluxDamping, /*bForceSingleThread*/ false);
+			Single.Step(Dt, SeaLevelAt(Step), Tidemark::Rules::DefaultGravity, Tidemark::Rules::DefaultFluxDamping, /*bForceSingleThread*/ true);
+			if (Step % CheckpointEvery == 0)
+			{
+				if (!ExpectSameHash(FString::Printf(TEXT("multi-thread vs single-thread at step %d"), Step),
+					HashSolver(Multi, static_cast<uint32>(Step)), HashSolver(Single, static_cast<uint32>(Step))))
+				{
+					break; // the first divergent checkpoint is the useful one
+				}
+			}
 		}
-		ExpectSameHash(TEXT("multi-thread vs single-thread"), HashSolver(Multi, StepCount), HashSolver(Single, StepCount));
+		TestTrue(TEXT("the flood reached free cells (free volume > 0)"), Single.FreeVolume() > 0.0);
 	});
-#endif
 
 	It("VolumeConserved", [this]()
 	{
 		// Closed basin: no Fixed cell at all (Init leaves Fixed at 0, SetupSea is not called), the grid border has no
 		// outward pipe. 1 m of water on the central 8 x 8 cells (64 x 36 m2 = 2 304 m3), 12 000 steps, total volume
-		// constant within 1 litre. FreeVolume sums in double; the per-step arithmetic is float32 (solver).
+		// constant within VolumeToleranceRelative (D-1). FreeVolume sums in double; the per-step arithmetic is float32 (solver).
 		FTidemarkSolver Solver;
 		BuildTerrain(Solver, RootSeed().Derive(FName(TEXT("Basin"))), false);
 		int32 FixedCount = 0;
@@ -351,6 +361,12 @@ void FTidemarkDeterminismSpec::Define()
 		const double Before = Solver.FreeVolume();
 		TestEqual(TEXT("initial volume (m3)"), Before, 2304.0, 0.001);
 
+		// D-1: relative criterion read from the rules (the asset default must agree with the compile-time constant).
+		const UTidemarkRules* Rules = GetDefault<UTidemarkRules>();
+		TestEqual(TEXT("UTidemarkRules::VolumeToleranceRelative matches Tidemark::Rules::DefaultVolumeToleranceRelative"),
+			Rules->VolumeToleranceRelative, VolumeToleranceRelative, 1.0e-12);
+		const double VolumeToleranceM3 = Before * Rules->VolumeToleranceRelative;
+
 		double WorstDriftM3 = 0.0;
 		const int32 CheckpointEvery = StepCount / CheckpointCount;
 		for (int32 Step = 1; Step <= StepCount; ++Step)
@@ -365,9 +381,10 @@ void FTidemarkDeterminismSpec::Define()
 		}
 		const double After = Solver.FreeVolume();
 		TestTrue(TEXT("all depths finite"), AllFinite(Solver.Depth));
-		TestTrue(FString::Printf(TEXT("volume conserved within 1 L over %d steps: before %.6f m3, after %.6f m3, drift %+.3f L, worst %.3f L"),
-			StepCount, Before, After, (After - Before) * 1000.0, WorstDriftM3 * 1000.0), FMath::Abs(After - Before) <= VolumeToleranceM3);
-		TestTrue(FString::Printf(TEXT("worst checkpoint drift within 1 L: %.3f L"), WorstDriftM3 * 1000.0), WorstDriftM3 <= VolumeToleranceM3);
+		TestTrue(FString::Printf(TEXT("volume conserved within %.1f L (relative %.1e) over %d steps: before %.6f m3, after %.6f m3, drift %+.3f L, worst %.3f L"),
+			VolumeToleranceM3 * 1000.0, Rules->VolumeToleranceRelative, StepCount, Before, After, (After - Before) * 1000.0, WorstDriftM3 * 1000.0),
+			FMath::Abs(After - Before) <= VolumeToleranceM3);
+		TestTrue(FString::Printf(TEXT("worst checkpoint drift within %.1f L: %.3f L"), VolumeToleranceM3 * 1000.0, WorstDriftM3 * 1000.0), WorstDriftM3 <= VolumeToleranceM3);
 		// Not vacuous: the water spread across the basin.
 		TestTrue(TEXT("water reached the far corner (61, 61)"), Solver.Depth[Solver.Index(61, 61)] > 0.005f);
 	});

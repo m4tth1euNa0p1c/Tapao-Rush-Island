@@ -31,12 +31,15 @@ void FTidemarkSolver::SetupSea(float SeaLevel, float OpenSeaDepth)
 	Flux.Init(FVector4f(0.0f), SizeX * SizeY);
 }
 
-void FTidemarkSolver::Step(float Dt, float SeaLevel, float Gravity, float FluxDamping)
+void FTidemarkSolver::Step(float Dt, float SeaLevel, float Gravity, float FluxDamping, bool bForceSingleThread)
 {
 	if (!IsValid() || Dt <= 0.0f)
 	{
 		return;
 	}
+
+	// D-2: the same two passes on the calling thread when asked; the per-cell arithmetic does not depend on it.
+	const EParallelForFlags Flags = bForceSingleThread ? EParallelForFlags::ForceSingleThread : EParallelForFlags::None;
 
 	const float Area = CellSize * CellSize;
 	// pipe of cross-section CellSize^2 and length CellSize
@@ -63,7 +66,7 @@ void FTidemarkSolver::Step(float Dt, float SeaLevel, float Gravity, float FluxDa
 			}
 			Flux[I] = F;
 		}
-	});
+	}, Flags);
 
 	// 2. Volume change from the inflows and outflows; fixed cells follow the sea.
 	//    Reads Flux (frozen by pass 1) of the cell and its neighbours, writes Depth of this cell only.
@@ -86,7 +89,7 @@ void FTidemarkSolver::Step(float Dt, float SeaLevel, float Gravity, float FluxDa
 			const float Out = F.X + F.Y + F.Z + F.W;
 			Depth[I] = FMath::Max(0.0f, Depth[I] + (In - Out) * Dt / Area);
 		}
-	});
+	}, Flags);
 }
 
 double FTidemarkSolver::FreeVolume() const
