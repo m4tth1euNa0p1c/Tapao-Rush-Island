@@ -126,11 +126,9 @@ bool UTidemarkImportLibrary::SaveAssetPackage(UTidemarkTerrainAsset* Asset, FStr
 	FSavePackageArgs SaveArgs;
 	SaveArgs.TopLevelFlags = RF_Public | RF_Standalone;
 	SaveArgs.SaveFlags = SAVE_NoError;
-	SaveArgs.Error = GError;
-	const FSavePackageResultStruct SaveResult = UPackage::Save(Package, Asset, *FileName, SaveArgs);
-	if (!SaveResult.IsSuccessful())
+	if (!UPackage::SavePackage(Package, Asset, *FileName, SaveArgs))
 	{
-		OutError = FString::Printf(TEXT("save of '%s' failed (%d)"), *FileName, static_cast<int32>(SaveResult.Result));
+		OutError = FString::Printf(TEXT("save of '%s' failed (see the log)"), *FileName);
 		return false;
 	}
 	return true;

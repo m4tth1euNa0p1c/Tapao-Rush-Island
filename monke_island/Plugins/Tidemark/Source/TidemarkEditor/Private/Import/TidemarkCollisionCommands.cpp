@@ -22,15 +22,11 @@
 #include "UObject/Package.h"
 #include "UObject/SavePackage.h"
 
-// The grid baker of TM-08 (Tidemark::Bake::BakeGrid). When its header is not there yet (parallel tickets), a minimal
-// local bake samples the source at every cell centre so that the command still works; the asset creation is kept here
-// on purpose (NewObject + SavePackage, no dependency on UTidemarkImportLibrary).
-#if __has_include("TidemarkEditor/Import/TidemarkImportFactory.h")
-#include "TidemarkEditor/Import/TidemarkImportFactory.h"
+// The grid baker of TM-08 (Tidemark::Bake::BakeGrid) does the sampling; the asset creation is kept here on purpose
+// (NewObject + SavePackage) so the command has no dependency on UTidemarkImportLibrary. LocalBakeGrid below is the
+// fallback kept behind TIDEMARK_HAS_BAKE_GRID for a standalone build of this file; it is never compiled by default.
+#include "TidemarkEditor/Import/TidemarkBaker.h"
 #define TIDEMARK_HAS_BAKE_GRID 1
-#else
-#define TIDEMARK_HAS_BAKE_GRID 0
-#endif
 
 namespace Tidemark::CollisionCommands
 {
@@ -248,9 +244,9 @@ namespace Tidemark::CollisionCommands
 		BakeSettings.SeaLevelCm = DefaultSeaLevelCm;
 		BakeSettings.OpenSeaDepthCm = Tidemark::Rules::DefaultOpenSeaDepthCm;
 		const FTidemarkBakeResult Result = Tidemark::Bake::BakeGrid(Source, BakeSettings, Grid);
-		if (!Result.bSuccess)
+		if (!Result.bOk)
 		{
-			UE_LOG(LogTidemarkEditor, Error, TEXT("tidemark.BakeCollision: BakeGrid failed: %s"), *Result.Message);
+			UE_LOG(LogTidemarkEditor, Error, TEXT("tidemark.BakeCollision: BakeGrid failed: %s"), *Result.Error);
 			return;
 		}
 #else
