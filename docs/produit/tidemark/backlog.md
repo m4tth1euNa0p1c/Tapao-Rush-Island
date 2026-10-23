@@ -74,3 +74,12 @@ Portes : **S2 go/no-go** (écrit par `tidemark-lead`, ici décidé « go » par 
 | TM-41 | Serveur MCP Python `tidemark-mcp` : 3 outils qui exécutent le commandlet, réponses avec `rule_id@version`, `grid_hash`, `seed`, « inconnu » sans donnée | tidemark-mcp-developer |
 | TM-42 | Script MIT `heightmap_from_open_data.py` (Copernicus, ICESat-2, côte Etalab) avec `CREDITS.json` ; OSM exclu | tidemark-terrain-programmer |
 | TM-43 | Export GeoTIFF de `.tmk` | tidemark-terrain-programmer |
+
+## Décisions ouvertes (remontées par la vague 1, 2026-10-23)
+| # | Sujet | Constat | Options | Qui tranche |
+|---|---|---|---|---|
+| D-1 | Conservation du volume en float32 | Modèle numpy du solveur (même ordre d'opérations) : dérive ≈ −10 L sur 12 000 pas pour 2 304 m³ ; 0 en float64. Spec `Tidemark.Determinism.VolumeConserved` gardée à ±1 L : échec attendu au premier build | (a) `Depth` en `double` dans le solveur (mémoire ×2, déterminisme inchangé) ; (b) critère relatif (1e-5) dans `UTidemarkRules` ; (c) accumulateur de compensation (Kahan) par cellule | `tidemark-lead` à TM-10/TM-13 |
+| D-2 | `Step(..., bForceSingleThread)` | Demandé par la spec `IndependentOfWorkerCount` (en `#if 0`) | ajouter le paramètre, transmis en `EParallelForFlags::ForceSingleThread` | `tidemark-solver-programmer` à TM-10 |
+| D-3 | `Niagara` en dépendance privée de `TidemarkRuntime` | Plugin moteur, pas un module de base : UBT peut refuser pour un plugin livré seul | retirer jusqu'à TM-23, ou déclarer la dépendance de plugin dans le `.uplugin` | `tidemark-lead` au premier build |
+| D-4 | `UPROPERTY` sur `uint64` (`FTidemarkSeed`, `FTidemarkStateHash`) | UHT peut refuser | deux `uint32`, ou retirer `BlueprintType` | au premier build |
+| D-5 | CI sans compilation | Aucun runner Windows UE 5.8 ; job `build-windows` écrit, `if: false` | runner auto-hébergé sur un PC, ou « build local + rapport joint » | propriétaire |
