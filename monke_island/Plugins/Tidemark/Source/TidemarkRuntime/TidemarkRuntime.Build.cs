@@ -19,7 +19,10 @@ public class TidemarkRuntime : ModuleRules
 			"NetCore",
 			"RenderCore",
 			"RHI",
-			"Niagara"
+			"Niagara",
+			// Grid/TidemarkFormat: manifest.json of the .tmk folders.
+			"Json",
+			"JsonUtilities"
 		});
 	}
 }
