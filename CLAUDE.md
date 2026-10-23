@@ -15,6 +15,8 @@ Personnage jouable : `BP_Islander` (C++ `AIslanderCharacter` + `UIslanderMovemen
 
 Barque physique (L2, ADR-003) : `Source/monke_island/Boats/` (`ABoatActor`, `UBoatRiderComponent`, `UBoatSubsystem`, `DA_BoatRules`), spec `docs/features/boat-rowing.md`, asset `SM_Barque` (`docs/art/briefs/barque.md`, générateur `scripts/props/barque.py`) ; F s'asseoir/se lever, ZQSD ramer, console `monke.SpawnBoat`. Rôle `ue-boat-programmer`, skill `/ue-boat-physics`.
 
+**Tidemark** (produit dérivé, décidé le 2026-10-23) : plugin UE de montée des eaux déterministe, répliquée et lisible dans l'éditeur, bâti en extrayant `Flood/`. Contrat : `docs/produit/CAHIER_DES_CHARGES_TIDEMARK.md` ; conventions `docs/produit/tidemark/CONVENTIONS.md` ; backlog `docs/produit/tidemark/backlog.md` ; code dans `monke_island/Plugins/Tidemark/` (zéro include de `monke_island`). Cellule `tidemark-*` (10 rôles), skills `/tidemark` (statut, plan, vague, portes), `/tidemark-bootstrap`, `/tidemark-determinism`, `/tidemark-terrain-import`, `/tidemark-lint`, `/tidemark-netcheck`, `/tidemark-release`, `/tidemark-tapao-bridge`, `/tidemark-mcp`. Une seule menace en V1 (l'eau), trois couches, portes S2 / S4 / S5 ; Tapao gelé hors correctifs pendant les 8 semaines, `Source/monke_island/` touché seulement par `tidemark-tapao-integrator` en S7.
+
 Personnage pilote du cahier (§10) : bean « soldat britannique » (`sprite/player-1.png`), 1,05 m, ragdoll actif façon Fall Guys, skins modulaires — fiche `docs/features/character-bean-soldier.md`, générateur `scripts/character/bean_soldier.py`, écarts `docs/adr/ADR-002-personnage-bean.md`. Pipeline : `/character-pipeline`.
 
 ## Arborescence
@@ -24,7 +26,7 @@ Personnage pilote du cahier (§10) : bean « soldat britannique » (`sprite/play
 - `scripts/` — `ue.ps1` (build / gen / test / editor / status / clean / profile / package), `chantier.py`, `perf_summary.py`, `mcp_image.py`, `map/` (pipeline carto), `atoll/` + `pack_terrain_layers.py` + `fetch_atoll_textures.py` (look-dev Blender et textures).
 - `art/` — textures CC0 (`art/textures/`, couches de terrain `terrain_layers/`), HDRI, modèles ; crédits dans `art/SOURCES.md`. Mondes archivés et réutilisables (kit .blend + textures par type + README) : `art/archives/environnements/<monde>/`, dont `atoll_tuamotu`.
 - `docs/` — `CAHIER_DES_CHARGES.md` (contrat produit), `features/` specs, `adr/`, `bugs/`, `levels/`, `templates/`, `conventions/`, `production/` (backlog, chantier, journal), `reference/map/<ile>/`.
-- `.claude/factory/FACTORY.md` — charte de l'usine agentique (cellules, environnements DEV → REC → INT → PROD, ressources exclusives, vagues) ; `.claude/agents/` — l'équipe (29 rôles) ; `.claude/skills/` — les workflows (35 skills).
+- `.claude/factory/FACTORY.md` — charte de l'usine agentique (cellules, environnements DEV → REC → INT → PROD, ressources exclusives, vagues) ; `.claude/agents/` — l'équipe (29 rôles + 10 rôles Tidemark) ; `.claude/skills/` — les workflows (35 skills + 9 skills Tidemark).
 
 ## Commandes
 ```powershell
@@ -54,7 +56,7 @@ Dépôt privé `git@github.com:m4tth1euNa0p1c/Tapao-Rush-Island.git`, binaires s
 - Backlog (lots du cahier, puis mécaniques futures) : `docs/production/backlog.md`. Le niveau d'eau doit rester un paramètre global.
 
 ## Skills
-`/factory` · `/factory-gate` · `/chantier` · `/ue-sprint` · `/ue-feature` · `/ue-new-class` · `/ue-build` · `/ue-test` · `/ue-review` · `/ue-bugfix` · `/ue-editor` · `/ue-import` · `/ue-material` · `/ue-level-blockout` · `/ue-pcg-scatter` · `/ue-ui-widget` · `/ue-ai-behavior` · `/ue-playtest` · `/ue-profile` · `/ue-package` · `/ue-vcs` · `/map-geodata` · `/map-terrain` · `/blender-asset` · `/character-pipeline` · `/character-model` · `/character-rig` · `/character-physics` · `/character-skin` · `/ue-boat-physics` · `/ue-architecture` · `/ue-optimize` · `/ue-memory-audit` · `/ue-security-review` · `/ue-error-handling`
+`/tidemark` · `/tidemark-bootstrap` · `/tidemark-determinism` · `/tidemark-terrain-import` · `/tidemark-lint` · `/tidemark-netcheck` · `/tidemark-release` · `/tidemark-tapao-bridge` · `/tidemark-mcp` · `/factory` · `/factory-gate` · `/chantier` · `/ue-sprint` · `/ue-feature` · `/ue-new-class` · `/ue-build` · `/ue-test` · `/ue-review` · `/ue-bugfix` · `/ue-editor` · `/ue-import` · `/ue-material` · `/ue-level-blockout` · `/ue-pcg-scatter` · `/ue-ui-widget` · `/ue-ai-behavior` · `/ue-playtest` · `/ue-profile` · `/ue-package` · `/ue-vcs` · `/map-geodata` · `/map-terrain` · `/blender-asset` · `/character-pipeline` · `/character-model` · `/character-rig` · `/character-physics` · `/character-skin` · `/ue-boat-physics` · `/ue-architecture` · `/ue-optimize` · `/ue-memory-audit` · `/ue-security-review` · `/ue-error-handling`
 
 ## Conventions C++
 - Style Epic : tabs, accolades à la ligne, `/** */` sur chaque UPROPERTY/UFUNCTION, `Category` obligatoire.
