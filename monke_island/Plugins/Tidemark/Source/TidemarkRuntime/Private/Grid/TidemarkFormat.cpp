@@ -235,7 +235,8 @@ namespace Tidemark::Format
 			for (const TSharedPtr<FJsonValue>& Value : Layers)
 			{
 				const TSharedPtr<FJsonObject>* Object = nullptr;
-				if (Value.IsValid() && Value->TryGetObject(Object) && Object && (*Object)->GetStringField(TEXT("name")) == Name)
+				FString LayerName;
+				if (Value.IsValid() && Value->TryGetObject(Object) && Object && (*Object)->TryGetStringField(TEXT("name"), LayerName) && LayerName == Name)
 				{
 					return Object;
 				}
