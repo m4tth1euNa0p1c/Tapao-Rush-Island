@@ -1,0 +1,81 @@
+name: Tidemark
+
+on:
+  pull_request:
+    paths:
+      - "monke_island/Plugins/Tidemark/**"
+      - "scripts/tidemark/**"
+      - "scripts/tests/test_tidemark_checks.py"
+      - ".github/workflows/tidemark.yml"
+  push:
+    branches: [main, ga]
+    paths:
+      - "monke_island/Plugins/Tidemark/**"
+      - "scripts/tidemark/**"
+      - "scripts/tests/test_tidemark_checks.py"
+      - ".github/workflows/tidemark.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verifications-tidemark:
+    name: Plugin Tidemark — zéro dépendance au jeu, hasard seedé, crédits
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Pas de téléchargement LFS : les greps lisent des sources texte, les .uasset restent des pointeurs
+      - name: Récupérer le dépôt sans les fichiers LFS
+        uses: actions/checkout@v4
+        env:
+          GIT_LFS_SKIP_SMUDGE: "1"
+        with:
+          lfs: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Zéro dépendance au module monke_island (CONVENTIONS §1)
+        run: python scripts/tidemark/check_no_game_dependency.py
+
+      - name: Aucun hasard non seedé ni horloge murale hors Tests/ (CONVENTIONS §4–§5)
+        run: python scripts/tidemark/check_no_unseeded_random.py
+
+      - name: Crédits, PROVENANCE.json et données interdites (CONVENTIONS §7)
+        run: python scripts/tidemark/check_credits.py
+
+      - name: Tests unitaires des vérifications
+        run: python -m unittest scripts/tests/test_tidemark_checks.py -v
+
+  # Compilation du plugin et specs Tidemark.* (cahier Tidemark §6.6 : « la CI compile le plugin et exécute les specs dès la S1 »).
+  # Désactivé : activer quand un runner Windows avec UE 5.8 existe ; sinon la preuve `compilé` reste un build local
+  # avec rapport joint (scripts/ue.ps1 build, puis scripts/ue.ps1 test -Filter Tidemark,
+  # rapport monke_island/Saved/Automation/Reports/index.json attaché au ticket). Décision : tidemark-lead + propriétaire.
+  build-windows:
+    name: Compilation UE 5.8 et specs Tidemark.* (runner Windows auto-hébergé)
+    if: false
+    needs: verifications-tidemark
+    runs-on: [self-hosted, windows]
+    timeout-minutes: 120
+    steps:
+      - name: Récupérer le dépôt avec les fichiers LFS
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Compiler le projet et le plugin (éditeur fermé sur le runner)
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ue.ps1 build
+
+      - name: Exécuter les specs Tidemark.*
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ue.ps1 test -Filter Tidemark
+
+      - name: Rapport d'automatisation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tidemark-automation-report
+          path: monke_island/Saved/Automation/Reports/
+          if-no-files-found: warn

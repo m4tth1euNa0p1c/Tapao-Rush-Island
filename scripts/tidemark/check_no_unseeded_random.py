@@ -2,7 +2,7 @@
 """Tidemark CI check: no unseeded randomness or wall-clock time in the simulation.
 
 Fails (exit 1) with ``file:line: message`` on ``FMath::Rand``, ``FMath::FRand``,
-``RandRange``, ``FRandRange``, ``VRand``, ``RandBool``, ``FRandomStream(`` without
+``RandRange``, ``FRandRange``, ``VRand``, ``RandBool``, ``FRandomStream(`` / ``FRandomStream Name(`` without
 ``FTidemarkSeed`` / ``ToRandomStream`` on the same line, ``FDateTime::Now``,
 ``FDateTime::UtcNow``, ``FPlatformTime::Cycles`` and ``GetTimeSeconds()`` in
 ``monke_island/Plugins/Tidemark/Source`` outside ``Tests/`` folders.
@@ -28,7 +28,8 @@ RULES: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"\bFPlatformTime::Cycles"), "compteur de cycles interdit dans la simulation (CONVENTIONS §4)"),
     (re.compile(r"\bGetTimeSeconds\(\)"), "temps monde interdit : la simulation avance par StepIndex"),
 )
-RANDOM_STREAM = re.compile(r"\bFRandomStream\s*\(")
+# FRandomStream(42) or FRandomStream Stream(42): constructed with a literal seed
+RANDOM_STREAM = re.compile(r"\bFRandomStream\b(?:\s+\w+)?\s*\(")
 
 
 def repo_root() -> Path:
@@ -39,10 +40,17 @@ def in_tests(path: Path, root: Path) -> bool:
     return "Tests" in path.relative_to(root).parts
 
 
+COMMENT_LINE = re.compile(r"^\s*(//|/\*|\*)")
+TRAILING_COMMENT = re.compile(r"//.*$")
+
+
 def check_line(line: str) -> str | None:
-    """Returns the violation message for one source line, or None."""
+    """Returns the violation message for one code line, or None (comments cannot run, so they are ignored)."""
     if ALLOW.search(line):
         return None
+    if COMMENT_LINE.match(line):
+        return None
+    line = TRAILING_COMMENT.sub("", line)
     for pattern, why in RULES:
         match = pattern.search(line)
         if match:
