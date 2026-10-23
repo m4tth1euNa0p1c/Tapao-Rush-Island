@@ -1396,3 +1396,4 @@ Une ligne par changement de statut (append-only).
 - 2026-10-23 18:14 · T-343 · tidemark-solver-programmer · en-cours · 
 - 2026-10-23 18:14 · T-345 · tidemark-qa · en-cours · 
 - 2026-10-23 18:16 · T-346 · tidemark-release-engineer · review · TM-06 — env=rec — sourcé : 5 produits, 27 URL — benchmark.md
+- 2026-10-23 18:17 · T-342 · tidemark-solver-programmer · review · TM-02 — env=rec — non compilé (session cloud) : FTidemarkSolver + spec Tidemark.Solver.* ; build et test -Filter Tidemark.Solver à lancer sur le PC — fichiers : Plugins/Tidemark/Source/TidemarkRuntime/Public/Tidemark/Solver/TidemarkSolver.h, Private/Solver/TidemarkSolver.cpp, Private/Tests/TidemarkSolverSpec.cpp, Docs/CHANGELOG.md
