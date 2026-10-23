@@ -24,7 +24,12 @@ public class TidemarkEditor : ModuleRules
 			"SlateCore",
 			"ToolMenus",
 			"EditorFramework",
-			"Projects"
+			"Projects",
+			// Import/: asset creation and registration (TidemarkImportLibrary).
+			"AssetRegistry",
+			// Import/TextureHeightSource: 16-bit PNG and EXR heightmaps through IImageWrapperModule::DecompressImage.
+			"ImageWrapper",
+			"ImageCore"
 		});
 	}
 }
