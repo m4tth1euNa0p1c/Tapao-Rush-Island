@@ -18,7 +18,17 @@ from pathlib import Path
 import numpy as np
 
 TOOLS = Path(__file__).resolve().parents[1]
-REPO = TOOLS.parents[3]
+
+
+def find_repo_root(start: Path) -> Path:
+    """Remonte jusqu'au dossier qui contient scripts/tidemark/check_credits.py (Tapao ou le dépôt du plugin)."""
+    for candidate in [start, *start.parents]:
+        if (candidate / "scripts" / "tidemark" / "check_credits.py").is_file():
+            return candidate
+    raise FileNotFoundError("scripts/tidemark/check_credits.py introuvable au-dessus de " + str(start))
+
+
+REPO = find_repo_root(TOOLS)
 sys.path.insert(0, str(TOOLS))
 import tmk  # noqa: E402
 
